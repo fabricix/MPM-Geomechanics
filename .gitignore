@@ -1,0 +1,9 @@
+Debug/
+Release/
+sublime/
+doxygen/html
+doxygen/latex 
+.settings/
+.tracecompass/
+.cproject
+.project
