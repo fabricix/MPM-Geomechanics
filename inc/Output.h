@@ -9,6 +9,7 @@
 #define OUTPUT_H_
 
 #include "Mesh.h"
+#include "Particle.h"
 
 enum GridType{POINTS,CELLS};
 
@@ -19,12 +20,14 @@ public:
 	Output();
 	virtual ~Output();
 	void writeGrid(Mesh&,GridType=GridType::CELLS); // write the grid mesh in to a vtu file
+	void writeParticles(vector<Particle>&, double);
 
 private:
 
 	void defineEdian();
 	double checkTolerance(double);
 	void createGridFolder();
+	void createParticleFolder();
 };
 
 #endif /* OUTPUT_H_ */

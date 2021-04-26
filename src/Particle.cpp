@@ -43,6 +43,16 @@ Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
 
+int Particle::getId()
+{
+	return id;
+}
+
+Vector3d Particle::getPosition()
+{
+	return position;
+}
+
 void Particle::updateContributionNodes(Mesh & mesh)
 {
 	// nodes that the particle contributed

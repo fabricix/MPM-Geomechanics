@@ -31,6 +31,10 @@ public:
 	virtual ~Particle(); //!< default destructor
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
 
+	// get methods
+	int getId(); //!< returns the particle identification 
+	Vector3d getPosition(); //!< returns the current particle position
+
 private:
 
 	int id;	//!< particle id

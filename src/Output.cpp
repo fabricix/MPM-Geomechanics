@@ -17,6 +17,7 @@
 
 #include<string>
 using std::string;
+using std::to_string;
 
 #include <fstream>
 using std::ofstream;
@@ -33,12 +34,21 @@ namespace OutputTolerance
     double deltaValue=1.0e-38;
 }
 
+
 namespace Folders
 {
-    bool gridFolderExist=false;
     string edian="";
+
+    // grid
+    bool gridFolderExist=false;
     string gridFolderName="grid";
     string gridFileName="eulerianGrid.vtu";
+    
+    // particles
+    bool particleFolderExist=false;
+    string particleFolderName="particles";
+    string particleFileName="particles";
+    vector<double> particleFilesTime;
 }
 
 Output::Output() {
@@ -82,6 +92,123 @@ void Output::createGridFolder()
         Folders::gridFolderExist=true;
 }
 
+void Output::createParticleFolder()
+{
+    if (Folders::particleFolderExist)
+        return;
+    
+    int status=0;
+
+    #if defined (linux) || defined(__linux__)
+    status=mkdir(Folders::particleFolderName.c_str(),0777);
+    #endif
+
+    #if defined (_WIN64) || defined(_WIN32)
+    status=_mkdir(Folders::particleFolderName.c_str());
+    #endif
+
+    if (status==-1)
+        Folders::particleFolderExist=true;
+}
+
+void Output::writeParticles(vector<Particle>& particles, double time)
+{
+    // define edian
+    if(Folders::edian==""){
+        defineEdian();
+    }
+
+    // create grid folder
+    if(!Folders::particleFolderExist){
+        createParticleFolder();
+    }
+    
+    // add time in loop time vector
+    Folders::particleFilesTime.push_back(time);
+
+    // open particle file
+    ofstream partFile;
+    partFile.open((Folders::particleFolderName+"/"+Folders::particleFileName+"_"+to_string(Folders::particleFilesTime.size())+".vtu").c_str());
+    partFile.precision(4);
+
+    // particle data
+    int nPoints=particles.size();
+
+    // write results
+    partFile<<"<?xml version=\"1.0\"?>\n";
+    partFile<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<<Folders::edian.c_str()<<"\">\n";
+    partFile<<"<UnstructuredGrid>\n";
+    
+    // piece
+    partFile<<fixed<<"<Piece NumberOfPoints=\""<<nPoints<<"\" NumberOfCells=\""<<nPoints<<"\">\n";
+    
+    // points
+    partFile<<"<Points>\n";
+    
+    // particle position
+    partFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+    for (int i = 0; i < nPoints; ++i) {
+        Vector3d pos=particles.at(i).getPosition();
+        partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+
+    // end points
+    partFile<<"</Points>\n";
+    
+    // point data
+    partFile<<"<PointData>\n";
+    
+    // particle Id
+    partFile<<"<DataArray type=\"Float32\" Name=\"particleId\" Format=\"ascii\">\n";
+    for (int i = 0; i < nPoints; ++i) {
+        partFile<<scientific<<particles.at(i).getId()<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+
+    // end point data
+    partFile<<"</PointData>\n";
+    
+    // cells
+    partFile<<"<Cells>\n";
+
+    // connectivity
+    partFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
+    for (int i = 0; i < int(particles.size()); ++i)
+    {
+        partFile<<i<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+    
+    // offsets
+    partFile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
+    for (int i = 0; i < int(particles.size()); ++i)
+    {
+        partFile<<i+1<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+    
+    // types
+    partFile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+    for (int i = 0; i < nPoints; ++i) {
+        partFile<<1<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+    
+    // end cells
+    partFile<<"</Cells>\n";
+    
+    // end piece
+    partFile<<"</Piece>\n";
+    
+    // end file
+    partFile<<"</UnstructuredGrid>\n";
+    partFile<<"</VTKFile>\n";
+
+    // close file
+    partFile.close();
+}
+
 void Output::writeGrid(Mesh& mesh, GridType gridType)
 {
     // define edian
@@ -95,9 +222,9 @@ void Output::writeGrid(Mesh& mesh, GridType gridType)
     }
     
     // open grid file
-    ofstream gridfile;
-    gridfile.open((Folders::gridFolderName+"/"+Folders::gridFileName).c_str());
-    gridfile.precision(4);
+    ofstream gridFile;
+    gridFile.open((Folders::gridFolderName+"/"+Folders::gridFileName).c_str());
+    gridFile.precision(4);
 
     // mesh data
     int nPoints=mesh.getNumNodes();
@@ -105,53 +232,53 @@ void Output::writeGrid(Mesh& mesh, GridType gridType)
     int nCells=nCellsVec(0)*nCellsVec(1)*nCellsVec(2);
 
     // write results
-    gridfile<<"<?xml version=\"1.0\"?>\n";
-    gridfile<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<<Folders::edian.c_str()<<"\">\n";
-    gridfile<<"<UnstructuredGrid>\n";
+    gridFile<<"<?xml version=\"1.0\"?>\n";
+    gridFile<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<<Folders::edian.c_str()<<"\">\n";
+    gridFile<<"<UnstructuredGrid>\n";
     
     // piece
-    gridfile<<fixed<<"<Piece NumberOfPoints=\""<<nPoints<<"\" NumberOfCells=\""<<nCells<<"\">\n";
+    gridFile<<fixed<<"<Piece NumberOfPoints=\""<<nPoints<<"\" NumberOfCells=\""<<nCells<<"\">\n";
     
     // points
-    gridfile<<"<Points>\n";
+    gridFile<<"<Points>\n";
     
     // node position
-    gridfile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
     vector<Node>inodes = mesh.getNodes();
     for (int i = 0; i < nPoints; ++i) {
         Vector3d pos=inodes.at(i).getCoordinates();
-        gridfile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+        gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
 
     // end points
-    gridfile<<"</Points>\n";
+    gridFile<<"</Points>\n";
     
     // point data
-    gridfile<<"<PointData Scalars=\"scalars\">\n";
+    gridFile<<"<PointData>\n";
     
     // local ID of nodes
-    gridfile<<"<DataArray type=\"Float32\" Name=\"Id-MPM\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Float32\" Name=\"Id-MPM\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        gridfile<<scientific<<inodes.at(i).getId()<<"\n";
+        gridFile<<scientific<<inodes.at(i).getId()<<"\n";
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
 
     // active nodes
-    gridfile<<"<DataArray type=\"Float32\" Name=\"Active\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Float32\" Name=\"Active\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        gridfile<<scientific<<(inodes.at(i).getActive())<<"\n";
+        gridFile<<scientific<<(inodes.at(i).getActive())<<"\n";
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
 
     // end point data
-    gridfile<<"</PointData>\n";
+    gridFile<<"</PointData>\n";
     
     // cells
-    gridfile<<"<Cells>\n";
+    gridFile<<"<Cells>\n";
 
     // connectivity
-    gridfile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
     
     int nCellsX = nCellsVec(0);
     int nCellsY = nCellsVec(1);
@@ -160,7 +287,7 @@ void Output::writeGrid(Mesh& mesh, GridType gridType)
     for (int k = 0; k < nCellsZ; ++k){
         for (int j = 0; j < nCellsY; ++j) {
             for (int i = 0; i < nCellsX; ++i){
-                gridfile<<scientific
+                gridFile<<scientific
                 <<k*(nCellsY+1)*(nCellsX+1)+j    *(nCellsX+1)+i                              <<" "
                 <<k*(nCellsY+1)*(nCellsX+1)+j    *(nCellsX+1)+i+1                            <<" "
                 <<k*(nCellsX+1)*(nCellsY+1)+(j+1)*(nCellsX)  +i+2+j                          <<" "
@@ -172,33 +299,33 @@ void Output::writeGrid(Mesh& mesh, GridType gridType)
             }
         }
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
     
     // offsets
-    gridfile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
     for (int i = 0; i < nCells; ++i) {
-        gridfile<<""<<8*(i+1)<< "\n";
+        gridFile<<""<<8*(i+1)<< "\n";
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
     
     // types
     int cellsType=gridType==GridType::POINTS?1:(gridType==GridType::CELLS?12:1);
-    gridfile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        gridfile<<""<<cellsType<<"\n";
+        gridFile<<cellsType<<"\n";
     }
-    gridfile<<"</DataArray>\n";
+    gridFile<<"</DataArray>\n";
     
     // end cells
-    gridfile<<"</Cells>\n";
+    gridFile<<"</Cells>\n";
     
     // end piece
-    gridfile<<"</Piece>\n";
+    gridFile<<"</Piece>\n";
     
     // end file
-    gridfile<<"</UnstructuredGrid>\n";
-    gridfile<<"</VTKFile>\n";
+    gridFile<<"</UnstructuredGrid>\n";
+    gridFile<<"</VTKFile>\n";
 
     // close file
-    gridfile.close();
+    gridFile.close();
 }
