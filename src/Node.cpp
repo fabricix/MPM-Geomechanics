@@ -23,8 +23,6 @@ Node::Node() {
     momentum.setZero();
     force.setZero();
     acceleration.setZero();
-
-    shapeType=InterpolationFunctionType::GIMP;
 }
 
 //
@@ -50,7 +48,7 @@ void Node::setActive(bool a){
 // get methods
 //
 
-const Vector3d & Node::getCoordinates(){
+Vector3d Node::getCoordinates(){
 
     return coordinates;
 }
@@ -63,4 +61,3 @@ bool Node::getActive(){
 
 	return active;
 }
-

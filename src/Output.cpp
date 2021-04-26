@@ -82,7 +82,7 @@ void Output::createGridFolder()
         Folders::gridFolderExist=true;
 }
 
-void Output::writeGrid(Mesh& mesh)
+void Output::writeGrid(Mesh& mesh, GridType gridType)
 {
     // define edian
     if(Folders::edian==""){
@@ -101,8 +101,8 @@ void Output::writeGrid(Mesh& mesh)
 
     // mesh data
     int nPoints=mesh.getNumNodes();
-    vector<int> nCellsVec = mesh.getTotalCells();
-    int nCells=nCellsVec.at(0)*nCellsVec.at(1)*nCellsVec.at(2);
+    Vector3i nCellsVec = mesh.getTotalCells();
+    int nCells=nCellsVec(0)*nCellsVec(1)*nCellsVec(2);
 
     // write results
     gridfile<<"<?xml version=\"1.0\"?>\n";
@@ -153,9 +153,9 @@ void Output::writeGrid(Mesh& mesh)
     // connectivity
     gridfile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
     
-    int nCellsX = nCellsVec.at(0);
-    int nCellsY = nCellsVec.at(1);
-    int nCellsZ = nCellsVec.at(2);
+    int nCellsX = nCellsVec(0);
+    int nCellsY = nCellsVec(1);
+    int nCellsZ = nCellsVec(2);
 
     for (int k = 0; k < nCellsZ; ++k){
         for (int j = 0; j < nCellsY; ++j) {
@@ -182,10 +182,10 @@ void Output::writeGrid(Mesh& mesh)
     gridfile<<"</DataArray>\n";
     
     // types
+    int cellsType=gridType==GridType::POINTS?1:(gridType==GridType::CELLS?12:1);
     gridfile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        //gridfile<<""<<12<<"\n"; // cells
-        gridfile<<""<<1<<"\n";    // points
+        gridfile<<""<<cellsType<<"\n";
     }
     gridfile<<"</DataArray>\n";
     

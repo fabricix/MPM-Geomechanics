@@ -27,79 +27,79 @@ Shape::~Shape() {
 }
 
 // update the shape funcion values 
-double Shape::shapeGimp(double xixp, double L, double lp)
+double Shape::shapeGimp(double xpi, double L, double lp)
 {   
-    // dxip = relative position of particle respect to the node, xp-xi
-    // lp = half current particle size
+    // xpi = relative position of particle respect to the node, xp-xi
     // L = cell dimention
+    // lp = half current particle size
 
-    if (abs(xixp)>=(L+lp))
+    if (abs(xpi)>=(L+lp))
     {
         return 0.0;
     }
 
-    if ((-L-lp)< xixp && xixp<=(-L+lp))
+    if ((-L-lp)< xpi && xpi<=(-L+lp))
     {
-        return ((L+lp+xixp)*(L+lp+xixp))/(4.0*L*lp);
+        return ((L+lp+xpi)*(L+lp+xpi))/(4.0*L*lp);
     }
 
-    if ((-L+lp)<xixp && xixp<=-lp)
+    if ((-L+lp)<xpi && xpi<=-lp)
     {
-        return 1.0+(xixp/L);
+        return 1.0+(xpi/L);
     }
 
-    if ((-lp)<xixp && xixp<=lp)
+    if ((-lp)<xpi && xpi<=lp)
     {
-        return 1.0-(xixp*xixp+lp*lp)/(2.0*L*lp);
+        return 1.0-(xpi*xpi+lp*lp)/(2.0*L*lp);
     }
 
-    if (lp<xixp && xixp<=(L-lp))
+    if (lp<xpi && xpi<=(L-lp))
     {
-        return 1.0-(xixp/L);
+        return 1.0-(xpi/L);
     }
 
-    if ((L-lp)<xixp && xixp<=(L+lp))
+    if ((L-lp)<xpi && xpi<=(L+lp))
     {
-        return ((L+lp-xixp)*(L+lp-xixp))/(4.0*L*lp);
+        return ((L+lp-xpi)*(L+lp-xpi))/(4.0*L*lp);
     }
     return 0.0;
 }
 
 // update the shape funcion values 
-double Shape::gradientGimp(double xixp, double L, double lp)
+double Shape::gradientGimp(double xip, double L, double lp)
 {   
-    // dxip = relative position of particle respect to the node, xp-xi
-    // lp = half current particle size
+    // xip = relative position of particle respect to the node, xp-xi
     // L = cell dimension
+    // lp = half current particle size
 
-    if (abs(xixp)>=(L+lp))
+    if (abs(xip)>=(L+lp))
     {
         return 0.0;
     }
 
-    if ((-L-lp)<xixp && xixp<=(-L+lp))
+    if ((-L-lp)<xip && xip<=(-L+lp))
     {
-        return (L+lp+xixp)/(2.0*L*lp);
+        return (L+lp+xip)/(2.0*L*lp);
     }
 
-    if ((-L+lp)<xixp && xixp<=-lp)
+    if ((-L+lp)<xip && xip<=-lp)
     {
         return 1.0/L;
     }
 
-    if ((-lp)<xixp && xixp<=lp)
+    if ((-lp)<xip && xip<=lp)
     {
-        return (-xixp/(L*lp));
+        return (-xip/(L*lp));
     }
 
-    if (lp<xixp && xixp<=(L-lp))
+    if (lp<xip && xip<=(L-lp))
     {
         return (-1.0/L);
     }
 
-    if ((L-lp)<xixp && xixp<=(L+lp))
+    if ((L-lp)<xip && xip<=(L+lp))
     {
-        return -(L+lp-xixp)/(2.0*L*lp);
+        return -(L+lp-xip)/(2.0*L*lp);
     }
 
     return 0.0;

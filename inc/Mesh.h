@@ -11,6 +11,10 @@
 #include <vector>
 using std::vector;
 
+#include "../inc/Eigen/Core"
+using Eigen::Vector3d;
+using Eigen::Vector3i;
+
 #include "Node.h"
 #include "Particle.h"
 
@@ -30,7 +34,6 @@ public:
     virtual ~Mesh(); //!< default destructor
 
     void createGrid(); //!< create a structured mesh grid
-    void activateNodes(const vector<int>&,bool); //!< active nodes by its id
     bool updateNodesContribution(const vector<Particle>&); //!< update the nodes contributing at each particle
 
     // set methods
@@ -38,49 +41,37 @@ public:
     void setNumCells(int,int,int); //!< set number of cell in each direction
     void setNumGhosts(int); //!< set number of ghosts around the domain
     void setLimits(double,double,double,double,double,double); //!< set domain limits
+    void activateNodes(const vector<int>&,bool=true); //!< active nodes by its id
+    void activateNode(int,bool=true); //!< active node by its id
 
     // get methods
     int getNumNodes(); //!< returns total nodes in mesh
     const vector<Node> & getNodes(); //!< returns nodes in mesh
-    vector<double> getCellDimension(); //!< returns the cells dimension in each direction
-    vector<int> getNumCells(); //!< returns total cells in the mesh without ghosts
-    vector<int> getTotalCells(); //!< returns total cells including ghosts
+    Vector3d getCellDimension(); //!< returns the cells dimension in each direction
+    Vector3i getNumCells(); //!< returns total cells in the mesh without ghosts
+    Vector3i getTotalCells(); //!< returns total cells including ghosts
     int getNumGhosts(); //!< get number of ghosts
-    vector<double> getMinLimits(); //!< returns lower mesh coordinates
-    vector<double> getMaxLimits(); //!< returns higher mesh coordinates
+    Vector3d getMinLimits(); //!< returns lower mesh coordinates
+    Vector3d getMaxLimits(); //!< returns higher mesh coordinates
     vector<int> getNodesInCell(Vector3d); //!< returns the nodes of the cell containing a point
     vector<int> getContributionNodes(Vector3d); //!< returns the nodes contributing at point
 
 private:
        
-    int nCellX; //!< number of cells in x without ghost
-    int nCellY; //!< number of cells in y without ghost
-    int nCellZ; //!< number of cells in z without ghost
-
     int nGhosts; //!< number of ghost cells
 
-    double cellDimX; //!< cell dimension in x
-    double cellDimY; //!< cell dimension in y
-    double cellDimZ; //!< cell dimension in z
-
-    int nRowsX; //!< number of rows in x
-    int nRowsY; //!< number of rows in y
-    int nRowsZ; //!< number of rows in z
-
-    double minLimitX; //!< lower x coordinate domain without ghosts
-    double minLimitY; //!< lower y coordinate domain without ghosts
-    double minLimitZ; //!< lower z coordinate domain without ghosts
-
-    double maxLimitX; //!< high x coordinate of domain without ghosts
-    double maxLimitY; //!< high y coordinate of domain without ghosts
-    double maxLimitZ; //!< high z coordinate of domain without ghosts
-
+    Vector3i nCell; //!< number of cells in each direction without ghost
+    Vector3i nRows; //!< number of rows in each direction
+    
+    Vector3d cellDim; //!< cell dimension in each direction
+    Vector3d minLimit; //!< lower coordinates domain without ghosts
+    Vector3d maxLimit; //!< high coordinates of domain without ghosts
+    
     vector<Node> gridNodes; //!< all nodes in mesh
    
-    // private methods
     int getCellIdbyPosition(Vector3d); //!< returns the cell id in a position coordinates
-    vector<double> getGridCoordinates(Vector3d); //!< returns the grid coordinates of a position
-    vector<int> getParentNodeCoordinates(Vector3d); //!< return the grid parent node coordinate of a position
+    Vector3d getGridCoordinates(Vector3d); //!< returns the grid coordinates of a position
+    Vector3i getParentNodeCoordinates(Vector3d); //!< return the grid parent node coordinate of a position
     int getParentCellIdConstribution(Vector3d); //!< return the id of the parent node contributing at the point
 };
 

@@ -16,10 +16,11 @@ using std::floor;
 
 Mesh::Mesh() {
 
-	setNumCells(0, 0, 0);
-	setNumGhosts(0);
-    setCellDimension(0.0, 0.0, 0.0);
-    setLimits(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+	nGhosts=0;
+	nCell.setZero();
+    cellDim.setZero();
+    minLimit.setZero();
+    maxLimit.setZero();
 }
 
 Mesh::~Mesh() {
@@ -37,10 +38,9 @@ void Mesh::setCellDimension(double dx, double dy, double dz) {
         Warning::printMessage("Cell dimension must be greater that 0");
     }
 
-    cellDimX=dx;
-    cellDimY=dy;
-    cellDimZ=dz;
-}
+    cellDim=Vector3d(dx,dy,dz);
+    
+    }
 
 void Mesh::setNumCells(int nx, int ny, int nz) {
 
@@ -49,9 +49,7 @@ void Mesh::setNumCells(int nx, int ny, int nz) {
         Warning::printMessage("Number of cells must be greater that 0");
     }
 
-    nCellX=nx;
-    nCellY=ny;
-    nCellZ=nz;
+    nCell=Vector3i(nx,ny,nz);
 }
 
 void Mesh::setNumGhosts(int ng) {
@@ -64,37 +62,29 @@ void Mesh::setNumGhosts(int ng) {
     nGhosts=ng;
 }
 
-void Mesh::setLimits(double minx, double miny, double minz, double maxx, double maxy, double maxz) {
+void Mesh::setLimits(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 
-    minLimitX=minx;
-    minLimitY=miny;
-    minLimitZ=minz;
-    maxLimitX=maxx;
-    maxLimitY=maxy;
-    maxLimitZ=maxz;
+    minLimit=Vector3d(minX,minY,minZ);
+    maxLimit=Vector3d(maxX,maxY,maxZ);
 }
 
 //
 // get methods
 //
 
+Vector3d Mesh::getCellDimension() {
 
-vector<double> Mesh::getCellDimension() {
-
-    vector<double> v {cellDimX, cellDimY, cellDimZ};
-    return v;
+    return cellDim;
 }
 
-vector<int> Mesh::getNumCells() {
+Vector3i Mesh::getNumCells() {
 
-    vector<int> v {nCellX, nCellY, nCellZ};
-    return v;
+    return nCell;
 }
 
-vector<int> Mesh::getTotalCells() { 
+Vector3i Mesh::getTotalCells() { 
    
-    vector<int> v {nCellX+nGhosts*2, nCellY+nGhosts*2, nCellZ+nGhosts*2};
-    return v;
+    return Vector3i(nCell(0)+nGhosts*2, nCell(1)+nGhosts*2, nCell(2)+nGhosts*2);
 }
 
 const vector<Node> & Mesh::getNodes() {
@@ -112,53 +102,51 @@ int Mesh::getNumGhosts() {
     return nGhosts;
 }
 
-vector<double> Mesh::getGridCoordinates(Vector3d position) {
+Vector3d Mesh::getGridCoordinates(Vector3d position) {
 
     // grid coordinates
-    double i = (position(0)-minLimitX)/cellDimX+nGhosts;
-    double j = (position(1)-minLimitY)/cellDimY+nGhosts;
-    double k = (position(2)-minLimitZ)/cellDimZ+nGhosts;
+    double i = (position(0)-minLimit(0))/cellDim(0)+nGhosts;
+    double j = (position(1)-minLimit(1))/cellDim(1)+nGhosts;
+    double k = (position(2)-minLimit(2))/cellDim(2)+nGhosts;
 
     // return vector of coordinates
-    vector<double> v{i,j,k};
-    return v;
+    return Vector3d(i,j,k);
 }
 
-vector<int> Mesh::getParentNodeCoordinates(Vector3d position) {
+Vector3i Mesh::getParentNodeCoordinates(Vector3d position) {
 
     // grid coordinates
-    vector<double> gridCoords = getGridCoordinates(position);
+    Vector3d gridCoords = getGridCoordinates(position);
     
     // return the floor of the grid coordinates
-    vector<int> v{int(floor(gridCoords.at(0))),int(floor(gridCoords.at(1))), int(floor(gridCoords.at(2)))};
-    return v;
+    return Vector3i(int(floor(gridCoords(0))),int(floor(gridCoords(1))),int(floor(gridCoords(2))));
 }
 
 int Mesh::getCellIdbyPosition(Vector3d position)
 {
     // parent node coordinate
-    vector<int> gridParentNodeCoords = getParentNodeCoordinates(position);
-    int i = gridParentNodeCoords.at(0);
-    int j = gridParentNodeCoords.at(1);
-    int k = gridParentNodeCoords.at(2);
+    Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
+    int i = gridParentNodeCoords(0);
+    int j = gridParentNodeCoords(1);
+    int k = gridParentNodeCoords(2);
 
     // cell id
-    return ((j*nRowsX+i)+(nRowsX*nRowsY*k));
+    return ((j*nRows(0)+i)+(nRows(0)*nRows(1)*k));
 }
 
 int Mesh::getParentCellIdConstribution(Vector3d position)
 {
     // parent node coordinates
-    vector<int> gridParentNodeCoords = getParentNodeCoordinates(position);
-    int pi=gridParentNodeCoords.at(0);
-    int pj=gridParentNodeCoords.at(1);
-    int pk=gridParentNodeCoords.at(2);
+    Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
+    int pi=gridParentNodeCoords(0);
+    int pj=gridParentNodeCoords(1);
+    int pk=gridParentNodeCoords(2);
 
     // grid coordinates
-    vector<double> gridCoords = getGridCoordinates(position);
-    double gi=gridCoords.at(0);
-    double gj=gridCoords.at(1);
-    double gk=gridCoords.at(2);
+    Vector3d gridCoords = getGridCoordinates(position);
+    double gi=gridCoords(0);
+    double gj=gridCoords(1);
+    double gk=gridCoords(2);
 
     // relative distance to parent node
     double relDx = gi-double(pi);
@@ -171,19 +159,17 @@ int Mesh::getParentCellIdConstribution(Vector3d position)
     int k = relDz<0.5 ? pk-1 : pk;
 
     // return the parent node of 27 node contribution
-    return ((j*nRowsX+i)+(nRowsX*nRowsY*k));
+    return ((j*nRows(0)+i)+(nRows(0)*nRows(1)*k));
 }
 
-vector<double> Mesh::getMinLimits() {
+Vector3d Mesh::getMinLimits() {
 
-	vector<double>v{minLimitX, minLimitY, minLimitZ};
-	return v;
+	return minLimit;
 }
 
-vector<double> Mesh::getMaxLimits() {
+Vector3d Mesh::getMaxLimits() {
 
-	vector<double>v{maxLimitX, maxLimitY, maxLimitZ};
-	return v;
+	return maxLimit;
 }
 
 vector<int> Mesh::getNodesInCell(Vector3d position)
@@ -192,12 +178,12 @@ vector<int> Mesh::getNodesInCell(Vector3d position)
     
     int idNode1 = cellId;
     int idNode2 = idNode1+1;
-    int idNode3 = idNode1+nRowsX;
+    int idNode3 = idNode1+nRows(0);
     int idNode4 = idNode3+1;
-    int idNode5 = idNode1 + (nRowsX*nRowsY);
-    int idNode6 = idNode2 + (nRowsX*nRowsY);
-    int idNode7 = idNode3 + (nRowsX*nRowsY);
-    int idNode8 = idNode4 + (nRowsX*nRowsY);
+    int idNode5 = idNode1 + (nRows(0)*nRows(1));
+    int idNode6 = idNode2 + (nRows(0)*nRows(1));
+    int idNode7 = idNode3 + (nRows(0)*nRows(1));
+    int idNode8 = idNode4 + (nRows(0)*nRows(1));
 
     vector<int> v {idNode1,idNode2,idNode3,idNode4,idNode5,idNode6,idNode7,idNode8};
     return v;
@@ -207,8 +193,8 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
 
     int cellId = getParentCellIdConstribution(position);
     
-    int nXYGridNodes = nRowsX*nRowsY;
-    int I = nRowsX;
+    int nXYGridNodes = nRows(0)*nRows(1);
+    int I = nRows(0);
 
     int zPlane = nXYGridNodes*0;
     int idNode1 = cellId       + zPlane;
@@ -268,12 +254,12 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
 void Mesh::createGrid(void) {
 
     // set the rows in each direction
-    nRowsX = nCellX+2*nGhosts+1;
-    nRowsY = nCellY+2*nGhosts+1;
-    nRowsZ = nCellZ+2*nGhosts+1;
+    nRows(0) = nCell(0)+2*nGhosts+1;
+    nRows(1) = nCell(1)+2*nGhosts+1;
+    nRows(2) = nCell(2)+2*nGhosts+1;
 
     // resize the node vector
-    gridNodes.resize(nRowsX*nRowsY*nRowsZ);
+    gridNodes.resize(nRows(0)*nRows(1)*nRows(2));
 
     // initialize nodes
     for (size_t i=0;i<gridNodes.size();i++){
@@ -281,19 +267,19 @@ void Mesh::createGrid(void) {
     }
 
     // create a grid
-    for (int k=0; k<nRowsZ; k++)
+    for (int k=0; k<nRows(2); k++)
     {
-        for(int j=0; j<nRowsY; j++)
+        for(int j=0; j<nRows(1); j++)
         {
-            for(int i=0; i<nRowsX; i++)
+            for(int i=0; i<nRows(0); i++)
             {
                 // grid node coordinates
-                double x = (i-nGhosts)*cellDimX+minLimitX;
-                double y = (j-nGhosts)*cellDimY+minLimitY;
-                double z = (k-nGhosts)*cellDimZ+minLimitZ;
+                double x = (i-nGhosts)*cellDim(0)+minLimit(0);
+                double y = (j-nGhosts)*cellDim(1)+minLimit(1);
+                double z = (k-nGhosts)*cellDim(2)+minLimit(2);
 
                 // grid node id
-                int nodeId=(j*nRowsX+i)+(nRowsY*nRowsX*k);
+                int nodeId=(j*nRows(0)+i)+(nRows(1)*nRows(0)*k);
 
                 // set node id
                 gridNodes[nodeId].setId(nodeId);
@@ -305,11 +291,19 @@ void Mesh::createGrid(void) {
     }
 }
 
+void Mesh::activateNode(int nodesId,bool activeValue) {
+
+    if (nodesId<int(gridNodes.size()))
+    {
+        gridNodes.at(nodesId).setActive(activeValue);
+    }    
+}
+
 void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
 
     for (size_t i = 0; i < nodesId.size(); ++i)
     {
-        gridNodes.at(nodesId.at(i)).setActive(activeValue);
+        activateNode(nodesId.at(i),activeValue);
     }
 }
 

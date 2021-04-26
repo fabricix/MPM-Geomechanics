@@ -11,25 +11,18 @@
 #include "../inc/Eigen/Core"
 using Eigen::Vector3d;
 
-enum InterpolationFunctionType{LINEAR, GIMP};
-
 class Shape {
+
 public:
 	
 	Shape();
 	virtual ~Shape();
 	
 	void updateGimp(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the GIMP functions and gradients
-	void updateGimpZZ(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the GIMP functions and gradients
-
-public:
 	
 	double gradientGimp(double, double, double); //!< GIMP gradient shape function
 	double shapeGimp(double, double, double); //!< GIMP shape function
 	
-	double gradientGimpZZ(double, double, double); //!< GIMP gradient shape function
-	double shapeGimpZZ(double, double, double); //!< GIMP shape function
-
 	double Sx; //!< shape function value in x
 	double Sy; //!< shape function value in y
 	double Sz; //!< shape function value in z

@@ -11,18 +11,22 @@
 #include "Mesh.h"
 #include "Particle.h"
 #include "Model.h"
+#include "Output.h"
 
 class MPM {
 
 public:
 	MPM();
 	virtual ~MPM();
+	void updateParticleContribution();
+	void printMesh();
 
-private:
-
-	Model model; //! model setup
+public:
+	
 	Mesh mesh; //!< grid mesh
 	vector<Particle> particles; //!< material points
+	Output output; //!< output operations
+
 };
 
 #endif /* MPM_H_ */

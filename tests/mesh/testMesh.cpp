@@ -20,24 +20,21 @@ int main(int argc, char **argv)
 	Mesh mesh;
 
 	mesh.setNumCells(10,10,10);
-	mesh.setCellDimension(1,1,1);
+	mesh.setCellDimension(1.0,1.0,1.0);
 	mesh.setNumGhosts(2);
 	mesh.createGrid();
 
 	// activate p1
-	//mesh.activateNodes(mesh.getNodesInCell(Vector3d(0.4,0.4,0.4)), true);
+	mesh.activateNodes(mesh.getNodesInCell(Vector3d(0.4,0.4,0.4)));
 
-	// contribution p1
-	// mesh.activateNodes(mesh.getContributionNodes(Vector3d(0.5,0,0.5)), true);
+	// contribution p2
+	mesh.activateNodes(mesh.getContributionNodes(Vector3d(2.5,0.5,0.5)));
 
-	// activate p2
-	//mesh.activateNodes(mesh.getNodesInCell(Vector3d(7.9,1.4,8.5)), true);
-
-	// contribution p1
-	//mesh.activateNodes(mesh.getContributionNodes(Vector3d(7.9,1.4,8.5)), true);
+	// contribution p3
+	mesh.activateNodes(mesh.getContributionNodes(Vector3d(7.9,1.4,8.5)));
 
 	Output output;
-	output.writeGrid(mesh);
+	output.writeGrid(mesh,GridType::POINTS);
 
 	return 0;
 }

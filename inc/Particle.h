@@ -14,6 +14,8 @@ using Eigen::Vector3d;
 
 #include "Contribution.h"
 #include "Mesh.h"
+#include "Model.h"
+#include "Shape.h"
 
 #include <vector>
 
@@ -27,7 +29,7 @@ class Particle {
 public:
 	Particle(); //!< default constructor
 	virtual ~Particle(); //!< default destructor
-	bool updateContributionNodes(const Mesh &); //!< update the list of nodes that contributes
+	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
 
 private:
 
@@ -48,7 +50,8 @@ private:
 	Vector3d velocity; //!< particle velocity
 	Vector3d momentum; //!< particle momentum
 	Vector3d externalForce;	//!< external force
-
+	Vector3d size; //!< size in each direction
+	
 	Matrix3d stress; //!< particle stress
 	Matrix3d strain; //!< particle strain
 	Matrix3d deformationGradient; //!< particle deformation gradient
@@ -56,6 +59,8 @@ private:
 	Matrix3d velocityGradient; //!< particle deformation gradient
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
+
+	Shape shape;
 };
 
 #endif /* PARTICLE_H_ */

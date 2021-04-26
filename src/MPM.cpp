@@ -15,3 +15,16 @@ MPM::MPM() {
 MPM::~MPM() {
 	// TODO Auto-generated destructor stub
 }
+
+void MPM::printMesh()
+{
+	output.writeGrid(mesh);
+}
+
+void MPM::updateParticleContribution()
+{
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		particles.at(i).updateContributionNodes(mesh);
+	}
+}

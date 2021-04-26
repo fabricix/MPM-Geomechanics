@@ -8,14 +8,11 @@
 #ifndef CONTRIBUTION_H_
 #define CONTRIBUTION_H_
 
-#include <vector>
-using std::vector;
-
 class Contribution {
+
 public:
 	Contribution();
 	virtual ~Contribution();
-	//updateWeightGradients();
 
 	int nodeId; //!< id of the contribuited node
 	double weight; //!< weight value of a node at a particle

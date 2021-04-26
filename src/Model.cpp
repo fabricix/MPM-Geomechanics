@@ -7,43 +7,46 @@
 
 #include "Model.h"
 
-Model::Model() {
-	// TODO Auto-generated constructor stub
+namespace ModelSetup {
 
-	contact=false;
-	gravity=false;
-	axisymetric=false;
-	coupled=false;
-	jaumann=false;
+	bool contact=false;				//!< is contact active
+	bool gravity=false;				//!< is gravity active
+	bool axisymetric=false;			//!< is axisymetric model
+	bool coupled=false;				//!< is coupled analysis
+	bool jaumann=false;				//!< is Jaumann rate active
 
-	istep=0;
-	nThreads=0;
+	int istep=0;					//!< current time step
+	int nThreads=1;					//!< number of threads in current job
+	int contributionNodes=27;		//!< nodes that the particles contributed
 
-	dt=0.0;
-	time=0.0;
-	dtFraction=0.0;
-	kineticEnergy=0.0;
+	double dt=0.0;					//!< time step
+	double time=0.0;				//!< simulation time
+	double dtFraction=0.25; 	    //!< fraction of critical time step
+	double kineticEnergy=0.0;		//!< kinetic energy of the model
 
-	inputFile="";
+	string inputFile="";			//!< input file name
+
+	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
+
+	DampingType damping=DampingType::NONE; //!< damping type
 
     #if defined (_WIN64) || defined(_WIN32)
-    operationalSystem=ModelSetup::OperationalSystem::WINDOWS;
+	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system
     #elif defined (linux) || defined(__linux__)
-    operationalSystem=ModelSetup::OperationalSystem::LINUX;
+	OperationalSystem operationalSystem=OperationalSystem::LINUX; //!< operational system
     #endif
 
-	stressScheme=ModelSetup::StressUpdateScheme::USL;
-	damping=ModelSetup::DampingType::NONE;
-}
+    InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP;
+	
+	bool isWindowsSystem(){
+		return operationalSystem==OperationalSystem::WINDOWS?true:false;
+	}
 
-Model::~Model() {
-	// TODO Auto-generated destructor stub
-}
+	bool isLinuxSystem(){
+		return operationalSystem==OperationalSystem::LINUX?true:false;
+	}
 
-bool Model::isWindowsSystem(){
-	return operationalSystem==ModelSetup::OperationalSystem::WINDOWS?true:false;
-}
-
-bool Model::isLinuxSystem(){
-	return operationalSystem==ModelSetup::OperationalSystem::LINUX?true:false;
+	int getContributionNodesNum(){
+		return contributionNodes;
+	}
 }

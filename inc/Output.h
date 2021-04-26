@@ -8,7 +8,9 @@
 #ifndef OUTPUT_H_
 #define OUTPUT_H_
 
-#include "../inc/Mesh.h"
+#include "Mesh.h"
+
+enum GridType{POINTS,CELLS};
 
 class Output {
 
@@ -16,7 +18,7 @@ public:
 
 	Output();
 	virtual ~Output();
-	void writeGrid(Mesh&); // write the grid mesh in to a vtu file
+	void writeGrid(Mesh&,GridType=GridType::CELLS); // write the grid mesh in to a vtu file
 
 private:
 

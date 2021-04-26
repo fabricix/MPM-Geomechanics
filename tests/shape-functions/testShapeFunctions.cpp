@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
 	// open a file
 	ofstream outputfile;
-	outputfile.open ("./shape-verification/shape.csv");
+	outputfile.open ("../tests/shape-functions/shape.csv");
 	outputfile<<"x,y,z,sx,sy,sz,gx,gy,gz\n";
 
 	// compute shape and gradients
