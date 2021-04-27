@@ -17,6 +17,7 @@ using Eigen::Vector3i;
 
 #include "Node.h"
 #include "Particle.h"
+#include "Boundary.h"
 
 class Particle;
 
@@ -68,11 +69,16 @@ private:
     Vector3d maxLimit; //!< high coordinates of domain without ghosts
     
     vector<Node> gridNodes; //!< all nodes in mesh
-   
+    
+    vector<Boundary> BoundaryX; //!< boundary plane with normal X
+    vector<Boundary> BoundaryY; //!< boundary plane with normal Y
+    vector<Boundary> BoundaryZ; //!< boundary plane with normal Z
+
     int getCellIdbyPosition(Vector3d); //!< returns the cell id in a position coordinates
     Vector3d getGridCoordinates(Vector3d); //!< returns the grid coordinates of a position
     Vector3i getParentNodeCoordinates(Vector3d); //!< return the grid parent node coordinate of a position
     int getParentCellIdConstribution(Vector3d); //!< return the id of the parent node contributing at the point
+    void updateBoundaries(); //!< updates the boundary nodes index
 };
 
 #endif /* MESH_H_ */

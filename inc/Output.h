@@ -17,13 +17,13 @@ class Output {
 
 public:
 	
-	/// \enum GridType
+	/// \enum CellType
 	/// Describes the way that the cells are written in the mesh file
-	enum GridType{POINTS,CELLS};
+	enum CellType{POINTS,CELLS};
 
 	Output(); //!< default constructor
 	virtual ~Output(); //!< default destructor
-	void writeGrid(Mesh&,GridType=GridType::CELLS); //!< write the grid mesh into a vtu file.
+	void writeGrid(Mesh&,CellType=CellType::CELLS); //!< write the grid mesh into a vtu file.
 	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
 
 private:

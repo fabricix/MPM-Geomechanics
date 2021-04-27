@@ -209,7 +209,7 @@ void Output::writeParticles(vector<Particle>& particles, double time)
     partFile.close();
 }
 
-void Output::writeGrid(Mesh& mesh, GridType gridType)
+void Output::writeGrid(Mesh& mesh, CellType gridType)
 {
     // define edian
     if(Folders::edian==""){
@@ -309,7 +309,7 @@ void Output::writeGrid(Mesh& mesh, GridType gridType)
     gridFile<<"</DataArray>\n";
     
     // types
-    int cellsType=gridType==GridType::POINTS?1:(gridType==GridType::CELLS?12:1);
+    int cellsType=gridType==CellType::POINTS?1:(gridType==CellType::CELLS?12:1);
     gridFile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
         gridFile<<cellsType<<"\n";

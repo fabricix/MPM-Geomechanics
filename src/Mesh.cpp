@@ -21,6 +21,10 @@ Mesh::Mesh() {
     cellDim.setZero();
     minLimit.setZero();
     maxLimit.setZero();
+
+    BoundaryX.resize(2);
+    BoundaryY.resize(2);
+    BoundaryZ.resize(2);
 }
 
 Mesh::~Mesh() {
@@ -307,8 +311,47 @@ void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
     }
 }
 
-bool updateNodesContribution(const vector<Particle>&)
+void Mesh::updateBoundaries()
 {
-    return true;
-    // TODO
+    for (size_t i = 0; i < gridNodes.size(); ++i)
+    {
+        Vector3d nodeCoordinates=gridNodes.at(i).getCoordinates();
+        int nodeId = gridNodes.at(i).getId();
+
+        // plane X0
+        if (nodeCoordinates(0)<=minLimit(0))
+        {
+            BoundaryX.at(0).nodesIndex.push_back(nodeId);
+        }
+
+        // plane Y0
+        else if (nodeCoordinates(1)<=minLimit(1))
+        {
+            BoundaryY.at(0).nodesIndex.push_back(nodeId);
+        }
+        
+        // plane Z0
+        else if (nodeCoordinates(2)<=minLimit(2))
+        {
+            BoundaryZ.at(0).nodesIndex.push_back(nodeId);
+        }
+
+        // plane Xn
+        else if (nodeCoordinates(0)>=maxLimit(0))
+        {
+            BoundaryX.at(1).nodesIndex.push_back(nodeId);
+        }
+
+        // plane Yn
+        else if (nodeCoordinates(1)>=maxLimit(1))
+        {
+            BoundaryY.at(1).nodesIndex.push_back(nodeId);
+        }        
+
+        // plane Zn
+        else if (nodeCoordinates(2)>=maxLimit(2))
+        {
+            BoundaryZ.at(1).nodesIndex.push_back(nodeId);
+        }
+    }
 }
