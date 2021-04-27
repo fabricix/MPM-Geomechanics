@@ -8,6 +8,8 @@
 #ifndef CONTRIBUTION_H_
 #define CONTRIBUTION_H_
 
+/// \class Contribution
+/// \brief Represents the node that una particle contributes.
 class Contribution {
 
 public:

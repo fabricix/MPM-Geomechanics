@@ -8,11 +8,9 @@
 #ifndef INC_UTILITIES_H_
 #define INC_UTILITIES_H_
 
+/// \namespace Utils
+/// \brief Contains auxiliary functions
 namespace Utils{
-
-template<typename T> T sgn(T val){
-	return(val<0.0?-1.0:1.0);
-}
 
 }
 

@@ -11,23 +11,27 @@
 #include "Mesh.h"
 #include "Particle.h"
 
-enum GridType{POINTS,CELLS};
-
+/// \class Output
+/// \brief Operations to write the results and the mesh for its visualization.
 class Output {
 
 public:
+	
+	/// \enum GridType
+	/// Describes the way that the cells are written in the mesh file
+	enum GridType{POINTS,CELLS};
 
-	Output();
-	virtual ~Output();
-	void writeGrid(Mesh&,GridType=GridType::CELLS); // write the grid mesh in to a vtu file
-	void writeParticles(vector<Particle>&, double=0.0);
+	Output(); //!< default constructor
+	virtual ~Output(); //!< default destructor
+	void writeGrid(Mesh&,GridType=GridType::CELLS); //!< write the grid mesh into a vtu file.
+	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
 
 private:
 
-	void defineEdian();
-	double checkTolerance(double);
-	void createGridFolder();
-	void createParticleFolder();
+	void defineEdian(); //!< defines the type of data based of the system
+	double checkTolerance(double); //!< defines a tolerance for write the results
+	void createGridFolder(); //!< creates a folder containing the grid
+	void createParticleFolder(); //!< create a folder containing the particles result files
 };
 
 #endif /* OUTPUT_H_ */

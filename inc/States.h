@@ -8,6 +8,8 @@
 #ifndef STATES_H_
 #define STATES_H_
 
+/// \class States
+/// \brief Represents model states that can be loaded before a simulation.
 class States {
 public:
 	States();

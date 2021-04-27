@@ -13,8 +13,7 @@ using std::string;
 
 /// \namespace Warning
 /// \brief This namespace contain functions to print 
-/// coloured text indicating possible error or inconsistency in data. 
-///
+/// coloured text indicating possible error or inconsistency in data.
 namespace Warning
 {
     void printMessage(string); //!< prints a warning message in terminal

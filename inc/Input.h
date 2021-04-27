@@ -8,6 +8,8 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
+/// \class Input
+/// \brief Operations to read the input file.
 class Input {
 public:
 	Input();

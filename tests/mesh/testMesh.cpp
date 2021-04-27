@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 	Output output;
 
 	// write the mesh
-	output.writeGrid(mesh,GridType::POINTS);
+	output.writeGrid(mesh,Output::POINTS);
 
 	// write the particles
 	output.writeParticles(particles);

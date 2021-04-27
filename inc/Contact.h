@@ -8,6 +8,8 @@
 #ifndef CONTACT_H_
 #define CONTACT_H_
 
+/// \class Contact
+/// \brief Represents a frictional contact between bodies
 class Contact {
 public:
 	Contact();

@@ -11,12 +11,13 @@
 #include "../inc/Eigen/Core"
 using Eigen::Vector3d;
 
+/// \class Shape
+/// \brief Represents the shape functions used in the interpolation process.
 class Shape {
-
 public:
 	
-	Shape();
-	virtual ~Shape();
+	Shape(); //!< default constructor
+	virtual ~Shape(); //<! defaul destructor
 	
 	void updateGimp(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the GIMP functions and gradients
 	

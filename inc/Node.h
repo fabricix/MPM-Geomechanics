@@ -11,8 +11,8 @@
 #include "../inc/Eigen/Core"
 using Eigen::Vector3d;
 
-#include "Shape.h"
-
+/// \class Node
+/// \brief Represents a mesh node.
 class Node {
 
 public:
