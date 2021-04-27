@@ -20,7 +20,7 @@ public:
 	Output();
 	virtual ~Output();
 	void writeGrid(Mesh&,GridType=GridType::CELLS); // write the grid mesh in to a vtu file
-	void writeParticles(vector<Particle>&, double);
+	void writeParticles(vector<Particle>&, double=0.0);
 
 private:
 

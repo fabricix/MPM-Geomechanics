@@ -17,24 +17,36 @@ using std::vector;
 
 int main(int argc, char **argv)
 {
+	// create the mesh
 	Mesh mesh;
-
 	mesh.setNumCells(10,10,10);
 	mesh.setCellDimension(1.0,1.0,1.0);
 	mesh.setNumGhosts(2);
 	mesh.createGrid();
 
-	// activate p1
-	mesh.activateNodes(mesh.getNodesInCell(Vector3d(0.4,0.4,0.4)));
+	// create particles
+	std::vector<Particle> particles;
+	particles.push_back(Particle(Vector3d(0.4,0.4,0.4)));
+	particles.push_back(Particle(Vector3d(2.5,0.5,0.5)));
+	particles.push_back(Particle(Vector3d(7.9,1.4,8.5)));
 
-	// contribution p2
-	mesh.activateNodes(mesh.getContributionNodes(Vector3d(2.5,0.5,0.5)));
+	// activate nodes containing p1
+	mesh.activateNodes(mesh.getNodesInCell(particles.at(0).getPosition()));
 
-	// contribution p3
-	mesh.activateNodes(mesh.getContributionNodes(Vector3d(7.9,1.4,8.5)));
+	// activate contribution nodes of p2
+	mesh.activateNodes(mesh.getContributionNodes(particles.at(1).getPosition()));
 
+	// activate contribution nodes of p3
+	mesh.activateNodes(mesh.getContributionNodes(particles.at(2).getPosition()));
+
+	// create an output object
 	Output output;
+
+	// write the mesh
 	output.writeGrid(mesh,GridType::POINTS);
 
+	// write the particles
+	output.writeParticles(particles);
+	
 	return 0;
 }

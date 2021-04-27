@@ -20,6 +20,7 @@ public:
 	virtual ~MPM();
 	void updateParticleContribution();
 	void printMesh();
+	void printParticles();
 
 public:
 	

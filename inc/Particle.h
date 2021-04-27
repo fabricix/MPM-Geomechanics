@@ -26,14 +26,19 @@ class Mesh;
 /// This class contain all Lagrangian variables
 /// that represents the domain an its properties 
 class Particle {
+
 public:
+
 	Particle(); //!< default constructor
+	Particle(Vector3d); //!< create a particle in a coordinate
 	virtual ~Particle(); //!< default destructor
+
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
 
 	// get methods
 	int getId(); //!< returns the particle identification 
 	Vector3d getPosition(); //!< returns the current particle position
+	const vector<Contribution>& getContributionNodes(); //<! returns the contribution list
 
 private:
 
@@ -64,7 +69,9 @@ private:
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
 
-	Shape shape;
+	Shape shape; //!< shape function representation
+
+	void initializeValues(); //!< initialization of all data in particle
 };
 
 #endif /* PARTICLE_H_ */

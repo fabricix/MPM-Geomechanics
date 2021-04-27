@@ -21,6 +21,11 @@ void MPM::printMesh()
 	output.writeGrid(mesh);
 }
 
+void MPM::printParticles()
+{
+	output.writeParticles(particles);
+}
+
 void MPM::updateParticleContribution()
 {
 	for (size_t i = 0; i < particles.size(); ++i)

@@ -10,38 +10,24 @@
 
 Particle::Particle() {
 
-	id=0;
-	materialId=0;
-	cellId=0;
-	bodyId=0;
+	initializeValues();
+}
 
-	mass=0.0;
-	density=0.0;
-	volume=0.0;
-	plasticStrain=0.0;
-	initialVolume=0.0;
-	porosity=0.0;
+Particle::Particle(Vector3d particlePosition) {
 
-	position.setZero();
-	initialPosition.setZero();
-	velocity.setZero();
-	momentum.setZero();
-	externalForce.setZero();
-	size.setZero();
-
-	stress.setZero();
-	strain.setZero();
-	deformationGradient.setZero();
-	deformationGradientIncrement.setZero();
-	velocityGradient.setZero();
-
-	contributionNodes.clear();
-	contributionNodes.resize(ModelSetup::getContributionNodesNum());
+	initializeValues();
+	
+	position=particlePosition;
+	initialPosition=particlePosition;
 }
 
 Particle::~Particle() {
 	// TODO Auto-generated destructor stub
 }
+
+//
+// publics methods
+//
 
 int Particle::getId()
 {
@@ -51,6 +37,11 @@ int Particle::getId()
 Vector3d Particle::getPosition()
 {
 	return position;
+}
+
+const vector<Contribution>& Particle::getContributionNodes(){
+
+	return contributionNodes;
 }
 
 void Particle::updateContributionNodes(Mesh & mesh)
@@ -79,4 +70,39 @@ void Particle::updateContributionNodes(Mesh & mesh)
 		contributionNodes.at(i).gradientY=shape.Sx*shape.Gy*shape.Sz;
 		contributionNodes.at(i).gradientZ=shape.Sx*shape.Sy*shape.Gz;
 	}
+}
+
+//
+// private methods
+// 
+
+void Particle::initializeValues(){
+
+	id=0;
+	materialId=0;
+	cellId=0;
+	bodyId=0;
+
+	mass=0.0;
+	density=0.0;
+	volume=0.0;
+	plasticStrain=0.0;
+	initialVolume=0.0;
+	porosity=0.0;
+
+	position.setZero();
+	initialPosition.setZero();
+	velocity.setZero();
+	momentum.setZero();
+	externalForce.setZero();
+	size.setZero();
+
+	stress.setZero();
+	strain.setZero();
+	deformationGradient.setZero();
+	deformationGradientIncrement.setZero();
+	velocityGradient.setZero();
+
+	contributionNodes.clear();
+	contributionNodes.resize(ModelSetup::getContributionNodesNum());
 }
