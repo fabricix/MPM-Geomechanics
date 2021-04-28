@@ -17,7 +17,7 @@ public:
 	virtual ~Body();
 
 private:
-	int id;
+	int id; //!< Body identification
 
 };
 

@@ -40,6 +40,9 @@ public:
 	Vector3d getPosition(); //!< returns the current particle position
 	const vector<Contribution>& getContributionNodes(); //<! returns the contribution list
 
+	// set methods
+	void setSize(Vector3d); //!< configures particle size in each direction
+
 private:
 
 	int id;	//!< particle id

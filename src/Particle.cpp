@@ -72,6 +72,10 @@ void Particle::updateContributionNodes(Mesh & mesh)
 	}
 }
 
+void Particle::setSize(Vector3d pSize){
+
+	size=pSize;
+}
 //
 // private methods
 // 
