@@ -56,6 +56,7 @@ public:
     Vector3d getMaxLimits(); //!< returns higher mesh coordinates
     vector<int> getNodesInCell(Vector3d); //!< returns the nodes of the cell containing a point
     vector<int> getContributionNodes(Vector3d); //!< returns the nodes contributing at point
+    const Boundary& getBoundary(); //!< return mesh boundaries
 
 private:
        
@@ -70,10 +71,8 @@ private:
     
     vector<Node> gridNodes; //!< all nodes in mesh
     
-    vector<Boundary> BoundaryX; //!< boundary plane with normal X
-    vector<Boundary> BoundaryY; //!< boundary plane with normal Y
-    vector<Boundary> BoundaryZ; //!< boundary plane with normal Z
-
+    Boundary boundary; //!< mesh boundary
+    
     int getCellIdbyPosition(Vector3d); //!< returns the cell id in a position coordinates
     Vector3d getGridCoordinates(Vector3d); //!< returns the grid coordinates of a position
     Vector3i getParentNodeCoordinates(Vector3d); //!< return the grid parent node coordinate of a position

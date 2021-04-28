@@ -21,10 +21,6 @@ Mesh::Mesh() {
     cellDim.setZero();
     minLimit.setZero();
     maxLimit.setZero();
-
-    BoundaryX.resize(2);
-    BoundaryY.resize(2);
-    BoundaryZ.resize(2);
 }
 
 Mesh::~Mesh() {
@@ -88,7 +84,7 @@ Vector3i Mesh::getNumCells() {
 
 Vector3i Mesh::getTotalCells() { 
    
-    return Vector3i(nCell(0)+nGhosts*2, nCell(1)+nGhosts*2, nCell(2)+nGhosts*2);
+    return Vector3i(nCell.x()+nGhosts*2, nCell.y()+nGhosts*2, nCell.z()+nGhosts*2);
 }
 
 const vector<Node> & Mesh::getNodes() {
@@ -109,9 +105,9 @@ int Mesh::getNumGhosts() {
 Vector3d Mesh::getGridCoordinates(Vector3d position) {
 
     // grid coordinates
-    double i = (position(0)-minLimit(0))/cellDim(0)+nGhosts;
-    double j = (position(1)-minLimit(1))/cellDim(1)+nGhosts;
-    double k = (position(2)-minLimit(2))/cellDim(2)+nGhosts;
+    double i = (position.x()-minLimit.x())/cellDim.x()+nGhosts;
+    double j = (position.y()-minLimit.y())/cellDim.y()+nGhosts;
+    double k = (position.z()-minLimit.z())/cellDim.z()+nGhosts;
 
     // return vector of coordinates
     return Vector3d(i,j,k);
@@ -123,34 +119,34 @@ Vector3i Mesh::getParentNodeCoordinates(Vector3d position) {
     Vector3d gridCoords = getGridCoordinates(position);
     
     // return the floor of the grid coordinates
-    return Vector3i(int(floor(gridCoords(0))),int(floor(gridCoords(1))),int(floor(gridCoords(2))));
+    return Vector3i(int(floor(gridCoords.x())),int(floor(gridCoords.y())),int(floor(gridCoords.z())));
 }
 
 int Mesh::getCellIdbyPosition(Vector3d position)
 {
     // parent node coordinate
     Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
-    int i = gridParentNodeCoords(0);
-    int j = gridParentNodeCoords(1);
-    int k = gridParentNodeCoords(2);
+    int i = gridParentNodeCoords.x();
+    int j = gridParentNodeCoords.y();
+    int k = gridParentNodeCoords.z();
 
     // cell id
-    return ((j*nRows(0)+i)+(nRows(0)*nRows(1)*k));
+    return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
 int Mesh::getParentCellIdConstribution(Vector3d position)
 {
     // parent node coordinates
     Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
-    int pi=gridParentNodeCoords(0);
-    int pj=gridParentNodeCoords(1);
-    int pk=gridParentNodeCoords(2);
+    int pi=gridParentNodeCoords.x();
+    int pj=gridParentNodeCoords.y();
+    int pk=gridParentNodeCoords.z();
 
     // grid coordinates
     Vector3d gridCoords = getGridCoordinates(position);
-    double gi=gridCoords(0);
-    double gj=gridCoords(1);
-    double gk=gridCoords(2);
+    double gi=gridCoords.x();
+    double gj=gridCoords.y();
+    double gk=gridCoords.z();
 
     // relative distance to parent node
     double relDx = gi-double(pi);
@@ -163,7 +159,7 @@ int Mesh::getParentCellIdConstribution(Vector3d position)
     int k = relDz<0.5 ? pk-1 : pk;
 
     // return the parent node of 27 node contribution
-    return ((j*nRows(0)+i)+(nRows(0)*nRows(1)*k));
+    return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
 Vector3d Mesh::getMinLimits() {
@@ -182,12 +178,12 @@ vector<int> Mesh::getNodesInCell(Vector3d position)
     
     int idNode1 = cellId;
     int idNode2 = idNode1+1;
-    int idNode3 = idNode1+nRows(0);
+    int idNode3 = idNode1+nRows.x();
     int idNode4 = idNode3+1;
-    int idNode5 = idNode1 + (nRows(0)*nRows(1));
-    int idNode6 = idNode2 + (nRows(0)*nRows(1));
-    int idNode7 = idNode3 + (nRows(0)*nRows(1));
-    int idNode8 = idNode4 + (nRows(0)*nRows(1));
+    int idNode5 = idNode1 + (nRows.x()*nRows.y());
+    int idNode6 = idNode2 + (nRows.x()*nRows.y());
+    int idNode7 = idNode3 + (nRows.x()*nRows.y());
+    int idNode8 = idNode4 + (nRows.x()*nRows.y());
 
     vector<int> v {idNode1,idNode2,idNode3,idNode4,idNode5,idNode6,idNode7,idNode8};
     return v;
@@ -197,8 +193,8 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
 
     int cellId = getParentCellIdConstribution(position);
     
-    int nXYGridNodes = nRows(0)*nRows(1);
-    int I = nRows(0);
+    int nXYGridNodes = nRows.x()*nRows.y();
+    int I = nRows.x();
 
     int zPlane = nXYGridNodes*0;
     int idNode1 = cellId       + zPlane;
@@ -246,10 +242,10 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
     return v;
 }
 
-//
-// private methods
-//
+const Boundary& Mesh::getBoundary(){
 
+    return boundary;
+}
 
 //
 // public methods
@@ -258,12 +254,12 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
 void Mesh::createGrid(void) {
 
     // set the rows in each direction
-    nRows(0) = nCell(0)+2*nGhosts+1;
-    nRows(1) = nCell(1)+2*nGhosts+1;
-    nRows(2) = nCell(2)+2*nGhosts+1;
+    nRows.x() = nCell.x()+2*nGhosts+1;
+    nRows.y() = nCell.y()+2*nGhosts+1;
+    nRows.z() = nCell.z()+2*nGhosts+1;
 
     // resize the node vector
-    gridNodes.resize(nRows(0)*nRows(1)*nRows(2));
+    gridNodes.resize(nRows.x()*nRows.y()*nRows.z());
 
     // initialize nodes
     for (size_t i=0;i<gridNodes.size();i++){
@@ -271,19 +267,19 @@ void Mesh::createGrid(void) {
     }
 
     // create a grid
-    for (int k=0; k<nRows(2); k++)
+    for (int k=0; k<nRows.z(); k++)
     {
-        for(int j=0; j<nRows(1); j++)
+        for(int j=0; j<nRows.y(); j++)
         {
-            for(int i=0; i<nRows(0); i++)
+            for(int i=0; i<nRows.x(); i++)
             {
                 // grid node coordinates
-                double x = (i-nGhosts)*cellDim(0)+minLimit(0);
-                double y = (j-nGhosts)*cellDim(1)+minLimit(1);
-                double z = (k-nGhosts)*cellDim(2)+minLimit(2);
+                double x = (i-nGhosts)*cellDim.x()+minLimit.x();
+                double y = (j-nGhosts)*cellDim.y()+minLimit.y();
+                double z = (k-nGhosts)*cellDim.z()+minLimit.z();
 
                 // grid node id
-                int nodeId=(j*nRows(0)+i)+(nRows(1)*nRows(0)*k);
+                int nodeId=(j*nRows.x()+i)+(nRows.y()*nRows.x()*k);
 
                 // set node id
                 gridNodes[nodeId].setId(nodeId);
@@ -293,14 +289,14 @@ void Mesh::createGrid(void) {
             }
         }
     }
+
+    // update boundaries
+    updateBoundaries();
 }
 
-void Mesh::activateNode(int nodesId,bool activeValue) {
+void Mesh::activateNode(int nodeId,bool activeValue) {
 
-    if (nodesId<int(gridNodes.size()))
-    {
-        gridNodes.at(nodesId).setActive(activeValue);
-    }    
+    gridNodes.at(nodeId).setActive(activeValue);
 }
 
 void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
@@ -311,47 +307,58 @@ void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
     }
 }
 
+//
+// private methods
+//
+
 void Mesh::updateBoundaries()
 {
+    // current limits
+    Vector3d minLimitsGhosts = minLimit-nGhosts*cellDim;
+    Vector3d maxLimitsGhosts = Vector3d(nCell.x()*cellDim.x(),nCell.y()*cellDim.y(),nCell.z()*cellDim.z())+nGhosts*cellDim;
+
     for (size_t i = 0; i < gridNodes.size(); ++i)
     {
+        // node coordinates
         Vector3d nodeCoordinates=gridNodes.at(i).getCoordinates();
+        
+        // node id
         int nodeId = gridNodes.at(i).getId();
 
         // plane X0
-        if (nodeCoordinates(0)<=minLimit(0))
+        if (nodeCoordinates.x()<=minLimitsGhosts.x())
         {
-            BoundaryX.at(0).nodesIndex.push_back(nodeId);
+            boundary.planeX0.push_back(nodeId);
         }
 
         // plane Y0
-        else if (nodeCoordinates(1)<=minLimit(1))
+        if (nodeCoordinates.y()<=minLimitsGhosts.y())
         {
-            BoundaryY.at(0).nodesIndex.push_back(nodeId);
+            boundary.planeY0.push_back(nodeId);
         }
         
         // plane Z0
-        else if (nodeCoordinates(2)<=minLimit(2))
+        if (nodeCoordinates.z()<=minLimitsGhosts.z())
         {
-            BoundaryZ.at(0).nodesIndex.push_back(nodeId);
+            boundary.planeZ0.push_back(nodeId);
         }
 
         // plane Xn
-        else if (nodeCoordinates(0)>=maxLimit(0))
+        if (nodeCoordinates.x()>=maxLimitsGhosts.x())
         {
-            BoundaryX.at(1).nodesIndex.push_back(nodeId);
+            boundary.planeXn.push_back(nodeId);
         }
 
         // plane Yn
-        else if (nodeCoordinates(1)>=maxLimit(1))
+        if (nodeCoordinates.y()>=maxLimitsGhosts.y())
         {
-            BoundaryY.at(1).nodesIndex.push_back(nodeId);
+            boundary.planeYn.push_back(nodeId);
         }        
 
         // plane Zn
-        else if (nodeCoordinates(2)>=maxLimit(2))
+        if (nodeCoordinates.z()>=maxLimitsGhosts.z())
         {
-            BoundaryZ.at(1).nodesIndex.push_back(nodeId);
+            boundary.planeZn.push_back(nodeId);
         }
     }
 }
