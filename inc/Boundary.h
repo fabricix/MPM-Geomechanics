@@ -27,12 +27,12 @@ public:
 	
 	BoundaryType type; //!< type of fixities to be applied to the nodes 
 
-	vector<int> planeX0; //<! nodes in plane X0
-	vector<int> planeY0; //<! nodes in plane Y0 
-	vector<int> planeZ0; //<! nodes in plane Z0 
-	vector<int> planeXn; //<! nodes in plane Xn 
-	vector<int> planeYn; //<! nodes in plane Yn 
-	vector<int> planeZn; //<! nodes in plane Zn 
+	vector<int> planeX0; //!< nodes in plane X0
+	vector<int> planeY0; //!< nodes in plane Y0 
+	vector<int> planeZ0; //!< nodes in plane Z0 
+	vector<int> planeXn; //!< nodes in plane Xn 
+	vector<int> planeYn; //!< nodes in plane Yn 
+	vector<int> planeZn; //!< nodes in plane Zn 
 };
 
 #endif /* BOUNDARY_H_ */
