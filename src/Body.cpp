@@ -7,11 +7,19 @@
 
 #include "Body.h"
 
-Body::Body() {
-	// TODO Auto-generated constructor stub
+int Body::totalBodies=0; // initialize the static member
 
+Body::Body() {
+	
+	totalBodies++;
 }
 
 Body::~Body() {
-	// TODO Auto-generated destructor stub
+	
+	totalBodies--;
+}
+
+int Body::getTotalBodies(){
+
+	return totalBodies;
 }

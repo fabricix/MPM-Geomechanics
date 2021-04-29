@@ -8,28 +8,9 @@
 #include "MPM.h"
 
 MPM::MPM() {
-
-
+	// TODO Auto-generated destructor stub
 }
 
 MPM::~MPM() {
 	// TODO Auto-generated destructor stub
-}
-
-void MPM::printMesh()
-{
-	output.writeGrid(mesh);
-}
-
-void MPM::printParticles()
-{
-	output.writeParticles(particles);
-}
-
-void MPM::updateParticleContribution()
-{
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
-		particles.at(i).updateContributionNodes(mesh);
-	}
 }

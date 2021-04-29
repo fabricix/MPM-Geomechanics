@@ -8,17 +8,28 @@
 #ifndef BODY_H_
 #define BODY_H_
 
+#include<vector>
+using std::vector;
+
+#include "Particle.h"
+
 /// \class Body
 /// \brief Represents a body
 class Body {
 
 public:
+	
 	Body();
 	virtual ~Body();
+	
+	static int getTotalBodies(); //<! returns o number of bodies
 
 private:
-	int id; //!< Body identification
-
+	
+	int id; //!< body identification
+	vector<Particle> particles; //!< material points forming the body  
+	
+	static int totalBodies; //!< number of bodies
 };
 
 #endif /* BODY_H_ */

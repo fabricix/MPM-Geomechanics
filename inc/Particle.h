@@ -39,7 +39,8 @@ public:
 	int getId(); //!< returns the particle identification 
 	Vector3d getPosition(); //!< returns the current particle position
 	const vector<Contribution>& getContributionNodes(); //<! returns the contribution list
-
+	static int getTotalParticles(); //<! returns o number of particles created
+	
 	// set methods
 	void setSize(Vector3d); //!< configures particle size in each direction
 
@@ -75,6 +76,8 @@ private:
 	Shape shape; //!< shape function representation
 
 	void initializeValues(); //!< initialization of all data in particle
+	
+	static int totalParticles; //!< total particle in the model
 };
 
 #endif /* PARTICLE_H_ */

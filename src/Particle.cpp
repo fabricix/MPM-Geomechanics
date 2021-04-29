@@ -8,21 +8,29 @@
 #include "Particle.h"
 #include "Mesh.h"
 
+int Particle::totalParticles=0;
+
 Particle::Particle() {
+
+	totalParticles++;
 
 	initializeValues();
 }
 
 Particle::Particle(Vector3d particlePosition) {
 
+	totalParticles++;
+
 	initializeValues();
 	
 	position=particlePosition;
+	
 	initialPosition=particlePosition;
 }
 
 Particle::~Particle() {
-	// TODO Auto-generated destructor stub
+	
+	totalParticles--;
 }
 
 //
@@ -42,6 +50,11 @@ Vector3d Particle::getPosition()
 const vector<Contribution>& Particle::getContributionNodes(){
 
 	return contributionNodes;
+}
+
+int Particle::getTotalParticles()
+{
+	return totalParticles;
 }
 
 void Particle::updateContributionNodes(Mesh & mesh)
