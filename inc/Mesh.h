@@ -16,7 +16,6 @@ using Eigen::Vector3d;
 using Eigen::Vector3i;
 
 #include "Node.h"
-#include "Particle.h"
 #include "Boundary.h"
 
 class Particle;
@@ -47,7 +46,7 @@ public:
 
     // get methods
     int getNumNodes(); //!< returns total nodes in mesh
-    const vector<Node> & getNodes(); //!< returns nodes in mesh
+    vector<Node> * getNodes(); //!< returns nodes in mesh
     Vector3d getCellDimension(); //!< returns the cells dimension in each direction
     Vector3i getNumCells(); //!< returns total cells in the mesh without ghosts
     Vector3i getTotalCells(); //!< returns total cells including ghosts

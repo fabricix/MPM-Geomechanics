@@ -61,3 +61,8 @@ bool Node::getActive(){
 
 	return active;
 }
+
+void Node::addMass(double dm){
+
+	mass+=dm;
+}

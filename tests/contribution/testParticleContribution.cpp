@@ -55,13 +55,13 @@ int main(int argc, char **argv)
 		outputfile.open ("particle"+to_string(i)+".csv");
 		outputfile<<"node,w,gx,gy,gz\n";
 
-		for (size_t j=0; j<iparticle.getContributionNodes().size(); j++){
+		for (size_t j=0; j<iparticle.getContributionNodes()->size(); j++){
 
-			int nodeId = iparticle.getContributionNodes().at(j).nodeId;
-			double weight = iparticle.getContributionNodes().at(j).weight;
-			double gradiX = iparticle.getContributionNodes().at(j).gradientX;
-			double gradiY = iparticle.getContributionNodes().at(j).gradientY;
-			double gradiZ = iparticle.getContributionNodes().at(j).gradientZ;
+			int nodeId = iparticle.getContributionNodes()->at(j).nodeId;
+			double weight = iparticle.getContributionNodes()->at(j).weight;
+			double gradiX = iparticle.getContributionNodes()->at(j).gradientX;
+			double gradiY = iparticle.getContributionNodes()->at(j).gradientY;
+			double gradiZ = iparticle.getContributionNodes()->at(j).gradientZ;
 			outputfile<<nodeId<<","<<weight<<","<<gradiX<<","<<gradiY<<","<<gradiZ<<"\n";
 		}
 		outputfile.close();

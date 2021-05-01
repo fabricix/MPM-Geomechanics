@@ -244,9 +244,9 @@ void Output::writeGrid(Mesh& mesh, CellType gridType)
     
     // node position
     gridFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-    vector<Node>inodes = mesh.getNodes();
+    vector<Node>* inodes = mesh.getNodes();
     for (int i = 0; i < nPoints; ++i) {
-        Vector3d pos=inodes.at(i).getCoordinates();
+        Vector3d pos=inodes->at(i).getCoordinates();
         gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
     }
     gridFile<<"</DataArray>\n";
@@ -260,14 +260,14 @@ void Output::writeGrid(Mesh& mesh, CellType gridType)
     // local ID of nodes
     gridFile<<"<DataArray type=\"Float32\" Name=\"Id-MPM\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        gridFile<<scientific<<inodes.at(i).getId()<<"\n";
+        gridFile<<scientific<<inodes->at(i).getId()<<"\n";
     }
     gridFile<<"</DataArray>\n";
 
     // active nodes
     gridFile<<"<DataArray type=\"Float32\" Name=\"Active\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
-        gridFile<<scientific<<(inodes.at(i).getActive())<<"\n";
+        gridFile<<scientific<<(inodes->at(i).getActive())<<"\n";
     }
     gridFile<<"</DataArray>\n";
 

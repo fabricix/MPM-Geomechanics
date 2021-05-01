@@ -12,6 +12,7 @@
 #include "Body.h"
 #include "Model.h"
 #include "Output.h"
+#include "Interpolation.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -29,6 +30,7 @@ public:
 	Mesh mesh; //!< grid mesh
 	vector<Body> bodies; //!< bodies discretized by material points
 	Output output; //!< output operations
+	Interpolation interpolation; //!< interpolation operations
 };
 
 #endif /* MPM_H_ */

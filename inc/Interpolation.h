@@ -8,6 +8,12 @@
 #ifndef INTERPOLATION_H_
 #define INTERPOLATION_H_
 
+#include<vector>
+using std::vector;
+
+class Mesh;
+class Particle;
+
 /// \class Interpolation
 /// \brief Represents the interpolation operations in the MPM.
 /// 
@@ -17,6 +23,7 @@ class Interpolation {
 public:
 	Interpolation();
 	virtual ~Interpolation();
+	bool interpolateMassToNodes(Mesh&, vector<Particle>&);
 };
 
 #endif /* INTERPOLATION_H_ */

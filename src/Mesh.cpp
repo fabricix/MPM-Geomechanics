@@ -13,6 +13,7 @@ using std::floor;
 
 #include "Mesh.h"
 #include "Warning.h"
+#include "Particle.h"
 
 Mesh::Mesh() {
 
@@ -87,9 +88,9 @@ Vector3i Mesh::getTotalCells() {
     return Vector3i(nCell.x()+nGhosts*2, nCell.y()+nGhosts*2, nCell.z()+nGhosts*2);
 }
 
-const vector<Node> & Mesh::getNodes() {
+vector<Node>* Mesh::getNodes() {
 
-    return gridNodes;
+    return &gridNodes;
 }
 
 int Mesh::getNumNodes() {
