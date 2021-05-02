@@ -37,8 +37,9 @@ public:
 
 	// get methods
 	int getId(); //!< returns the particle identification 
+	double getMass(); //!< returns the mass of the particle
 	Vector3d getPosition(); //!< returns the current particle position
-	const vector<Contribution>& getContributionNodes(); //<! returns the contribution list
+	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 	static int getTotalParticles(); //<! returns o number of particles created
 	
 	// set methods

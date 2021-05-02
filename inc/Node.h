@@ -30,6 +30,8 @@ public:
 	bool getActive();
 	Vector3d getCoordinates();
 
+	void addMass(double);
+
 private:
 
 	bool active; //!< is active node
