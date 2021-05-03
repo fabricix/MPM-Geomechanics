@@ -10,6 +10,7 @@
 
 #include "Mesh.h"
 #include "Particle.h"
+#include "Body.h"
 
 /// \class Output
 /// \brief Operations to write the results and the mesh for its visualization.
@@ -25,6 +26,7 @@ public:
 	virtual ~Output(); //!< default destructor
 	void writeGrid(Mesh&,CellType=CellType::CELLS); //!< write the grid mesh into a vtu file.
 	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
+	void writeBody(Body&, double=0.0); //!< write the particles in a body.
 
 private:
 

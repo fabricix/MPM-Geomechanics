@@ -22,7 +22,14 @@ public:
 	Body();
 	virtual ~Body();
 	
+	bool createCuboid(Mesh& mesh, Vector3d, Vector3d); //<! creates a rectangle 
+
+	int getId(); //<! returns the body identification
+
+	vector<Particle>& getParticles(); //<! returns particle in the body
+
 	static int getTotalBodies(); //<! returns o number of bodies
+	
 
 private:
 	

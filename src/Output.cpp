@@ -59,22 +59,22 @@ Output::~Output() {
     // TODO Auto-generated destructor stub
 }
 
-void Output::defineEdian()
-{
+void Output::defineEdian(){
+
     int16_t i = 1;
     int8_t *p = (int8_t*) &i;
     Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
 }
 
-double Output::checkTolerance(double val)
-{
+double Output::checkTolerance(double val){
+
     if (val==0.0) return val;
     if (val<0.0) return val>(-OutputTolerance::deltaValue)?(-OutputTolerance::deltaValue):val;
     return val<OutputTolerance::deltaValue?OutputTolerance::deltaValue:val;
 }
 
-void Output::createGridFolder()
-{
+void Output::createGridFolder(){
+
     if (Folders::gridFolderExist)
         return;
     
@@ -92,8 +92,8 @@ void Output::createGridFolder()
         Folders::gridFolderExist=true;
 }
 
-void Output::createParticleFolder()
-{
+void Output::createParticleFolder(){
+
     if (Folders::particleFolderExist)
         return;
     
@@ -111,8 +111,8 @@ void Output::createParticleFolder()
         Folders::particleFolderExist=true;
 }
 
-void Output::writeParticles(vector<Particle>& particles, double time)
-{
+void Output::writeParticles(vector<Particle>& particles, double time){
+
     // define edian
     if(Folders::edian==""){
         defineEdian();
@@ -209,8 +209,8 @@ void Output::writeParticles(vector<Particle>& particles, double time)
     partFile.close();
 }
 
-void Output::writeGrid(Mesh& mesh, CellType gridType)
-{
+void Output::writeGrid(Mesh& mesh, CellType gridType){
+
     // define edian
     if(Folders::edian==""){
         defineEdian();
@@ -335,4 +335,9 @@ void Output::writeGrid(Mesh& mesh, CellType gridType)
 
     // close file
     gridFile.close();
+}
+
+void Output::writeBody(Body& body, double time){
+
+    writeParticles(body.getParticles(),time);
 }
