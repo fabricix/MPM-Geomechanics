@@ -18,7 +18,7 @@ using std::floor;
 Mesh::Mesh() {
 
 	nGhosts=0;
-	nCell.setZero();
+	nCells.setZero();
     cellDim.setZero();
     minLimit.setZero();
     maxLimit.setZero();
@@ -50,7 +50,7 @@ void Mesh::setNumCells(int nx, int ny, int nz) {
         Warning::printMessage("Number of cells must be greater that 0");
     }
 
-    nCell=Vector3i(nx,ny,nz);
+    nCells=Vector3i(nx,ny,nz);
 }
 
 void Mesh::setNumGhosts(int ng) {
@@ -80,12 +80,12 @@ Vector3d Mesh::getCellDimension() {
 
 Vector3i Mesh::getNumCells() {
 
-    return nCell;
+    return nCells;
 }
 
 Vector3i Mesh::getTotalCells() { 
    
-    return Vector3i(nCell.x()+nGhosts*2, nCell.y()+nGhosts*2, nCell.z()+nGhosts*2);
+    return Vector3i(nCells.x()+nGhosts*2, nCells.y()+nGhosts*2, nCells.z()+nGhosts*2);
 }
 
 vector<Node>* Mesh::getNodes() {
@@ -255,9 +255,9 @@ const Boundary& Mesh::getBoundary(){
 void Mesh::createGrid(void) {
 
     // set the rows in each direction
-    nRows.x() = nCell.x()+2*nGhosts+1;
-    nRows.y() = nCell.y()+2*nGhosts+1;
-    nRows.z() = nCell.z()+2*nGhosts+1;
+    nRows.x() = nCells.x()+2*nGhosts+1;
+    nRows.y() = nCells.y()+2*nGhosts+1;
+    nRows.z() = nCells.z()+2*nGhosts+1;
 
     // resize the node vector
     gridNodes.resize(nRows.x()*nRows.y()*nRows.z());
@@ -316,7 +316,7 @@ void Mesh::updateBoundaries()
 {
     // current limits
     Vector3d minLimitsGhosts = minLimit-nGhosts*cellDim;
-    Vector3d maxLimitsGhosts = Vector3d(nCell.x()*cellDim.x(),nCell.y()*cellDim.y(),nCell.z()*cellDim.z())+nGhosts*cellDim;
+    Vector3d maxLimitsGhosts = Vector3d(nCells.x()*cellDim.x(),nCells.y()*cellDim.y(),nCells.z()*cellDim.z())+nGhosts*cellDim;
 
     for (size_t i = 0; i < gridNodes.size(); ++i)
     {

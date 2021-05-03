@@ -66,3 +66,8 @@ void Node::addMass(double dm){
 
 	mass+=dm;
 }
+
+double Node::getMass()
+{
+    return mass;
+}

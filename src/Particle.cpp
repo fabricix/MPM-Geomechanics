@@ -74,7 +74,7 @@ void Particle::updateContributionNodes(Mesh & mesh)
 	for (size_t i = 0; i < nodesId.size(); ++i)
 	{	
 		// set the node id
-		contributionNodes.at(i).nodeId=nodesId.at(i);
+		contributionNodes.at(i).setNodeId(nodesId.at(i));
 		
 		// get the node
 		Node iNode = gNodes->at(nodesId.at(i));
@@ -82,11 +82,16 @@ void Particle::updateContributionNodes(Mesh & mesh)
 		// update the shape functions and gradients
 		shape.updateGimp(position,iNode.getCoordinates(),mesh.getCellDimension(), size);
 
-		// update contribution
-		contributionNodes.at(i).weight   =shape.Sx*shape.Sy*shape.Sz;
-		contributionNodes.at(i).gradientX=shape.Gx*shape.Sy*shape.Sz;
-		contributionNodes.at(i).gradientY=shape.Sx*shape.Gy*shape.Sz;
-		contributionNodes.at(i).gradientZ=shape.Sx*shape.Sy*shape.Gz;
+		// update weight
+		contributionNodes.at(i).setWeight(shape.Sx*shape.Sy*shape.Sz);
+
+		// update gradients
+		Vector3d gradients;
+		gradients.x()=shape.Gx*shape.Sy*shape.Sz;
+		gradients.y()=shape.Sx*shape.Gy*shape.Sz;
+		gradients.z()=shape.Sx*shape.Sy*shape.Gz;
+
+		contributionNodes.at(i).setGradients(gradients);
 	}
 }
 
@@ -94,6 +99,12 @@ void Particle::setSize(Vector3d pSize){
 
 	size=pSize;
 }
+
+void Particle::setMass(double m)
+{
+	mass=m;
+}
+
 //
 // private methods
 // 

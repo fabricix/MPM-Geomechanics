@@ -29,6 +29,7 @@ public:
 	int getId();
 	bool getActive();
 	Vector3d getCoordinates();
+	double getMass();
 
 	void addMass(double);
 

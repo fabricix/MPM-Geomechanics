@@ -61,7 +61,7 @@ private:
        
     int nGhosts; //!< number of ghost cells
 
-    Vector3i nCell; //!< number of cells in each direction without ghost
+    Vector3i nCells; //!< number of cells in each direction without ghost
     Vector3i nRows; //!< number of rows in each direction
     
     Vector3d cellDim; //!< cell dimension in each direction

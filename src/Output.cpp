@@ -258,7 +258,7 @@ void Output::writeGrid(Mesh& mesh, CellType gridType)
     gridFile<<"<PointData>\n";
     
     // local ID of nodes
-    gridFile<<"<DataArray type=\"Float32\" Name=\"Id-MPM\" Format=\"ascii\">\n";
+    gridFile<<"<DataArray type=\"Float32\" Name=\"Id\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
         gridFile<<scientific<<inodes->at(i).getId()<<"\n";
     }
@@ -268,6 +268,13 @@ void Output::writeGrid(Mesh& mesh, CellType gridType)
     gridFile<<"<DataArray type=\"Float32\" Name=\"Active\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
         gridFile<<scientific<<(inodes->at(i).getActive())<<"\n";
+    }
+    gridFile<<"</DataArray>\n";
+
+    // nodal mass
+    gridFile<<"<DataArray type=\"Float32\" Name=\"Mass\" Format=\"ascii\">\n";
+    for (int i = 0; i < nPoints; ++i) {
+        gridFile<<scientific<<(inodes->at(i).getMass())<<"\n";
     }
     gridFile<<"</DataArray>\n";
 

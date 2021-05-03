@@ -7,8 +7,8 @@
 
 #include "Contribution.h"
 
-Contribution::Contribution() {
-	// TODO Auto-generated constructor stub
+Contribution::Contribution()
+:nodeId(0),weight(0.0),gradient(0.0,0.0,0.0) {
 
 }
 
@@ -16,3 +16,31 @@ Contribution::~Contribution() {
 	// TODO Auto-generated destructor stub
 }
 
+int Contribution::getNodeId(){
+
+	return nodeId;
+}
+
+double Contribution::getWeight(){
+
+	return weight;
+}
+Vector3d Contribution::getGradients(){
+
+	return gradient;
+}
+
+void Contribution::setNodeId(int nid){
+
+	nodeId=nid;
+}
+
+void Contribution::setWeight(double w){
+
+	weight=w;
+}
+
+void Contribution::setGradients(Vector3d grad){
+
+	gradient=grad;
+}

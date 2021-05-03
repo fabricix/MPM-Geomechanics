@@ -44,6 +44,7 @@ public:
 	
 	// set methods
 	void setSize(Vector3d); //!< configures particle size in each direction
+	void setMass(double); //!< configures particle mass
 
 private:
 

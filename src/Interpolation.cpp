@@ -33,7 +33,7 @@ bool Interpolation::interpolateMassToNodes(Mesh& mesh, vector<Particle>& particl
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
 			// add the weighted particle mass.
-			nodes->at(contribution->at(j).nodeId).addMass(particles.at(i).getMass()*contribution->at(j).weight);
+			nodes->at(contribution->at(j).getNodeId()).addMass(particles.at(i).getMass()*contribution->at(j).getWeight());
 		}
 	}
 	return true;
