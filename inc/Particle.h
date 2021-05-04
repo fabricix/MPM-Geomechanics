@@ -38,8 +38,11 @@ public:
 	// get methods
 	int getId(); //!< returns the particle identification 
 	double getMass(); //!< returns the mass of the particle
+	Vector3d getMomentum(); //!< returns the momentum of the particle
 	Vector3d getPosition(); //!< returns the current particle position
 	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
+	Matrix3d getStress(); //!< returns the current particle stress tensor
+	double getDensity(); //!< returns the current particle density
 	static int getTotalParticles(); //<! returns o number of particles created
 	
 	// set methods

@@ -62,12 +62,26 @@ bool Node::getActive(){
 	return active;
 }
 
+double Node::getMass()
+{
+    return mass;
+}
+
+//
+// add methods
+//
+
 void Node::addMass(double dm){
 
 	mass+=dm;
 }
 
-double Node::getMass()
-{
-    return mass;
+void Node::addMomentum(Vector3d dp){
+
+    momentum+=dp;
+}
+
+void Node::addInternalForce(Vector3d fint){
+
+    internalForce+=fint;
 }

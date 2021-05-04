@@ -94,36 +94,43 @@ bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2) {
                 pt1.x() += (dx*0.25);
                 pt1.y() += (dy*0.25);
                 pt1.z() += (dz*0.25);
-				// particle 2
+				
+                // particle 2
                 pt2.x() -= (dx*0.25);
                 pt2.y() += (dy*0.25);
                 pt2.z() += (dz*0.25);
+                
                 // particle 3
                 pt3.x() += (dx*0.25);
                 pt3.y() -= (dy*0.25);
                 pt3.z() += (dz*0.25);
-				// particle 4
+				
+                // particle 4
                 pt4.x() -= (dx*0.25);
                 pt4.y() -= (dy*0.25);
                 pt4.z() += (dz*0.25);
-				// particle 5
+				
+                // particle 5
                 pt5.x() += (dx*0.25);
                 pt5.y() += (dy*0.25);
                 pt5.z() -= (dz*0.25);
-				// particle 6
+				
+                // particle 6
                 pt6.x() -= (dx*0.25);
                 pt6.y() += (dy*0.25);
                 pt6.z() -= (dz*0.25);
+                
                 // particle 7
                 pt7.x() += (dx*0.25);
                 pt7.y() -= (dy*0.25);
                 pt7.z() -= (dz*0.25);
+                
                 // particle 8
                 pt8.x() -= (dx*0.25);
                 pt8.y() -= (dy*0.25);
                 pt8.z() -= (dz*0.25);
 
-                // push particles in the body's particle vector
+                // push all particles in the body's particle vector
                 particles.push_back(Particle(pt1));
                 particles.push_back(Particle(pt2));
                 particles.push_back(Particle(pt3));
@@ -135,7 +142,5 @@ bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2) {
             }
         }   
     }
-
-
 	return true;
 }

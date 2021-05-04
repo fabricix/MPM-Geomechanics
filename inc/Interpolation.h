@@ -23,7 +23,9 @@ class Interpolation {
 public:
 	Interpolation();
 	virtual ~Interpolation();
-	bool interpolateMassToNodes(Mesh&, vector<Particle>&);
+	void interpolateMassToNodes(Mesh&, vector<Particle>&);
+	void interpolateMomentumToNodes(Mesh&, vector<Particle>&);
+	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&);
 };
 
 #endif /* INTERPOLATION_H_ */

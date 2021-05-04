@@ -32,6 +32,8 @@ public:
 	double getMass();
 
 	void addMass(double);
+	void addMomentum(Vector3d);
+	void addInternalForce(Vector3d);
 
 private:
 
@@ -43,6 +45,7 @@ private:
 	Vector3d momentum; //!< nodal momentum
 	Vector3d force; //!<  nodal total force
 	Vector3d acceleration; //!< nodal acceleration
+	Vector3d internalForce; //!< nodal internal force
 };
 
 #endif /* NODE_H_ */

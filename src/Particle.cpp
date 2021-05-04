@@ -62,6 +62,21 @@ int Particle::getTotalParticles()
 	return totalParticles;
 }
 
+Vector3d Particle::getMomentum(){
+
+	return momentum;
+}
+
+Matrix3d Particle::getStress(){
+
+	return stress;
+}
+
+double Particle::getDensity(){
+
+	return density;
+}
+
 void Particle::updateContributionNodes(Mesh & mesh)
 {
 	// nodes that the particle contributed
