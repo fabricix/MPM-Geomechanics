@@ -5,6 +5,10 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
+#include<string>
+using std::string;
+using std::to_string;
+
 #include "Particle.h"
 #include "Mesh.h"
 
@@ -12,20 +16,39 @@ int Particle::totalParticles=0;
 
 Particle::Particle() {
 
-	totalParticles++;
-
 	initializeValues();
+
+	setId(totalParticles);
+
+	totalParticles++;
 }
 
-Particle::Particle(Vector3d particlePosition) {
-
-	totalParticles++;
+Particle::Particle(Vector3d position, Material* material) {
 
 	initializeValues();
 	
-	position=particlePosition;
+	setId(totalParticles);
+
+	setPosition(position);
 	
-	initialPosition=particlePosition;
+	setInitialPosition(position);
+	
+	setMaterial(material);
+
+	totalParticles++;
+}
+
+Particle::Particle(Vector3d position) {
+
+	initializeValues();
+	
+	setId(totalParticles);
+
+	setPosition(position);
+	
+	setInitialPosition(position);
+
+	totalParticles++;
 }
 
 Particle::~Particle() {
@@ -34,7 +57,7 @@ Particle::~Particle() {
 }
 
 //
-// publics methods
+// get methods
 //
 
 int Particle::getId()
@@ -74,8 +97,51 @@ Matrix3d Particle::getStress(){
 
 double Particle::getDensity(){
 
-	return density;
+	return material->getDensity();
 }
+
+int Particle::getMaterialId(){
+
+	return material->getId();
+}
+
+//
+// set methods
+//
+
+void Particle::setSize(Vector3d pSize){
+
+	size=pSize;
+}
+
+void Particle::setMass(double m)
+{
+	mass=m;
+}
+
+void Particle::setPosition(Vector3d x)
+{
+	position=x;
+}
+
+void Particle::setInitialPosition(Vector3d xo)
+{
+	initialPosition=xo;
+}
+
+void Particle::setId(int i)
+{
+	id=i;
+}
+
+void Particle::setMaterial(Material* mat)
+{
+	material=mat;
+}
+
+//
+// public methods
+//
 
 void Particle::updateContributionNodes(Mesh & mesh)
 {
@@ -110,16 +176,6 @@ void Particle::updateContributionNodes(Mesh & mesh)
 	}
 }
 
-void Particle::setSize(Vector3d pSize){
-
-	size=pSize;
-}
-
-void Particle::setMass(double m)
-{
-	mass=m;
-}
-
 //
 // private methods
 // 
@@ -127,7 +183,6 @@ void Particle::setMass(double m)
 void Particle::initializeValues(){
 
 	id=0;
-	materialId=0;
 	cellId=0;
 	bodyId=0;
 
@@ -153,4 +208,5 @@ void Particle::initializeValues(){
 
 	contributionNodes.clear();
 	contributionNodes.resize(ModelSetup::getContributionNodesNum());
+	material=NULL;
 }

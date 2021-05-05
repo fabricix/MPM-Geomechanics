@@ -5,6 +5,9 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
+#include<string>
+using std::to_string;
+
 #include <cmath>
 using std::pow;
 
@@ -13,14 +16,24 @@ using Eigen::Vector3d;
 using Eigen::Vector3i;
 
 #include "Body.h"
+#include "Warning.h"
 
-int Body::totalBodies=0; // initialize the static member
+//
+// static members
+//
+int Body::totalBodies=0; //!< initialize total materials
+
+vector<Material> Body::materials; //!< materials vector
+
+//
+// public methods
+//
 
 Body::Body() {
 	
-	totalBodies++;
+    setId(totalBodies);
 
-	id=totalBodies;
+	totalBodies++;
 }
 
 Body::~Body() {
@@ -28,14 +41,32 @@ Body::~Body() {
 	totalBodies--;
 }
 
+//
+// set methods
+//
+
+void Body::setId(int bid){
+
+    id=bid;
+}
+
+void Body::setMaterialVector(Material material)
+{
+	materials.push_back(material);
+}
+
+// 
+// get methods
+//
+
 int Body::getTotalBodies(){
 
-	return totalBodies;
+    return totalBodies;
 }
 
 int Body::getId(){
 
-	return id;
+    return id;
 }
 
 vector<Particle>& Body::getParticles(){
@@ -43,7 +74,36 @@ vector<Particle>& Body::getParticles(){
 	return particles;
 }
 
-bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2) {
+vector<Material>* Body::getMaterials()
+{
+    return &materials;
+}
+
+//
+// public methods
+//
+
+bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2, int materialId)
+{   
+    bool control = false;
+
+    for (size_t i = 0; i < Body::materials.size(); ++i)
+    {
+        if (Body::materials.at(i).getId()==materialId)
+        {
+            control = createCuboid(mesh,pointP1,pointP2,Body::materials.at(i));
+        }
+    }
+
+    if (!control)
+    {
+        Warning::printMessage("The material with Id "+to_string(materialId)+" was not found during body creation.");
+    }
+
+    return control;
+}
+
+bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2, Material& material) {
 
 	// cell dimension
 	Vector3d cellDimension = mesh.getCellDimension();
@@ -131,14 +191,14 @@ bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2) {
                 pt8.z() -= (dz*0.25);
 
                 // push all particles in the body's particle vector
-                particles.push_back(Particle(pt1));
-                particles.push_back(Particle(pt2));
-                particles.push_back(Particle(pt3));
-                particles.push_back(Particle(pt4));
-                particles.push_back(Particle(pt5));
-                particles.push_back(Particle(pt6));
-                particles.push_back(Particle(pt7));
-                particles.push_back(Particle(pt8));
+                particles.push_back(Particle(pt1,&material));
+                particles.push_back(Particle(pt2,&material));
+                particles.push_back(Particle(pt3,&material));
+                particles.push_back(Particle(pt4,&material));
+                particles.push_back(Particle(pt5,&material));
+                particles.push_back(Particle(pt6,&material));
+                particles.push_back(Particle(pt7,&material));
+                particles.push_back(Particle(pt8,&material));
             }
         }   
     }

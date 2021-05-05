@@ -160,9 +160,16 @@ void Output::writeParticles(vector<Particle>& particles, double time){
     partFile<<"<PointData>\n";
     
     // particle Id
-    partFile<<"<DataArray type=\"Float32\" Name=\"particleId\" Format=\"ascii\">\n";
+    partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
     for (int i = 0; i < nPoints; ++i) {
         partFile<<scientific<<particles.at(i).getId()<<"\n";
+    }
+    partFile<<"</DataArray>\n";
+
+    // particle material Id
+    partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
+    for (int i = 0; i < nPoints; ++i) {
+        partFile<<scientific<<particles.at(i).getMaterialId()<<"\n";
     }
     partFile<<"</DataArray>\n";
 

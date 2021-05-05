@@ -43,8 +43,8 @@ private:
 	
 	Vector3d coordinates; //!< node coordinates
 	Vector3d momentum; //!< nodal momentum
-	Vector3d force; //!<  nodal total force
 	Vector3d acceleration; //!< nodal acceleration
+	Vector3d force; //!<  nodal total force
 	Vector3d internalForce; //!< nodal internal force
 };
 

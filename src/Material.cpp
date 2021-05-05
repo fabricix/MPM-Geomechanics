@@ -7,12 +7,46 @@
 
 #include "Material.h"
 
-Material::Material() {
-	// TODO Auto-generated constructor stub
-
+Material::Material(int id, double density, MaterialType type) {
+	
+	setDensity(density);
+	setId(id);
+	setType(type);
 }
 
 Material::~Material() {
-	// TODO Auto-generated destructor stub
+
 }
 
+//
+// get methods
+//
+
+int Material::getId(){
+
+	return id;
+}
+
+double Material::getDensity(){
+
+	return density;
+}
+
+//
+// set methods
+//
+
+void Material::setId(int mid){
+
+	id=mid;
+}
+
+void Material::setDensity(double d){
+
+	density=d;
+}
+
+void Material::setType(MaterialType mt){
+
+	type=mt;
+}

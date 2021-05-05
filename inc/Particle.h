@@ -16,6 +16,7 @@ using Eigen::Vector3d;
 #include "Mesh.h"
 #include "Model.h"
 #include "Shape.h"
+#include "Material.h"
 
 #include <vector>
 
@@ -30,7 +31,8 @@ class Particle {
 public:
 
 	Particle(); //!< default constructor
-	Particle(Vector3d); //!< create a particle in a coordinate
+	Particle(Vector3d); //!< create a particle
+	Particle(Vector3d, Material*); //!< create a particle
 	virtual ~Particle(); //!< default destructor
 
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
@@ -43,17 +45,22 @@ public:
 	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 	Matrix3d getStress(); //!< returns the current particle stress tensor
 	double getDensity(); //!< returns the current particle density
-	static int getTotalParticles(); //<! returns o number of particles created
+	int getMaterialId(); //!< returns the particle's material
 	
 	// set methods
 	void setSize(Vector3d); //!< configures particle size in each direction
 	void setMass(double); //!< configures particle mass
 	void setVolume(double); //!< configures particle volume
+	void setMaterial(Material*); //!< configures the material in the particle
+	void setInitialPosition(Vector3d); //!< configures the initial position
+	void setPosition(Vector3d); //!< configures the current position
+
+	// static methods
+	static int getTotalParticles(); //<! returns o number of particles created
 
 private:
 
 	int id;	//!< particle id
-	int materialId;	//!< material id
 	int cellId; //!< cell id
 	int bodyId; //!< body id
 
@@ -81,8 +88,11 @@ private:
 
 	Shape shape; //!< shape function representation
 
+	Material* material; //!< material pointer
+
 	void initializeValues(); //!< initialization of all data in particle
-	
+	void setId(int); //!< configures the particle id
+
 	static int totalParticles; //!< total particle in the model
 };
 
