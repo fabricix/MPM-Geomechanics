@@ -105,6 +105,11 @@ int Particle::getMaterialId(){
 	return material->getId();
 }
 
+Vector3d Particle::getExternalForce()
+{
+	return externalForce;
+}
+
 //
 // set methods
 //

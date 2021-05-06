@@ -21,8 +21,9 @@ Node::Node() {
 
     coordinates.setZero();
     momentum.setZero();
-    force.setZero();
     acceleration.setZero();
+    externalForce.setZero();
+    internalForce.setZero();
 }
 
 //
@@ -54,6 +55,7 @@ Vector3d Node::getCoordinates(){
 }
 
 int Node::getId(){
+
     return id;
 }
 
@@ -81,7 +83,12 @@ void Node::addMomentum(Vector3d dp){
     momentum+=dp;
 }
 
-void Node::addInternalForce(Vector3d fint){
+void Node::addInternalForce(Vector3d dfint){
 
-    internalForce+=fint;
+    internalForce+=dfint;
+}
+
+void Node::addExternalForce(Vector3d dfext){
+
+    externalForce+=dfext;
 }

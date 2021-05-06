@@ -26,6 +26,7 @@ public:
 	void interpolateMassToNodes(Mesh&, vector<Particle>&);
 	void interpolateMomentumToNodes(Mesh&, vector<Particle>&);
 	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&);
+	void interpolateExternalForceToNodes(Mesh&, vector<Particle>&);
 };
 
 #endif /* INTERPOLATION_H_ */

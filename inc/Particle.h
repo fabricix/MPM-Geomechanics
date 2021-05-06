@@ -42,6 +42,7 @@ public:
 	double getMass(); //!< returns the mass of the particle
 	Vector3d getMomentum(); //!< returns the momentum of the particle
 	Vector3d getPosition(); //!< returns the current particle position
+	Vector3d getExternalForce(); //!< returns the external force in particle
 	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 	Matrix3d getStress(); //!< returns the current particle stress tensor
 	double getDensity(); //!< returns the current particle density

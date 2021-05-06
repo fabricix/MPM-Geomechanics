@@ -34,6 +34,7 @@ public:
 	void addMass(double);
 	void addMomentum(Vector3d);
 	void addInternalForce(Vector3d);
+	void addExternalForce(Vector3d);
 
 private:
 
@@ -44,7 +45,7 @@ private:
 	Vector3d coordinates; //!< node coordinates
 	Vector3d momentum; //!< nodal momentum
 	Vector3d acceleration; //!< nodal acceleration
-	Vector3d force; //!<  nodal total force
+	Vector3d externalForce; //!<  total external force
 	Vector3d internalForce; //!< nodal internal force
 };
 

@@ -31,7 +31,7 @@ vector<Material> Body::materials; //!< materials vector
 
 Body::Body() {
 	
-    setId(totalBodies);
+	setId(totalBodies);
 
 	totalBodies++;
 }
@@ -47,7 +47,7 @@ Body::~Body() {
 
 void Body::setId(int bid){
 
-    id=bid;
+	id=bid;
 }
 
 void Body::setMaterialVector(Material material)
@@ -61,12 +61,12 @@ void Body::setMaterialVector(Material material)
 
 int Body::getTotalBodies(){
 
-    return totalBodies;
+	return totalBodies;
 }
 
 int Body::getId(){
 
-    return id;
+	return id;
 }
 
 vector<Particle>& Body::getParticles(){
@@ -76,7 +76,7 @@ vector<Particle>& Body::getParticles(){
 
 vector<Material>* Body::getMaterials()
 {
-    return &materials;
+	return &materials;
 }
 
 //
@@ -85,22 +85,22 @@ vector<Material>* Body::getMaterials()
 
 bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2, int materialId)
 {   
-    bool control = false;
+	bool control = false;
 
-    for (size_t i = 0; i < Body::materials.size(); ++i)
-    {
-        if (Body::materials.at(i).getId()==materialId)
-        {
-            control = createCuboid(mesh,pointP1,pointP2,Body::materials.at(i));
-        }
-    }
+	for (size_t i = 0; i < Body::materials.size(); ++i)
+	{
+		if (Body::materials.at(i).getId()==materialId)
+		{
+			control = createCuboid(mesh,pointP1,pointP2,Body::materials.at(i));
+		}
+	}
 
-    if (!control)
-    {
-        Warning::printMessage("The material with Id "+to_string(materialId)+" was not found during body creation.");
-    }
+	if (!control)
+	{
+		Warning::printMessage("The material with Id "+to_string(materialId)+" was not found during body creation.");
+	}
 
-    return control;
+	return control;
 }
 
 bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2, Material& material) {
@@ -121,86 +121,86 @@ bool Body::createCuboid(Mesh& mesh, Vector3d pointP1, Vector3d pointP2, Material
 	// double particleVolume=particleSize.x()*particleSize.y()*particleSize.z();
 	
 	// number of cells in bounding box
-    Vector3d nCellsBoundingBox;
-    nCellsBoundingBox.x()=(pointP2.x()-pointP1.x())/cellDimension.x();
-    nCellsBoundingBox.y()=(pointP2.y()-pointP1.y())/cellDimension.y();
-    nCellsBoundingBox.z()=(pointP2.z()-pointP1.z())/cellDimension.z();
-    
-    // use a dx,dy,dz notation
-    double dx = cellDimension.x();
-    double dy = cellDimension.y();
-    double dz = cellDimension.z();
+	Vector3d nCellsBoundingBox;
+	nCellsBoundingBox.x()=(pointP2.x()-pointP1.x())/cellDimension.x();
+	nCellsBoundingBox.y()=(pointP2.y()-pointP1.y())/cellDimension.y();
+	nCellsBoundingBox.z()=(pointP2.z()-pointP1.z())/cellDimension.z();
+	
+	// use a dx,dy,dz notation
+	double dx = cellDimension.x();
+	double dy = cellDimension.y();
+	double dz = cellDimension.z();
 
 	// create the particles and put it in the space
-    for (int i = 0; i < nCellsBoundingBox.x(); ++i)
-    {
-        for (int j = 0; j < nCellsBoundingBox.y(); ++j)
-        {
-            for (int k = 0; k < nCellsBoundingBox.z(); ++k)
-            {   
-            	// cell points
-                Vector3d pt1 = pointP1+Vector3d(dx*i,dy*j,dz*k);
-                Vector3d pt2 = pt1 + Vector3d(dx,0.0,0.0);
-                Vector3d pt3 = pt1 + Vector3d(0.0,dy,0.0);
-                Vector3d pt4 = pt2 + Vector3d(0.0,dy,0.0);
-                Vector3d pt5 = pt1 + Vector3d(0.0,0.0,dz);
-                Vector3d pt6 = pt2 + Vector3d(0.0,0.0,dz);
-                Vector3d pt7 = pt3 + Vector3d(0.0,0.0,dz);
-                Vector3d pt8 = pt4 + Vector3d(0.0,0.0,dz);
+	for (int i = 0; i < nCellsBoundingBox.x(); ++i)
+	{
+		for (int j = 0; j < nCellsBoundingBox.y(); ++j)
+		{
+			for (int k = 0; k < nCellsBoundingBox.z(); ++k)
+			{   
+				// cell points
+				Vector3d pt1 = pointP1+Vector3d(dx*i,dy*j,dz*k);
+				Vector3d pt2 = pt1 + Vector3d(dx,0.0,0.0);
+				Vector3d pt3 = pt1 + Vector3d(0.0,dy,0.0);
+				Vector3d pt4 = pt2 + Vector3d(0.0,dy,0.0);
+				Vector3d pt5 = pt1 + Vector3d(0.0,0.0,dz);
+				Vector3d pt6 = pt2 + Vector3d(0.0,0.0,dz);
+				Vector3d pt7 = pt3 + Vector3d(0.0,0.0,dz);
+				Vector3d pt8 = pt4 + Vector3d(0.0,0.0,dz);
 
-                // particles position inside the cell
+				// particles position inside the cell
 
-                // particle 1
-                pt1.x() += (dx*0.25);
-                pt1.y() += (dy*0.25);
-                pt1.z() += (dz*0.25);
+				// particle 1
+				pt1.x() += (dx*0.25);
+				pt1.y() += (dy*0.25);
+				pt1.z() += (dz*0.25);
 				
-                // particle 2
-                pt2.x() -= (dx*0.25);
-                pt2.y() += (dy*0.25);
-                pt2.z() += (dz*0.25);
-                
-                // particle 3
-                pt3.x() += (dx*0.25);
-                pt3.y() -= (dy*0.25);
-                pt3.z() += (dz*0.25);
+				// particle 2
+				pt2.x() -= (dx*0.25);
+				pt2.y() += (dy*0.25);
+				pt2.z() += (dz*0.25);
 				
-                // particle 4
-                pt4.x() -= (dx*0.25);
-                pt4.y() -= (dy*0.25);
-                pt4.z() += (dz*0.25);
+				// particle 3
+				pt3.x() += (dx*0.25);
+				pt3.y() -= (dy*0.25);
+				pt3.z() += (dz*0.25);
 				
-                // particle 5
-                pt5.x() += (dx*0.25);
-                pt5.y() += (dy*0.25);
-                pt5.z() -= (dz*0.25);
+				// particle 4
+				pt4.x() -= (dx*0.25);
+				pt4.y() -= (dy*0.25);
+				pt4.z() += (dz*0.25);
 				
-                // particle 6
-                pt6.x() -= (dx*0.25);
-                pt6.y() += (dy*0.25);
-                pt6.z() -= (dz*0.25);
-                
-                // particle 7
-                pt7.x() += (dx*0.25);
-                pt7.y() -= (dy*0.25);
-                pt7.z() -= (dz*0.25);
-                
-                // particle 8
-                pt8.x() -= (dx*0.25);
-                pt8.y() -= (dy*0.25);
-                pt8.z() -= (dz*0.25);
+				// particle 5
+				pt5.x() += (dx*0.25);
+				pt5.y() += (dy*0.25);
+				pt5.z() -= (dz*0.25);
+				
+				// particle 6
+				pt6.x() -= (dx*0.25);
+				pt6.y() += (dy*0.25);
+				pt6.z() -= (dz*0.25);
+				
+				// particle 7
+				pt7.x() += (dx*0.25);
+				pt7.y() -= (dy*0.25);
+				pt7.z() -= (dz*0.25);
+				
+				// particle 8
+				pt8.x() -= (dx*0.25);
+				pt8.y() -= (dy*0.25);
+				pt8.z() -= (dz*0.25);
 
-                // push all particles in the body's particle vector
-                particles.push_back(Particle(pt1,&material));
-                particles.push_back(Particle(pt2,&material));
-                particles.push_back(Particle(pt3,&material));
-                particles.push_back(Particle(pt4,&material));
-                particles.push_back(Particle(pt5,&material));
-                particles.push_back(Particle(pt6,&material));
-                particles.push_back(Particle(pt7,&material));
-                particles.push_back(Particle(pt8,&material));
-            }
-        }   
-    }
+				// push all particles in the body's particle vector
+				particles.push_back(Particle(pt1,&material));
+				particles.push_back(Particle(pt2,&material));
+				particles.push_back(Particle(pt3,&material));
+				particles.push_back(Particle(pt4,&material));
+				particles.push_back(Particle(pt5,&material));
+				particles.push_back(Particle(pt6,&material));
+				particles.push_back(Particle(pt7,&material));
+				particles.push_back(Particle(pt8,&material));
+			}
+		}   
+	}
 	return true;
 }
