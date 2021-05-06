@@ -17,24 +17,24 @@ class Node {
 
 public:
 
-	virtual ~Node();
-	Node();
+	virtual ~Node(); //!< default destructor
+	Node(); //!< default constructor
 
 	// set methods
-	void setId(int);
-	void setActive(bool);
-	void setCoordinates(Vector3d);
+	void setId(int); //!< configures the identification
+	void setActive(bool); //!< configures the active state
+	void setCoordinates(Vector3d); //!< configures the coordinates
 
 	// get methods
-	int getId();
-	bool getActive();
-	Vector3d getCoordinates();
-	double getMass();
+	int getId(); //!< returns the identification
+	bool getActive(); //!< returns the active state
+	Vector3d getCoordinates(); //!< returns the coordinates
+	double getMass(); //!< returns the mass
 
-	void addMass(double);
-	void addMomentum(Vector3d);
-	void addInternalForce(Vector3d);
-	void addExternalForce(Vector3d);
+	void addMass(double); //!< adds mass to the nodal mass
+	void addMomentum(Vector3d); //!< adds momentum to the nodal momentum
+	void addInternalForce(Vector3d); //!< adds internal force to the nodal internal force
+	void addExternalForce(Vector3d); //!< adds external force to the nodal external force
 
 private:
 

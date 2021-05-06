@@ -21,12 +21,12 @@ class Particle;
 /// from nodes to particle back.
 class Interpolation {
 public:
-	Interpolation();
-	virtual ~Interpolation();
-	void interpolateMassToNodes(Mesh&, vector<Particle>&);
-	void interpolateMomentumToNodes(Mesh&, vector<Particle>&);
-	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&);
-	void interpolateExternalForceToNodes(Mesh&, vector<Particle>&);
+	Interpolation(); //!< default constructor
+	virtual ~Interpolation(); //!< default destructor
+	void interpolateMassToNodes(Mesh&, vector<Particle>&); //!< interpolate mass from particles to nodes
+	void interpolateMomentumToNodes(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
+	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate internal force from particles to nodes
+	void interpolateExternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate external force from particles to nodes
 };
 
 #endif /* INTERPOLATION_H_ */

@@ -12,24 +12,24 @@
 using Eigen::Vector3d;
 
 /// \class Contribution
-/// \brief Represents the node that una particle contributes.
+/// \brief Represents the node that the particle contributes.
 class Contribution {
 
 public:
-	Contribution();
-	virtual ~Contribution();
+	Contribution(); //!< default constructor
+	virtual ~Contribution(); //!< default destructor
 
-	int getNodeId();
-	double getWeight();
-	Vector3d getGradients();
+	int getNodeId(); //!< returns the node identification
+	double getWeight(); //!< returns the weight value
+	Vector3d getGradients(); //!< returns the gradients values
 
-	void setNodeId(int);
-	void setWeight(double);
-	void setGradients(Vector3d);
+	void setNodeId(int); //!< configures node identification
+	void setWeight(double); //!< configures weight
+	void setGradients(Vector3d); //!< configures gradients
 
 
 private:
-	int nodeId; //!< id of the contribuited node
+	int nodeId; //!< identification of node
 	double weight; //!< weight value of a node at a particle
 	Vector3d gradient; //!< gradient value of a node at a particle
 };
