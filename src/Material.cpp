@@ -5,6 +5,9 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
+#include <iostream>
+using std::cout;
+
 #include "Material.h"
 
 Material::Material(int id, double density, MaterialType type) {
@@ -49,4 +52,9 @@ void Material::setDensity(double d){
 void Material::setType(MaterialType mt){
 
 	type=mt;
+}
+
+void Material::updateStress(){
+
+	cout<<"updating stress in Material base class\n";
 }

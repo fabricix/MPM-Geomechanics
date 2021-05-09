@@ -8,7 +8,7 @@
 #ifndef CONTRIBUTION_H_
 #define CONTRIBUTION_H_
 
-#include "../inc/Eigen/Core"
+#include "Eigen/Core"
 using Eigen::Vector3d;
 
 /// \class Contribution

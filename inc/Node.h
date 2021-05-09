@@ -8,7 +8,7 @@
 #ifndef NODE_H_
 #define NODE_H_
 
-#include "../inc/Eigen/Core"
+#include "Eigen/Core"
 using Eigen::Vector3d;
 
 /// \class Node

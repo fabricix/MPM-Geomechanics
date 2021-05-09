@@ -8,7 +8,7 @@
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
-#include "../inc/Eigen/Core"
+#include "Eigen/Core"
 using Eigen::Vector3d;
 
 /// \class Shape

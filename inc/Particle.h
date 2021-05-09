@@ -8,7 +8,7 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
-#include "../inc/Eigen/Core"
+#include "Eigen/Core"
 using Eigen::Matrix3d;
 using Eigen::Vector3d;
 

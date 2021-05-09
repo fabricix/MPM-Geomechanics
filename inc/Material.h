@@ -30,6 +30,9 @@ public:
 	void setDensity(double); //!< configures the density
 	void setType(MaterialType); //!< configures the type
 
+	// virtual update stress method
+	virtual void updateStress();
+
 private:
 	int id; //!< material identification
 	double density; //!< density

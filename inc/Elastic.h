@@ -23,6 +23,8 @@ public:
 	void setYoung(double); //!< configures the Young's modulus
 	void setPoisson(double); //!< configures Poisson's ratio
 
+	virtual void updateStress();
+
 private:
 	double Young; //!< Young's modulus
 	double Poisson; //!< Poisson's ratio

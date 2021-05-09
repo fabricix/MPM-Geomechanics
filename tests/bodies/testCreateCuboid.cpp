@@ -18,6 +18,9 @@ using std::ofstream;
 #include <string>
 using std::to_string;
 
+#include "Eigen/Core"
+using Eigen::Vector3d;
+
 #include "MPM.h"
 #include "Particle.h"
 #include "Body.h"
@@ -39,19 +42,10 @@ int main(int argc, char **argv)
 	// create a body using the configured materials
 	Body body;
 
-	// set materials in the body vector materials
-	body.setMaterialVector(elastic1);
-	body.setMaterialVector(elastic2);
-
-#if 0
 	// create a cuboid by a reference
-	body.createCuboid(mesh, Vector3d(0,0,0),Vector3d(2,3,5),body.getMaterials()->at(0));
-	body.createCuboid(mesh, Vector3d(2,2,6),Vector3d(4,4,7),body.getMaterials()->at(1));
-#else
-	// create a cuboid by the id of the materials
-	body.createCuboid(mesh, Vector3d(0,0,0),Vector3d(2,3,5),10);
-	body.createCuboid(mesh, Vector3d(2,2,6),Vector3d(4,4,7),20);
-#endif
+	body.createCuboid(mesh, Vector3d(0,0,0),Vector3d(2,3,5),&elastic1);
+	body.createCuboid(mesh, Vector3d(2,2,6),Vector3d(4,4,7),&elastic2);
+
 	// create an output object
 	Output output;
 	output.writeGrid(mesh,Output::POINTS);
@@ -59,5 +53,3 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-
-
