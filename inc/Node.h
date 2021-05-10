@@ -16,16 +16,14 @@ using Eigen::Vector3d;
 class Node {
 
 public:
-
+	
 	virtual ~Node(); //!< default destructor
 	Node(); //!< default constructor
 
-	// set methods
 	void setId(int); //!< configures the identification
 	void setActive(bool); //!< configures the active state
 	void setCoordinates(Vector3d); //!< configures the coordinates
 
-	// get methods
 	int getId(); //!< returns the identification
 	bool getActive(); //!< returns the active state
 	Vector3d getCoordinates(); //!< returns the coordinates

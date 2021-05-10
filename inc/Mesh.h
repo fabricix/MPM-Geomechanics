@@ -36,7 +36,6 @@ public:
     void createGrid(); //!< create a structured mesh grid
     bool updateNodesContribution(const vector<Particle>&); //!< update the nodes contributing at each particle
 
-    // set methods
     void setCellDimension(double,double,double); //!< set cells dimension in each direction
     void setNumCells(int,int,int); //!< set number of cell in each direction
     void setNumGhosts(int); //!< set number of ghosts around the domain
@@ -44,7 +43,6 @@ public:
     void activateNodes(const vector<int>&,bool=true); //!< active nodes by its id
     void activateNode(int,bool=true); //!< active node by its id
 
-    // get methods
     int getNumNodes(); //!< returns total nodes in mesh
     vector<Node> * getNodes(); //!< returns nodes in mesh
     Vector3d getCellDimension(); //!< returns the cells dimension in each direction
@@ -58,9 +56,9 @@ public:
     const Boundary& getBoundary(); //!< return mesh boundaries
 
 private:
-       
+    
     int nGhosts; //!< number of ghost cells
-
+    
     Vector3i nCells; //!< number of cells in each direction without ghost
     Vector3i nRows; //!< number of rows in each direction
     

@@ -11,7 +11,9 @@
 /// \class Integration
 /// \brief Represents the integration operations in the MPM.
 class Integration {
+
 public:
+	
 	Integration(); //!< default constructor
 	virtual ~Integration(); //!< default destructor
 };

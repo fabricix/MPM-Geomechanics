@@ -88,14 +88,12 @@ private:
 	Matrix3d velocityGradient; //!< particle deformation gradient
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
-
 	Shape* shape; //!< shape function representation
-
 	Material* material; //!< material pointer
 
-	void initializeValues(); //!< initialization of all data in particle
-
 	static int totalParticles; //!< total particle in the model
+	
+	void initializeValues(); //!< initialization of all data in particle
 };
 
 #endif /* PARTICLE_H_ */

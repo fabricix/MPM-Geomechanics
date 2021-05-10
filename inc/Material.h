@@ -21,19 +21,17 @@ public:
 	Material(int id=-1,double density=0, MaterialType=MaterialType::NONE); //!< default constructor
 	virtual ~Material(); //< default destructor
 	
-	// get methods
-	int getId();
-	double getDensity();
+	int getId(); //!< returns the identification
+	double getDensity(); //!< returns density
 
-	// set methods
 	void setId(int); //!< configures the material identification
 	void setDensity(double); //!< configures the density
 	void setType(MaterialType); //!< configures the type
 
-	// virtual update stress method
-	virtual void updateStress();
+	virtual void updateStress(); //!< update the stress tensor
 
 private:
+	
 	int id; //!< material identification
 	double density; //!< density
 	MaterialType type; //!< material type

@@ -15,16 +15,15 @@
 class ShapeLinear: public Shape {
 
 public:
-
+	
 	ShapeLinear();
 	virtual ~ShapeLinear();
-
-	void update(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the shape functions and its gradients
+	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the shape functions and its gradients
 
 private:
 
-	double computeGradient(double, double, double); //!< returns the gradient of the shape function
-	double computeShape(double, double, double); //!< returns the shape function value at a position
+	virtual double computeGradient(double, double, double); //!< returns the gradient of the shape function
+	virtual double computeShape(double, double, double); //!< returns the shape function value at a position
 };
 
 #endif /* SHAPELINEAR_H_ */

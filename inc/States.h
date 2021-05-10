@@ -11,7 +11,9 @@
 /// \class States
 /// \brief Represents model states that can be loaded before a simulation.
 class States {
+
 public:
+	
 	States();
 	virtual ~States();
 };

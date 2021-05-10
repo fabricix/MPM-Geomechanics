@@ -20,9 +20,12 @@ class Particle;
 /// This class allows to interpolate quantities from particles to node and
 /// from nodes to particle back.
 class Interpolation {
+
 public:
+	
 	Interpolation(); //!< default constructor
 	virtual ~Interpolation(); //!< default destructor
+	
 	void interpolateMassToNodes(Mesh&, vector<Particle>&); //!< interpolate mass from particles to nodes
 	void interpolateMomentumToNodes(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
 	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate internal force from particles to nodes

@@ -11,7 +11,9 @@
 /// \class Loads
 /// \brief Represents loads in the MPM model.
 class Loads {
+
 public:
+	
 	Loads(); //!< default constructor
 	virtual ~Loads(); //<! default destructor
 };

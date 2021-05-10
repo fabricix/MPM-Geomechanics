@@ -19,30 +19,22 @@ using std::vector;
 class Body {
 
 public:
-	
+
 	Body();
 	virtual ~Body();
 	
-	// create methods
 	bool createCuboid(Mesh&, Vector3d, Vector3d, Material*); //<! creates a cuboid
 
-	// get methods
 	int getId(); //<! returns the body identification
-	
 	vector<Particle>& getParticles(); //<! returns particle in the body
-	
-	// set methods
-	void setId(int); //<! configures the id of the body
-	
-	// static methods
 	static int getTotalBodies(); //<! returns o number of bodies
+	
+	void setId(int); //<! configures the id of the body
 	
 private:
 	
 	int id; //!< body identification
-	
 	vector<Particle> particles; //!< material points forming the body  
-
 	static int totalBodies; //!< number of bodies
 };
 

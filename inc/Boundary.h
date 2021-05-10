@@ -16,6 +16,7 @@ using std::vector;
 class Boundary {
 
 public:
+
 	/// \enum BoundaryType
 	/// \brief Determines the type of fixities to be imposed to the mesh. 
 	enum BoundaryType{FIXED,SYMETRICAL};
@@ -26,7 +27,6 @@ public:
 public:
 	
 	BoundaryType type; //!< type of fixities to be applied to the nodes 
-
 	vector<int> planeX0; //!< nodes in plane X0
 	vector<int> planeY0; //!< nodes in plane Y0 
 	vector<int> planeZ0; //!< nodes in plane Z0 

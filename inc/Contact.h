@@ -11,7 +11,9 @@
 /// \class Contact
 /// \brief Represents a frictional contact between bodies
 class Contact {
+
 public:
+	
 	Contact();
 	virtual ~Contact();
 };

@@ -11,7 +11,9 @@
 /// \class Input
 /// \brief Operations to read the input file.
 class Input {
+
 public:
+	
 	Input();
 	virtual ~Input();
 };

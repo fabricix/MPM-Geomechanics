@@ -18,6 +18,12 @@ Interpolation::~Interpolation() {
 	// TODO Auto-generated destructor stub
 }
 
+//
+//
+// From particle to node
+//
+//
+
 void Interpolation::interpolateMassToNodes(Mesh& mesh, vector<Particle>& particles){
 
 	// Get the mesh nodes pointer.
@@ -121,3 +127,10 @@ void Interpolation::interpolateExternalForceToNodes(Mesh& mesh, vector<Particle>
 		}
 	}
 }
+
+//
+//
+// From node to particle
+//
+//
+

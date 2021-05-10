@@ -16,6 +16,7 @@ using Eigen::Vector3d;
 class Contribution {
 
 public:
+
 	Contribution(); //!< default constructor
 	virtual ~Contribution(); //!< default destructor
 
@@ -27,8 +28,8 @@ public:
 	void setWeight(double); //!< configures weight
 	void setGradients(Vector3d); //!< configures gradients
 
-
 private:
+	
 	int nodeId; //!< identification of node
 	double weight; //!< weight value of a node at a particle
 	Vector3d gradient; //!< gradient value of a node at a particle
