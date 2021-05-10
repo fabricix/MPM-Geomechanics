@@ -18,16 +18,12 @@ Particle::Particle() {
 
 	initializeValues();
 
-	setId(totalParticles);
-
 	totalParticles++;
 }
 
 Particle::Particle(Vector3d position, Material* material) {
 
 	initializeValues();
-	
-	setId(totalParticles);
 
 	setPosition(position);
 	
@@ -41,8 +37,6 @@ Particle::Particle(Vector3d position, Material* material) {
 Particle::Particle(Vector3d position) {
 
 	initializeValues();
-	
-	setId(totalParticles);
 
 	setPosition(position);
 	
@@ -97,12 +91,12 @@ Matrix3d Particle::getStress(){
 
 double Particle::getDensity(){
 
-	return material->getDensity();
+	return material!=0?material->getDensity():0.0;
 }
 
 int Particle::getMaterialId(){
 
-	return material->getId();
+	return material!=0?material->getId():-1;
 }
 
 Vector3d Particle::getExternalForce()
@@ -223,6 +217,6 @@ void Particle::initializeValues(){
 	contributionNodes.clear();
 	contributionNodes.resize(ModelSetup::getContributionNodesNum());
 	
-	shape=NULL;
-	material=NULL;
+	shape=0;
+	material=0;
 }

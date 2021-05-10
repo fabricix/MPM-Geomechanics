@@ -56,6 +56,7 @@ public:
 	void setShape(Shape*); //!< configures the shape function in the particle
 	void setInitialPosition(Vector3d); //!< configures the initial position
 	void setPosition(Vector3d); //!< configures the current position
+	void setId(int); //!< configures the particle id
 
 	// static methods
 	static int getTotalParticles(); //<! returns o number of particles created
@@ -93,7 +94,6 @@ private:
 	Material* material; //!< material pointer
 
 	void initializeValues(); //!< initialization of all data in particle
-	void setId(int); //!< configures the particle id
 
 	static int totalParticles; //!< total particle in the model
 };

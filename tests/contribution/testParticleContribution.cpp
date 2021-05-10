@@ -36,15 +36,14 @@ int main(int argc, char **argv)
 	particles.push_back(Particle(Vector3d(2.1,5.2,7.4)));
 	particles.push_back(Particle(Vector3d(1.4,3.2,8.4)));
 
-	// configure particle size
+	// configure particle
 	for (size_t i=0; i<particles.size(); i++){
-		particles.at(i).setSize(Vector3d(1.0,1.0,1.0));
-	}
 
-	// configure the shape functions in particles
-	for (size_t i=0; i<particles.size(); i++){
-		Shape* shape = new ShapeGimp;
-		particles.at(i).setShape(shape);
+		// size
+		particles.at(i).setSize(Vector3d(1.0,1.0,1.0));
+
+		// shape
+		particles.at(i).setShape(new ShapeGimp);
 	}
 
 	// update contributions and write results

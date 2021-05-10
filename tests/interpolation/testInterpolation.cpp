@@ -23,6 +23,7 @@ using std::to_string;
 #include "Particle.h"
 #include "Interpolation.h"
 #include "Output.h"
+#include "ShapeGimp.h"
 
 int main(int argc, char **argv)
 {
@@ -30,7 +31,6 @@ int main(int argc, char **argv)
 	Mesh mesh;
 	mesh.setNumCells(10,10,10);
 	mesh.setCellDimension(1,1,1);
-	mesh.setNumGhosts(2);
 	mesh.createGrid();
 
 	// create particles
@@ -42,8 +42,17 @@ int main(int argc, char **argv)
 	// configures particle
 	for (size_t i=0; i<particles.size(); i++){
 
+		// id
+		particles.at(i).setId(i);
+
+		// size
 		particles.at(i).setSize(Vector3d(1.0,1.0,1.0));
+		
+		// mass
 		particles.at(i).setMass(1.0);
+
+		// shape
+		particles.at(i).setShape(new ShapeGimp);
 	}
 
 	// update contributions nodes
