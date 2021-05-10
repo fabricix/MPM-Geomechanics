@@ -19,18 +19,25 @@ public:
 	Shape(); //!< default constructor
 	virtual ~Shape(); //<! defaul destructor
 	
-	void updateGimp(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the GIMP functions and gradients
-	
-	double gradientGimp(double, double, double); //!< GIMP gradient shape function
-	double shapeGimp(double, double, double); //!< GIMP shape function
-	
-	double Sx; //!< shape function value in x
-	double Sy; //!< shape function value in y
-	double Sz; //!< shape function value in z
+	// pure virtual method
+	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d)=0; //!< update the shape functions and its gradients
 
-	double Gx; //!< shape function gradient value in x
-	double Gy; //!< shape function gradient value in y
-	double Gz; //!< shape function gradient value in z
+	// get methods
+	Vector3d getShape(); //!< returns the shape function values
+	Vector3d getDerivate(); //!< returns the derivates values
+	
+	// set methods
+	void setShape(double,double,double); //!< configures the shape function value
+	void setDerivate(double,double,double); //!< configures the derivates of the shape functions
+	
+private:
+
+	// get methods
+	virtual double computeGradient(double, double, double) = 0; //!< returns the gradient of the shape function
+	virtual double computeShape(double, double, double) = 0; //!< returns the shape function value at a position
+
+	Vector3d shape; //!< shape function values
+	Vector3d derivate; //!< shape function gradient values
 };
 
 #endif /* SHAPE_H_ */

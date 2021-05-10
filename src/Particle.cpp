@@ -166,18 +166,22 @@ void Particle::updateContributionNodes(Mesh & mesh)
 		Node iNode = gNodes->at(nodesId.at(i));
 
 		// update the shape functions and gradients
-		shape.updateGimp(position,iNode.getCoordinates(),mesh.getCellDimension(), size);
+		shape->update(position,iNode.getCoordinates(),mesh.getCellDimension(), size);
+
+		// get shape function and its derivates
+		Vector3d shapeFn = shape->getShape();
+		Vector3d derivateFn = shape->getDerivate();
 
 		// update weight
-		contributionNodes.at(i).setWeight(shape.Sx*shape.Sy*shape.Sz);
+		contributionNodes.at(i).setWeight(shapeFn.x()*shapeFn.y()*shapeFn.z());
 
 		// update gradients
-		Vector3d gradients;
-		gradients.x()=shape.Gx*shape.Sy*shape.Sz;
-		gradients.y()=shape.Sx*shape.Gy*shape.Sz;
-		gradients.z()=shape.Sx*shape.Sy*shape.Gz;
+		Vector3d gradient;
+		gradient.x() = derivateFn.x()*shapeFn.y()*shapeFn.z();
+		gradient.y() = shapeFn.x()*derivateFn.y()*shapeFn.z();
+		gradient.z() = shapeFn.x()*shapeFn.y()*derivateFn.z();
 
-		contributionNodes.at(i).setGradients(gradients);
+		contributionNodes.at(i).setGradients(gradient);
 	}
 }
 

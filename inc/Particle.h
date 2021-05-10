@@ -87,7 +87,7 @@ private:
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
 
-	Shape shape; //!< shape function representation
+	Shape* shape; //!< shape function representation
 
 	Material* material; //!< material pointer
 

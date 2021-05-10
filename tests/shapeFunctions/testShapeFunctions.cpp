@@ -5,22 +5,57 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
-#include <vector>
-using std::vector;
+#include <string>
+using std::string;
 
 #include <fstream>
 using std::ofstream;
 
-#include "Shape.h"
+#include "ShapeGimp.h"
+#include "ShapeLinear.h"
+
+void computeShapeAndGradients(
+		Shape* shapePntr,
+		string filenameStr,
+		double nIncrements,
+		Vector3d iDomain,
+		Vector3d delta,
+		Vector3d gx,
+		Vector3d cellDim,
+		Vector3d particleSize)
+{
+	// open a file
+	ofstream outputfile;
+	outputfile.open (filenameStr);
+	outputfile<<"x,y,z,sx,sy,sz,gx,gy,gz\n";
+
+	// compute shape and gradients
+	for(size_t i=0; i<nIncrements;i++){
+
+		// particle position
+		Vector3d pPosition(iDomain.x()+delta.x()*i,iDomain.y()+delta.y()*i,iDomain.z()+delta.z()*i);
+
+		// update shape function and derivates
+		shapePntr->update(pPosition,gx,cellDim,particleSize);
+
+		// shape function values
+		Vector3d shapeFn=shapePntr->getShape();
+		Vector3d derivateFn=shapePntr->getDerivate();
+
+		// write the results
+		outputfile
+		<<pPosition.x()<<","<<pPosition.y()<<","<<pPosition.z()<<","
+		<<shapeFn.x()<<","<<shapeFn.y()<<","<<shapeFn.z()<<","
+		<<derivateFn.x()<<","<<derivateFn.y()<<","<<derivateFn.z()<<"\n";
+	}
+	outputfile.close();
+}
 
 int main(int argc, char **argv)
 {
 	// shape instance
-	Shape shape;
+	ShapeGimp shapeGimp;
+	ShapeLinear shapeLinear;
 
 	// node position
 	Vector3d nodePosition(0.0,0.0,0.0);
@@ -33,9 +68,7 @@ int main(int argc, char **argv)
 	double nIncrements=300;
 
 	// increments in each direction
-	double dx = (fDomain.x()-iDomain.x())/nIncrements;
-	double dy = (fDomain.y()-iDomain.y())/nIncrements;
-	double dz = (fDomain.z()-iDomain.z())/nIncrements;
+	Vector3d delta = (fDomain-iDomain)/nIncrements;
 
 	// cell dimension
 	Vector3d cellDim(1.0,1.0,1.0);
@@ -46,20 +79,12 @@ int main(int argc, char **argv)
 	// node position
 	Vector3d gx(0.5,0.5,0.5);
 
-	// open a file
-	ofstream outputfile;
-	outputfile.open ("shape.csv");
-	outputfile<<"x,y,z,sx,sy,sz,gx,gy,gz\n";
+	// write linear shape function
+	computeShapeAndGradients(&shapeLinear,"shapeLinear.csv",nIncrements,iDomain,delta,gx,cellDim,particleSize);
 
-	// compute shape and gradients
-	for(size_t i=0; i<nIncrements;i++){
+	// write gimp shape functions
+	computeShapeAndGradients(&shapeGimp,"shapeGimp.csv",nIncrements,iDomain,delta,gx,cellDim,particleSize);
 
-		// particle position
-		Vector3d pPosition(iDomain.x()+dx*i,iDomain.y()+dy*i,iDomain.z()+dz*i);
-
-		shape.updateGimp(pPosition,gx,cellDim,particleSize);
-		outputfile<<pPosition.x()<<","<<pPosition.y()<<","<<pPosition.z()<<","<<shape.Sx<<","<<shape.Sy<<","<<shape.Sz<<","<<shape.Gx<<","<<shape.Gy<<","<<shape.Gz<<"\n";
-	}
-	outputfile.close();
+	
 	return 0;
 }

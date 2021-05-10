@@ -16,7 +16,7 @@ def sgn(a):
     else:
         return 1.0
     
-# functions
+# gimp shape function - book Zhuo Zhuang eq. 3.136
 def NiGIMPShapeFunction(L,lp,xp,xi):
     
     if (xp-xi) <= (-L-lp):
@@ -40,7 +40,7 @@ def NiGIMPShapeFunction(L,lp,xp,xi):
     if (L+lp)<=(xp-xi):
         return 0
 
-# functions
+# derivate of gimp shape function - book Zhuo Zhuang eq. 3.137
 def GNiGIMPShapeFunction(L,lp,xp,xi):
     
     s = xp-xi
@@ -63,9 +63,8 @@ def GNiGIMPShapeFunction(L,lp,xp,xi):
     if (L-lp<s<=L+lp):
         return -(L+lp-s)/(2*L*lp)
     
-    
-# functions
-def NiGIMPShapeFunctionMPM3D(L,lp,xp,xi):
+# shape function used in program MPM-PUCRio
+def NiGIMPShapeFunctionMPMPUCRio(L,lp,xp,xi):
     
     r = abs(xp-xi);
     l = lp;
@@ -82,8 +81,8 @@ def NiGIMPShapeFunctionMPM3D(L,lp,xp,xi):
       
     return 0.0;
      
-# derivate of functions
-def GNiGIMPShapeFunctionMPM3D(L,lp,xp,xi):
+# derivate of shape function used in program MPM-PUCRio
+def GNiGIMPShapeFunctionMPMPUCRio(L,lp,xp,xi):
     
     x = xp-xi
     r = abs(x);
@@ -101,64 +100,71 @@ def GNiGIMPShapeFunctionMPM3D(L,lp,xp,xi):
       
     return 0.0;
 
-
-import pandas as pd
-sh1=pd.read_csv("shape.csv")
-
+# create a plot
 import matplotlib.pyplot as plt
 plt.close("all")
 fig,ax=plt.subplots(1,1)
 
-# x
+# load the MPM++ results 
+import pandas as pd
+sh1=pd.read_csv("shapeGimp.csv")
+
+# plot shape function and gradients in x
 ax.plot(sh1.x,sh1.sx,'--b',label='Sx-MPM++')
 ax.plot(sh1.x,sh1.gx,'--r',label='Gx-MPM++')
 ax.legend()
 
-# # y
+# plot shape function and gradients in y
 ax.plot(sh1.y,sh1.sy,':b',label='Sy-MPM++')
 ax.plot(sh1.y,sh1.gy,':r',label='Gy-MPM++')
 ax.legend()
 
-# # z
+# plot shape function and gradients in z
 ax.plot(sh1.z,sh1.sz,'-.b',label='Sz-MPM++')
 ax.plot(sh1.z,sh1.gz,'-.r',label='Gz-MPM++')
 ax.legend()
 
-# Plot verification
+#
+# Results comparison
+#
 
+# particle size
 L = 1.0
 
-# porticle caracteristic lenght
+# particle characteristic length
 lp = 0.25
 
 # particle position
 xp = np.linspace(-3,3,300)
 
-# node position  
+# node position
 xi = 0.5
 
-# shape function of nodes
-Ni = np.zeros_like(xp) 
-dNi = np.zeros_like(xp)
+# vectors to calculate the shape functions and its gradients
+Ni=np.zeros_like(xp) 
+dNi=np.zeros_like(xp)
+Ni2=np.zeros_like(xp) 
+dNi2=np.zeros_like(xp)
 
-Ni2 = np.zeros_like(xp) 
-dNi2 = np.zeros_like(xp)
-
+# performs the computation
 for i in np.arange(xp.size):
     
+    # book's solution
     Ni[i] = NiGIMPShapeFunction(L,lp,xp[i],xi)
     dNi[i]  = GNiGIMPShapeFunction(L,lp,xp[i],xi)
+    
+    # MPM-PUCRio's solution
+    Ni2[i] = NiGIMPShapeFunctionMPMPUCRio(L,lp,xp[i],xi)
+    dNi2[i] = GNiGIMPShapeFunctionMPMPUCRio(L,lp,xp[i],xi)
         
-    Ni2[i] = NiGIMPShapeFunctionMPM3D(L,lp,xp[i],xi)
-    dNi2[i] = GNiGIMPShapeFunctionMPM3D(L,lp,xp[i],xi)
-        
-
+# plot the results: 1
 ax.plot(xp,Ni,'xb',label='S-Zhuo Zhuang')
 ax.plot(xp,dNi,'xr',label='G-Zhuo Zhuang')
 
-ax.plot(xp,Ni,'+b',label='S-MPM-PUCRio')
-ax.plot(xp,dNi,'+r',label='G-MPM-PUCRio')
+# plot the results: 2
+ax.plot(xp,Ni2,'+b',label='S-MPM-PUCRio')
+ax.plot(xp,dNi2,'+r',label='G-MPM-PUCRio')
 
+# add legends and show the figure
 ax.legend()
-
 plt.show()
