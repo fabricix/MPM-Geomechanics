@@ -10,6 +10,8 @@
 
 #include <Shape.h>
 
+/// \class ShapeGimp
+/// \brief Represents the GIMP shape functions used in the interpolation process.
 class ShapeGimp: public Shape {
 public:
 	ShapeGimp();

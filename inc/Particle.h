@@ -53,6 +53,7 @@ public:
 	void setMass(double); //!< configures particle mass
 	void setVolume(double); //!< configures particle volume
 	void setMaterial(Material*); //!< configures the material in the particle
+	void setShape(Shape*); //!< configures the shape function in the particle
 	void setInitialPosition(Vector3d); //!< configures the initial position
 	void setPosition(Vector3d); //!< configures the current position
 

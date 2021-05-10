@@ -144,6 +144,11 @@ void Particle::setMaterial(Material* mat)
 	material=mat;
 }
 
+void Particle::setShape(Shape*sh)
+{
+	shape=sh;
+}
+
 //
 // public methods
 //
@@ -198,8 +203,8 @@ void Particle::initializeValues(){
 	mass=0.0;
 	density=0.0;
 	volume=0.0;
-	plasticStrain=0.0;
 	initialVolume=0.0;
+	plasticStrain=0.0;
 	porosity=0.0;
 
 	position.setZero();
@@ -217,5 +222,7 @@ void Particle::initializeValues(){
 
 	contributionNodes.clear();
 	contributionNodes.resize(ModelSetup::getContributionNodesNum());
+	
+	shape=NULL;
 	material=NULL;
 }

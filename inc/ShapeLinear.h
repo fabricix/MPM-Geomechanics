@@ -10,6 +10,8 @@
 
 #include <Shape.h>
 
+/// \class ShapeLinear
+/// \brief Represents the Linear shape functions used in the interpolation process.
 class ShapeLinear: public Shape {
 
 public:

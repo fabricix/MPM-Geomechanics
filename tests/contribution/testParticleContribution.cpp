@@ -20,6 +20,7 @@ using std::to_string;
 
 #include "MPM.h"
 #include "Particle.h"
+#include "ShapeGimp.h"
 
 int main(int argc, char **argv)
 {
@@ -27,7 +28,6 @@ int main(int argc, char **argv)
 	Mesh mesh;
 	mesh.setNumCells(10,10,10);
 	mesh.setCellDimension(1,1,1);
-	mesh.setNumGhosts(2);
 	mesh.createGrid();
 
 	// create particles
@@ -36,9 +36,15 @@ int main(int argc, char **argv)
 	particles.push_back(Particle(Vector3d(2.1,5.2,7.4)));
 	particles.push_back(Particle(Vector3d(1.4,3.2,8.4)));
 
-	// configures particle size
+	// configure particle size
 	for (size_t i=0; i<particles.size(); i++){
 		particles.at(i).setSize(Vector3d(1.0,1.0,1.0));
+	}
+
+	// configure the shape functions in particles
+	for (size_t i=0; i<particles.size(); i++){
+		Shape* shape = new ShapeGimp;
+		particles.at(i).setShape(shape);
 	}
 
 	// update contributions and write results

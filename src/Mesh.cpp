@@ -17,7 +17,7 @@ using std::floor;
 
 Mesh::Mesh() {
 
-	nGhosts=0;
+	nGhosts=2;
 	nCells.setZero();
     cellDim.setZero();
     minLimit.setZero();
