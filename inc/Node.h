@@ -23,11 +23,14 @@ public:
 	void setId(int); //!< configures the identification
 	void setActive(bool); //!< configures the active state
 	void setCoordinates(Vector3d); //!< configures the coordinates
+	void setVelocity(Vector3d); //!< configures the velocity
 
 	int getId(); //!< returns the identification
 	bool getActive(); //!< returns the active state
-	Vector3d getCoordinates(); //!< returns the coordinates
 	double getMass(); //!< returns the mass
+	Vector3d getCoordinates(); //!< returns the coordinates
+	Vector3d getMomentum(); //!< returns the momentum
+	Vector3d getVelocity(); //!< returns the velocity
 
 	void addMass(double); //!< adds mass to the nodal mass
 	void addMomentum(Vector3d); //!< adds momentum to the nodal momentum
@@ -42,6 +45,7 @@ private:
 	
 	Vector3d coordinates; //!< node coordinates
 	Vector3d momentum; //!< nodal momentum
+	Vector3d velocity; //!< nodal velocity
 	Vector3d acceleration; //!< nodal acceleration
 	Vector3d externalForce; //!<  total external force
 	Vector3d internalForce; //!< nodal internal force

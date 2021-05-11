@@ -104,6 +104,11 @@ Vector3d Particle::getExternalForce()
 	return externalForce;
 }
 
+Matrix3d Particle::getStrainIncrement(){
+
+	return strainIncrement;
+}
+
 //
 // set methods
 //
@@ -141,6 +146,21 @@ void Particle::setMaterial(Material* mat)
 void Particle::setShape(Shape*sh)
 {
 	shape=sh;
+}
+
+void Particle::setStrainIncrement(Matrix3d ds){
+
+	strainIncrement=ds;
+}
+
+void Particle::setVorticityIncrement(Matrix3d dvor){
+
+	vorticityIncrement=dvor;
+}
+
+void Particle::setDensity(double den){
+
+	density = den;
 }
 
 //
@@ -210,6 +230,8 @@ void Particle::initializeValues(){
 
 	stress.setZero();
 	strain.setZero();
+	strainIncrement.setZero();
+	vorticityIncrement.setZero();
 	deformationGradient.setZero();
 	deformationGradientIncrement.setZero();
 	velocityGradient.setZero();

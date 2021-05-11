@@ -28,7 +28,8 @@ public:
 	void setDensity(double); //!< configures the density
 	void setType(MaterialType); //!< configures the type
 
-	virtual void updateStress(); //!< update the stress tensor
+	virtual void updateStress()=0; //!< update the stress tensor
+	virtual MaterialType getType(); //!< returns the material type
 
 private:
 	

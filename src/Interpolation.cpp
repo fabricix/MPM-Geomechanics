@@ -134,3 +134,84 @@ void Interpolation::interpolateExternalForceToNodes(Mesh& mesh, vector<Particle>
 //
 //
 
+void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle>& particles,double dt){
+
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize a matrix for strain increment computation
+		Matrix3d dstrain = Matrix3d::Zero();
+		
+		// For each node in the contribution list,
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get gradient
+			Vector3d dN = contribution->at(j).getGradients();
+
+			// get velocity
+			Vector3d v = nodes->at(contribution->at(j).getNodeId()).getVelocity();
+
+			dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt;
+			dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt;
+			dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt;
+			
+			dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt;
+			dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt;
+			dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt;
+			
+			dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt;
+			dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt;
+			dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt;
+		}
+
+		// add quantity in particle
+		particles.at(i).setStrainIncrement(dstrain);
+	}
+}
+
+void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle>& particles,double dt){
+
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize a matrix for strain increment computation
+		Matrix3d dvorticity = Matrix3d::Zero();
+		
+		// For each node in the contribution list,
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get gradient
+			Vector3d dN = contribution->at(j).getGradients();
+
+			// get velocity
+			Vector3d v = nodes->at(contribution->at(j).getNodeId()).getVelocity();
+
+			dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt;
+			dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt;
+			dvorticity(0,2) += (dN(2)*v(0)-dN(0)*v(2))*0.5*dt;
+			
+			dvorticity(1,0) += (dN(0)*v(1)-dN(1)*v(0))*0.5*dt;
+			dvorticity(1,1) += (dN(1)*v(1)-dN(1)*v(1))*0.5*dt;
+			dvorticity(1,2) += (dN(2)*v(1)-dN(1)*v(2))*0.5*dt;
+			
+			dvorticity(2,0) += (dN(0)*v(2)-dN(2)*v(0))*0.5*dt;
+			dvorticity(2,1) += (dN(1)*v(2)-dN(2)*v(1))*0.5*dt;
+			dvorticity(2,2) += (dN(2)*v(2)-dN(2)*v(2))*0.5*dt;
+		}
+
+		// add quantity in particle
+		particles.at(i).setVorticityIncrement(dvorticity);
+	}
+}

@@ -20,7 +20,7 @@ public:
 	Shape(); //!< default constructor
 	virtual ~Shape(); //<! defaul destructor
 	
-	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d)=0; //!< update the shape functions and its gradients
+	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d) = 0; //!< update the shape functions and its gradients
 
 	Vector3d getShape(); //!< returns the shape function values
 	Vector3d getDerivate(); //!< returns the derivates values

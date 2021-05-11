@@ -49,12 +49,12 @@ void Material::setDensity(double d){
 	density=d;
 }
 
-void Material::setType(MaterialType mt){
+void Material::setType(Material::MaterialType mt){
 
 	type=mt;
 }
 
-void Material::updateStress(){
+Material::MaterialType Material::getType(){
 
-	cout<<"updating stress in Material base class\n";
+	return type;
 }

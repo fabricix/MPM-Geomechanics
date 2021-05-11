@@ -30,6 +30,9 @@ public:
 	void interpolateMomentumToNodes(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
 	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate internal force from particles to nodes
 	void interpolateExternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate external force from particles to nodes
+
+	void particleStrainIncrement(Mesh&, vector<Particle>&, double dt); //!< interpolate the strain increment at particle
+	void particleVorticityIncrement(Mesh&, vector<Particle>&,double dt); //!< interpolate the vorticity increment at particle
 };
 
 #endif /* INTERPOLATION_H_ */

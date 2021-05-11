@@ -23,7 +23,8 @@ public:
 	void setPoisson(double); //!< configures Poisson's ratio
 
 	virtual void updateStress();
-
+	virtual Material::MaterialType getType();
+	
 private:
 	
 	double Young; //!< Young's modulus

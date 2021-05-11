@@ -21,6 +21,7 @@ Node::Node() {
 
     coordinates.setZero();
     momentum.setZero();
+    velocity.setZero();
     acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
@@ -45,6 +46,11 @@ void Node::setActive(bool a){
     active=a;
 }
 
+void Node::setVelocity(Vector3d v){
+
+    velocity=v;
+}
+
 //
 // get methods
 //
@@ -52,6 +58,11 @@ void Node::setActive(bool a){
 Vector3d Node::getCoordinates(){
 
     return coordinates;
+}
+
+Vector3d Node::getMomentum(){
+
+    return momentum;
 }
 
 int Node::getId(){
@@ -67,6 +78,11 @@ bool Node::getActive(){
 double Node::getMass()
 {
     return mass;
+}
+
+Vector3d Node::getVelocity(){
+
+    return velocity;
 }
 
 //

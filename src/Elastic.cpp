@@ -35,3 +35,8 @@ void Elastic::updateStress(){
 
 	cout<<"updating elastic stress\n";
 }
+
+Material::MaterialType Elastic::getType(){
+
+	return Material::getType();
+}

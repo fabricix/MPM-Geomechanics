@@ -37,28 +37,29 @@ public:
 
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
 
-	// get methods
 	int getId(); //!< returns the particle identification 
+	int getMaterialId(); //!< returns the particle's material
 	double getMass(); //!< returns the mass of the particle
+	double getDensity(); //!< returns the current particle density
 	Vector3d getMomentum(); //!< returns the momentum of the particle
 	Vector3d getPosition(); //!< returns the current particle position
 	Vector3d getExternalForce(); //!< returns the external force in particle
-	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 	Matrix3d getStress(); //!< returns the current particle stress tensor
-	double getDensity(); //!< returns the current particle density
-	int getMaterialId(); //!< returns the particle's material
-	
-	// set methods
-	void setSize(Vector3d); //!< configures particle size in each direction
+	Matrix3d getStrainIncrement(); //!< returns the strain increment
+	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
+
+	void setId(int); //!< configures the particle id
 	void setMass(double); //!< configures particle mass
 	void setVolume(double); //!< configures particle volume
-	void setMaterial(Material*); //!< configures the material in the particle
-	void setShape(Shape*); //!< configures the shape function in the particle
+	void setDensity(double); //!< configures particle density
 	void setInitialPosition(Vector3d); //!< configures the initial position
 	void setPosition(Vector3d); //!< configures the current position
-	void setId(int); //!< configures the particle id
+	void setSize(Vector3d); //!< configures particle size in each direction
+	void setStrainIncrement(Matrix3d); //!< configures the strain increment
+	void setVorticityIncrement(Matrix3d); //!< configures the vorticity increment
+	void setMaterial(Material*); //!< configures the material in the particle
+	void setShape(Shape*); //!< configures the shape function in the particle
 
-	// static methods
 	static int getTotalParticles(); //<! returns o number of particles created
 
 private:
@@ -83,6 +84,8 @@ private:
 	
 	Matrix3d stress; //!< particle stress
 	Matrix3d strain; //!< particle strain
+	Matrix3d strainIncrement; //!< particle strain increment
+	Matrix3d vorticityIncrement; //!< particle vorticity increment
 	Matrix3d deformationGradient; //!< particle deformation gradient
 	Matrix3d deformationGradientIncrement; //!< particle deformation gradient increment
 	Matrix3d velocityGradient; //!< particle deformation gradient
