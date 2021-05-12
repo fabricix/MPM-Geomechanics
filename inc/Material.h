@@ -8,6 +8,8 @@
 #ifndef MATERIAL_H_
 #define MATERIAL_H_
 
+class Particle;
+
 /// \class Material
 /// \brief Represents a material.
 class Material {
@@ -28,7 +30,7 @@ public:
 	void setDensity(double); //!< configures the density
 	void setType(MaterialType); //!< configures the type
 
-	virtual void updateStress()=0; //!< update the stress tensor
+	virtual void updateStress(Particle*)=0; //!< update the stress tensor
 	virtual MaterialType getType(); //!< returns the material type
 
 private:

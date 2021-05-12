@@ -9,6 +9,7 @@
 #define ELASTIC_H_
 
 #include <Material.h>
+#include "Particle.h"
 
 /// \class Elastic
 /// \brief Represents an elastic material.
@@ -22,7 +23,10 @@ public:
 	void setYoung(double); //!< configures the Young's modulus
 	void setPoisson(double); //!< configures Poisson's ratio
 
-	virtual void updateStress();
+	double getShearModulus(); //!< returns th shear modulus
+	double getBulkModulus(); //!< returns the bulk modulus
+	
+	virtual void updateStress(Particle* particle);
 	virtual Material::MaterialType getType();
 	
 private:

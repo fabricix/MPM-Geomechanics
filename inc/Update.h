@@ -19,6 +19,7 @@ public:
 
 	void nodalVelocity(Mesh&);
 	void particleDensity(vector<Particle>&);
+	void particleStress(vector<Particle>&);
 };
 
 #endif /* UPDATE_H_ */

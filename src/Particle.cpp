@@ -109,6 +109,11 @@ Matrix3d Particle::getStrainIncrement(){
 	return strainIncrement;
 }
 
+Matrix3d Particle::getVorticityIncrement(){
+
+	return vorticityIncrement;
+}
+
 //
 // set methods
 //
@@ -163,9 +168,19 @@ void Particle::setDensity(double den){
 	density = den;
 }
 
+void Particle::setStress(Matrix3d s){
+
+	stress=s;
+}
+
 //
 // public methods
 //
+
+void Particle::updateStress(){
+
+	material->updateStress(this);
+}
 
 void Particle::updateContributionNodes(Mesh & mesh)
 {

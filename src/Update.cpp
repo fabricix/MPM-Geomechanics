@@ -41,3 +41,13 @@ void Update::particleDensity(vector<Particle>& particles){
 		particles.at(i).setDensity(density/(1+volStrain));
 	}
 }
+
+void Update::particleStress(vector<Particle>& particles){
+
+	// For each particle 
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		// update particle stress
+		particles.at(i).updateStress();
+	}
+}

@@ -36,6 +36,7 @@ public:
 	virtual ~Particle(); //!< default destructor
 
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
+	void updateStress();//!< update the stress
 
 	int getId(); //!< returns the particle identification 
 	int getMaterialId(); //!< returns the particle's material
@@ -46,6 +47,7 @@ public:
 	Vector3d getExternalForce(); //!< returns the external force in particle
 	Matrix3d getStress(); //!< returns the current particle stress tensor
 	Matrix3d getStrainIncrement(); //!< returns the strain increment
+	Matrix3d getVorticityIncrement(); //!< returns the vorticity increment
 	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 
 	void setId(int); //!< configures the particle id
@@ -57,6 +59,7 @@ public:
 	void setSize(Vector3d); //!< configures particle size in each direction
 	void setStrainIncrement(Matrix3d); //!< configures the strain increment
 	void setVorticityIncrement(Matrix3d); //!< configures the vorticity increment
+	void setStress(Matrix3d); //!< configures the current particle stress tensor
 	void setMaterial(Material*); //!< configures the material in the particle
 	void setShape(Shape*); //!< configures the shape function in the particle
 
