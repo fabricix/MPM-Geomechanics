@@ -14,8 +14,8 @@ class States {
 
 public:
 	
-	States();
-	virtual ~States();
+	States(); //!< default constructor
+	virtual ~States(); //!< default destructor
 };
 
 #endif /* STATES_H_ */

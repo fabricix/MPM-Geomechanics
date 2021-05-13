@@ -13,8 +13,8 @@
 #include "Model.h"
 #include "Output.h"
 #include "Input.h"
-#include "Interpolation.h"
 #include "States.h"
+#include "Solver.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -31,8 +31,8 @@ public:
 	
 	Mesh mesh; //!< grid mesh
 	vector<Body> bodies; //!< bodies discretized by material points
-	Interpolation interpolation; //!< interpolation operations
 	States states; //!< operations for load and save model's states
+	Solver* solver; //!< operation for solve the equations in time
 	Input input; //!< input operations
 	Output output; //!< output operations
 };

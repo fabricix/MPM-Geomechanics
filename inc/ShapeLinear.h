@@ -16,8 +16,8 @@ class ShapeLinear: public Shape {
 
 public:
 	
-	ShapeLinear();
-	virtual ~ShapeLinear();
+	ShapeLinear(); //!< default constructor
+	virtual ~ShapeLinear(); //!< default destructor
 	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the shape functions and its gradients
 
 private:

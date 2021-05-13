@@ -33,8 +33,8 @@ public:
 
 	void particleStrainIncrement(Mesh&, vector<Particle>&, double dt); //!< interpolate the strain increment at particle
 	void particleVorticityIncrement(Mesh&, vector<Particle>&,double dt); //!< interpolate the vorticity increment at particle
-	void particleVelocityRate(Mesh& ,vector<Particle>&);
-	void particlePositionRate(Mesh& ,vector<Particle>&);
+	void particleVelocityRate(Mesh& ,vector<Particle>&); //!< interpolate velocity rate to particles
+	void particlePositionRate(Mesh& ,vector<Particle>&); //!< interpolate position rate to particles
 };
 
 #endif /* INTERPOLATION_H_ */

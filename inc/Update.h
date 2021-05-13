@@ -11,19 +11,21 @@
 #include "Mesh.h"
 #include "Particle.h"
 
+/// \class Update
+/// \brief Represents operations to update values in nodes and particles.
 class Update {
 
 public:
 
-	Update();
-	virtual ~Update();
+	Update(); //!< default constructor
+	virtual ~Update(); //!< default destructor
 
-	void nodalVelocity(Mesh&);
-	void resetNodalValues(Mesh&);
-	void particleDensity(vector<Particle>&);
-	void particleStress(vector<Particle>&);
-	void particleVelocity(vector<Particle>&,double);
-	void particlePosition(vector<Particle>&,double);
+	void nodalVelocity(Mesh&); //!< updates the nodal velocity
+	void resetNodalValues(Mesh&); //!< deletes all stored values in nodes 
+	void particleDensity(vector<Particle>&); //!< updates the particles' density
+	void particleStress(vector<Particle>&); //!< update the particles' stress
+	void particleVelocity(vector<Particle>&,double); //!< update the particle velocity
+	void particlePosition(vector<Particle>&,double); //!< update the particle position
 
 };
 

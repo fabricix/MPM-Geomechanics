@@ -16,8 +16,8 @@ class ShapeGimp: public Shape {
 
 public:
 
-	ShapeGimp();
-	virtual ~ShapeGimp();
+	ShapeGimp(); //!< default constructor
+	virtual ~ShapeGimp(); //!< default destructor
 	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the shape functions and its gradients
 
 private:
