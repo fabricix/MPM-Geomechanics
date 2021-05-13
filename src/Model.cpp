@@ -13,9 +13,8 @@ namespace ModelSetup {
 	bool gravity=false;				//!< is gravity active
 	bool axisymetric=false;			//!< is axisymetric model
 	bool coupled=false;				//!< is coupled analysis
-	bool jaumann=false;				//!< is Jaumann rate active
+	bool jaumann=true;				//!< is Jaumann rate active
 
-	int istep=0;					//!< current time step
 	int nThreads=1;					//!< number of threads in current job
 	int contributionNodes=27;		//!< nodes that the particles contributed
 
@@ -38,15 +37,46 @@ namespace ModelSetup {
 
     InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP;
 	
-	bool isWindowsSystem(){
+	bool getWindowsSystem(){
 		return operationalSystem==OperationalSystem::WINDOWS?true:false;
 	}
 
-	bool isLinuxSystem(){
+	bool getLinuxSystem(){
 		return operationalSystem==OperationalSystem::LINUX?true:false;
 	}
 
-	int getContributionNodesNum(){
-		return contributionNodes;
-	}
+	int getContributionNodesNum(){ return contributionNodes; }
+
+	double getDt(){ return dt; }
+	void setDt(double d){ dt=d; }
+
+	double getDtFraction(){ return dtFraction; }
+	void setDtFraction(double d){ dtFraction=d; }
+
+	double getThreads(){ return nThreads; }
+	void setThreads(double d){ nThreads=d; }
+
+	bool getContact(){ return contact; }
+	void setContact(bool d){ contact=d; }
+
+	bool getGravity(){ return gravity; }
+	void setGravity(bool d){ gravity=d; }
+
+	bool getAxisymetric(){ return axisymetric; }
+	void setAxisymetric(bool d){ axisymetric=d; }
+
+	bool getJanumann(){ return jaumann; }
+	void setJanumann(bool d){ jaumann=d; }
+
+	string getInputFile(){ return inputFile; }
+	void setInputFile(string d){ inputFile=d; }
+
+	ModelSetup::StressUpdateScheme getUpdateStressScheme(){ return stress; }
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme d){ stress=d; }
+
+	ModelSetup::DampingType getDamping(){ return damping; }
+	void setDamping(ModelSetup::DampingType d){ damping=d; }
+
+	ModelSetup::InterpolationFunctionType getInterpolationFunction(){ return interpolationType; }
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d){ interpolationType=d; }
 }

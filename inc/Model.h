@@ -31,10 +31,43 @@ namespace ModelSetup {
 	/// \brief Defines the type of interpolation function.
 	enum InterpolationFunctionType{LINEAR, GIMP};
 
-	bool isWindowsSystem(); //<! returns true is the system is Windows
-	bool isLinuxSystem(); //<! returns true if the system is Linux
-
+	bool getWindowsSystem(); //<! returns true is the system is Windows
+	bool getLinuxSystem(); //<! returns true if the system is Linux
+	
 	int getContributionNodesNum(); //<! returns the number of nodes that a particle contributes.
+	
+	double getDt(); //<! returns the time step
+	void setDt(double); //<! configures the time step
+
+	double getDtFraction(); //<! returns
+	void setDtFraction(double); //<! configures the fraction of critical time step
+
+	double getThreads(); //<! returns
+	void setThreads(double); //<! configures the number of threads
+
+	bool getContact(); //<! returns if contact is active
+	void setContact(bool); //<! configures if contact is active
+
+	bool getGravity(); //<! returns if gravity is active
+	void setGravity(bool); //<! configures if gravity is active
+
+	bool getAxisymetric(); //<! returns if axisymetric analisys is active
+	void setAxisymetric(bool); //<! configures if axisymetric analisys is active
+
+	bool getJanumann(); //<! returns if Jaumann rate is active
+	void setJanumann(bool); //<! configures if Jaumann rate is active
+
+	string getInputFile(); //<! returns the input file name
+	void setInputFile(string); //<! configures the input file name
+
+	ModelSetup::StressUpdateScheme getUpdateStressScheme(); //<! returns the scheme for updating the stress
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme); //<! configures the scheme for updating the stress
+
+	ModelSetup::DampingType getDamping(); //<! returns the damping
+	void setDamping(ModelSetup::DampingType); //<! configures the damping type
+
+	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //<! returns the interpolation functions
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType); //<! configures the interpolation functions
 };
 
 #endif /* MODEL_H_ */
