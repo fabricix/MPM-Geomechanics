@@ -8,6 +8,8 @@
 #ifndef INTEGRATION_H_
 #define INTEGRATION_H_
 
+#include "Mesh.h"
+
 /// \class Integration
 /// \brief Represents the integration operations in the MPM.
 class Integration {
@@ -16,6 +18,7 @@ public:
 	
 	Integration(); //!< default constructor
 	virtual ~Integration(); //!< default destructor
+	void nodalMomentum(Mesh& mesh,double dt); //!< integrate the nodal momentum
 };
 
 #endif /* INTEGRATION_H_ */

@@ -24,7 +24,7 @@ Interpolation::~Interpolation() {
 //
 //
 
-void Interpolation::interpolateMassToNodes(Mesh& mesh, vector<Particle>& particles){
+void Interpolation::nodalMass(Mesh& mesh, vector<Particle>& particles){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();
@@ -47,7 +47,7 @@ void Interpolation::interpolateMassToNodes(Mesh& mesh, vector<Particle>& particl
 	}
 }
 
-void Interpolation::interpolateMomentumToNodes(Mesh& mesh, vector<Particle>& particles){
+void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle>& particles){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();
@@ -70,7 +70,7 @@ void Interpolation::interpolateMomentumToNodes(Mesh& mesh, vector<Particle>& par
 	}
 }
 
-void Interpolation::interpolateInternalForceToNodes(Mesh& mesh, vector<Particle>& particles){
+void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle>& particles){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();
@@ -105,7 +105,7 @@ void Interpolation::interpolateInternalForceToNodes(Mesh& mesh, vector<Particle>
 	}
 }
 
-void Interpolation::interpolateExternalForceToNodes(Mesh& mesh, vector<Particle>& particles){
+void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle>& particles){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();
@@ -213,5 +213,75 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle>& par
 
 		// add quantity in particle
 		particles.at(i).setVorticityIncrement(dvorticity);
+	}
+}
+
+void Interpolation::particleVelocityRate(Mesh& mesh, vector<Particle>& particles){
+
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize the result vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// For each node in the contribution list,
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get weight
+			double Nip = contribution->at(j).getWeight();
+
+			// get total nodal force
+			Vector3d totalForce = nodes->at(contribution->at(j).getNodeId()).getTotalForce();
+
+			// get nodal mass
+			double nodalMass = nodes->at(contribution->at(j).getNodeId()).getMass();
+
+			// compute the contribution
+			velocityRate+=totalForce*Nip/nodalMass;
+		}
+
+		// add quantity in particle
+		particles.at(i).setVelocityRate(velocityRate);
+	}
+}
+
+void Interpolation::particlePositionRate(Mesh& mesh, vector<Particle>& particles){
+
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
+	for (size_t i = 0; i < particles.size(); ++i)
+	{
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize the result vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// For each node in the contribution list,
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get weight
+			double Nip = contribution->at(j).getWeight();
+
+			// get total nodal force
+			Vector3d nodalMomentum = nodes->at(contribution->at(j).getNodeId()).getMomentum();
+
+			// get nodal mass
+			double nodalMass = nodes->at(contribution->at(j).getNodeId()).getMass();
+
+			// compute the contribution
+			velocityRate+=nodalMomentum*Nip/nodalMass;
+		}
+
+		// add quantity in particle
+		particles.at(i).setPositionRate(velocityRate);
 	}
 }

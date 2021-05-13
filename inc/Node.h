@@ -24,18 +24,22 @@ public:
 	void setActive(bool); //!< configures the active state
 	void setCoordinates(Vector3d); //!< configures the coordinates
 	void setVelocity(Vector3d); //!< configures the velocity
+	void setMomentum(Vector3d); //!< configures the momentum
 
 	int getId(); //!< returns the identification
 	bool getActive(); //!< returns the active state
 	double getMass(); //!< returns the mass
 	Vector3d getCoordinates(); //!< returns the coordinates
 	Vector3d getMomentum(); //!< returns the momentum
+	Vector3d getTotalForce(); //!< returns the total nodal force
 	Vector3d getVelocity(); //!< returns the velocity
 
 	void addMass(double); //!< adds mass to the nodal mass
 	void addMomentum(Vector3d); //!< adds momentum to the nodal momentum
 	void addInternalForce(Vector3d); //!< adds internal force to the nodal internal force
 	void addExternalForce(Vector3d); //!< adds external force to the nodal external force
+
+	void resetValues(); //!< delete all values sored in node mesh
 
 private:
 

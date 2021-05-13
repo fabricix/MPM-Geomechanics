@@ -26,13 +26,15 @@ public:
 	Interpolation(); //!< default constructor
 	virtual ~Interpolation(); //!< default destructor
 	
-	void interpolateMassToNodes(Mesh&, vector<Particle>&); //!< interpolate mass from particles to nodes
-	void interpolateMomentumToNodes(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
-	void interpolateInternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate internal force from particles to nodes
-	void interpolateExternalForceToNodes(Mesh&, vector<Particle>&); //!< interpolate external force from particles to nodes
+	void nodalMass(Mesh&, vector<Particle>&); //!< interpolate mass from particles to nodes
+	void nodalMomentum(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
+	void nodalInternalForce(Mesh&, vector<Particle>&); //!< interpolate internal force from particles to nodes
+	void nodalExternalForce(Mesh&, vector<Particle>&); //!< interpolate external force from particles to nodes
 
 	void particleStrainIncrement(Mesh&, vector<Particle>&, double dt); //!< interpolate the strain increment at particle
 	void particleVorticityIncrement(Mesh&, vector<Particle>&,double dt); //!< interpolate the vorticity increment at particle
+	void particleVelocityRate(Mesh& ,vector<Particle>&);
+	void particlePositionRate(Mesh& ,vector<Particle>&);
 };
 
 #endif /* INTERPOLATION_H_ */

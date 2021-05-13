@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	Interpolation interpolation;
 
 	// interpolate particle mass to nodes
-	interpolation.interpolateMassToNodes(mesh,particles);
+	interpolation.nodalMass(mesh,particles);
 
 	// open a file
 	ofstream outputfile;
