@@ -21,26 +21,11 @@
 
 		"type":"structured",
 		
-		"cellDimension":
-		{
-			"x":1,
-			"y":1,
-			"z":1
-		},
+		"cellDimension":[1,2,3],
 
-		"origin":
-		{
-			"x":0,
-			"y":0,
-			"z":0
-		},
+		"origin":[1,2,3],
 
-		"nCells":
-		{
-			"x":10,
-			"y":10,
-			"z":20
-		},
+		"nCells":[10,10,10],
 
 		"boundaryConditons":
 		{

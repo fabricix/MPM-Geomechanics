@@ -22,8 +22,12 @@ using std::vector;
 #include "Json/json.hpp"
 using json = nlohmann::json;
 
+#include "Input.h"
+
 int main() {
 
+	// test using the json structure
+#if 0
 	// read a JSON file
 	std::ifstream i("inputFile.json");
 	json j;
@@ -56,6 +60,19 @@ int main() {
 	{
 		cout<<"The size of the id and the position must be equal\n";
 	}
+#else
+	// test using the class input
 
+	Input input;
+	input.readInputFile("inputFile.json");
+
+	// print all values
+	cout<<input.getJson()<<"\n";
+
+	// print
+	cout<<"print Stress Scheme Update:\n";
+	cout<<input.getJson()[input.getKeyWords()[Input::stressSchemeUpdate]]<<'\n';
+
+#endif
 	return 0;
 }

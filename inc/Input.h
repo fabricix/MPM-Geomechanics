@@ -8,14 +8,89 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
+#include <string>
+using std::string;
+
+#include <map>
+using std::map;
+
+#include "Json/json.hpp"
+using json = nlohmann::json;
+
 /// \class Input
 /// \brief Operations to read the input file.
 class Input {
 
 public:
+
+	/// \enum KeyWords
+	/// \brief Defines all the keywords used in the input file.
+	enum KeyWords
+	{
+		alpha, //!< alpha damping parameter
+		body, //!< used to define a body
+		boundaryConditons, //!< used to define the boundary conditions
+		cellDimension, //!< used to define the cell dimension in each direction
+		cohesion, //!< cohesion parameter in elasto-plastic model
+		cuboid, //!< used to define a cuboid body
+		damping, //!< used to define the damping in the model
+		displacement, //!< used to write the displacement field in the output file
+		dtFraction, //!< used to define the fraction of the critical time step
+		elastic, //!< used to define an elastic body
+		fields, //!< used to inform the field to be written in the output file
+		fixed, //!< used to define a fixed boundary condition
+		free, //!< used to define a free boundary condition
+		friction, //!< friction angle parameter in an elasto-plastic model
+		id, //!< used to define an identification
+		localNoViscous, //!< used to define a local no viscous damping
+		mass, //!< used to define the mass of a particle
+		materialId, //!< used to define a material identification
+		materials, //!< used to define materials
+		mesh, //!< used to define a mesh
+		nCells, //!< number of cells in each direction
+		nThreads, //!< number of threads in the current simulation
+		number, //!< number of results to be written
+		origin, //!< used to define the origin of coordinates
+		paneX0, //!< used to define the boundary conditions in the plane X0
+		paneXn, //!< used to define the boundary conditions in the plane Xn
+		paneY0, //!< used to define the boundary conditions in the plane Y0
+		paneYn, //!< used to define the boundary conditions in the plane Yn
+		paneZ0, //!< used to define the boundary conditions in the plane Z0
+		paneZn, //!< used to define the boundary conditions in the plane Zn
+		particles, //!< used to define the total particles
+		plastic, //!< defines an elasto-plastic material
+		pointP1, //!< defines the a lower left point in a cuboid
+		pointP2, //!< defines the a higher right point in a cuboid
+		poisson, //!< defines the Poisson's ratio in a material
+		position, //!< define position using coordinates
+		results, //!< used to define the type and the number of results
+		sliding, //!< used to defines a sliding boundary condition
+		stress, //!< used to inform the field stress in to be written
+		stressSchemeUpdate, //!< defines the type of stress update
+		structured, //!< used to defines the mesh type
+		type, //!< used to define a type of mesh
+		USL, //!< used to inform the Update Stress Last scheme
+		young //!< Young's modulus of an elastic material 
+	};
+
+	Input(); //!< default constructor
 	
-	Input();
-	virtual ~Input();
+	virtual ~Input(); //!< default destructor
+
+	void readInputFile(); //!< read the input file
+	void readInputFile(string); //!< read the input file
+
+	map<Input::KeyWords,string> getKeyWords(); //!< returns the map with the keywords
+	json getJson(); //!< returns the data file structure
+	string getFileName(); //!< returns the file name
+
+	void setFileName(string); //!< configures the filename
+
+private:
+
+	map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure
+	json inputFile; //!< data structure containing all the model informations
+	string inputFileName; //!< file name to be read
 };
 
 #endif /* INPUT_H_ */
