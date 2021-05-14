@@ -28,38 +28,38 @@ int main(int argc, char **argv)
 
 	enum Plane {X0,Y0,Z0,Xn,Yn,Zn};
 
-	Plane boundaryPlane=Plane::Xn;
+	Plane boundaryPlane=Plane::Zn;
 
 	switch (boundaryPlane)
 	{
 		case Plane::X0:
 			// active nodes in plane X0
-			mesh.activateNodes(mesh.getBoundary().planeX0);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneX0()->nodes);
 			break;
 
 		case Plane::Y0:
 			// active nodes in plane Y0
-			mesh.activateNodes(mesh.getBoundary().planeY0);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneY0()->nodes);
 			break;
 
 		case Plane::Z0:
 			// active nodes in plane Z0
-			mesh.activateNodes(mesh.getBoundary().planeZ0);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneZ0()->nodes);
 			break;
 
 		case Plane::Xn:
 			// active nodes in plane Xn
-			mesh.activateNodes(mesh.getBoundary().planeXn);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneXn()->nodes);
 			break;
 
 		case Plane::Yn:
 			// active nodes in plane Yn
-			mesh.activateNodes(mesh.getBoundary().planeYn);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneYn()->nodes);
 			break;
 
 		case Plane::Zn:
 			// active nodes in plane Zn
-			mesh.activateNodes(mesh.getBoundary().planeZn);
+			mesh.activateNodes(mesh.getBoundary()->getPlaneZn()->nodes);
 			break;
 	}
 

@@ -114,3 +114,63 @@ void Update::particlePosition(Mesh& mesh, vector<Particle>& particles, double dt
 		particles.at(i).setPosition(particles.at(i).getPosition()+positionRate*dt);
 	}
 }
+
+static void setPlane(const Boundary::planeBoundary* plane, vector<Node>* nodes, int dir){
+
+	for (size_t i = 0; i < plane->nodes.size(); ++i)
+	{
+		switch(plane->type) {
+
+			case Boundary::BoundaryType::FIXED:
+				nodes->at(plane->nodes.at(i)).setMomentum(Vector3d::Zero());
+			break;
+		
+			case Boundary::BoundaryType::SLIDING:
+				
+				Vector3d momentum = nodes->at(plane->nodes.at(i)).getMomentum();
+				
+				switch(dir) {
+
+					case 0:
+					momentum.x()=0.0;
+					break;
+
+					case 1:
+					momentum.y()=0.0;
+					break;
+
+					case 2:
+					momentum.z()=0.0;
+					break;
+				}
+				nodes->at(plane->nodes.at(i)).setMomentum(momentum);
+			break;
+		}
+	}
+}
+
+void Update::boundaryConditions(Mesh& mesh){
+
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// coordinates to fix momentum x=0, y=1, z=2
+
+	// Plane X0
+	setPlane(mesh.getBoundary()->getPlaneX0(), nodes, 0);
+
+	// Plane Y0
+	setPlane(mesh.getBoundary()->getPlaneY0(), nodes, 1);
+
+	// Plane Z0
+	setPlane(mesh.getBoundary()->getPlaneZ0(), nodes, 2);
+	
+	// Plane Xn
+	setPlane(mesh.getBoundary()->getPlaneXn(), nodes, 0);
+
+	// Plane Yn
+	setPlane(mesh.getBoundary()->getPlaneYn(), nodes, 1);
+
+	// Plane Zn
+	setPlane(mesh.getBoundary()->getPlaneZn(), nodes, 2);
+}

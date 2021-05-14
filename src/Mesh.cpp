@@ -243,9 +243,9 @@ vector<int> Mesh::getContributionNodes(Vector3d position) {
     return v;
 }
 
-const Boundary& Mesh::getBoundary(){
+Boundary* Mesh::getBoundary(){
 
-    return boundary;
+    return &boundary;
 }
 
 //
@@ -318,6 +318,11 @@ void Mesh::updateBoundaries()
     Vector3d minLimitsGhosts = minLimit-nGhosts*cellDim;
     Vector3d maxLimitsGhosts = Vector3d(nCells.x()*cellDim.x(),nCells.y()*cellDim.y(),nCells.z()*cellDim.z())+nGhosts*cellDim;
 
+    // node vectors
+    vector<int> nodesPlaneX0, nodesPlaneY0, nodesPlaneZ0;
+    vector<int> nodesPlaneXn, nodesPlaneYn, nodesPlaneZn;
+
+    // get boundary nodes
     for (size_t i = 0; i < gridNodes.size(); ++i)
     {
         // node coordinates
@@ -329,37 +334,45 @@ void Mesh::updateBoundaries()
         // plane X0
         if (nodeCoordinates.x()<=minLimitsGhosts.x())
         {
-            boundary.planeX0.push_back(nodeId);
+            nodesPlaneX0.push_back(nodeId);
         }
-
         // plane Y0
         if (nodeCoordinates.y()<=minLimitsGhosts.y())
         {
-            boundary.planeY0.push_back(nodeId);
+            nodesPlaneY0.push_back(nodeId);
         }
         
         // plane Z0
         if (nodeCoordinates.z()<=minLimitsGhosts.z())
         {
-            boundary.planeZ0.push_back(nodeId);
+            nodesPlaneZ0.push_back(nodeId);
         }
 
         // plane Xn
         if (nodeCoordinates.x()>=maxLimitsGhosts.x())
         {
-            boundary.planeXn.push_back(nodeId);
+            nodesPlaneXn.push_back(nodeId);
         }
 
         // plane Yn
         if (nodeCoordinates.y()>=maxLimitsGhosts.y())
         {
-            boundary.planeYn.push_back(nodeId);
+            nodesPlaneYn.push_back(nodeId);
         }        
 
         // plane Zn
         if (nodeCoordinates.z()>=maxLimitsGhosts.z())
         {
-            boundary.planeZn.push_back(nodeId);
+            nodesPlaneZn.push_back(nodeId);
         }
     }
+
+    // set vectors in structure
+    boundary.setNodesPlaneX0(nodesPlaneX0);
+    boundary.setNodesPlaneY0(nodesPlaneY0);
+    boundary.setNodesPlaneZ0(nodesPlaneZ0);
+
+    boundary.setNodesPlaneXn(nodesPlaneXn);
+    boundary.setNodesPlaneYn(nodesPlaneYn);
+    boundary.setNodesPlaneZn(nodesPlaneZn);
 }

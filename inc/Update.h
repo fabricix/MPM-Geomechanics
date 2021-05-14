@@ -26,6 +26,7 @@ public:
 	void particleStress(vector<Particle>&); //!< update the particles' stress
 	void particleVelocity(Mesh&, vector<Particle>&,double); //!< update the particle velocity
 	void particlePosition(Mesh&, vector<Particle>&,double); //!< update the particle position
+	void boundaryConditions(Mesh& mesh); //!< update essential boundary condition
 };
 
 #endif /* UPDATE_H_ */
