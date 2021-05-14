@@ -20,8 +20,8 @@ class Body {
 
 public:
 
-	Body();
-	virtual ~Body();
+	Body(); //<! default constructor
+	virtual ~Body(); //<! default destructor
 	
 	bool createCuboid(Mesh&, Vector3d, Vector3d, Material*); //<! creates a cuboid
 

@@ -21,7 +21,7 @@ public:
 	/// \brief Determines the type of restrictions to be imposed to the mesh.
 	enum BoundaryType{FIXED,SLIDING};
 
-	/// \struct BoundaryType
+	/// \struct planeBoundary
 	/// \brief Represents the nodes and the type of restrictions
 	struct planeBoundary
 	{
@@ -29,8 +29,8 @@ public:
 		vector<int> nodes; //!< nodes in plane
 	};
 
-	Boundary();
-	virtual ~Boundary();
+	Boundary(); //!< default constructor
+	virtual ~Boundary(); //!< default destructor
 
 	const planeBoundary* getPlaneX0(); //!< returns plane X0
 	const planeBoundary* getPlaneY0(); //!< returns plane Y0
@@ -39,12 +39,12 @@ public:
 	const planeBoundary* getPlaneYn(); //!< returns plane Yn
 	const planeBoundary* getPlaneZn(); //!< returns plane Zn
 
-	void setNodesPlaneX0(vector<int>);
-	void setNodesPlaneY0(vector<int>);
-	void setNodesPlaneZ0(vector<int>);
-	void setNodesPlaneXn(vector<int>);
-	void setNodesPlaneYn(vector<int>);
-	void setNodesPlaneZn(vector<int>);
+	void setNodesPlaneX0(vector<int>); //!< configures the plane X0 
+	void setNodesPlaneY0(vector<int>); //!< configures the plane Y0
+	void setNodesPlaneZ0(vector<int>); //!< configures the plane Z0
+	void setNodesPlaneXn(vector<int>); //!< configures the plane Xn
+	void setNodesPlaneYn(vector<int>); //!< configures the plane Yn
+	void setNodesPlaneZn(vector<int>); //!< configures the plane Zn
 
 private:
 
