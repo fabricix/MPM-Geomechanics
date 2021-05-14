@@ -24,7 +24,6 @@ Input::Input() {
 		keywords[KeyWords::elastic]="elastic";
 		keywords[KeyWords::fields]="fields";
 		keywords[KeyWords::fixed]="fixed";
-		keywords[KeyWords::free]="free";
 		keywords[KeyWords::friction]="friction";
 		keywords[KeyWords::id]="id";
 		keywords[KeyWords::localNoViscous]="localNoViscous";

@@ -39,7 +39,6 @@ public:
 		elastic, //!< used to define an elastic body
 		fields, //!< used to inform the field to be written in the output file
 		fixed, //!< used to define a fixed boundary condition
-		free, //!< used to define a free boundary condition
 		friction, //!< friction angle parameter in an elasto-plastic model
 		id, //!< used to define an identification
 		localNoViscous, //!< used to define a local no viscous damping

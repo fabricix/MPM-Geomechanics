@@ -45,8 +45,6 @@ public:
 	Vector3d getMomentum(); //!< returns the momentum of the particle
 	Vector3d getPosition(); //!< returns the current particle position
 	Vector3d getExternalForce(); //!< returns the external force in particle
-	Vector3d getVelocityRate(); //!< returns particle velocity rate
-	Vector3d getPositionRate(); //!< returns particle velocity rate
 	Vector3d getVelocity(); //!< returns particle velocity
 	Matrix3d getStress(); //!< returns the current particle stress tensor
 	Matrix3d getStrainIncrement(); //!< returns the strain increment
@@ -60,8 +58,6 @@ public:
 	void setInitialPosition(Vector3d); //!< configures the initial position
 	void setPosition(Vector3d); //!< configures the current position
 	void setSize(Vector3d); //!< configures particle size in each direction
-	void setVelocityRate(Vector3d); //!< configures particle velocity rate
-	void setPositionRate(Vector3d); //!< configures particle position rate
 	void setVelocity(Vector3d); //!< configures particle velocity
 	void setStrainIncrement(Matrix3d); //!< configures the strain increment
 	void setVorticityIncrement(Matrix3d); //!< configures the vorticity increment
@@ -85,8 +81,6 @@ private:
 	double porosity; //!< particle porosity
 
 	Vector3d position; //!< particle position
-	Vector3d velocityRate; //!< particle velocity rate
-	Vector3d positionRate; //!< particle position rate 
 	Vector3d initialPosition; //!< initial particle position
 	Vector3d velocity; //!< particle velocity
 	Vector3d momentum; //!< particle momentum

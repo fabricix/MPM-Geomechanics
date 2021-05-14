@@ -63,22 +63,54 @@ void Update::particleStress(vector<Particle>& particles){
 	}
 }
 
-void Update::particleVelocity(vector<Particle>& particles, double dt){
+void Update::particleVelocity(Mesh& mesh, vector<Particle>& particles, double dt){
 
-	// For each particle 
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize the result vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// For each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// compute the velocity rate contributuion
+			velocityRate+=nodes->at(contribution->at(j).getNodeId()).getTotalForce()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+		}
+
 		// update particle velocity
-		particles.at(i).setVelocity(particles.at(i).getVelocity()+particles.at(i).getVelocityRate()*dt);
+		particles.at(i).setVelocity(particles.at(i).getVelocity()+velocityRate*dt);
 	}
 }
 
-void Update::particlePosition(vector<Particle>& particles, double dt){
+void Update::particlePosition(Mesh& mesh, vector<Particle>& particles, double dt){
 
-	// For each particle 
+	// Get the mesh nodes pointer
+	vector<Node>* nodes = mesh.getNodes();
+
+	// For each particle, 
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
-		// update particle velocity
-		particles.at(i).setPosition(particles.at(i).getPosition()+particles.at(i).getPositionRate()*dt);
+		// get the nodes and weights that this particle contributes.
+		vector<Contribution>* contribution = particles.at(i).getContributionNodes();
+
+		// initialize the result vector
+		Vector3d positionRate = Vector3d::Zero();
+		
+		// For each node in the contribution list,
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// compute the position rate contribution
+			positionRate+=nodes->at(contribution->at(j).getNodeId()).getMomentum()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+		}
+
+		// update particle position
+		particles.at(i).setPosition(particles.at(i).getPosition()+positionRate*dt);
 	}
 }

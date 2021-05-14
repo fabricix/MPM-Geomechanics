@@ -24,9 +24,8 @@ public:
 	void resetNodalValues(Mesh&); //!< deletes all stored values in nodes 
 	void particleDensity(vector<Particle>&); //!< updates the particles' density
 	void particleStress(vector<Particle>&); //!< update the particles' stress
-	void particleVelocity(vector<Particle>&,double); //!< update the particle velocity
-	void particlePosition(vector<Particle>&,double); //!< update the particle position
-
+	void particleVelocity(Mesh&, vector<Particle>&,double); //!< update the particle velocity
+	void particlePosition(Mesh&, vector<Particle>&,double); //!< update the particle position
 };
 
 #endif /* UPDATE_H_ */

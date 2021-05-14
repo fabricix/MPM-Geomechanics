@@ -104,16 +104,6 @@ Vector3d Particle::getExternalForce()
 	return externalForce;
 }
 
-Vector3d Particle::getPositionRate()
-{
-	return positionRate;
-}
-
-Vector3d Particle::getVelocityRate()
-{
-	return velocityRate;
-}
-
 Vector3d Particle::getVelocity()
 {
 	return velocity;
@@ -188,16 +178,6 @@ void Particle::setStress(Matrix3d s){
 	stress=s;
 }
 
-void Particle::setVelocityRate(Vector3d vr){
-
-	velocityRate=vr;
-}
-
-void Particle::setPositionRate(Vector3d pr){
-
-	positionRate=pr;
-}
-
 void Particle::setVelocity(Vector3d v){
 
 	velocity = v;
@@ -267,8 +247,6 @@ void Particle::initializeValues(){
 	porosity=0.0;
 
 	position.setZero();
-	positionRate.setZero();
-	velocityRate.setZero();
 	initialPosition.setZero();
 	velocity.setZero();
 	momentum.setZero();

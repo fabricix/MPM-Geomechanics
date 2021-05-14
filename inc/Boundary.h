@@ -19,7 +19,7 @@ public:
 
 	/// \enum BoundaryType
 	/// \brief Determines the type of fixities to be imposed to the mesh. 
-	enum BoundaryType{FIXED,SYMETRICAL};
+	enum BoundaryType{FIXED,SLIDING};
 
 	Boundary();
 	virtual ~Boundary();

@@ -9,7 +9,7 @@
 
 Boundary::Boundary(){
 
-	type = BoundaryType::SYMETRICAL;
+	type = BoundaryType::SLIDING;
 }
 
 Boundary::~Boundary() {
