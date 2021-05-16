@@ -173,8 +173,8 @@ Vector3d Mesh::getMaxLimits() {
 	return maxLimit;
 }
 
-vector<int> Mesh::getNodesInCell(Vector3d position)
-{
+vector<int> Mesh::getNodesInCell(Vector3d position){
+    
     int cellId = getCellIdbyPosition(position);
     
     int idNode1 = cellId;

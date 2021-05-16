@@ -34,7 +34,6 @@ public:
     virtual ~Mesh(); //!< default destructor
 
     void createGrid(); //!< create a structured mesh grid
-    bool updateNodesContribution(const vector<Particle>&); //!< update the nodes contributing at each particle
 
     void setCellDimension(double,double,double); //!< set cells dimension in each direction
     void setNumCells(int,int,int); //!< set number of cell in each direction

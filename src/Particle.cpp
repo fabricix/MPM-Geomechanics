@@ -198,7 +198,7 @@ void Particle::updateContributionNodes(Mesh & mesh)
 	const vector<int> nodesId = mesh.getContributionNodes(position);
 	
 	// reference to grid nodes
-	const vector<Node> * gNodes = mesh.getNodes();
+	vector<Node> * gNodes = mesh.getNodes();
 
 	// update the shape function for all nodes that this particle contributes
 	for (size_t i = 0; i < nodesId.size(); ++i)
@@ -206,11 +206,11 @@ void Particle::updateContributionNodes(Mesh & mesh)
 		// set the node id
 		contributionNodes.at(i).setNodeId(nodesId.at(i));
 		
-		// get the node
-		Node iNode = gNodes->at(nodesId.at(i));
-
+		// active the node
+		gNodes->at(nodesId.at(i)).setActive(true);
+	
 		// update the shape functions and gradients
-		shape->update(position,iNode.getCoordinates(),mesh.getCellDimension(), size);
+		shape->update(position,gNodes->at(nodesId.at(i)).getCoordinates(),mesh.getCellDimension(),size);
 
 		// get shape function and its derivates
 		Vector3d shapeFn = shape->getShape();

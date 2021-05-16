@@ -39,11 +39,18 @@ namespace ModelSetup {
 	double getDt(); //<! returns the time step
 	void setDt(double); //<! configures the time step
 
+	double getTime(); //<! returns the simulation time
+	void setTime(double); //<! configures the simulation time
+
+	int getResultNum(); //!< returns the total results to be written
+	void setResultNum(int); //!< configures the total results
+	int getResultSteps(); //!< returns the step when the results will be written
+
 	double getDtFraction(); //<! returns
 	void setDtFraction(double); //<! configures the fraction of critical time step
 
-	double getThreads(); //<! returns
-	void setThreads(double); //<! configures the number of threads
+	int getThreads(); //<! returns
+	void setThreads(int); //<! configures the number of threads
 
 	bool getContact(); //<! returns if contact is active
 	void setContact(bool); //<! configures if contact is active

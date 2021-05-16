@@ -7,27 +7,35 @@
 
 #include "Model.h"
 
+#include <cmath>
+using std::floor;
+
 namespace ModelSetup {
 
-	bool contact=false;				//!< is contact active
-	bool gravity=false;				//!< is gravity active
-	bool axisymetric=false;			//!< is axisymetric model
-	bool coupled=false;				//!< is coupled analysis
-	bool jaumann=true;				//!< is Jaumann rate active
+	namespace  {
+		
+		bool contact=false;				//!< is contact active
+		bool gravity=false;				//!< is gravity active
+		bool axisymetric=false;			//!< is axisymetric model
+		bool coupled=false;				//!< is coupled analysis
+		bool jaumann=true;				//!< is Jaumann rate active
 
-	int nThreads=1;					//!< number of threads in current job
-	int contributionNodes=27;		//!< nodes that the particles contributed
+		int nThreads=1;					//!< number of threads in current job
+		int contributionNodes=27;		//!< nodes that the particles contributed
 
-	double dt=0.0;					//!< time step
-	double time=0.0;				//!< simulation time
-	double dtFraction=0.25; 	    //!< fraction of critical time step
-	double kineticEnergy=0.0;		//!< kinetic energy of the model
+		double dt=0.0;					//!< time step
+		double time=0.0;				//!< simulation time
+		double dtFraction=0.25; 	    //!< fraction of critical time step
+		double kineticEnergy=0.0;		//!< kinetic energy of the model
 
-	string inputFile="";			//!< input file name
+		int resultNumber=10;			//!< number of results to write
 
-	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
+		string inputFile="";			//!< input file name
 
-	DampingType damping=DampingType::NONE; //!< damping type
+		StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
+
+		DampingType damping=DampingType::NONE; //!< damping type
+	}
 
     #if defined (_WIN64) || defined(_WIN32)
 	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system
@@ -37,15 +45,18 @@ namespace ModelSetup {
 
     InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP;
 	
-	bool getWindowsSystem(){
-		return operationalSystem==OperationalSystem::WINDOWS?true:false;
-	}
-
-	bool getLinuxSystem(){
-		return operationalSystem==OperationalSystem::LINUX?true:false;
-	}
-
+	bool getWindowsSystem(){return operationalSystem==OperationalSystem::WINDOWS?true:false; }
+	bool getLinuxSystem(){ return operationalSystem==OperationalSystem::LINUX?true:false; }
+	
 	int getContributionNodesNum(){ return contributionNodes; }
+
+	double getTime(){ return time; }
+	void setTime(double d){ time=d; }
+
+	int getResultNum(){ return resultNumber; }
+	void setResultNum(int d){ resultNumber=d; }
+
+	int getResultSteps(){ return floor(time/dt)/resultNumber; }
 
 	double getDt(){ return dt; }
 	void setDt(double d){ dt=d; }
@@ -53,8 +64,8 @@ namespace ModelSetup {
 	double getDtFraction(){ return dtFraction; }
 	void setDtFraction(double d){ dtFraction=d; }
 
-	double getThreads(){ return nThreads; }
-	void setThreads(double d){ nThreads=d; }
+	int getThreads(){ return nThreads; }
+	void setThreads(int d){ nThreads=d; }
 
 	bool getContact(){ return contact; }
 	void setContact(bool d){ contact=d; }

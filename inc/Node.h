@@ -25,6 +25,7 @@ public:
 	void setCoordinates(Vector3d); //!< configures the coordinates
 	void setVelocity(Vector3d); //!< configures the velocity
 	void setMomentum(Vector3d); //!< configures the momentum
+	void setTotalForce(Vector3d); //!< configures the total nodal force
 
 	int getId(); //!< returns the identification
 	bool getActive(); //!< returns the active state
@@ -53,6 +54,7 @@ private:
 	Vector3d acceleration; //!< nodal acceleration
 	Vector3d externalForce; //!<  total external force
 	Vector3d internalForce; //!< nodal internal force
+	Vector3d totalForce; //!< nodal total force
 };
 
 #endif /* NODE_H_ */

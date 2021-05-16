@@ -25,6 +25,7 @@ Node::Node() {
     acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
+    totalForce.setZero();
 }
 
 void Node::resetValues()
@@ -37,6 +38,7 @@ void Node::resetValues()
     acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
+    totalForce.setZero();
 }
 //
 // set methods
@@ -67,13 +69,18 @@ void Node::setMomentum(Vector3d p){
     momentum=p;
 }
 
+void Node::setTotalForce(Vector3d f){
+
+    totalForce=f;
+}
+
 //
 // get methods
 //
 
 Vector3d Node::getTotalForce(){
 
-    return(internalForce+externalForce);
+    return totalForce;
 }
 
 Vector3d Node::getCoordinates(){

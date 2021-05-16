@@ -35,7 +35,7 @@ public:
 	Particle(Vector3d, Material*); //!< create a particle
 	virtual ~Particle(); //!< default destructor
 
-	void updateContributionNodes(Mesh &); //!< update the list of nodes that contributes
+	void updateContributionNodes(Mesh &); //!< update the list of nodes that the particle contributes
 	void updateStress();//!< update the stress
 
 	int getId(); //!< returns the particle identification 
