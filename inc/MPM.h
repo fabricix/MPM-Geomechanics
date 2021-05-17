@@ -34,7 +34,6 @@ public:
 	States states; //!< operations for load and save model's states
 	Solver* solver; //!< operation for solve the equations in time
 	Input input; //!< input operations
-	Output output; //!< output operations
 };
 
 #endif /* MPM_H_ */

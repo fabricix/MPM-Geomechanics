@@ -7,22 +7,16 @@
 
 #include "Integration.h"
 
-Integration::Integration() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Integration::~Integration() {
-	// TODO Auto-generated destructor stub
-}
-
 void Integration::nodalMomentum(Mesh& mesh,double dt){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();
 
 	for (size_t i = 0; i < nodes->size(); ++i)
-	{
-		nodes->at(i).setMomentum(nodes->at(i).getMomentum()+nodes->at(i).getTotalForce()*dt);
+	{	
+		if (nodes->at(i).getActive())
+		{
+			nodes->at(i).setMomentum(nodes->at(i).getMomentum()+nodes->at(i).getTotalForce()*dt);
+		}
 	}
 }

@@ -32,6 +32,8 @@ public:
 	double getMass(); //!< returns the mass
 	Vector3d getCoordinates(); //!< returns the coordinates
 	Vector3d getMomentum(); //!< returns the momentum
+	Vector3d getInternalForce(); //!< returns the internal force
+	Vector3d getExternalForce(); //!< returns the external force
 	Vector3d getTotalForce(); //!< returns the total nodal force
 	Vector3d getVelocity(); //!< returns the velocity
 

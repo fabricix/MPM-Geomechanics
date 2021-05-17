@@ -63,11 +63,8 @@ int main(int argc, char **argv)
 			break;
 	}
 
-	// create an output object
-	Output output;
-
 	// write the mesh
-	output.writeGrid(mesh,Output::POINTS);
+	Output::writeGrid(mesh,Output::POINTS);
 
 	
 	return 0;

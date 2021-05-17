@@ -7,15 +7,6 @@
 
 #include "Update.h"
 
-Update::Update() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Update::~Update() {
-	// TODO Auto-generated destructor stub
-}
-
 void Update::nodalVelocity(Mesh& mesh){
 
 	// reference to grid nodes
@@ -24,7 +15,10 @@ void Update::nodalVelocity(Mesh& mesh){
 	// update the nodal velocity
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		gNodes->at(i).setVelocity(gNodes->at(i).getMomentum()/gNodes->at(i).getMass());
+		if(gNodes->at(i).getActive()){
+		
+			gNodes->at(i).setVelocity(gNodes->at(i).getMomentum()/gNodes->at(i).getMass());
+		}
 	}
 }
 
@@ -36,7 +30,10 @@ void Update::nodalTotalForce(Mesh& mesh){
 	// update total force in nodes
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		//gNodes->at(i).setTotalForce(gNodes->at(i).getInternalForce()+gNodes->at(i).getExternalForce());
+		if(gNodes->at(i).getActive()){
+		
+			gNodes->at(i).setTotalForce(gNodes->at(i).getInternalForce()+gNodes->at(i).getExternalForce());
+		}
 	}
 }
 
@@ -48,7 +45,10 @@ void Update::resetNodalValues(Mesh& mesh){
 	// update the shape function for all nodes that this particle contributes
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		gNodes->at(i).resetValues();
+		if(gNodes->at(i).getActive()){
+			
+			gNodes->at(i).resetValues();
+		}
 	}
 }
 
@@ -57,11 +57,10 @@ void Update::particleDensity(vector<Particle>& particles){
 	// For each particle 
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
-		double density = particles.at(i).getDensity();
 		double volStrain = particles.at(i).getStrainIncrement().trace();
 
 		// update particle density
-		particles.at(i).setDensity(density/(1+volStrain));
+		particles.at(i).setDensity(particles.at(i).getDensity()/(1+volStrain));
 	}
 }
 
@@ -131,32 +130,37 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{
-		switch(plane->type) {
+		if (nodes->at(plane->nodes.at(i)).getActive()){
 
-			case Boundary::BoundaryType::FIXED:
-				nodes->at(plane->nodes.at(i)).setMomentum(Vector3d::Zero());
-			break;
-		
-			case Boundary::BoundaryType::SLIDING:
-				
-				Vector3d momentum = nodes->at(plane->nodes.at(i)).getMomentum();
-				
-				switch(dir) {
+			switch(plane->type) {
 
-					case 0:
-					momentum.x()=0.0;
-					break;
+				case Boundary::BoundaryType::FIXED:
+					nodes->at(plane->nodes.at(i)).setMomentum(Vector3d::Zero());
+				break;
+			
+				case Boundary::BoundaryType::SLIDING:
+					
+					Vector3d momentum = nodes->at(plane->nodes.at(i)).getMomentum();
+					
+					switch(dir) {
 
-					case 1:
-					momentum.y()=0.0;
-					break;
+						case 0:
+						momentum.x()=0.0;
+						break;
 
-					case 2:
-					momentum.z()=0.0;
-					break;
-				}
-				nodes->at(plane->nodes.at(i)).setMomentum(momentum);
-			break;
+						case 1:
+						momentum.y()=0.0;
+						break;
+
+						case 2:
+						momentum.z()=0.0;
+						break;
+					}
+
+					nodes->at(plane->nodes.at(i)).setMomentum(momentum);
+
+				break;
+			}
 		}
 	}
 }
@@ -166,7 +170,7 @@ void Update::boundaryConditionsMomentum(Mesh& mesh){
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
 
-	// coordinates to fix momentum x=0, y=1, z=2
+	// x=0, y=1, z=2
 
 	// Plane X0
 	setPlaneMomentum(mesh.getBoundary()->getPlaneX0(), nodes, 0);
@@ -191,32 +195,35 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{
-		switch(plane->type) {
+		if (nodes->at(plane->nodes.at(i)).getActive()){
+			
+			switch(plane->type) {
 
-			case Boundary::BoundaryType::FIXED:
-				nodes->at(plane->nodes.at(i)).setTotalForce(Vector3d::Zero());
-			break;
-		
-			case Boundary::BoundaryType::SLIDING:
-				
-				Vector3d force = nodes->at(plane->nodes.at(i)).getTotalForce();
-				
-				switch(dir) {
+				case Boundary::BoundaryType::FIXED:
+					nodes->at(plane->nodes.at(i)).setTotalForce(Vector3d::Zero());
+				break;
+			
+				case Boundary::BoundaryType::SLIDING:
+					
+					Vector3d force = nodes->at(plane->nodes.at(i)).getTotalForce();
+					
+					switch(dir) {
 
-					case 0:
-					force.x()=0.0;
-					break;
+						case 0:
+						force.x()=0.0;
+						break;
 
-					case 1:
-					force.y()=0.0;
-					break;
+						case 1:
+						force.y()=0.0;
+						break;
 
-					case 2:
-					force.z()=0.0;
-					break;
-				}
-				nodes->at(plane->nodes.at(i)).setTotalForce(force);
-			break;
+						case 2:
+						force.z()=0.0;
+						break;
+					}
+					nodes->at(plane->nodes.at(i)).setTotalForce(force);
+				break;
+			}
 		}
 	}
 }
@@ -226,7 +233,7 @@ void Update::boundaryConditionsForce(Mesh& mesh){
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
 
-	// coordinates to fix force x=0, y=1, z=2
+	// x=0, y=1, z=2
 
 	// Plane X0
 	setPlaneForce(mesh.getBoundary()->getPlaneX0(), nodes, 0);

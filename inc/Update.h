@@ -11,14 +11,9 @@
 #include "Mesh.h"
 #include "Particle.h"
 
-/// \class Update
+/// \namespace Update
 /// \brief Represents operations to update values in nodes and particles.
-class Update {
-
-public:
-
-	Update(); //!< default constructor
-	virtual ~Update(); //!< default destructor
+namespace Update {
 
 	void nodalVelocity(Mesh&); //!< updates the nodal velocity
 	void nodalTotalForce(Mesh&); //!< updates the nodal total force
@@ -30,8 +25,6 @@ public:
 	void boundaryConditionsForce(Mesh& mesh); //!< update essential boundary condition
 	void boundaryConditionsMomentum(Mesh& mesh); //!< update essential boundary condition
 	void contributionNodes(Mesh&, vector<Particle>&); //!< for each particle update the weights in each nodes that contributes
-
-private:
 
 	void setPlaneForce(const Boundary::planeBoundary*, vector<Node>*, int dir); //!< the restriction in each node in boundary planes
 	void setPlaneMomentum(const Boundary::planeBoundary*, vector<Node>*, int dir); //!< the restriction in each node in boundary planes

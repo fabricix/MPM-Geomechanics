@@ -12,28 +12,17 @@
 #include "Particle.h"
 #include "Body.h"
 
-/// \class Output
+/// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.
-class Output {
+namespace Output {
 
-public:
-	
 	/// \enum CellType
 	/// Describes the way that the cells are written in the mesh file
 	enum CellType{POINTS,CELLS};
 
-	Output(); //!< default constructor
-	virtual ~Output(); //!< default destructor
 	void writeGrid(Mesh&,CellType=CellType::CELLS); //!< write the grid mesh into a vtu file.
 	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
 	void writeBody(Body&, double=0.0); //!< write the particles in a body.
-
-private:
-
-	void defineEdian(); //!< defines the type of data based of the system
-	double checkTolerance(double); //!< defines a tolerance for write the results
-	void createGridFolder(); //!< creates a folder containing the grid
-	void createParticleFolder(); //!< create a folder containing the particles result files
 };
 
 #endif /* OUTPUT_H_ */

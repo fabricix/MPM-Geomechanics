@@ -10,14 +10,10 @@
 
 #include "Mesh.h"
 
-/// \class Integration
+/// \namespace Integration
 /// \brief Represents the integration operations in the MPM.
-class Integration {
+namespace Integration {
 
-public:
-	
-	Integration(); //!< default constructor
-	virtual ~Integration(); //!< default destructor
 	void nodalMomentum(Mesh& mesh,double dt); //!< integrate the nodal momentum
 };
 

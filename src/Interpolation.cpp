@@ -9,19 +9,8 @@
 #include "Contribution.h"
 #include "Particle.h"
 
-Interpolation::Interpolation() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Interpolation::~Interpolation() {
-	// TODO Auto-generated destructor stub
-}
-
-//
 //
 // From particle to node
-//
 //
 
 void Interpolation::nodalMass(Mesh& mesh, vector<Particle>& particles){
@@ -129,9 +118,7 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle>& particles){
 }
 
 //
-//
 // From node to particle
-//
 //
 
 void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle>& particles,double dt){

@@ -113,6 +113,16 @@ Vector3d Node::getVelocity(){
     return velocity;
 }
 
+Vector3d Node::getInternalForce(){
+
+    return internalForce;
+}
+    
+Vector3d Node::getExternalForce(){
+
+    return externalForce;
+}
+
 //
 // add methods
 //

@@ -14,17 +14,12 @@ using std::vector;
 class Mesh;
 class Particle;
 
-/// \class Interpolation
+/// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.
 /// 
 /// This class allows to interpolate quantities from particles to node and
 /// from nodes to particle back.
-class Interpolation {
-
-public:
-	
-	Interpolation(); //!< default constructor
-	virtual ~Interpolation(); //!< default destructor
+namespace Interpolation {
 	
 	void nodalMass(Mesh&, vector<Particle>&); //!< interpolate mass from particles to nodes
 	void nodalMomentum(Mesh&, vector<Particle>&); //!< interpolate momentum from particles to nodes
