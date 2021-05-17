@@ -24,12 +24,22 @@ using json = nlohmann::json;
 
 #include "Input.h"
 
-int main() {
+int main(int argc, char **argv) {
+
+	string fileName;
+
+	if(argc<2){
+		cout<< "insert the name of the file as program argument " << "\n";
+		return 0;
+	}
+	else{
+		fileName=string(argv[1]);
+	}
 
 	// test using the json structure
 #if 0
 	// read a JSON file
-	std::ifstream i("inputFile.json");
+	std::ifstream i(fileName);
 	json j;
 	i >> j;
 
@@ -64,14 +74,18 @@ int main() {
 	// test using the class input
 
 	Input input;
-	input.readInputFile("inputFile.json");
-
-	// print all values
-	cout<<input.getJson()<<"\n";
+	input.readInputFile(fileName);
 
 	// print
 	cout<<"print Stress Scheme Update:\n";
-	cout<<input.getJson()[input.getKeyWords()[Input::stressSchemeUpdate]]<<'\n';
+	if(input.getJson().contains(input.getKeyWords()[Input::stressSchemeUpdate]))
+	{
+		cout<<input.getJson()[input.getKeyWords()[Input::stressSchemeUpdate]]<<'\n';
+	}
+	else
+	{
+		cout << "Please verify the input file name and keywords\n";
+	}
 
 #endif
 	return 0;

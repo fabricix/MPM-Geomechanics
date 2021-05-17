@@ -23,6 +23,7 @@ namespace Output {
 	void writeGrid(Mesh&,CellType=CellType::CELLS); //!< write the grid mesh into a vtu file.
 	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
 	void writeBody(Body&, double=0.0); //!< write the particles in a body.
+	void writeResultsSeries(); //!< write the time series of the results
 };
 
 #endif /* OUTPUT_H_ */

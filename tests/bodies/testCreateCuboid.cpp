@@ -47,9 +47,9 @@ int main(int argc, char **argv)
 	body.createCuboid(mesh, Vector3d(2,2,6),Vector3d(4,4,7),&elastic2);
 
 	// create an output object
-	Output output;
-	output.writeGrid(mesh,Output::POINTS);
-	output.writeBody(body);
+	Output::writeGrid(mesh,Output::POINTS);
+	Output::writeBody(body);
+	Output::writeResultsSeries();
 
 	return 0;
 }

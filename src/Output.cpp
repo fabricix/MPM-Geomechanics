@@ -49,6 +49,7 @@ namespace Output{
         bool particleFolderExist=false;
         string particleFolderName="particles";
         string particleFileName="particles";
+        string particleFileTimeSerie="particleTimeSerie";
         vector<double> particleFilesTime;
     }
 
@@ -116,7 +117,7 @@ namespace Output{
             defineEdian();
         }
 
-        // create grid folder
+        // create particle folder
         if(!Folders::particleFolderExist){
             createParticleFolder();
         }
@@ -126,7 +127,7 @@ namespace Output{
 
         // open particle file
         ofstream partFile;
-        partFile.open((Folders::particleFolderName+"/"+Folders::particleFileName+"_"+to_string(Folders::particleFilesTime.size())+".vtu").c_str());
+        partFile.open(Folders::particleFolderName+"/"+Folders::particleFileName+"_"+to_string(Folders::particleFilesTime.size())+".vtu");
         partFile.precision(4);
 
         // particle data
@@ -228,7 +229,7 @@ namespace Output{
         
         // open grid file
         ofstream gridFile;
-        gridFile.open((Folders::gridFolderName+"/"+Folders::gridFileName).c_str());
+        gridFile.open(Folders::gridFolderName+"/"+Folders::gridFileName);
         gridFile.precision(4);
 
         // mesh data
@@ -347,4 +348,31 @@ namespace Output{
         writeParticles(body.getParticles(),time);
     }
 
+    void writeResultsSeries(){
+
+        // define edian
+        if(Folders::edian==""){
+            defineEdian();
+        }
+
+        // create particle folder
+        if(!Folders::particleFolderExist){
+            createParticleFolder();
+        }
+
+        // open particle serie file
+        ofstream serieFile;
+        serieFile.open(Folders::particleFolderName+"/"+Folders::particleFileTimeSerie+".pvd");
+
+        // write the file
+        serieFile <<"<?xml version=\"1.0\"?>\n";
+        serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+        serieFile <<"\t<Collection>\n";
+        for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
+        {
+            serieFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
+        }
+        serieFile <<"\t</Collection>\n";
+        serieFile <<"</VTKFile>\n";
+    }
 }
