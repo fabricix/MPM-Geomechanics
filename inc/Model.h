@@ -1,4 +1,4 @@
-/*
+ /*
  * Model.h
  *
  *  Created on: 22 de abr de 2021
@@ -7,6 +7,9 @@
 
 #ifndef MODEL_H_
 #define MODEL_H_
+
+#include "Eigen/Core"
+using Eigen::Vector3d;
 
 #include<string>
 using std::string;
@@ -31,50 +34,53 @@ namespace ModelSetup {
 	/// \brief Defines the type of interpolation function.
 	enum InterpolationFunctionType{LINEAR, GIMP};
 
-	bool getWindowsSystem(); //<! returns true is the system is Windows
-	bool getLinuxSystem(); //<! returns true if the system is Linux
+	bool getWindowsSystem(); //!< returns true is the system is Windows
+	bool getLinuxSystem(); //!< returns true if the system is Linux
 	
-	int getContributionNodesNum(); //<! returns the number of nodes that a particle contributes.
+	int getContributionNodesNum(); //!< returns the number of nodes that a particle contributes.
 	
-	double getDt(); //<! returns the time step
-	void setDt(double); //<! configures the time step
+	double getDt(); //!< returns the time step
+	void setDt(double); //!< configures the time step
 
-	double getTime(); //<! returns the simulation time
-	void setTime(double); //<! configures the simulation time
+	double getTime(); //!< returns the simulation time
+	void setTime(double); //!< configures the simulation time
 
 	int getResultNum(); //!< returns the total results to be written
 	void setResultNum(int); //!< configures the total results
 	int getResultSteps(); //!< returns the step when the results will be written
 
-	double getDtFraction(); //<! returns
-	void setDtFraction(double); //<! configures the fraction of critical time step
+	double getDtFraction(); //!< returns
+	void setDtFraction(double); //!< configures the fraction of critical time step
 
-	int getThreads(); //<! returns
-	void setThreads(int); //<! configures the number of threads
+	int getThreads(); //!< returns
+	void setThreads(int); //!< configures the number of threads
 
-	bool getContact(); //<! returns if contact is active
-	void setContact(bool); //<! configures if contact is active
+	bool getContactActive(); //!< returns if contact is active
+	void setContactActive(bool); //!< configures if contact is active
 
-	bool getGravity(); //<! returns if gravity is active
-	void setGravity(bool); //<! configures if gravity is active
+	bool getGravityActive(); //!< returns if gravity is active
+	void setGravityActive(bool); //!< configures if gravity is active
 
-	bool getAxisymetric(); //<! returns if axisymetric analisys is active
-	void setAxisymetric(bool); //<! configures if axisymetric analisys is active
+	Vector3d getGravity(); //!< returns gravity vector
+	void setGravity(Vector3d d); //!< configures gravity vector
 
-	bool getJanumann(); //<! returns if Jaumann rate is active
-	void setJanumann(bool); //<! configures if Jaumann rate is active
+	bool getAxisymetricActive(); //!< returns if axisymetric analisys is active
+	void setAxisymetricActive(bool); //!< configures if axisymetric analisys is active
 
-	string getInputFile(); //<! returns the input file name
-	void setInputFile(string); //<! configures the input file name
+	bool getJanumannActive(); //!< returns if Jaumann rate is active
+	void setJanumannActive(bool); //!< configures if Jaumann rate is active
 
-	ModelSetup::StressUpdateScheme getUpdateStressScheme(); //<! returns the scheme for updating the stress
-	void setUpdateStressScheme(ModelSetup::StressUpdateScheme); //<! configures the scheme for updating the stress
+	string getInputFile(); //!< returns the input file name
+	void setInputFile(string); //!< configures the input file name
 
-	ModelSetup::DampingType getDamping(); //<! returns the damping
-	void setDamping(ModelSetup::DampingType); //<! configures the damping type
+	ModelSetup::StressUpdateScheme getUpdateStressScheme(); //!< returns the scheme for updating the stress
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme); //!< configures the scheme for updating the stress
 
-	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //<! returns the interpolation functions
-	void setInterpolationFunction(ModelSetup::InterpolationFunctionType); //<! configures the interpolation functions
+	ModelSetup::DampingType getDamping(); //!< returns the damping
+	void setDamping(ModelSetup::DampingType); //!< configures the damping type
+
+	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //!< returns the interpolation functions
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType); //!< configures the interpolation functions
 };
 
 #endif /* MODEL_H_ */

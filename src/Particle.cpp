@@ -183,6 +183,16 @@ void Particle::setVelocity(Vector3d v){
 	velocity = v;
 }
 
+void Particle::setExternalForce(Vector3d f)
+{
+	externalForce=f;
+}
+
+void Particle::addExternalForce(Vector3d df)
+{
+	externalForce+=df;
+}
+
 //
 // public methods
 //

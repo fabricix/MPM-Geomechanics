@@ -14,11 +14,13 @@ namespace ModelSetup {
 
 	namespace  {
 		
-		bool contact=false;				//!< is contact active
-		bool gravity=false;				//!< is gravity active
-		bool axisymetric=false;			//!< is axisymetric model
-		bool coupled=false;				//!< is coupled analysis
-		bool jaumann=true;				//!< is Jaumann rate active
+		bool contactActive=false;		//!< is contact active
+		bool gravityActive=false;		//!< is gravity active
+		bool axisymetricActive=false;	//!< is axisymetric model
+		bool coupledActive=false;		//!< is coupled analysis
+		bool jaumannActive=true;		//!< is Jaumann rate active
+		
+		Vector3d gravity(0,0,-9.81);	//!< gravity vector
 
 		int nThreads=1;					//!< number of threads in current job
 		int contributionNodes=27;		//!< nodes that the particles contributed
@@ -67,17 +69,20 @@ namespace ModelSetup {
 	int getThreads(){ return nThreads; }
 	void setThreads(int d){ nThreads=d; }
 
-	bool getContact(){ return contact; }
-	void setContact(bool d){ contact=d; }
+	bool getContactActive(){ return contactActive; }
+	void setContactActive(bool d){ contactActive=d; }
 
-	bool getGravity(){ return gravity; }
-	void setGravity(bool d){ gravity=d; }
+	bool getGravityActive(){ return gravityActive; }
+	void setGravityActive(bool d){ gravityActive=d; }
 
-	bool getAxisymetric(){ return axisymetric; }
-	void setAxisymetric(bool d){ axisymetric=d; }
+	Vector3d getGravity(){ return gravity; }
+	void setGravity(Vector3d d){ gravity=d; }
 
-	bool getJanumann(){ return jaumann; }
-	void setJanumann(bool d){ jaumann=d; }
+	bool getAxisymetricActive(){ return axisymetricActive; }
+	void setAxisymetricActive(bool d){ axisymetricActive=d; }
+
+	bool getJanumannActive(){ return jaumannActive; }
+	void setJanumannActive(bool d){ jaumannActive=d; }
 
 	string getInputFile(){ return inputFile; }
 	void setInputFile(string d){ inputFile=d; }

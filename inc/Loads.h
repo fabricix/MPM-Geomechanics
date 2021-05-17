@@ -8,14 +8,17 @@
 #ifndef LOADS_H_
 #define LOADS_H_
 
-/// \class Loads
-/// \brief Represents loads in the MPM model.
-class Loads {
+#include <Body.h>
 
-public:
-	
-	Loads(); //!< default constructor
-	virtual ~Loads(); //<! default destructor
+#include <vector>
+using std::vector;
+
+/// \namespace Loads
+/// \brief Operations to manage loads in the MPM model.
+namespace Loads {
+
+	void setGravity(vector<Body>&);
+
 };
 
 #endif /* LOADS_H_ */

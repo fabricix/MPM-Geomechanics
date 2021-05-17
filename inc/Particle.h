@@ -59,11 +59,14 @@ public:
 	void setPosition(Vector3d); //!< configures the current position
 	void setSize(Vector3d); //!< configures particle size in each direction
 	void setVelocity(Vector3d); //!< configures particle velocity
+	void setExternalForce(Vector3d); //!< configures the external force in particle
 	void setStrainIncrement(Matrix3d); //!< configures the strain increment
 	void setVorticityIncrement(Matrix3d); //!< configures the vorticity increment
 	void setStress(Matrix3d); //!< configures the current particle stress tensor
 	void setMaterial(Material*); //!< configures the material in the particle
 	void setShape(Shape*); //!< configures the shape function in the particle
+	
+	void addExternalForce(Vector3d); //!< adds a external force increment
 
 	static int getTotalParticles(); //<! returns o number of particles created
 

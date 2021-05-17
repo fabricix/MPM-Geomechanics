@@ -6,13 +6,25 @@
  */
 
 #include "Loads.h"
+#include "Model.h"
 
-Loads::Loads() {
-	// TODO Auto-generated constructor stub
+namespace Loads{
 
-}
+	void setGravity(vector<Body>& bodies){
 
-Loads::~Loads() {
-	// TODO Auto-generated destructor stub
+		if (!ModelSetup::getGravityActive()){
+
+			return;
+		}
+
+		for (size_t i = 0; i < bodies.size(); ++i)
+		{
+			for (size_t j = 0; j < bodies.at(i).getParticles().size(); ++j)
+			{
+				bodies.at(i).getParticles().at(j).addExternalForce(
+						bodies.at(i).getParticles().at(j).getMass()*ModelSetup::getGravity());
+			}
+		}
+	}
 }
 
