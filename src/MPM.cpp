@@ -212,7 +212,7 @@ void MPM::setUpMaterialList(){
 	{
 		json::iterator it;
 
-		for( it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
+		for(it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
 			
 			if((*it)[keywords[Input::type]]==keywords[Input::elastic])
 			{
@@ -241,7 +241,7 @@ void MPM::setUpBodyList(){
 	{
 		json::iterator it;
 
-		for( it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
+		for(it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
 			
 			if((*it)[keywords[Input::type]]==keywords[Input::cuboid])
 			{
@@ -272,11 +272,11 @@ void MPM::createBodies(){
 	{	
 		// get material from list
 		Material* iMaterial=0;
-		for (size_t i = 0; i < materials.size(); ++i) {
+		for (size_t j = 0; j < materials.size(); ++j) {
 
-			if (bodies.at(i)->getMaterialId()==materials.at(i)->getId()){
+			if (bodies.at(i)->getMaterialId()==materials.at(j)->getId()){
 
-				iMaterial=materials.at(i);
+				iMaterial=materials.at(j);
 				break;
 			}
 		}
@@ -295,11 +295,11 @@ void MPM::setUpParticles(){
 			switch(ModelSetup::getInterpolationFunction())
 			{
 				case ModelSetup::LINEAR:
-					particles.at(i).setShape(new ShapeLinear);
+					particles.at(j).setShape(new ShapeLinear);
 					break;
 
 				case ModelSetup::GIMP:
-					particles.at(i).setShape(new ShapeGimp);
+					particles.at(j).setShape(new ShapeGimp);
 					break;
 				default:
 				Warning::printMessage("Bad definition of shape function in particle");
