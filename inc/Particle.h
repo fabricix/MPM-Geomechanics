@@ -33,6 +33,7 @@ public:
 	Particle(); //!< default constructor
 	Particle(Vector3d); //!< create a particle
 	Particle(Vector3d, Material*); //!< create a particle
+	Particle(Vector3d, Material*, Vector3d); //!< create a particle
 	virtual ~Particle(); //!< default destructor
 
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that the particle contributes

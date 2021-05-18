@@ -27,9 +27,11 @@ Input::Input() {
 		keywords[KeyWords::elastic]="elastic";
 		keywords[KeyWords::fields]="fields";
 		keywords[KeyWords::fixed]="fixed";
+		keywords[KeyWords::GIMP]="GIMP";
 		keywords[KeyWords::friction]="friction";
 		keywords[KeyWords::id]="id";
 		keywords[KeyWords::localNoViscous]="localNoViscous";
+		keywords[KeyWords::linear]="linear";
 		keywords[KeyWords::mass]="mass";
 		keywords[KeyWords::materialId]="materialId";
 		keywords[KeyWords::material]="material";
@@ -52,6 +54,7 @@ Input::Input() {
 		keywords[KeyWords::poisson]="poisson";
 		keywords[KeyWords::position]="position";
 		keywords[KeyWords::results]="results";
+		keywords[KeyWords::shapeFunction]="shapeFunction";
 		keywords[KeyWords::sliding]="sliding";
 		keywords[KeyWords::stress]="stress";
 		keywords[KeyWords::stressSchemeUpdate]="stressSchemeUpdate";

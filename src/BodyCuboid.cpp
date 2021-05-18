@@ -49,7 +49,7 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 
 	// particle volume
 	// double particleVolume=particleSize.x()*particleSize.y()*particleSize.z();
-	
+	 
 	// number of cells in bounding box
 	Vector3d nCellsBoundingBox;
 	nCellsBoundingBox.x()=(pointP2.x()-pointP1.x())/cellDimension.x();
@@ -124,14 +124,14 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 				pt8.z() -= (dz*0.25);
 
 				// push all particles in the body's particle vector
-				particles.push_back(Particle(pt1,material));
-				particles.push_back(Particle(pt2,material));
-				particles.push_back(Particle(pt3,material));
-				particles.push_back(Particle(pt4,material));
-				particles.push_back(Particle(pt5,material));
-				particles.push_back(Particle(pt6,material));
-				particles.push_back(Particle(pt7,material));
-				particles.push_back(Particle(pt8,material));
+				particles.push_back(Particle(pt1,material,particleSize));
+				particles.push_back(Particle(pt2,material,particleSize));
+				particles.push_back(Particle(pt3,material,particleSize));
+				particles.push_back(Particle(pt4,material,particleSize));
+				particles.push_back(Particle(pt5,material,particleSize));
+				particles.push_back(Particle(pt6,material,particleSize));
+				particles.push_back(Particle(pt7,material,particleSize));
+				particles.push_back(Particle(pt8,material,particleSize));
 			}
 		}   
 	}

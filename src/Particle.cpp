@@ -21,6 +21,21 @@ Particle::Particle() {
 	totalParticles++;
 }
 
+Particle::Particle(Vector3d position, Material* material, Vector3d size){
+
+	initializeValues();
+
+	setPosition(position);
+	
+	setInitialPosition(position);
+	
+	setMaterial(material);
+
+	setSize(size);
+
+	totalParticles++;
+}
+
 Particle::Particle(Vector3d position, Material* material) {
 
 	initializeValues();

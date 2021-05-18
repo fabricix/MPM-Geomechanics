@@ -48,6 +48,8 @@ private:
 	void setUpMaterialList(); //!< configures the material list
 	void setUpBodyList(); //!< configures the body list
 	void createBodies(); //!< configures the body list
+	bool setInterpolationFunctions(); //!< configures the shape function
+	void setUpParticles(); //!< configures the particles
 };
 
 #endif /* MPM_H_ */

@@ -49,7 +49,9 @@ public:
 		fields, //!< used to inform the field to be written in the output file
 		fixed, //!< used to define a fixed boundary condition
 		friction, //!< friction angle parameter in an elasto-plastic model
+		GIMP, //!< generalized interpolation material point
 		id, //!< used to define an identification
+		linear,//!< linear shape function
 		localNoViscous, //!< used to define a local no viscous damping
 		mass, //!< used to define the mass of a particle
 		materialId, //!< used to define a material identification
@@ -72,6 +74,7 @@ public:
 		poisson, //!< defines the Poisson's ratio in a material
 		position, //!< define position using coordinates
 		results, //!< used to define the type and the number of results
+		shapeFunction, //!< nodal shape functions
 		sliding, //!< used to defines a sliding boundary condition
 		stress, //!< used to inform the field stress in to be written
 		stressSchemeUpdate, //!< defines the type of stress update
@@ -92,7 +95,7 @@ public:
 
 	map<Input::KeyWords,string> getKeyWords(); //!< returns the map with the keywords
 	json getJson(); //!< returns the data file structure
-	
+
 	string getFileName(); //!< returns the file name
 	void setFileName(string); //!< configures the filename
 	

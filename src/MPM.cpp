@@ -11,6 +11,8 @@
 #include "Warning.h"
 #include "Elastic.h"
 #include "BodyCuboid.h"
+#include "ShapeGimp.h"
+#include "ShapeLinear.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -47,7 +49,7 @@ bool MPM::readInputFile(int argc, char **argv){
 bool MPM::setSimulationTime(){
 	
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 
 	bool flag = false;
 
@@ -67,13 +69,13 @@ bool MPM::setSimulationTime(){
 bool MPM::setSolver() {
 	
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 	
 	bool flag = false;
 
 	if(inputFile.contains(keywords[Input::stressSchemeUpdate]))
 	{
-		if(inputFile[keywords[Input::stressSchemeUpdate]]=="USL") {
+		if(inputFile[keywords[Input::stressSchemeUpdate]]==keywords[Input::USL]) {
 			solver = new SolverUSL();
 			return !flag;
 		}
@@ -83,10 +85,34 @@ bool MPM::setSolver() {
 	return flag;
 }
 
+bool MPM::setInterpolationFunctions() {
+	
+	json inputFile=input.getJson();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
+	
+	bool flag = false;
+
+	if(inputFile.contains(keywords[Input::shapeFunction]))
+	{
+		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::GIMP]) {
+			ModelSetup::setInterpolationFunction(ModelSetup::GIMP);
+			return !flag;
+		}
+
+		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::linear]) {
+			ModelSetup::setInterpolationFunction(ModelSetup::LINEAR);
+			return !flag;
+		}
+	}
+	
+	Warning::printMessage("Verify "+keywords[Input::shapeFunction]+" definition in the input file");
+	return flag;
+}
+
 bool MPM::setTimeStep(){
 
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 
 	bool flag = false;
 
@@ -103,7 +129,7 @@ bool MPM::setTimeStep(){
 bool MPM::setUpMesh(){
 	
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 
 	bool nCellsFlag=false;
 
@@ -179,7 +205,7 @@ bool MPM::setUpMesh(){
 void MPM::setUpMaterialList(){
 
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 
 	// setup the material list
 	if(inputFile.contains(keywords[Input::material]))
@@ -209,7 +235,7 @@ void MPM::setUpMaterialList(){
 void MPM::setUpBodyList(){
 
 	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords =input.getKeyWords();
+	map<Input::KeyWords,string> keywords = input.getKeyWords();
 
 	if(inputFile.contains(keywords[Input::body]))
 	{
@@ -258,6 +284,30 @@ void MPM::createBodies(){
 	}
 }
 
+void MPM::setUpParticles(){
+
+	for (size_t i = 0; i < bodies.size(); ++i)
+	{	
+		vector<Particle>& particles = bodies.at(i)->getParticles();
+
+		for (size_t j = 0; j < particles.size(); ++j)
+		{
+			switch(ModelSetup::getInterpolationFunction())
+			{
+				case ModelSetup::LINEAR:
+					particles.at(i).setShape(new ShapeLinear);
+					break;
+
+				case ModelSetup::GIMP:
+					particles.at(i).setShape(new ShapeGimp);
+					break;
+				default:
+				Warning::printMessage("Bad definition of shape function in particle");
+			}
+		}
+	}
+}
+
 void MPM::createModel(){
 
 	// set the simulation time 
@@ -269,6 +319,9 @@ void MPM::createModel(){
 	// set the update stress scheme
 	setSolver();
 
+	// set the interpolation functions
+	setInterpolationFunctions();
+
 	// setup the mesh
 	setUpMesh();
 
@@ -278,8 +331,11 @@ void MPM::createModel(){
 	// setup the body list
 	setUpBodyList();
 
-	// create the body
+	// create the bodies
 	createBodies();
+
+	// configures the particles in the model
+	setUpParticles();
 }
 
 void MPM::solve(){
