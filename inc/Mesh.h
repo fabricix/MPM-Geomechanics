@@ -36,9 +36,14 @@ public:
     void createGrid(); //!< create a structured mesh grid
 
     void setCellDimension(double,double,double); //!< set cells dimension in each direction
+    void setCellDimension(Vector3d); //!< set cells dimension in each direction
     void setNumCells(int,int,int); //!< set number of cell in each direction
+    void setNumCells(Vector3i); //!< set number of cell in each direction
     void setNumGhosts(int); //!< set number of ghosts around the domain
     void setLimits(double,double,double,double,double,double); //!< set domain limits
+    void setOrigin(double,double,double); //!< set origin of coordinates
+    void setOrigin(Vector3d); //!< set origin of coordinates
+    
     void activateNodes(const vector<int>&,bool=true); //!< active nodes by its id
     void activateNode(int,bool=true); //!< active node by its id
 

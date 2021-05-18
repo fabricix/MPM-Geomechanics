@@ -21,7 +21,7 @@ public:
 	SolverUSL(); //!< default constructor
 	virtual ~SolverUSL(); //!< default destructor
 
-	virtual void Solve(vector<Body>&, Mesh&);
+	virtual void Solve(vector<Body*>&, Mesh&); //!< solve the problem in time
 };
 
 #endif /* SOLVERUSL_H_ */

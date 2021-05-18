@@ -6,6 +6,9 @@
  */
 
 #include "Input.h"
+#include "SolverUSL.h"
+#include "Elastic.h"
+#include "BodyCuboid.h"
 
 #include <fstream>
 using std::ifstream;
@@ -19,8 +22,8 @@ Input::Input() {
 		keywords[KeyWords::cohesion]="cohesion";
 		keywords[KeyWords::cuboid]="cuboid";
 		keywords[KeyWords::damping]="damping";
+		keywords[KeyWords::density]="density";
 		keywords[KeyWords::displacement]="displacement";
-		keywords[KeyWords::dtFraction]="dtFraction";
 		keywords[KeyWords::elastic]="elastic";
 		keywords[KeyWords::fields]="fields";
 		keywords[KeyWords::fixed]="fixed";
@@ -29,7 +32,7 @@ Input::Input() {
 		keywords[KeyWords::localNoViscous]="localNoViscous";
 		keywords[KeyWords::mass]="mass";
 		keywords[KeyWords::materialId]="materialId";
-		keywords[KeyWords::materials]="materials";
+		keywords[KeyWords::material]="material";
 		keywords[KeyWords::mesh]="mesh";
 		keywords[KeyWords::mesh]="mesh";
 		keywords[KeyWords::nCells]="nCells";
@@ -42,7 +45,7 @@ Input::Input() {
 		keywords[KeyWords::paneYn]="paneYn";
 		keywords[KeyWords::paneZ0]="paneZ0";
 		keywords[KeyWords::paneZn]="paneZn";
-		keywords[KeyWords::particles]="particles";
+		keywords[KeyWords::particle]="particle";
 		keywords[KeyWords::plastic]="plastic";
 		keywords[KeyWords::pointP1]="pointP1";
 		keywords[KeyWords::pointP2]="pointP2";
@@ -53,6 +56,9 @@ Input::Input() {
 		keywords[KeyWords::stress]="stress";
 		keywords[KeyWords::stressSchemeUpdate]="stressSchemeUpdate";
 		keywords[KeyWords::structured]="structured";
+		keywords[KeyWords::time]="time";
+		keywords[KeyWords::timeStep]="timeStep";
+		keywords[KeyWords::timeStepFraction]="timeStepFraction";
 		keywords[KeyWords::type]="type";
 		keywords[KeyWords::USL]="USL";
 		keywords[KeyWords::young]="young";

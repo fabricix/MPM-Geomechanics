@@ -1,5 +1,5 @@
 {
-	"stressSchemeUpdate":"USL",
+	"stressSchemeUpdate;":"USL",
 
 	"dtFraction":0.25,
 	
@@ -38,10 +38,11 @@
 		}
 	},
 
-	"materials":
+	"material":
 	{
 		"elastic":
 		{
+			"type":"elastic",
 			"id":1,
 			"young":50,
 			"poisson":0.1
@@ -49,6 +50,7 @@
 
 		"plastic":
 		{
+			"type":"plastic",
 			"id":2,
 			"young":50,
 			"poisson":0.1,
@@ -61,10 +63,18 @@
 	{
 		"cuboid":
 		{
-			"id":1,
-			"pointP1":[1,2,3],
-			"pointP2":[2,3,4],
-			"materialId":1
+			"id":[1],
+			"pointP1":[[1,2,3]],
+			"pointP2":[[2,3,4]],
+			"materialId":[1]
+		},
+
+		"rectangle":
+		{
+			"id":[1],
+			"pointP1":[[1,2,3]],
+			"pointP2":[[2,3,4]],
+			"materialId":[1]
 		}
 	},
 

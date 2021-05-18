@@ -202,7 +202,7 @@ void Particle::updateStress(){
 	material->updateStress(this);
 }
 
-void Particle::updateContributionNodes(Mesh & mesh)
+void Particle::updateContributionNodes(Mesh& mesh)
 {
 	// nodes that the particle contributed
 	const vector<int> nodesId = mesh.getContributionNodes(position);

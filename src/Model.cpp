@@ -28,7 +28,7 @@ namespace ModelSetup {
 		double dt=0.0;					//!< time step
 		double time=0.0;				//!< simulation time
 		double dtFraction=0.25; 	    //!< fraction of critical time step
-		double kineticEnergy=0.0;		//!< kinetic energy of the model
+		//double kineticEnergy=0.0;		//!< kinetic energy of the model
 
 		int resultNumber=10;			//!< number of results to write
 
@@ -60,11 +60,11 @@ namespace ModelSetup {
 
 	int getResultSteps(){ return floor(time/dt)/resultNumber; }
 
-	double getDt(){ return dt; }
-	void setDt(double d){ dt=d; }
+	double getTimeStep(){ return dt; }
+	void setTimeStep(double d){ dt=d; }
 
-	double getDtFraction(){ return dtFraction; }
-	void setDtFraction(double d){ dtFraction=d; }
+	double getTimeStepFraction(){ return dtFraction; }
+	void setTimeStepFraction(double d){ dtFraction=d; }
 
 	int getThreads(){ return nThreads; }
 	void setThreads(int d){ nThreads=d; }

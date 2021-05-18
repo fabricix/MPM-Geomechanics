@@ -23,13 +23,17 @@ public:
 	Body(); //<! default constructor
 	virtual ~Body(); //<! default destructor
 	
-	bool createCuboid(Mesh&, Vector3d, Vector3d, Material*); //<! creates a cuboid
+	virtual void create(Mesh& mesh, Material* material)=0;
+	virtual void setMaterialId(int)=0;//!< configures the material id
+	virtual int getMaterialId()=0; //!< returns the material id
 
 	int getId(); //<! returns the body identification
 	vector<Particle>& getParticles(); //<! returns particle in the body
 	static int getTotalBodies(); //<! returns o number of bodies
 	
 	void setId(int); //<! configures the id of the body
+	void setParticles(vector<Particle>); //<! configures the particles
+	void insertParticles(vector<Particle>); //<! configures the particles
 	
 private:
 	

@@ -39,8 +39,8 @@ namespace ModelSetup {
 	
 	int getContributionNodesNum(); //!< returns the number of nodes that a particle contributes.
 	
-	double getDt(); //!< returns the time step
-	void setDt(double); //!< configures the time step
+	double getTimeStep(); //!< returns the time step
+	void setTimeStep(double); //!< configures the time step
 
 	double getTime(); //!< returns the simulation time
 	void setTime(double); //!< configures the simulation time
@@ -49,8 +49,8 @@ namespace ModelSetup {
 	void setResultNum(int); //!< configures the total results
 	int getResultSteps(); //!< returns the step when the results will be written
 
-	double getDtFraction(); //!< returns
-	void setDtFraction(double); //!< configures the fraction of critical time step
+	double getTimeStepFraction(); //!< returns
+	void setTimeStepFraction(double); //!< configures the fraction of critical time step
 
 	int getThreads(); //!< returns
 	void setThreads(int); //!< configures the number of threads

@@ -39,9 +39,13 @@ void Mesh::setCellDimension(double dx, double dy, double dz) {
         Warning::printMessage("Cell dimension must be greater that 0");
     }
 
-    cellDim=Vector3d(dx,dy,dz);
-    
-    }
+    cellDim=Vector3d(dx,dy,dz);    
+}
+
+void Mesh::setCellDimension(Vector3d cdim) {
+
+    setCellDimension(cdim.x(), cdim.y(), cdim.z());
+}
 
 void Mesh::setNumCells(int nx, int ny, int nz) {
 
@@ -51,6 +55,11 @@ void Mesh::setNumCells(int nx, int ny, int nz) {
     }
 
     nCells=Vector3i(nx,ny,nz);
+}
+
+void Mesh::setNumCells(Vector3i n) {
+
+    setNumCells(n.x(), n.y(), n.z());
 }
 
 void Mesh::setNumGhosts(int ng) {
@@ -67,6 +76,16 @@ void Mesh::setLimits(double minX, double minY, double minZ, double maxX, double 
 
     minLimit=Vector3d(minX,minY,minZ);
     maxLimit=Vector3d(maxX,maxY,maxZ);
+}
+
+void Mesh::setOrigin(double x,double y,double z){
+    
+    minLimit=Vector3d(x,y,z);
+}
+
+void Mesh::setOrigin(Vector3d o){
+
+    minLimit=o;
 }
 
 //

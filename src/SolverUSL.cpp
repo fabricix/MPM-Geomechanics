@@ -15,7 +15,7 @@ using std::vector;
 #include "Update.h"
 #include "Output.h"
 
-SolverUSL::SolverUSL() {
+SolverUSL::SolverUSL():Solver() {
 	// TODO Auto-generated constructor stub
 
 }
@@ -24,10 +24,10 @@ SolverUSL::~SolverUSL() {
 	// TODO Auto-generated destructor stub
 }
 
-void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
+void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 	double time=ModelSetup::getTime();
-	double dt=ModelSetup::getDt();
+	double dt=ModelSetup::getTimeStep();
 	int resultSteps=ModelSetup::getResultSteps();
 	double iTime=0.0;
 	int loopCounter=1;
@@ -38,13 +38,13 @@ void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// update contribution nodes
-			Update::contributionNodes(mesh,bodies.at(i).getParticles());
+			Update::contributionNodes(mesh,bodies.at(i)->getParticles());
 			
 			// nodal mass
-			Interpolation::nodalMass(mesh,bodies.at(i).getParticles());
+			Interpolation::nodalMass(mesh,bodies.at(i)->getParticles());
 
 			// nodal momentum
-			Interpolation::nodalMomentum(mesh,bodies.at(i).getParticles());
+			Interpolation::nodalMomentum(mesh,bodies.at(i)->getParticles());
 		}
 
 		// impose essential boundary condition on nodal momentum
@@ -53,10 +53,10 @@ void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// nodal internal force
-			Interpolation::nodalInternalForce(mesh,bodies.at(i).getParticles());
+			Interpolation::nodalInternalForce(mesh,bodies.at(i)->getParticles());
 			
 			// nodal external force
-			Interpolation::nodalExternalForce(mesh,bodies.at(i).getParticles());
+			Interpolation::nodalExternalForce(mesh,bodies.at(i)->getParticles());
 		}
 
 		// nodal total force
@@ -71,10 +71,10 @@ void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// update particle velocity
-			Update::particleVelocity(mesh,bodies.at(i).getParticles(),loopCounter==1?dt/2.0:dt);
+			Update::particleVelocity(mesh,bodies.at(i)->getParticles(),loopCounter==1?dt/2.0:dt);
 			
 			// update particle position
-			Update::particlePosition(mesh,bodies.at(i).getParticles(),dt);
+			Update::particlePosition(mesh,bodies.at(i)->getParticles(),dt);
 		}
 
 		// nodal velocity
@@ -83,16 +83,16 @@ void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// calculate particle strain increment
-			Interpolation::particleStrainIncrement(mesh,bodies.at(i).getParticles(),dt);
+			Interpolation::particleStrainIncrement(mesh,bodies.at(i)->getParticles(),dt);
 			
 			// calculate particle vorticity increment
-			Interpolation::particleVorticityIncrement(mesh,bodies.at(i).getParticles(),dt);
+			Interpolation::particleVorticityIncrement(mesh,bodies.at(i)->getParticles(),dt);
 			
 			// update particle density
-			Update::particleDensity(bodies.at(i).getParticles());
+			Update::particleDensity(bodies.at(i)->getParticles());
 			
 			// update particle stress
-			Update::particleStress(bodies.at(i).getParticles());
+			Update::particleStress(bodies.at(i)->getParticles());
 		}
 		
 		// reset all nodal values
@@ -103,7 +103,7 @@ void SolverUSL::Solve(vector<Body>& bodies, Mesh& mesh){
 		{
 			for (size_t i = 0; i < bodies.size(); ++i){
 
-				Output::writeParticles(bodies.at(i).getParticles(),time);
+				Output::writeParticles(bodies.at(i)->getParticles(),time);
 			}
 		}
 

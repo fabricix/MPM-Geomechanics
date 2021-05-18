@@ -76,17 +76,45 @@ int main(int argc, char **argv) {
 	Input input;
 	input.readInputFile(fileName);
 
-	// print
-	cout<<"print Stress Scheme Update:\n";
-	if(input.getJson().contains(input.getKeyWords()[Input::stressSchemeUpdate]))
-	{
-		cout<<input.getJson()[input.getKeyWords()[Input::stressSchemeUpdate]]<<'\n';
-	}
-	else
-	{
-		cout << "Please verify the input file name and keywords\n";
-	}
+	json j = input.getJson();
 
+	// print
+//	cout<<"print Stress Scheme Update:\n";
+//	if(input.getJson().contains(input.getKeyWords()[Input::stressSchemeUpdate]))
+//	{
+//		cout<<input.getJson()[input.getKeyWords()[Input::stressSchemeUpdate]]<<'\n';
+//	}
+//	else
+//	{
+//		cout << "Please verify the input file name and keywords\n";
+//	}
+//
+//	if(input.getJson().contains(input.getKeyWords()[Input::alpha])){
+//
+//		cout<< "testing containing alpha -> OK\n";
+//	}
+//	else
+//	{
+//		cout<< "testing containing alpha -> FAIL\n";
+//	}
+//
+	//cout<< "couaints body = ";
+	//cout<<j["body"].contains("cuboid")<<"\n";
+
+	//cout<< "cuboids size = ";
+	//cout<<j["body"]["cuboid"]["id"].size()<<"\n";
+
+	cout<<"body size "<<j["body"].size()<<"\n";
+	cout<<"material size "<<j["material"].size()<<"\n";
+	cout<<"material elastic id size "<<j["material"]["elastic"]["id"].size()<<"\n";
+
+	// iteration over the materials
+
+	json::iterator it;
+
+	for( it = j["material"].begin(); it!=j["material"].end();it++){
+		cout<<*it<<"\n";
+	}
 #endif
 	return 0;
 }

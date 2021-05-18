@@ -24,6 +24,7 @@ using Eigen::Vector3d;
 #include "MPM.h"
 #include "Particle.h"
 #include "Body.h"
+#include "BodyCuboid.h"
 #include "Elastic.h"
 
 int main(int argc, char **argv)
@@ -40,11 +41,12 @@ int main(int argc, char **argv)
 	Elastic elastic2(20,1.0,1.0,0.3);
 
 	// create a body using the configured materials
-	Body body;
+	BodyCuboid body;
+	body.setPoints(Vector3d(0,0,0),Vector3d(2,3,5));
+	body.create(mesh,&elastic1);
 
-	// create a cuboid by a reference
-	body.createCuboid(mesh, Vector3d(0,0,0),Vector3d(2,3,5),&elastic1);
-	body.createCuboid(mesh, Vector3d(2,2,6),Vector3d(4,4,7),&elastic2);
+	body.setPoints(Vector3d(2,2,6),Vector3d(4,4,7));
+	body.create(mesh,&elastic2);
 
 	// create an output object
 	Output::writeGrid(mesh,Output::POINTS);

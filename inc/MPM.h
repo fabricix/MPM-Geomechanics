@@ -26,14 +26,28 @@ public:
 
 	MPM(); //!< default constructor
 	virtual ~MPM(); //!< default destructor
-	
-public:
+
+	bool readInputFile(int argc, char **argv); //!< read the input file of the model
+	void createModel(); //!< create the numerical MPM model
+	void solve(); //!< solve the problem in time
+	void end(); //!< finish all program structure
+
+private:
 	
 	Mesh mesh; //!< grid mesh
-	vector<Body> bodies; //!< bodies discretized by material points
+	vector<Body*> bodies; //!< bodies discretized by material points
+	vector<Material*> materials; //!< bodies discretized by material points
 	States states; //!< operations for load and save model's states
 	Solver* solver; //!< operation for solve the equations in time
 	Input input; //!< input operations
+
+	bool setSimulationTime(); //!< configures the simulation time
+	bool setSolver(); //!< configures the solver of the model
+	bool setTimeStep(); //!< configures the time step 
+	bool setUpMesh(); //!< configures the mesh
+	void setUpMaterialList(); //!< configures the material list
+	void setUpBodyList(); //!< configures the body list
+	void createBodies(); //!< configures the body list
 };
 
 #endif /* MPM_H_ */
