@@ -17,7 +17,7 @@ using std::vector;
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
 
-	void setGravity(vector<Body>&);
+	void setGravity(vector<Body*>&);
 
 };
 

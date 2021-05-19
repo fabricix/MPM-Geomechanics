@@ -28,6 +28,7 @@ Input::Input() {
 		keywords[KeyWords::elastic]="elastic";
 		keywords[KeyWords::fields]="fields";
 		keywords[KeyWords::fixed]="fixed";
+		keywords[KeyWords::gravity]="gravity";
 		keywords[KeyWords::GIMP]="GIMP";
 		keywords[KeyWords::friction]="friction";
 		keywords[KeyWords::id]="id";
@@ -289,4 +290,18 @@ vector<Body*> Input::getBodyList(){
 	}
 
 	return bodies;
+}
+
+Vector3d Input::getGravity(){
+
+	Vector3d gravity=Vector3d::Zero();
+	
+	if(inputFile.contains(keywords[Input::gravity])&&inputFile[keywords[Input::gravity]].is_array()){
+
+		gravity.x()=inputFile[keywords[Input::gravity]][0];
+		gravity.y()=inputFile[keywords[Input::gravity]][1];
+		gravity.z()=inputFile[keywords[Input::gravity]][2];
+	}
+	
+	return gravity;
 }

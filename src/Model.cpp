@@ -76,7 +76,12 @@ namespace ModelSetup {
 	void setGravityActive(bool d){ gravityActive=d; }
 
 	Vector3d getGravity(){ return gravity; }
-	void setGravity(Vector3d d){ gravity=d; }
+	
+	void setGravity(Vector3d d){ 
+		
+		gravity=d; 
+		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
+	}
 
 	bool getAxisymetricActive(){ return axisymetricActive; }
 	void setAxisymetricActive(bool d){ axisymetricActive=d; }

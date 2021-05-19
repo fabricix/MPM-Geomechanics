@@ -44,12 +44,13 @@ private:
 	void setSimulationTime(); //!< configures the simulation time
 	void setSolver(); //!< configures the solver of the model
 	void setTimeStep(); //!< configures the time step 
-	void setUpMesh(); //!< configures the mesh
-	void setUpMaterialList(); //!< configures the material list
-	void setUpBodyList(); //!< configures the body list
+	void setupMesh(); //!< configures the mesh
+	void setupMaterialList(); //!< configures the material list
+	void setupBodyList(); //!< configures the body list
 	void createBodies(); //!< configures the body list
 	void setInterpolationFunctions(); //!< configures the shape function
-	void setUpParticles(); //!< configures the particles
+	void setupParticles(); //!< configures the particles
+	void setupLoads(); //<! configures the loads in the model
 };
 
 #endif /* MPM_H_ */

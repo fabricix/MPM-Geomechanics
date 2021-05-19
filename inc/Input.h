@@ -49,6 +49,7 @@ public:
 		fields, //!< used to inform the field to be written in the output file
 		fixed, //!< used to define a fixed boundary condition
 		friction, //!< friction angle parameter in an elasto-plastic model
+		gravity, //!< body force intensity
 		GIMP, //!< generalized interpolation material point
 		id, //!< used to define an identification
 		linear,//!< linear shape function
@@ -99,15 +100,16 @@ public:
 	string getFileName(); //!< returns the file name
 	void setFileName(string); //!< configures the filename
 	
-	double getSimulationTime();
-	double getTimeStep();
-	Solver* getSolver();
-	ModelSetup::InterpolationFunctionType getInterpolationFunction();
-	Vector3i getCellsNum();
-	Vector3d getCellDimension();
-	Vector3d getOrigin();
-	vector<Material*> getMaterialList();
-	vector<Body*> getBodyList();
+	double getSimulationTime(); //!< return the simulation time
+	double getTimeStep(); //!< return the time step
+	Solver* getSolver(); //!< return the solver
+	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //!< return the interpolation functions
+	Vector3i getCellsNum(); //!< return the number of cells in each direction
+	Vector3d getCellDimension(); //!< return the cell dimension
+	Vector3d getOrigin(); //!< return the origin of coordinates
+	vector<Material*> getMaterialList(); //!< return the material list
+	vector<Body*> getBodyList(); //!< return the body list
+	Vector3d getGravity(); //!< return the gravity force
 
 private:
 

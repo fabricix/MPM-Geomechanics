@@ -13,6 +13,7 @@
 #include "BodyCuboid.h"
 #include "ShapeGimp.h"
 #include "ShapeLinear.h"
+#include "Loads.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -66,7 +67,7 @@ void MPM::setTimeStep(){
 	ModelSetup::setTimeStep(input.getTimeStep());
 }
 
-void MPM::setUpMesh(){
+void MPM::setupMesh(){
 	
 	// number of cells
 	mesh.setNumCells(input.getCellsNum());
@@ -81,20 +82,20 @@ void MPM::setUpMesh(){
 	mesh.createGrid();
 }
 
-void MPM::setUpMaterialList(){
+void MPM::setupMaterialList(){
 
 	materials=input.getMaterialList();
 }
 
-void MPM::setUpBodyList(){
+void MPM::setupBodyList(){
 
 	bodies=input.getBodyList();
 }
 
 void MPM::createBodies(){
 
-	for (size_t i = 0; i < bodies.size(); ++i)
-	{	
+	for (size_t i = 0; i < bodies.size(); ++i){
+
 		// get material from list
 		Material* iMaterial=0;
 		for (size_t j = 0; j < materials.size(); ++j) {
@@ -109,17 +110,17 @@ void MPM::createBodies(){
 	}
 }
 
-void MPM::setUpParticles(){
+void MPM::setupParticles(){
 
-	for (size_t i = 0; i < bodies.size(); ++i)
-	{	
+	for (size_t i = 0; i < bodies.size(); ++i){
+
 		vector<Particle*>& particles = bodies.at(i)->getParticles();
 
-		for (size_t j = 0; j < particles.size(); ++j)
-		{
+		for (size_t j = 0; j < particles.size(); ++j){
+
 			// set shape function
-			switch(ModelSetup::getInterpolationFunction())
-			{
+			switch(ModelSetup::getInterpolationFunction()){
+
 				case ModelSetup::LINEAR:
 					particles.at(j)->setShape(new ShapeLinear);
 					break;
@@ -132,6 +133,14 @@ void MPM::setUpParticles(){
 			}
 		}
 	}
+}
+
+void MPM::setupLoads(){
+
+	// gravity
+	ModelSetup::setGravity(input.getGravity());
+	Loads::setGravity(bodies);
+
 }
 
 void MPM::createModel(){
@@ -149,25 +158,28 @@ void MPM::createModel(){
 	setInterpolationFunctions();
 
 	// setup the mesh
-	setUpMesh();
+	setupMesh();
 
 	// setup the material list
-	setUpMaterialList();
+	setupMaterialList();
 
 	// setup the body list
-	setUpBodyList();
+	setupBodyList();
 
 	// create the bodies
 	createBodies();
 
 	// configures the particles in the model
-	setUpParticles();
+	setupParticles();
+
+	// configures the loads
+	setupLoads();
 }
 
 void MPM::solve(){
 	
-	if (solver==0)
-	{
+	if (solver==0){
+
 		Warning::printMessage("The solver was not correctly defined.");
 	}
 	else{
@@ -182,7 +194,6 @@ void MPM::solve(){
 	
 		cout<<"Elapsed time: "<<elapsed_seconds.count()<<" seconds\n";
 	}
-	
 }
 
 void MPM::end(){
