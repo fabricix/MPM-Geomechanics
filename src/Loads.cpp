@@ -21,8 +21,8 @@ namespace Loads{
 		{
 			for (size_t j = 0; j < bodies.at(i).getParticles().size(); ++j)
 			{
-				bodies.at(i).getParticles().at(j).addExternalForce(
-						bodies.at(i).getParticles().at(j).getMass()*ModelSetup::getGravity());
+				bodies.at(i).getParticles().at(j)->addExternalForce(
+						bodies.at(i).getParticles().at(j)->getMass()*ModelSetup::getGravity());
 			}
 		}
 	}

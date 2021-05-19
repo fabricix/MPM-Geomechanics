@@ -110,7 +110,7 @@ namespace Output{
         }
     }
     
-    void writeParticles(vector<Particle>& particles, double time){
+    void writeParticles(vector<Particle*>& particles, double time){
 
         // define edian
         if(Folders::edian==""){
@@ -147,7 +147,7 @@ namespace Output{
         // particle position
         partFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            Vector3d pos=particles.at(i).getPosition();
+            Vector3d pos=particles.at(i)->getPosition();
             partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
         }
         partFile<<"</DataArray>\n";
@@ -161,14 +161,14 @@ namespace Output{
         // particle Id
         partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles.at(i).getId()<<"\n";
+            partFile<<scientific<<particles.at(i)->getId()<<"\n";
         }
         partFile<<"</DataArray>\n";
 
         // particle material Id
         partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles.at(i).getMaterialId()<<"\n";
+            partFile<<scientific<<particles.at(i)->getMaterialId()<<"\n";
         }
         partFile<<"</DataArray>\n";
 
@@ -346,6 +346,17 @@ namespace Output{
     void writeBody(Body& body, double time){
 
         writeParticles(body.getParticles(),time);
+    }
+
+    void writeBodies(vector<Body*>& bodies, double time){
+
+        vector<Particle*> particles;
+        for (size_t i = 0; i < bodies.size(); ++i)
+        {
+            particles.insert(particles.end(),bodies.at(i)->getParticles().begin(),bodies.at(i)->getParticles().end());
+        }
+
+        writeParticles(particles,time);
     }
 
     void writeResultsSeries(){

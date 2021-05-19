@@ -25,28 +25,25 @@ int main(int argc, char **argv)
 	mesh.createGrid();
 
 	// create particles
-	std::vector<Particle> particles;
-	particles.push_back(Particle(Vector3d(0.4,0.4,0.4)));
-	particles.push_back(Particle(Vector3d(2.5,0.5,0.5)));
-	particles.push_back(Particle(Vector3d(7.9,1.4,8.5)));
+	std::vector<Particle*> particles;
+	particles.push_back(new Particle(Vector3d(0.4,0.4,0.4)));
+	particles.push_back(new Particle(Vector3d(2.5,0.5,0.5)));
+	particles.push_back(new Particle(Vector3d(7.9,1.4,8.5)));
 
 	// activate nodes containing p1
-	mesh.activateNodes(mesh.getNodesInCell(particles.at(0).getPosition()));
+	mesh.activateNodes(mesh.getNodesInCell(particles.at(0)->getPosition()));
 
 	// activate contribution nodes of p2
-	mesh.activateNodes(mesh.getContributionNodes(particles.at(1).getPosition()));
+	mesh.activateNodes(mesh.getContributionNodes(particles.at(1)->getPosition()));
 
 	// activate contribution nodes of p3
-	mesh.activateNodes(mesh.getContributionNodes(particles.at(2).getPosition()));
-
-	// create an output object
-	Output output;
+	mesh.activateNodes(mesh.getContributionNodes(particles.at(2)->getPosition()));
 
 	// write the mesh
-	output.writeGrid(mesh,Output::POINTS);
+	Output::writeGrid(mesh,Output::POINTS);
 
 	// write the particles
-	output.writeParticles(particles);
+	Output::writeParticles(particles);
 	
 	return 0;
 }

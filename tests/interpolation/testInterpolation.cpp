@@ -34,43 +34,35 @@ int main(int argc, char **argv)
 	mesh.createGrid();
 
 	// create particles
-	std::vector<Particle> particles;
-	particles.push_back(Particle(Vector3d(0.0,0.0,0.0)));
-	particles.push_back(Particle(Vector3d(2.1,5.2,7.4)));
-	particles.push_back(Particle(Vector3d(1.4,3.2,8.4)));
+	std::vector<Particle*> particles;
+	particles.push_back(new Particle(Vector3d(0.0,0.0,0.0)));
+	particles.push_back(new Particle(Vector3d(2.1,5.2,7.4)));
+	particles.push_back(new Particle(Vector3d(1.4,3.2,8.4)));
 
 	// configures particle
 	for (size_t i=0; i<particles.size(); i++){
 
 		// id
-		particles.at(i).setId(i);
+		particles.at(i)->setId(i);
 
 		// size
-		particles.at(i).setSize(Vector3d(1.0,1.0,1.0));
+		particles.at(i)->setSize(Vector3d(1.0,1.0,1.0));
 		
 		// mass
-		particles.at(i).setMass(1.0);
+		particles.at(i)->setMass(1.0);
 
 		// shape
-		particles.at(i).setShape(new ShapeGimp);
+		particles.at(i)->setShape(new ShapeGimp);
 	}
 
 	// update contributions nodes
 	for (size_t i=0; i<particles.size(); i++){
 
-		particles.at(i).updateContributionNodes(mesh);
+		particles.at(i)->updateContributionNodes(mesh);
 	}
-
-	// activate contribution nodes
-	for (size_t i=0; i<particles.size(); i++){
-		mesh.activateNodes(mesh.getContributionNodes(particles.at(i).getPosition()));
-	}
-
-	// create an interpolator instance
-	Interpolation interpolation;
 
 	// interpolate particle mass to nodes
-	interpolation.nodalMass(mesh,particles);
+	Interpolation::nodalMass(mesh,particles);
 
 	// open a file
 	ofstream outputfile;
@@ -84,29 +76,26 @@ int main(int argc, char **argv)
 	for (size_t i=0; i<particles.size(); i++){
 
 		// contribution vector
-		vector<Contribution> *contribution=particles.at(i).getContributionNodes();
+		vector<Contribution> *contribution=particles.at(i)->getContributionNodes();
 		
 		// nodal mass
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{
 			outputfile
-			   <<particles.at(i).getPosition().x()<<
-			","<<particles.at(i).getPosition().y()<<
-			","<<particles.at(i).getPosition().z()<<
+			   <<particles.at(i)->getPosition().x()<<
+			","<<particles.at(i)->getPosition().y()<<
+			","<<particles.at(i)->getPosition().z()<<
 			","<<contribution->at(j).getNodeId()<<
 			","<<gridNodes->at(contribution->at(j).getNodeId()).getMass()<<endl;
 		}
 	}
 	outputfile.close();
 
-	// create an output operator
-	Output output;
-
 	// write the mesh
-	output.writeGrid(mesh,Output::POINTS);
+	Output::writeGrid(mesh,Output::POINTS);
 
 	// write the particles
-	output.writeParticles(particles);
+	Output::writeParticles(particles);
 
 	return 0;
 }

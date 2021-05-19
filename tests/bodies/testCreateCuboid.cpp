@@ -41,16 +41,20 @@ int main(int argc, char **argv)
 	Elastic elastic2(20,1.0,1.0,0.3);
 
 	// create a body using the configured materials
-	BodyCuboid body;
-	body.setPoints(Vector3d(0,0,0),Vector3d(2,3,5));
-	body.create(mesh,&elastic1);
+	BodyCuboid body1;
+	body1.setPoints(Vector3d(0,0,0),Vector3d(2,3,5));
+	body1.create(mesh,&elastic1);
 
-	body.setPoints(Vector3d(2,2,6),Vector3d(4,4,7));
-	body.create(mesh,&elastic2);
+	BodyCuboid body2;
+	body2.setPoints(Vector3d(2,2,6),Vector3d(4,4,7));
+	body2.create(mesh,&elastic2);
 
 	// create an output object
 	Output::writeGrid(mesh,Output::POINTS);
-	Output::writeBody(body);
+
+	vector<Body*> bodies {&body1,&body2};
+	Output::writeBodies(bodies);
+
 	Output::writeResultsSeries();
 
 	return 0;

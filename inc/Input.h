@@ -23,7 +23,7 @@ using Eigen::Vector3d;
 
 #include "Solver.h"
 #include "Material.h"
-
+#include "Model.h"
 
 /// \class Input
 /// \brief Operations to read the input file.
@@ -99,6 +99,16 @@ public:
 	string getFileName(); //!< returns the file name
 	void setFileName(string); //!< configures the filename
 	
+	double getSimulationTime();
+	double getTimeStep();
+	Solver* getSolver();
+	ModelSetup::InterpolationFunctionType getInterpolationFunction();
+	Vector3i getCellsNum();
+	Vector3d getCellDimension();
+	Vector3d getOrigin();
+	vector<Material*> getMaterialList();
+	vector<Body*> getBodyList();
+
 private:
 
 	map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure

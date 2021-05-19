@@ -50,12 +50,12 @@ void Body::setId(int bid){
 	id=bid;
 }
 
-void Body::setParticles(vector<Particle> prts){
+void Body::setParticles(vector<Particle*> prts){
 
 	particles=prts;
 }
 
-void Body::insertParticles(vector<Particle> prts){
+void Body::insertParticles(vector<Particle*> prts){
 
 	particles.insert(particles.end(),prts.begin(),prts.end());
 }
@@ -74,7 +74,7 @@ int Body::getId(){
 	return id;
 }
 
-vector<Particle>& Body::getParticles(){
+vector<Particle*>& Body::getParticles(){
 
 	return particles;
 }

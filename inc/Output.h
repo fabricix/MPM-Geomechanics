@@ -21,9 +21,10 @@ namespace Output {
 	enum CellType{POINTS,CELLS};
 
 	void writeGrid(Mesh&,CellType=CellType::CELLS); //!< write the grid mesh into a vtu file.
-	void writeParticles(vector<Particle>&, double=0.0); //!< write the particles of the model into a vtu file.
+	void writeParticles(vector<Particle*>&, double=0.0); //!< write the particles of the model into a vtu file.
 	void writeBody(Body&, double=0.0); //!< write the particles in a body.
 	void writeResultsSeries(); //!< write the time series of the results
+	void writeBodies(vector<Body*>& bodies, double=0.0); //!< write the particles forming bodies
 };
 
 #endif /* OUTPUT_H_ */

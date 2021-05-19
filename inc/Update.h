@@ -18,13 +18,13 @@ namespace Update {
 	void nodalVelocity(Mesh&); //!< updates the nodal velocity
 	void nodalTotalForce(Mesh&); //!< updates the nodal total force
 	void resetNodalValues(Mesh&); //!< deletes all stored values in nodes 
-	void particleDensity(vector<Particle>&); //!< updates the particles' density
-	void particleStress(vector<Particle>&); //!< update the particles' stress
-	void particleVelocity(Mesh&, vector<Particle>&,double); //!< update the particle velocity
-	void particlePosition(Mesh&, vector<Particle>&,double); //!< update the particle position
+	void particleDensity(vector<Particle*>&); //!< updates the particles' density
+	void particleStress(vector<Particle*>&); //!< update the particles' stress
+	void particleVelocity(Mesh&, vector<Particle*>&,double); //!< update the particle velocity
+	void particlePosition(Mesh&, vector<Particle*>&,double); //!< update the particle position
 	void boundaryConditionsForce(Mesh& mesh); //!< update essential boundary condition
 	void boundaryConditionsMomentum(Mesh& mesh); //!< update essential boundary condition
-	void contributionNodes(Mesh&, vector<Particle>&); //!< for each particle update the weights in each nodes that contributes
+	void contributionNodes(Mesh&, vector<Particle*>&); //!< for each particle update the weights in each nodes that contributes
 
 	void setPlaneForce(const Boundary::planeBoundary*, vector<Node>*, int dir); //!< the restriction in each node in boundary planes
 	void setPlaneMomentum(const Boundary::planeBoundary*, vector<Node>*, int dir); //!< the restriction in each node in boundary planes

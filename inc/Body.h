@@ -28,17 +28,17 @@ public:
 	virtual int getMaterialId()=0; //!< returns the material id
 
 	int getId(); //<! returns the body identification
-	vector<Particle>& getParticles(); //<! returns particle in the body
+	vector<Particle*>& getParticles(); //<! returns particle in the body
 	static int getTotalBodies(); //<! returns o number of bodies
 	
 	void setId(int); //<! configures the id of the body
-	void setParticles(vector<Particle>); //<! configures the particles
-	void insertParticles(vector<Particle>); //<! configures the particles
+	void setParticles(vector<Particle*>); //<! configures the particles
+	void insertParticles(vector<Particle*>); //<! configures the particles
 	
 private:
 	
 	int id; //!< body identification
-	vector<Particle> particles; //!< material points forming the body  
+	vector<Particle*> particles; //!< material points forming the body  
 	static int totalBodies; //!< number of bodies
 };
 

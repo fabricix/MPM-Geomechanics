@@ -62,7 +62,7 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 	double dz = cellDimension.z();
 
 	// vector of particles
-	vector<Particle> particles;
+	vector<Particle*> particles;
 
 	// create the particles and put it in the space
 	for (int i = 0; i < nCellsBoundingBox.x(); ++i)
@@ -124,17 +124,16 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 				pt8.z() -= (dz*0.25);
 
 				// push all particles in the body's particle vector
-				particles.push_back(Particle(pt1,material,particleSize));
-				particles.push_back(Particle(pt2,material,particleSize));
-				particles.push_back(Particle(pt3,material,particleSize));
-				particles.push_back(Particle(pt4,material,particleSize));
-				particles.push_back(Particle(pt5,material,particleSize));
-				particles.push_back(Particle(pt6,material,particleSize));
-				particles.push_back(Particle(pt7,material,particleSize));
-				particles.push_back(Particle(pt8,material,particleSize));
+				particles.push_back(new Particle(pt1,material,particleSize));
+				particles.push_back(new Particle(pt2,material,particleSize));
+				particles.push_back(new Particle(pt3,material,particleSize));
+				particles.push_back(new Particle(pt4,material,particleSize));
+				particles.push_back(new Particle(pt5,material,particleSize));
+				particles.push_back(new Particle(pt6,material,particleSize));
+				particles.push_back(new Particle(pt7,material,particleSize));
+				particles.push_back(new Particle(pt8,material,particleSize));
 			}
 		}   
 	}
-
 	setParticles(particles);
 }

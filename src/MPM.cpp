@@ -46,224 +46,49 @@ bool MPM::readInputFile(int argc, char **argv){
 	return false;
 }
 
-bool MPM::setSimulationTime(){
+void MPM::setSimulationTime(){
 	
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-
-	bool flag = false;
-
-	if(inputFile.contains(keywords[Input::time])&&inputFile[keywords[Input::time]].is_number())
-	{
-		ModelSetup::setTime(inputFile[keywords[Input::time]]);
-		return !flag;
-	}
-	else
-	{
-		Warning::printMessage("Verify "+keywords[Input::time]+" definition in the input file");
-		return flag;
-	}
-	return flag;
+	ModelSetup::setTime(input.getSimulationTime());
 }
 
-bool MPM::setSolver() {
+void MPM::setSolver() {
 	
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-	
-	bool flag = false;
-
-	if(inputFile.contains(keywords[Input::stressSchemeUpdate]))
-	{
-		if(inputFile[keywords[Input::stressSchemeUpdate]]==keywords[Input::USL]) {
-			solver = new SolverUSL();
-			return !flag;
-		}
-	}
-	
-	Warning::printMessage("Verify "+keywords[Input::stressSchemeUpdate]+" definition in the input file");
-	return flag;
+	solver = input.getSolver();
 }
 
-bool MPM::setInterpolationFunctions() {
-	
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-	
-	bool flag = false;
+void MPM::setInterpolationFunctions() {
 
-	if(inputFile.contains(keywords[Input::shapeFunction]))
-	{
-		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::GIMP]) {
-			ModelSetup::setInterpolationFunction(ModelSetup::GIMP);
-			return !flag;
-		}
-
-		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::linear]) {
-			ModelSetup::setInterpolationFunction(ModelSetup::LINEAR);
-			return !flag;
-		}
-	}
-	
-	Warning::printMessage("Verify "+keywords[Input::shapeFunction]+" definition in the input file");
-	return flag;
+	ModelSetup::setInterpolationFunction(input.getInterpolationFunction());
 }
 
-bool MPM::setTimeStep(){
+void MPM::setTimeStep(){
 
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-
-	bool flag = false;
-
-	if(inputFile.contains(keywords[Input::timeStep])&&inputFile[keywords[Input::timeStep]].is_number()){
-
-		ModelSetup::setTimeStep(inputFile[keywords[Input::timeStep]]);
-		return !flag;
-	}
-
-	Warning::printMessage("Verify "+keywords[Input::timeStep]+" definition in the input file");
-	return flag;
+	ModelSetup::setTimeStep(input.getTimeStep());
 }
 
-bool MPM::setUpMesh(){
+void MPM::setUpMesh(){
 	
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-
-	bool nCellsFlag=false;
-
-	int nCells[3]; 
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::nCells])){	
-		
-		if(inputFile[keywords[Input::mesh]][keywords[Input::nCells]].is_array()) {
-
-			nCells[0]=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][0];
-			nCells[1]=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][1];
-			nCells[2]=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][2];
-			mesh.setNumCells(nCells[0],nCells[1],nCells[2]);
-			nCellsFlag=!nCellsFlag;
-		}
-	}
+	// number of cells
+	mesh.setNumCells(input.getCellsNum());
 	
 	// set cell dimension
-	bool cellDimensionFlag=false;
-
-	double cellDimension[3]; 
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::cellDimension])){
-
-		if(inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]].is_array()) {
-		
-				cellDimension[0]=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][0];
-				cellDimension[1]=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][1];
-				cellDimension[2]=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][2];
-				mesh.setCellDimension(cellDimension[0],cellDimension[1],cellDimension[2]);
-				cellDimensionFlag=!cellDimensionFlag;
-		}
-	}
+	mesh.setCellDimension(input.getCellDimension());
 	
 	// set origin
-	bool originFlag = false;
+	mesh.setOrigin(input.getOrigin());
 
-	double origin[3];
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::origin])){
-
-		if(inputFile[keywords[Input::mesh]][keywords[Input::origin]].is_array()) {
-			
-				origin[0]=inputFile[keywords[Input::mesh]][keywords[Input::origin]][0];
-				origin[1]=inputFile[keywords[Input::mesh]][keywords[Input::origin]][1];
-				origin[2]=inputFile[keywords[Input::mesh]][keywords[Input::origin]][2];
-				mesh.setOrigin(origin[0],origin[1],origin[2]);
-				originFlag=!originFlag;
-		}
-	}
-
-	if (nCellsFlag && cellDimensionFlag && originFlag){
-
-		mesh.createGrid();
-	}
-	else{
-
-		Warning::printMessage("The mesh can not be created. Verify the input file:");
-		
-		if (!nCellsFlag){
-			Warning::printMessage("Error in keyword "+keywords[Input::nCells]);
-		}
-		if (!cellDimensionFlag){
-			Warning::printMessage("Error in keyword "+keywords[Input::cellDimension]);
-		}
-		if (!originFlag){
-			Warning::printMessage("Error in keyword "+keywords[Input::origin]);
-		}
-	}
-	return (nCellsFlag && cellDimensionFlag && originFlag);
+	// create the mesh
+	mesh.createGrid();
 }
 
 void MPM::setUpMaterialList(){
 
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-
-	// setup the material list
-	if(inputFile.contains(keywords[Input::material]))
-	{
-		json::iterator it;
-
-		for(it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
-			
-			if((*it)[keywords[Input::type]]==keywords[Input::elastic])
-			{
-				int id = (*it)[keywords[Input::id]];
-				double young = (*it)[keywords[Input::young]];
-				double poisson = (*it)[keywords[Input::poisson]];
-				double density = (*it)[keywords[Input::density]];
-				materials.push_back(new Elastic(id,density,young,poisson));
-			}
-		}
-	}
-	
-	if (materials.empty())
-	{
-		Warning::printMessage("The material list can not be created. Verify the input file:");
-		Warning::printMessage("Error in keyword "+keywords[Input::material]);
-	}
+	materials=input.getMaterialList();
 }
 
 void MPM::setUpBodyList(){
 
-	json inputFile=input.getJson();
-	map<Input::KeyWords,string> keywords = input.getKeyWords();
-
-	if(inputFile.contains(keywords[Input::body]))
-	{
-		json::iterator it;
-
-		for(it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
-			
-			if((*it)[keywords[Input::type]]==keywords[Input::cuboid])
-			{
-				int id = (*it)[keywords[Input::id]];
-				Vector3d pointP1((*it)[keywords[Input::pointP1]][0],(*it)[keywords[Input::pointP1]][1],(*it)[keywords[Input::pointP1]][2]);
-				Vector3d pointP2((*it)[keywords[Input::pointP2]][0],(*it)[keywords[Input::pointP2]][1],(*it)[keywords[Input::pointP2]][2]);
-				int materialId = (*it)[keywords[Input::materialId]];
-
-				BodyCuboid* iBody = new BodyCuboid();
-				iBody->setId(id);
-				iBody->setPoints(pointP1,pointP2);
-				iBody->setMaterialId(materialId);
-				bodies.push_back(iBody);
-			}
-		}
-	}
-
-	if (bodies.empty())
-	{
-		Warning::printMessage("The body list can not be created. Verify the input file:");
-		Warning::printMessage("Error in keyword "+keywords[Input::body]);
-	}
+	bodies=input.getBodyList();
 }
 
 void MPM::createBodies(){
@@ -288,18 +113,19 @@ void MPM::setUpParticles(){
 
 	for (size_t i = 0; i < bodies.size(); ++i)
 	{	
-		vector<Particle>& particles = bodies.at(i)->getParticles();
+		vector<Particle*>& particles = bodies.at(i)->getParticles();
 
 		for (size_t j = 0; j < particles.size(); ++j)
 		{
+			// set shape function
 			switch(ModelSetup::getInterpolationFunction())
 			{
 				case ModelSetup::LINEAR:
-					particles.at(j).setShape(new ShapeLinear);
+					particles.at(j)->setShape(new ShapeLinear);
 					break;
 
 				case ModelSetup::GIMP:
-					particles.at(j).setShape(new ShapeGimp);
+					particles.at(j)->setShape(new ShapeGimp);
 					break;
 				default:
 				Warning::printMessage("Bad definition of shape function in particle");
