@@ -19,16 +19,16 @@ public:
 
 	void setPoints(Vector3d,Vector3d);//!< configures the cuboid points
 	
-	virtual void setMaterialId(int);//!< configures the material id
+	virtual void setMaterialId(int); //!< configures the material id
 	virtual int getMaterialId(); //!< returns the material id
 
 	virtual void create(Mesh& mesh, Material* material); //!< create a cuboid
 
 private:
 
-	Vector3d pointP1;
-	Vector3d pointP2;
-	int materialId; 
+	Vector3d pointP1; //!< lower left point
+	Vector3d pointP2; //!< higher right point
+	int materialId; //!< material identification
 };
 
 #endif /* BODYCUBOID_H_ */
