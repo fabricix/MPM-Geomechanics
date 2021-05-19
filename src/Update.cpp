@@ -15,7 +15,7 @@ void Update::nodalVelocity(Mesh& mesh){
 	// update the nodal velocity
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		if(gNodes->at(i).getActive()){
+		if(gNodes->at(i).getActive()&&gNodes->at(i).getMass()!=0.0){
 		
 			gNodes->at(i).setVelocity(gNodes->at(i).getMomentum()/gNodes->at(i).getMass());
 		}
@@ -58,9 +58,12 @@ void Update::particleDensity(vector<Particle*>& particles){
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		double volStrain = particles.at(i)->getStrainIncrement().trace();
-
+		
 		// update particle density
-		particles.at(i)->setDensity(particles.at(i)->getDensity()/(1+volStrain));
+		if ((1+volStrain)!=0){
+
+			particles.at(i)->setDensity(particles.at(i)->getDensity()/(1+volStrain));
+		}
 	}
 }
 
@@ -92,7 +95,10 @@ void Update::particleVelocity(Mesh& mesh, vector<Particle*>& particles, double d
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
 			// compute the velocity rate contributuion
-			velocityRate+=nodes->at(contribution->at(j).getNodeId()).getTotalForce()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+			if (nodes->at(contribution->at(j).getNodeId()).getMass()!=0.0)
+			{
+				velocityRate+=nodes->at(contribution->at(j).getNodeId()).getTotalForce()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+			}
 		}
 
 		// update particle velocity
@@ -118,7 +124,10 @@ void Update::particlePosition(Mesh& mesh, vector<Particle*>& particles, double d
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
 			// compute the position rate contribution
-			positionRate+=nodes->at(contribution->at(j).getNodeId()).getMomentum()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+			if (nodes->at(contribution->at(j).getNodeId()).getMass()!=0.0)
+			{
+				positionRate+=nodes->at(contribution->at(j).getNodeId()).getMomentum()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+			}
 		}
 
 		// update particle position

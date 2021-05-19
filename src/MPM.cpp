@@ -180,7 +180,7 @@ void MPM::solve(){
 		
 		std::chrono::duration<double> elapsed_seconds = end-start;
 	
-		cout << "Elapsed time: " << elapsed_seconds.count()<<  "seconds";
+		cout<<"Elapsed time: "<<elapsed_seconds.count()<<" seconds\n";
 	}
 	
 }
