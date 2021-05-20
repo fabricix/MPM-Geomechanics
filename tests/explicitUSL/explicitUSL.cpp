@@ -5,16 +5,6 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-
-
-
-/*
- * testMesh.cpp
- *
- *  Created on: 23 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
-
 #include <iostream>
 using std::cout;
 using std::endl;

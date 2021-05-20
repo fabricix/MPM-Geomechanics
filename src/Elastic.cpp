@@ -63,8 +63,8 @@ void Elastic::updateStress(Particle* particle){
 	
 	// new stresses
 	Matrix3d stress_dev_new = stress_dev_rotated+2.0*getShearModulus()*dstrain_dev;
-	double stress_mean = stress.trace()+getBulkModulus()*dstrain_vol;
+	double stress_mean_new = stress.trace()+getBulkModulus()*dstrain_vol;
 
 	// sets the new stress
-	particle->setStress(stress_dev_new+Matrix3d::Identity()*stress_mean);
+	particle->setStress(stress_dev_new+Matrix3d::Identity()*stress_mean_new);
 }

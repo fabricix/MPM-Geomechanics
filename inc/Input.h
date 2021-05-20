@@ -110,6 +110,7 @@ public:
 	vector<Material*> getMaterialList(); //!< return the material list
 	vector<Body*> getBodyList(); //!< return the body list
 	Vector3d getGravity(); //!< return the gravity force
+	int getResultNum(); //!< return the number of results
 
 private:
 

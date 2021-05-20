@@ -50,7 +50,8 @@ private:
 	void createBodies(); //!< configures the body list
 	void setInterpolationFunctions(); //!< configures the shape function
 	void setupParticles(); //!< configures the particles
-	void setupLoads(); //<! configures the loads in the model
+	void setupLoads(); //!< configures the loads in the model
+	void setupResults(); //!< configures the total results to bo written
 };
 
 #endif /* MPM_H_ */

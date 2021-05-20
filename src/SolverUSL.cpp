@@ -103,11 +103,17 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		{
 			for (size_t i = 0; i < bodies.size(); ++i){
 
-				Output::writeParticles(bodies.at(i)->getParticles(),time);
+				Output::writeBodies(bodies,iTime);
 			}
 		}
 
 		// advance in time
 		iTime+=dt;
 	}
+
+	// write the Eulerian mesh
+	Output::writeGrid(mesh,Output::POINTS);
+
+	// write results series
+	Output::writeResultsSeries();
 }

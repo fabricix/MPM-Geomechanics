@@ -305,3 +305,14 @@ Vector3d Input::getGravity(){
 	
 	return gravity;
 }
+
+
+int Input::getResultNum(){
+
+	int results = 10;
+	if(inputFile.contains(keywords[Input::results])&&inputFile[keywords[Input::results]].is_number()){
+		
+		results=inputFile[keywords[Input::results]];
+	}
+	return results;
+}

@@ -143,6 +143,12 @@ void MPM::setupLoads(){
 
 }
 
+void MPM::setupResults(){
+
+	// gravity
+	ModelSetup::setResultNum(input.getResultNum());
+}
+
 void MPM::createModel(){
 
 	// set the simulation time 
@@ -174,6 +180,9 @@ void MPM::createModel(){
 
 	// configures the loads
 	setupLoads();
+
+	// configures the results
+	setupResults();
 }
 
 void MPM::solve(){
