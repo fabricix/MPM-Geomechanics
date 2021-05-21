@@ -16,16 +16,16 @@ Contribution::~Contribution() {
 	// TODO Auto-generated destructor stub
 }
 
-int Contribution::getNodeId(){
+int Contribution::getNodeId() const {
 
 	return nodeId;
 }
 
-double Contribution::getWeight(){
+double Contribution::getWeight() const {
 
 	return weight;
 }
-Vector3d Contribution::getGradients(){
+Vector3d Contribution::getGradients() const {
 
 	return gradient;
 }

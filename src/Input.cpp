@@ -14,63 +14,66 @@
 #include <fstream>
 using std::ifstream;
 
-Input::Input() {
+namespace Input {
 
-		keywords[KeyWords::alpha]="alpha";
-		keywords[KeyWords::body]="body";
-		keywords[KeyWords::boundaryConditons]="boundaryConditons";
-		keywords[KeyWords::cellDimension]="cellDimension";
-		keywords[KeyWords::cohesion]="cohesion";
-		keywords[KeyWords::cuboid]="cuboid";
-		keywords[KeyWords::damping]="damping";
-		keywords[KeyWords::density]="density";
-		keywords[KeyWords::displacement]="displacement";
-		keywords[KeyWords::elastic]="elastic";
-		keywords[KeyWords::fields]="fields";
-		keywords[KeyWords::fixed]="fixed";
-		keywords[KeyWords::gravity]="gravity";
-		keywords[KeyWords::GIMP]="GIMP";
-		keywords[KeyWords::friction]="friction";
-		keywords[KeyWords::id]="id";
-		keywords[KeyWords::localNoViscous]="localNoViscous";
-		keywords[KeyWords::linear]="linear";
-		keywords[KeyWords::mass]="mass";
-		keywords[KeyWords::materialId]="materialId";
-		keywords[KeyWords::material]="material";
-		keywords[KeyWords::mesh]="mesh";
-		keywords[KeyWords::mesh]="mesh";
-		keywords[KeyWords::nCells]="nCells";
-		keywords[KeyWords::nThreads]="nThreads";
-		keywords[KeyWords::number]="number";
-		keywords[KeyWords::origin]="origin";
-		keywords[KeyWords::paneX0]="paneX0";
-		keywords[KeyWords::paneXn]="paneXn";
-		keywords[KeyWords::paneY0]="paneY0";
-		keywords[KeyWords::paneYn]="paneYn";
-		keywords[KeyWords::paneZ0]="paneZ0";
-		keywords[KeyWords::paneZn]="paneZn";
-		keywords[KeyWords::particle]="particle";
-		keywords[KeyWords::plastic]="plastic";
-		keywords[KeyWords::pointP1]="pointP1";
-		keywords[KeyWords::pointP2]="pointP2";
-		keywords[KeyWords::poisson]="poisson";
-		keywords[KeyWords::position]="position";
-		keywords[KeyWords::results]="results";
-		keywords[KeyWords::shapeFunction]="shapeFunction";
-		keywords[KeyWords::sliding]="sliding";
-		keywords[KeyWords::stress]="stress";
-		keywords[KeyWords::stressSchemeUpdate]="stressSchemeUpdate";
-		keywords[KeyWords::structured]="structured";
-		keywords[KeyWords::time]="time";
-		keywords[KeyWords::timeStep]="timeStep";
-		keywords[KeyWords::timeStepFraction]="timeStepFraction";
-		keywords[KeyWords::type]="type";
-		keywords[KeyWords::USL]="USL";
-		keywords[KeyWords::young]="young";
+		map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure
+		json inputFile; //!< data structure containing all the model informations
+		string inputFileName; //!< file name to be read
 }
 
-Input::~Input() {
-	// TODO Auto-generated destructor stub
+void Input::initKeyWords(){
+
+		keywords[Input::KeyWords::alpha]="alpha";
+		keywords[Input::KeyWords::body]="body";
+		keywords[Input::KeyWords::boundaryConditons]="boundaryConditons";
+		keywords[Input::KeyWords::cellDimension]="cellDimension";
+		keywords[Input::KeyWords::cohesion]="cohesion";
+		keywords[Input::KeyWords::cuboid]="cuboid";
+		keywords[Input::KeyWords::damping]="damping";
+		keywords[Input::KeyWords::density]="density";
+		keywords[Input::KeyWords::displacement]="displacement";
+		keywords[Input::KeyWords::elastic]="elastic";
+		keywords[Input::KeyWords::fields]="fields";
+		keywords[Input::KeyWords::fixed]="fixed";
+		keywords[Input::KeyWords::gravity]="gravity";
+		keywords[Input::KeyWords::GIMP]="GIMP";
+		keywords[Input::KeyWords::friction]="friction";
+		keywords[Input::KeyWords::id]="id";
+		keywords[Input::KeyWords::localNoViscous]="localNoViscous";
+		keywords[Input::KeyWords::linear]="linear";
+		keywords[Input::KeyWords::mass]="mass";
+		keywords[Input::KeyWords::materialId]="materialId";
+		keywords[Input::KeyWords::material]="material";
+		keywords[Input::KeyWords::mesh]="mesh";
+		keywords[Input::KeyWords::mesh]="mesh";
+		keywords[Input::KeyWords::nCells]="nCells";
+		keywords[Input::KeyWords::nThreads]="nThreads";
+		keywords[Input::KeyWords::number]="number";
+		keywords[Input::KeyWords::origin]="origin";
+		keywords[Input::KeyWords::paneX0]="paneX0";
+		keywords[Input::KeyWords::paneXn]="paneXn";
+		keywords[Input::KeyWords::paneY0]="paneY0";
+		keywords[Input::KeyWords::paneYn]="paneYn";
+		keywords[Input::KeyWords::paneZ0]="paneZ0";
+		keywords[Input::KeyWords::paneZn]="paneZn";
+		keywords[Input::KeyWords::particle]="particle";
+		keywords[Input::KeyWords::plastic]="plastic";
+		keywords[Input::KeyWords::pointP1]="pointP1";
+		keywords[Input::KeyWords::pointP2]="pointP2";
+		keywords[Input::KeyWords::poisson]="poisson";
+		keywords[Input::KeyWords::position]="position";
+		keywords[Input::KeyWords::results]="results";
+		keywords[Input::KeyWords::shapeFunction]="shapeFunction";
+		keywords[Input::KeyWords::sliding]="sliding";
+		keywords[Input::KeyWords::stress]="stress";
+		keywords[Input::KeyWords::stressSchemeUpdate]="stressSchemeUpdate";
+		keywords[Input::KeyWords::structured]="structured";
+		keywords[Input::KeyWords::time]="time";
+		keywords[Input::KeyWords::timeStep]="timeStep";
+		keywords[Input::KeyWords::timeStepFraction]="timeStepFraction";
+		keywords[Input::KeyWords::type]="type";
+		keywords[Input::KeyWords::USL]="USL";
+		keywords[Input::KeyWords::young]="young";
 }
 
 map<Input::KeyWords,string> Input::getKeyWords(){
@@ -94,7 +97,8 @@ void Input::setFileName(string ifn){
 }
 
 void Input::readInputFile(string filename){
-
+	
+	initKeyWords();
 	setFileName(filename);
 	readInputFile();
 }

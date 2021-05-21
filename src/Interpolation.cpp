@@ -22,14 +22,14 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>& particles){
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// get the particle mass
 		double pMass = particles.at(i)->getMass();
 
 		// For each node in the contribution list 
 		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		{
 			// add the weighted quantity in node
 			nodes->at(contribution->at(j).getNodeId()).addMass(pMass*contribution->at(j).getWeight());
 		}
@@ -45,7 +45,7 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// get the particle momentum
 		Vector3d pMomentum = particles.at(i)->getMomentum();
@@ -68,7 +68,7 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>& particles)
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// obtain particle stress
 		Matrix3d pStress = particles.at(i)->getStress();
@@ -84,9 +84,9 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>& particles)
 
 			// and compute the internal force
 			Vector3d internalForce;
-			internalForce.x()=-(pStress(0,0)*gradient.x()+pStress(1,0)*gradient.y()+pStress(2,0)*gradient.z())*pVolume;
-			internalForce.y()=-(pStress(0,1)*gradient.x()+pStress(1,1)*gradient.y()+pStress(2,1)*gradient.z())*pVolume;
-			internalForce.z()=-(pStress(0,2)*gradient.x()+pStress(1,2)*gradient.y()+pStress(2,2)*gradient.z())*pVolume;
+			internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
+			internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
+			internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
 
 			// add the quantity in node
 			nodes->at(contribution->at(j).getNodeId()).addInternalForce(internalForce);
@@ -103,7 +103,7 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>& particles)
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// get external force at particle
 		Vector3d pExtForce = particles.at(i)->getExternalForce();
@@ -130,7 +130,7 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>& parti
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// initialize a matrix for strain increment computation
 		Matrix3d dstrain = Matrix3d::Zero();
@@ -157,7 +157,7 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>& parti
 			dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt;
 		}
 
-		// add quantity in particle
+		// set quantity in particle
 		particles.at(i)->setStrainIncrement(dstrain);
 	}
 }
@@ -171,7 +171,7 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>& pa
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
 		// initialize a matrix for strain increment computation
 		Matrix3d dvorticity = Matrix3d::Zero();

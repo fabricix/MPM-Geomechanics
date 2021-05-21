@@ -20,9 +20,9 @@ public:
 	Contribution(); //!< default constructor
 	virtual ~Contribution(); //!< default destructor
 
-	int getNodeId(); //!< returns the node identification
-	double getWeight(); //!< returns the weight value
-	Vector3d getGradients(); //!< returns the gradients values
+	int getNodeId() const; //!< returns the node identification
+	double getWeight() const; //!< returns the weight value
+	Vector3d getGradients() const; //!< returns the gradients values
 
 	void setNodeId(int); //!< configures node identification
 	void setWeight(double); //!< configures weight

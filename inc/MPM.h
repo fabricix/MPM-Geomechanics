@@ -37,9 +37,7 @@ private:
 	Mesh mesh; //!< grid mesh
 	vector<Body*> bodies; //!< bodies discretized by material points
 	vector<Material*> materials; //!< bodies discretized by material points
-	States states; //!< operations for load and save model's states
 	Solver* solver; //!< operation for solve the equations in time
-	Input input; //!< input operations
 
 	void setSimulationTime(); //!< configures the simulation time
 	void setSolver(); //!< configures the solver of the model

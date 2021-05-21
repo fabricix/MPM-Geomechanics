@@ -78,7 +78,7 @@ void Node::setTotalForce(Vector3d f){
 // get methods
 //
 
-Vector3d Node::getTotalForce(){
+Vector3d Node::getTotalForce() {
 
     return totalForce;
 }

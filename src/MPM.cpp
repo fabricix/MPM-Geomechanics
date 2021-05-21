@@ -33,7 +33,7 @@ MPM::~MPM() {
 }
 
 bool MPM::readInputFile(int argc, char **argv){
-
+	
 	if (argc!=2){
 
 		Warning::printMessage("Bad argument list");
@@ -41,7 +41,7 @@ bool MPM::readInputFile(int argc, char **argv){
 	}
 	else{
 
-		input.readInputFile(string(argv[1]));
+		Input::readInputFile(string(argv[1]));
 		return true;
 	}
 	return false;
@@ -49,34 +49,34 @@ bool MPM::readInputFile(int argc, char **argv){
 
 void MPM::setSimulationTime(){
 	
-	ModelSetup::setTime(input.getSimulationTime());
+	ModelSetup::setTime(Input::getSimulationTime());
 }
 
 void MPM::setSolver() {
 	
-	solver = input.getSolver();
+	solver = Input::getSolver();
 }
 
 void MPM::setInterpolationFunctions() {
 
-	ModelSetup::setInterpolationFunction(input.getInterpolationFunction());
+	ModelSetup::setInterpolationFunction(Input::getInterpolationFunction());
 }
 
 void MPM::setTimeStep(){
 
-	ModelSetup::setTimeStep(input.getTimeStep());
+	ModelSetup::setTimeStep(Input::getTimeStep());
 }
 
 void MPM::setupMesh(){
 	
 	// number of cells
-	mesh.setNumCells(input.getCellsNum());
+	mesh.setNumCells(Input::getCellsNum());
 	
 	// set cell dimension
-	mesh.setCellDimension(input.getCellDimension());
+	mesh.setCellDimension(Input::getCellDimension());
 	
 	// set origin
-	mesh.setOrigin(input.getOrigin());
+	mesh.setOrigin(Input::getOrigin());
 
 	// create the mesh
 	mesh.createGrid();
@@ -84,12 +84,12 @@ void MPM::setupMesh(){
 
 void MPM::setupMaterialList(){
 
-	materials=input.getMaterialList();
+	materials=Input::getMaterialList();
 }
 
 void MPM::setupBodyList(){
 
-	bodies=input.getBodyList();
+	bodies=Input::getBodyList();
 }
 
 void MPM::createBodies(){
@@ -138,7 +138,7 @@ void MPM::setupParticles(){
 void MPM::setupLoads(){
 
 	// gravity
-	ModelSetup::setGravity(input.getGravity());
+	ModelSetup::setGravity(Input::getGravity());
 	Loads::setGravity(bodies);
 
 }
@@ -146,7 +146,7 @@ void MPM::setupLoads(){
 void MPM::setupResults(){
 
 	// gravity
-	ModelSetup::setResultNum(input.getResultNum());
+	ModelSetup::setResultNum(Input::getResultNum());
 }
 
 void MPM::createModel(){

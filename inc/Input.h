@@ -27,9 +27,7 @@ using Eigen::Vector3d;
 
 /// \class Input
 /// \brief Operations to read the input file.
-class Input {
-
-public:
+namespace Input {
 
 	/// \enum KeyWords
 	/// \brief Defines all the keywords used in the input file.
@@ -87,10 +85,8 @@ public:
 		young //!< Young's modulus of an elastic material 
 	};
 
-	Input(); //!< default constructor
+	void initKeyWords(); //!< initialize the keywords
 	
-	virtual ~Input(); //!< default destructor
-
 	void readInputFile(); //!< read the input file
 	void readInputFile(string); //!< read the input file
 
@@ -111,12 +107,6 @@ public:
 	vector<Body*> getBodyList(); //!< return the body list
 	Vector3d getGravity(); //!< return the gravity force
 	int getResultNum(); //!< return the number of results
-
-private:
-
-	map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure
-	json inputFile; //!< data structure containing all the model informations
-	string inputFileName; //!< file name to be read
 };
 
 #endif /* INPUT_H_ */
