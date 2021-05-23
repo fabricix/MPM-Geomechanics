@@ -62,15 +62,6 @@ namespace Output{
             Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
         }
 
-#if 0
-        double checkTolerance(double val){
-
-            if (val==0.0) return val;
-            if (val<0.0) return val>(-OutputTolerance::deltaValue)?(-OutputTolerance::deltaValue):val;
-            return val<OutputTolerance::deltaValue?OutputTolerance::deltaValue:val;
-        }
-#endif
-
         void createGridFolder(){
 
             if (Folders::gridFolderExist)

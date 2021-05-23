@@ -29,9 +29,15 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>& particles){
 
 		// For each node in the contribution list 
 		for (size_t j = 0; j < contribution->size(); ++j)
-		{
+		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// add the weighted quantity in node
-			nodes->at(contribution->at(j).getNodeId()).addMass(pMass*contribution->at(j).getWeight());
+			nodeI.addMass(pMass*contribI.getWeight());
 		}
 	}
 }
@@ -47,14 +53,26 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
-		// get the particle momentum
-		Vector3d pMomentum = particles.at(i)->getMomentum();
+		// get particle velocity
+		Vector3d pVelocity = particles.at(i)->getVelocity();
 
+		// get particle mass
+		double pMass = particles.at(i)->getMass();
+		
+		//Vector3d pMomentum = particles.at(i)->getMomentum();
+		
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// add the weighted quantity in node
-			nodes->at(contribution->at(j).getNodeId()).addMomentum(pMomentum*contribution->at(j).getWeight());
+			nodeI.addMomentum(pMass*pVelocity*contribI.getWeight());
+			//nodeI.addMomentum(pMomentum*contribI.getWeight());
 		}
 	}
 }
@@ -79,17 +97,23 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>& particles)
 		// For each node in the contribution list
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// get the nodal gradients
-			Vector3d gradient=contribution->at(j).getGradients();
+			Vector3d gradient = contribI.getGradients();
 
 			// and compute the internal force
-			Vector3d internalForce;
+			Vector3d internalForce = Vector3d::Zero();
 			internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
 			internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
 			internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
 
 			// add the quantity in node
-			nodes->at(contribution->at(j).getNodeId()).addInternalForce(internalForce);
+			nodeI.addInternalForce(internalForce);
 		}
 	}
 }
@@ -111,8 +135,14 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>& particles)
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// add the weighted quantity in node
-			nodes->at(contribution->at(j).getNodeId()).addExternalForce(pExtForce*contribution->at(j).getWeight());
+			nodeI.addExternalForce(pExtForce*contribI.getWeight());
 		}
 	}
 }
@@ -138,11 +168,17 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>& parti
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// get gradient
-			Vector3d dN = contribution->at(j).getGradients();
+			Vector3d dN = contribI.getGradients();
 
 			// get velocity
-			Vector3d v = nodes->at(contribution->at(j).getNodeId()).getVelocity();
+			Vector3d v = nodeI.getVelocity();
 
 			dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt;
 			dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt;
@@ -179,11 +215,17 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>& pa
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contribution structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// get gradient
-			Vector3d dN = contribution->at(j).getGradients();
+			Vector3d dN = contribI.getGradients();
 
 			// get velocity
-			Vector3d v = nodes->at(contribution->at(j).getNodeId()).getVelocity();
+			Vector3d v = nodeI.getVelocity();
 
 			dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt;
 			dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt;

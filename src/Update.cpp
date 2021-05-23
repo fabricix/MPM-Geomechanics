@@ -15,9 +15,11 @@ void Update::nodalVelocity(Mesh& mesh){
 	// update the nodal velocity
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		if(gNodes->at(i).getActive()&&gNodes->at(i).getMass()!=0.0){
+		Node& nodeI = gNodes->at(i);
+
+		if(nodeI.getActive() && nodeI.getMass()!=0.0){
 		
-			gNodes->at(i).setVelocity(gNodes->at(i).getMomentum()/gNodes->at(i).getMass());
+			nodeI.setVelocity(nodeI.getMomentum()/nodeI.getMass());
 		}
 	}
 }
@@ -27,12 +29,14 @@ void Update::nodalTotalForce(Mesh& mesh){
 	// reference to grid nodes
 	vector<Node>* gNodes = mesh.getNodes();
 
-	// update total force in nodes
+	// over all nodes
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		if(gNodes->at(i).getActive()){
+		Node& nodeI = gNodes->at(i);
+
+		if(nodeI.getActive()){
 		
-			gNodes->at(i).setTotalForce(gNodes->at(i).getInternalForce()+gNodes->at(i).getExternalForce());
+			nodeI.setTotalForce(nodeI.getInternalForce()+nodeI.getExternalForce());
 		}
 	}
 }
@@ -45,9 +49,11 @@ void Update::resetNodalValues(Mesh& mesh){
 	// update the shape function for all nodes that this particle contributes
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{
-		if(gNodes->at(i).getActive()){
+		Node& nodeI = gNodes->at(i);
+
+		if(nodeI.getActive()){
 			
-			gNodes->at(i).resetValues();
+			nodeI.resetValues();
 		}
 	}
 }
@@ -57,12 +63,15 @@ void Update::particleDensity(vector<Particle*>& particles){
 	// For each particle 
 	for (size_t i = 0; i < particles.size(); ++i)
 	{
-		double volStrain = particles.at(i)->getStrainIncrement().trace();
+		Particle* particleP = particles.at(i);
+
+		// volumetric strain increment
+		double volStrainInc = particleP->getStrainIncrement().trace();
 		
 		// update particle density
-		if ((1+volStrain)!=0){
+		if ((1+volStrainInc)!=0){
 
-			particles.at(i)->setDensity(particles.at(i)->getDensity()/(1+volStrain));
+			particleP->setDensity(particleP->getDensity()/(1+volStrainInc));
 		}
 	}
 }
@@ -94,15 +103,24 @@ void Update::particleVelocity(Mesh& mesh, vector<Particle*>& particles, double d
 		// For each node in the contribution list
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contributing node structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// compute the velocity rate contributuion
-			if (nodes->at(contribution->at(j).getNodeId()).getMass()!=0.0)
-			{
-				velocityRate+=nodes->at(contribution->at(j).getNodeId()).getTotalForce()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+			if (nodeI.getMass()!=0.0)
+			{	
+				velocityRate+=nodeI.getTotalForce()*contribI.getWeight()/nodeI.getMass();
 			}
 		}
 
+		// particle pointer
+		Particle* particleP = particles.at(i);
+
 		// update particle velocity
-		particles.at(i)->setVelocity(particles.at(i)->getVelocity()+velocityRate*dt);
+		particleP->setVelocity(particleP->getVelocity()+velocityRate*dt);
 	}
 }
 
@@ -123,15 +141,24 @@ void Update::particlePosition(Mesh& mesh, vector<Particle*>& particles, double d
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
+			// contributing node structure
+			const Contribution contribI = contribution->at(j);
+
+			// contributing node
+			Node& nodeI = nodes->at(contribI.getNodeId());
+
 			// compute the position rate contribution
-			if (nodes->at(contribution->at(j).getNodeId()).getMass()!=0.0)
+			if (nodeI.getMass()!=0.0)
 			{
-				positionRate+=nodes->at(contribution->at(j).getNodeId()).getMomentum()*contribution->at(j).getWeight()/nodes->at(contribution->at(j).getNodeId()).getMass();
+				positionRate+=nodeI.getMomentum()*contribI.getWeight()/nodeI.getMass();
 			}
 		}
 
+		// particle pointer
+		Particle* particleP = particles.at(i);
+
 		// update particle position
-		particles.at(i)->setPosition(particles.at(i)->getPosition()+positionRate*dt);
+		particleP->setPosition(particleP->getPosition()+positionRate*dt);
 	}
 }
 
@@ -139,17 +166,19 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{
-		if (nodes->at(plane->nodes.at(i)).getActive()){
+		Node& nodeI = nodes->at(plane->nodes.at(i));
+
+		if (nodeI.getActive()){
 
 			switch(plane->type) {
 
 				case Boundary::BoundaryType::FIXED:
-					nodes->at(plane->nodes.at(i)).setMomentum(Vector3d::Zero());
+					nodeI.setMomentum(Vector3d::Zero());
 				break;
 			
 				case Boundary::BoundaryType::SLIDING:
 					
-					Vector3d momentum = nodes->at(plane->nodes.at(i)).getMomentum();
+					Vector3d momentum = nodeI.getMomentum();
 					
 					switch(dir) {
 
@@ -166,7 +195,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 						break;
 					}
 
-					nodes->at(plane->nodes.at(i)).setMomentum(momentum);
+					nodeI.setMomentum(momentum);
 
 				break;
 			}
@@ -204,17 +233,19 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{
-		if (nodes->at(plane->nodes.at(i)).getActive()){
+		Node& nodeI = nodes->at(plane->nodes.at(i));
+
+		if (nodeI.getActive()){
 			
 			switch(plane->type) {
 
 				case Boundary::BoundaryType::FIXED:
-					nodes->at(plane->nodes.at(i)).setTotalForce(Vector3d::Zero());
+					nodeI.setTotalForce(Vector3d::Zero());
 				break;
 			
 				case Boundary::BoundaryType::SLIDING:
 					
-					Vector3d force = nodes->at(plane->nodes.at(i)).getTotalForce();
+					Vector3d force = nodeI.getTotalForce();
 					
 					switch(dir) {
 
@@ -230,7 +261,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 						force.z()=0.0;
 						break;
 					}
-					nodes->at(plane->nodes.at(i)).setTotalForce(force);
+					nodeI.setTotalForce(force);
 				break;
 			}
 		}

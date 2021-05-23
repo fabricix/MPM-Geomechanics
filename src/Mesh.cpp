@@ -331,11 +331,11 @@ void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
 // private methods
 //
 
-void Mesh::updateBoundaries()
-{
-    // current limits
-    Vector3d minLimitsGhosts = minLimit-nGhosts*cellDim;
-    Vector3d maxLimitsGhosts = Vector3d(nCells.x()*cellDim.x(),nCells.y()*cellDim.y(),nCells.z()*cellDim.z())+nGhosts*cellDim;
+void Mesh::updateBoundaries(){
+    
+    // model's limits
+    Vector3d minLimitsGhosts = minLimit;
+    Vector3d maxLimitsGhosts = Vector3d(nCells.x()*cellDim.x(),nCells.y()*cellDim.y(),nCells.z()*cellDim.z());
 
     // node vectors
     vector<int> nodesPlaneX0, nodesPlaneY0, nodesPlaneZ0;

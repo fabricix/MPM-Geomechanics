@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
 	enum Plane {X0,Y0,Z0,Xn,Yn,Zn};
 
-	Plane boundaryPlane=Plane::Zn;
+	Plane boundaryPlane=Plane::Z0;
 
 	switch (boundaryPlane)
 	{
