@@ -10,12 +10,14 @@
 
 #include <Body.h>
 
+/// \class BodyCuboid
+/// \brief Represents cuboid in 3D
 class BodyCuboid: public Body {
 
 public:
 
-	BodyCuboid();
-	virtual ~BodyCuboid();
+	BodyCuboid(); //!< default constructor
+	virtual ~BodyCuboid(); //!< default destructor
 
 	void setPoints(Vector3d,Vector3d);//!< configures the cuboid points
 	

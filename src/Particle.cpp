@@ -29,8 +29,6 @@ Particle::Particle(Vector3d position, Material* material, Vector3d size){
 
 	setPosition(position);
 	
-	setInitialPosition(position);
-	
 	setMaterial(material);
 
 	setDensity(material!=0?material->getDensity():0.0);
@@ -50,14 +48,11 @@ Particle::Particle(Vector3d position, Material* material) {
 
 	setPosition(position);
 	
-	setInitialPosition(position);
-	
 	setMaterial(material);
 
 	setDensity(material!=0?material->getDensity():0.0);
 
 	setId(totalParticles);
-
 
 	totalParticles++;
 }
@@ -67,8 +62,6 @@ Particle::Particle(Vector3d position) {
 	initializeValues();
 
 	setPosition(position);
-	
-	setInitialPosition(position);
 
 	setId(totalParticles);
 
@@ -84,18 +77,18 @@ Particle::~Particle() {
 // get methods
 //
 
-int Particle::getId()
-{
+int Particle::getId() const {
+
 	return id;
 }
 
-double Particle::getMass()
-{
+double Particle::getMass() const{
+
 	return mass;
 }
 
-Vector3d Particle::getPosition()
-{
+Vector3d Particle::getPosition() const{
+
 	return position;
 }
 
@@ -104,47 +97,42 @@ vector<Contribution>* Particle::getContributionNodes(){
 	return &contributionNodes;
 }
 
-int Particle::getTotalParticles()
-{
+int Particle::getTotalParticles() {
+
 	return totalParticles;
 }
 
-Vector3d Particle::getMomentum(){
-
-	return momentum;
-}
-
-Matrix3d Particle::getStress(){
+Matrix3d Particle::getStress() const {
 
 	return stress;
 }
 
-double Particle::getDensity(){
+double Particle::getDensity() const {
 
 	return density;
 }
 
-int Particle::getMaterialId(){
+int Particle::getMaterialId() const {
 
 	return material!=0?material->getId():-1;
 }
 
-Vector3d Particle::getExternalForce()
-{
+Vector3d Particle::getExternalForce() const {
+
 	return externalForce;
 }
 
-Vector3d Particle::getVelocity()
-{
+Vector3d Particle::getVelocity() const {
+
 	return velocity;
 }
 
-Matrix3d Particle::getStrainIncrement(){
+Matrix3d Particle::getStrainIncrement() const {
 
 	return strainIncrement;
 }
 
-Matrix3d Particle::getVorticityIncrement(){
+Matrix3d Particle::getVorticityIncrement() const {
 
 	return vorticityIncrement;
 }
@@ -166,11 +154,6 @@ void Particle::setMass(double m)
 void Particle::setPosition(Vector3d x)
 {
 	position=x;
-}
-
-void Particle::setInitialPosition(Vector3d xo)
-{
-	initialPosition=xo;
 }
 
 void Particle::setId(int i)
@@ -276,7 +259,6 @@ void Particle::updateContributionNodes(Mesh& mesh)
 void Particle::initializeValues(){
 
 	id=0;
-	cellId=0;
 	bodyId=0;
 
 	mass=0.0;
@@ -287,9 +269,7 @@ void Particle::initializeValues(){
 	porosity=0.0;
 
 	position.setZero();
-	initialPosition.setZero();
 	velocity.setZero();
-	momentum.setZero();
 	externalForce.setZero();
 	size.setZero();
 
@@ -297,7 +277,6 @@ void Particle::initializeValues(){
 	strain.setZero();
 	strainIncrement.setZero();
 	vorticityIncrement.setZero();
-	deformationGradient.setZero();
 	deformationGradientIncrement.setZero();
 	velocityGradient.setZero();
 

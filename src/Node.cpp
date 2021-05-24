@@ -78,47 +78,47 @@ void Node::setTotalForce(Vector3d f){
 // get methods
 //
 
-Vector3d Node::getTotalForce() {
+Vector3d Node::getTotalForce() const {
 
     return totalForce;
 }
 
-Vector3d Node::getCoordinates(){
+Vector3d Node::getCoordinates() const {
 
     return coordinates;
 }
 
-Vector3d Node::getMomentum(){
+Vector3d Node::getMomentum() const {
 
     return momentum;
 }
 
-int Node::getId(){
+int Node::getId() const {
 
     return id;
 }
 
-bool Node::getActive(){
+bool Node::getActive() const {
 
 	return active;
 }
 
-double Node::getMass()
-{
+double Node::getMass() const {
+
     return mass;
 }
 
-Vector3d Node::getVelocity(){
+Vector3d Node::getVelocity() const {
 
     return velocity;
 }
 
-Vector3d Node::getInternalForce(){
+Vector3d Node::getInternalForce() const {
 
     return internalForce;
 }
     
-Vector3d Node::getExternalForce(){
+Vector3d Node::getExternalForce() const {
 
     return externalForce;
 }

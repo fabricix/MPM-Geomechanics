@@ -20,20 +20,20 @@ class Body {
 
 public:
 
-	Body(); //<! default constructor
-	virtual ~Body(); //<! default destructor
+	Body(); //!< default constructor
+	virtual ~Body(); //!< default destructor
 	
 	virtual void create(Mesh& mesh, Material* material)=0;
 	virtual void setMaterialId(int)=0;//!< configures the material id
 	virtual int getMaterialId()=0; //!< returns the material id
 
-	int getId(); //<! returns the body identification
-	vector<Particle*>& getParticles(); //<! returns particle in the body
-	static int getTotalBodies(); //<! returns o number of bodies
+	int getId() const; //!< returns the body identification
+	vector<Particle*>& getParticles(); //!< returns particle in the body
+	static int getTotalBodies(); //!< returns o number of bodies
 	
-	void setId(int); //<! configures the id of the body
-	void setParticles(vector<Particle*>); //<! configures the particles
-	void insertParticles(vector<Particle*>); //<! configures the particles
+	void setId(int); //!< configures the id of the body
+	void setParticles(vector<Particle*>); //!< configures the particles
+	void insertParticles(vector<Particle*>); //!< configures the particles
 	
 private:
 	

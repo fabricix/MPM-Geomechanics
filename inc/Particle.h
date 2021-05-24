@@ -39,17 +39,17 @@ public:
 	void updateContributionNodes(Mesh &); //!< update the list of nodes that the particle contributes
 	void updateStress();//!< update the stress
 
-	int getId(); //!< returns the particle identification 
-	int getMaterialId(); //!< returns the particle's material
-	double getMass(); //!< returns the mass of the particle
-	double getDensity(); //!< returns the current particle density
-	Vector3d getMomentum(); //!< returns the momentum of the particle
-	Vector3d getPosition(); //!< returns the current particle position
-	Vector3d getExternalForce(); //!< returns the external force in particle
-	Vector3d getVelocity(); //!< returns particle velocity
-	Matrix3d getStress(); //!< returns the current particle stress tensor
-	Matrix3d getStrainIncrement(); //!< returns the strain increment
-	Matrix3d getVorticityIncrement(); //!< returns the vorticity increment
+	int getId() const; //!< returns the particle identification 
+	int getMaterialId() const; //!< returns the particle's material
+	double getMass() const; //!< returns the mass of the particle
+	double getDensity() const; //!< returns the current particle density
+	Vector3d getMomentum() const; //!< returns the momentum of the particle
+	Vector3d getPosition() const; //!< returns the current particle position
+	Vector3d getExternalForce() const; //!< returns the external force in particle
+	Vector3d getVelocity() const; //!< returns particle velocity
+	Matrix3d getStress() const; //!< returns the current particle stress tensor
+	Matrix3d getStrainIncrement() const; //!< returns the strain increment
+	Matrix3d getVorticityIncrement() const; //!< returns the vorticity increment
 	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
 
 	void setId(int); //!< configures the particle id
@@ -74,7 +74,6 @@ public:
 private:
 
 	int id;	//!< particle id
-	int cellId; //!< cell id
 	int bodyId; //!< body id
 
 	double mass; //!< particle mass
@@ -85,9 +84,7 @@ private:
 	double porosity; //!< particle porosity
 
 	Vector3d position; //!< particle position
-	Vector3d initialPosition; //!< initial particle position
 	Vector3d velocity; //!< particle velocity
-	Vector3d momentum; //!< particle momentum
 	Vector3d externalForce;	//!< external force
 	Vector3d size; //!< size in each direction
 	
@@ -95,7 +92,6 @@ private:
 	Matrix3d strain; //!< particle strain
 	Matrix3d strainIncrement; //!< particle strain increment
 	Matrix3d vorticityIncrement; //!< particle vorticity increment
-	Matrix3d deformationGradient; //!< particle deformation gradient
 	Matrix3d deformationGradientIncrement; //!< particle deformation gradient increment
 	Matrix3d velocityGradient; //!< particle deformation gradient
 

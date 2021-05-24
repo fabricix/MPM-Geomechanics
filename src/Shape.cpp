@@ -21,19 +21,19 @@ Shape::~Shape() {
 	// TODO Auto-generated destructor stub
 }
 
-Vector3d Shape::getShape() {
+Vector3d Shape::getShape() const {
 
     return shape;
 }
 
-void Shape::setShape(double sx, double sy, double sz){
-
-    shape=Vector3d(sx,sy,sz);
-}
-
-Vector3d Shape::getDerivate() {
+Vector3d Shape::getDerivate() const {
 
     return derivate;
+}
+
+void Shape::setShape(double sx, double sy, double sz) {
+
+    shape=Vector3d(sx,sy,sz);
 }
 
 void Shape::setDerivate(double gx, double gy, double gz){

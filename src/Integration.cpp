@@ -14,9 +14,11 @@ void Integration::nodalMomentum(Mesh& mesh,double dt){
 
 	for (size_t i = 0; i < nodes->size(); ++i)
 	{	
-		if (nodes->at(i).getActive())
+		Node& nodeI = nodes->at(i);
+		
+		if (nodeI.getActive())
 		{
-			nodes->at(i).setMomentum(nodes->at(i).getMomentum()+nodes->at(i).getTotalForce()*dt);
+			nodeI.setMomentum(nodeI.getMomentum()+nodeI.getTotalForce()*dt);
 		}
 	}
 }

@@ -32,6 +32,12 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 	double iTime=0.0;
 	int loopCounter=1;
 
+	// write the initial state
+	for (size_t i = 0; i < bodies.size(); ++i){
+
+		Output::writeBodies(bodies,iTime);
+	}
+
 	// solve in time
 	while(iTime<time){
 

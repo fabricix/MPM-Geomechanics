@@ -64,12 +64,12 @@ void Body::insertParticles(vector<Particle*> prts){
 // get methods
 //
 
-int Body::getTotalBodies(){
+int Body::getTotalBodies() {
 
 	return totalBodies;
 }
 
-int Body::getId(){
+int Body::getId() const {
 
 	return id;
 }

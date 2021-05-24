@@ -27,15 +27,15 @@ public:
 	void setMomentum(Vector3d); //!< configures the momentum
 	void setTotalForce(Vector3d); //!< configures the total nodal force
 
-	int getId(); //!< returns the identification
-	bool getActive(); //!< returns the active state
-	double getMass(); //!< returns the mass
-	Vector3d getCoordinates(); //!< returns the coordinates
-	Vector3d getMomentum(); //!< returns the momentum
-	Vector3d getInternalForce(); //!< returns the internal force
-	Vector3d getExternalForce(); //!< returns the external force
-	Vector3d getTotalForce(); //!< returns the total nodal force
-	Vector3d getVelocity(); //!< returns the velocity
+	int getId() const; //!< returns the identification
+	bool getActive() const; //!< returns the active state
+	double getMass() const; //!< returns the mass
+	Vector3d getCoordinates() const; //!< returns the coordinates
+	Vector3d getMomentum() const; //!< returns the momentum
+	Vector3d getInternalForce() const; //!< returns the internal force
+	Vector3d getExternalForce() const; //!< returns the external force
+	Vector3d getTotalForce() const; //!< returns the total nodal force
+	Vector3d getVelocity() const; //!< returns the velocity
 
 	void addMass(double); //!< adds mass to the nodal mass
 	void addMomentum(Vector3d); //!< adds momentum to the nodal momentum

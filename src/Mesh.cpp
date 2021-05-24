@@ -92,17 +92,17 @@ void Mesh::setOrigin(Vector3d o){
 // get methods
 //
 
-Vector3d Mesh::getCellDimension() {
+Vector3d Mesh::getCellDimension() const {
 
     return cellDim;
 }
 
-Vector3i Mesh::getNumCells() {
+Vector3i Mesh::getNumCells() const {
 
     return nCells;
 }
 
-Vector3i Mesh::getTotalCells() { 
+Vector3i Mesh::getTotalCells() const { 
    
     return Vector3i(nCells.x()+nGhosts*2, nCells.y()+nGhosts*2, nCells.z()+nGhosts*2);
 }
@@ -112,17 +112,17 @@ vector<Node>* Mesh::getNodes() {
     return &gridNodes;
 }
 
-int Mesh::getNumNodes() {
+int Mesh::getNumNodes() const {
 
     return gridNodes.size();
 }
 
-int Mesh::getNumGhosts() {
+int Mesh::getNumGhosts() const {
 
     return nGhosts;
 }
 
-Vector3d Mesh::getGridCoordinates(Vector3d position) {
+Vector3d Mesh::getGridCoordinates(Vector3d position) const {
 
     // grid coordinates
     double i = (position.x()-minLimit.x())/cellDim.x()+nGhosts;
@@ -133,7 +133,7 @@ Vector3d Mesh::getGridCoordinates(Vector3d position) {
     return Vector3d(i,j,k);
 }
 
-Vector3i Mesh::getParentNodeCoordinates(Vector3d position) {
+Vector3i Mesh::getParentNodeCoordinates(Vector3d position) const {
 
     // grid coordinates
     Vector3d gridCoords = getGridCoordinates(position);
@@ -142,8 +142,8 @@ Vector3i Mesh::getParentNodeCoordinates(Vector3d position) {
     return Vector3i(int(floor(gridCoords.x())),int(floor(gridCoords.y())),int(floor(gridCoords.z())));
 }
 
-int Mesh::getCellIdbyPosition(Vector3d position)
-{
+int Mesh::getCellIdbyPosition(Vector3d position) const {
+
     // parent node coordinate
     Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
     int i = gridParentNodeCoords.x();
@@ -154,8 +154,8 @@ int Mesh::getCellIdbyPosition(Vector3d position)
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
-int Mesh::getParentCellIdConstribution(Vector3d position)
-{
+int Mesh::getParentCellIdConstribution(Vector3d position) const{
+
     // parent node coordinates
     Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
     int pi=gridParentNodeCoords.x();
@@ -182,17 +182,17 @@ int Mesh::getParentCellIdConstribution(Vector3d position)
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
-Vector3d Mesh::getMinLimits() {
+Vector3d Mesh::getMinLimits() const {
 
 	return minLimit;
 }
 
-Vector3d Mesh::getMaxLimits() {
+Vector3d Mesh::getMaxLimits() const {
 
 	return maxLimit;
 }
 
-vector<int> Mesh::getNodesInCell(Vector3d position){
+vector<int> Mesh::getNodesInCell(Vector3d position) const {
     
     int cellId = getCellIdbyPosition(position);
     
@@ -209,7 +209,7 @@ vector<int> Mesh::getNodesInCell(Vector3d position){
     return v;
 }
 
-vector<int> Mesh::getContributionNodes(Vector3d position) {
+vector<int> Mesh::getContributionNodes(Vector3d position) const {
 
     int cellId = getParentCellIdConstribution(position);
     

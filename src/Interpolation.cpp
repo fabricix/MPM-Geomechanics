@@ -59,8 +59,6 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 		// get particle mass
 		double pMass = particles.at(i)->getMass();
 		
-		//Vector3d pMomentum = particles.at(i)->getMomentum();
-		
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j)
 		{	
@@ -72,7 +70,6 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 
 			// add the weighted quantity in node
 			nodeI.addMomentum(pMass*pVelocity*contribI.getWeight());
-			//nodeI.addMomentum(pMomentum*contribI.getWeight());
 		}
 	}
 }

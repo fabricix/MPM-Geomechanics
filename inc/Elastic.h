@@ -26,8 +26,8 @@ public:
 	double getShearModulus(); //!< returns th shear modulus
 	double getBulkModulus(); //!< returns the bulk modulus
 	
-	virtual void updateStress(Particle* particle);
-	virtual Material::MaterialType getType();
+	virtual void updateStress(Particle* particle); //!< update the stress in the particle
+	virtual Material::MaterialType getType(); //!< returns the material type
 	
 private:
 	

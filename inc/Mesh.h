@@ -47,16 +47,16 @@ public:
     void activateNodes(const vector<int>&,bool=true); //!< active nodes by its id
     void activateNode(int,bool=true); //!< active node by its id
 
-    int getNumNodes(); //!< returns total nodes in mesh
+    int getNumNodes() const; //!< returns total nodes in mesh
     vector<Node> * getNodes(); //!< returns nodes in mesh
-    Vector3d getCellDimension(); //!< returns the cells dimension in each direction
-    Vector3i getNumCells(); //!< returns total cells in the mesh without ghosts
-    Vector3i getTotalCells(); //!< returns total cells including ghosts
-    int getNumGhosts(); //!< get number of ghosts
-    Vector3d getMinLimits(); //!< returns lower mesh coordinates
-    Vector3d getMaxLimits(); //!< returns higher mesh coordinates
-    vector<int> getNodesInCell(Vector3d); //!< returns the nodes of the cell containing a point
-    vector<int> getContributionNodes(Vector3d); //!< returns the nodes contributing at point
+    Vector3d getCellDimension() const; //!< returns the cells dimension in each direction
+    Vector3i getNumCells() const; //!< returns total cells in the mesh without ghosts
+    Vector3i getTotalCells() const; //!< returns total cells including ghosts
+    int getNumGhosts() const; //!< get number of ghosts
+    Vector3d getMinLimits() const; //!< returns lower mesh coordinates
+    Vector3d getMaxLimits() const; //!< returns higher mesh coordinates
+    vector<int> getNodesInCell(Vector3d) const; //!< returns the nodes of the cell containing a point
+    vector<int> getContributionNodes(Vector3d) const; //!< returns the nodes contributing at point
     Boundary* getBoundary(); //!< return mesh boundaries
 
 private:
@@ -74,10 +74,10 @@ private:
     
     Boundary boundary; //!< mesh boundary
     
-    int getCellIdbyPosition(Vector3d); //!< returns the cell id in a position coordinates
-    Vector3d getGridCoordinates(Vector3d); //!< returns the grid coordinates of a position
-    Vector3i getParentNodeCoordinates(Vector3d); //!< return the grid parent node coordinate of a position
-    int getParentCellIdConstribution(Vector3d); //!< return the id of the parent node contributing at the point
+    int getCellIdbyPosition(Vector3d) const; //!< returns the cell id in a position coordinates
+    Vector3d getGridCoordinates(Vector3d) const; //!< returns the grid coordinates of a position
+    Vector3i getParentNodeCoordinates(Vector3d) const; //!< return the grid parent node coordinate of a position
+    int getParentCellIdConstribution(Vector3d) const; //!< return the id of the parent node contributing at the point
     void updateBoundaries(); //!< updates the boundary nodes index
 };
 

@@ -49,22 +49,28 @@ Material::MaterialType Elastic::getType(){
 void Elastic::updateStress(Particle* particle){
 
 	// strain increment and its deviate
-	Matrix3d dstrain = particle->getStrainIncrement();
-	Matrix3d dstrain_dev = dstrain-Matrix3d::Identity()*dstrain.trace();
-	double dstrain_vol = dstrain.trace();
+	Matrix3d de = particle->getStrainIncrement();
+	Matrix3d deDev = de-Matrix3d::Identity()*de.trace()/3.0;
+	double deVol = de.trace();
 
 	// current stress and deviate
 	Matrix3d stress = particle->getStress();
-	Matrix3d stress_dev = stress-Matrix3d::Identity()*stress.trace();;
+	Matrix3d stressDev = stress-Matrix3d::Identity()*stress.trace()/3.0;
+	double stressMean = stress.trace()/3.0;
 
+#if 1
 	// rotated matrix
 	Matrix3d spin = particle->getVorticityIncrement();
-	Matrix3d stress_dev_rotated = stress_dev+(stress_dev*spin.transpose()+spin*stress_dev);
+	Matrix3d stressDevRot = stressDev+(stressDev*spin.transpose()+spin*stressDev);
 	
 	// new stresses
-	Matrix3d stress_dev_new = stress_dev_rotated+2.0*getShearModulus()*dstrain_dev;
-	double stress_mean_new = stress.trace()+getBulkModulus()*dstrain_vol;
+	Matrix3d stressDevNew = stressDevRot+2.0*getShearModulus()*deDev;
+#else
+	Matrix3d stressDevNew = stressDev+2.0*getShearModulus()*deDev;
+#endif
+	
+	double stressMeanNew = stressMean+getBulkModulus()*deVol;
 
 	// sets the new stress
-	particle->setStress(stress_dev_new+Matrix3d::Identity()*stress_mean_new);
+	particle->setStress(stressDevNew+Matrix3d::Identity()*stressMeanNew);
 }
