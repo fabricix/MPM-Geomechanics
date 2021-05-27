@@ -15,32 +15,3 @@ Contribution::Contribution()
 Contribution::~Contribution() {
 	// TODO Auto-generated destructor stub
 }
-
-int Contribution::getNodeId() const {
-
-	return nodeId;
-}
-
-double Contribution::getWeight() const {
-
-	return weight;
-}
-Vector3d Contribution::getGradients() const {
-
-	return gradient;
-}
-
-void Contribution::setNodeId(int nid){
-
-	nodeId=nid;
-}
-
-void Contribution::setWeight(double w){
-
-	weight=w;
-}
-
-void Contribution::setGradients(Vector3d grad){
-
-	gradient=grad;
-}

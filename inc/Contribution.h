@@ -27,27 +27,27 @@ public:
 
 	/// \brief Return the node identification
 	/// \param[out] node_id Node identification
-	int getNodeId() const;
-	
+	inline int getNodeId() const { return this->nodeId; }
+
 	/// \brief Return the weight value
 	/// \param[out] nodal_weight Value of the nodal weight evaluated at the particle position
-	double getWeight() const;
-	
+	inline double getWeight() const { return this->weight; }
+
 	/// \brief Return the gradients values
 	/// \param[out] nodal_gradients Nodal gradients in each direction evaluated at the particle position
-	Vector3d getGradients() const;
+	inline Vector3d getGradients() const { return this->gradient; }
 
 	/// \brief Configure node identification
 	/// \param[int] nodal_id Node identification
-	void setNodeId(int);
+	inline void setNodeId(int nodal_id) { this->nodeId=nodal_id; }
 	
 	/// \brief Configure weight
 	/// \param[int] nodal_weight Value of the nodal weight evaluated at the particle position
-	void setWeight(double);
+	inline void setWeight(double nodal_weight) { this->weight=nodal_weight; }
 	
 	/// \brief Configure gradients
 	/// \param[int] nodal_gradients Nodal gradients in each direction evaluated at the particle position
-	void setGradients(Vector3d);
+	inline void setGradients(Vector3d nodal_gradients) { this->gradient=nodal_gradients; };
 
 private:
 	

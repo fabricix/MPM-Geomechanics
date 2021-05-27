@@ -16,20 +16,38 @@ class BodyCuboid: public Body {
 
 public:
 
-	BodyCuboid(); //!< default constructor
-	virtual ~BodyCuboid(); //!< default destructor
-
-	void setPoints(Vector3d,Vector3d);//!< configures the cuboid points
+	/// \brief Default constructor
+	///
+	BodyCuboid();
 	
-	virtual void setMaterialId(int); //!< configures the material id
-	virtual int getMaterialId(); //!< returns the material id
+	/// \brief Default constructor
+	///
+	virtual ~BodyCuboid();
 
-	virtual void create(Mesh& mesh, Material* material); //!< create a cuboid
+	/// \brief Configure the geometrical points of the cuboid
+	/// \param[in] point_1 Lower left geometrical point of the cuboid
+	/// \param[in] point_2 Higher right geometrical point of the cuboid
+	void setPoints(Vector3d,Vector3d);
+	
+	/// \brief Configure the material id
+	/// \param[in] material_id Material identification
+	virtual void setMaterialId(int);
+	
+	/// \brief Return the material identification
+	/// \param[out] material_id Material identification
+	virtual int getMaterialId() const;
+
+	/// \brief Create a cuboid in space
+	/// \param[in] &mesh Mesh reference
+	/// \param[in] *material Material pointer 
+	virtual void create(Mesh& mesh, Material* material);
 
 private:
 
 	Vector3d pointP1; //!< lower left point
+
 	Vector3d pointP2; //!< higher right point
+	
 	int materialId; //!< material identification
 };
 
