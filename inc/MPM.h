@@ -24,32 +24,85 @@ class MPM {
 
 public:
 
-	MPM(); //!< default constructor
-	virtual ~MPM(); //!< default destructor
+	/// \brief Default constructor
+	///
+	MPM(); 
+	
+	/// \brief Default destructor
+	///
+	virtual ~MPM();
 
-	bool readInputFile(int argc, char **argv); //!< read the input file of the model
-	void createModel(); //!< create the numerical MPM model
-	void solve(); //!< solve the problem in time
-	void end(); //!< finish all program structure
+	/// \brief Read the input file of the model
+	/// \param[in] argument_counter Argument counter
+	/// \param[in] argument_vector Argument vector
+	bool readInputFile(int, char **);
+	
+	/// \brief Create the numerical MPM model
+	///
+	void createModel();
+	
+	/// \brief Solve the problem in time
+	///
+	void solve();
+	
+	/// \brief Finish all program structure
+	///
+	void end();
 
 private:
 	
 	Mesh mesh; //!< grid mesh
+
 	vector<Body*> bodies; //!< bodies discretized by material points
+
 	vector<Material*> materials; //!< bodies discretized by material points
+	
 	Solver* solver; //!< operation for solve the equations in time
 
-	void setSimulationTime(); //!< configures the simulation time
-	void setSolver(); //!< configures the solver of the model
-	void setTimeStep(); //!< configures the time step 
-	void setupMesh(); //!< configures the mesh
-	void setupMaterialList(); //!< configures the material list
-	void setupBodyList(); //!< configures the body list
-	void createBodies(); //!< configures the body list
-	void setInterpolationFunctions(); //!< configures the shape function
-	void setupParticles(); //!< configures the particles
-	void setupLoads(); //!< configures the loads in the model
-	void setupResults(); //!< configures the total results to bo written
+	/// \brief Configure the simulation time
+	///
+	void setSimulationTime();
+	
+	/// \brief Configure the solver of the model
+	///
+	void setSolver();
+	
+	/// \brief Configure the time step 
+	///
+	void setTimeStep();
+	
+	/// \brief Configure the mesh
+	///
+	void setupMesh();
+	
+	/// \brief Configures the material list
+	///
+	void setupMaterialList();
+	
+	/// \brief Configure the body list
+	///
+	void setupBodyList();
+	
+	/// \brief Create bodies
+	///
+	void createBodies();
+	
+	/// \brief Configure the interpolation functions
+	///
+	void setInterpolationFunctions();
+	
+	/// \brief Configure the particles
+	///
+	void setupParticles();
+	
+	/// \brief Configure the loads in the model
+	///
+	void setupLoads();
+	
+	/// \brief Configure the results to be written
+	///
+	void setupResults();
 };
+
 
 #endif /* MPM_H_ */

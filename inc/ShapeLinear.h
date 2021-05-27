@@ -16,14 +16,38 @@ class ShapeLinear: public Shape {
 
 public:
 	
-	ShapeLinear(); //!< default constructor
-	virtual ~ShapeLinear(); //!< default destructor
-	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d); //!< update the shape functions and its gradients
+	/// \brief Default constructor
+	///
+	ShapeLinear();
+	
+	/// \brief Default desconstructor
+	///
+	virtual ~ShapeLinear();
+	
+	/// \brief Update the shape functions and its gradients
+	/// \param[in] particle_position Particle position
+	/// \param[in] nodal_position Nodal position
+	/// \param[in] cell_dimension Cell dimension
+	/// \param[in] particle_size Particle size
+	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d);
 
 private:
 
-	virtual double computeGradient(double, double, double); //!< returns the gradient of the shape function
-	virtual double computeShape(double, double, double); //!< returns the shape function value at a position
+	/// \brief Returns the gradient of the shape function
+	/// \param[in] p_i_relative_position Relative position of
+	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
+	/// \param[in] cell_dimension Cell dimension in the direction
+	/// \param[in] lp Half current particle size
+	/// \param[out] \f$dS_{Ip}/di\f$
+	virtual double computeGradient(double, double, double);
+
+	/// \brief Returns the shape function value
+	/// \param[in] p_I_relative_position Relative position of
+	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
+	/// \param[in] cell_dimension Cell dimension in the direction
+	/// \param[in] lp Half current particle size
+	/// \param[out] \f$S_{Ip}\f$
+	virtual double computeShape(double, double, double);
 };
 
 #endif /* SHAPELINEAR_H_ */

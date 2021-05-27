@@ -23,53 +23,150 @@ using Eigen::Vector3d;
 class Mesh;
 
 /// \class Particle
-/// \brief Represents a material point
+/// \brief Represents a Lagrangian material point
 /// This class contain all Lagrangian variables
 /// that represents the domain an its properties 
 class Particle {
 
 public:
 
-	Particle(); //!< default constructor
-	Particle(Vector3d); //!< create a particle
-	Particle(Vector3d, Material*); //!< create a particle
-	Particle(Vector3d, Material*, Vector3d); //!< create a particle
-	virtual ~Particle(); //!< default destructor
+	/// Default constructor
+	/// 
+	Particle(); 
 
-	void updateContributionNodes(Mesh &); //!< update the list of nodes that the particle contributes
-	void updateStress();//!< update the stress
+	/// \brief Create a particle
+	/// \param[in] position Particle position
+	Particle(Vector3d);
 
-	int getId() const; //!< returns the particle identification 
-	int getMaterialId() const; //!< returns the particle's material
-	double getMass() const; //!< returns the mass of the particle
-	double getDensity() const; //!< returns the current particle density
-	Vector3d getMomentum() const; //!< returns the momentum of the particle
-	Vector3d getPosition() const; //!< returns the current particle position
-	Vector3d getExternalForce() const; //!< returns the external force in particle
-	Vector3d getVelocity() const; //!< returns particle velocity
-	Matrix3d getStress() const; //!< returns the current particle stress tensor
-	Matrix3d getStrainIncrement() const; //!< returns the strain increment
-	Matrix3d getVorticityIncrement() const; //!< returns the vorticity increment
-	vector<Contribution>* getContributionNodes(); //<! returns the contribution list
-
-	void setId(int); //!< configures the particle id
-	void setMass(double); //!< configures particle mass
-	void setVolume(double); //!< configures particle volume
-	void setDensity(double); //!< configures particle density
-	void setInitialPosition(Vector3d); //!< configures the initial position
-	void setPosition(Vector3d); //!< configures the current position
-	void setSize(Vector3d); //!< configures particle size in each direction
-	void setVelocity(Vector3d); //!< configures particle velocity
-	void setExternalForce(Vector3d); //!< configures the external force in particle
-	void setStrainIncrement(Matrix3d); //!< configures the strain increment
-	void setVorticityIncrement(Matrix3d); //!< configures the vorticity increment
-	void setStress(Matrix3d); //!< configures the current particle stress tensor
-	void setMaterial(Material*); //!< configures the material in the particle
-	void setShape(Shape*); //!< configures the shape function in the particle
+	/// \brief Create a particle
+	/// \param[in] position Particle position
+	/// \param[in] *material Material pointer
+	Particle(Vector3d, Material*);
 	
-	void addExternalForce(Vector3d); //!< adds a external force increment
+	/// \brief Create a particle
+	/// \param[in] position Particle position
+	/// \param[in] *material Material pointer
+	/// \param[in] size Particle size in each direction
+	Particle(Vector3d, Material*, Vector3d);
+	
+	/// \brief Default destructor
+	virtual ~Particle();
 
-	static int getTotalParticles(); //<! returns o number of particles created
+	/// \brief Update the list of nodes that the particle contributes
+	/// \param[in] mesh Mesh reference
+	void updateContributionNodes(Mesh &);
+
+	/// \brief Update the particle stress
+	///  
+	void updateStress();
+
+	/// \brief Returns the particle identification 
+	/// \param[out] particle_id Particle identification
+	int getId() const;
+
+	/// \brief Returns the particle's material
+	/// \param[out] material_id Material index
+	int getMaterialId() const; 
+
+	/// \brief Returns the mass of the particle
+	/// \param[out] mass Particle mass
+	double getMass() const; 
+
+	/// \brief Returns the current particle density
+	/// \param[out] density Particle density
+	double getDensity() const; 
+
+	/// \brief Returns the momentum of the particle
+	/// \param[out] momentum Particle momentum
+	Vector3d getMomentum() const; 
+
+	/// \brief Returns the current particle position
+	/// \param[out] position Particle current position
+	Vector3d getPosition() const; 
+
+	/// \brief Returns the external force in particle
+	/// \param[out] external_force Particle external force
+	Vector3d getExternalForce() const; 
+
+	/// \brief Returns particle velocity
+	/// \param[out] velocity Particle current velocity
+	Vector3d getVelocity() const; 
+
+	/// \brief Returns the current particle stress tensor
+	/// \param[out] stress Particle stress
+	Matrix3d getStress() const; 
+
+	/// \brief Returns the strain increment
+	/// \param[out] delta_strain Particle strain increment
+	Matrix3d getStrainIncrement() const; 
+
+	/// \brief Returns the vorticity increment
+	/// \param[out] delta_vorticity Particle vorticity (spin) increment 
+	Matrix3d getVorticityIncrement() const; 
+
+	/// \brief Returns the contribution list
+	/// \param[out] contribution Contribution node structure
+	vector<Contribution>* getContributionNodes(); 
+
+	/// \brief Configures the particle id
+	/// \param[in] particle_id Particle identification
+	void setId(int); 
+
+	/// \brief Configures particle mass
+	/// \param[in] particle_mass Particle mass
+	void setMass(double); 
+
+	/// \brief Configures particle volume
+	/// \param[in] particle_volume Current particle volume
+	void setVolume(double); 
+
+	/// \brief Configures particle density
+	/// \param[in] particle_density Current particle density
+	void setDensity(double); 
+
+	/// \brief Configures the current particle position
+	/// \param[in] particle_position Current particle position
+	void setPosition(Vector3d); 
+
+	/// \brief Configures particle size in each direction
+	/// \param[in] particle_size Current particle size
+	void setSize(Vector3d); 
+
+	/// \brief Configures particle velocity
+	/// \param[in] particle_velocity Current particle velocity
+	void setVelocity(Vector3d); 
+
+	/// \brief Configures the external force in particle
+	/// \param[in] external_force Particle external force
+	void setExternalForce(Vector3d); 
+
+	/// \brief Configures the strain increment
+	/// \param[in] delta_strain Particle strain increment
+	void setStrainIncrement(Matrix3d); 
+
+	/// \brief Configures the vorticity increment
+	/// \param[in] delta_vorticity Particle vorticity (spin) increment 
+	void setVorticityIncrement(Matrix3d); 
+
+	/// \brief Configures the current particle stress tensor
+	/// \param[in] stress Particle stress
+	void setStress(Matrix3d); 
+
+	/// \brief Configures the material in the particle
+	/// \param[in] *material Material pointer
+	void setMaterial(Material*); 
+
+	/// \brief Configures the shape function in the particle
+	/// \param[in] *shape Shape pointer
+	void setShape(Shape*); 
+
+	/// \brief Adds a external force increment
+	/// \param[in] delta_external_force External force increment
+	void addExternalForce(Vector3d); 
+
+	/// \brief Returns o number of particles created
+	/// \param[out] total_particles Total created particles
+	static int getTotalParticles(); 
 
 private:
 
@@ -101,7 +198,9 @@ private:
 
 	static int totalParticles; //!< total particle in the model
 	
-	void initializeValues(); //!< initialization of all data in particle
+	/// Initialize all attributes in the particles
+	///
+	void initializeValues();
 };
 
 #endif /* PARTICLE_H_ */

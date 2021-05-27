@@ -14,7 +14,10 @@
 /// \brief Represents the integration operations in the MPM.
 namespace Integration {
 
-	void nodalMomentum(Mesh& mesh,double dt); //!< integrate the nodal momentum
+	/// \brief Integrate the nodal momentum
+	/// \param[in] mesh Mesh reference
+	/// \param[in] dt Time step
+	void nodalMomentum(Mesh& mesh,double dt);
 };
 
 #endif /* INTEGRATION_H_ */

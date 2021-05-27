@@ -27,7 +27,7 @@ void BodyCuboid::setMaterialId(int mi) {
 	materialId=mi;
 }
 
-int BodyCuboid::getMaterialId() {
+int BodyCuboid::getMaterialId() const {
 
 	return materialId;
 }

@@ -25,7 +25,7 @@ using Eigen::Vector3d;
 #include "Material.h"
 #include "Model.h"
 
-/// \class Input
+/// \namespace Input
 /// \brief Operations to read the input file.
 namespace Input {
 
@@ -85,28 +85,79 @@ namespace Input {
 		young //!< Young's modulus of an elastic material 
 	};
 
-	void initKeyWords(); //!< initialize the keywords
+	/// \brief Initialize the keywords
+	///
+	void initKeyWords();
 	
-	void readInputFile(); //!< read the input file
-	void readInputFile(string); //!< read the input file
-
-	map<Input::KeyWords,string> getKeyWords(); //!< returns the map with the keywords
-	json getJson(); //!< returns the data file structure
-
-	string getFileName(); //!< returns the file name
-	void setFileName(string); //!< configures the filename
+	/// \brief Read the input file
+	///
+	void readInputFile();
 	
-	double getSimulationTime(); //!< return the simulation time
-	double getTimeStep(); //!< return the time step
-	Solver* getSolver(); //!< return the solver
-	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //!< return the interpolation functions
-	Vector3i getCellsNum(); //!< return the number of cells in each direction
-	Vector3d getCellDimension(); //!< return the cell dimension
-	Vector3d getOrigin(); //!< return the origin of coordinates
-	vector<Material*> getMaterialList(); //!< return the material list
-	vector<Body*> getBodyList(); //!< return the body list
-	Vector3d getGravity(); //!< return the gravity force
-	int getResultNum(); //!< return the number of results
+	/// \brief Read the input file
+	/// \param[in] file_name File name
+	void readInputFile(string);
+
+	/// \brief Return the map with the keywords
+	/// \param[out] map_keywords_strings A map containing an string for each KeyWord
+	map<Input::KeyWords,string> getKeyWords();
+	
+	/// \brief Return the data file structure
+	/// \param[out] json_file Json file structure containing all read data
+	json getJson();
+
+	/// \brief Return the file name
+	/// \param[out] file_name File name
+	string getFileName();
+	
+	/// \brief Configure the filename
+	/// \param[in] file_name File name
+	void setFileName(string);
+	
+	/// \brief Return the simulation time
+	/// \param[out] simulation_time Total simulation time
+	double getSimulationTime();
+	
+	/// \brief Return the time step
+	/// \param[out] time_step Time step
+	double getTimeStep();
+	
+	/// \brief Return the solver to be used in the model.
+	///
+	/// After read the input file this class creates an Solver instance and returns its pointer.
+	/// \param[out] solver* Solver pointer
+	Solver* getSolver();
+	
+	/// \brief Return the interpolation functions type
+	/// \param[out] interpolation_type ModelSetup::InterpolationFunctionType
+	ModelSetup::InterpolationFunctionType getInterpolationFunction();
+	
+	/// \brief Return the number of cells in each direction
+	/// \param[out] cells_num Cells' number in each direction
+	Vector3i getCellsNum();
+	
+	/// \brief Return the cell dimension
+	/// \param[out] cell_dimension Cell dimension in each direction 
+	Vector3d getCellDimension();
+	
+	/// \brief Return the origin of coordinates
+	/// \param[out] origin Coordinates of the origin of the mesh
+	Vector3d getOrigin();
+	
+	/// \brief Return the material list
+	/// \param[out] material_list A list containing Material pointers
+	vector<Material*> getMaterialList();
+	
+	/// \brief Return the body list
+	/// \param[out] A list containing Body pointers
+	vector<Body*> getBodyList();
+	
+	/// \brief Return the gravity force
+	/// \param[out] gravity Gravity force
+	Vector3d getGravity();
+	
+	/// \brief Return the number of results
+	/// \param[out] num_results Number of results to be written
+	int getResultNum();
 };
 
 #endif /* INPUT_H_ */

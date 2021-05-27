@@ -13,15 +13,23 @@
 #include "Mesh.h"
 
 /// \class SolverUSL
-/// \brief Represents the operations to solve the equations in time using the scheme Update Stress Last
+/// \brief Represents the operations to solve the
+/// equations in time using the scheme Update Stress Last
 class SolverUSL: public Solver {
 
 public:
 
-	SolverUSL(); //!< default constructor
-	virtual ~SolverUSL(); //!< default destructor
-
-	virtual void Solve(vector<Body*>&, Mesh&); //!< solve the problem in time
+	/// \brief Default constructor
+	///
+	SolverUSL();
+	
+	/// \brief Default destructor
+	///
+	virtual ~SolverUSL();
+	
+	/// \brief Solve the problem in time
+	///
+	virtual void Solve(vector<Body*>&, Mesh&); 
 };
 
 #endif /* SOLVERUSL_H_ */

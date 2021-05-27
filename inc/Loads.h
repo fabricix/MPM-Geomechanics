@@ -17,7 +17,9 @@ using std::vector;
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
 
-	void setGravity(vector<Body*>&); //!< configures the gravity load in particles
+	/// \brief Configures the gravity load in particles
+	/// \param[in] body_list A list containing Body pointers 
+	void setGravity(vector<Body*>&);
 
 };
 

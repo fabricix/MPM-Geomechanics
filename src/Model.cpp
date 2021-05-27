@@ -17,7 +17,6 @@ namespace ModelSetup {
 		bool contactActive=false;		//!< is contact active
 		bool gravityActive=false;		//!< is gravity active
 		bool axisymetricActive=false;	//!< is axisymetric model
-		bool coupledActive=false;		//!< is coupled analysis
 		bool jaumannActive=true;		//!< is Jaumann rate active
 		
 		Vector3d gravity(0,0,-9.81);	//!< gravity vector
@@ -28,7 +27,6 @@ namespace ModelSetup {
 		double dt=0.0;					//!< time step
 		double time=0.0;				//!< simulation time
 		double dtFraction=0.25; 	    //!< fraction of critical time step
-		//double kineticEnergy=0.0;		//!< kinetic energy of the model
 
 		int resultNumber=10;			//!< number of results to write
 

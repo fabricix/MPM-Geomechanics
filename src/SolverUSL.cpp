@@ -26,6 +26,7 @@ SolverUSL::~SolverUSL() {
 
 void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
+	// simulation variables
 	double time=ModelSetup::getTime();
 	double dt=ModelSetup::getTimeStep();
 	int resultSteps=ModelSetup::getResultSteps();

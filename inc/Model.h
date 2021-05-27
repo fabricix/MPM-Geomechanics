@@ -34,53 +34,138 @@ namespace ModelSetup {
 	/// \brief Defines the type of interpolation function.
 	enum InterpolationFunctionType{LINEAR, GIMP};
 
-	bool getWindowsSystem(); //!< returns true is the system is Windows
-	bool getLinuxSystem(); //!< returns true if the system is Linux
+	/// \brief Return true is the system is Windows
+	/// \param[out] is_windows_system Trues if is Windows system
+	bool getWindowsSystem();
+
+	/// \brief Return true is the system is Linux
+	/// \param[out] is_linux_system Trues if is Linux system
+	bool getLinuxSystem();
 	
-	int getContributionNodesNum(); //!< returns the number of nodes that a particle contributes.
+	/// \brief Return the number of nodes that a particle contributes.
+	int getContributionNodesNum();
 	
-	double getTimeStep(); //!< returns the time step
-	void setTimeStep(double); //!< configures the time step
+	/// \brief Return the time step
+	/// \param[out] time_step Time step
+	double getTimeStep();
+	
+	/// \brief Configure the time step
+	/// \param[in] time_step Time step
+	void setTimeStep(double);
 
-	double getTime(); //!< returns the simulation time
-	void setTime(double); //!< configures the simulation time
+	/// \brief Return the simulation time
+	/// \param[out] simulation_time Simulation time
+	double getTime();
+	
+	/// \brief Configure the simulation time
+	/// \param[in] simulation_time Simulation time
+	void setTime(double);
 
-	int getResultNum(); //!< returns the total results to be written
-	void setResultNum(int); //!< configures the total results
-	int getResultSteps(); //!< returns the step when the results will be written
+	/// \brief Return the total results to be written
+	/// \param[out] total_results Number of results
+	int getResultNum();
+	
+	/// \brief Configure the total results to be written
+	/// \param[in] total_results Number of results
+	void setResultNum(int);
+	
+	/// \brief Return the every how many steps the results will be written
+	/// \param[out] n_steps_results Number of steps
+	int getResultSteps();
 
-	double getTimeStepFraction(); //!< returns
-	void setTimeStepFraction(double); //!< configures the fraction of critical time step
+	/// \brief Return the fraction of time steps
+	/// \param[out] time_step_fraction Time step fraction
+	double getTimeStepFraction();
+	
+	/// \brief Configures the fraction of critical time step
+	/// \param[in] time_step_fraction Time step fraction
+	void setTimeStepFraction(double);
 
-	int getThreads(); //!< returns
-	void setThreads(int); //!< configures the number of threads
+	/// \brief Return the number of threads in the simulation
+	/// \param[out] n_threads Number of threads
+	int getThreads();
+	
+	/// \brief Configures the number of threads
+	/// \param[in] n_threads Number of threads
+	void setThreads(int);
 
-	bool getContactActive(); //!< returns if contact is active
-	void setContactActive(bool); //!< configures if contact is active
+	/// \brief Return if contact method is activated
+	/// \param[out] is_contact_active Contact activated
+	bool getContactActive();
+	
+	/// \brief Configure if contact method is activated
+	/// \param[in] is_contact_activated Contact active
+	void setContactActive(bool);
 
-	bool getGravityActive(); //!< returns if gravity is active
-	void setGravityActive(bool); //!< configures if gravity is active
+	/// \brief Return if gravity is active
+	/// \param[out] is_gravity_activated Gravity active
+	bool getGravityActive();
+	
+	/// \brief Configure if gravity is active
+	/// \param[in] is_gravity_activated Gravity active
+	void setGravityActive(bool);
 
-	Vector3d getGravity(); //!< returns gravity vector
-	void setGravity(Vector3d d); //!< configures gravity vector
+	/// \brief Return the gravity vector
+	/// \param[out] gravity_vector A vector containing the gravity
+	/// acceleration in each direction
+	Vector3d getGravity();
+	
+	/// \brief Configure the gravity vector
+	/// \param[in] gravity_vector A vector containing the gravity
+	/// acceleration in each direction
+	void setGravity(Vector3d);
 
-	bool getAxisymetricActive(); //!< returns if axisymetric analisys is active
-	void setAxisymetricActive(bool); //!< configures if axisymetric analisys is active
+	/// \brief Return if axisymetric analisys is active
+	/// \param[out] if_axysimentric_active Axisymetric active value
+	bool getAxisymetricActive();
+	
+	/// \brief Configure if axisymetric analisys is active
+	/// \param[in] if_axysimentric_active Axisymetric active value
+	void setAxisymetricActive(bool);
 
-	bool getJanumannActive(); //!< returns if Jaumann rate is active
-	void setJanumannActive(bool); //!< configures if Jaumann rate is active
+	/// \brief Return if Jaumann rate is active
+	/// \param[out] if_jaumann_active Jaumann active value
+	bool getJanumannActive();
+	
+	/// \brief Configure if Jaumann rate is active
+	/// \param[in] if_jaumann_active Jaumann active value
+	void setJanumannActive(bool);
 
-	string getInputFile(); //!< returns the input file name
-	void setInputFile(string); //!< configures the input file name
+	/// \brief Return the input file name
+	/// \param[out] file_name File name
+	string getInputFile();
+	
+	/// \brief Configure the input file name
+	/// \param[in] file_name File name
+	void setInputFile(string);
 
-	ModelSetup::StressUpdateScheme getUpdateStressScheme(); //!< returns the scheme for updating the stress
-	void setUpdateStressScheme(ModelSetup::StressUpdateScheme); //!< configures the scheme for updating the stress
+	/// \brief Return the scheme for updating the stress
+	/// \param[out] stress_sheme_update Stress scheme update
+	/// ModelSetup::StressUpdateScheme
+	ModelSetup::StressUpdateScheme getUpdateStressScheme();
+	
+	/// \brief Configure the scheme for updating the stress
+	/// \param[in] stress_sheme_update Stress scheme update
+	/// ModelSetup::StressUpdateScheme
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme);
 
-	ModelSetup::DampingType getDamping(); //!< returns the damping
-	void setDamping(ModelSetup::DampingType); //!< configures the damping type
+	/// \brief Return the damping type
+	/// \param[out] damping_type Damping type ModelSetup::DampingType
+	ModelSetup::DampingType getDamping();
+	
+	/// \brief Configure the damping type
+	/// \param[in] damping_type Damping type ModelSetup::DampingType
+	void setDamping(ModelSetup::DampingType);
 
-	ModelSetup::InterpolationFunctionType getInterpolationFunction(); //!< returns the interpolation functions
-	void setInterpolationFunction(ModelSetup::InterpolationFunctionType); //!< configures the interpolation functions
+	/// \brief Return the interpolation functions type
+	/// \param[out] interpolation_functions_type Interpolation
+	/// functions type ModelSetup::InterpolationFunctionType
+	ModelSetup::InterpolationFunctionType getInterpolationFunction();
+	
+	/// \brief Configure the interpolation functions type
+	/// \param[in] interpolation_functions_type Interpolation
+	/// functions type ModelSetup::InterpolationFunctionType
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType);
 };
 
 #endif /* MODEL_H_ */

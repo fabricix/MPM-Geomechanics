@@ -9,13 +9,19 @@
 #define STATES_H_
 
 /// \class States
-/// \brief Represents model states that can be loaded before a simulation.
+/// \brief Represents model states that
+/// can be loaded before a simulation.
 class States {
 
 public:
 	
-	States(); //!< default constructor
-	virtual ~States(); //!< default destructor
+	/// \brief Default constructor
+	///
+	States();
+
+	/// \brief Default destructor
+	///
+	virtual ~States();
 };
 
 #endif /* STATES_H_ */

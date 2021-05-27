@@ -20,23 +20,48 @@ public:
 	/// Describes the material's constitutive model type
 	enum MaterialType{NONE,ELASTIC};
 
-	Material(int id=-1,double density=0, MaterialType=MaterialType::NONE); //!< default constructor
-	virtual ~Material(); //< default destructor
+	/// \brief Default constructor
+	///
+	Material(int id=-1,double density=0, MaterialType=MaterialType::NONE);
 	
-	int getId(); //!< returns the identification
-	double getDensity(); //!< returns density
+	/// \brief Default destructor
+	///
+	virtual ~Material();
+	
+	/// \brief Return the identification
+	/// \param[out] material_id Material identification
+	int getId();
+	
+	/// \brief Returns material density
+	/// \param[out] density Material density
+	double getDensity();
 
-	void setId(int); //!< configures the material identification
-	void setDensity(double); //!< configures the density
-	void setType(MaterialType); //!< configures the type
+	/// \brief Configure the material identification
+	/// \param[in] material_id Material identification
+	void setId(int);
+	
+	/// \brief Configures the material density
+	/// \param[in] material_density Material density 
+	void setDensity(double);
+	
+	/// \brief Configures the material type
+	/// \param[in] material_type Material::MaterialType
+	void setType(MaterialType);
 
-	virtual void updateStress(Particle*)=0; //!< update the stress tensor
-	virtual MaterialType getType(); //!< returns the material type
+	/// \brief Update the stress tensor
+	/// \param[in] particle* Particle pointer
+	virtual void updateStress(Particle*)=0;
+	
+	/// \brief Returns the material type
+	/// \param[out] material_type Material::MaterialType
+	virtual MaterialType getType();
 
 private:
 	
 	int id; //!< material identification
-	double density; //!< density
+
+	double density; //!< density \f$\rho\f$
+	
 	MaterialType type; //!< material type
 };
 

@@ -20,10 +20,17 @@ class Solver {
 
 public:
 
-	Solver(); //!< default constructor
-	virtual ~Solver(); //!< default destructor
+	/// \brief Default constructor
+	///
+	Solver();
+
+	/// \brief Default destructor
+	///
+	virtual ~Solver();
 	
-	virtual void Solve(vector<Body*>& bodies, Mesh& mesh)=0; //!< pure virtual method
+	/// \brief Solve the problem in time
+	///
+	virtual void Solve(vector<Body*>& bodies, Mesh& mesh)=0;
 };
 
 #endif /* SOLVER_H_ */

@@ -20,25 +20,57 @@ class Body {
 
 public:
 
-	Body(); //!< default constructor
-	virtual ~Body(); //!< default destructor
-	
-	virtual void create(Mesh& mesh, Material* material)=0;
-	virtual void setMaterialId(int)=0;//!< configures the material id
-	virtual int getMaterialId()=0; //!< returns the material id
+	/// \brief Default constructor
+	///
+	Body();
 
-	int getId() const; //!< returns the body identification
-	vector<Particle*>& getParticles(); //!< returns particle in the body
-	static int getTotalBodies(); //!< returns o number of bodies
+	/// \brief Default destructor
+	///
+	virtual ~Body();
 	
-	void setId(int); //!< configures the id of the body
-	void setParticles(vector<Particle*>); //!< configures the particles
-	void insertParticles(vector<Particle*>); //!< configures the particles
+	/// \brief Create a body with particles and material
+	/// \param[in] mesh Computational Mesh reference
+	/// \param[in] *material Pointer to a Material
+	virtual void create(Mesh& mesh, Material* material)=0;
+	
+	/// \brief Configure the material id
+	/// \param[in] mat_id Material identification
+	virtual void setMaterialId(int)=0;
+	
+	/// \brief Return the material id
+	/// \param[out] mat_id
+	virtual int getMaterialId() const=0;
+
+	/// \brief Return the body identification
+	/// \param[out] body_id Body identification
+	int getId() const;
+
+	/// \brief Return the particles forming the body
+	/// \param[out] particles A reference to a vector containing Particle pointers
+	vector<Particle*>& getParticles();
+
+	/// \brief Return the total bodies in the model
+	/// \param[out] total_bodies Total created bodies
+	static int getTotalBodies();
+	
+	/// \brief Configure the id of the body
+	/// \param[in] body_id Body identification 
+	void setId(int);
+
+	/// \brief Configure the particles in the body
+	/// \param[in] particle_vector A vector containing pointers to the particle
+	void setParticles(vector<Particle*>);
+
+	/// \brief Add particles to the current particle list
+	/// \param[in] particle_vectr A vector containing pointers to particles
+	void insertParticles(vector<Particle*>);
 	
 private:
 	
 	int id; //!< body identification
+
 	vector<Particle*> particles; //!< material points forming the body  
+	
 	static int totalBodies; //!< number of bodies
 };
 

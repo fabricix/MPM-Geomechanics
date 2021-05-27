@@ -17,21 +17,44 @@ class Contribution {
 
 public:
 
-	Contribution(); //!< default constructor
-	virtual ~Contribution(); //!< default destructor
+	/// \brief Default constructor
+	///
+	Contribution();
+	
+	/// \brief Default destructor
+	///
+	virtual ~Contribution();
 
-	int getNodeId() const; //!< returns the node identification
-	double getWeight() const; //!< returns the weight value
-	Vector3d getGradients() const; //!< returns the gradients values
+	/// \brief Return the node identification
+	/// \param[out] node_id Node identification
+	int getNodeId() const;
+	
+	/// \brief Return the weight value
+	/// \param[out] nodal_weight Value of the nodal weight evaluated at the particle position
+	double getWeight() const;
+	
+	/// \brief Return the gradients values
+	/// \param[out] nodal_gradients Nodal gradients in each direction evaluated at the particle position
+	Vector3d getGradients() const;
 
-	void setNodeId(int); //!< configures node identification
-	void setWeight(double); //!< configures weight
-	void setGradients(Vector3d); //!< configures gradients
+	/// \brief Configure node identification
+	/// \param[int] nodal_id Node identification
+	void setNodeId(int);
+	
+	/// \brief Configure weight
+	/// \param[int] nodal_weight Value of the nodal weight evaluated at the particle position
+	void setWeight(double);
+	
+	/// \brief Configure gradients
+	/// \param[int] nodal_gradients Nodal gradients in each direction evaluated at the particle position
+	void setGradients(Vector3d);
 
 private:
 	
 	int nodeId; //!< identification of node
+
 	double weight; //!< weight value of a node at a particle
+
 	Vector3d gradient; //!< gradient value of a node at a particle
 };
 

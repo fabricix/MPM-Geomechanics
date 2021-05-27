@@ -14,8 +14,13 @@ class Contact {
 
 public:
 	
-	Contact(); //!< default constructor 
-	virtual ~Contact(); //!< default destructor
+	/// \brief Default constructor
+	///
+	Contact(); 
+	
+	/// \brief Default destructor
+	///
+	virtual ~Contact();
 };
 
 #endif /* CONTACT_H_ */

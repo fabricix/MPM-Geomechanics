@@ -311,7 +311,7 @@ void Mesh::createGrid(void) {
     }
 
     // update boundaries
-    updateBoundaries();
+    configureBoundaries();
 }
 
 void Mesh::activateNode(int nodeId,bool activeValue) {
@@ -331,7 +331,7 @@ void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
 // private methods
 //
 
-void Mesh::updateBoundaries(){
+void Mesh::configureBoundaries(){
     
     // model's limits
     Vector3d minLimitsGhosts = minLimit;
