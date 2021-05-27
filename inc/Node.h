@@ -69,7 +69,7 @@ public:
 	
 	/// \brief Return the nodal momentum
 	/// \param[out] nodal_momentum Vector containing the nodal momentum
-	Vector3d getMomentum() const { return this->momentum; }
+	inline Vector3d getMomentum() const { return this->momentum; }
 		
 	/// \brief Return the nodal internal force
 	/// \param[out] nodal_internal_force Vector
