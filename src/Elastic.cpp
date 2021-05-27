@@ -21,26 +21,6 @@ Elastic::~Elastic() {
 	// TODO Auto-generated destructor stub
 }
 
-void Elastic::setYoung(double y){
-
-	Young=y;
-}
-	
-void Elastic::setPoisson(double p){
-
-	Poisson=p;
-}
-
-double Elastic::getShearModulus(){
-
-	return Young/2.0/(1.0+Poisson);
-}
-
-double Elastic::getBulkModulus(){
-
-	return Young/3.0/(1.0-2.0*Poisson);
-}
-
 Material::MaterialType Elastic::getType(){
 
 	return Material::getType();

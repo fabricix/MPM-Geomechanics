@@ -30,19 +30,19 @@ public:
 	
 	/// \brief Configure the Young's modulus
 	/// \param[in] young_modulus Young's modulus \f$E\f$
-	void setYoung(double);
+	inline void setYoung(double young_modulus) { this->Young=young_modulus; }
 	
 	/// \brief Configure the Poisson's ratio
 	/// \param[in] poisson_modulus Poisson's ratio \f$\nu\f$
-	void setPoisson(double);
+	inline void setPoisson(double poisson_modulus) { this->Poisson=poisson_modulus; }
 
 	/// \brief Return the Shear modulus
 	/// \param[out] shear_modulus Shear modulus \f$G=\frac{E}{2(1+\nu)}\f$
-	double getShearModulus();
+	inline double getShearModulus() const { return this->Young/2.0/(1.0+this->Poisson); }
 	
 	/// \brief Return the Bulk modulus
 	/// \param[out] shear_modulus Shear modulus \f$K=\frac{E}{3(1-2\nu)}\f$ 
-	double getBulkModulus();
+	inline double getBulkModulus() const { return this->Young/3.0/(1.0-2.0*this->Poisson); }
 	
 	/// \brief Update the stress in the particle
 	/// \param[in] *particle Particle pointer
