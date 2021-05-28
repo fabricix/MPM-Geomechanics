@@ -7,32 +7,6 @@
 
 #include "BodyCuboid.h"
 
-BodyCuboid::BodyCuboid():Body() {
-	// TODO Auto-generated constructor stub
-
-}
-
-BodyCuboid::~BodyCuboid() {
-	// TODO Auto-generated destructor stub
-}
-
-void BodyCuboid::setPoints(Vector3d p1,Vector3d p2){
-
-	pointP1=p1;
-	pointP2=p2;
-}
-
-void BodyCuboid::setMaterialId(int mi) {
-
-	materialId=mi;
-}
-
-int BodyCuboid::getMaterialId() const {
-
-	return materialId;
-}
-
-
 void BodyCuboid::create(Mesh& mesh, Material* material) {
 
 	// cell dimension
