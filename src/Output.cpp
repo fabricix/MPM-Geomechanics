@@ -160,6 +160,13 @@ namespace Output{
         }
         partFile<<"</DataArray>\n";
 
+        // particle displacement
+        partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+        for (int i = 0; i < nPoints; ++i) {
+            partFile<<scientific<<(particles.at(i)->getPosition()-particles.at(i)->getInitialPosition()).transpose()<<"\n";
+        }
+        partFile<<"</DataArray>\n";
+
         // end point data
         partFile<<"</PointData>\n";
         

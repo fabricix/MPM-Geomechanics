@@ -29,6 +29,8 @@ Particle::Particle(Vector3d position, Material* material, Vector3d size){
 
 	setPosition(position);
 	
+	setInitialPosition(position);
+	
 	setMaterial(material);
 
 	setDensity(material!=0?material->getDensity():0.0);
@@ -48,6 +50,8 @@ Particle::Particle(Vector3d position, Material* material) {
 
 	setPosition(position);
 	
+	setInitialPosition(position);
+
 	setMaterial(material);
 
 	setDensity(material!=0?material->getDensity():0.0);
@@ -62,6 +66,8 @@ Particle::Particle(Vector3d position) {
 	initializeValues();
 
 	setPosition(position);
+
+	setInitialPosition(position);
 
 	setId(totalParticles);
 
@@ -121,6 +127,7 @@ void Particle::initializeValues(){
 	plasticStrain=0.0;
 	porosity=0.0;
 
+	initialPosition.setZero();
 	position.setZero();
 	velocity.setZero();
 	externalForce.setZero();

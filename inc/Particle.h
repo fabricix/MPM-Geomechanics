@@ -80,6 +80,10 @@ public:
 	/// \param[out] position Particle current position
 	inline Vector3d getPosition() const { return this->position; } 
 
+	/// \brief Returns the initial particle position
+	/// \param[out] initial_position Particle initial position
+	inline Vector3d getInitialPosition() const { return this->initialPosition; } 
+
 	/// \brief Returns the external force in particle
 	/// \param[out] external_force Particle external force
 	inline Vector3d getExternalForce() const { return this->externalForce; } 
@@ -119,6 +123,10 @@ public:
 	/// \brief Configures the current particle position
 	/// \param[in] particle_position Current particle position
 	inline void setPosition(Vector3d particle_position) { this->position=particle_position; } 
+
+	/// \brief Configures the initial particle position
+	/// \param[in] particle_initial_position Particle initial position
+	inline void setInitialPosition(Vector3d particle_initial_position) { this->initialPosition=particle_initial_position; } 
 
 	/// \brief Configures particle size in each direction
 	/// \param[in] particle_size Current particle size
@@ -173,6 +181,7 @@ private:
 	double porosity; //!< particle porosity
 
 	Vector3d position; //!< particle position
+	Vector3d initialPosition; //!< particle initial position
 	Vector3d velocity; //!< particle velocity
 	Vector3d externalForce;	//!< external force
 	Vector3d size; //!< size in each direction
