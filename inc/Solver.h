@@ -33,4 +33,13 @@ public:
 	virtual void Solve(vector<Body*>& bodies, Mesh& mesh)=0;
 };
 
+inline Solver::Solver() {
+	
+
+}
+
+inline Solver::~Solver() {
+	
+}
+
 #endif /* SOLVER_H_ */
