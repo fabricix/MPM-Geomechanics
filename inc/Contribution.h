@@ -58,4 +58,13 @@ private:
 	Vector3d gradient; //!< gradient value of a node at a particle
 };
 
+inline Contribution::Contribution()
+:nodeId(0),weight(0.0),gradient(0.0,0.0,0.0) {
+
+}
+
+inline Contribution::~Contribution() {
+	
+}
+
 #endif /* CONTRIBUTION_H_ */
