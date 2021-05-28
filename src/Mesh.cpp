@@ -72,54 +72,13 @@ void Mesh::setNumGhosts(int ng) {
     nGhosts=ng;
 }
 
-void Mesh::setLimits(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-
-    minLimit=Vector3d(minX,minY,minZ);
-    maxLimit=Vector3d(maxX,maxY,maxZ);
-}
-
-void Mesh::setOrigin(double x,double y,double z){
-    
-    minLimit=Vector3d(x,y,z);
-}
-
-void Mesh::setOrigin(Vector3d o){
-
-    minLimit=o;
-}
-
 //
 // get methods
 //
 
-Vector3d Mesh::getCellDimension() const {
-
-    return cellDim;
-}
-
-Vector3i Mesh::getNumCells() const {
-
-    return nCells;
-}
-
 Vector3i Mesh::getTotalCells() const { 
    
     return Vector3i(nCells.x()+nGhosts*2, nCells.y()+nGhosts*2, nCells.z()+nGhosts*2);
-}
-
-vector<Node>* Mesh::getNodes() {
-
-    return &gridNodes;
-}
-
-int Mesh::getNumNodes() const {
-
-    return gridNodes.size();
-}
-
-int Mesh::getNumGhosts() const {
-
-    return nGhosts;
 }
 
 Vector3d Mesh::getGridCoordinates(Vector3d position) const {
@@ -180,16 +139,6 @@ int Mesh::getParentCellIdConstribution(Vector3d position) const{
 
     // return the parent node of 27 node contribution
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
-}
-
-Vector3d Mesh::getMinLimits() const {
-
-	return minLimit;
-}
-
-Vector3d Mesh::getMaxLimits() const {
-
-	return maxLimit;
 }
 
 vector<int> Mesh::getNodesInCell(Vector3d position) const {
@@ -262,11 +211,6 @@ vector<int> Mesh::getContributionNodes(Vector3d position) const {
     return v;
 }
 
-Boundary* Mesh::getBoundary(){
-
-    return &boundary;
-}
-
 //
 // public methods
 //
@@ -312,11 +256,6 @@ void Mesh::createGrid(void) {
 
     // update boundaries
     configureBoundaries();
-}
-
-void Mesh::activateNode(int nodeId,bool activeValue) {
-
-    gridNodes.at(nodeId).setActive(activeValue);
 }
 
 void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {

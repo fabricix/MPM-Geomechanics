@@ -79,12 +79,12 @@ public:
     /// \param[in] x_origin_coordinate X Coordinate
     /// \param[in] y_origin_coordinate Y Coordinate
     /// \param[in] z_origin_coordinate Z Coordinate
-    void setOrigin(double,double,double);
+    inline void setOrigin(double x,double y,double z) { this->minLimit=Vector3d(x,y,z); }
     
     /// \brief Set origin of coordinates
     /// \param[in] origin_coordinate A vector containing the x,y and z 
     /// coordinates of the origin
-    void setOrigin(Vector3d);
+    inline void setOrigin(Vector3d origin_coordinate) { this->minLimit=origin_coordinate; }
     
     /// \brief Activate nodes by its id
     /// \param[in] id_list A list containing the identification of the nodes
@@ -101,21 +101,21 @@ public:
 
     /// \brief Return total nodes in mesh
     /// \param[out] num_nodes Total nodes in the mesh
-    int getNumNodes() const;
+    inline int getNumNodes() const { return this->gridNodes.size(); }
     
     /// \brief Return nodes in mesh
     /// \param[out] node_list_pointer A pointer no the mesh nodes
-    vector<Node> * getNodes();
+    inline vector<Node> * getNodes() { return &(this->gridNodes); }
     
     /// \brief Return the cells dimension in each direction
     /// \param[out] cell_dimension A vector containing the cell dimension
     /// in each direction
-    Vector3d getCellDimension() const;
+    inline Vector3d getCellDimension() const {  return this->cellDim; }
     
     /// \brief Return total cells in the mesh without ghosts
     /// \param[out] cell_number A vector containing the number of cells
     /// in each direction
-    Vector3i getNumCells() const;
+    inline Vector3i getNumCells() const { return this->nCells; }
     
     /// \brief Return total cells including ghosts
     /// \param[out] cell_number A vector containing the number of cells
@@ -124,17 +124,17 @@ public:
     
     /// \brief Get number of ghosts
     /// \param[out] ghost_number Number of additional cells around the mesh
-    int getNumGhosts() const;
+    inline int getNumGhosts() const { return this->nGhosts; }
 
     /// \brief Return lower mesh coordinates
     /// \param[out] min_limits A vector containing the lower
     /// coordinates of the mesh
-    Vector3d getMinLimits() const;
+    inline Vector3d getMinLimits() const { return this->minLimit;}
 
     /// \brief Return higher mesh coordinates
     /// \param[out] max_limits A vector containing the higher
     /// coordinates of the mesh
-    Vector3d getMaxLimits() const;
+    inline Vector3d getMaxLimits() const { return this->maxLimit; }
 
     /// \brief Return the nodes of the cell containing a point
     /// \param[in] point_coordinate A vector containing the 
@@ -153,7 +153,7 @@ public:
 
     /// \brief return mesh boundaries
     /// \param[out] boundary_pointer A pointer to the Boundary structure
-    Boundary* getBoundary();
+    inline Boundary* getBoundary() { return &(this->boundary); }
 
 private:
     
@@ -205,5 +205,16 @@ private:
     ///
     void configureBoundaries();
 };
+
+inline void Mesh::activateNode(int nodeId,bool activeValue) {
+
+    gridNodes.at(nodeId).setActive(activeValue);
+}
+
+inline void Mesh::setLimits(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+
+    minLimit=Vector3d(minX,minY,minZ);
+    maxLimit=Vector3d(maxX,maxY,maxZ);
+}
 
 #endif /* MESH_H_ */
