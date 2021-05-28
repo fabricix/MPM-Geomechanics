@@ -8,6 +8,9 @@
 #include <vector>
 using std::vector;
 
+#include <iostream>
+using std::cout;
+
 #include "SolverUSL.h"
 #include "Model.h"
 #include "Integration.h"
@@ -122,6 +125,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 			for (size_t i = 0; i < bodies.size(); ++i){
 
 				Output::writeBodies(bodies,iTime);
+        		std::cout<<"Time = "<<iTime<<"\n";
 			}
 		}
 
