@@ -11,12 +11,11 @@ using std::abs;
 #include "ShapeLinear.h"
 
 ShapeLinear::ShapeLinear():Shape() {
-	// TODO Auto-generated constructor stub
 
 }
 
 ShapeLinear::~ShapeLinear() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 double ShapeLinear::computeShape(double xpi, double L, double lp)

@@ -11,14 +11,11 @@ using std::abs;
 #include "ShapeGimp.h"
 
 ShapeGimp::ShapeGimp():Shape(){
-
-	// TODO Auto-generated constructor stub
-
+	
 }
 
 ShapeGimp::~ShapeGimp() {
 
-	// TODO Auto-generated destructor stub
 }
 
 double ShapeGimp::computeShape(double xpi, double L, double lp)

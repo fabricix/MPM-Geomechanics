@@ -25,11 +25,12 @@ using std::cout;
 
 
 MPM::MPM() {
+	
 	solver=0;
 }
 
 MPM::~MPM() {
-	// TODO Auto-generated destructor stub
+
 }
 
 bool MPM::readInputFile(int argc, char **argv){
@@ -140,7 +141,6 @@ void MPM::setupLoads(){
 	// gravity
 	ModelSetup::setGravity(Input::getGravity());
 	Loads::setGravity(bodies);
-
 }
 
 void MPM::setupResults(){

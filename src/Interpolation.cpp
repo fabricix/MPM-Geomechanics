@@ -19,8 +19,8 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>& particles){
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -28,8 +28,8 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>& particles){
 		double pMass = particles.at(i)->getMass();
 
 		// For each node in the contribution list 
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 
@@ -48,8 +48,8 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -60,8 +60,8 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>& particles){
 		double pMass = particles.at(i)->getMass();
 		
 		// For each node in the contribution list,
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 
@@ -80,8 +80,8 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>& particles)
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -92,8 +92,8 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>& particles)
 		double pVolume = particles.at(i)->getMass()/particles.at(i)->getDensity();
 
 		// For each node in the contribution list
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 
@@ -121,8 +121,8 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>& particles)
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -130,8 +130,8 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>& particles)
 		Vector3d pExtForce = particles.at(i)->getExternalForce();
 
 		// For each node in the contribution list,
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 
@@ -154,8 +154,8 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>& parti
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -163,8 +163,8 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>& parti
 		Matrix3d dstrain = Matrix3d::Zero();
 		
 		// For each node in the contribution list,
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 
@@ -201,8 +201,8 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>& pa
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
-	{
+	for (size_t i = 0; i < particles.size(); ++i){
+
 		// get the nodes and weights that this particle contributes.
 		const vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
 
@@ -210,8 +210,8 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>& pa
 		Matrix3d dvorticity = Matrix3d::Zero();
 		
 		// For each node in the contribution list,
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{	
+		for (size_t j = 0; j < contribution->size(); ++j){
+
 			// contribution structure
 			const Contribution contribI = contribution->at(j);
 

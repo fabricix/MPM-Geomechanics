@@ -76,37 +76,25 @@ void Input::initKeyWords(){
 		keywords[Input::KeyWords::young]="young";
 }
 
-map<Input::KeyWords,string> Input::getKeyWords(){
+map<Input::KeyWords,string> Input::getKeyWords(){ return keywords; }
 
-	return keywords;
-}
+json Input::getJson(){ return inputFile; }
 
-json Input::getJson(){
+string Input::getFileName(){ return inputFileName; }
 
-	return inputFile;
-}
-
-string Input::getFileName(){
-
-	return inputFileName;
-}
-
-void Input::setFileName(string ifn){
-
-	inputFileName=ifn;
-}
+void Input::setFileName(string ifn){ inputFileName=ifn; }
 
 void Input::readInputFile(string filename){
-	
+
 	initKeyWords();
 	setFileName(filename);
 	readInputFile();
 }
 
-void Input::readInputFile()
-{
-	if (inputFileName!="")
-	{
+void Input::readInputFile() {
+
+	if (inputFileName!=""){
+
 		// read the file
 		ifstream i(inputFileName);
 		
@@ -117,12 +105,12 @@ void Input::readInputFile()
 
 double Input::getSimulationTime(){
 
-	if(inputFile.contains(keywords[Input::time])&&inputFile[keywords[Input::time]].is_number())
-	{
+	if(inputFile.contains(keywords[Input::time])&&inputFile[keywords[Input::time]].is_number()){
+
 		return inputFile[keywords[Input::time]];
 	}
-	else
-	{
+	else{
+
 		Warning::printMessage("Verify "+keywords[Input::time]+" definition in the input file");
 	}
 	return 0.0;
@@ -130,8 +118,8 @@ double Input::getSimulationTime(){
 
 Solver* Input::getSolver(){
 	
-	if(inputFile.contains(keywords[Input::stressSchemeUpdate]))
-	{
+	if(inputFile.contains(keywords[Input::stressSchemeUpdate])){
+
 		if(inputFile[keywords[Input::stressSchemeUpdate]]==keywords[Input::USL]) {
 			
 			return new SolverUSL();
@@ -144,8 +132,8 @@ Solver* Input::getSolver(){
 
 ModelSetup::InterpolationFunctionType Input::getInterpolationFunction(){
 	
-	if(inputFile.contains(keywords[Input::shapeFunction]))
-	{
+	if(inputFile.contains(keywords[Input::shapeFunction])){
+
 		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::GIMP]) {
 
 			return ModelSetup::GIMP;
@@ -235,14 +223,14 @@ vector<Material*> Input::getMaterialList(){
 	vector<Material*> materials;
 
 	// setup the material list
-	if(inputFile.contains(keywords[Input::material]))
-	{
+	if(inputFile.contains(keywords[Input::material])){
+
 		json::iterator it;
 
 		for(it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
 			
-			if((*it)[keywords[Input::type]]==keywords[Input::elastic])
-			{
+			if((*it)[keywords[Input::type]]==keywords[Input::elastic]){
+
 				int id = (*it)[keywords[Input::id]];
 				double young = (*it)[keywords[Input::young]];
 				double poisson = (*it)[keywords[Input::poisson]];
@@ -260,19 +248,18 @@ vector<Material*> Input::getMaterialList(){
 	return materials;
 }
 
-
 vector<Body*> Input::getBodyList(){
 
 	vector<Body*> bodies;
 
-	if(inputFile.contains(keywords[Input::body]))
-	{
+	if(inputFile.contains(keywords[Input::body])){
+
 		json::iterator it;
 
 		for(it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
 			
-			if((*it)[keywords[Input::type]]==keywords[Input::cuboid])
-			{
+			if((*it)[keywords[Input::type]]==keywords[Input::cuboid]){
+
 				int id = (*it)[keywords[Input::id]];
 				Vector3d pointP1((*it)[keywords[Input::pointP1]][0],(*it)[keywords[Input::pointP1]][1],(*it)[keywords[Input::pointP1]][2]);
 				Vector3d pointP2((*it)[keywords[Input::pointP2]][0],(*it)[keywords[Input::pointP2]][1],(*it)[keywords[Input::pointP2]][2]);
@@ -287,8 +274,8 @@ vector<Body*> Input::getBodyList(){
 		}
 	}
 
-	if (bodies.empty())
-	{
+	if (bodies.empty()){
+
 		Warning::printMessage("The body list can not be created. Verify the input file:");
 		Warning::printMessage("Error in keyword "+keywords[Input::body]);
 	}
@@ -309,7 +296,6 @@ Vector3d Input::getGravity(){
 	
 	return gravity;
 }
-
 
 int Input::getResultNum(){
 

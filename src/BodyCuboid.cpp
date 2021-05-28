@@ -39,12 +39,12 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 	vector<Particle*> particles;
 
 	// create the particles and put it in the space
-	for (int i = 0; i < nCellsBoundingBox.x(); ++i)
-	{
-		for (int j = 0; j < nCellsBoundingBox.y(); ++j)
-		{
-			for (int k = 0; k < nCellsBoundingBox.z(); ++k)
-			{   
+	for (int i = 0; i < nCellsBoundingBox.x(); ++i){
+
+		for (int j = 0; j < nCellsBoundingBox.y(); ++j){
+
+			for (int k = 0; k < nCellsBoundingBox.z(); ++k){ 
+
 				// cell points
 				Vector3d pt1 = pointP1+Vector3d(dx*i,dy*j,dz*k);
 				Vector3d pt2 = pt1 + Vector3d(dx,0.0,0.0);

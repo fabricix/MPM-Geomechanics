@@ -53,52 +53,49 @@ namespace Output{
         vector<double> particleFilesTime;
     }
 
-    namespace {
+    void defineEdian(){
 
-        void defineEdian(){
+        int16_t i = 1;
+        int8_t *p = (int8_t*) &i;
+        Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
+    }
 
-            int16_t i = 1;
-            int8_t *p = (int8_t*) &i;
-            Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
-        }
+    void createGridFolder(){
 
-        void createGridFolder(){
+        if (Folders::gridFolderExist)
+            return;
+        
+        int status=0;
 
-            if (Folders::gridFolderExist)
-                return;
-            
-            int status=0;
+        #if defined (linux) || defined(__linux__)
+        status=mkdir(Folders::gridFolderName.c_str(),0777);
+        #endif
 
-            #if defined (linux) || defined(__linux__)
-            status=mkdir(Folders::gridFolderName.c_str(),0777);
-            #endif
+        #if defined (_WIN64) || defined(_WIN32)
+        status=_mkdir(Folders::gridFolderName.c_str());
+        #endif
 
-            #if defined (_WIN64) || defined(_WIN32)
-            status=_mkdir(Folders::gridFolderName.c_str());
-            #endif
+        if (status==-1)
+            Folders::gridFolderExist=true;
+    }
 
-            if (status==-1)
-                Folders::gridFolderExist=true;
-        }
+    void createParticleFolder(){
 
-        void createParticleFolder(){
+        if (Folders::particleFolderExist)
+            return;
+        
+        int status=0;
 
-            if (Folders::particleFolderExist)
-                return;
-            
-            int status=0;
+        #if defined (linux) || defined(__linux__)
+        status=mkdir(Folders::particleFolderName.c_str(),0777);
+        #endif
 
-            #if defined (linux) || defined(__linux__)
-            status=mkdir(Folders::particleFolderName.c_str(),0777);
-            #endif
+        #if defined (_WIN64) || defined(_WIN32)
+        status=_mkdir(Folders::particleFolderName.c_str());
+        #endif
 
-            #if defined (_WIN64) || defined(_WIN32)
-            status=_mkdir(Folders::particleFolderName.c_str());
-            #endif
-
-            if (status==-1)
-                Folders::particleFolderExist=true;
-        }
+        if (status==-1)
+            Folders::particleFolderExist=true;
     }
     
     void writeParticles(vector<Particle*>& particles, double time){

@@ -16,12 +16,11 @@ using std::vector;
 #include "Output.h"
 
 SolverUSL::SolverUSL():Solver() {
-	// TODO Auto-generated constructor stub
 
 }
 
 SolverUSL::~SolverUSL() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){

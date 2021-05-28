@@ -8,11 +8,11 @@
 #include "Contact.h"
 
 Contact::Contact() {
-	// TODO Auto-generated constructor stub
+	
 
 }
 
 Contact::~Contact() {
-	// TODO Auto-generated destructor stub
+	
 }
 

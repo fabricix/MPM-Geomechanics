@@ -12,30 +12,27 @@ using std::floor;
 
 namespace ModelSetup {
 
-	namespace  {
-		
-		bool contactActive=false;		//!< is contact active
-		bool gravityActive=false;		//!< is gravity active
-		bool axisymetricActive=false;	//!< is axisymetric model
-		bool jaumannActive=true;		//!< is Jaumann rate active
-		
-		Vector3d gravity(0,0,-9.81);	//!< gravity vector
+	bool contactActive=false;		//!< is contact active
+	bool gravityActive=false;		//!< is gravity active
+	bool axisymetricActive=false;	//!< is axisymetric model
+	bool jaumannActive=true;		//!< is Jaumann rate active
+	
+	Vector3d gravity(0,0,-9.81);	//!< gravity vector
 
-		int nThreads=1;					//!< number of threads in current job
-		int contributionNodes=27;		//!< nodes that the particles contributed
+	int nThreads=1;					//!< number of threads in current job
+	int contributionNodes=27;		//!< nodes that the particles contributed
 
-		double dt=0.0;					//!< time step
-		double time=0.0;				//!< simulation time
-		double dtFraction=0.25; 	    //!< fraction of critical time step
+	double dt=0.0;					//!< time step
+	double time=0.0;				//!< simulation time
+	double dtFraction=0.25; 	    //!< fraction of critical time step
 
-		int resultNumber=10;			//!< number of results to write
+	int resultNumber=10;			//!< number of results to write
 
-		string inputFile="";			//!< input file name
+	string inputFile="";			//!< input file name
 
-		StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
+	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
 
-		DampingType damping=DampingType::NONE; //!< damping type
-	}
+	DampingType damping=DampingType::NONE; //!< damping type
 
     #if defined (_WIN64) || defined(_WIN32)
 	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system

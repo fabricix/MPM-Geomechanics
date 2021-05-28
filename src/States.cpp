@@ -8,11 +8,11 @@
 #include "States.h"
 
 States::States() {
-	// TODO Auto-generated constructor stub
+	
 
 }
 
 States::~States() {
-	// TODO Auto-generated destructor stub
+	
 }
 
