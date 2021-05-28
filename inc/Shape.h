@@ -35,22 +35,22 @@ public:
 	/// \brief Return the shape function values
 	/// \param[out] shape_function_value The nodal shape 
 	/// function value \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
-	Vector3d getShape() const;
+	inline Vector3d getShape() const { return this->shape; }
 	
 	/// \brief Returns the derivates values
 	/// \param[out] shape_function_derivates The derivates 
 	/// of the nodal shape function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
-	Vector3d getDerivate() const;
+	inline Vector3d getDerivate() const { return this->derivate; }
 	
 	/// \brief Configure the shape function values
 	/// \param[in] shape_function_value The nodal shape 
 	/// function values \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
-	void setShape(double,double,double);
+	inline void setShape(double sx, double sy, double sz) { this->shape=Vector3d(sx,sy,sz); }
 	
 	/// \brief Configure the nodal shape function derivates
 	/// \param[in] shape_function_derivates The derivates 
 	/// of the nodal shape function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
-	void setDerivate(double,double,double);
+	inline void setDerivate(double gx, double gy, double gz) { this->derivate=Vector3d(gx,gy,gz); }
 	
 private:
 	
@@ -74,5 +74,15 @@ private:
 	
 	Vector3d derivate; //!< shape function gradient values
 };
+
+inline Shape::Shape() {
+	
+	this->shape.setZero();
+	this->derivate.setZero();
+}
+
+inline Shape::~Shape() {
+	
+}
 
 #endif /* SHAPE_H_ */
