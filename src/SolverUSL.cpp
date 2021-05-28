@@ -34,6 +34,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 	int resultSteps=ModelSetup::getResultSteps();
 	double iTime=0.0;
 	int loopCounter=1;
+	vector<Particle*>* particles=0;
 
 	// write the initial state
 	for (size_t i = 0; i < bodies.size(); ++i){
@@ -47,7 +48,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// particles
-			vector<Particle*>* particles=bodies.at(i)->getParticles();
+			particles=bodies.at(i)->getParticles();
 
 			// update contribution nodes
 			Update::contributionNodes(mesh,particles);
@@ -65,7 +66,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// particles
-			vector<Particle*>* particles=bodies.at(i)->getParticles();
+			particles=bodies.at(i)->getParticles();
 
 			// nodal internal force
 			Interpolation::nodalInternalForce(mesh,particles);
@@ -86,7 +87,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// particles
-			vector<Particle*>* particles=bodies.at(i)->getParticles();
+			particles=bodies.at(i)->getParticles();
 
 			// update particle velocity
 			Update::particleVelocity(mesh,particles,loopCounter==1?dt/2.0:dt);
@@ -101,7 +102,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		for (size_t i = 0; i < bodies.size(); ++i){
 
 			// particles
-			vector<Particle*>* particles=bodies.at(i)->getParticles();
+			particles=bodies.at(i)->getParticles();
 
 			// calculate particle strain increment
 			Interpolation::particleStrainIncrement(mesh,particles,dt);
