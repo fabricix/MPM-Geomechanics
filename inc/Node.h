@@ -134,4 +134,34 @@ private:
 	Vector3d totalForce; //!< nodal total force
 };
 
+inline Node::Node() {
+
+    active=false;
+    id=0;
+    mass=0.0;
+    coordinates.setZero();
+    momentum.setZero();
+    velocity.setZero();
+    acceleration.setZero();
+    externalForce.setZero();
+    internalForce.setZero();
+    totalForce.setZero();
+}
+
+inline void Node::resetValues()
+{
+    active=false;
+    mass=0.0;
+    momentum.setZero();
+    velocity.setZero();
+    acceleration.setZero();
+    externalForce.setZero();
+    internalForce.setZero();
+    totalForce.setZero();
+}
+
+inline Node::~Node() {
+
+}
+
 #endif /* NODE_H_ */
