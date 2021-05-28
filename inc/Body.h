@@ -43,35 +43,38 @@ public:
 
 	/// \brief Return the body identification
 	/// \param[out] body_id Body identification
-	int getId() const;
+	inline int getId() const { return this->id; }
 
 	/// \brief Return the particles forming the body
 	/// \param[out] particles A reference to a vector containing Particle pointers
-	vector<Particle*>& getParticles();
-
-	/// \brief Return the total bodies in the model
-	/// \param[out] total_bodies Total created bodies
-	static int getTotalBodies();
+	inline vector<Particle*>& getParticles() { return this->particles; }
 	
 	/// \brief Configure the id of the body
 	/// \param[in] body_id Body identification 
-	void setId(int);
+	inline void setId(int body_id) { this->id=body_id; }
 
 	/// \brief Configure the particles in the body
 	/// \param[in] particle_vector A vector containing pointers to the particle
-	void setParticles(vector<Particle*>);
+	inline void setParticles(vector<Particle*> particle_vector) { this->particles=particle_vector; }
 
 	/// \brief Add particles to the current particle list
 	/// \param[in] particle_vectr A vector containing pointers to particles
-	void insertParticles(vector<Particle*>);
+	inline void insertParticles(vector<Particle*> prts) { this->particles.insert(this->particles.end(),prts.begin(),prts.end()); }
 	
 private:
 	
 	int id; //!< body identification
 
 	vector<Particle*> particles; //!< material points forming the body  
-	
-	static int totalBodies; //!< number of bodies
 };
+
+
+inline Body::Body() {
+	
+}
+
+inline Body::~Body() {
+	
+}
 
 #endif /* BODY_H_ */
