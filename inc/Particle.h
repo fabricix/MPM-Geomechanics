@@ -149,7 +149,7 @@ public:
 	inline void setVorticityIncrement(Matrix3d vorticity_increment) { this->vorticityIncrement=vorticity_increment; }
 
 	/// \brief Configures the current particle stress tensor
-	/// \param[in] stress Particle stress
+	/// \param[in] particle_stress Particle stress
 	inline void setStress(Matrix3d particle_stress) { this->stress=particle_stress; } 
 
 	/// \brief Configures the material in the particle

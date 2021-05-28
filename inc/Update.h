@@ -74,7 +74,7 @@ namespace Update {
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneMomentum(const Boundary::planeBoundary*, vector<Node>* nodes, int direction);
+	void setPlaneMomentum(const Boundary::planeBoundary* boudary, vector<Node>* nodes, int direction);
 };
 
 #endif /* UPDATE_H_ */
