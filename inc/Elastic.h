@@ -36,10 +36,6 @@ public:
 	/// \param[in] poisson_modulus Poisson's ratio \f$\nu\f$
 	inline void setPoisson(double poisson_modulus) { this->Poisson=poisson_modulus; }
 
-	/// \brief Configure the Jaumann rate active
-	/// \param[in] jaumann_active Jaumann active
-	inline void setJaumann(bool jaumann_active=false) { this->jaumann=jaumann_active; }
-
 	/// \brief Return the Shear modulus
 	/// \param[out] shear_modulus Shear modulus \f$G=\frac{E}{2(1+\nu)}\f$
 	inline double getShearModulus() const { return this->Young/2.0/(1.0+this->Poisson); }
@@ -61,8 +57,6 @@ private:
 	double Young; //!< Young's modulus \f$E\f$
 	
 	double Poisson; //!< Poisson's ratio \f$\nu\f$
-
-	bool jaumann; //!< Jaumann rate activated
 };
 
 inline Elastic::Elastic(int id, double density, double Young, double Poisson)
@@ -70,7 +64,6 @@ inline Elastic::Elastic(int id, double density, double Young, double Poisson)
 {
 	this->setYoung(Young);
 	this->setPoisson(Poisson);
-	this->setJaumann(true);
 }
 
 inline Elastic::~Elastic() {

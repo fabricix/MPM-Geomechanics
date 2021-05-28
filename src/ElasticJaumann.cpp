@@ -1,13 +1,13 @@
 /*
- * Elastic.cpp
+ * ElasticJaumann.cpp
  *
- *  Created on: 4 de mai de 2021
+ *  Created on: 28 de mai de 2021
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-#include "Elastic.h"
+#include "ElasticJaumann.h"
 
-void Elastic::updateStress(Particle* particle){
+void ElasticJaumann::updateStress(Particle* particle){
 
 	// strain increment and its deviate
 	Matrix3d de = particle->getStrainIncrement();
@@ -19,8 +19,13 @@ void Elastic::updateStress(Particle* particle){
 	Matrix3d stressDev = stress-Matrix3d::Identity()*stress.trace()/3.0;
 	double stressMean = stress.trace()/3.0;
 
+	
+	// rotated matrix
+	Matrix3d spin = particle->getVorticityIncrement();
+	Matrix3d stressDevRot = stressDev+(stressDev*spin.transpose()+spin*stressDev);
+	
 	// integrate the stresses
-	Matrix3d stressDevNew = stressDev+2.0*getShearModulus()*deDev;
+	Matrix3d stressDevNew = stressDevRot+2.0*getShearModulus()*deDev;
 	double stressMeanNew = stressMean+getBulkModulus()*deVol;
 
 	// sets the new stress
