@@ -98,7 +98,7 @@ namespace Output{
             Folders::particleFolderExist=true;
     }
     
-    void writeParticles(vector<Particle*>& particles, double time){
+    void writeParticles(vector<Particle*>* particles, double time){
 
         // define edian
         if(Folders::edian==""){
@@ -119,7 +119,7 @@ namespace Output{
         partFile.precision(4);
 
         // particle data
-        int nPoints=particles.size();
+        int nPoints=particles->size();
 
         // write results
         partFile<<"<?xml version=\"1.0\"?>\n";
@@ -135,7 +135,7 @@ namespace Output{
         // particle position
         partFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            Vector3d pos=particles.at(i)->getPosition();
+            Vector3d pos=particles->at(i)->getPosition();
             partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
         }
         partFile<<"</DataArray>\n";
@@ -149,21 +149,21 @@ namespace Output{
         // particle Id
         partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles.at(i)->getId()<<"\n";
+            partFile<<scientific<<particles->at(i)->getId()<<"\n";
         }
         partFile<<"</DataArray>\n";
 
         // particle material Id
         partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles.at(i)->getMaterialId()<<"\n";
+            partFile<<scientific<<particles->at(i)->getMaterialId()<<"\n";
         }
         partFile<<"</DataArray>\n";
 
         // particle displacement
         partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<(particles.at(i)->getPosition()-particles.at(i)->getInitialPosition()).transpose()<<"\n";
+            partFile<<scientific<<(particles->at(i)->getPosition()-particles->at(i)->getInitialPosition()).transpose()<<"\n";
         }
         partFile<<"</DataArray>\n";
 
@@ -175,7 +175,7 @@ namespace Output{
 
         // connectivity
         partFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
-        for (int i = 0; i < int(particles.size()); ++i)
+        for (int i = 0; i < int(particles->size()); ++i)
         {
             partFile<<i<<"\n";
         }
@@ -183,7 +183,7 @@ namespace Output{
         
         // offsets
         partFile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
-        for (int i = 0; i < int(particles.size()); ++i)
+        for (int i = 0; i < int(particles->size()); ++i)
         {
             partFile<<i+1<<"\n";
         }
@@ -348,10 +348,10 @@ namespace Output{
         vector<Particle*> particles;
         for (size_t i = 0; i < bodies.size(); ++i)
         {
-            particles.insert(particles.end(),bodies.at(i)->getParticles().begin(),bodies.at(i)->getParticles().end());
+            particles.insert(particles.end(),bodies.at(i)->getParticles()->begin(),bodies.at(i)->getParticles()->end());
         }
 
-        writeParticles(particles,time);
+        writeParticles(&particles,time);
     }
 
     void writeResultsSeries(){

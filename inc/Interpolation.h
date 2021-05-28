@@ -24,35 +24,35 @@ namespace Interpolation {
 	/// \brief Interpolate mass from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
-	void nodalMass(Mesh&, vector<Particle*>&);
+	void nodalMass(Mesh&, vector<Particle*>*);
 	
 	/// \brief Interpolate momentum from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
-	void nodalMomentum(Mesh&, vector<Particle*>&);
+	void nodalMomentum(Mesh&, vector<Particle*>*);
 	
 	/// \brief Interpolate internal force from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
-	void nodalInternalForce(Mesh&, vector<Particle*>&);
+	void nodalInternalForce(Mesh&, vector<Particle*>*);
 	
 	/// \brief Interpolate external force from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
-	void nodalExternalForce(Mesh&, vector<Particle*>&);
+	void nodalExternalForce(Mesh&, vector<Particle*>*);
 
 	
 	/// \brief Interpolate the strain increment at particle
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleStrainIncrement(Mesh&, vector<Particle*>&, double);
+	void particleStrainIncrement(Mesh&, vector<Particle*>*, double);
 	
 	/// \brief Interpolate the vorticity increment at particle
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleVorticityIncrement(Mesh&, vector<Particle*>&,double);
+	void particleVorticityIncrement(Mesh&, vector<Particle*>*,double);
 };
 
 #endif /* INTERPOLATION_H_ */

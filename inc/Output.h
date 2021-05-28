@@ -28,7 +28,7 @@ namespace Output {
 	/// \brief Write the particles of the model into a vtu file
 	/// \param[in] particles_list List containing pointers to particles
 	/// \param[in] time Time
-	void writeParticles(vector<Particle*>&, double=0.0);
+	void writeParticles(vector<Particle*>*, double=0.0);
 	
 	/// \brief Write the particles in a body
 	/// \param[in] body Body reference

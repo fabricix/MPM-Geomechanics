@@ -29,21 +29,21 @@ namespace Update {
 	
 	/// \brief Updates the particles' density
 	/// \param[in] particle_list List of particles
-	void particleDensity(vector<Particle*>&);
+	void particleDensity(vector<Particle*>*);
 	
 	/// \brief Update the particles' stress
 	/// \param[in] particle_list List of particles
-	void particleStress(vector<Particle*>&);
+	void particleStress(vector<Particle*>*);
 	
 	/// \brief Update the particle velocity
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list List of particles
-	void particleVelocity(Mesh&, vector<Particle*>&,double);
+	void particleVelocity(Mesh&, vector<Particle*>*,double);
 	
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list List of particles
-	void particlePosition(Mesh&, vector<Particle*>&,double);
+	void particlePosition(Mesh&, vector<Particle*>*,double);
 	
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
@@ -58,7 +58,7 @@ namespace Update {
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particle_list List of particles
-	void contributionNodes(Mesh&, vector<Particle*>&);
+	void contributionNodes(Mesh&, vector<Particle*>*);
 
 	/// \brief Configure the force in each node in boundary planes
 	/// \param[in] boudary Boundary plane

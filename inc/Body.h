@@ -30,7 +30,7 @@ public:
 	
 	/// \brief Create a body with particles and material
 	/// \param[in] mesh Computational Mesh reference
-	/// \param[in] *material Pointer to a Material
+	/// \param[in] material Material
 	virtual void create(Mesh& mesh, Material* material)=0;
 	
 	/// \brief Configure the material id
@@ -47,7 +47,7 @@ public:
 
 	/// \brief Return the particles forming the body
 	/// \param[out] particles A reference to a vector containing Particle pointers
-	inline vector<Particle*>& getParticles() { return this->particles; }
+	inline vector<Particle*>* getParticles() { return &(this->particles); }
 	
 	/// \brief Configure the id of the body
 	/// \param[in] body_id Body identification 

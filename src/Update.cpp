@@ -58,12 +58,12 @@ void Update::resetNodalValues(Mesh& mesh){
 	}
 }
 
-void Update::particleDensity(vector<Particle*>& particles){
+void Update::particleDensity(vector<Particle*>* particles){
 
 	// For each particle 
-	for (size_t i = 0; i < particles.size(); ++i)
+	for (size_t i = 0; i < particles->size(); ++i)
 	{
-		Particle* particleP = particles.at(i);
+		Particle* particleP = particles->at(i);
 
 		// volumetric strain increment
 		double volStrainInc = particleP->getStrainIncrement().trace();
@@ -76,26 +76,26 @@ void Update::particleDensity(vector<Particle*>& particles){
 	}
 }
 
-void Update::particleStress(vector<Particle*>& particles){
+void Update::particleStress(vector<Particle*>* particles){
 
 	// For each particle 
-	for (size_t i = 0; i < particles.size(); ++i)
+	for (size_t i = 0; i < particles->size(); ++i)
 	{
 		// update particle stress
-		particles.at(i)->updateStress();
+		particles->at(i)->updateStress();
 	}
 }
 
-void Update::particleVelocity(Mesh& mesh, vector<Particle*>& particles, double dt){
+void Update::particleVelocity(Mesh& mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
+	for (size_t i = 0; i < particles->size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// initialize the result vector
 		Vector3d velocityRate = Vector3d::Zero();
@@ -117,23 +117,23 @@ void Update::particleVelocity(Mesh& mesh, vector<Particle*>& particles, double d
 		}
 
 		// particle pointer
-		Particle* particleP = particles.at(i);
+		Particle* particleP = particles->at(i);
 
 		// update particle velocity
 		particleP->setVelocity(particleP->getVelocity()+velocityRate*dt);
 	}
 }
 
-void Update::particlePosition(Mesh& mesh, vector<Particle*>& particles, double dt){
+void Update::particlePosition(Mesh& mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
+	for (size_t i = 0; i < particles->size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles.at(i)->getContributionNodes();
+		vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// initialize the result vector
 		Vector3d positionRate = Vector3d::Zero();
@@ -155,7 +155,7 @@ void Update::particlePosition(Mesh& mesh, vector<Particle*>& particles, double d
 		}
 
 		// particle pointer
-		Particle* particleP = particles.at(i);
+		Particle* particleP = particles->at(i);
 
 		// update particle position
 		particleP->setPosition(particleP->getPosition()+positionRate*dt);
@@ -294,12 +294,12 @@ void Update::boundaryConditionsForce(Mesh& mesh){
 	setPlaneForce(mesh.getBoundary()->getPlaneZn(), nodes, 2);
 }
 
-void Update::contributionNodes(Mesh& mesh, vector<Particle*>& particles){
+void Update::contributionNodes(Mesh& mesh, vector<Particle*>* particles){
 
 	// For each particle, 
-	for (size_t i = 0; i < particles.size(); ++i)
+	for (size_t i = 0; i < particles->size(); ++i)
 	{	
 		// update the contribution nodes
-		particles.at(i)->updateContributionNodes(mesh);
+		particles->at(i)->updateContributionNodes(mesh);
 	}
 }

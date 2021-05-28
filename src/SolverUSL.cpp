@@ -43,14 +43,17 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
+			// particles
+			vector<Particle*>* particles=bodies.at(i)->getParticles();
+
 			// update contribution nodes
-			Update::contributionNodes(mesh,bodies.at(i)->getParticles());
+			Update::contributionNodes(mesh,particles);
 			
 			// nodal mass
-			Interpolation::nodalMass(mesh,bodies.at(i)->getParticles());
+			Interpolation::nodalMass(mesh,particles);
 
 			// nodal momentum
-			Interpolation::nodalMomentum(mesh,bodies.at(i)->getParticles());
+			Interpolation::nodalMomentum(mesh,particles);
 		}
 
 		// impose essential boundary condition on nodal momentum
@@ -58,11 +61,14 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
+			// particles
+			vector<Particle*>* particles=bodies.at(i)->getParticles();
+
 			// nodal internal force
-			Interpolation::nodalInternalForce(mesh,bodies.at(i)->getParticles());
+			Interpolation::nodalInternalForce(mesh,particles);
 			
 			// nodal external force
-			Interpolation::nodalExternalForce(mesh,bodies.at(i)->getParticles());
+			Interpolation::nodalExternalForce(mesh,particles);
 		}
 
 		// nodal total force
@@ -76,11 +82,14 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
+			// particles
+			vector<Particle*>* particles=bodies.at(i)->getParticles();
+
 			// update particle velocity
-			Update::particleVelocity(mesh,bodies.at(i)->getParticles(),loopCounter==1?dt/2.0:dt);
+			Update::particleVelocity(mesh,particles,loopCounter==1?dt/2.0:dt);
 			
 			// update particle position
-			Update::particlePosition(mesh,bodies.at(i)->getParticles(),dt);
+			Update::particlePosition(mesh,particles,dt);
 		}
 
 		// nodal velocity
@@ -88,17 +97,20 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
+			// particles
+			vector<Particle*>* particles=bodies.at(i)->getParticles();
+
 			// calculate particle strain increment
-			Interpolation::particleStrainIncrement(mesh,bodies.at(i)->getParticles(),dt);
+			Interpolation::particleStrainIncrement(mesh,particles,dt);
 			
 			// calculate particle vorticity increment
-			Interpolation::particleVorticityIncrement(mesh,bodies.at(i)->getParticles(),dt);
+			Interpolation::particleVorticityIncrement(mesh,particles,dt);
 			
 			// update particle density
-			Update::particleDensity(bodies.at(i)->getParticles());
+			Update::particleDensity(particles);
 			
 			// update particle stress
-			Update::particleStress(bodies.at(i)->getParticles());
+			Update::particleStress(particles);
 		}
 		
 		// reset all nodal values

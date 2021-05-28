@@ -115,19 +115,19 @@ void MPM::setupParticles(){
 
 	for (size_t i = 0; i < bodies.size(); ++i){
 
-		vector<Particle*>& particles = bodies.at(i)->getParticles();
+		vector<Particle*>* particles = bodies.at(i)->getParticles();
 
-		for (size_t j = 0; j < particles.size(); ++j){
+		for (size_t j = 0; j < particles->size(); ++j){
 
 			// set shape function
 			switch(ModelSetup::getInterpolationFunction()){
 
 				case ModelSetup::LINEAR:
-					particles.at(j)->setShape(new ShapeLinear);
+					particles->at(j)->setShape(new ShapeLinear);
 					break;
 
 				case ModelSetup::GIMP:
-					particles.at(j)->setShape(new ShapeGimp);
+					particles->at(j)->setShape(new ShapeGimp);
 					break;
 				default:
 				Warning::printMessage("Bad definition of shape function in particle");
