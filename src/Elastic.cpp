@@ -22,16 +22,21 @@ void Elastic::updateStress(Particle* particle){
 	Matrix3d stressDev = stress-Matrix3d::Identity()*stress.trace()/3.0;
 	double stressMean = stress.trace()/3.0;
 
-#if 1
-	// rotated matrix
-	Matrix3d spin = particle->getVorticityIncrement();
-	Matrix3d stressDevRot = stressDev+(stressDev*spin.transpose()+spin*stressDev);
+	Matrix3d stressDevNew;
+
+	if (this->jaumann){
+
+		// rotated matrix
+		Matrix3d spin = particle->getVorticityIncrement();
+		Matrix3d stressDevRot = stressDev+(stressDev*spin.transpose()+spin*stressDev);
+		
+		// new stresses
+		stressDevNew = stressDevRot+2.0*getShearModulus()*deDev;
 	
-	// new stresses
-	Matrix3d stressDevNew = stressDevRot+2.0*getShearModulus()*deDev;
-#else
-	Matrix3d stressDevNew = stressDev+2.0*getShearModulus()*deDev;
-#endif
+	}
+	else{
+		stressDevNew = stressDev+2.0*getShearModulus()*deDev;
+	}
 	
 	double stressMeanNew = stressMean+getBulkModulus()*deVol;
 
