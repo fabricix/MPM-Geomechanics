@@ -30,23 +30,23 @@ public:
 	
 	/// \brief Return the identification
 	/// \param[out] material_id Material identification
-	int getId();
+	inline int getId() { return this->id; }
 	
 	/// \brief Returns material density
 	/// \param[out] density Material density
-	double getDensity();
+	inline double getDensity() { return this->density; }
 
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
-	void setId(int);
+	inline void setId(int material_id) { this->id=material_id; }
 	
 	/// \brief Configures the material density
 	/// \param[in] material_density Material density 
-	void setDensity(double);
+	inline void setDensity(double material_density) { this->density=material_density; }
 	
 	/// \brief Configures the material type
 	/// \param[in] material_type Material::MaterialType
-	void setType(MaterialType);
+	inline void setType(MaterialType material_type) { this->type=material_type; }
 
 	/// \brief Update the stress tensor
 	/// \param[in] particle* Particle pointer
@@ -54,7 +54,7 @@ public:
 	
 	/// \brief Returns the material type
 	/// \param[out] material_type Material::MaterialType
-	virtual MaterialType getType();
+	inline virtual MaterialType getType() { return this->type; }
 
 private:
 	
@@ -64,5 +64,16 @@ private:
 	
 	MaterialType type; //!< material type
 };
+
+inline Material::Material(int id, double density, MaterialType type) {
+	
+	this->setDensity(density);
+	this->setId(id);
+	this->setType(type);
+}
+
+inline Material::~Material() {
+
+}
 
 #endif /* MATERIAL_H_ */
