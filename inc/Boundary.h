@@ -39,52 +39,51 @@ public:
 
 	/// \brief Return the nodes lower than the plane X0, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary
-	const planeBoundary* getPlaneX0();
+	inline const planeBoundary* getPlaneX0() { return &(this->planeX0); }
 
 	/// \brief Return the nodes lower than the plane Y0, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary
-	const planeBoundary* getPlaneY0();
+	inline const planeBoundary* getPlaneY0() { return &(this->planeY0); }
 
 	/// \brief Return the nodes lower than the plane Z0, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary
-	const planeBoundary* getPlaneZ0();
+	inline const planeBoundary* getPlaneZ0() { return &(this->planeZ0); }
 	
 	/// \brief Return the nodes lower than the plane Xn, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary
-	const planeBoundary* getPlaneXn();
+	inline const planeBoundary* getPlaneXn() { return &(this->planeXn); }
 	
 	/// \brief Return the nodes lower than the plane Yn, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary
-	const planeBoundary* getPlaneYn();
+	inline const planeBoundary* getPlaneYn()  { return &(this->planeYn); }
 	
 	/// \brief Return the nodes lower than the plane Zn, including ghosts
 	/// \param[out] *plane_boundary A pointer to planeBoundary	
-	const planeBoundary* getPlaneZn();
-
+	inline const planeBoundary* getPlaneZn()  { return &(this->planeZn); }
 
 	/// \brief Configure the nodes lower than the plane X0, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneX0(vector<int>);
+	inline void setNodesPlaneX0(vector<int> nodes_id) { this->planeX0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Y0, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneY0(vector<int>);
+	inline void setNodesPlaneY0(vector<int> nodes_id) { this->planeY0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Z0, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneZ0(vector<int>);
+	inline void setNodesPlaneZ0(vector<int> nodes_id) { this->planeZ0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Xn, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneXn(vector<int>);
+	inline void setNodesPlaneXn(vector<int> nodes_id) { this->planeXn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Yn, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneYn(vector<int>);
+	inline void setNodesPlaneYn(vector<int> nodes_id) { this->planeYn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Zn, including ghosts
 	/// \param[int] nodes_id A vector with nodes identifications
-	void setNodesPlaneZn(vector<int>);
+	inline void setNodesPlaneZn(vector<int> nodes_id) { this->planeZn.nodes=nodes_id; }
 
 private:
 
@@ -100,5 +99,19 @@ private:
 	
 	Boundary::planeBoundary planeZn; //!< boundary nodes at plane Zn 
 };
+
+inline Boundary::Boundary(){
+
+	planeX0.type=BoundaryType::SLIDING;
+	planeY0.type=BoundaryType::SLIDING;
+	planeZ0.type=BoundaryType::SLIDING;
+	planeXn.type=BoundaryType::SLIDING;
+	planeYn.type=BoundaryType::SLIDING;
+	planeZn.type=BoundaryType::SLIDING;
+}
+
+inline Boundary::~Boundary() {
+	
+}
 
 #endif /* BOUNDARY_H_ */

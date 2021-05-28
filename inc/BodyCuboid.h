@@ -53,7 +53,7 @@ private:
 
 inline BodyCuboid::BodyCuboid():Body() {
 	
-
+	materialId=-1;
 }
 
 inline  BodyCuboid::~BodyCuboid() {

@@ -69,7 +69,7 @@ private:
 };
 
 
-inline Body::Body() {
+inline Body::Body():id(-1) {
 	
 }
 
