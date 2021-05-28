@@ -100,53 +100,53 @@ public:
     void activateNode(int id, bool active_value=true);
 
     /// \brief Return total nodes in mesh
-    /// \param[out] num_nodes Total nodes in the mesh
+    /// \return Total nodes in the mesh
     inline int getNumNodes() const { return this->gridNodes.size(); }
     
     /// \brief Return nodes in mesh
-    /// \param[out] node_list_pointer A pointer no the mesh nodes
+    /// \return A pointer to the mesh nodes
     inline vector<Node> * getNodes() { return &(this->gridNodes); }
     
     /// \brief Return the cells dimension in each direction
-    /// \param[out] cell_dimension A vector containing the cell dimension
+    /// \return A vector containing the cell dimension
     /// in each direction
     inline Vector3d getCellDimension() const { return this->cellDim; }
     
     /// \brief Return total cells in the mesh without ghosts
-    /// \param[out] cell_number A vector containing the number of cells
+    /// \return A vector containing the number of cells
     /// in each direction
     inline Vector3i getNumCells() const { return this->nCells; }
     
     /// \brief Return total cells including ghosts
-    /// \param[out] cell_number A vector containing the number of cells
+    /// \return A vector containing the number of cells
     /// in each direction
     Vector3i getTotalCells() const;
     
     /// \brief Get number of ghosts
-    /// \param[out] ghost_number Number of additional cells around the mesh
+    /// \return Number of additional cells around the mesh
     inline int getNumGhosts() const { return this->nGhosts; }
 
     /// \brief Return lower mesh coordinates
-    /// \param[out] min_limits A vector containing the lower
+    /// \return A vector containing the lower
     /// coordinates of the mesh
     inline Vector3d getMinLimits() const { return this->minLimit;}
 
     /// \brief Return higher mesh coordinates
-    /// \param[out] max_limits A vector containing the higher
+    /// \return A vector containing the higher
     /// coordinates of the mesh
     inline Vector3d getMaxLimits() const { return this->maxLimit; }
 
     /// \brief Return the nodes of the cell containing a point
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] node_index A list containing the indexes
+    /// \return A list containing the indexes
     /// of the nodes of the cell containing the point
     vector<int> getNodesInCell(Vector3d point) const;
 
     /// \brief Return the nodes contributing at point
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] contributed_nodes A list containing the indexes
+    /// \return Contributed nodes. A list containing the indexes
     /// of the nodes that the a particle placed in the coordinate point
     /// contributes
     vector<int> getContributionNodes(Vector3d point) const;
@@ -176,28 +176,28 @@ private:
     /// \brief Return the cell id in a position coordinates
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] cell_id The identification of the cell containing
+    /// \return The identification of the cell containing
     /// the point
     int getCellIdbyPosition(Vector3d point) const;
     
     /// \brief Return the grid coordinates of a position
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] cell_grid_coordinates The cell coordinates in
+    /// \return The cell coordinates in
     /// grid coordinates: \f$i\f$, \f$j\f$ and \f$k\f$
     Vector3d getGridCoordinates(Vector3d point) const;
     
     /// \brief Return the grid parent node coordinate of a position
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] paren_node_grid_coordinate The floor (lower-left)
+    /// \return Parent node grid coordinate. The floor (lower-left)
     /// grid coordinate of the cell containing the point
     Vector3i getParentNodeCoordinates(Vector3d point) const;
     
     /// \brief Return the id of the parent node contributing at the point
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \param[out] paren_node_grid_id The identification of the cell
+    /// \return Parent node grid id. The identification of the cell
     /// containing the point
     int getParentCellIdConstribution(Vector3d point) const;
     

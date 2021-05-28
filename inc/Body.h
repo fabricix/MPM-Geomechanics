@@ -38,15 +38,15 @@ public:
 	virtual void setMaterialId(int material_id)=0;
 	
 	/// \brief Return the material id
-	/// \param[out] mat_id
+	/// \return Material identification
 	virtual int getMaterialId() const=0;
 
 	/// \brief Return the body identification
-	/// \param[out] body_id Body identification
+	/// \return Body identification
 	inline int getId() const { return this->id; }
 
 	/// \brief Return the particles forming the body
-	/// \param[out] particles A reference to a vector containing Particle pointers
+	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
 	
 	/// \brief Configure the id of the body

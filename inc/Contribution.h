@@ -26,15 +26,15 @@ public:
 	virtual ~Contribution();
 
 	/// \brief Return the node identification
-	/// \param[out] node_id Node identification
+	/// \return Node identification
 	inline int getNodeId() const { return this->nodeId; }
 
 	/// \brief Return the weight value
-	/// \param[out] nodal_weight Value of the nodal weight evaluated at the particle position
+	/// \return Nodal weight. Value of the nodal weight evaluated at the particle position
 	inline double getWeight() const { return this->weight; }
 
 	/// \brief Return the gradients values
-	/// \param[out] nodal_gradients Nodal gradients in each direction evaluated at the particle position
+	/// \return Nodal gradients. Nodal gradients in each direction evaluated at the particle position
 	inline Vector3d getGradients() const { return this->gradient; }
 
 	/// \brief Configure node identification

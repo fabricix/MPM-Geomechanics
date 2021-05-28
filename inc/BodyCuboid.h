@@ -34,7 +34,7 @@ public:
 	inline virtual void setMaterialId(int material_id) { this->materialId=material_id; }
 	
 	/// \brief Return the material identification
-	/// \param[out] material_id Material identification
+	/// \return Material identification
 	inline virtual int getMaterialId() const { return this->materialId; }
 
 	/// \brief Create a cuboid in space

@@ -98,15 +98,15 @@ namespace Input {
 	void readInputFile(string);
 
 	/// \brief Return the map with the keywords
-	/// \param[out] map_keywords_strings A map containing an string for each KeyWord
+	/// \return A map containing an string for each KeyWord
 	map<Input::KeyWords,string> getKeyWords();
 	
 	/// \brief Return the data file structure
-	/// \param[out] json_file Json file structure containing all read data
+	/// \return Json file structure containing all read data
 	json getJson();
 
 	/// \brief Return the file name
-	/// \param[out] file_name File name
+	/// \return File name
 	string getFileName();
 	
 	/// \brief Configure the filename
@@ -114,49 +114,49 @@ namespace Input {
 	void setFileName(string file_name);
 	
 	/// \brief Return the simulation time
-	/// \param[out] simulation_time Total simulation time
+	/// \return Simulation time
 	double getSimulationTime();
 	
 	/// \brief Return the time step
-	/// \param[out] time_step Time step
+	/// \return Time step
 	double getTimeStep();
 	
 	/// \brief Return the solver to be used in the model.
 	///
 	/// After read the input file this class creates an Solver instance and returns its pointer.
-	/// \param[out] solver* Solver pointer
+	/// \return Solver
 	Solver* getSolver();
 	
 	/// \brief Return the interpolation functions type
-	/// \param[out] interpolation_type ModelSetup::InterpolationFunctionType
+	/// \return ModelSetup::InterpolationFunctionType
 	ModelSetup::InterpolationFunctionType getInterpolationFunction();
 	
 	/// \brief Return the number of cells in each direction
-	/// \param[out] cells_num Cells' number in each direction
+	/// \return Number of cells in each direction
 	Vector3i getCellsNum();
 	
 	/// \brief Return the cell dimension
-	/// \param[out] cell_dimension Cell dimension in each direction 
+	/// \return Cell dimension in each direction 
 	Vector3d getCellDimension();
 	
 	/// \brief Return the origin of coordinates
-	/// \param[out] origin Coordinates of the origin of the mesh
+	/// \return Coordinates of the origin of the mesh
 	Vector3d getOrigin();
 	
 	/// \brief Return the material list
-	/// \param[out] material_list A list containing Material pointers
+	/// \return A list containing Material pointers
 	vector<Material*> getMaterialList();
 	
 	/// \brief Return the body list
-	/// \param[out] A list containing Body pointers
+	/// \return A list containing Body pointers
 	vector<Body*> getBodyList();
 	
 	/// \brief Return the gravity force
-	/// \param[out] gravity Gravity force
+	/// \return Gravity force
 	Vector3d getGravity();
 	
 	/// \brief Return the number of results
-	/// \param[out] num_results Number of results to be written
+	/// \return Number of results to be written
 	int getResultNum();
 };
 

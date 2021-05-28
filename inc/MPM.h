@@ -35,6 +35,7 @@ public:
 	/// \brief Read the input file of the model
 	/// \param[in] argument_counter Argument counter
 	/// \param[in] argument_vector Argument vector
+	/// \return True is the the file was correctly read
 	bool readInputFile(int argument_counter, char ** argument_vector);
 	
 	/// \brief Create the numerical MPM model

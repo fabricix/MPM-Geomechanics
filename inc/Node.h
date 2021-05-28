@@ -51,44 +51,40 @@ public:
 	inline void setTotalForce(Vector3d total_nodal_force) { this->totalForce=total_nodal_force; }
 
 	/// \brief Return the nodal identification
-	/// \param[out] node_id Nodal identification 
+	/// \return Nodal identification 
 	inline int getId() const { return this->id; }
 	
 	/// \brief Return the activate state of the node
-	/// \param[out] is_node_active Nodal activate state
+	/// \return Nodal activate state
 	inline bool getActive() const { return this->active; }
 	
 	/// \brief Return the nodal mass
-	/// \param[out] nodal_mass Nodal mass
+	/// \return Nodal mass
 	inline double getMass() const { return this->mass; }
 	
 	/// \brief Return the nodal coordinates
-	/// \param[out] nodal_coordinates Vector containing the nodal
+	/// \return Vector containing the nodal
 	/// coordinates
 	inline Vector3d getCoordinates() const { return this->coordinates; }
 	
 	/// \brief Return the nodal momentum
-	/// \param[out] nodal_momentum Vector containing the nodal momentum
+	/// \return Vector containing the nodal momentum
 	inline Vector3d getMomentum() const { return this->momentum; }
 		
 	/// \brief Return the nodal internal force
-	/// \param[out] nodal_internal_force Vector
-	/// containing the nodal internal force
+	/// \return Vector containing the nodal internal force
 	inline Vector3d getInternalForce() const { return this->internalForce; }
 		
 	/// \brief Return the nodal external force
-	/// \param[out] nodal_external_force Vector
-	/// containing the nodal external force
+	/// \return Vector containing the nodal external force
 	inline Vector3d getExternalForce() const { return this->externalForce; }
 		
 	/// \brief Return the nodal total force
-	/// \param[out] nodal_total_force Vector
-	/// containing the nodal total force
+	/// \return Vector containing the nodal total force
 	inline Vector3d getTotalForce() const { return this->totalForce; }
 		
 	/// \brief Return the nodal velocity
-	/// \param[out] nodal_velocity Vector
-	/// containing the nodal velocity
+	/// \return Vector containing the nodal velocity
 	inline Vector3d getVelocity() const { return this->velocity; }
 
 	/// \brief Add a mass increment to the nodal mass

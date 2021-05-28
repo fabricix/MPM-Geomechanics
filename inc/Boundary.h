@@ -38,27 +38,27 @@ public:
 	virtual ~Boundary();
 
 	/// \brief Return the nodes lower than the plane X0, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary
+	/// \return A pointer to planeBoundary in X0
 	inline const planeBoundary* getPlaneX0() { return &(this->planeX0); }
 
 	/// \brief Return the nodes lower than the plane Y0, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary
+	/// \return A pointer to planeBoundary in Y0
 	inline const planeBoundary* getPlaneY0() { return &(this->planeY0); }
 
 	/// \brief Return the nodes lower than the plane Z0, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary
+	/// \return A pointer to planeBoundary in Z0
 	inline const planeBoundary* getPlaneZ0() { return &(this->planeZ0); }
 	
 	/// \brief Return the nodes lower than the plane Xn, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary
+	/// \return A pointer to planeBoundary Xn
 	inline const planeBoundary* getPlaneXn() { return &(this->planeXn); }
 	
 	/// \brief Return the nodes lower than the plane Yn, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary
+	/// \return A pointer to planeBoundary Yn
 	inline const planeBoundary* getPlaneYn()  { return &(this->planeYn); }
 	
 	/// \brief Return the nodes lower than the plane Zn, including ghosts
-	/// \param[out] *plane_boundary A pointer to planeBoundary	
+	/// \return A pointer to planeBoundary Zn
 	inline const planeBoundary* getPlaneZn()  { return &(this->planeZn); }
 
 	/// \brief Configure the nodes lower than the plane X0, including ghosts

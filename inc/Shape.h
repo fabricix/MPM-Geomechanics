@@ -33,13 +33,13 @@ public:
 	virtual void update(Vector3d particle_position, Vector3d nodal_position, Vector3d cell_dimension, Vector3d particle_size) = 0;
 
 	/// \brief Return the shape function values
-	/// \param[out] shape_function_value The nodal shape 
+	/// \return The nodal shape 
 	/// function value \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
 	inline Vector3d getShape() const { return this->shape; }
 	
 	/// \brief Returns the derivates values
-	/// \param[out] shape_function_derivates The derivates 
-	/// of the nodal shape function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
+	/// \return The derivates of the nodal shape
+	/// function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
 	inline Vector3d getDerivate() const { return this->derivate; }
 	
 	/// \brief Configure the shape function values
@@ -65,7 +65,7 @@ private:
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
-	/// \param[out] \f$dS_{Ip}/di\f$
+	/// \return The gradient of the shape function: \f$dS_{Ip}/di\f$
 	virtual double computeGradient(double pI_position, double cell_dimension, double lp) = 0;
 	
 	/// \brief Returns the shape function value
@@ -73,7 +73,7 @@ private:
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
-	/// \param[out] \f$S_{Ip}\f$
+	/// \return The shape function value \f$S_{Ip}\f$
 	virtual double computeShape(double pI_position, double cell_dimension, double lp) = 0;
 
 	Vector3d shape; //!< shape function values

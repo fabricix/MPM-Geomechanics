@@ -61,51 +61,51 @@ public:
 	inline void updateStress() { material->updateStress(this); }
 
 	/// \brief Returns the particle identification 
-	/// \param[out] particle_id Particle identification
+	/// \return Particle identification
 	inline int getId() const { return this->id; }
 
 	/// \brief Returns the particle's material
-	/// \param[out] material_id Material index
+	/// \return Material identification
 	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; } 
 
 	/// \brief Returns the mass of the particle
-	/// \param[out] mass Particle mass
+	/// \return Particle mass
 	inline double getMass() const { return this->mass; }
 
 	/// \brief Returns the current particle density
-	/// \param[out] density Particle density
+	/// \return Particle density
 	inline double getDensity() const { return this->density; }
 
 	/// \brief Returns the current particle position
-	/// \param[out] position Particle current position
+	/// \return Particle current position
 	inline Vector3d getPosition() const { return this->position; } 
 
 	/// \brief Returns the initial particle position
-	/// \param[out] initial_position Particle initial position
+	/// \return Particle initial position
 	inline Vector3d getInitialPosition() const { return this->initialPosition; } 
 
 	/// \brief Returns the external force in particle
-	/// \param[out] external_force Particle external force
+	/// \return Particle external force
 	inline Vector3d getExternalForce() const { return this->externalForce; } 
 
 	/// \brief Returns particle velocity
-	/// \param[out] velocity Particle current velocity
+	/// \return Particle current velocity
 	inline Vector3d getVelocity() const { return this->velocity; }
 
 	/// \brief Returns the current particle stress tensor
-	/// \param[out] stress Particle stress
+	/// \return Particle stress
 	inline Matrix3d getStress() const { return this->stress; }
 
 	/// \brief Returns the strain increment
-	/// \param[out] delta_strain Particle strain increment
+	/// \return Particle strain increment
 	inline Matrix3d getStrainIncrement() const { return this->strainIncrement; }
 
 	/// \brief Returns the vorticity increment
-	/// \param[out] delta_vorticity Particle vorticity (spin) increment 
+	/// \return Particle vorticity (spin) increment 
 	inline Matrix3d getVorticityIncrement() const { return this->vorticityIncrement; }
 
 	/// \brief Returns the contribution list
-	/// \param[out] contribution Contribution node structure
+	/// \return Contribution node structure
 	inline vector<Contribution>* getContributionNodes() { return &(this->contributionNodes); }
 
 	/// \brief Configures the particle id
@@ -165,7 +165,7 @@ public:
 	inline void addExternalForce(Vector3d delta_external_force) { this->externalForce+=delta_external_force; }
 
 	/// \brief Returns o number of particles created
-	/// \param[out] total_particles Total created particles
+	/// \return Total created particles
 	static int getTotalParticles(); 
 
 private:

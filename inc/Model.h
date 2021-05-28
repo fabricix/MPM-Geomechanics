@@ -35,18 +35,19 @@ namespace ModelSetup {
 	enum InterpolationFunctionType{LINEAR, GIMP};
 
 	/// \brief Return true is the system is Windows
-	/// \param[out] is_windows_system Trues if is Windows system
+	/// \return True if is Windows system
 	bool getWindowsSystem();
 
 	/// \brief Return true is the system is Linux
-	/// \param[out] is_linux_system Trues if is Linux system
+	/// \return True if is Linux system
 	bool getLinuxSystem();
 	
 	/// \brief Return the number of nodes that a particle contributes.
+	/// \return The number of nodes that a particle contributes
 	int getContributionNodesNum();
 	
 	/// \brief Return the time step
-	/// \param[out] time_step Time step
+	/// \return Time step
 	double getTimeStep();
 	
 	/// \brief Configure the time step
@@ -54,7 +55,7 @@ namespace ModelSetup {
 	void setTimeStep(double time_step);
 
 	/// \brief Return the simulation time
-	/// \param[out] simulation_time Simulation time
+	/// \return Simulation time
 	double getTime();
 	
 	/// \brief Configure the simulation time
@@ -62,7 +63,7 @@ namespace ModelSetup {
 	void setTime(double simulation_time);
 
 	/// \brief Return the total results to be written
-	/// \param[out] total_results Number of results
+	/// \return Number of results
 	int getResultNum();
 	
 	/// \brief Configure the total results to be written
@@ -70,11 +71,11 @@ namespace ModelSetup {
 	void setResultNum(int total_results);
 	
 	/// \brief Return the every how many steps the results will be written
-	/// \param[out] n_steps_results Number of steps
+	/// \return Number of steps
 	int getResultSteps();
 
 	/// \brief Return the fraction of time steps
-	/// \param[out] time_step_fraction Time step fraction
+	/// \return Time step fraction
 	double getTimeStepFraction();
 	
 	/// \brief Configures the fraction of critical time step
@@ -82,7 +83,7 @@ namespace ModelSetup {
 	void setTimeStepFraction(double time_step_fraction);
 
 	/// \brief Return the number of threads in the simulation
-	/// \param[out] n_threads Number of threads
+	/// \return Number of threads
 	int getThreads();
 	
 	/// \brief Configures the number of threads
@@ -90,7 +91,7 @@ namespace ModelSetup {
 	void setThreads(int n_threads);
 
 	/// \brief Return if contact method is activated
-	/// \param[out] is_contact_active Contact activated
+	/// \return True if contact method is activated
 	bool getContactActive();
 	
 	/// \brief Configure if contact method is activated
@@ -98,7 +99,7 @@ namespace ModelSetup {
 	void setContactActive(bool is_contact_activated);
 
 	/// \brief Return if gravity is active
-	/// \param[out] is_gravity_activated Gravity active
+	/// \return True if gravity active
 	bool getGravityActive();
 	
 	/// \brief Configure if gravity is active
@@ -106,7 +107,7 @@ namespace ModelSetup {
 	void setGravityActive(bool is_gravity_activated);
 
 	/// \brief Return the gravity vector
-	/// \param[out] gravity_vector A vector containing the gravity
+	/// \return A vector containing the gravity
 	/// acceleration in each direction
 	Vector3d getGravity();
 	
@@ -116,7 +117,7 @@ namespace ModelSetup {
 	void setGravity(Vector3d gravity);
 
 	/// \brief Return if axisymetric analisys is active
-	/// \param[out] if_axysimentric_active Axisymetric active value
+	/// \return True is axisymetric condition is active
 	bool getAxisymetricActive();
 	
 	/// \brief Configure if axisymetric analisys is active
@@ -124,7 +125,7 @@ namespace ModelSetup {
 	void setAxisymetricActive(bool if_axysimentric_active);
 
 	/// \brief Return if Jaumann rate is active
-	/// \param[out] if_jaumann_active Jaumann active value
+	/// \return True if Jaumann rate correction is active
 	bool getJanumannActive();
 	
 	/// \brief Configure if Jaumann rate is active
@@ -132,7 +133,7 @@ namespace ModelSetup {
 	void setJanumannActive(bool if_jaumann_active);
 
 	/// \brief Return the input file name
-	/// \param[out] file_name File name
+	/// \return File name
 	string getInputFile();
 	
 	/// \brief Configure the input file name
@@ -140,7 +141,7 @@ namespace ModelSetup {
 	void setInputFile(string file_name);
 
 	/// \brief Return the scheme for updating the stress
-	/// \param[out] stress_sheme_update Stress scheme update
+	/// \return Stress scheme update
 	/// ModelSetup::StressUpdateScheme
 	ModelSetup::StressUpdateScheme getUpdateStressScheme();
 	
@@ -150,7 +151,7 @@ namespace ModelSetup {
 	void setUpdateStressScheme(ModelSetup::StressUpdateScheme stress_sheme_update);
 
 	/// \brief Return the damping type
-	/// \param[out] damping_type Damping type ModelSetup::DampingType
+	/// \return Damping type ModelSetup::DampingType
 	ModelSetup::DampingType getDamping();
 	
 	/// \brief Configure the damping type
@@ -158,7 +159,7 @@ namespace ModelSetup {
 	void setDamping(ModelSetup::DampingType damping_type);
 
 	/// \brief Return the interpolation functions type
-	/// \param[out] interpolation_functions_type Interpolation
+	/// \return interpolation_functions_type Interpolation
 	/// functions type ModelSetup::InterpolationFunctionType
 	ModelSetup::InterpolationFunctionType getInterpolationFunction();
 	

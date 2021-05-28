@@ -38,7 +38,7 @@ private:
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
-	/// \param[out] \f$dS_{Ip}/di\f$
+	/// \return The gradient of the shape function \f$dS_{Ip}/di\f$
 	virtual double computeGradient(double pI_position, double cell_dimension, double lp);
 	
 	/// \brief Returns the shape function value
@@ -46,7 +46,7 @@ private:
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
-	/// \param[out] \f$S_{Ip}\f$
+	/// \return Shape function value \f$S_{Ip}\f$
 	virtual double computeShape(double pI_position, double cell_dimension, double lp);
 };
 

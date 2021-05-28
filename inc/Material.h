@@ -29,11 +29,11 @@ public:
 	virtual ~Material();
 	
 	/// \brief Return the identification
-	/// \param[out] material_id Material identification
+	/// \return Material identification
 	inline int getId() { return this->id; }
 	
 	/// \brief Returns material density
-	/// \param[out] density Material density
+	/// \return Material density
 	inline double getDensity() { return this->density; }
 
 	/// \brief Configure the material identification
@@ -53,7 +53,7 @@ public:
 	virtual void updateStress(Particle* particle)=0;
 	
 	/// \brief Returns the material type
-	/// \param[out] material_type Material::MaterialType
+	/// \return Material::MaterialType
 	inline virtual MaterialType getType() { return this->type; }
 
 private:

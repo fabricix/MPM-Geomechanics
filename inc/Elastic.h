@@ -37,11 +37,11 @@ public:
 	inline void setPoisson(double poisson) { this->Poisson=poisson; }
 
 	/// \brief Return the Shear modulus
-	/// \param[out] shear Shear modulus \f$G=\frac{E}{2(1+\nu)}\f$
+	/// \return Shear modulus \f$G=\frac{E}{2(1+\nu)}\f$
 	inline double getShearModulus() const { return this->Young/2.0/(1.0+this->Poisson); }
 	
 	/// \brief Return the Bulk modulus
-	/// \param[out] bulk Bulk modulus \f$K=\frac{E}{3(1-2\nu)}\f$ 
+	/// \return Bulk modulus \f$K=\frac{E}{3(1-2\nu)}\f$ 
 	inline double getBulkModulus() const { return this->Young/3.0/(1.0-2.0*this->Poisson); }
 	
 	/// \brief Update the stress in the particle
@@ -49,7 +49,7 @@ public:
 	virtual void updateStress(Particle* particle);
 	
 	/// \brief Return the material type
-	/// \param[out] material_type Material::MaterialType
+	/// \return Material type Material::MaterialType
 	inline virtual Material::MaterialType getType() { return Material::getType(); }
 	
 private:
