@@ -50,7 +50,7 @@ public:
 	
 	/// \brief Return the material type
 	/// \param[out] material_type Material type
-	virtual Material::MaterialType getType();
+	inline virtual Material::MaterialType getType() { return Material::getType(); }
 	
 private:
 	
@@ -58,5 +58,16 @@ private:
 	
 	double Poisson; //!< Poisson's ratio \f$\nu\f$
 };
+
+inline Elastic::Elastic(int id, double density, double Young, double Poisson)
+: Material(id, density, Material::MaterialType::ELASTIC)
+{
+	this->setYoung(Young);
+	this->setPoisson(Poisson);
+}
+
+inline Elastic::~Elastic() {
+	
+}
 
 #endif /* ELASTIC_H_ */

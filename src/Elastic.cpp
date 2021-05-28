@@ -10,22 +10,6 @@ using std::cout;
 
 #include "Elastic.h"
 
-Elastic::Elastic(int id, double density, double Young, double Poisson)
-: Material(id, density, Material::MaterialType::ELASTIC)
-{
-	setYoung(Young);
-	setPoisson(Poisson);
-}
-
-Elastic::~Elastic() {
-	// TODO Auto-generated destructor stub
-}
-
-Material::MaterialType Elastic::getType(){
-
-	return Material::getType();
-}
-
 void Elastic::updateStress(Particle* particle){
 
 	// strain increment and its deviate
