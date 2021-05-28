@@ -18,8 +18,8 @@ using std::vector;
 namespace Loads {
 
 	/// \brief Configures the gravity load in particles
-	/// \param[in] body_list A list containing Body pointers 
-	void setGravity(vector<Body*>&);
+	/// \param[in] bodies A list containing Body pointers 
+	void setGravity(vector<Body*>& bodies);
 
 };
 

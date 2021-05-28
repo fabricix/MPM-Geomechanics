@@ -62,27 +62,27 @@ public:
 	inline const planeBoundary* getPlaneZn()  { return &(this->planeZn); }
 
 	/// \brief Configure the nodes lower than the plane X0, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneX0(vector<int> nodes_id) { this->planeX0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Y0, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneY0(vector<int> nodes_id) { this->planeY0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Z0, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneZ0(vector<int> nodes_id) { this->planeZ0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Xn, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneXn(vector<int> nodes_id) { this->planeXn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Yn, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneYn(vector<int> nodes_id) { this->planeYn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Zn, including ghosts
-	/// \param[int] nodes_id A vector with nodes identifications
+	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneZn(vector<int> nodes_id) { this->planeZn.nodes=nodes_id; }
 
 private:

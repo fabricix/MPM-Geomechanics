@@ -51,7 +51,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure the time step
 	/// \param[in] time_step Time step
-	void setTimeStep(double);
+	void setTimeStep(double time_step);
 
 	/// \brief Return the simulation time
 	/// \param[out] simulation_time Simulation time
@@ -59,7 +59,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure the simulation time
 	/// \param[in] simulation_time Simulation time
-	void setTime(double);
+	void setTime(double simulation_time);
 
 	/// \brief Return the total results to be written
 	/// \param[out] total_results Number of results
@@ -67,7 +67,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure the total results to be written
 	/// \param[in] total_results Number of results
-	void setResultNum(int);
+	void setResultNum(int total_results);
 	
 	/// \brief Return the every how many steps the results will be written
 	/// \param[out] n_steps_results Number of steps
@@ -79,7 +79,7 @@ namespace ModelSetup {
 	
 	/// \brief Configures the fraction of critical time step
 	/// \param[in] time_step_fraction Time step fraction
-	void setTimeStepFraction(double);
+	void setTimeStepFraction(double time_step_fraction);
 
 	/// \brief Return the number of threads in the simulation
 	/// \param[out] n_threads Number of threads
@@ -87,7 +87,7 @@ namespace ModelSetup {
 	
 	/// \brief Configures the number of threads
 	/// \param[in] n_threads Number of threads
-	void setThreads(int);
+	void setThreads(int n_threads);
 
 	/// \brief Return if contact method is activated
 	/// \param[out] is_contact_active Contact activated
@@ -95,7 +95,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure if contact method is activated
 	/// \param[in] is_contact_activated Contact active
-	void setContactActive(bool);
+	void setContactActive(bool is_contact_activated);
 
 	/// \brief Return if gravity is active
 	/// \param[out] is_gravity_activated Gravity active
@@ -103,7 +103,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure if gravity is active
 	/// \param[in] is_gravity_activated Gravity active
-	void setGravityActive(bool);
+	void setGravityActive(bool is_gravity_activated);
 
 	/// \brief Return the gravity vector
 	/// \param[out] gravity_vector A vector containing the gravity
@@ -111,9 +111,9 @@ namespace ModelSetup {
 	Vector3d getGravity();
 	
 	/// \brief Configure the gravity vector
-	/// \param[in] gravity_vector A vector containing the gravity
+	/// \param[in] gravity A vector containing the gravity
 	/// acceleration in each direction
-	void setGravity(Vector3d);
+	void setGravity(Vector3d gravity);
 
 	/// \brief Return if axisymetric analisys is active
 	/// \param[out] if_axysimentric_active Axisymetric active value
@@ -121,7 +121,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure if axisymetric analisys is active
 	/// \param[in] if_axysimentric_active Axisymetric active value
-	void setAxisymetricActive(bool);
+	void setAxisymetricActive(bool if_axysimentric_active);
 
 	/// \brief Return if Jaumann rate is active
 	/// \param[out] if_jaumann_active Jaumann active value
@@ -129,7 +129,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure if Jaumann rate is active
 	/// \param[in] if_jaumann_active Jaumann active value
-	void setJanumannActive(bool);
+	void setJanumannActive(bool if_jaumann_active);
 
 	/// \brief Return the input file name
 	/// \param[out] file_name File name
@@ -137,7 +137,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure the input file name
 	/// \param[in] file_name File name
-	void setInputFile(string);
+	void setInputFile(string file_name);
 
 	/// \brief Return the scheme for updating the stress
 	/// \param[out] stress_sheme_update Stress scheme update
@@ -147,7 +147,7 @@ namespace ModelSetup {
 	/// \brief Configure the scheme for updating the stress
 	/// \param[in] stress_sheme_update Stress scheme update
 	/// ModelSetup::StressUpdateScheme
-	void setUpdateStressScheme(ModelSetup::StressUpdateScheme);
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme stress_sheme_update);
 
 	/// \brief Return the damping type
 	/// \param[out] damping_type Damping type ModelSetup::DampingType
@@ -155,7 +155,7 @@ namespace ModelSetup {
 	
 	/// \brief Configure the damping type
 	/// \param[in] damping_type Damping type ModelSetup::DampingType
-	void setDamping(ModelSetup::DampingType);
+	void setDamping(ModelSetup::DampingType damping_type);
 
 	/// \brief Return the interpolation functions type
 	/// \param[out] interpolation_functions_type Interpolation
@@ -165,7 +165,7 @@ namespace ModelSetup {
 	/// \brief Configure the interpolation functions type
 	/// \param[in] interpolation_functions_type Interpolation
 	/// functions type ModelSetup::InterpolationFunctionType
-	void setInterpolationFunction(ModelSetup::InterpolationFunctionType);
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType interpolation_functions_type);
 };
 
 #endif /* MODEL_H_ */

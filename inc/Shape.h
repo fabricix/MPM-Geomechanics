@@ -30,7 +30,7 @@ public:
 	/// \param[in] nodal_position Nodal position
 	/// \param[in] cell_dimension Cell dimension
 	/// \param[in] particle_size Particle size
-	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d) = 0;
+	virtual void update(Vector3d particle_position, Vector3d nodal_position, Vector3d cell_dimension, Vector3d particle_size) = 0;
 
 	/// \brief Return the shape function values
 	/// \param[out] shape_function_value The nodal shape 
@@ -43,32 +43,38 @@ public:
 	inline Vector3d getDerivate() const { return this->derivate; }
 	
 	/// \brief Configure the shape function values
-	/// \param[in] shape_function_value The nodal shape 
-	/// function values \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
+	///
+	/// Nodal shape function values: \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
+	/// \param[in] sx The nodal shape function value in X
+	/// \param[in] sy The nodal shape function value in Y
+	/// \param[in] sz The nodal shape function value in Z
 	inline void setShape(double sx, double sy, double sz) { this->shape=Vector3d(sx,sy,sz); }
 	
 	/// \brief Configure the nodal shape function derivates
-	/// \param[in] shape_function_derivates The derivates 
-	/// of the nodal shape function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
+	///
+	/// The nodal derivate shape function values: \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
+	/// \param[in] gx The nodal derivate shape function value in X
+	/// \param[in] gy The nodal derivate shape function value in Y
+	/// \param[in] gz The nodal derivate shape function value in Z
 	inline void setDerivate(double gx, double gy, double gz) { this->derivate=Vector3d(gx,gy,gz); }
 	
 private:
 	
 	/// \brief Returns the gradient of the shape function
-	/// \param[in] p_i_relative_position Relative position of
+	/// \param[in] pI_position Relative position of
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
 	/// \param[out] \f$dS_{Ip}/di\f$
-	virtual double computeGradient(double, double, double) = 0;
+	virtual double computeGradient(double pI_position, double cell_dimension, double lp) = 0;
 	
 	/// \brief Returns the shape function value
-	/// \param[in] p_I_relative_position Relative position of
+	/// \param[in] pI_position Relative position of
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
 	/// \param[out] \f$S_{Ip}\f$
-	virtual double computeShape(double, double, double) = 0;
+	virtual double computeShape(double pI_position, double cell_dimension, double lp) = 0;
 
 	Vector3d shape; //!< shape function values
 	

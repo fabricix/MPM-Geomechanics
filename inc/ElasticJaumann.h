@@ -10,31 +10,31 @@
 
 #include <Elastic.h>
 
-/// \class ElasticLaumann
+/// \class ElasticJaumann
 /// \brief Represents an elastic material with the Jaumann rate correction
 class ElasticJaumann: public Elastic {
 
 public:
 	
 	/// \brief Create a linear elastic material
-	/// \param[in] material_id Material identification
-	/// \param[in] material_density Material density \f$\rho\f$
-	/// \param[in] young_modulus Young's modulus \f$E\f$
-	/// \param[in] poisson_modulus Poisson's ratio \f$\nu\f$
-	ElasticJaumann(int, double, double, double);
+	/// \param[in] id Material identification
+	/// \param[in] density Material density \f$\rho\f$
+	/// \param[in] young Young's modulus \f$E\f$
+	/// \param[in] poisson Poisson's ratio \f$\nu\f$
+	ElasticJaumann(int id, double density, double young, double poisson);
 
 	/// \brief Default destructor
 	///
 	virtual ~ElasticJaumann();
 
 	/// \brief Update the stress in the particle
-	/// \param[in] *particle Particle pointer
+	/// \param[in] particle Particle
 	virtual void updateStress(Particle* particle);
 
 };
 
-inline ElasticJaumann::ElasticJaumann(int id, double density, double Young, double Poisson)
-: Elastic(id, density, Young, Poisson){
+inline ElasticJaumann::ElasticJaumann(int id, double density, double young, double poisson)
+: Elastic(id, density, young, poisson){
 
 }
 

@@ -38,15 +38,15 @@ public:
 	inline Vector3d getGradients() const { return this->gradient; }
 
 	/// \brief Configure node identification
-	/// \param[int] nodal_id Node identification
+	/// \param[in] nodal_id Node identification
 	inline void setNodeId(int nodal_id) { this->nodeId=nodal_id; }
 	
 	/// \brief Configure weight
-	/// \param[int] nodal_weight Value of the nodal weight evaluated at the particle position
+	/// \param[in] nodal_weight Value of the nodal weight evaluated at the particle position
 	inline void setWeight(double nodal_weight) { this->weight=nodal_weight; }
 	
 	/// \brief Configure gradients
-	/// \param[int] nodal_gradients Nodal gradients in each direction evaluated at the particle position
+	/// \param[in] nodal_gradients Nodal gradients in each direction evaluated at the particle position
 	inline void setGradients(Vector3d nodal_gradients) { this->gradient=nodal_gradients; };
 
 private:

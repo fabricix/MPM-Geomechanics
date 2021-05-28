@@ -36,25 +36,25 @@ public:
 
 	/// \brief Create a particle
 	/// \param[in] position Particle position
-	Particle(Vector3d);
+	Particle(Vector3d position);
 
 	/// \brief Create a particle
 	/// \param[in] position Particle position
-	/// \param[in] *material Material pointer
-	Particle(Vector3d, Material*);
+	/// \param[in] material Material
+	Particle(Vector3d position, Material* material);
 	
 	/// \brief Create a particle
 	/// \param[in] position Particle position
-	/// \param[in] *material Material pointer
+	/// \param[in] material Material
 	/// \param[in] size Particle size in each direction
-	Particle(Vector3d, Material*, Vector3d);
+	Particle(Vector3d position, Material* material, Vector3d size);
 	
 	/// \brief Default destructor
 	virtual ~Particle();
 
 	/// \brief Update the list of nodes that the particle contributes
 	/// \param[in] mesh Mesh reference
-	void updateContributionNodes(Mesh &);
+	void updateContributionNodes(Mesh & mesh);
 
 	/// \brief Update the particle stress
 	///  
@@ -153,12 +153,12 @@ public:
 	inline void setStress(Matrix3d particle_stress) { this->stress=particle_stress; } 
 
 	/// \brief Configures the material in the particle
-	/// \param[in] *material_pointer Material pointer
-	inline void setMaterial(Material* material_pointer) { this->material=material_pointer; } 
+	/// \param[in] material Material
+	inline void setMaterial(Material* material) { this->material=material; } 
 
 	/// \brief Configures the shape function in the particle
-	/// \param[in] *shape Shape pointer
-	inline void setShape(Shape* shape_pointer) { this->shape=shape_pointer; }
+	/// \param[in] shape Shape
+	inline void setShape(Shape* shape) { this->shape=shape; }
 
 	/// \brief Adds a external force increment
 	/// \param[in] delta_external_force External force increment

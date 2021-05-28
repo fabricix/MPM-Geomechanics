@@ -29,25 +29,25 @@ public:
 	/// \param[in] nodal_position Nodal position
 	/// \param[in] cell_dimension Cell dimension
 	/// \param[in] particle_size Particle size
-	virtual void update(Vector3d, Vector3d, Vector3d, Vector3d);
+	virtual void update(Vector3d particle_position, Vector3d nodal_position , Vector3d cell_dimension, Vector3d particle_size);
 
 private:
 	
 	/// \brief Returns the gradient of the shape function
-	/// \param[in] p_i_relative_position Relative position of
+	/// \param[in] pI_position Relative position of
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
 	/// \param[out] \f$dS_{Ip}/di\f$
-	virtual double computeGradient(double, double, double);
+	virtual double computeGradient(double pI_position, double cell_dimension, double lp);
 	
 	/// \brief Returns the shape function value
-	/// \param[in] p_I_relative_position Relative position of
+	/// \param[in] pI_position Relative position of
 	/// the particle \f$p\f$ respect to the node: \f$x_p-x_I\f$
 	/// \param[in] cell_dimension Cell dimension in the direction
 	/// \param[in] lp Half current particle size
 	/// \param[out] \f$S_{Ip}\f$
-	virtual double computeShape(double, double, double);
+	virtual double computeShape(double pI_position, double cell_dimension, double lp);
 };
 
 #endif /* SHAPEGIMP_H_ */

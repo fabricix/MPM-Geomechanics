@@ -34,8 +34,8 @@ public:
 	virtual void create(Mesh& mesh, Material* material)=0;
 	
 	/// \brief Configure the material id
-	/// \param[in] mat_id Material identification
-	virtual void setMaterialId(int)=0;
+	/// \param[in] material_id Material identification
+	virtual void setMaterialId(int material_id)=0;
 	
 	/// \brief Return the material id
 	/// \param[out] mat_id
@@ -54,12 +54,12 @@ public:
 	inline void setId(int body_id) { this->id=body_id; }
 
 	/// \brief Configure the particles in the body
-	/// \param[in] particle_vector A vector containing pointers to the particle
-	inline void setParticles(vector<Particle*> particle_vector) { this->particles=particle_vector; }
+	/// \param[in] particle_list A vector containing pointers to the particle
+	inline void setParticles(vector<Particle*> particle_list) { this->particles=particle_list; }
 
 	/// \brief Add particles to the current particle list
-	/// \param[in] particle_vectr A vector containing pointers to particles
-	inline void insertParticles(vector<Particle*> prts) { this->particles.insert(this->particles.end(),prts.begin(),prts.end()); }
+	/// \param[in] particle_list A vector containing pointers to particles
+	inline void insertParticles(vector<Particle*> particle_list) { this->particles.insert(this->particles.end(),particle_list.begin(),particle_list.end()); }
 	
 private:
 	

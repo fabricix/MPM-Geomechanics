@@ -23,26 +23,26 @@ namespace Output {
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
 	/// \param[in] cell_type_representation Cell type representation Output::CellType
-	void writeGrid(Mesh&,CellType=CellType::CELLS);
+	void writeGrid(Mesh& mesh,CellType cell_type_representation=CellType::CELLS);
 	
 	/// \brief Write the particles of the model into a vtu file
-	/// \param[in] particles_list List containing pointers to particles
+	/// \param[in] particles List containing pointers to particles
 	/// \param[in] time Time
-	void writeParticles(vector<Particle*>*, double=0.0);
+	void writeParticles(vector<Particle*>* particles, double time=0.0);
 	
 	/// \brief Write the particles in a body
 	/// \param[in] body Body reference
 	/// \param[in] time Time
-	void writeBody(Body&, double=0.0);
+	void writeBody(Body& body, double time=0.0);
 	
 	/// \brief Write the time series of the results
 	///
 	void writeResultsSeries();
 	
 	/// \brief Write the particles forming bodies
-	/// \param[in] body_list_reference Body list
+	/// \param[in] bodies Body list
 	/// \param[in] time Time
-	void writeBodies(vector<Body*>& bodies, double=0.0);
+	void writeBodies(vector<Body*>& bodies, double time=0.0);
 };
 
 #endif /* OUTPUT_H_ */

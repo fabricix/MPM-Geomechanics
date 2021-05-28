@@ -49,8 +49,8 @@ public:
 	inline void setType(MaterialType material_type) { this->type=material_type; }
 
 	/// \brief Update the stress tensor
-	/// \param[in] particle* Particle pointer
-	virtual void updateStress(Particle*)=0;
+	/// \param[in] particle Particle
+	virtual void updateStress(Particle* particle)=0;
 	
 	/// \brief Returns the material type
 	/// \param[out] material_type Material::MaterialType

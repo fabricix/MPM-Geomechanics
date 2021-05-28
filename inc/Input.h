@@ -111,7 +111,7 @@ namespace Input {
 	
 	/// \brief Configure the filename
 	/// \param[in] file_name File name
-	void setFileName(string);
+	void setFileName(string file_name);
 	
 	/// \brief Return the simulation time
 	/// \param[out] simulation_time Total simulation time

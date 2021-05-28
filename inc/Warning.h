@@ -18,7 +18,7 @@ namespace Warning
 {	
 	/// \brief Prints a warning message in terminal
 	/// \param[in] message String containing the message to print
-    void printMessage(string);
+    void printMessage(string message);
 }
 
 #endif /* INC_WARNING_H_ */
