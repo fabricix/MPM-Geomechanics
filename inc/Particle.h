@@ -58,111 +58,103 @@ public:
 
 	/// \brief Update the particle stress
 	///  
-	void updateStress();
+	inline void updateStress() { material->updateStress(this); }
 
 	/// \brief Returns the particle identification 
 	/// \param[out] particle_id Particle identification
-	int getId() const;
+	inline int getId() const { return this->id; }
 
 	/// \brief Returns the particle's material
 	/// \param[out] material_id Material index
-	int getMaterialId() const; 
+	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; } 
 
 	/// \brief Returns the mass of the particle
 	/// \param[out] mass Particle mass
-	double getMass() const; 
+	inline double getMass() const { return this->mass; }
 
 	/// \brief Returns the current particle density
 	/// \param[out] density Particle density
-	double getDensity() const; 
-
-	/// \brief Returns the momentum of the particle
-	/// \param[out] momentum Particle momentum
-	Vector3d getMomentum() const; 
+	inline double getDensity() const { return this->density; }
 
 	/// \brief Returns the current particle position
 	/// \param[out] position Particle current position
-	Vector3d getPosition() const; 
+	inline Vector3d getPosition() const { return this->position; } 
 
 	/// \brief Returns the external force in particle
 	/// \param[out] external_force Particle external force
-	Vector3d getExternalForce() const; 
+	inline Vector3d getExternalForce() const { return this->externalForce; } 
 
 	/// \brief Returns particle velocity
 	/// \param[out] velocity Particle current velocity
-	Vector3d getVelocity() const; 
+	inline Vector3d getVelocity() const { return this->velocity; }
 
 	/// \brief Returns the current particle stress tensor
 	/// \param[out] stress Particle stress
-	Matrix3d getStress() const; 
+	inline Matrix3d getStress() const { return this->stress; }
 
 	/// \brief Returns the strain increment
 	/// \param[out] delta_strain Particle strain increment
-	Matrix3d getStrainIncrement() const; 
+	inline Matrix3d getStrainIncrement() const { return this->strainIncrement; }
 
 	/// \brief Returns the vorticity increment
 	/// \param[out] delta_vorticity Particle vorticity (spin) increment 
-	Matrix3d getVorticityIncrement() const; 
+	inline Matrix3d getVorticityIncrement() const { return this->vorticityIncrement; }
 
 	/// \brief Returns the contribution list
 	/// \param[out] contribution Contribution node structure
-	vector<Contribution>* getContributionNodes(); 
+	inline vector<Contribution>* getContributionNodes() { return &(this->contributionNodes); }
 
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
-	void setId(int); 
+	inline void setId(int particle_id) { this->id=particle_id; }
 
 	/// \brief Configures particle mass
 	/// \param[in] particle_mass Particle mass
-	void setMass(double); 
-
-	/// \brief Configures particle volume
-	/// \param[in] particle_volume Current particle volume
-	void setVolume(double); 
+	inline void setMass(double particle_mass) { this->mass=particle_mass; } 
 
 	/// \brief Configures particle density
 	/// \param[in] particle_density Current particle density
-	void setDensity(double); 
+	inline void setDensity(double particle_density) { this->density=particle_density; } 
 
 	/// \brief Configures the current particle position
 	/// \param[in] particle_position Current particle position
-	void setPosition(Vector3d); 
+	inline void setPosition(Vector3d particle_position) { this->position=particle_position; } 
 
 	/// \brief Configures particle size in each direction
 	/// \param[in] particle_size Current particle size
-	void setSize(Vector3d); 
+	inline void setSize(Vector3d particle_size) { this->size=particle_size; } 
 
 	/// \brief Configures particle velocity
 	/// \param[in] particle_velocity Current particle velocity
-	void setVelocity(Vector3d); 
+	inline void setVelocity(Vector3d particle_velocity) { this->velocity = particle_velocity; }
 
 	/// \brief Configures the external force in particle
 	/// \param[in] external_force Particle external force
-	void setExternalForce(Vector3d); 
+	inline void setExternalForce(Vector3d external_force) { this->externalForce=external_force; }
 
 	/// \brief Configures the strain increment
-	/// \param[in] delta_strain Particle strain increment
-	void setStrainIncrement(Matrix3d); 
+	/// \param[in] strain_increment Particle strain increment
+	inline void setStrainIncrement(Matrix3d strain_increment) { this->strainIncrement=strain_increment; }
 
 	/// \brief Configures the vorticity increment
-	/// \param[in] delta_vorticity Particle vorticity (spin) increment 
-	void setVorticityIncrement(Matrix3d); 
+	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
+	inline void setVorticityIncrement(Matrix3d vorticity_increment) { this->vorticityIncrement=vorticity_increment; }
 
 	/// \brief Configures the current particle stress tensor
 	/// \param[in] stress Particle stress
-	void setStress(Matrix3d); 
+	inline void setStress(Matrix3d particle_stress) { this->stress=particle_stress; } 
 
 	/// \brief Configures the material in the particle
-	/// \param[in] *material Material pointer
-	void setMaterial(Material*); 
+	/// \param[in] *material_pointer Material pointer
+	inline void setMaterial(Material* material_pointer) { this->material=material_pointer; } 
 
 	/// \brief Configures the shape function in the particle
 	/// \param[in] *shape Shape pointer
-	void setShape(Shape*); 
+	inline void setShape(Shape* shape_pointer) { this->shape=shape_pointer; }
 
 	/// \brief Adds a external force increment
 	/// \param[in] delta_external_force External force increment
-	void addExternalForce(Vector3d); 
+	inline void addExternalForce(Vector3d delta_external_force) { this->externalForce+=delta_external_force; }
 
 	/// \brief Returns o number of particles created
 	/// \param[out] total_particles Total created particles
@@ -202,5 +194,15 @@ private:
 	///
 	void initializeValues();
 };
+
+inline Particle::~Particle() {
+	
+	totalParticles--;
+}
+
+inline int Particle::getTotalParticles() {
+
+	return totalParticles;
+}
 
 #endif /* PARTICLE_H_ */
