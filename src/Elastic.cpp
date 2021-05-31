@@ -7,7 +7,7 @@
 
 #include "Elastic.h"
 
-void Elastic::updateStress(Particle* particle){
+void Elastic::updateStress(Particle* particle) const {
 
 	// strain increment and its deviate
 	Matrix3d de = particle->getStrainIncrement();

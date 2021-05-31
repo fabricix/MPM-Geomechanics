@@ -19,7 +19,7 @@ public:
 
 	/// \enum BoundaryType
 	/// \brief Determines the type of restrictions to be imposed to the mesh.
-	enum BoundaryType{FIXED,SLIDING};
+	enum BoundaryType{ FIXED, SLIDING };
 
 	/// \struct planeBoundary
 	/// \brief Represents the nodes and the type of restrictions
@@ -39,51 +39,51 @@ public:
 
 	/// \brief Return the nodes lower than the plane X0, including ghosts
 	/// \return A pointer to planeBoundary in X0
-	inline const planeBoundary* getPlaneX0() { return &(this->planeX0); }
+	inline const planeBoundary* getPlaneX0() const { return &(this->planeX0); }
 
 	/// \brief Return the nodes lower than the plane Y0, including ghosts
 	/// \return A pointer to planeBoundary in Y0
-	inline const planeBoundary* getPlaneY0() { return &(this->planeY0); }
+	inline const planeBoundary* getPlaneY0() const { return &(this->planeY0); }
 
 	/// \brief Return the nodes lower than the plane Z0, including ghosts
 	/// \return A pointer to planeBoundary in Z0
-	inline const planeBoundary* getPlaneZ0() { return &(this->planeZ0); }
+	inline const planeBoundary* getPlaneZ0() const { return &(this->planeZ0); }
 	
 	/// \brief Return the nodes lower than the plane Xn, including ghosts
 	/// \return A pointer to planeBoundary Xn
-	inline const planeBoundary* getPlaneXn() { return &(this->planeXn); }
+	inline const planeBoundary* getPlaneXn() const { return &(this->planeXn); }
 	
 	/// \brief Return the nodes lower than the plane Yn, including ghosts
 	/// \return A pointer to planeBoundary Yn
-	inline const planeBoundary* getPlaneYn()  { return &(this->planeYn); }
+	inline const planeBoundary* getPlaneYn() const { return &(this->planeYn); }
 	
 	/// \brief Return the nodes lower than the plane Zn, including ghosts
 	/// \return A pointer to planeBoundary Zn
-	inline const planeBoundary* getPlaneZn()  { return &(this->planeZn); }
+	inline const planeBoundary* getPlaneZn() const { return &(this->planeZn); }
 
 	/// \brief Configure the nodes lower than the plane X0, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneX0(vector<int> nodes_id) { this->planeX0.nodes=nodes_id; }
+	inline void setNodesPlaneX0(const vector<int>& nodes_id) { this->planeX0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Y0, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneY0(vector<int> nodes_id) { this->planeY0.nodes=nodes_id; }
+	inline void setNodesPlaneY0(const vector<int>& nodes_id) { this->planeY0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Z0, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneZ0(vector<int> nodes_id) { this->planeZ0.nodes=nodes_id; }
+	inline void setNodesPlaneZ0(const vector<int>& nodes_id) { this->planeZ0.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Xn, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneXn(vector<int> nodes_id) { this->planeXn.nodes=nodes_id; }
+	inline void setNodesPlaneXn(const vector<int>& nodes_id) { this->planeXn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Yn, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneYn(vector<int> nodes_id) { this->planeYn.nodes=nodes_id; }
+	inline void setNodesPlaneYn(const vector<int>& nodes_id) { this->planeYn.nodes=nodes_id; }
 	
 	/// \brief Configure the nodes lower than the plane Zn, including ghosts
 	/// \param[in] nodes_id A vector with nodes identifications
-	inline void setNodesPlaneZn(vector<int> nodes_id) { this->planeZn.nodes=nodes_id; }
+	inline void setNodesPlaneZn(const vector<int>& nodes_id) { this->planeZn.nodes=nodes_id; }
 
 private:
 

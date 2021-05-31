@@ -46,7 +46,7 @@ public:
     /// \param[in] cell_dimension_x Cell dimesion in x
     /// \param[in] cell_dimension_y Cell dimesion in y
     /// \param[in] cell_dimension_z Cell dimesion in z
-    void setCellDimension(double cell_dimension_x,double cell_dimension_y,double cell_dimension_z);
+    void setCellDimension(double cell_dimension_x, double cell_dimension_y, double cell_dimension_z);
     
     /// \brief Set cells dimension in each direction
     /// \param[in] cell_dimension A vector containing the Cell dimesion in each direction
@@ -56,7 +56,7 @@ public:
     /// \param[in] number_cells_x Number of cells in x
     /// \param[in] number_cells_y Number of cells in y
     /// \param[in] number_cells_z Number of cells in z
-    void setNumCells(int number_cells_x,int number_cells_y,int number_cells_z);
+    void setNumCells(int number_cells_x, int number_cells_y, int number_cells_z);
     
     /// \brief Set number of cell in each direction
     /// \param[in] number_cells Vector containing the number of cells in each direction
@@ -73,13 +73,13 @@ public:
     /// \param[in] x_max Maximum X coordinate
     /// \param[in] y_max Maximum Y coordinate
     /// \param[in] z_max Maximum Z coordinate
-    void setLimits(double x_min,double y_min,double z_min,double x_max,double y_max,double z_max); 
+    void setLimits(double x_min, double y_min, double z_min, double x_max, double y_max, double z_max); 
     
     /// \brief Set origin of coordinates
     /// \param[in] x X Coordinate
     /// \param[in] y Y Coordinate
     /// \param[in] z Z Coordinate
-    inline void setOrigin(double x,double y,double z) { this->minLimit=Vector3d(x,y,z); }
+    inline void setOrigin(double x, double y, double z) { this->minLimit=Vector3d(x,y,z); }
     
     /// \brief Set origin of coordinates
     /// \param[in] origin_coordinate A vector containing the x,y and z 
@@ -91,7 +91,7 @@ public:
     /// to be activated
     /// \param[in] active_value Active value can be true for activate
     /// the node or false for inactivate the node
-    void activateNodes(const vector<int>& id_list,const bool active_value=true);
+    void activateNodes(const vector<int>& id_list, bool active_value=true);
     
     /// \brief Activate node by its id
     /// \param[in] id The id of the node to modify its active attribute
@@ -105,7 +105,7 @@ public:
     
     /// \brief Return nodes in mesh
     /// \return A pointer to the mesh nodes
-    inline vector<Node> * getNodes() { return &(this->gridNodes); }
+    inline vector<Node>* getNodes() { return &(this->gridNodes); }
     
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension

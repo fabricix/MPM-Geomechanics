@@ -33,21 +33,25 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 	double dt=ModelSetup::getTimeStep();
 	int resultSteps=ModelSetup::getResultSteps();
 	double iTime=0.0;
-	int loopCounter=1;
+	int loopCounter=0;
 	vector<Particle*>* particles=0;
-
-	// write the initial state
-	for (size_t i = 0; i < bodies.size(); ++i){
-
-		Output::writeBodies(bodies,iTime);
-	}
 
 	// solve in time
 	while(iTime<time){
 
+		// write results
+		if (loopCounter++%resultSteps==0)
+		{
+			for (size_t i = 0; i < bodies.size(); ++i){
+
+				Output::writeBodies(bodies,iTime);
+			}
+			std::cout<<"Time = "<<iTime<<"\n";
+		}
+
 		for (size_t i = 0; i < bodies.size(); ++i){
 
-			// particles
+			// body particles
 			particles=bodies.at(i)->getParticles();
 
 			// update contribution nodes
@@ -65,7 +69,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
-			// particles
+			// body particles
 			particles=bodies.at(i)->getParticles();
 
 			// nodal internal force
@@ -86,7 +90,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
-			// particles
+			// body particles
 			particles=bodies.at(i)->getParticles();
 
 			// update particle velocity
@@ -101,7 +105,7 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 
 		for (size_t i = 0; i < bodies.size(); ++i){
 
-			// particles
+			// body particles
 			particles=bodies.at(i)->getParticles();
 
 			// calculate particle strain increment
@@ -119,16 +123,6 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
-
-		// write results
-		if (loopCounter++%resultSteps==0)
-		{
-			for (size_t i = 0; i < bodies.size(); ++i){
-
-				Output::writeBodies(bodies,iTime);
-        		std::cout<<"Time = "<<iTime<<"\n";
-			}
-		}
 
 		// advance in time
 		iTime+=dt;

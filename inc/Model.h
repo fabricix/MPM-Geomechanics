@@ -20,19 +20,19 @@ namespace ModelSetup {
 
 	/// \enum StressUpdateScheme
 	/// \brief Defines the type of scheme used to update the stress.
-	enum StressUpdateScheme{USF, USL, MUSL};
+	enum StressUpdateScheme{ USF, USL, MUSL };
 
 	/// \enum DampingType
 	/// \brief Defines the type of damping.
-	enum DampingType{NONE,LOCAL_NO_VISCOUS,DYNAMIC_RELAX};
+	enum DampingType{ NONE, LOCAL_NO_VISCOUS, DYNAMIC_RELAX};
 	
 	/// \enum OperationalSystem
 	/// \brief Defines the current operational system.
-	enum OperationalSystem{WINDOWS,LINUX};
+	enum OperationalSystem{ WINDOWS, LINUX };
 
 	/// \enum InterpolationFunctionType
 	/// \brief Defines the type of interpolation function.
-	enum InterpolationFunctionType{LINEAR, GIMP};
+	enum InterpolationFunctionType{ LINEAR, GIMP };
 
 	/// \brief Return true is the system is Windows
 	/// \return True if is Windows system

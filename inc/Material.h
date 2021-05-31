@@ -18,7 +18,7 @@ public:
 
 	/// \enum MaterialType
 	/// Describes the material's constitutive model type
-	enum MaterialType{NONE,ELASTIC};
+	enum MaterialType{ NONE, ELASTIC };
 
 	/// \brief Default constructor
 	///
@@ -30,11 +30,11 @@ public:
 	
 	/// \brief Return the identification
 	/// \return Material identification
-	inline int getId() { return this->id; }
+	inline int getId() const { return this->id; }
 	
 	/// \brief Returns material density
 	/// \return Material density
-	inline double getDensity() { return this->density; }
+	inline double getDensity() const { return this->density; }
 
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
@@ -50,11 +50,11 @@ public:
 
 	/// \brief Update the stress tensor
 	/// \param[in] particle Particle
-	virtual void updateStress(Particle* particle)=0;
+	virtual void updateStress(Particle* particle) const = 0;
 	
 	/// \brief Returns the material type
 	/// \return Material::MaterialType
-	inline virtual MaterialType getType() { return this->type; }
+	inline virtual MaterialType getType() const { return this->type; }
 
 private:
 	

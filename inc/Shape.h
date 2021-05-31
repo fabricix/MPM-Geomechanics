@@ -30,7 +30,7 @@ public:
 	/// \param[in] nodal_position Nodal position
 	/// \param[in] cell_dimension Cell dimension
 	/// \param[in] particle_size Particle size
-	virtual void update(Vector3d particle_position, Vector3d nodal_position, Vector3d cell_dimension, Vector3d particle_size) = 0;
+	virtual void update(const Vector3d& particle_position, const Vector3d& nodal_position, const Vector3d& cell_dimension, const Vector3d& particle_size) = 0;
 
 	/// \brief Return the shape function values
 	/// \return The nodal shape 

@@ -31,15 +31,15 @@ public:
 	/// \brief Create a body with particles and material
 	/// \param[in] mesh Computational Mesh reference
 	/// \param[in] material Material
-	virtual void create(Mesh& mesh, Material* material)=0;
+	virtual void create(Mesh& mesh, Material* material) = 0;
 	
 	/// \brief Configure the material id
 	/// \param[in] material_id Material identification
-	virtual void setMaterialId(int material_id)=0;
+	virtual void setMaterialId(int material_id) = 0;
 	
 	/// \brief Return the material id
 	/// \return Material identification
-	virtual int getMaterialId() const=0;
+	virtual int getMaterialId() const = 0;
 
 	/// \brief Return the body identification
 	/// \return Body identification

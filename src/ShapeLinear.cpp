@@ -66,22 +66,22 @@ double ShapeLinear::computeGradient(double xip, double L, double lp)
     return 0.0;
 }
 
-void ShapeLinear::update(Vector3d posParticle, Vector3d posNode, Vector3d cellDim, Vector3d particleSize){
+void ShapeLinear::update(const Vector3d& posParticle, const Vector3d& posNode, const Vector3d& cellDim, const Vector3d& particleSize){
 
     // relative distance to node
-    double rx  = posParticle(0)-posNode(0);
-    double ry  = posParticle(1)-posNode(1);
-    double rz  = posParticle(2)-posNode(2);
+    const double rx  = posParticle(0)-posNode(0);
+    const double ry  = posParticle(1)-posNode(1);
+    const double rz  = posParticle(2)-posNode(2);
 
     // update shape functions
-    double Sx = computeShape(rx, cellDim(0), 0.0);
-    double Sy = computeShape(ry, cellDim(1), 0.0);
-    double Sz = computeShape(rz, cellDim(2), 0.0);
+    const double Sx = computeShape(rx, cellDim(0), 0.0);
+    const double Sy = computeShape(ry, cellDim(1), 0.0);
+    const double Sz = computeShape(rz, cellDim(2), 0.0);
 	setShape(Sx,Sy,Sz);
     
     // update gradients
-    double Gx = computeGradient(rx, cellDim(0), 0.0);
-    double Gy = computeGradient(ry, cellDim(1), 0.0);
-    double Gz = computeGradient(rz, cellDim(2), 0.0);
+    const double Gx = computeGradient(rx, cellDim(0), 0.0);
+    const double Gy = computeGradient(ry, cellDim(1), 0.0);
+    const double Gz = computeGradient(rz, cellDim(2), 0.0);
     setDerivate(Gx,Gy,Gz);
 }

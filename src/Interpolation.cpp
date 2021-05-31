@@ -25,7 +25,7 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>* particles){
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// get the particle mass
-		double pMass = particles->at(i)->getMass();
+		const double pMass = particles->at(i)->getMass();
 
 		// For each node in the contribution list 
 		for (size_t j = 0; j < contribution->size(); ++j){
@@ -54,10 +54,10 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>* particles){
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// get particle velocity
-		Vector3d pVelocity = particles->at(i)->getVelocity();
+		const Vector3d pVelocity = particles->at(i)->getVelocity();
 
 		// get particle mass
-		double pMass = particles->at(i)->getMass();
+		const double pMass = particles->at(i)->getMass();
 		
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j){
@@ -86,10 +86,10 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>* particles)
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// obtain particle stress
-		Matrix3d pStress = particles->at(i)->getStress();
+		const Matrix3d pStress = particles->at(i)->getStress();
 		
 		// get the particle volume
-		double pVolume = particles->at(i)->getMass()/particles->at(i)->getDensity();
+		const double pVolume = particles->at(i)->getMass()/particles->at(i)->getDensity();
 
 		// For each node in the contribution list
 		for (size_t j = 0; j < contribution->size(); ++j){
@@ -101,7 +101,7 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>* particles)
 			Node& nodeI = nodes->at(contribI.getNodeId());
 
 			// get the nodal gradients
-			Vector3d gradient = contribI.getGradients();
+			const Vector3d gradient = contribI.getGradients();
 
 			// and compute the internal force
 			Vector3d internalForce = Vector3d::Zero();
@@ -127,7 +127,7 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>* particles)
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// get external force at particle
-		Vector3d pExtForce = particles->at(i)->getExternalForce();
+		const Vector3d pExtForce = particles->at(i)->getExternalForce();
 
 		// For each node in the contribution list,
 		for (size_t j = 0; j < contribution->size(); ++j){
@@ -148,7 +148,7 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>* particles)
 // From node to particle
 //
 
-void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* particles,double dt){
+void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
@@ -172,10 +172,10 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* parti
 			Node& nodeI = nodes->at(contribI.getNodeId());
 
 			// get gradient
-			Vector3d dN = contribI.getGradients();
+			const Vector3d dN = contribI.getGradients();
 
 			// get velocity
-			Vector3d v = nodeI.getVelocity();
+			const Vector3d v = nodeI.getVelocity();
 
 			dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt;
 			dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt;
@@ -195,7 +195,7 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* parti
 	}
 }
 
-void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles,double dt){
+void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
 	vector<Node>* nodes = mesh.getNodes();
@@ -219,10 +219,10 @@ void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>* pa
 			Node& nodeI = nodes->at(contribI.getNodeId());
 
 			// get gradient
-			Vector3d dN = contribI.getGradients();
+			const Vector3d dN = contribI.getGradients();
 
 			// get velocity
-			Vector3d v = nodeI.getVelocity();
+			const Vector3d v = nodeI.getVelocity();
 
 			dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt;
 			dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt;

@@ -54,7 +54,7 @@ public:
 
 	/// \brief Update the list of nodes that the particle contributes
 	/// \param[in] mesh Mesh reference
-	void updateContributionNodes(Mesh & mesh);
+	void updateContributionNodes(Mesh& mesh);
 
 	/// \brief Update the particle stress
 	///  
@@ -106,7 +106,7 @@ public:
 
 	/// \brief Returns the contribution list
 	/// \return Contribution node structure
-	inline vector<Contribution>* getContributionNodes() { return &(this->contributionNodes); }
+	inline vector<Contribution>* const getContributionNodes() { return &(this->contributionNodes); }
 
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
@@ -154,7 +154,7 @@ public:
 
 	/// \brief Configures the material in the particle
 	/// \param[in] material Material
-	inline void setMaterial(Material* material) { this->material=material; } 
+	inline void setMaterial(Material* material) { this->material=material; }
 
 	/// \brief Configures the shape function in the particle
 	/// \param[in] shape Shape

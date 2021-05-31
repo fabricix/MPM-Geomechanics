@@ -51,7 +51,7 @@ namespace Interpolation {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles,double time_step);
+	void particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles, double time_step);
 };
 
 #endif /* INTERPOLATION_H_ */

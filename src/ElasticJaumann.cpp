@@ -7,7 +7,7 @@
 
 #include "ElasticJaumann.h"
 
-void ElasticJaumann::updateStress(Particle* particle){
+void ElasticJaumann::updateStress(Particle* particle) const {
 
 	// strain increment and its deviate
 	Matrix3d de = particle->getStrainIncrement();

@@ -288,9 +288,9 @@ namespace Output{
         // connectivity
         gridFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
         
-        int nCellsX = nCellsVec(0);
-        int nCellsY = nCellsVec(1);
-        int nCellsZ = nCellsVec(2);
+        const int nCellsX = nCellsVec(0);
+        const int nCellsY = nCellsVec(1);
+        const int nCellsZ = nCellsVec(2);
 
         for (int k = 0; k < nCellsZ; ++k){
             for (int j = 0; j < nCellsY; ++j) {

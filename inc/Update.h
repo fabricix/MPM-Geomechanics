@@ -39,13 +39,13 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles List of particles
 	/// \param[in] time_step Time step
-	void particleVelocity(Mesh& mesh, vector<Particle*>* particles,double time_step);
+	void particleVelocity(Mesh& mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles List of particles
 	/// \param[in] time_step Time step
-	void particlePosition(Mesh& mesh, vector<Particle*>* particles,double time_step);
+	void particlePosition(Mesh& mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
@@ -67,14 +67,14 @@ namespace Update {
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneForce(const Boundary::planeBoundary* boudary, vector<Node>* nodes, int direction);
+	void setPlaneForce(const Boundary::planeBoundary* boudary, vector<Node>* nodes, unsigned direction);
 	
 	/// \brief Configure the momentum in each node in boundary planes
 	/// \param[in] boudary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneMomentum(const Boundary::planeBoundary* boudary, vector<Node>* nodes, int direction);
+	void setPlaneMomentum(const Boundary::planeBoundary* boudary, vector<Node>* nodes, unsigned direction);
 };
 
 #endif /* UPDATE_H_ */

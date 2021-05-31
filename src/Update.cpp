@@ -66,7 +66,7 @@ void Update::particleDensity(vector<Particle*>* particles){
 		Particle* particleP = particles->at(i);
 
 		// volumetric strain increment
-		double volStrainInc = particleP->getStrainIncrement().trace();
+		const double volStrainInc = particleP->getStrainIncrement().trace();
 		
 		// update particle density
 		if ((1+volStrainInc)!=0){
@@ -95,7 +95,7 @@ void Update::particleVelocity(Mesh& mesh, vector<Particle*>* particles, double d
 	for (size_t i = 0; i < particles->size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// initialize the result vector
 		Vector3d velocityRate = Vector3d::Zero();
@@ -133,7 +133,7 @@ void Update::particlePosition(Mesh& mesh, vector<Particle*>* particles, double d
 	for (size_t i = 0; i < particles->size(); ++i)
 	{
 		// get the nodes and weights that this particle contributes.
-		vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 		// initialize the result vector
 		Vector3d positionRate = Vector3d::Zero();
@@ -162,7 +162,7 @@ void Update::particlePosition(Mesh& mesh, vector<Particle*>* particles, double d
 	}
 }
 
-void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>* nodes, int dir){
+void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{
@@ -229,7 +229,7 @@ void Update::boundaryConditionsMomentum(Mesh& mesh){
 	setPlaneMomentum(mesh.getBoundary()->getPlaneZn(), nodes, 2);
 }
 
-void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, int dir){
+void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	for (size_t i = 0; i < plane->nodes.size(); ++i)
 	{

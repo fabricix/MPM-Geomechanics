@@ -46,11 +46,11 @@ public:
 	
 	/// \brief Update the stress in the particle
 	/// \param[in] particle Particle
-	virtual void updateStress(Particle* particle);
+	virtual void updateStress(Particle* particle) const;
 	
 	/// \brief Return the material type
 	/// \return Material type Material::MaterialType
-	inline virtual Material::MaterialType getType() { return Material::getType(); }
+	inline virtual Material::MaterialType getType() const { return Material::getType(); }
 	
 private:
 	

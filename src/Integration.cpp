@@ -7,7 +7,7 @@
 
 #include "Integration.h"
 
-void Integration::nodalMomentum(Mesh& mesh,double dt){
+void Integration::nodalMomentum(Mesh& mesh, double dt){
 
 	// Get the mesh nodes pointer.
 	vector<Node>* nodes = mesh.getNodes();

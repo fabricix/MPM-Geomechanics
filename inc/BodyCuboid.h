@@ -27,7 +27,7 @@ public:
 	/// \brief Configure the geometrical points of the cuboid
 	/// \param[in] point_1 Lower left geometrical point of the cuboid
 	/// \param[in] point_2 Higher right geometrical point of the cuboid
-	inline void setPoints(Vector3d point_1,Vector3d point_2) { this->pointP1=point_1; this->pointP2=point_2; }
+	inline void setPoints(Vector3d point_1, Vector3d point_2) { this->pointP1=point_1; this->pointP2=point_2; }
 	
 	/// \brief Configure the material id
 	/// \param[in] material_id Material identification
