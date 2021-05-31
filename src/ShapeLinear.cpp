@@ -68,20 +68,15 @@ double ShapeLinear::computeGradient(double xip, double L, double lp)
 
 void ShapeLinear::update(const Vector3d& posParticle, const Vector3d& posNode, const Vector3d& cellDim, const Vector3d& particleSize){
 
-    // relative distance to node
-    const double rx  = posParticle(0)-posNode(0);
-    const double ry  = posParticle(1)-posNode(1);
-    const double rz  = posParticle(2)-posNode(2);
-
     // update shape functions
-    const double Sx = computeShape(rx, cellDim(0), 0.0);
-    const double Sy = computeShape(ry, cellDim(1), 0.0);
-    const double Sz = computeShape(rz, cellDim(2), 0.0);
+    const double Sx = computeShape(posParticle(0)-posNode(0), cellDim(0), 0.0);
+    const double Sy = computeShape(posParticle(1)-posNode(1), cellDim(1), 0.0);
+    const double Sz = computeShape(posParticle(2)-posNode(2), cellDim(2), 0.0);
 	setShape(Sx,Sy,Sz);
     
     // update gradients
-    const double Gx = computeGradient(rx, cellDim(0), 0.0);
-    const double Gy = computeGradient(ry, cellDim(1), 0.0);
-    const double Gz = computeGradient(rz, cellDim(2), 0.0);
+    const double Gx = computeGradient(posParticle(0)-posNode(0), cellDim(0), 0.0);
+    const double Gy = computeGradient(posParticle(1)-posNode(1), cellDim(1), 0.0);
+    const double Gz = computeGradient(posParticle(2)-posNode(2), cellDim(2), 0.0);
     setDerivate(Gx,Gy,Gz);
 }

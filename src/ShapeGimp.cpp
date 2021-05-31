@@ -97,34 +97,19 @@ double ShapeGimp::computeGradient(double xip, double L, double lp)
 
 void ShapeGimp::update(const Vector3d& posParticle, const Vector3d& posNode, const Vector3d& cellDim, const Vector3d& particleSize){
 
-    // relative distance to node
-    const double rx  = posParticle(0)-posNode(0);
-    const double ry  = posParticle(1)-posNode(1);
-    const double rz  = posParticle(2)-posNode(2);
-    
-    // lp is half the current particle size (L = 2lp)
-    const double lpx = particleSize(0)/2.0;
-    const double lpy = particleSize(1)/2.0;
-    const double lpz = particleSize(2)/2.0;
-
-	// update particle domain
-    #if 0
-    lpx = lpx*deformationGradient.xx;
-    lpy = lpx*deformationGradient.yy;
-    lpz = lpx*deformationGradient.zz;
-    #endif
-
-    // update shape functions
-    const double Sx = computeShape(rx, cellDim(0), lpx);
-    const double Sy = computeShape(ry, cellDim(1), lpy);
-    const double Sz = computeShape(rz, cellDim(2), lpz);
+    // compute shape functions
+    const double Sx = computeShape(posParticle(0)-posNode(0), cellDim(0), particleSize(0)/2.0);
+    const double Sy = computeShape(posParticle(1)-posNode(1), cellDim(1), particleSize(1)/2.0);
+    const double Sz = computeShape(posParticle(2)-posNode(2), cellDim(2), particleSize(2)/2.0);
 	
+    // update shape function
     setShape(Sx,Sy,Sz);
     
-    // update gradients
-    const double Gx = computeGradient(rx, cellDim(0), lpx);
-    const double Gy = computeGradient(ry, cellDim(1), lpy);
-    const double Gz = computeGradient(rz, cellDim(2), lpz);
+    // compute gradients
+    const double Gx = computeGradient(posParticle(0)-posNode(0), cellDim(0), particleSize(0)/2.0);
+    const double Gy = computeGradient(posParticle(1)-posNode(1), cellDim(1), particleSize(1)/2.0);
+    const double Gz = computeGradient(posParticle(2)-posNode(2), cellDim(2), particleSize(2)/2.0);
     
+    // set gradients 
     setDerivate(Gx,Gy,Gz);
 }

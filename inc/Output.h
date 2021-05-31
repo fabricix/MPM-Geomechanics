@@ -18,7 +18,7 @@ namespace Output {
 
 	/// \enum CellType
 	/// Describes the way that the cells are written in the mesh file
-	enum CellType{POINTS,CELLS};
+	enum CellType{ POINTS, CELLS };
 
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
