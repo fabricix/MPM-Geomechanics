@@ -95,7 +95,7 @@ namespace Input {
 	
 	/// \brief Read the input file
 	/// \param[in] file_name File name
-	void readInputFile(string);
+	void readInputFile(string file_name);
 
 	/// \brief Return the map with the keywords
 	/// \return A map containing an string for each KeyWord

@@ -81,134 +81,122 @@ Vector3i Mesh::getTotalCells() const {
     return Vector3i(nCells.x()+nGhosts*2, nCells.y()+nGhosts*2, nCells.z()+nGhosts*2);
 }
 
-Vector3d Mesh::getGridCoordinates(Vector3d position) const {
+Vector3d Mesh::getGridCoordinates(const Vector3d& position) const {
 
     // grid coordinates
-    double i = (position.x()-minLimit.x())/cellDim.x()+nGhosts;
-    double j = (position.y()-minLimit.y())/cellDim.y()+nGhosts;
-    double k = (position.z()-minLimit.z())/cellDim.z()+nGhosts;
+    const double i = (position.x()-minLimit.x())/cellDim.x()+nGhosts;
+    const double j = (position.y()-minLimit.y())/cellDim.y()+nGhosts;
+    const double k = (position.z()-minLimit.z())/cellDim.z()+nGhosts;
 
     // return vector of coordinates
     return Vector3d(i,j,k);
 }
 
-Vector3i Mesh::getParentNodeCoordinates(Vector3d position) const {
+Vector3i Mesh::getParentNodeCoordinates(const Vector3d& position) const {
 
     // grid coordinates
-    Vector3d gridCoords = getGridCoordinates(position);
+    const Vector3d gridCoords = getGridCoordinates(position);
     
     // return the floor of the grid coordinates
     return Vector3i(int(floor(gridCoords.x())),int(floor(gridCoords.y())),int(floor(gridCoords.z())));
 }
 
-int Mesh::getCellIdbyPosition(Vector3d position) const {
+int Mesh::getCellIdbyPosition(const Vector3d& position) const {
 
     // parent node coordinate
-    Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
-    int i = gridParentNodeCoords.x();
-    int j = gridParentNodeCoords.y();
-    int k = gridParentNodeCoords.z();
+    const Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
+    const int i = gridParentNodeCoords.x();
+    const int j = gridParentNodeCoords.y();
+    const int k = gridParentNodeCoords.z();
 
     // cell id
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
-int Mesh::getParentCellIdConstribution(Vector3d position) const{
+int Mesh::getParentCellIdConstribution(const Vector3d& position) const{
 
     // parent node coordinates
-    Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
-    int pi=gridParentNodeCoords.x();
-    int pj=gridParentNodeCoords.y();
-    int pk=gridParentNodeCoords.z();
+	const Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);
+    const int pi=gridParentNodeCoords.x();
+    const int pj=gridParentNodeCoords.y();
+    const int pk=gridParentNodeCoords.z();
 
     // grid coordinates
-    Vector3d gridCoords = getGridCoordinates(position);
-    double gi=gridCoords.x();
-    double gj=gridCoords.y();
-    double gk=gridCoords.z();
+    const Vector3d gridCoords = getGridCoordinates(position);
+    const double gi=gridCoords.x();
+    const double gj=gridCoords.y();
+    const double gk=gridCoords.z();
 
     // relative distance to parent node
-    double relDx = gi-double(pi);
-    double relDy = gj-double(pj);
-    double relDz = gk-double(pk);
+    const double relDx = gi-double(pi);
+    const double relDy = gj-double(pj);
+    const double relDz = gk-double(pk);
 
     // calculate the correct the parent node
-    int i = relDx<0.5 ? pi-1 : pi;
-    int j = relDy<0.5 ? pj-1 : pj;
-    int k = relDz<0.5 ? pk-1 : pk;
+    const int i = relDx<0.5 ? pi-1 : pi;
+    const int j = relDy<0.5 ? pj-1 : pj;
+    const int k = relDz<0.5 ? pk-1 : pk;
 
     // return the parent node of 27 node contribution
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
-vector<int> Mesh::getNodesInCell(Vector3d position) const {
+vector<int> Mesh::getNodesInCell(const Vector3d& position) const {
     
-    int cellId = getCellIdbyPosition(position);
+    const int cellId = getCellIdbyPosition(position);
     
-    int idNode1 = cellId;
-    int idNode2 = idNode1+1;
-    int idNode3 = idNode1+nRows.x();
-    int idNode4 = idNode3+1;
-    int idNode5 = idNode1 + (nRows.x()*nRows.y());
-    int idNode6 = idNode2 + (nRows.x()*nRows.y());
-    int idNode7 = idNode3 + (nRows.x()*nRows.y());
-    int idNode8 = idNode4 + (nRows.x()*nRows.y());
+    const int idNode1 = cellId;
+    const int idNode2 = idNode1+1;
+    const int idNode3 = idNode1+nRows.x();
+    const int idNode4 = idNode3+1;
+    const int idNode5 = idNode1 + (nRows.x()*nRows.y());
+    const int idNode6 = idNode2 + (nRows.x()*nRows.y());
+    const int idNode7 = idNode3 + (nRows.x()*nRows.y());
+    const int idNode8 = idNode4 + (nRows.x()*nRows.y());
 
     vector<int> v {idNode1,idNode2,idNode3,idNode4,idNode5,idNode6,idNode7,idNode8};
     return v;
 }
 
-vector<int> Mesh::getContributionNodes(Vector3d position) const {
+vector<int> Mesh::getContributionNodes(const Vector3d& position) const {
 
-    int cellId = getParentCellIdConstribution(position);
+    const int cellId = getParentCellIdConstribution(position);
+    const int nXY = nRows.x()*nRows.y();
+    const int nX = nRows.x();
+
+    vector<int> contributionIds(27,0);
+
+    contributionIds.at(0) = cellId+0;
+    contributionIds.at(1) = cellId+1;
+    contributionIds.at(2) = cellId+2;
+    contributionIds.at(3) = cellId+nX+0;
+    contributionIds.at(4) = cellId+nX+1;
+    contributionIds.at(5) = cellId+nX+2;
+    contributionIds.at(6) = cellId+nX+nX+0;
+    contributionIds.at(7) = cellId+nX+nX+1;
+    contributionIds.at(8) = cellId+nX+nX+2;
+
+    contributionIds.at(9)  = cellId+0+nXY*1;
+    contributionIds.at(10) = cellId+1+nXY*1;
+    contributionIds.at(11) = cellId+2+nXY*1;
+    contributionIds.at(12) = cellId+nX+0+nXY*1;
+    contributionIds.at(13) = cellId+nX+1+nXY*1;
+    contributionIds.at(14) = cellId+nX+2+nXY*1;
+    contributionIds.at(15) = cellId+nX+nX+0+nXY*1;
+    contributionIds.at(16) = cellId+nX+nX+1+nXY*1;
+    contributionIds.at(17) = cellId+nX+nX+2+nXY*1;
+
+    contributionIds.at(18) = cellId+0+nXY*2;
+    contributionIds.at(19) = cellId+1+nXY*2;
+    contributionIds.at(20) = cellId+2+nXY*2;
+    contributionIds.at(21) = cellId+nX+0+nXY*2;
+    contributionIds.at(22) = cellId+nX+1+nXY*2;
+    contributionIds.at(23) = cellId+nX+2+nXY*2;
+    contributionIds.at(24) = cellId+nX+nX+0+nXY*2;
+    contributionIds.at(25) = cellId+nX+nX+1+nXY*2;
+    contributionIds.at(26) = cellId+nX+nX+2+nXY*2;
     
-    int nXYGridNodes = nRows.x()*nRows.y();
-    int I = nRows.x();
-
-    int zPlane = nXYGridNodes*0;
-    int idNode1 = cellId       + zPlane;
-    int idNode2 = cellId+1     + zPlane;
-    int idNode3 = cellId+2     + zPlane;
-    int idNode4 = cellId+I     + zPlane;
-    int idNode5 = cellId+I+1   + zPlane;
-    int idNode6 = cellId+I+2   + zPlane;
-    int idNode7 = cellId+I+I   + zPlane;
-    int idNode8 = cellId+I+I+1 + zPlane;
-    int idNode9 = cellId+I+I+2 + zPlane;
-
-    zPlane = nXYGridNodes*1;
-    int idNode10 = cellId       + zPlane;
-    int idNode11 = cellId+1     + zPlane;
-    int idNode12 = cellId+2     + zPlane;
-    int idNode13 = cellId+I     + zPlane;
-    int idNode14 = cellId+I+1   + zPlane;
-    int idNode15 = cellId+I+2   + zPlane;
-    int idNode16 = cellId+I+I   + zPlane;
-    int idNode17 = cellId+I+I+1 + zPlane;
-    int idNode18 = cellId+I+I+2 + zPlane;
-
-    zPlane = nXYGridNodes*2;
-    int idNode19 = cellId       + zPlane;
-    int idNode20 = cellId+1     + zPlane;
-    int idNode21 = cellId+2     + zPlane;
-    int idNode22 = cellId+I     + zPlane;
-    int idNode23 = cellId+I+1   + zPlane;
-    int idNode24 = cellId+I+2   + zPlane;
-    int idNode25 = cellId+I+I   + zPlane;
-    int idNode26 = cellId+I+I+1 + zPlane;
-    int idNode27 = cellId+I+I+2 + zPlane;
-    
-    
-    vector<int> v { idNode1,  idNode2,  idNode3,
-                    idNode4,  idNode5,  idNode6,
-                    idNode7,  idNode8,  idNode9,
-                    idNode10, idNode11, idNode12,
-                    idNode13, idNode14, idNode15,
-                    idNode16, idNode17, idNode18,
-                    idNode19, idNode20, idNode21,
-                    idNode22, idNode23, idNode24,
-                    idNode25, idNode26, idNode27};
-    return v;
+    return contributionIds;
 }
 
 //
@@ -258,7 +246,7 @@ void Mesh::createGrid(void) {
     configureBoundaries();
 }
 
-void Mesh::activateNodes(const vector<int>& nodesId,bool activeValue) {
+void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {
 
     for (size_t i = 0; i < nodesId.size(); ++i)
     {

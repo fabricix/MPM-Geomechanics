@@ -91,7 +91,7 @@ public:
     /// to be activated
     /// \param[in] active_value Active value can be true for activate
     /// the node or false for inactivate the node
-    void activateNodes(const vector<int>& id_list,bool active_value=true);
+    void activateNodes(const vector<int>& id_list,const bool active_value=true);
     
     /// \brief Activate node by its id
     /// \param[in] id The id of the node to modify its active attribute
@@ -141,7 +141,7 @@ public:
     /// coordinates of a point
     /// \return A list containing the indexes
     /// of the nodes of the cell containing the point
-    vector<int> getNodesInCell(Vector3d point) const;
+    vector<int> getNodesInCell(const Vector3d& point) const;
 
     /// \brief Return the nodes contributing at point
     /// \param[in] point A vector containing the 
@@ -149,7 +149,7 @@ public:
     /// \return Contributed nodes. A list containing the indexes
     /// of the nodes that the a particle placed in the coordinate point
     /// contributes
-    vector<int> getContributionNodes(Vector3d point) const;
+    vector<int> getContributionNodes(const Vector3d& point) const;
 
     /// \brief return mesh boundaries
     /// \param[out] boundary_pointer A pointer to the Boundary structure
@@ -178,35 +178,35 @@ private:
     /// coordinates of a point
     /// \return The identification of the cell containing
     /// the point
-    int getCellIdbyPosition(Vector3d point) const;
+    int getCellIdbyPosition(const Vector3d& point) const;
     
     /// \brief Return the grid coordinates of a position
     /// \param[in] point A vector containing the 
     /// coordinates of a point
     /// \return The cell coordinates in
     /// grid coordinates: \f$i\f$, \f$j\f$ and \f$k\f$
-    Vector3d getGridCoordinates(Vector3d point) const;
+    Vector3d getGridCoordinates(const Vector3d& point) const;
     
     /// \brief Return the grid parent node coordinate of a position
     /// \param[in] point A vector containing the 
     /// coordinates of a point
     /// \return Parent node grid coordinate. The floor (lower-left)
     /// grid coordinate of the cell containing the point
-    Vector3i getParentNodeCoordinates(Vector3d point) const;
+    Vector3i getParentNodeCoordinates(const Vector3d& point) const;
     
     /// \brief Return the id of the parent node contributing at the point
     /// \param[in] point A vector containing the 
     /// coordinates of a point
     /// \return Parent node grid id. The identification of the cell
     /// containing the point
-    int getParentCellIdConstribution(Vector3d point) const;
+    int getParentCellIdConstribution(const Vector3d& point) const;
     
     /// \brief Updates the boundary nodes index
     ///
     void configureBoundaries();
 };
 
-inline void Mesh::activateNode(int nodeId,bool activeValue) {
+inline void Mesh::activateNode(const int nodeId, const bool activeValue) {
 
     gridNodes.at(nodeId).setActive(activeValue);
 }
