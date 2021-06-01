@@ -23,7 +23,7 @@ Particle::Particle() {
 	setId(totalParticles);
 }
 
-Particle::Particle(Vector3d position, Material* material, Vector3d size){
+Particle::Particle(const Vector3d& position, Material* material, const Vector3d& size){
 
 	initializeValues();
 
@@ -44,7 +44,7 @@ Particle::Particle(Vector3d position, Material* material, Vector3d size){
 	totalParticles++;
 }
 
-Particle::Particle(Vector3d position, Material* material) {
+Particle::Particle(const Vector3d& position, Material* material) {
 
 	initializeValues();
 
@@ -61,7 +61,7 @@ Particle::Particle(Vector3d position, Material* material) {
 	totalParticles++;
 }
 
-Particle::Particle(Vector3d position) {
+Particle::Particle(const Vector3d& position) {
 
 	initializeValues();
 

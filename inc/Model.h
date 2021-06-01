@@ -109,12 +109,12 @@ namespace ModelSetup {
 	/// \brief Return the gravity vector
 	/// \return A vector containing the gravity
 	/// acceleration in each direction
-	Vector3d getGravity();
+	const Vector3d& getGravity();
 	
 	/// \brief Configure the gravity vector
 	/// \param[in] gravity A vector containing the gravity
 	/// acceleration in each direction
-	void setGravity(Vector3d gravity);
+	void setGravity(const Vector3d& gravity);
 
 	/// \brief Return if axisymetric analisys is active
 	/// \return True is axisymetric condition is active

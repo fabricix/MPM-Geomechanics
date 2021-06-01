@@ -50,7 +50,7 @@ public:
     
     /// \brief Set cells dimension in each direction
     /// \param[in] cell_dimension A vector containing the Cell dimesion in each direction
-    void setCellDimension(Vector3d cell_dimension);
+    void setCellDimension(const Vector3d& cell_dimension);
     
     /// \brief Set number of cell in each direction
     /// \param[in] number_cells_x Number of cells in x
@@ -60,7 +60,7 @@ public:
     
     /// \brief Set number of cell in each direction
     /// \param[in] number_cells Vector containing the number of cells in each direction
-    void setNumCells(Vector3i number_cells);
+    void setNumCells(const Vector3i& number_cells);
     
     /// \brief Set number of ghosts around the domain
     /// \param[in] ghosts Number of ghosts around the domain
@@ -84,7 +84,7 @@ public:
     /// \brief Set origin of coordinates
     /// \param[in] origin_coordinate A vector containing the x,y and z 
     /// coordinates of the origin
-    inline void setOrigin(Vector3d origin_coordinate) { this->minLimit=origin_coordinate; }
+    inline void setOrigin(const Vector3d& origin_coordinate) { this->minLimit=origin_coordinate; }
     
     /// \brief Activate nodes by its id
     /// \param[in] id_list A list containing the identification of the nodes
@@ -110,12 +110,12 @@ public:
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension
     /// in each direction
-    inline Vector3d getCellDimension() const { return this->cellDim; }
+    inline const Vector3d& getCellDimension() const { return this->cellDim; }
     
     /// \brief Return total cells in the mesh without ghosts
     /// \return A vector containing the number of cells
     /// in each direction
-    inline Vector3i getNumCells() const { return this->nCells; }
+    inline const Vector3i& getNumCells() const { return this->nCells; }
     
     /// \brief Return total cells including ghosts
     /// \return A vector containing the number of cells
@@ -129,12 +129,12 @@ public:
     /// \brief Return lower mesh coordinates
     /// \return A vector containing the lower
     /// coordinates of the mesh
-    inline Vector3d getMinLimits() const { return this->minLimit;}
+    inline const Vector3d& getMinLimits() const { return this->minLimit;}
 
     /// \brief Return higher mesh coordinates
     /// \return A vector containing the higher
     /// coordinates of the mesh
-    inline Vector3d getMaxLimits() const { return this->maxLimit; }
+    inline const Vector3d& getMaxLimits() const { return this->maxLimit; }
 
     /// \brief Return the nodes of the cell containing a point
     /// \param[in] point A vector containing the 

@@ -35,20 +35,20 @@ public:
 	
 	/// \brief Configure the nodal coordinates
 	/// \param[in] nodal_coordinates Vector containing the nodal coordinates
-	inline void setCoordinates(Vector3d nodal_coordinates) { this->coordinates=nodal_coordinates; }
+	inline void setCoordinates(const Vector3d& nodal_coordinates) { this->coordinates=nodal_coordinates; }
 	
 	/// \brief Configure the nodal velocity
 	/// \param[in] nodal_velocity Vector containing the nodal velocity
-	inline void setVelocity(Vector3d nodal_velocity) { this->velocity=nodal_velocity; }
+	inline void setVelocity(const Vector3d& nodal_velocity) { this->velocity=nodal_velocity; }
 	
 	/// \brief Configure the nodal momentum
 	/// \param[in] nodal_momentum Vector containing the nodal momentum
-	inline void setMomentum(Vector3d nodal_momentum) { this->momentum=nodal_momentum; }
+	inline void setMomentum(const Vector3d& nodal_momentum) { this->momentum=nodal_momentum; }
 	
 	/// \brief Configure the total nodal force
 	/// \param[in] total_nodal_force Vector containing the total
 	/// nodal force
-	inline void setTotalForce(Vector3d total_nodal_force) { this->totalForce=total_nodal_force; }
+	inline void setTotalForce(const Vector3d& total_nodal_force) { this->totalForce=total_nodal_force; }
 
 	/// \brief Return the nodal identification
 	/// \return Nodal identification 
@@ -65,27 +65,27 @@ public:
 	/// \brief Return the nodal coordinates
 	/// \return Vector containing the nodal
 	/// coordinates
-	inline Vector3d getCoordinates() const { return this->coordinates; }
+	inline const Vector3d& getCoordinates() const { return this->coordinates; }
 	
 	/// \brief Return the nodal momentum
 	/// \return Vector containing the nodal momentum
-	inline Vector3d getMomentum() const { return this->momentum; }
+	inline const Vector3d& getMomentum() const { return this->momentum; }
 		
 	/// \brief Return the nodal internal force
 	/// \return Vector containing the nodal internal force
-	inline Vector3d getInternalForce() const { return this->internalForce; }
+	inline const Vector3d& getInternalForce() const { return this->internalForce; }
 		
 	/// \brief Return the nodal external force
 	/// \return Vector containing the nodal external force
-	inline Vector3d getExternalForce() const { return this->externalForce; }
+	inline const Vector3d& getExternalForce() const { return this->externalForce; }
 		
 	/// \brief Return the nodal total force
 	/// \return Vector containing the nodal total force
-	inline Vector3d getTotalForce() const { return this->totalForce; }
+	inline const Vector3d& getTotalForce() const { return this->totalForce; }
 		
 	/// \brief Return the nodal velocity
 	/// \return Vector containing the nodal velocity
-	inline Vector3d getVelocity() const { return this->velocity; }
+	inline const Vector3d& getVelocity() const { return this->velocity; }
 
 	/// \brief Add a mass increment to the nodal mass
 	/// \param[in] mass_increment Nodal mass increment 
@@ -93,15 +93,15 @@ public:
 		
 	/// \brief Add a momentum increment to the nodal momentum
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
-	inline void addMomentum(Vector3d momentum_increment) { this->momentum+=momentum_increment; }
+	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }
 		
 	/// \brief Add a internal force increment to the nodal internal force
 	/// \param[in] internal_force_increment Vector containing nodal internal force increment 
-	inline void addInternalForce(Vector3d internal_force_increment) { this->internalForce+=internal_force_increment; }
+	inline void addInternalForce(const Vector3d& internal_force_increment) { this->internalForce+=internal_force_increment; }
 		
 	/// \brief Add a external force increment to the nodal external force
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
-	inline void addExternalForce(Vector3d external_force_increment) { this->externalForce+=external_force_increment; }
+	inline void addExternalForce(const Vector3d& external_force_increment) { this->externalForce+=external_force_increment; }
 	
 	/// \brief delete all values stored in node
 	///

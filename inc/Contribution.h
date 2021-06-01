@@ -35,7 +35,7 @@ public:
 
 	/// \brief Return the gradients values
 	/// \return Nodal gradients. Nodal gradients in each direction evaluated at the particle position
-	inline Vector3d getGradients() const { return this->gradient; }
+	inline const Vector3d& getGradients() const { return this->gradient; }
 
 	/// \brief Configure node identification
 	/// \param[in] nodal_id Node identification
@@ -47,7 +47,7 @@ public:
 	
 	/// \brief Configure gradients
 	/// \param[in] nodal_gradients Nodal gradients in each direction evaluated at the particle position
-	inline void setGradients(Vector3d nodal_gradients) { this->gradient=nodal_gradients; };
+	inline void setGradients(const Vector3d& nodal_gradients) { this->gradient=nodal_gradients; };
 
 private:
 	

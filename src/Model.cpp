@@ -70,11 +70,11 @@ namespace ModelSetup {
 	bool getGravityActive(){ return gravityActive; }
 	void setGravityActive(bool d){ gravityActive=d; }
 
-	Vector3d getGravity(){ return gravity; }
+	const Vector3d& getGravity(){ return gravity; }
 	
-	void setGravity(Vector3d d){ 
+	void setGravity(const Vector3d& gravity_in){
 		
-		gravity=d; 
+		gravity=gravity_in; 
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
 

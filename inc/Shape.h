@@ -35,12 +35,12 @@ public:
 	/// \brief Return the shape function values
 	/// \return The nodal shape 
 	/// function value \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
-	inline Vector3d getShape() const { return this->shape; }
+	inline const Vector3d& getShape() const { return this->shape; }
 	
 	/// \brief Returns the derivates values
 	/// \return The derivates of the nodal shape
 	/// function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
-	inline Vector3d getDerivate() const { return this->derivate; }
+	inline const Vector3d& getDerivate() const { return this->derivate; }
 	
 	/// \brief Configure the shape function values
 	///

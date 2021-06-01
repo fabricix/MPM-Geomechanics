@@ -42,7 +42,7 @@ void Mesh::setCellDimension(double dx, double dy, double dz) {
     cellDim=Vector3d(dx,dy,dz);    
 }
 
-void Mesh::setCellDimension(Vector3d cdim) {
+void Mesh::setCellDimension(const Vector3d& cdim) {
 
     setCellDimension(cdim.x(), cdim.y(), cdim.z());
 }
@@ -57,7 +57,7 @@ void Mesh::setNumCells(int nx, int ny, int nz) {
     nCells=Vector3i(nx,ny,nz);
 }
 
-void Mesh::setNumCells(Vector3i n) {
+void Mesh::setNumCells(const Vector3i& n) {
 
     setNumCells(n.x(), n.y(), n.z());
 }
