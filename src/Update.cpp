@@ -19,7 +19,7 @@ void Update::nodalVelocity(Mesh& mesh){
 
 		if(nodeI.getActive() && nodeI.getMass()!=0.0){
 		
-			nodeI.setVelocity(nodeI.getMomentum()/nodeI.getMass());
+			nodeI.updateVelocity();
 		}
 	}
 }
@@ -30,13 +30,13 @@ void Update::nodalTotalForce(Mesh& mesh){
 	vector<Node>* gNodes = mesh.getNodes();
 
 	// over all nodes
-	for (size_t i = 0; i < gNodes->size(); ++i)
-	{
+	for (size_t i = 0; i < gNodes->size(); ++i) {
+
 		Node& nodeI = gNodes->at(i);
 
-		if(nodeI.getActive()){
+		if(nodeI.getActive()) {
 		
-			nodeI.setTotalForce(nodeI.getInternalForce()+nodeI.getExternalForce());
+			nodeI.updateTotalForce();
 		}
 	}
 }
@@ -51,7 +51,7 @@ void Update::resetNodalValues(Mesh& mesh){
 	{
 		Node& nodeI = gNodes->at(i);
 
-		if(nodeI.getActive()){
+		if(nodeI.getActive()) {
 			
 			nodeI.resetValues();
 		}
@@ -63,16 +63,8 @@ void Update::particleDensity(vector<Particle*>* particles){
 	// For each particle 
 	for (size_t i = 0; i < particles->size(); ++i)
 	{
-		Particle* particleP = particles->at(i);
-
-		// volumetric strain increment
-		const double volStrainInc = particleP->getStrainIncrement().trace();
-		
-		// update particle density
-		if ((1+volStrainInc)!=0){
-
-			particleP->setDensity(particleP->getDensity()/(1+volStrainInc));
-		}
+		// update density
+		particles->at(i)->updateDensity();
 	}
 }
 

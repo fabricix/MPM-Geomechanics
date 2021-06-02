@@ -17,8 +17,6 @@ using std::vector;
 
 int main(int argc, char **argv)
 {
-	// TODO
-
 	// create the mesh
 	Mesh mesh;
 	mesh.setNumCells(10,10,10);

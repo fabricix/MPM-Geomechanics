@@ -146,3 +146,15 @@ void Particle::initializeValues(){
 	shape=0;
 	material=0;
 }
+
+void Particle::updateDensity() {
+
+	// volumetric strain increment
+	double volStrainInc = strainIncrement.trace();
+	
+	// update particle density
+	if ((1.0+volStrainInc)!=0.0){
+
+		density = density / (1.0+volStrainInc);
+	}
+}

@@ -106,7 +106,7 @@ public:
     /// \brief Return nodes in mesh
     /// \return A pointer to the mesh nodes
     inline vector<Node>* getNodes() { return &(this->gridNodes); }
-    
+
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension
     /// in each direction
@@ -206,7 +206,7 @@ private:
     void configureBoundaries();
 };
 
-inline void Mesh::activateNode(const int nodeId, const bool activeValue) {
+inline void Mesh::activateNode(int nodeId, const bool activeValue) {
 
     gridNodes.at(nodeId).setActive(activeValue);
 }

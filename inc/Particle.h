@@ -60,6 +60,10 @@ public:
 	///  
 	inline void updateStress() { material->updateStress(this); }
 
+	/// \brief Update the particle density
+	///  
+	void updateDensity();
+
 	/// \brief Returns the particle identification 
 	/// \return Particle identification
 	inline int getId() const { return this->id; }

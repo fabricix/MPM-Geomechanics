@@ -103,9 +103,21 @@ public:
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
 	inline void addExternalForce(const Vector3d& external_force_increment) { this->externalForce+=external_force_increment; }
 	
-	/// \brief delete all values stored in node
+	/// \brief Delete all values stored in node
 	///
 	void resetValues();
+
+	/// \brief Calculate the total nodal force
+	///
+	inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce; }
+
+	/// \brief Update nodal velocity
+	///
+	inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
+
+	/// brief Integrate momentum
+	///
+	inline void integrateMomentum(double dt) { this->momentum = this->momentum + this->totalForce*dt; }
 
 private:
 
