@@ -36,6 +36,7 @@ void Update::nodalTotalForce(Mesh& mesh){
 
 		if(nodeI.getActive()) {
 		
+			nodeI.updateDampingForce();
 			nodeI.updateTotalForce();
 		}
 	}

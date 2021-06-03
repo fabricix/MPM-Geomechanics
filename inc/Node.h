@@ -109,7 +109,11 @@ public:
 
 	/// \brief Calculate the total nodal force
 	///
-	inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce; }
+	inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce; }
+
+	/// \brief Calculate the damping nodal force
+	///
+	void updateDampingForce();
 
 	/// \brief Update nodal velocity
 	///
@@ -138,6 +142,8 @@ private:
 	Vector3d externalForce; //!<  total external force
 
 	Vector3d internalForce; //!< nodal internal force
+
+	Vector3d dampingForce; //!< nodal damping force
 	
 	Vector3d totalForce; //!< nodal total force
 };
@@ -154,6 +160,7 @@ inline Node::Node() {
     externalForce.setZero();
     internalForce.setZero();
     totalForce.setZero();
+    dampingForce.setZero();
 }
 
 inline void Node::resetValues()
@@ -165,7 +172,6 @@ inline void Node::resetValues()
     acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
-    totalForce.setZero();
 }
 
 inline Node::~Node() {

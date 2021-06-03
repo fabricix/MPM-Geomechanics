@@ -21,18 +21,18 @@ namespace ModelSetup {
 
 	int nThreads=1;					//!< number of threads in current job
 	int contributionNodes=27;		//!< nodes that the particles contributed
+	int resultNumber=10;			//!< number of results to write
 
 	double dt=0.0;					//!< time step
 	double time=0.0;				//!< simulation time
 	double dtFraction=0.25; 	    //!< fraction of critical time step
-
-	int resultNumber=10;			//!< number of results to write
+	double localDamping=0.8;		//!< local damping value
 
 	string inputFile="";			//!< input file name
 
 	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
 
-	DampingType damping=DampingType::NONE; //!< damping type
+	DampingType damping=DampingType::UNDAMPED; //!< damping type
 
     #if defined (_WIN64) || defined(_WIN32)
 	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system
@@ -95,4 +95,6 @@ namespace ModelSetup {
 
 	ModelSetup::InterpolationFunctionType getInterpolationFunction(){ return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d){ interpolationType=d; }
+
+	double getDampingLocal () {return localDamping;}
 }

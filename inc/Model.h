@@ -23,8 +23,8 @@ namespace ModelSetup {
 	enum StressUpdateScheme{ USF, USL, MUSL };
 
 	/// \enum DampingType
-	/// \brief Defines the type of damping.
-	enum DampingType{ NONE, LOCAL_NO_VISCOUS, DYNAMIC_RELAX};
+	/// \brief Defines the type of damping
+	enum DampingType{ UNDAMPED, LOCAL, RAYLEIGH, ARTIFICIAL_VISCOSITY};
 	
 	/// \enum OperationalSystem
 	/// \brief Defines the current operational system.
@@ -154,6 +154,10 @@ namespace ModelSetup {
 	/// \return Damping type ModelSetup::DampingType
 	ModelSetup::DampingType getDamping();
 	
+	/// \brief Return the local damping value
+	/// \return Alpha The value for the local damping
+	double getDampingLocal();
+
 	/// \brief Configure the damping type
 	/// \param[in] damping_type Damping type ModelSetup::DampingType
 	void setDamping(ModelSetup::DampingType damping_type);
