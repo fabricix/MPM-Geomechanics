@@ -80,7 +80,7 @@ void Particle::updateContributionNodes(Mesh& mesh)
 	const vector<int> nodesId = mesh.getContributionNodes(position);
 	
 	// reference to grid nodes
-	vector<Node> * gNodes = mesh.getNodes();
+	vector<Node>* gNodes = mesh.getNodes();
 
 	// update the shape function for all nodes that this particle contributes
 	for (size_t i = 0; i < nodesId.size(); ++i)

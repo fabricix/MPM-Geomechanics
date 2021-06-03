@@ -5,6 +5,9 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
+#include <cmath>
+using std::sqrt;
+
 #include "Elastic.h"
 
 void Elastic::updateStress(Particle* particle) const {
@@ -25,4 +28,10 @@ void Elastic::updateStress(Particle* particle) const {
 
 	// sets the new stress
 	particle->setStress(stressDevNew+Matrix3d::Identity()*stressMeanNew);
+}
+
+double Elastic::getSoundSpeed( ) const {
+
+	// sound speed
+	return sqrt(Young*(1.0-Poisson)/(1.0+Poisson)/(1.0-2.0*Poisson)/Elastic::getDensity());
 }

@@ -23,6 +23,8 @@ using json = nlohmann::json;
 #include <iostream>
 using std::cout;
 
+#include<string>
+using std::to_string;
 
 MPM::MPM() {
 	
@@ -65,7 +67,40 @@ void MPM::setInterpolationFunctions() {
 
 void MPM::setTimeStep(){
 
+	// input time step
 	ModelSetup::setTimeStep(Input::getTimeStep());
+
+	// verify the Courant-Friedrichs-Lewy condition
+	
+	// maximum sound speed
+	double maxSoundSpeed = 0.0;
+	for (size_t i = 0; i < materials.size(); ++i){
+
+		double currentSoundSpeed = materials.at(i)->getSoundSpeed();
+		
+		if (currentSoundSpeed>maxSoundSpeed) {
+		
+			maxSoundSpeed=currentSoundSpeed;
+		}
+	}
+
+	// mean cells dimensions
+	double cellsDimention = mesh.getCellDimension().mean();
+
+	// critical time step
+	if (maxSoundSpeed!=0.0)
+	{
+		double criticalTimeStep = cellsDimention/maxSoundSpeed;
+
+		if (ModelSetup::getTimeStep()>criticalTimeStep){
+
+			Warning::printMessage("time step is greater than critical time step: "+to_string(criticalTimeStep));
+		}
+	}
+	else
+	{
+		Warning::printMessage("verify the material sound speed: "+to_string(maxSoundSpeed));
+	}
 }
 
 void MPM::setupMesh(){
@@ -154,8 +189,6 @@ void MPM::createModel(){
 	// set the simulation time 
 	setSimulationTime();
 
-	// set time step
-	setTimeStep();
 	
 	// set the update stress scheme
 	setSolver();
@@ -169,6 +202,9 @@ void MPM::createModel(){
 	// setup the material list
 	setupMaterialList();
 
+	// set time step
+	setTimeStep();
+	
 	// setup the body list
 	setupBodyList();
 

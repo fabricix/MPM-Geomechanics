@@ -51,6 +51,10 @@ public:
 	/// \brief Return the material type
 	/// \return Material type Material::MaterialType
 	inline virtual Material::MaterialType getType() const { return Material::getType(); }
+
+	/// \brief Get sound speed
+	/// \param[out] sound_speed Sound speed
+	virtual double getSoundSpeed( ) const;
 	
 private:
 	

@@ -47,14 +47,18 @@ public:
 	/// \brief Configures the material type
 	/// \param[in] material_type Material::MaterialType
 	inline void setType(MaterialType material_type) { this->type=material_type; }
-
-	/// \brief Update the stress tensor
-	/// \param[in] particle Particle
-	virtual void updateStress(Particle* particle) const = 0;
 	
 	/// \brief Returns the material type
 	/// \return Material::MaterialType
 	inline virtual MaterialType getType() const { return this->type; }
+
+	/// \brief Update the stress tensor
+	/// \param[in] particle Particle
+	virtual void updateStress(Particle* particle) const = 0;
+
+	/// \brief Get sound speed
+	/// \param[out] sound_speed Sound speed
+	virtual double getSoundSpeed( ) const = 0;
 
 private:
 	

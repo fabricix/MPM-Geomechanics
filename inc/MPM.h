@@ -68,10 +68,6 @@ private:
 	///
 	void setSolver();
 	
-	/// \brief Configure the time step 
-	///
-	void setTimeStep();
-	
 	/// \brief Configure the mesh
 	///
 	void setupMesh();
@@ -88,6 +84,10 @@ private:
 	///
 	void createBodies();
 	
+	/// \brief Configure the time step 
+	///
+	void setTimeStep();
+
 	/// \brief Configure the interpolation functions
 	///
 	void setInterpolationFunctions();
