@@ -73,10 +73,9 @@ int main(int argc, char **argv) {
 #else
 	// test using the class input
 
-	Input input;
-	input.readInputFile(fileName);
+	Input::readInputFile(fileName);
 
-	json j = input.getJson();
+	json j = Input::getJson();
 
 	// print
 //	cout<<"print Stress Scheme Update:\n";
@@ -115,6 +114,20 @@ int main(int argc, char **argv) {
 	for( it = j["material"].begin(); it!=j["material"].end();it++){
 		cout<<*it<<"\n";
 	}
+
+	// delete materials
+	j.erase("material");
+
+	cout<<"print the materials again \n";
+
+	for( it = j["material"].begin(); it!=j["material"].end();it++){
+			cout<<*it<<"\n";
+	}
+
+	// verify data
+	cout<< "mesh was found: "<<Input::verifyData(j,Input::KeyWords::mesh)<<"\n";
+	cout<< "nCels was found: "<<Input::verifyData(j["mesh"],Input::KeyWords::nCells)<<"\n";
+
 #endif
 	return 0;
 }

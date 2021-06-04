@@ -188,7 +188,6 @@ void MPM::createModel(){
 
 	// set the simulation time 
 	setSimulationTime();
-
 	
 	// set the update stress scheme
 	setSolver();

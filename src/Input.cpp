@@ -15,7 +15,7 @@
 using std::ifstream;
 
 namespace Input {
-
+s
 		map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure
 		json inputFile; //!< data structure containing all the model informations
 		string inputFileName; //!< file name to be read
@@ -76,9 +76,9 @@ void Input::initKeyWords(){
 		keywords[Input::KeyWords::young]="young";
 }
 
-map<Input::KeyWords,string> Input::getKeyWords(){ return keywords; }
+const map<Input::KeyWords,string>& Input::getKeyWords(){ return keywords; }
 
-json Input::getJson(){ return inputFile; }
+const json& Input::getJson(){ return inputFile; }
 
 string Input::getFileName(){ return inputFileName; }
 
@@ -89,6 +89,39 @@ void Input::readInputFile(string filename){
 	initKeyWords();
 	setFileName(filename);
 	readInputFile();
+}
+
+bool Input::verifyData(json jsonObject, Input::KeyWords keyword ) {
+
+	return jsonObject.contains(keywords[keyword]);
+}
+
+bool Input::verifyData(json jsonObject, Input::KeyWords keyword, string dataType ) {
+
+	// contain verification
+	if (verifyData(jsonObject, keyword)){
+
+		// data verification
+		if (dataType=="array")
+		{
+			return jsonObject[keywords[keyword]].is_array();
+		}
+		else if (dataType=="string")
+		{
+			return jsonObject[keywords[keyword]].is_string();
+		}
+		else if (dataType=="number")
+		{
+			return jsonObject[keywords[keyword]].is_number();
+		}
+		else if (dataType=="boolean")
+		{
+			return jsonObject[keywords[keyword]].is_boolean();
+		}
+	}
+	
+	Warning::printMessage("Bed definition of keyword "+keywords[keyword]+" in the input file");
+	return false;
 }
 
 void Input::readInputFile() {
@@ -104,24 +137,24 @@ void Input::readInputFile() {
 }
 
 double Input::getSimulationTime(){
-
-	if(inputFile.contains(keywords[Input::time])&&inputFile[keywords[Input::time]].is_number()){
-
+	
+	if(verifyData(inputFile, Input::time, "number"))
+	{
+		// return the simulation time
 		return inputFile[keywords[Input::time]];
 	}
-	else{
-
-		Warning::printMessage("Verify "+keywords[Input::time]+" definition in the input file");
-	}
+	
+	Warning::printMessage("Verify "+keywords[Input::time]+" definition in the input file");
 	return 0.0;
 }
 
 Solver* Input::getSolver(){
 	
-	if(inputFile.contains(keywords[Input::stressSchemeUpdate])){
+	if (verifyData(inputFile, Input::stressSchemeUpdate, "string")){
 
 		if(inputFile[keywords[Input::stressSchemeUpdate]]==keywords[Input::USL]) {
-			
+
+			// return the USL solver
 			return new SolverUSL();
 		}
 	}
@@ -132,14 +165,17 @@ Solver* Input::getSolver(){
 
 ModelSetup::InterpolationFunctionType Input::getInterpolationFunction(){
 	
-	if(inputFile.contains(keywords[Input::shapeFunction])){
+	if (verifyData(inputFile, Input::shapeFunction, "string")){
 
 		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::GIMP]) {
 
+			// return GIMP shape function type
 			return ModelSetup::GIMP;
 		}
 
 		if(inputFile[keywords[Input::shapeFunction]]==keywords[Input::linear]) {
+
+			// return Linear shape function type
 			return ModelSetup::LINEAR;
 		}
 	}
@@ -150,7 +186,7 @@ ModelSetup::InterpolationFunctionType Input::getInterpolationFunction(){
 
 double Input::getTimeStep(){
 
-	if(inputFile.contains(keywords[Input::timeStep])&&inputFile[keywords[Input::timeStep]].is_number()){
+	if (verifyData(inputFile, Input::timeStep, "number")){
 
 		return inputFile[keywords[Input::timeStep]];
 	}
@@ -161,17 +197,13 @@ double Input::getTimeStep(){
 
 Vector3i Input::getCellsNum(){
 
-	Vector3i nCells; 
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::nCells])){	
+	if(verifyData(inputFile, Input::mesh) && verifyData(inputFile[keywords[Input::mesh]], Input::nCells, "array")){
 		
-		if(inputFile[keywords[Input::mesh]][keywords[Input::nCells]].is_array()) {
-
-			nCells(0)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][0];
-			nCells(1)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][1];
-			nCells(2)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][2];
-			return nCells;
-		}
+		Vector3i nCells; 
+		nCells(0)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][0];
+		nCells(1)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][1];
+		nCells(2)=inputFile[keywords[Input::mesh]][keywords[Input::nCells]][2];
+		return nCells;	
 	}
 
 	Warning::printMessage("Error in keyword "+keywords[Input::nCells]);
@@ -180,18 +212,13 @@ Vector3i Input::getCellsNum(){
 
 Vector3d Input::getCellDimension(){
 
-	Vector3d cellDimension; 
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::cellDimension])){
-
-		if(inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]].is_array()) {
+	if(verifyData(inputFile, Input::mesh)&&verifyData(inputFile[keywords[Input::mesh]], Input::cellDimension, "array")){
 		
-				cellDimension(0)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][0];
-				cellDimension(1)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][1];
-				cellDimension(2)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][2];
-				
-				return cellDimension;
-		}
+		Vector3d cellDimension; 
+		cellDimension(0)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][0];
+		cellDimension(1)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][1];
+		cellDimension(2)=inputFile[keywords[Input::mesh]][keywords[Input::cellDimension]][2];
+		return cellDimension;
 	}
 
 	Warning::printMessage("Error in keyword "+keywords[Input::cellDimension]);
@@ -200,18 +227,13 @@ Vector3d Input::getCellDimension(){
 
 Vector3d Input::getOrigin(){
 
-	Vector3d origin;
-
-	if(inputFile.contains(keywords[Input::mesh])&&inputFile[keywords[Input::mesh]].contains(keywords[Input::origin])){
-
-		if(inputFile[keywords[Input::mesh]][keywords[Input::origin]].is_array()) {
+	if(verifyData(inputFile, Input::mesh)&&verifyData(inputFile[keywords[Input::mesh]], Input::origin, "array")){
 			
-				origin(0)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][0];
-				origin(1)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][1];
-				origin(2)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][2];
-				
-				return origin;
-		}	
+		Vector3d origin;
+		origin(0)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][0];
+		origin(1)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][1];
+		origin(2)=inputFile[keywords[Input::mesh]][keywords[Input::origin]][2];
+		return origin;	
 	}
 
 	Warning::printMessage("Error in keyword "+keywords[Input::origin]);
@@ -223,12 +245,12 @@ vector<Material*> Input::getMaterialList(){
 	vector<Material*> materials;
 
 	// setup the material list
-	if(inputFile.contains(keywords[Input::material])){
+	if (verifyData(inputFile, Input::material)){
 
 		json::iterator it;
-
 		for(it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
 			
+			// elastic material
 			if((*it)[keywords[Input::type]]==keywords[Input::elastic]){
 
 				int id = (*it)[keywords[Input::id]];
@@ -252,12 +274,13 @@ vector<Body*> Input::getBodyList(){
 
 	vector<Body*> bodies;
 
-	if(inputFile.contains(keywords[Input::body])){
+	if (verifyData(inputFile, Input::body)){
 
 		json::iterator it;
 
 		for(it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
 			
+			// cuboid body
 			if((*it)[keywords[Input::type]]==keywords[Input::cuboid]){
 
 				int id = (*it)[keywords[Input::id]];
@@ -287,7 +310,7 @@ Vector3d Input::getGravity(){
 
 	Vector3d gravity=Vector3d::Zero();
 	
-	if(inputFile.contains(keywords[Input::gravity])&&inputFile[keywords[Input::gravity]].is_array()){
+	if (verifyData(inputFile, Input::gravity, "array")){
 
 		gravity.x()=inputFile[keywords[Input::gravity]][0];
 		gravity.y()=inputFile[keywords[Input::gravity]][1];
@@ -300,8 +323,8 @@ Vector3d Input::getGravity(){
 int Input::getResultNum(){
 
 	int results = 10;
-	if(inputFile.contains(keywords[Input::results])&&inputFile[keywords[Input::results]].is_number()){
-		
+	if (verifyData(inputFile, Input::results, "number")){
+
 		results=inputFile[keywords[Input::results]];
 	}
 	return results;

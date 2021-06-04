@@ -99,11 +99,11 @@ namespace Input {
 
 	/// \brief Return the map with the keywords
 	/// \return A map containing an string for each KeyWord
-	map<Input::KeyWords,string> getKeyWords();
+	const map<Input::KeyWords,string>& getKeyWords();
 	
 	/// \brief Return the data file structure
 	/// \return Json file structure containing all read data
-	json getJson();
+	const json& getJson();
 
 	/// \brief Return the file name
 	/// \return File name
@@ -158,6 +158,20 @@ namespace Input {
 	/// \brief Return the number of results
 	/// \return Number of results to be written
 	int getResultNum();
+
+	/// \brief Verifies the input data 
+	/// \param[in] jsonObject Structure to be verified
+	/// \param[in] keyword Keyword to be verified
+	/// \param[in] dataType String of the data type to be verified:
+	/// this can be "string", "number", "array" or "boolean"
+	/// \return status True is the file contains the keyword with the specified dataType 
+	bool verifyData(json jsonObject, Input::KeyWords keyword, string dataType );
+
+	/// \brief Verifies the input data 
+	/// \param[in] jsonObject Structure to be verified
+	/// \param[in] keyword Keyword to be verified
+	/// \return status True is the file contains the keyword with the specified dataType
+	bool verifyData(json jsonObject, Input::KeyWords keyword );
 };
 
 #endif /* INPUT_H_ */
