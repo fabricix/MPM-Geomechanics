@@ -15,7 +15,7 @@
 using std::ifstream;
 
 namespace Input {
-s
+
 		map<Input::KeyWords,string> keywords; //!< keyword the access to the data structure
 		json inputFile; //!< data structure containing all the model informations
 		string inputFileName; //!< file name to be read
