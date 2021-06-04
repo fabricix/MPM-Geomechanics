@@ -29,7 +29,32 @@ using std::scientific;
 #include <vector>
 using std::vector;
 
+#include <map>
+using std::map;
+
 namespace Output{
+
+    map<Output::Fields, string> fieldsToString;
+    map<string,bool> printFields;
+
+    void initFieldsKeyWords(){
+
+        fieldsToString[Output::id]="id";
+        fieldsToString[Output::material]="material";
+        fieldsToString[Output::displacement]="displacement";
+    }
+
+    void configureResultFiels(vector< string > fields)
+    {
+        // init the keywords
+        initFieldsKeyWords();
+
+        // load the fields from input file
+        for (size_t i = 0; i < fields.size(); ++i){
+
+            printFields[fields.at(i)]=true;
+        }
+    }
 
     namespace OutputTolerance
     {
@@ -146,26 +171,35 @@ namespace Output{
         // point data
         partFile<<"<PointData>\n";
         
-        // particle Id
-        partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
-        for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles->at(i)->getId()<<"\n";
-        }
-        partFile<<"</DataArray>\n";
+        if (printFields[fieldsToString[Output::Fields::id]]) {
 
-        // particle material Id
-        partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
-        for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<particles->at(i)->getMaterialId()<<"\n";
+            // particle Id
+            partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
+            for (int i = 0; i < nPoints; ++i) {
+                partFile<<scientific<<particles->at(i)->getId()<<"\n";
+            }
+            partFile<<"</DataArray>\n";
         }
-        partFile<<"</DataArray>\n";
 
-        // particle displacement
-        partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-        for (int i = 0; i < nPoints; ++i) {
-            partFile<<scientific<<(particles->at(i)->getPosition()-particles->at(i)->getInitialPosition()).transpose()<<"\n";
+        if (printFields[fieldsToString[Output::Fields::material]]){
+            
+            // particle material Id
+            partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
+            for (int i = 0; i < nPoints; ++i) {
+                partFile<<scientific<<particles->at(i)->getMaterialId()<<"\n";
+            }
+            partFile<<"</DataArray>\n";
         }
-        partFile<<"</DataArray>\n";
+
+        if (printFields[fieldsToString[Output::Fields::displacement]]){
+
+            // particle displacement
+            partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+            for (int i = 0; i < nPoints; ++i) {
+                partFile<<scientific<<(particles->at(i)->getPosition()-particles->at(i)->getInitialPosition()).transpose()<<"\n";
+            }
+            partFile<<"</DataArray>\n";
+        }
 
         // end point data
         partFile<<"</PointData>\n";

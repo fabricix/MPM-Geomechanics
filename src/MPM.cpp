@@ -180,8 +180,11 @@ void MPM::setupLoads(){
 
 void MPM::setupResults(){
 
-	// gravity
+	// number of results
 	ModelSetup::setResultNum(Input::getResultNum());
+	
+	// configures the fields
+	Output::configureResultFiels(Input::getResultFields());
 }
 
 void MPM::createModel(){

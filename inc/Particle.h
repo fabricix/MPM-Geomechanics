@@ -182,7 +182,6 @@ private:
 	double volume; //!< particle volume
 	double initialVolume; //!< initial particle volume
 	double plasticStrain; //!< effective plastic strain
-	double porosity; //!< particle porosity
 
 	Vector3d position; //!< particle position
 	Vector3d initialPosition; //!< particle initial position

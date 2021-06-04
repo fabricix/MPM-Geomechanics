@@ -23,57 +23,57 @@ namespace Input {
 
 void Input::initKeyWords(){
 
-		keywords[Input::KeyWords::alpha]="alpha";
-		keywords[Input::KeyWords::body]="body";
-		keywords[Input::KeyWords::boundaryConditons]="boundaryConditons";
-		keywords[Input::KeyWords::cellDimension]="cellDimension";
-		keywords[Input::KeyWords::cohesion]="cohesion";
-		keywords[Input::KeyWords::cuboid]="cuboid";
-		keywords[Input::KeyWords::damping]="damping";
-		keywords[Input::KeyWords::density]="density";
-		keywords[Input::KeyWords::displacement]="displacement";
-		keywords[Input::KeyWords::elastic]="elastic";
-		keywords[Input::KeyWords::fields]="fields";
-		keywords[Input::KeyWords::fixed]="fixed";
-		keywords[Input::KeyWords::gravity]="gravity";
-		keywords[Input::KeyWords::GIMP]="GIMP";
-		keywords[Input::KeyWords::friction]="friction";
-		keywords[Input::KeyWords::id]="id";
-		keywords[Input::KeyWords::localNoViscous]="localNoViscous";
-		keywords[Input::KeyWords::linear]="linear";
-		keywords[Input::KeyWords::mass]="mass";
-		keywords[Input::KeyWords::materialId]="materialId";
-		keywords[Input::KeyWords::material]="material";
-		keywords[Input::KeyWords::mesh]="mesh";
-		keywords[Input::KeyWords::mesh]="mesh";
-		keywords[Input::KeyWords::nCells]="nCells";
-		keywords[Input::KeyWords::nThreads]="nThreads";
-		keywords[Input::KeyWords::number]="number";
-		keywords[Input::KeyWords::origin]="origin";
-		keywords[Input::KeyWords::paneX0]="paneX0";
-		keywords[Input::KeyWords::paneXn]="paneXn";
-		keywords[Input::KeyWords::paneY0]="paneY0";
-		keywords[Input::KeyWords::paneYn]="paneYn";
-		keywords[Input::KeyWords::paneZ0]="paneZ0";
-		keywords[Input::KeyWords::paneZn]="paneZn";
-		keywords[Input::KeyWords::particle]="particle";
-		keywords[Input::KeyWords::plastic]="plastic";
-		keywords[Input::KeyWords::pointP1]="pointP1";
-		keywords[Input::KeyWords::pointP2]="pointP2";
-		keywords[Input::KeyWords::poisson]="poisson";
-		keywords[Input::KeyWords::position]="position";
-		keywords[Input::KeyWords::results]="results";
-		keywords[Input::KeyWords::shapeFunction]="shapeFunction";
-		keywords[Input::KeyWords::sliding]="sliding";
-		keywords[Input::KeyWords::stress]="stress";
-		keywords[Input::KeyWords::stressSchemeUpdate]="stressSchemeUpdate";
-		keywords[Input::KeyWords::structured]="structured";
-		keywords[Input::KeyWords::time]="time";
-		keywords[Input::KeyWords::timeStep]="timeStep";
-		keywords[Input::KeyWords::timeStepFraction]="timeStepFraction";
-		keywords[Input::KeyWords::type]="type";
-		keywords[Input::KeyWords::USL]="USL";
-		keywords[Input::KeyWords::young]="young";
+	keywords[Input::KeyWords::alpha]="alpha";
+	keywords[Input::KeyWords::body]="body";
+	keywords[Input::KeyWords::boundaryConditons]="boundaryConditons";
+	keywords[Input::KeyWords::cellDimension]="cellDimension";
+	keywords[Input::KeyWords::cohesion]="cohesion";
+	keywords[Input::KeyWords::cuboid]="cuboid";
+	keywords[Input::KeyWords::damping]="damping";
+	keywords[Input::KeyWords::density]="density";
+	keywords[Input::KeyWords::displacement]="displacement";
+	keywords[Input::KeyWords::elastic]="elastic";
+	keywords[Input::KeyWords::fields]="fields";
+	keywords[Input::KeyWords::fixed]="fixed";
+	keywords[Input::KeyWords::gravity]="gravity";
+	keywords[Input::KeyWords::GIMP]="GIMP";
+	keywords[Input::KeyWords::friction]="friction";
+	keywords[Input::KeyWords::id]="id";
+	keywords[Input::KeyWords::localNoViscous]="localNoViscous";
+	keywords[Input::KeyWords::linear]="linear";
+	keywords[Input::KeyWords::mass]="mass";
+	keywords[Input::KeyWords::materialId]="materialId";
+	keywords[Input::KeyWords::material]="material";
+	keywords[Input::KeyWords::mesh]="mesh";
+	keywords[Input::KeyWords::mesh]="mesh";
+	keywords[Input::KeyWords::nCells]="nCells";
+	keywords[Input::KeyWords::nThreads]="nThreads";
+	keywords[Input::KeyWords::number]="number";
+	keywords[Input::KeyWords::origin]="origin";
+	keywords[Input::KeyWords::paneX0]="paneX0";
+	keywords[Input::KeyWords::paneXn]="paneXn";
+	keywords[Input::KeyWords::paneY0]="paneY0";
+	keywords[Input::KeyWords::paneYn]="paneYn";
+	keywords[Input::KeyWords::paneZ0]="paneZ0";
+	keywords[Input::KeyWords::paneZn]="paneZn";
+	keywords[Input::KeyWords::particle]="particle";
+	keywords[Input::KeyWords::plastic]="plastic";
+	keywords[Input::KeyWords::pointP1]="pointP1";
+	keywords[Input::KeyWords::pointP2]="pointP2";
+	keywords[Input::KeyWords::poisson]="poisson";
+	keywords[Input::KeyWords::position]="position";
+	keywords[Input::KeyWords::print]="print";
+	keywords[Input::KeyWords::results]="results";
+	keywords[Input::KeyWords::shapeFunction]="shapeFunction";
+	keywords[Input::KeyWords::sliding]="sliding";
+	keywords[Input::KeyWords::stressSchemeUpdate]="stressSchemeUpdate";
+	keywords[Input::KeyWords::structured]="structured";
+	keywords[Input::KeyWords::time]="time";
+	keywords[Input::KeyWords::timeStep]="timeStep";
+	keywords[Input::KeyWords::timeStepFraction]="timeStepFraction";
+	keywords[Input::KeyWords::type]="type";
+	keywords[Input::KeyWords::USL]="USL";
+	keywords[Input::KeyWords::young]="young";
 }
 
 const map<Input::KeyWords,string>& Input::getKeyWords(){ return keywords; }
@@ -246,7 +246,8 @@ vector<Material*> Input::getMaterialList(){
 
 	// setup the material list
 	if (verifyData(inputFile, Input::material)){
-
+	
+		// loop aver all defined materials
 		json::iterator it;
 		for(it = inputFile[keywords[Input::material]].begin(); it!=inputFile[keywords[Input::material]].end();it++){
 			
@@ -276,8 +277,8 @@ vector<Body*> Input::getBodyList(){
 
 	if (verifyData(inputFile, Input::body)){
 
+		// loop aver all bodies
 		json::iterator it;
-
 		for(it=inputFile[keywords[Input::body]].begin(); it!=inputFile[keywords[Input::body]].end();it++){
 			
 			// cuboid body
@@ -328,4 +329,26 @@ int Input::getResultNum(){
 		results=inputFile[keywords[Input::results]];
 	}
 	return results;
+}
+
+vector<string> Input::getResultFields(){
+
+	vector<string> fields;
+	if (verifyData(inputFile, Input::results)){
+
+		if (verifyData(inputFile[keywords[Input::results]],Input::fields),"array")
+		{
+			json::iterator it;
+			for(it=inputFile[keywords[Input::results]][keywords[Input::fields]].begin(); 
+				it!=inputFile[keywords[Input::results]][keywords[Input::fields]].end();it++)
+			{
+				fields.push_back(*it);
+			}
+		}
+	}
+	if (fields.empty())
+	{
+		Warning::printMessage("The result list can not be created");
+	}
+	return fields;
 }

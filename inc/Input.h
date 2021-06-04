@@ -72,10 +72,10 @@ namespace Input {
 		pointP2, //!< defines the a higher right point in a cuboid
 		poisson, //!< defines the Poisson's ratio in a material
 		position, //!< define position using coordinates
+		print, //!<  used to define the number of results to be written 
 		results, //!< used to define the type and the number of results
 		shapeFunction, //!< nodal shape functions
 		sliding, //!< used to defines a sliding boundary condition
-		stress, //!< used to inform the field stress in to be written
 		stressSchemeUpdate, //!< defines the type of stress update
 		structured, //!< used to defines the mesh type
 		time, //!< simulation time
@@ -158,6 +158,10 @@ namespace Input {
 	/// \brief Return the number of results
 	/// \return Number of results to be written
 	int getResultNum();
+
+	/// \brief Return the fields to be written
+	///
+	vector<string> getResultFields();
 
 	/// \brief Verifies the input data 
 	/// \param[in] jsonObject Structure to be verified

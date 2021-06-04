@@ -125,7 +125,6 @@ void Particle::initializeValues(){
 	volume=0.0;
 	initialVolume=0.0;
 	plasticStrain=0.0;
-	porosity=0.0;
 
 	initialPosition.setZero();
 	position.setZero();

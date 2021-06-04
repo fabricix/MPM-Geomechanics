@@ -16,9 +16,22 @@
 /// \brief Operations to write the results and the mesh for its visualization.
 namespace Output {
 
+	/// \enum FieldsKeyWords
+	/// \brief Defines all the keywords used in the outfile file.
+	enum Fields
+	{
+		id, //!< particle id
+		material, //!< particle material id
+		displacement //!< particle displacement
+	};
+
 	/// \enum CellType
 	/// Describes the way that the cells are written in the mesh file
 	enum CellType{ POINTS, CELLS };
+
+	/// \brief Initialize the keywords of the fields
+	///
+	void initFieldsKeyWords();
 
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
@@ -43,6 +56,10 @@ namespace Output {
 	/// \param[in] bodies Body list
 	/// \param[in] time Time
 	void writeBodies(vector<Body*>& bodies, double time=0.0);
+
+	/// \brief Configures the fields to be written
+	/// \param[in] fields List of fields
+	void configureResultFiels(vector<string> fields);
 };
 
 #endif /* OUTPUT_H_ */
