@@ -16,8 +16,8 @@
 /// \brief Operations to write the results and the mesh for its visualization.
 namespace Output {
 
-	/// \enum FieldsKeyWords
-	/// \brief Defines all the keywords used in the outfile file.
+	/// \enum Fields
+	/// \brief Defines all the keywords used in the out file.
 	enum Fields
 	{
 		id, //!< particle id
