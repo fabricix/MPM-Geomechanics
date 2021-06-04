@@ -20,9 +20,9 @@ namespace Output {
 	/// \brief Defines all the keywords used in the out file.
 	enum Fields
 	{
-		id, //!< particle id
-		material, //!< particle material id
-		displacement //!< particle displacement
+		id, //!< write the particle id
+		material, //!< write particle material id
+		displacement //!< write particle displacement
 	};
 
 	/// \enum CellType
