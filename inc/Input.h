@@ -11,9 +11,6 @@
 #include <string>
 using std::string;
 
-#include <map>
-using std::map;
-
 #include "Json/json.hpp"
 using json = nlohmann::json;
 
@@ -27,79 +24,157 @@ using Eigen::Vector3d;
 
 /// \namespace Input
 /// \brief Operations to read the input file.
+///
+/// ## Definition
+///
+/// The keywords are the way to setup the numerical model. 
+/// Have keyword for each characteristic implemented in the program.
+/// Some of they are associated with numbers, for example "time":0.2, others
+/// that are associated with strings, for example "type":"elastic", or to 
+/// arrays, for example "gravity":[0.0,0.0,-9.81], and with others definitions, like "mesh":{
+/// "cells_dimension":[1,1,1], ... 
+/// Next is presented the complete list of keyword for using in the input file,
+/// organized according the characteristic to be configured. 
+///
+/// ## Bodies
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | ----------|
+/// | body | define bodies | -- |
+/// | type | define a type of body | string |
+/// | id | define a body identification | integer |
+/// | material_id | used to setup a defined material to the body | integer |
+/// | cuboid | cuboid body type | -- |
+/// | point_p1 | define the a lower left point in a cuboid | array |
+/// | point_p2 | define the a higher right point in a cuboid | array |
+///
+/// ### Cuboid definition
+///
+/// ```
+///	                            Cuboid
+///                           ----------
+///                          |\         |\ 
+///                          | \        | \ 
+///    z                     |  \       |  \ 
+///    |                     |    ----------+ <-- Point 2
+///    |                     |   |      |   |
+///    +---- y   Point 1 --> + --|------    |
+///     \                     \  |       \  |
+///      \                     \ |        \ |
+///       x                     \|         \|
+///                               ---------- 
+/// ```
+///
+/// ## Loads
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | gravity | define the body force intensity | array |
+///
+/// ## Simulation Time
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | time | define the simulation time | double |
+/// | time_step | define the time step | double |
+///
+/// ## Stress update scheme
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | stress_scheme_update | used to define the type of stress update scheme| string |
+/// | USL | Update Stress Last scheme type | -- |
+/// 
+/// ## Shape Functions
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | shape_function | define the type of nodal interpolation function | string |
+/// | GIMP | generalized interpolation material point shape function type | -- |
+/// | linear | linear shape function type | -- |
+/// 
+/// ## Mesh
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | mesh | used to define a mesh | -- | 
+/// | cells_number | define the number of cells in each direction | array |
+/// | cells_dimension | used to define the cell dimension in each direction | array |
+/// | origin | used to define the origin of coordinates | array |
+///
+/// ## Materials
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | material | used to define materials | -- |
+/// | id | material identification | integer |
+/// | density | mass density | double |
+/// | type | used to specify the material constitutive model | string |
+/// | elastic | elastic material type | -- |
+/// | poisson | Poisson's ratio of the material | double |
+/// | young | Young's modulus of the material | double |
+///
+/// ## Results
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | results | used to define the type and the number of results | -- |
+/// | print | number of results to be written | integer |
+/// | fields | used to define the fields to be written | string array |
+/// | id | particle identification field | -- |
+/// | displacement | particle displacement field  | -- |
+/// | material | particle material field | -- |
+///
+/// ## Input file example
+///
+/// ```
+/// {
+/// 	"stress_scheme_update":"USL",
+///
+/// 	"shape_function":"GIMP",
+///
+/// 	"time":2,
+///
+/// 	"time_step":0.001,
+///
+/// 	"gravity":[0.0,0.0,-9.81],
+///
+/// 	"results":
+///		{
+/// 		"print":50,
+/// 		"fields":["id","displacement","material"]
+/// 	},
+///
+/// 	"mesh":
+///     {
+/// 		"cells_dimension":[1,1,1],
+/// 		"cells_number":[10,10,10],
+/// 		"origin":[0,0,0]
+/// 	},
+///
+/// 	"material":
+/// 	{
+/// 		"elastic":
+/// 		{
+/// 			"type":"elastic",
+/// 			"id":1,
+/// 			"young":50e4,
+/// 			"density":2000,
+/// 			"poisson":0.2
+/// 		}
+/// 	},
+///
+/// 	"body":
+/// 	{
+/// 		"cuboid":
+/// 		{
+/// 			"type":"cuboid",
+/// 			"id":1,
+/// 			"point_p1":[2,2,2],
+/// 			"point_p2":[7,7,7],
+/// 			"material_id":1
+/// 		}
+/// 	}
+/// }
+/// ```
+
 namespace Input {
-
-	/// \enum KeyWords
-	/// \brief Defines all the keywords used in the input file.
-	enum KeyWords
-	{
-		alpha, //!< alpha damping parameter
-		body, //!< used to define a body
-		boundaryConditons, //!< used to define the boundary conditions
-		cellDimension, //!< used to define the cell dimension in each direction
-		cohesion, //!< cohesion parameter in elasto-plastic model
-		cuboid, //!< used to define a cuboid body
-		damping, //!< used to define the damping in the model
-		density, //!< mass density
-		displacement, //!< used to write the displacement field in the output file
-		timeStepFraction, //!< used to define the fraction of the critical time step
-		elastic, //!< used to define an elastic body
-		fields, //!< used to inform the field to be written in the output file
-		fixed, //!< used to define a fixed boundary condition
-		friction, //!< friction angle parameter in an elasto-plastic model
-		gravity, //!< body force intensity
-		GIMP, //!< generalized interpolation material point
-		id, //!< used to define an identification
-		linear,//!< linear shape function
-		localNoViscous, //!< used to define a local no viscous damping
-		mass, //!< used to define the mass of a particle
-		materialId, //!< used to define a material identification
-		material, //!< used to define materials
-		mesh, //!< used to define a mesh
-		nCells, //!< number of cells in each direction
-		nThreads, //!< number of threads in the current simulation
-		number, //!< number of results to be written
-		origin, //!< used to define the origin of coordinates
-		paneX0, //!< used to define the boundary conditions in the plane X0
-		paneXn, //!< used to define the boundary conditions in the plane Xn
-		paneY0, //!< used to define the boundary conditions in the plane Y0
-		paneYn, //!< used to define the boundary conditions in the plane Yn
-		paneZ0, //!< used to define the boundary conditions in the plane Z0
-		paneZn, //!< used to define the boundary conditions in the plane Zn
-		particle, //!< used to define the total particles
-		plastic, //!< defines an elasto-plastic material
-		pointP1, //!< defines the a lower left point in a cuboid
-		pointP2, //!< defines the a higher right point in a cuboid
-		poisson, //!< defines the Poisson's ratio in a material
-		position, //!< define position using coordinates
-		print, //!<  used to define the number of results to be written 
-		results, //!< used to define the type and the number of results
-		shapeFunction, //!< nodal shape functions
-		sliding, //!< used to defines a sliding boundary condition
-		stressSchemeUpdate, //!< defines the type of stress update
-		structured, //!< used to defines the mesh type
-		time, //!< simulation time
-		timeStep, //!< time step
-		type, //!< used to define a type of mesh
-		USL, //!< used to inform the Update Stress Last scheme
-		young //!< Young's modulus of an elastic material 
-	};
-
-	/// \brief Initialize the keywords
-	///
-	void initKeyWords();
-	
-	/// \brief Read the input file
-	///
-	void readInputFile();
 	
 	/// \brief Read the input file
 	/// \param[in] file_name File name
 	void readInputFile(string file_name);
-
-	/// \brief Return the map with the keywords
-	/// \return A map containing an string for each KeyWord
-	const map<Input::KeyWords,string>& getKeyWords();
 	
 	/// \brief Return the data file structure
 	/// \return Json file structure containing all read data
@@ -108,10 +183,6 @@ namespace Input {
 	/// \brief Return the file name
 	/// \return File name
 	string getFileName();
-	
-	/// \brief Configure the filename
-	/// \param[in] file_name File name
-	void setFileName(string file_name);
 	
 	/// \brief Return the simulation time
 	/// \return Simulation time
@@ -169,13 +240,13 @@ namespace Input {
 	/// \param[in] dataType String of the data type to be verified:
 	/// this can be "string", "number", "array" or "boolean"
 	/// \return status True is the file contains the keyword with the specified dataType 
-	bool verifyData(json jsonObject, Input::KeyWords keyword, string dataType );
+	bool verifyData(json jsonObject, string keyword, string dataType );
 
 	/// \brief Verifies the input data 
 	/// \param[in] jsonObject Structure to be verified
 	/// \param[in] keyword Keyword to be verified
 	/// \return status True is the file contains the keyword with the specified dataType
-	bool verifyData(json jsonObject, Input::KeyWords keyword );
+	bool verifyData(json jsonObject, string keyword );
 };
 
 #endif /* INPUT_H_ */

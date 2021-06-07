@@ -16,15 +16,6 @@
 /// \brief Operations to write the results and the mesh for its visualization.
 namespace Output {
 
-	/// \enum Fields
-	/// \brief Defines all the keywords used in the out file.
-	enum Fields
-	{
-		id, //!< write the particle id
-		material, //!< write particle material id
-		displacement //!< write particle displacement
-	};
-
 	/// \enum CellType
 	/// Describes the way that the cells are written in the mesh file
 	enum CellType{ POINTS, CELLS };
@@ -60,6 +51,11 @@ namespace Output {
 	/// \brief Configures the fields to be written
 	/// \param[in] fields List of fields
 	void configureResultFiels(vector<string> fields);
-};
+	
+	/// \brief Verify is the field must be written
+	/// \param[in] field Field to verify
+	/// \return True if the field must be written
+	bool isFieldRequired (string ifield);
+}
 
 #endif /* OUTPUT_H_ */

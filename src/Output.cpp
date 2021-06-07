@@ -29,31 +29,25 @@ using std::scientific;
 #include <vector>
 using std::vector;
 
-#include <map>
-using std::map;
-
 namespace Output{
 
-    map<Output::Fields, string> fieldsToString;
-    map<string,bool> printFields;
+    vector<string> printFields;
 
-    void initFieldsKeyWords(){
-
-        fieldsToString[Output::id]="id";
-        fieldsToString[Output::material]="material";
-        fieldsToString[Output::displacement]="displacement";
+    void configureResultFiels(vector<string> fields)
+    {
+        printFields=fields;
     }
 
-    void configureResultFiels(vector< string > fields)
-    {
-        // init the keywords
-        initFieldsKeyWords();
+    bool isFieldRequired(string ifield) {
 
-        // load the fields from input file
-        for (size_t i = 0; i < fields.size(); ++i){
+        for (size_t i = 0; i < printFields.size(); ++i) {
 
-            printFields[fields.at(i)]=true;
+            if (printFields.at(i)==ifield) {
+
+                return true;
+            }
         }
+        return false;
     }
 
     namespace OutputTolerance
@@ -171,7 +165,7 @@ namespace Output{
         // point data
         partFile<<"<PointData>\n";
         
-        if (printFields[fieldsToString[Output::Fields::id]]) {
+        if (isFieldRequired("id")) {
 
             // particle Id
             partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
@@ -181,7 +175,7 @@ namespace Output{
             partFile<<"</DataArray>\n";
         }
 
-        if (printFields[fieldsToString[Output::Fields::material]]){
+        if (isFieldRequired("material")){
             
             // particle material Id
             partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
@@ -191,7 +185,7 @@ namespace Output{
             partFile<<"</DataArray>\n";
         }
 
-        if (printFields[fieldsToString[Output::Fields::displacement]]){
+        if (isFieldRequired("displacement")){
 
             // particle displacement
             partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
