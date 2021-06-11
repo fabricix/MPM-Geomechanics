@@ -1,5 +1,5 @@
 /*
- * SolverUSL.cpp
+ * SolverExplicitUSL.cpp
  *
  *  Created on: 13 de mai de 2021
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
@@ -11,22 +11,22 @@ using std::vector;
 #include <iostream>
 using std::cout;
 
-#include "SolverUSL.h"
+#include "SolverExplicitUSL.h"
 #include "Model.h"
 #include "Integration.h"
 #include "Interpolation.h"
 #include "Update.h"
 #include "Output.h"
 
-SolverUSL::SolverUSL():Solver() {
+SolverExplicitUSL::SolverExplicitUSL():Solver() {
 
 }
 
-SolverUSL::~SolverUSL() {
+SolverExplicitUSL::~SolverExplicitUSL() {
 	
 }
 
-void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
+void SolverExplicitUSL::Solve( ){
 
 	// simulation variables
 	double time=ModelSetup::getTime();
@@ -42,17 +42,17 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		// write results
 		if (loopCounter++%resultSteps==0)
 		{
-			for (size_t i = 0; i < bodies.size(); ++i){
+			for (size_t i = 0; i < bodies->size(); ++i){
 
 				Output::writeBodies(bodies,iTime);
 			}
 			std::cout<<"Time = "<<iTime<<"\n";
 		}
 
-		for (size_t i = 0; i < bodies.size(); ++i){
+		for (size_t i = 0; i < bodies->size(); ++i){
 
 			// body particles
-			particles=bodies.at(i)->getParticles();
+			particles=bodies->at(i)->getParticles();
 
 			// update contribution nodes
 			Update::contributionNodes(mesh,particles);
@@ -67,10 +67,10 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		// impose essential boundary condition on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
-		for (size_t i = 0; i < bodies.size(); ++i){
+		for (size_t i = 0; i < bodies->size(); ++i){
 
 			// body particles
-			particles=bodies.at(i)->getParticles();
+			particles=bodies->at(i)->getParticles();
 
 			// nodal internal force
 			Interpolation::nodalInternalForce(mesh,particles);
@@ -88,10 +88,10 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		// integrate the grid nodal momentum equation
 		Integration::nodalMomentum(mesh,loopCounter==1?dt/2.0:dt);
 
-		for (size_t i = 0; i < bodies.size(); ++i){
+		for (size_t i = 0; i < bodies->size(); ++i){
 
 			// body particles
-			particles=bodies.at(i)->getParticles();
+			particles=bodies->at(i)->getParticles();
 
 			// update particle velocity
 			Update::particleVelocity(mesh,particles,loopCounter==1?dt/2.0:dt);
@@ -103,10 +103,10 @@ void SolverUSL::Solve(vector<Body*>& bodies, Mesh& mesh){
 		// nodal velocity
 		Update::nodalVelocity(mesh);
 
-		for (size_t i = 0; i < bodies.size(); ++i){
+		for (size_t i = 0; i < bodies->size(); ++i){
 
 			// body particles
-			particles=bodies.at(i)->getParticles();
+			particles=bodies->at(i)->getParticles();
 
 			// calculate particle strain increment
 			Interpolation::particleStrainIncrement(mesh,particles,dt);

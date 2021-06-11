@@ -27,7 +27,7 @@ namespace Output {
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
 	/// \param[in] cell_type_representation Cell type representation Output::CellType
-	void writeGrid(Mesh& mesh, CellType cell_type_representation=CellType::CELLS);
+	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS);
 	
 	/// \brief Write the particles of the model into a vtu file
 	/// \param[in] particles List containing pointers to particles
@@ -37,7 +37,7 @@ namespace Output {
 	/// \brief Write the particles in a body
 	/// \param[in] body Body reference
 	/// \param[in] time Time
-	void writeBody(Body& body, double time=0.0);
+	void writeBody(Body* body, double time=0.0);
 	
 	/// \brief Write the time series of the results
 	///
@@ -46,7 +46,7 @@ namespace Output {
 	/// \brief Write the particles forming bodies
 	/// \param[in] bodies Body list
 	/// \param[in] time Time
-	void writeBodies(vector<Body*>& bodies, double time=0.0);
+	void writeBodies(vector<Body*>* bodies, double time=0.0);
 
 	/// \brief Configures the fields to be written
 	/// \param[in] fields List of fields

@@ -30,12 +30,24 @@ public:
 	
 	/// \brief Solve the problem in time
 	///
-	virtual void Solve(vector<Body*>& bodies, Mesh& mesh)=0;
+	virtual void Solve()=0;
+
+	/// \brief Register the mesh in the solver
+	///
+	inline void registerMesh(Mesh* mesh){ this->mesh=mesh; }
+	
+	/// \brief Register the bodies in the solver
+	///
+	inline void registerBodies(vector<Body*>* bodies){ this->bodies=bodies; }
+
+protected:
+
+	Mesh* mesh; //!< pointer to mesh
+	vector<Body*>* bodies; //!< pointer to bodies
 };
 
-inline Solver::Solver() {
+inline Solver::Solver():mesh(0),bodies(0) {
 	
-
 }
 
 inline Solver::~Solver() {

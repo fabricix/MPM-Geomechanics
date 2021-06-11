@@ -60,7 +60,7 @@ public:
 	/// \param[out] sound_speed Sound speed
 	virtual double getSoundSpeed( ) const = 0;
 
-private:
+protected:
 	
 	int id; //!< material identification
 

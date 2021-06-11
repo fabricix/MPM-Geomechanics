@@ -7,10 +7,10 @@
 
 #include "Update.h"
 
-void Update::nodalVelocity(Mesh& mesh){
+void Update::nodalVelocity(Mesh* mesh){
 
 	// reference to grid nodes
-	vector<Node>* gNodes = mesh.getNodes();
+	vector<Node>* gNodes = mesh->getNodes();
 
 	// update the nodal velocity
 	for (size_t i = 0; i < gNodes->size(); ++i)
@@ -24,10 +24,10 @@ void Update::nodalVelocity(Mesh& mesh){
 	}
 }
 
-void Update::nodalTotalForce(Mesh& mesh){
+void Update::nodalTotalForce(Mesh* mesh){
 
 	// reference to grid nodes
-	vector<Node>* gNodes = mesh.getNodes();
+	vector<Node>* gNodes = mesh->getNodes();
 
 	// over all nodes
 	for (size_t i = 0; i < gNodes->size(); ++i) {
@@ -42,10 +42,10 @@ void Update::nodalTotalForce(Mesh& mesh){
 	}
 }
 
-void Update::resetNodalValues(Mesh& mesh){
+void Update::resetNodalValues(Mesh* mesh){
 
 	// reference to grid nodes
-	vector<Node>* gNodes = mesh.getNodes();
+	vector<Node>* gNodes = mesh->getNodes();
 
 	// update the shape function for all nodes that this particle contributes
 	for (size_t i = 0; i < gNodes->size(); ++i)
@@ -79,10 +79,10 @@ void Update::particleStress(vector<Particle*>* particles){
 	}
 }
 
-void Update::particleVelocity(Mesh& mesh, vector<Particle*>* particles, double dt){
+void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i)
@@ -117,10 +117,10 @@ void Update::particleVelocity(Mesh& mesh, vector<Particle*>* particles, double d
 	}
 }
 
-void Update::particlePosition(Mesh& mesh, vector<Particle*>* particles, double dt){
+void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i)
@@ -196,30 +196,30 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 	}
 }
 
-void Update::boundaryConditionsMomentum(Mesh& mesh){
+void Update::boundaryConditionsMomentum(Mesh* mesh){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// x=0, y=1, z=2
 
 	// Plane X0
-	setPlaneMomentum(mesh.getBoundary()->getPlaneX0(), nodes, 0);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, 0);
 
 	// Plane Y0
-	setPlaneMomentum(mesh.getBoundary()->getPlaneY0(), nodes, 1);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, 1);
 
 	// Plane Z0
-	setPlaneMomentum(mesh.getBoundary()->getPlaneZ0(), nodes, 2);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, 2);
 	
 	// Plane Xn
-	setPlaneMomentum(mesh.getBoundary()->getPlaneXn(), nodes, 0);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneXn(), nodes, 0);
 
 	// Plane Yn
-	setPlaneMomentum(mesh.getBoundary()->getPlaneYn(), nodes, 1);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, 1);
 
 	// Plane Zn
-	setPlaneMomentum(mesh.getBoundary()->getPlaneZn(), nodes, 2);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, 2);
 }
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
@@ -261,33 +261,33 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 	}
 }
 
-void Update::boundaryConditionsForce(Mesh& mesh){
+void Update::boundaryConditionsForce(Mesh* mesh){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// x=0, y=1, z=2
 
 	// Plane X0
-	setPlaneForce(mesh.getBoundary()->getPlaneX0(), nodes, 0);
+	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, 0);
 
 	// Plane Y0
-	setPlaneForce(mesh.getBoundary()->getPlaneY0(), nodes, 1);
+	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, 1);
 
 	// Plane Z0
-	setPlaneForce(mesh.getBoundary()->getPlaneZ0(), nodes, 2);
+	setPlaneForce(mesh->getBoundary()->getPlaneZ0(), nodes, 2);
 	
 	// Plane Xn
-	setPlaneForce(mesh.getBoundary()->getPlaneXn(), nodes, 0);
+	setPlaneForce(mesh->getBoundary()->getPlaneXn(), nodes, 0);
 
 	// Plane Yn
-	setPlaneForce(mesh.getBoundary()->getPlaneYn(), nodes, 1);
+	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, 1);
 
 	// Plane Zn
-	setPlaneForce(mesh.getBoundary()->getPlaneZn(), nodes, 2);
+	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, 2);
 }
 
-void Update::contributionNodes(Mesh& mesh, vector<Particle*>* particles){
+void Update::contributionNodes(Mesh* mesh, vector<Particle*>* particles){
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i)

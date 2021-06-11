@@ -33,5 +33,5 @@ void Elastic::updateStress(Particle* particle) const {
 double Elastic::getSoundSpeed( ) const {
 
 	// sound speed
-	return sqrt(Young*(1.0-Poisson)/(1.0+Poisson)/(1.0-2.0*Poisson)/Elastic::getDensity());
+	return sqrt(Young*(1.0-Poisson)/(1.0+Poisson)/(1.0-2.0*Poisson)/density);
 }

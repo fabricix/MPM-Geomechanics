@@ -7,7 +7,7 @@
 
 #include "MPM.h"
 #include "Warning.h"
-#include "SolverUSL.h"
+#include "SolverExplicitUSL.h"
 #include "Warning.h"
 #include "Elastic.h"
 #include "BodyCuboid.h"
@@ -58,6 +58,8 @@ void MPM::setSimulationTime(){
 void MPM::setSolver() {
 	
 	solver = Input::getSolver();
+	solver->registerMesh(&mesh);
+	solver->registerBodies(&bodies);
 }
 
 void MPM::setInterpolationFunctions() {
@@ -192,8 +194,6 @@ void MPM::createModel(){
 	// set the simulation time 
 	setSimulationTime();
 	
-	// set the update stress scheme
-	setSolver();
 
 	// set the interpolation functions
 	setInterpolationFunctions();
@@ -212,6 +212,9 @@ void MPM::createModel(){
 
 	// create the bodies
 	createBodies();
+
+	// setup the solver
+	setSolver();
 
 	// configures the particles in the model
 	setupParticles();
@@ -233,7 +236,7 @@ void MPM::solve(){
 
 		auto start = std::chrono::system_clock::now();
 
-		solver->Solve(bodies, mesh);
+		solver->Solve();
 
 		auto end = std::chrono::system_clock::now();
 		

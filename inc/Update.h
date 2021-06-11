@@ -17,15 +17,15 @@ namespace Update {
 
 	/// \brief Update the nodal velocity
 	/// \param[in] mesh Mesh reference
-	void nodalVelocity(Mesh& mesh);
+	void nodalVelocity(Mesh* mesh);
 	
 	/// \brief Update the nodal total force
 	/// \param[in] mesh Mesh reference
-	void nodalTotalForce(Mesh& mesh); 
+	void nodalTotalForce(Mesh* mesh); 
 	
 	/// \brief Delete all stored values in nodes 
 	/// \param[in] mesh Mesh reference
-	void resetNodalValues(Mesh& mesh);
+	void resetNodalValues(Mesh* mesh);
 	
 	/// \brief Updates the particles' density
 	/// \param[in] particles List of particles
@@ -39,42 +39,42 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles List of particles
 	/// \param[in] time_step Time step
-	void particleVelocity(Mesh& mesh, vector<Particle*>* particles, double time_step);
+	void particleVelocity(Mesh* mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles List of particles
 	/// \param[in] time_step Time step
-	void particlePosition(Mesh& mesh, vector<Particle*>* particles, double time_step);
+	void particlePosition(Mesh* mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
 	/// \param[in] mesh Mesh reference
-	void boundaryConditionsForce(Mesh& mesh);
+	void boundaryConditionsForce(Mesh* mesh);
 	
 	/// \brief Apply essential boundary condition in
 	/// terms of momentum
 	/// \param[in] mesh Mesh reference
-	void boundaryConditionsMomentum(Mesh& mesh);
+	void boundaryConditionsMomentum(Mesh* mesh);
 	
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles List of particles
-	void contributionNodes(Mesh& mesh, vector<Particle*>* particles);
+	void contributionNodes(Mesh* mesh, vector<Particle*>* particles);
 
 	/// \brief Configure the force in each node in boundary planes
-	/// \param[in] boudary Boundary plane
+	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneForce(const Boundary::planeBoundary* boudary, vector<Node>* nodes, unsigned direction);
+	void setPlaneForce(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
 	
 	/// \brief Configure the momentum in each node in boundary planes
-	/// \param[in] boudary Boundary plane
+	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneMomentum(const Boundary::planeBoundary* boudary, vector<Node>* nodes, unsigned direction);
+	void setPlaneMomentum(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
 };
 
 #endif /* UPDATE_H_ */

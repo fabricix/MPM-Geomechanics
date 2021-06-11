@@ -13,10 +13,10 @@
 // From particle to node
 //
 
-void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>* particles){
+void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles){
 
 	// Get the mesh nodes pointer.
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){
@@ -42,10 +42,10 @@ void Interpolation::nodalMass(Mesh& mesh, vector<Particle*>* particles){
 	}
 }
 
-void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>* particles){
+void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles){
 
 	// Get the mesh nodes pointer.
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){
@@ -74,10 +74,10 @@ void Interpolation::nodalMomentum(Mesh& mesh, vector<Particle*>* particles){
 	}
 }
 
-void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>* particles){
+void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles){
 
 	// Get the mesh nodes pointer.
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){
@@ -115,10 +115,10 @@ void Interpolation::nodalInternalForce(Mesh& mesh, vector<Particle*>* particles)
 	}
 }
 
-void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>* particles){
+void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles){
 
 	// Get the mesh nodes pointer.
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){
@@ -148,10 +148,10 @@ void Interpolation::nodalExternalForce(Mesh& mesh, vector<Particle*>* particles)
 // From node to particle
 //
 
-void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* particles, double dt){
+void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){
@@ -195,10 +195,10 @@ void Interpolation::particleStrainIncrement(Mesh& mesh, vector<Particle*>* parti
 	}
 }
 
-void Interpolation::particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles, double dt){
+void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* particles, double dt){
 
 	// Get the mesh nodes pointer
-	vector<Node>* nodes = mesh.getNodes();
+	vector<Node>* nodes = mesh->getNodes();
 
 	// For each particle, 
 	for (size_t i = 0; i < particles->size(); ++i){

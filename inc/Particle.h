@@ -54,7 +54,7 @@ public:
 
 	/// \brief Update the list of nodes that the particle contributes
 	/// \param[in] mesh Mesh reference
-	void updateContributionNodes(Mesh& mesh);
+	void updateContributionNodes(Mesh* mesh);
 
 	/// \brief Update the particle stress
 	///  

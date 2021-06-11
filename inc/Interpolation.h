@@ -24,34 +24,34 @@ namespace Interpolation {
 	/// \brief Interpolate mass from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
-	void nodalMass(Mesh& mesh, vector<Particle*>* particles);
+	void nodalMass(Mesh* mesh, vector<Particle*>* particles);
 	
 	/// \brief Interpolate momentum from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
-	void nodalMomentum(Mesh& mesh, vector<Particle*>* particles);
+	void nodalMomentum(Mesh* mesh, vector<Particle*>* particles);
 	
 	/// \brief Interpolate internal force from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
-	void nodalInternalForce(Mesh& mesh, vector<Particle*>* particles);
+	void nodalInternalForce(Mesh* mesh, vector<Particle*>* particles);
 	
 	/// \brief Interpolate external force from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
-	void nodalExternalForce(Mesh& mesh, vector<Particle*>* particles);
+	void nodalExternalForce(Mesh* mesh, vector<Particle*>* particles);
 
 	/// \brief Interpolate the strain increment at particle
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleStrainIncrement(Mesh& mesh, vector<Particle*>* particles, double time_step);
+	void particleStrainIncrement(Mesh* mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Interpolate the vorticity increment at particle
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleVorticityIncrement(Mesh& mesh, vector<Particle*>* particles, double time_step);
+	void particleVorticityIncrement(Mesh* mesh, vector<Particle*>* particles, double time_step);
 };
 
 #endif /* INTERPOLATION_H_ */

@@ -238,7 +238,7 @@ namespace Output{
         partFile.close();
     }
 
-    void writeGrid(Mesh& mesh, CellType gridType){
+    void writeGrid(Mesh* mesh, CellType gridType){
 
         // define edian
         if(Folders::edian==""){
@@ -256,8 +256,8 @@ namespace Output{
         gridFile.precision(4);
 
         // mesh data
-        int nPoints=mesh.getNumNodes();
-        Vector3i nCellsVec = mesh.getTotalCells();
+        int nPoints=mesh->getNumNodes();
+        Vector3i nCellsVec = mesh->getTotalCells();
         int nCells=nCellsVec(0)*nCellsVec(1)*nCellsVec(2);
 
         // write results
@@ -273,7 +273,7 @@ namespace Output{
         
         // node position
         gridFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-        vector<Node>* inodes = mesh.getNodes();
+        vector<Node>* inodes = mesh->getNodes();
         for (int i = 0; i < nPoints; ++i) {
             Vector3d pos=inodes->at(i).getCoordinates();
             gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
@@ -366,17 +366,17 @@ namespace Output{
         gridFile.close();
     }
 
-    void writeBody(Body& body, double time){
+    void writeBody(Body* body, double time){
 
-        writeParticles(body.getParticles(),time);
+        writeParticles(body->getParticles(),time);
     }
 
-    void writeBodies(vector<Body*>& bodies, double time){
+    void writeBodies(vector<Body*>* bodies, double time){
 
         vector<Particle*> particles;
-        for (size_t i = 0; i < bodies.size(); ++i)
+        for (size_t i = 0; i < bodies->size(); ++i)
         {
-            particles.insert(particles.end(),bodies.at(i)->getParticles()->begin(),bodies.at(i)->getParticles()->end());
+            particles.insert(particles.end(),bodies->at(i)->getParticles()->begin(),bodies->at(i)->getParticles()->end());
         }
 
         writeParticles(&particles,time);

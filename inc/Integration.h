@@ -17,7 +17,7 @@ namespace Integration {
 	/// \brief Integrate the nodal momentum
 	/// \param[in] mesh Mesh reference
 	/// \param[in] dt Time step
-	void nodalMomentum(Mesh& mesh, double dt);
+	void nodalMomentum(Mesh* mesh, double dt);
 };
 
 #endif /* INTEGRATION_H_ */

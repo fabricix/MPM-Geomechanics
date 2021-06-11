@@ -6,7 +6,7 @@
  */
 
 #include "Input.h"
-#include "SolverUSL.h"
+#include "SolverExplicitUSL.h"
 #include "Elastic.h"
 #include "BodyCuboid.h"
 #include "Warning.h"
@@ -16,7 +16,7 @@ using std::ifstream;
 
 namespace Input {
 
-	json inputFile; //!< data structure containing all the model informations
+	json inputFile; //!< data structure containing all the model information
 	string inputFileName; //!< file name to be read
 }
 
@@ -89,7 +89,7 @@ Solver* Input::getSolver() {
 		if(inputFile["stress_scheme_update"]=="USL") {
 
 			// return a USL solver
-			return new SolverUSL();
+			return new SolverExplicitUSL();
 		}
 
 		Warning::printMessage("Bad definition of keyword \"stress_scheme_update\" in the input file");
