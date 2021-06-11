@@ -168,7 +168,6 @@ inline void Node::resetValues()
     active=false;
     mass=0.0;
     momentum.setZero();
-    velocity.setZero();
     acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();

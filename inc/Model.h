@@ -24,7 +24,7 @@ namespace ModelSetup {
 
 	/// \enum DampingType
 	/// \brief Defines the type of damping
-	enum DampingType{ UNDAMPED, LOCAL, RAYLEIGH, ARTIFICIAL_VISCOSITY};
+	enum DampingType{ UNDAMPED, LOCAL, RAYLEIGH, ARTIFICIAL_VISCOSITY };
 	
 	/// \enum OperationalSystem
 	/// \brief Defines the current operational system.
@@ -158,9 +158,17 @@ namespace ModelSetup {
 	/// \return Alpha The value for the local damping
 	double getDampingLocal();
 
+	/// \brief Configure the local damping value
+	/// \param[in] alpha Local damping value
+	void setDampingLocalValue(double alpha);
+
 	/// \brief Configure the damping type
-	/// \param[in] damping_type Damping type ModelSetup::DampingType
-	void setDamping(ModelSetup::DampingType damping_type);
+	/// \param[in] dampingType Damping type ModelSetup::DampingType
+	void setDampingType(ModelSetup::DampingType dampingType);
+	
+	/// \brief Return the damping type
+	/// \return dampingType Damping type ModelSetup::DampingType
+	ModelSetup::DampingType getDampingType();
 
 	/// \brief Return the interpolation functions type
 	/// \return interpolation_functions_type Interpolation

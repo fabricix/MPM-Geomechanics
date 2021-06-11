@@ -35,8 +35,11 @@ void Update::nodalTotalForce(Mesh* mesh){
 		Node& nodeI = gNodes->at(i);
 
 		if(nodeI.getActive()) {
-		
+
+			// update damping forces
 			nodeI.updateDampingForce();
+			
+			// update total forces
 			nodeI.updateTotalForce();
 		}
 	}

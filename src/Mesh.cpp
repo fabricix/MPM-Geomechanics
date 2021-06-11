@@ -113,7 +113,7 @@ int Mesh::getCellIdbyPosition(const Vector3d& position) const {
     return ((j*nRows.x()+i)+(nRows.x()*nRows.y()*k));
 }
 
-int Mesh::getParentCellIdConstribution(const Vector3d& position) const{
+int Mesh::getParentCellIdConstribution(const Vector3d& position) const {
 
     // parent node coordinates
 	const Vector3i gridParentNodeCoords = getParentNodeCoordinates(position);

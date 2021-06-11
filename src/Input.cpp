@@ -313,3 +313,36 @@ vector<string> Input::getResultFields() {
 	
 	return fields;
 }
+
+ModelSetup::DampingType Input::getDampingType() {
+
+	if (verifyData(inputFile,"damping"))
+	{
+		if(verifyData(inputFile["damping"],"type","string")){
+
+			// local damping
+			if (inputFile["damping"]["type"]=="local") {
+
+				return ModelSetup::DampingType::LOCAL;
+			}
+		}
+		Warning::printMessage("Bad definition of damping type");
+	}
+	
+	return ModelSetup::DampingType::UNDAMPED;
+}
+
+double Input::getDampingValue() {
+
+	if (verifyData(inputFile,"damping")&&verifyData(inputFile["damping"],"type","string"))
+	{
+		if (inputFile["damping"]["type"]=="local" && verifyData(inputFile["damping"],"value","number"))
+		{
+			return inputFile["damping"]["value"];
+		}
+	}
+	
+	Warning::printMessage("Bad definition of damping value");
+	
+	return 0.0;
+}

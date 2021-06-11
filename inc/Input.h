@@ -69,6 +69,12 @@ using Eigen::Vector3d;
 /// | --------| ----------- | --------- |
 /// | gravity | define the body force intensity | array |
 ///
+/// ## Damping
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | damping | define the damping type | -- |
+/// | local | define the local damping value | double |
+///
 /// ## Simulation Time
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -247,6 +253,14 @@ namespace Input {
 	/// \param[in] keyword Keyword to be verified
 	/// \return status True is the file contains the keyword with the specified dataType
 	bool verifyData(json jsonObject, string keyword );
+
+	/// \brief Read the damping definition in the input file
+	/// \return ModelSetup::DampingType The damping type
+	ModelSetup::DampingType getDampingType();
+
+	/// \brief Read the damping value
+	/// \return value The damping value
+	double getDampingValue();
 };
 
 #endif /* INPUT_H_ */

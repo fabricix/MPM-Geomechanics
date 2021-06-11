@@ -103,6 +103,10 @@ private:
 	/// \brief Configure the results to be written
 	///
 	void setupResults();
+	
+	/// \brief Configure the dampig forces
+	/// 
+	void setupDamping();
 };
 
 

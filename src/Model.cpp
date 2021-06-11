@@ -90,11 +90,12 @@ namespace ModelSetup {
 	ModelSetup::StressUpdateScheme getUpdateStressScheme(){ return stress; }
 	void setUpdateStressScheme(ModelSetup::StressUpdateScheme d){ stress=d; }
 
-	ModelSetup::DampingType getDamping(){ return damping; }
-	void setDamping(ModelSetup::DampingType d){ damping=d; }
+	ModelSetup::DampingType getDampingType(){ return damping; }
+	void setDampingType(ModelSetup::DampingType d){ damping=d; }
 
 	ModelSetup::InterpolationFunctionType getInterpolationFunction(){ return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d){ interpolationType=d; }
 
-	double getDampingLocal () {return localDamping;}
+	double getDampingLocal() {return localDamping;}
+	void setDampingLocalValue(double dampingValue) {localDamping = dampingValue;}
 }

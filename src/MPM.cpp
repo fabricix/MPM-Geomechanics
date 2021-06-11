@@ -180,6 +180,17 @@ void MPM::setupLoads(){
 	Loads::setGravity(bodies);
 }
 
+void MPM::setupDamping() {
+
+	ModelSetup::setDampingType(Input::getDampingType());
+
+	// setup local damping value
+	if (ModelSetup::getDampingType()==ModelSetup::LOCAL)
+	{
+		ModelSetup::setDampingLocalValue(Input::getDampingValue());
+	}
+}
+
 void MPM::setupResults(){
 
 	// number of results
@@ -194,7 +205,6 @@ void MPM::createModel(){
 	// set the simulation time 
 	setSimulationTime();
 	
-
 	// set the interpolation functions
 	setInterpolationFunctions();
 
@@ -221,6 +231,9 @@ void MPM::createModel(){
 
 	// configures the loads
 	setupLoads();
+
+	// configures the damping
+	setupDamping();
 
 	// configures the results
 	setupResults();

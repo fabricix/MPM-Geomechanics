@@ -13,15 +13,22 @@ using Eigen::Vector3d;
 
 void Node::updateDampingForce() { 
 
-	ModelSetup::DampingType dampingType = ModelSetup::getDamping();
-
-	switch(dampingType) {
+	switch(ModelSetup::getDampingType()) {
 
 		case ModelSetup::DampingType::LOCAL:
 		{
 			double alpha = ModelSetup::getDampingLocal();
+            
             Vector3d unbalancedForce = this->internalForce+this->externalForce;
-            this->dampingForce = - alpha*unbalancedForce.norm()*((this->velocity)/(this->velocity).norm());
+
+            Vector3d velDirection(0,0,0);
+
+            if(this->velocity.norm()!=0){
+            	
+            	velDirection = (this->velocity)/((this->velocity).norm());
+
+            	this->dampingForce = - alpha*unbalancedForce.norm()*velDirection;
+            }
 		}
 		break;
 
