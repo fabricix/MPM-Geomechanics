@@ -55,7 +55,7 @@ namespace Output {
 	/// \brief Verify is the field must be written
 	/// \param[in] field Field to verify
 	/// \return True if the field must be written
-	bool isFieldRequired (string ifield);
+	bool isFieldRequired (string field);
 }
 
 #endif /* OUTPUT_H_ */
