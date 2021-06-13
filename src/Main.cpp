@@ -16,7 +16,7 @@ using std::vector;
 
 int main(int argc, char **argv)
 {
-	// create a mpm master instance
+	// create a mpm instance
 	MPM mpm;
 
 	// read the input file

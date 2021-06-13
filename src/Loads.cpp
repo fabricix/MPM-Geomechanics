@@ -10,21 +10,29 @@
 
 namespace Loads{
 
-	void setGravity(vector<Body*>& bodies){
+	void setGravity(vector<Body*>& bodies) {
 
-		if (!ModelSetup::getGravityActive()){
+		// return if gravity is not activated
+		if (!ModelSetup::getGravityActive()) { return; }
 
-			return;
-		}
+		// get gravity
+		Vector3d gravity = ModelSetup::getGravity();
 
-		for (size_t i = 0; i < bodies.size(); ++i){
+		// for each body
+		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
-			for (size_t j = 0; j < bodies.at(i)->getParticles()->size(); ++j){
-				
-				bodies.at(i)->getParticles()->at(j)->addExternalForce(
-						bodies.at(i)->getParticles()->at(j)->getMass()*ModelSetup::getGravity());
+			// get particles
+			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
+
+			// for each particle 
+			for (size_t i = 0; i < particles->size(); ++i) {
+
+				// get particle handle
+				Particle* particle = particles->at(i);
+
+				// compute the gravitational force
+				particle->addExternalForce(particle->getMass()*gravity);
 			}
 		}
 	}
 }
-

@@ -44,7 +44,7 @@ namespace ModelSetup {
 	
 	/// \brief Return the number of nodes that a particle contributes.
 	/// \return The number of nodes that a particle contributes
-	int getContributionNodesNum();
+	unsigned getContributionNodesNum();
 	
 	/// \brief Return the time step
 	/// \return Time step
@@ -64,15 +64,15 @@ namespace ModelSetup {
 
 	/// \brief Return the total results to be written
 	/// \return Number of results
-	int getResultNum();
+	unsigned getResultNum();
 	
 	/// \brief Configure the total results to be written
 	/// \param[in] total_results Number of results
-	void setResultNum(int total_results);
+	void setResultNum(unsigned total_results);
 	
 	/// \brief Return the every how many steps the results will be written
 	/// \return Number of steps
-	int getResultSteps();
+	unsigned getResultSteps();
 
 	/// \brief Return the fraction of time steps
 	/// \return Time step fraction
@@ -84,11 +84,11 @@ namespace ModelSetup {
 
 	/// \brief Return the number of threads in the simulation
 	/// \return Number of threads
-	int getThreads();
+	unsigned getThreads();
 	
 	/// \brief Configures the number of threads
 	/// \param[in] n_threads Number of threads
-	void setThreads(int n_threads);
+	void setThreads(unsigned n_threads);
 
 	/// \brief Return if contact method is activated
 	/// \return True if contact method is activated

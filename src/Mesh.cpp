@@ -146,9 +146,9 @@ vector<int> Mesh::getNodesInCell(const Vector3d& position) const {
     const int cellId = getCellIdbyPosition(position);
     
     const int idNode1 = cellId;
-    const int idNode2 = idNode1+1;
-    const int idNode3 = idNode1+nRows.x();
-    const int idNode4 = idNode3+1;
+    const int idNode2 = idNode1 + 1;
+    const int idNode3 = idNode1 + nRows.x();
+    const int idNode4 = idNode3 + 1;
     const int idNode5 = idNode1 + (nRows.x()*nRows.y());
     const int idNode6 = idNode2 + (nRows.x()*nRows.y());
     const int idNode7 = idNode3 + (nRows.x()*nRows.y());

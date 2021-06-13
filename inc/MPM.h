@@ -11,12 +11,7 @@
 ///
 /// The MPM-Geomechanics is a Material Point Method implementation
 /// using C++ and Object Oriented Programming to simulating geomechanical
-/// problems. Geomechanical problems refers to problem witch Soils and Rock
-/// are subjected to mechanical actions like gravity, earthquake, etc.
-/// The water is a very important player in a large variety of geological and 
-/// geotechnical problems, thus its effect can also be simulated in this code
-/// through a full-coupled hydro-mechanical formulation using the mixture
-/// theory.
+/// problems in 3D.
 ///
 /// \section install_sec Installation
 ///

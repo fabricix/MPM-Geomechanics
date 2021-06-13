@@ -19,7 +19,6 @@ void ElasticJaumann::updateStress(Particle* particle) const {
 	Matrix3d stressDev = stress-Matrix3d::Identity()*stress.trace()/3.0;
 	double stressMean = stress.trace()/3.0;
 
-	
 	// rotated matrix
 	Matrix3d spin = particle->getVorticityIncrement();
 	Matrix3d stressDevRot = stressDev+(stressDev*spin.transpose()+spin*stressDev);

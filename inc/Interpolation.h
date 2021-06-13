@@ -12,7 +12,7 @@
 using std::vector;
 
 class Mesh;
-class Particle;
+class Body;
 
 /// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.
@@ -23,35 +23,35 @@ namespace Interpolation {
 	
 	/// \brief Interpolate mass from particles to nodes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
-	void nodalMass(Mesh* mesh, vector<Particle*>* particles);
+	/// \param[in] bodies A list of Bodies
+	void nodalMass(Mesh* mesh, vector<Body*>* bodies);
 	
 	/// \brief Interpolate momentum from particles to nodes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
-	void nodalMomentum(Mesh* mesh, vector<Particle*>* particles);
+	/// \param[in] bodies A list o Body pointers
+	void nodalMomentum(Mesh* mesh, vector<Body*>* bodies);
 	
 	/// \brief Interpolate internal force from particles to nodes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
-	void nodalInternalForce(Mesh* mesh, vector<Particle*>* particles);
+	/// \param[in] bodies A list o Body pointers
+	void nodalInternalForce(Mesh* mesh, vector<Body*>* bodies);
 	
 	/// \brief Interpolate external force from particles to nodes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
-	void nodalExternalForce(Mesh* mesh, vector<Particle*>* particles);
+	/// \param[in] bodies A list o Body pointers
+	void nodalExternalForce(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Interpolate the strain increment at particle
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
+	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
-	void particleStrainIncrement(Mesh* mesh, vector<Particle*>* particles, double time_step);
+	void particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
 	/// \brief Interpolate the vorticity increment at particle
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list o Particle pointers
+	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
-	void particleVorticityIncrement(Mesh* mesh, vector<Particle*>* particles, double time_step);
+	void particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
 };
 
 #endif /* INTERPOLATION_H_ */

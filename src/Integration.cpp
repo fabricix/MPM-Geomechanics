@@ -9,15 +9,18 @@
 
 void Integration::nodalMomentum(Mesh* mesh, double dt){
 
-	// Get the mesh nodes pointer.
+	// get mesh
 	vector<Node>* nodes = mesh->getNodes();
 
+	// for each node
 	for (size_t i = 0; i < nodes->size(); ++i) {
 
+		// get node handle
 		Node& nodeI = nodes->at(i);
 
 		if (nodeI.getActive()){
 			
+			// integrate nodal momentum
 			nodeI.integrateMomentum(dt);
 		}
 	}

@@ -88,9 +88,6 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		// set the node id
 		contributionNodes.at(i).setNodeId(nodesId.at(i));
 		
-		// active the node
-		gNodes->at(nodesId.at(i)).setActive(true);
-	
 		// update the shape functions and gradients
 		shape->update(position,gNodes->at(nodesId.at(i)).getCoordinates(),mesh->getCellDimension(),size);
 
@@ -107,6 +104,7 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		gradient.y() = shapeFn.x()*derivateFn.y()*shapeFn.z();
 		gradient.z() = shapeFn.x()*shapeFn.y()*derivateFn.z();
 
+		// set gradients
 		contributionNodes.at(i).setGradients(gradient);
 	}
 }

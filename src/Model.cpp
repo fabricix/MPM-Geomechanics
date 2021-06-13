@@ -12,90 +12,125 @@ using std::floor;
 
 namespace ModelSetup {
 
-	bool contactActive=false;		//!< is contact active
-	bool gravityActive=false;		//!< is gravity active
-	bool axisymetricActive=false;	//!< is axisymetric model
-	bool jaumannActive=true;		//!< is Jaumann rate active
+	///
+	/// Data members
+	///
+
+	// contact
+	bool contactActive=false; //!< is contact active
 	
-	Vector3d gravity(0,0,-9.81);	//!< gravity vector
+	// gravity
+	bool gravityActive=false; //!< is gravity active
+	Vector3d gravity(0,0,-9.81); //!< gravity vector
+	
+	// axisymmetric model
+	bool axisymetricActive=false; //!< is axisymmetric model
+	
+	// Jaumann stress rate 
+	bool jaumannActive=true; //!< is Jaumann rate active
+	
+	// threads
+	unsigned nThreads=1; //!< number of threads in current job
+	
+	// contribution nodes
+	unsigned contributionNodes=27; //!< nodes that the particles contributed
+	
+	// results
+	unsigned resultNumber=10; //!< number of results to write
 
-	int nThreads=1;					//!< number of threads in current job
-	int contributionNodes=27;		//!< nodes that the particles contributed
-	int resultNumber=10;			//!< number of results to write
+	// time
+	double dt=0.0; //!< time step
+	double time=0.0; //!< simulation time
+	double dtFraction=0.25; //!< fraction of critical time step
 
-	double dt=0.0;					//!< time step
-	double time=0.0;				//!< simulation time
-	double dtFraction=0.25; 	    //!< fraction of critical time step
-	double localDamping=0.8;		//!< local damping value
+	// damping
+	DampingType damping=DampingType::UNDAMPED; //!< damping type
+	double localDamping=0.0; //!< local damping value
 
-	string inputFile="";			//!< input file name
+	// input file
+	string inputFile=""; //!< input file name
 
+	// stress update scheme
 	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
 
-	DampingType damping=DampingType::UNDAMPED; //!< damping type
-
+	// operational system
     #if defined (_WIN64) || defined(_WIN32)
 	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system
     #elif defined (linux) || defined(__linux__)
 	OperationalSystem operationalSystem=OperationalSystem::LINUX; //!< operational system
     #endif
 
-    InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP;
+	// interpolation function
+    InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP; //!< interpolation function type
 	
-	bool getWindowsSystem(){return operationalSystem==OperationalSystem::WINDOWS?true:false; }
-	bool getLinuxSystem(){ return operationalSystem==OperationalSystem::LINUX?true:false; }
-	
-	int getContributionNodesNum(){ return contributionNodes; }
+	///
+	/// Function members
+	///
 
-	double getTime(){ return time; }
-	void setTime(double d){ time=d; }
+	// operational system
+	bool getWindowsSystem() { return operationalSystem==OperationalSystem::WINDOWS?true:false; }
+	bool getLinuxSystem() { return operationalSystem==OperationalSystem::LINUX?true:false; }
+		
+	// contribution nodes
+	unsigned getContributionNodesNum() { return contributionNodes; }
 
-	int getResultNum(){ return resultNumber; }
-	void setResultNum(int d){ resultNumber=d; }
+	// total time
+	double getTime() { return time; }
+	void setTime(double d) { time=d; }
 
-	int getResultSteps(){ return floor(time/dt)/resultNumber; }
+	// results
+	unsigned getResultNum() { return resultNumber; }
+	void setResultNum(unsigned d) { resultNumber=d; }
+	unsigned getResultSteps() { return floor(time/dt)/resultNumber; }
 
-	double getTimeStep(){ return dt; }
-	void setTimeStep(double d){ dt=d; }
+	// time step
+	double getTimeStep() { return dt; }
+	void setTimeStep(double d) { dt=d; }
+	double getTimeStepFraction() { return dtFraction; }
+	void setTimeStepFraction(double d) { dtFraction=d; }
 
-	double getTimeStepFraction(){ return dtFraction; }
-	void setTimeStepFraction(double d){ dtFraction=d; }
+	// threads
+	unsigned getThreads() { return nThreads; }
+	void setThreads(unsigned d) { nThreads=d; }
 
-	int getThreads(){ return nThreads; }
-	void setThreads(int d){ nThreads=d; }
+	// contact method
+	bool getContactActive() { return contactActive; }
+	void setContactActive(bool d) { contactActive=d; }
 
-	bool getContactActive(){ return contactActive; }
-	void setContactActive(bool d){ contactActive=d; }
+	// gravity
+	bool getGravityActive() { return gravityActive; }
+	void setGravityActive(bool d) { gravityActive=d; }
+	const Vector3d& getGravity() { return gravity; }
 
-	bool getGravityActive(){ return gravityActive; }
-	void setGravityActive(bool d){ gravityActive=d; }
-
-	const Vector3d& getGravity(){ return gravity; }
-	
-	void setGravity(const Vector3d& gravity_in){
+	void setGravity(const Vector3d& gravity_in) {
 		
 		gravity=gravity_in; 
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
 
-	bool getAxisymetricActive(){ return axisymetricActive; }
-	void setAxisymetricActive(bool d){ axisymetricActive=d; }
+	// axisymmetric analisys
+	bool getAxisymetricActive() { return axisymetricActive; }
+	void setAxisymetricActive(bool d) { axisymetricActive=d; }
 
-	bool getJanumannActive(){ return jaumannActive; }
-	void setJanumannActive(bool d){ jaumannActive=d; }
+	// Jaumann rate
+	bool getJanumannActive() { return jaumannActive; }
+	void setJanumannActive(bool d) { jaumannActive=d; }
 
-	string getInputFile(){ return inputFile; }
-	void setInputFile(string d){ inputFile=d; }
+	// input file
+	string getInputFile() { return inputFile; }
+	void setInputFile(string d) { inputFile=d; }
 
-	ModelSetup::StressUpdateScheme getUpdateStressScheme(){ return stress; }
-	void setUpdateStressScheme(ModelSetup::StressUpdateScheme d){ stress=d; }
+	// stress update scheme
+	ModelSetup::StressUpdateScheme getUpdateStressScheme() { return stress; }
+	void setUpdateStressScheme(ModelSetup::StressUpdateScheme d) { stress=d; }
 
-	ModelSetup::DampingType getDampingType(){ return damping; }
-	void setDampingType(ModelSetup::DampingType d){ damping=d; }
+	// damping
+	ModelSetup::DampingType getDampingType() { return damping; }
+	void setDampingType(ModelSetup::DampingType d) { damping=d; }
+	double getDampingLocal() { return localDamping; }
+	void setDampingLocalValue(double dampingValue) {localDamping = dampingValue; }
 
-	ModelSetup::InterpolationFunctionType getInterpolationFunction(){ return interpolationType; }
-	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d){ interpolationType=d; }
-
-	double getDampingLocal() {return localDamping;}
-	void setDampingLocalValue(double dampingValue) {localDamping = dampingValue;}
+	// interpolation functions
+	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
+	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
 }

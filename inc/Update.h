@@ -9,7 +9,7 @@
 #define UPDATE_H_
 
 #include "Mesh.h"
-#include "Particle.h"
+#include "Body.h"
 
 /// \namespace Update
 /// \brief Represents operations to update values in nodes and particles.
@@ -28,24 +28,24 @@ namespace Update {
 	void resetNodalValues(Mesh* mesh);
 	
 	/// \brief Updates the particles' density
-	/// \param[in] particles List of particles
-	void particleDensity(vector<Particle*>* particles);
+	/// \param[in] bodies List of Body pointers
+	void particleDensity(vector<Body*>* bodies);
 	
 	/// \brief Update the particles' stress
-	/// \param[in] particles List of particles
-	void particleStress(vector<Particle*>* particles);
+	/// \param[in] bodies List of Body pointers
+	void particleStress(vector<Body*>* bodies);
 	
 	/// \brief Update the particle velocity
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles List of particles
+	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
-	void particleVelocity(Mesh* mesh, vector<Particle*>* particles, double time_step);
+	void particleVelocity(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles List of particles
+	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
-	void particlePosition(Mesh* mesh, vector<Particle*>* particles, double time_step);
+	void particlePosition(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
@@ -59,8 +59,8 @@ namespace Update {
 	
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particles List of particles
-	void contributionNodes(Mesh* mesh, vector<Particle*>* particles);
+	/// \param[in] bodies List of bodies
+	void contributionNodes(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Configure the force in each node in boundary planes
 	/// \param[in] boundary Boundary plane
