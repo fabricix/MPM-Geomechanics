@@ -26,6 +26,9 @@ using std::cout;
 #include<string>
 using std::to_string;
 
+#include <cstdlib>
+using std::exit;
+
 MPM::MPM() {
 	
 	solver=0;
@@ -35,24 +38,36 @@ MPM::~MPM() {
 
 }
 
-bool MPM::readInputFile(int argc, char **argv){
+void MPM::readInputFile(int argc, char **argv){
 	
-	if (argc!=2){
+	try{
+		if (argc!=2){
 
-		Warning::printMessage("Bad argument list");
-		return false;
-	}
-	else{
+			Warning::printMessage("Bad argument list");
+			throw (0);
+		}
+		else{
 
-		Input::readInputFile(string(argv[1]));
-		return true;
+			Input::readInputFile(string(argv[1]));
+		}
 	}
-	return false;
+	catch(...)
+	{	
+		Warning::printMessage("Error during reading the input file");
+		Warning::printMessage("The program finished");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void MPM::setSimulationTime(){
 	
 	ModelSetup::setTime(Input::getSimulationTime());
+	
+	if(ModelSetup::getTime()<=0.0){
+		
+		Warning::printMessage("Simulation time must be greater that zero");
+		throw (0);
+	}
 }
 
 void MPM::setSolver() {
@@ -71,6 +86,12 @@ void MPM::setTimeStep(){
 
 	// input time step
 	ModelSetup::setTimeStep(Input::getTimeStep());
+
+	if(ModelSetup::getTimeStep()<=0.0){
+
+		Warning::printMessage("Time step must be greater that zero");
+		throw (0);
+	}
 
 	// verify the Courant-Friedrichs-Lewy condition
 	
@@ -102,6 +123,7 @@ void MPM::setTimeStep(){
 	else
 	{
 		Warning::printMessage("verify the material sound speed: "+to_string(maxSoundSpeed));
+		throw (0);
 	}
 }
 
@@ -168,6 +190,7 @@ void MPM::setupParticles(){
 					break;
 				default:
 				Warning::printMessage("Bad definition of shape function in particle");
+				throw (0);
 			}
 		}
 	}
@@ -185,8 +208,8 @@ void MPM::setupDamping() {
 	ModelSetup::setDampingType(Input::getDampingType());
 
 	// setup local damping value
-	if (ModelSetup::getDampingType()==ModelSetup::LOCAL)
-	{
+	if (ModelSetup::getDampingType()==ModelSetup::LOCAL){
+
 		ModelSetup::setDampingLocalValue(Input::getDampingValue());
 	}
 }
@@ -202,48 +225,59 @@ void MPM::setupResults(){
 
 void MPM::createModel(){
 
-	// set the simulation time 
-	setSimulationTime();
-	
-	// set the interpolation functions
-	setInterpolationFunctions();
+	try{
+		// set the simulation time 
+		setSimulationTime();
+		
+		// set the interpolation functions
+		setInterpolationFunctions();
 
-	// setup the mesh
-	setupMesh();
+		// setup the mesh
+		setupMesh();
 
-	// setup the material list
-	setupMaterialList();
+		// setup the material list
+		setupMaterialList();
 
-	// set time step
-	setTimeStep();
-	
-	// setup the body list
-	setupBodyList();
+		// set time step
+		setTimeStep();
+		
+		// setup the body list
+		setupBodyList();
 
-	// create the bodies
-	createBodies();
+		// create the bodies
+		createBodies();
 
-	// setup the solver
-	setSolver();
+		// setup the solver
+		setSolver();
 
-	// configures the particles in the model
-	setupParticles();
+		// configures the particles in the model
+		setupParticles();
 
-	// configures the loads
-	setupLoads();
+		// configures the loads
+		setupLoads();
 
-	// configures the damping
-	setupDamping();
+		// configures the damping
+		setupDamping();
 
-	// configures the results
-	setupResults();
+		// configures the results
+		setupResults();
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during model creation");
+		Warning::printMessage("Verify the input file");
+		Warning::printMessage("The program finished");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void MPM::solve(){
 	
 	if (solver==0){
 
-		Warning::printMessage("The solver was not correctly defined.");
+		Warning::printMessage("The solver was not correctly defined");
+		Warning::printMessage("The program finished");
+		exit(EXIT_FAILURE);
 	}
 	else{
 
@@ -261,5 +295,5 @@ void MPM::solve(){
 
 void MPM::end(){
 
-	cout << "The program finished."<<"\n";
+	cout<<"The program finished"<<"\n";
 }

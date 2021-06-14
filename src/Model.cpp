@@ -74,13 +74,15 @@ namespace ModelSetup {
 	// contribution nodes
 	unsigned getContributionNodesNum() { return contributionNodes; }
 
+
 	// total time
 	double getTime() { return time; }
 	void setTime(double d) { time=d; }
 
 	// results
 	unsigned getResultNum() { return resultNumber; }
-	void setResultNum(unsigned d) { resultNumber=d; }
+	void
+	setResultNum(unsigned d) { resultNumber=d; }
 	unsigned getResultSteps() { return floor(time/dt)/resultNumber; }
 
 	// time step

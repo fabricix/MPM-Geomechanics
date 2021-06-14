@@ -37,6 +37,7 @@ void Mesh::setCellDimension(double dx, double dy, double dz) {
     if (dx<=0.0 || dy<=0.0 || dz<=0.0)
     {
         Warning::printMessage("Cell dimension must be greater that 0");
+        throw (0);
     }
 
     cellDim=Vector3d(dx,dy,dz);    
@@ -49,9 +50,10 @@ void Mesh::setCellDimension(const Vector3d& cdim) {
 
 void Mesh::setNumCells(int nx, int ny, int nz) {
 
-    if (nx<=0 || ny<=0 || nz<=0)
-    {
+    if (nx<=0 || ny<=0 || nz<=0) {
+        
         Warning::printMessage("Number of cells must be greater that 0");
+        throw (0);
     }
 
     nCells=Vector3i(nx,ny,nz);
@@ -64,9 +66,10 @@ void Mesh::setNumCells(const Vector3i& n) {
 
 void Mesh::setNumGhosts(int ng) {
 
-    if (ng<0)
-    {
+    if (ng<0){
+
         Warning::printMessage("Number of Ghosts must be positive");
+        throw (0);
     }
 
     nGhosts=ng;

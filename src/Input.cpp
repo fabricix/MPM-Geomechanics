@@ -69,6 +69,7 @@ bool Input::verifyData(json jsonObject, string keyword, string dataType ) {
 	}
 	
 	Warning::printMessage("Bad definition of keyword \""+keyword+"\" in the input file");
+	throw (0);
 	return false;
 }
 
@@ -93,6 +94,7 @@ Solver* Input::getSolver() {
 		}
 
 		Warning::printMessage("Bad definition of keyword \"stress_scheme_update\" in the input file");
+		throw (0);
 	}
 	return 0;
 }
@@ -114,6 +116,7 @@ ModelSetup::InterpolationFunctionType Input::getInterpolationFunction() {
 		}
 
 		Warning::printMessage("Bad definition of keyword: \"shape_function\" in the input file");
+		throw (0);
 	}
 
 	return ModelSetup::GIMP;
@@ -206,6 +209,7 @@ vector<Material*> Input::getMaterialList(){
 	if (materials.empty()){
 
 		Warning::printMessage("The material list was not created");
+		throw (0);
 	}
 
 	return materials;
@@ -258,6 +262,7 @@ vector<Body*> Input::getBodyList(){
 	if (bodies.empty()){
 
 		Warning::printMessage("The body list was not created");
+		throw (0);
 	}
 
 	return bodies;
@@ -309,6 +314,7 @@ vector<string> Input::getResultFields() {
 	if (fields.empty()){
 
 		Warning::printMessage("The result fields list was not created");
+		throw (0);
 	}
 	
 	return fields;
@@ -327,6 +333,7 @@ ModelSetup::DampingType Input::getDampingType() {
 			}
 		}
 		Warning::printMessage("Bad definition of damping type");
+		throw (0);
 	}
 	
 	return ModelSetup::DampingType::UNDAMPED;
@@ -343,6 +350,7 @@ double Input::getDampingValue() {
 	}
 	
 	Warning::printMessage("Bad definition of damping value");
+	throw (0);
 	
 	return 0.0;
 }
