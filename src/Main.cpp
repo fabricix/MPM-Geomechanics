@@ -13,9 +13,13 @@ using std::endl;
 using std::vector;
 
 #include <MPM.h>
+#include <Output.h>
 
 int main(int argc, char **argv)
 {
+	// print welcome streen 
+	Output::welcomeScreen();
+
 	// create a mpm instance
 	MPM mpm;
 
@@ -31,5 +35,8 @@ int main(int argc, char **argv)
 	// finish the program
 	mpm.end();
 	
+	// print farewell screen
+	Output::farewellScreen();
+
 	return 0;
 }

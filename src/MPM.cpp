@@ -44,7 +44,6 @@ void MPM::readInputFile(int argc, char **argv){
 		if (argc!=2){
 
 			Warning::printMessage("Bad argument list");
-			throw (0);
 		}
 		else{
 
@@ -55,6 +54,7 @@ void MPM::readInputFile(int argc, char **argv){
 	{	
 		Warning::printMessage("Error during reading the input file");
 		Warning::printMessage("The program finished");
+		Output::farewellScreen();
 		exit(EXIT_FAILURE);
 	}
 }
@@ -267,6 +267,7 @@ void MPM::createModel(){
 		Warning::printMessage("Error during model creation");
 		Warning::printMessage("Verify the input file");
 		Warning::printMessage("The program finished");
+		Output::farewellScreen();
 		exit(EXIT_FAILURE);
 	}
 }
@@ -277,6 +278,7 @@ void MPM::solve(){
 
 		Warning::printMessage("The solver was not correctly defined");
 		Warning::printMessage("The program finished");
+		Output::farewellScreen();
 		exit(EXIT_FAILURE);
 	}
 	else{
@@ -289,11 +291,10 @@ void MPM::solve(){
 		
 		std::chrono::duration<double> elapsed_seconds = end-start;
 	
-		cout<<"Elapsed time: "<<elapsed_seconds.count()<<" seconds\n";
+		cout<<"\nElapsed time: "<<elapsed_seconds.count()<<" seconds\n";
 	}
 }
 
 void MPM::end(){
 
-	cout<<"The program finished"<<"\n";
 }

@@ -15,6 +15,11 @@
 
 #include "Output.h"
 
+#include <iostream>
+using std::cout;
+using std::left;
+using std::right;
+
 #include<string>
 using std::string;
 using std::to_string;
@@ -25,6 +30,7 @@ using std::ofstream;
 #include <iomanip>
 using std::fixed;
 using std::scientific;
+using std::setw;
 
 #include <vector>
 using std::vector;
@@ -382,15 +388,15 @@ namespace Output{
         writeParticles(&particles,time);
     }
 
-    void writeResultsSeries(){
+    void writeResultsSeries() {
 
         // define edian
-        if(Folders::edian==""){
+        if(Folders::edian=="") {
             defineEdian();
         }
 
         // create particle folder
-        if(!Folders::particleFolderExist){
+        if(!Folders::particleFolderExist) {
             createParticleFolder();
         }
 
@@ -408,5 +414,41 @@ namespace Output{
         }
         serieFile <<"\t</Collection>\n";
         serieFile <<"</VTKFile>\n";
+    }
+
+    void welcomeScreen() {
+
+        // format
+        int width = 55;
+
+        // information
+        string programName="MPM-Geomechanics";
+        string programDescription="A material point method program for geomechanics";
+        string programWeb="https://github.com/fabricix/MPM-Geomechanics";
+        string programVersion="0.1";
+        string programAuthor="Fabricio Fernández <fabricio.hmf@gmail.com>";
+        string hLines(width-2,'-');
+        string hSpaces(width-2,' ');
+        
+        // set screen
+        cout<<"\n"<<left<<" "<<setw(width)<<hLines<<" \n";
+        cout<<"|"+hSpaces+"|"<<"\n";
+        cout<<"|"<<right<<setw(34)<<programName<<setw(21)<<right<<"|\n";
+        cout<<"|"+hSpaces+"|"<<"\n";
+        cout<<"|"<<right<<setw(50)<<programDescription<<setw(5)<<right<<"|\n";
+        cout<<"|"+hSpaces+"|"<<"\n";
+
+        cout<<"|"<<left<<"web: "<<programWeb<<setw(6)<<right<<"|\n";
+        cout<<"|"<<left<<"author: "<<programAuthor<<setw(4)<<right<<"|\n";
+        cout<<"|"<<left<<"version: "<<programVersion<<setw(43)<<right<<"|\n";
+        cout<<"|"+hSpaces+"|"<<"\n";
+        cout<<left<<" "<<setw(width)<<hLines<<"\n\n";
+    }
+
+    void farewellScreen() {
+
+    	 int width = 55;
+    	 string hLines(width,'-');
+    	 cout<<"\n"<<left<<setw(width)<<hLines<<"\n\n";
     }
 }

@@ -56,6 +56,14 @@ namespace Output {
 	/// \param[in] field Field to verify
 	/// \return True if the field must be written
 	bool isFieldRequired (string field);
+
+	/// \brief Print initial program screen
+	///
+	void welcomeScreen();
+
+	/// \brief Print final program screen
+	///
+	void farewellScreen();
 }
 
 #endif /* OUTPUT_H_ */
