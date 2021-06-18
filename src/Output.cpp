@@ -418,7 +418,7 @@ namespace Output{
 
     void welcomeScreen() {
 
-        // format
+        // common format
         int width = 55;
 
         // information
@@ -429,15 +429,15 @@ namespace Output{
         string programAuthor="Fabricio Fernández <fabricio.hmf@gmail.com>";
         string hLines(width-2,'-');
         string hSpaces(width-2,' ');
+        string hSpacesArterisc(width-6,' ');
         
         // set screen
         cout<<"\n"<<left<<" "<<setw(width)<<hLines<<" \n";
-        cout<<"|"+hSpaces+"|"<<"\n";
+        cout<<"| *"+hSpacesArterisc+"* |"<<"\n";
         cout<<"|"<<right<<setw(34)<<programName<<setw(21)<<right<<"|\n";
         cout<<"|"+hSpaces+"|"<<"\n";
         cout<<"|"<<right<<setw(50)<<programDescription<<setw(5)<<right<<"|\n";
         cout<<"|"+hSpaces+"|"<<"\n";
-
         cout<<"|"<<left<<"web: "<<programWeb<<setw(6)<<right<<"|\n";
         cout<<"|"<<left<<"author: "<<programAuthor<<setw(4)<<right<<"|\n";
         cout<<"|"<<left<<"version: "<<programVersion<<setw(43)<<right<<"|\n";
