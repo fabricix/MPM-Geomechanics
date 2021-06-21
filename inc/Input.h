@@ -21,6 +21,7 @@ using Eigen::Vector3d;
 #include "Solver.h"
 #include "Material.h"
 #include "Model.h"
+#include "Boundary.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -29,10 +30,10 @@ using Eigen::Vector3d;
 ///
 /// The keywords are the way to setup the numerical model. 
 /// Have keyword for each characteristic implemented in the program.
-/// Some of they are associated with numbers, for example "time":0.2, others
-/// that are associated with strings, for example "type":"elastic", or to 
-/// arrays, for example "gravity":[0.0,0.0,-9.81], and with others definitions, like "mesh":{
-/// "cells_dimension":[1,1,1], ... 
+/// Some of they are associated with numbers, for example `"time":0.2`, others
+/// that are associated with strings, for example `"type":"elastic"`, or to 
+/// arrays, for example `"gravity":[0.0,0.0,-9.81]`, and with others definitions, like `"mesh":{
+/// "cells_dimension":[1,1,1], ...` 
 /// Next is presented the complete list of keyword for using in the input file,
 /// organized according the characteristic to be configured. 
 ///
@@ -101,6 +102,41 @@ using Eigen::Vector3d;
 /// | cells_number | define the number of cells in each direction | array |
 /// | cells_dimension | used to define the cell dimension in each direction | array |
 /// | origin | used to define the origin of coordinates | array |
+/// | boundary_conditions | used to set the mesh boundary conditions | -- |
+/// | sliding | boundary condition that can move perpendicular to the normal of the boundary plane | string |
+/// | fixed | boundary condition that can not move in any direction | string |
+/// | free | boundary condition that can move freely in all directions | string |
+/// | plane_X0 | Plane which normal points to the negative part of the axis X | -- | 
+/// | plane_Y0 | Plane which normal points to the negative part of the axis Y | -- | 
+/// | plane_Z0 | Plane which normal points to the negative part of the axis Z | -- | 
+/// | plane_Xn | Plane which normal points to the positive part of the axis X | -- | 
+/// | plane_Yn | Plane which normal points to the positive part of the axis Y | -- | 
+/// | plane_Zn | Plane which normal points to the positive part of the axis Z | -- | 
+///
+/// ### Definition of the planes for setting boundary conditions
+///
+/// ```
+///                     Boundaries of the Mesh
+///                             
+///                          +----------+
+///                          |\          \ 
+///                          | \ Plane Zn \ 
+///    z                     |  \          \ 
+///    |       Plane Y0 ------>  +----------+  <------ Plane Yn
+///    |                     |   |          |
+///    +---- y   		     +   |          |       
+///     \                     \  | Plane Xn |
+///      \                     \ |          |
+///       x                     \|          |
+///                              +----------+ 
+///
+///
+/// Plane X0 : Plane which normal points to the negative direction of axis X
+/// Plane Xn : Plane which normal points to the positive direction of axis X
+///
+/// ```
+/// **Note**: If any boundary condition is defined in the input file, sliding boundary condition
+/// is chosen, by default, for all planes.
 ///
 /// ## Materials
 ///	| Keyword | Description | Data type |
@@ -144,10 +180,20 @@ using Eigen::Vector3d;
 /// 	},
 ///
 /// 	"mesh":
-///     {
+///		{
 /// 		"cells_dimension":[1,1,1],
 /// 		"cells_number":[10,10,10],
-/// 		"origin":[0,0,0]
+/// 		"origin":[0,0,0],
+///
+///			"boundary_conditions":
+/// 		{
+/// 			"plane_X0":"fixed",
+/// 			"plane_Y0":"fixed",
+/// 			"plane_Z0":"fixed",
+/// 			"plane_Xn":"sliding",
+/// 			"plane_Yn":"sliding",
+/// 			"plane_Zn":"free"
+/// 		}
 /// 	},
 ///
 /// 	"material":
@@ -261,6 +307,11 @@ namespace Input {
 	/// \brief Read the damping value
 	/// \return value The damping value
 	double getDampingValue();
+
+	/// \brief Return the mesh boundary conditions
+	/// \return boundary_restriction_vector A vector containing 
+	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
+	vector<Boundary::BoundaryType> getMeshBoundaryConditions();
 };
 
 #endif /* INPUT_H_ */

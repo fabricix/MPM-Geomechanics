@@ -155,6 +155,11 @@ public:
     /// \param[out] boundary_pointer A pointer to the Boundary structure
     inline Boundary* getBoundary() { return &(this->boundary); }
 
+    /// \brief Configures the restriction of the boundary nodes
+    /// \param[in] restrictions Vector containing the restriction to the planes
+    /// X0, Y0, Z0, Xn, Yn and Zn.
+    void setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions);
+
 private:
     
     int nGhosts; //!< number of ghost cells

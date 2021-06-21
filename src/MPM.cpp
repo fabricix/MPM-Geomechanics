@@ -140,6 +140,9 @@ void MPM::setupMesh(){
 
 	// create the mesh
 	mesh.createGrid();
+
+	// configure the mesh boundary conditions
+	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 }
 
 void MPM::setupMaterialList(){
@@ -261,6 +264,7 @@ void MPM::createModel(){
 
 		// configures the results
 		setupResults();
+
 	}
 	catch(...)
 	{

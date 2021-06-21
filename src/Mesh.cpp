@@ -257,6 +257,24 @@ void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {
     }
 }
 
+void Mesh::setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions) {
+
+    // verify if there are restrictions to the six planes
+    if (restrictions.size()==6)
+    {
+    	boundary.setRestrictions(Boundary::BoundaryPlane::X0, restrictions.at(0));
+    	boundary.setRestrictions(Boundary::BoundaryPlane::Y0, restrictions.at(1));
+    	boundary.setRestrictions(Boundary::BoundaryPlane::Z0, restrictions.at(2));
+    	boundary.setRestrictions(Boundary::BoundaryPlane::Xn, restrictions.at(3));
+    	boundary.setRestrictions(Boundary::BoundaryPlane::Yn, restrictions.at(4));
+    	boundary.setRestrictions(Boundary::BoundaryPlane::Zn, restrictions.at(5));
+    }
+    else{
+        Warning::printMessage("Error setting the boundary conditions");
+    }
+}
+
+
 //
 // private methods
 //

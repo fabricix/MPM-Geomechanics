@@ -19,7 +19,11 @@ public:
 
 	/// \enum BoundaryType
 	/// \brief Determines the type of restrictions to be imposed to the mesh.
-	enum BoundaryType{ FIXED, SLIDING };
+	enum BoundaryType{ FREE, FIXED, SLIDING };
+
+	/// \enum BoundaryPlane
+	/// \brief Planes at the mesh boundary
+	enum BoundaryPlane{ X0, Y0, Z0, Xn, Yn, Zn };
 
 	/// \struct planeBoundary
 	/// \brief Represents the nodes and the type of restrictions
@@ -85,6 +89,15 @@ public:
 	/// \param[in] nodes_id A vector with nodes identifications
 	inline void setNodesPlaneZn(const vector<int>& nodes_id) { this->planeZn.nodes=nodes_id; }
 
+	/// \brief Configure the restrictions of the boundary nodes
+	/// \param[in] restriction Type of restriction Boundary::BoundaryType
+	inline void setRestrictions(Boundary::BoundaryType restriction);
+
+	/// \brief Configure the restrictions of the boundary nodes by plane
+	/// \param[in] restriction Type of restriction Boundary::BoundaryType
+	/// \param[in] plane Plane to be applied the restriction
+	inline void setRestrictions(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction);
+
 private:
 
 	Boundary::planeBoundary planeX0; //!< boundary nodes at plane X0
@@ -102,16 +115,50 @@ private:
 
 inline Boundary::Boundary(){
 
-	planeX0.type=BoundaryType::SLIDING;
-	planeY0.type=BoundaryType::SLIDING;
-	planeZ0.type=BoundaryType::SLIDING;
-	planeXn.type=BoundaryType::SLIDING;
-	planeYn.type=BoundaryType::SLIDING;
-	planeZn.type=BoundaryType::SLIDING;
+	setRestrictions(Boundary::BoundaryType::SLIDING);
 }
 
 inline Boundary::~Boundary() {
 	
 }
 
+inline void Boundary::setRestrictions(Boundary::BoundaryType restriction) {
+	
+	planeX0.type=restriction;
+	planeY0.type=restriction;
+	planeZ0.type=restriction;
+	planeXn.type=restriction;
+	planeYn.type=restriction;
+	planeZn.type=restriction;
+}
+
+inline void Boundary::setRestrictions(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction) {
+	
+	switch (plane)
+	{
+		case BoundaryPlane::X0:
+			planeX0.type=restriction;
+			break;
+		
+		case BoundaryPlane::Y0:
+			planeY0.type=restriction;
+			break;
+
+		case BoundaryPlane::Z0:
+			planeZ0.type=restriction;
+			break;
+
+		case BoundaryPlane::Xn:
+			planeXn.type=restriction;
+			break;
+		
+		case BoundaryPlane::Yn:
+			planeYn.type=restriction;
+			break;
+
+		case BoundaryPlane::Zn:
+			planeZn.type=restriction;
+			break;
+	}
+}
 #endif /* BOUNDARY_H_ */
