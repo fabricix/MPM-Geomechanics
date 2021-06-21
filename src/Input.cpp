@@ -322,21 +322,24 @@ vector<string> Input::getResultFields() {
 
 ModelSetup::DampingType Input::getDampingType() {
 
-	if (verifyData(inputFile,"damping"))
+	try
 	{
-		if(verifyData(inputFile["damping"],"type","string")){
+		if (inputFile["damping"].is_null())
+			return ModelSetup::DampingType::UNDAMPED;
 
-			// local damping
-			if (inputFile["damping"]["type"]=="local") {
+		if (inputFile["damping"]["type"].is_null())
+			throw(0);
+		
+		if(inputFile["damping"]["type"]=="local")
+			return ModelSetup::DampingType::LOCAL;
 
-				return ModelSetup::DampingType::LOCAL;
-			}
-		}
-		Warning::printMessage("Bad definition of damping type");
-		throw (0);
+		throw(0);
 	}
-	
-	return ModelSetup::DampingType::UNDAMPED;
+	catch(...)
+	{
+		Warning::printMessage("Error in damping keyword");
+		throw;
+	}
 }
 
 double Input::getDampingValue() {
