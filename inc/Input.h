@@ -286,20 +286,6 @@ namespace Input {
 	///
 	vector<string> getResultFields();
 
-	/// \brief Verifies the input data 
-	/// \param[in] jsonObject Structure to be verified
-	/// \param[in] keyword Keyword to be verified
-	/// \param[in] dataType String of the data type to be verified:
-	/// this can be "string", "number", "array" or "boolean"
-	/// \return status True is the file contains the keyword with the specified dataType 
-	bool verifyData(json jsonObject, string keyword, string dataType );
-
-	/// \brief Verifies the input data 
-	/// \param[in] jsonObject Structure to be verified
-	/// \param[in] keyword Keyword to be verified
-	/// \return status True is the file contains the keyword with the specified dataType
-	bool verifyData(json jsonObject, string keyword );
-
 	/// \brief Read the damping definition in the input file
 	/// \return ModelSetup::DampingType The damping type
 	ModelSetup::DampingType getDampingType();

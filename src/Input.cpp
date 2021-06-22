@@ -20,304 +20,434 @@ namespace Input {
 	string inputFileName; //!< file name to be read
 }
 
-inline const json& Input::getJson(){ return inputFile; }
+inline const json& Input::getJson() {
 
-inline string Input::getFileName(){ return inputFileName; }
+	return inputFile; 
+}
 
-void Input::readInputFile(string filename){
+inline string Input::getFileName() { 
 
-	// configures the input file	
-	inputFileName = filename;
+	return inputFileName; 
+}
 
-	if (inputFileName!=""){
+void Input::readInputFile(string filename) {
 
-		// read the file
-		ifstream i(inputFileName);
+
+	try{
+		// configures the input file	
+		inputFileName = filename;
 		
-		// initialize the json structure
-		i >> inputFile;	
+		if (inputFileName!=""){
+
+			// read the file
+			ifstream i(inputFileName);
+			
+			// initialize the json structure
+			i >> inputFile;	
+		}
+		else
+			throw(0);
 	}
-}
-
-bool Input::verifyData(json jsonObject, string keyword ) {
-
-	return jsonObject.contains(keyword);
-}
-
-bool Input::verifyData(json jsonObject, string keyword, string dataType ) {
-
-	// contain verification
-	if (verifyData(jsonObject, keyword)){
-
-		// data verification
-		if (dataType=="array")
-		{
-			return jsonObject[keyword].is_array();
-		}
-		else if (dataType=="string")
-		{
-			return jsonObject[keyword].is_string();
-		}
-		else if (dataType=="number")
-		{
-			return jsonObject[keyword].is_number();
-		}
-		else if (dataType=="boolean")
-		{
-			return jsonObject[keyword].is_boolean();
-		}
+	catch(...)
+	{
+		Warning::printMessage("Error in input file name");
+		throw;
 	}
-	
-	Warning::printMessage("Bad definition of keyword \""+keyword+"\" in the input file");
-	throw (0);
-	return false;
 }
 
 double Input::getSimulationTime(){
 	
-	if(verifyData(inputFile,"time","number")) {
-		
-		// return the simulation time
-		return inputFile["time"];
+	try{
+		if(inputFile["time"].is_number()) {
+
+			return inputFile["time"];
+		}
+		else
+			throw(0);
 	}
-	return 0.0;
+	catch(...)
+	{
+		Warning::printMessage("Error in input file name");
+		throw;
+	}
 }
 
 Solver* Input::getSolver() {
-
-	if (verifyData(inputFile,"stress_scheme_update","string")) {
-
-		if(inputFile["stress_scheme_update"]=="USL") {
-
-			// return a USL solver
-			return new SolverExplicitUSL();
+	
+	try
+	{	
+		// default value
+		if (inputFile["stress_scheme_update"].is_null())
+		{
+			return new SolverExplicitUSL();			
 		}
 
-		Warning::printMessage("Bad definition of keyword \"stress_scheme_update\" in the input file");
-		throw (0);
+		if (inputFile["stress_scheme_update"].is_string()) {
+
+			// USL scheme
+			if(inputFile["stress_scheme_update"]=="USL") {
+
+				return new SolverExplicitUSL();
+			}
+
+			throw (0);
+		}
+		
+		throw(0);
 	}
-	return 0;
+	catch(...)
+	{
+		Warning::printMessage("Error in solver definition in input file");
+		throw;
+	}
 }
 
 ModelSetup::InterpolationFunctionType Input::getInterpolationFunction() {
 	
-	if (verifyData(inputFile,"shape_function","string")) {
-
-		if(inputFile["shape_function"]=="GIMP") {
-
-			// return GIMP shape function type
-			return ModelSetup::GIMP;
+	try
+	{	
+		// default value
+		if (inputFile["shape_function"].is_null())
+		{
+			return ModelSetup::GIMP;	
 		}
 
-		if(inputFile["shape_function"]=="linear") {
+		if (inputFile["shape_function"].is_string()) {
 
-			// return Linear shape function type
-			return ModelSetup::LINEAR;
+			if(inputFile["shape_function"]=="GIMP") {
+
+				// return GIMP shape function type
+				return ModelSetup::GIMP;
+			}
+
+			if(inputFile["shape_function"]=="linear") {
+
+				// return Linear shape function type
+				return ModelSetup::LINEAR;
+			}
+
+			throw(0);
 		}
 
-		Warning::printMessage("Bad definition of keyword: \"shape_function\" in the input file");
-		throw (0);
+		throw(0);
 	}
-
-	return ModelSetup::GIMP;
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of shape function in input file");
+		throw;
+	}
 }
 
 double Input::getTimeStep(){
 
-	string keyword = "time_step";
+	try
+	{
+		if (inputFile["time_step"].is_number()){
 
-	if (verifyData(inputFile, keyword, "number")){
-
-		// return time step
-		return inputFile[keyword];
+			// return time step
+			return inputFile["time_step"];
+		}
+		throw(0);
 	}
-
-	return 0.0;
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of time step in input file");
+		throw;
+	}
 }
 
 Vector3i Input::getCellsNum() {
 
-	if(verifyData(inputFile,"mesh") && verifyData(inputFile["mesh"],"cells_number","array")){
-		
-		// return the number of cells
-		Vector3i cellsNumber;
-		cellsNumber(0)=inputFile["mesh"]["cells_number"][0];
-		cellsNumber(1)=inputFile["mesh"]["cells_number"][1];
-		cellsNumber(2)=inputFile["mesh"]["cells_number"][2];
+	try
+	{
+		if(inputFile["mesh"]["cells_number"].is_array()){
+			
+			// return the number of cells
+			Vector3i cellsNumber;
+			cellsNumber(0)=inputFile["mesh"]["cells_number"][0];
+			cellsNumber(1)=inputFile["mesh"]["cells_number"][1];
+			cellsNumber(2)=inputFile["mesh"]["cells_number"][2];
 
-		return cellsNumber;	
+			return cellsNumber;	
+		}
+
+		throw(0);
 	}
-
-	return Vector3i::Zero();
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of cell number in input file");
+		throw;
+	}
 }
 
 Vector3d Input::getCellDimension() {
 
-	if(verifyData(inputFile,"mesh") && verifyData(inputFile["mesh"],"cells_dimension","array")){
-		
-		Vector3d cellDimension; 
-		cellDimension(0)=inputFile["mesh"]["cells_dimension"][0];
-		cellDimension(1)=inputFile["mesh"]["cells_dimension"][1];
-		cellDimension(2)=inputFile["mesh"]["cells_dimension"][2];
+	try
+	{	
+		if(inputFile["mesh"]["cells_dimension"].is_array()){
+			
+			Vector3d cellDimension; 
+			cellDimension(0)=inputFile["mesh"]["cells_dimension"][0];
+			cellDimension(1)=inputFile["mesh"]["cells_dimension"][1];
+			cellDimension(2)=inputFile["mesh"]["cells_dimension"][2];
 
-		return cellDimension;
+			return cellDimension;
+		}
+
+		throw(0);
 	}
-
-	return Vector3d::Zero();
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of cell dimension in input file");
+		throw;
+	}
 }
 
 Vector3d Input::getOrigin() {
 
-	if(verifyData(inputFile,"mesh") && verifyData(inputFile["mesh"],"origin", "array")){
-			
-		Vector3d originVector;
-		originVector(0)=inputFile["mesh"]["origin"][0];
-		originVector(1)=inputFile["mesh"]["origin"][1];
-		originVector(2)=inputFile["mesh"]["origin"][2];
+	try
+	{
+		if(inputFile["mesh"]["origin"].is_array()){
+				
+			Vector3d originVector;
+			originVector(0)=inputFile["mesh"]["origin"][0];
+			originVector(1)=inputFile["mesh"]["origin"][1];
+			originVector(2)=inputFile["mesh"]["origin"][2];
 
-		return originVector;	
+			return originVector;	
+		}
+	
+		throw(0);
 	}
-
-	return Vector3d::Zero();
+	catch(...)
+	{
+		Warning::printMessage("Error reading mesh origin");
+		throw;
+	}
 }
 
 vector<Material*> Input::getMaterialList(){
 
-	vector<Material*> materials;
+	try{
 
-	// setup the material list
-	if (verifyData(inputFile, "material")){
-	
-		// loop aver all defined materials
-		json::iterator it;
-		for(it = inputFile["material"].begin(); it!=inputFile["material"].end();it++){
-			
-			// elastic material
-			if (verifyData((*it),"type", "string") && (*it)["type"] == "elastic"){
+		vector<Material*> materials;
+
+		// setup the material list
+		if (!inputFile["material"].is_null()){
+		
+			// loop aver all defined materials
+			json::iterator it;
+			for(it = inputFile["material"].begin(); it!=inputFile["material"].end();it++){
 				
-				int id=0; if (verifyData((*it),"id","number")) { id = ((*it)["id"]); }
-				double young=0.0; if (verifyData((*it),"young","number")) { young = ((*it)["young"]); }
-				double poisson=0.0; if (verifyData((*it),"poisson","number")) { poisson = ((*it)["poisson"]); }
-				double density=0.0; if (verifyData((*it),"density","number")) { density = ((*it)["density"]); }
-				
-				// create a new elastic material
-				materials.push_back(new Elastic(id, density, young, poisson));
+				// elastic material
+				if (!(*it)["type"].is_null() && (*it)["type"].is_string()){
+					
+					if ((*it)["type"] == "elastic")
+					{
+						int id=0; 
+						if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
+						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
+						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+						
+						// create a new elastic material
+						materials.push_back(new Elastic(id, density, young, poisson));
+					}
+				}
 			}
 		}
-	}
-	
-	if (materials.empty()){
 
-		Warning::printMessage("The material list was not created");
-		throw (0);
+		if (materials.empty())
+		{
+			throw(0);
+		}
+		return materials;
 	}
-
-	return materials;
+	catch(...)
+	{
+		Warning::printMessage("Error in materials definition in input file");
+		throw;
+	}
 }
 
 vector<Body*> Input::getBodyList(){
 
 	vector<Body*> bodies;
+	try
+	{
+		if (!inputFile["body"].is_null()){
 
-	if (verifyData(inputFile, "body")){
-
-		// loop aver all bodies
-		json::iterator it;
-		for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++){
-			
-			// cuboid body
-			if (verifyData((*it),"type","string") && (*it)["type"] == "cuboid"){
-
-				int id=0; if (verifyData((*it),"id","number")) { id = ((*it)["id"]); }
-
-				Vector3d pointP1=Vector3d::Zero();
-				if (verifyData((*it), "point_p1", "array")){
-
-					pointP1(0)=(*it)["point_p1"][0];
-					pointP1(1)=(*it)["point_p1"][1];
-					pointP1(2)=(*it)["point_p1"][2];
-				}
+			// loop aver all bodies
+			json::iterator it;
+			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) {
 				
-				Vector3d pointP2=Vector3d::Zero();
-				if (verifyData((*it),"point_p2","array")){
+				// cuboid body
+				if ((*it)["type"] == "cuboid") {
 
-					pointP2(0)=(*it)["point_p2"][0];
-					pointP2(1)=(*it)["point_p2"][1];
-					pointP2(2)=(*it)["point_p2"][2];
+					// body id
+					int id=0; 
+					if ((*it)["id"].is_number()){
+						id = ((*it)["id"]);
+					}
+					else
+						throw(0);
+
+					// point P1
+					Vector3d pointP1=Vector3d::Zero();
+					if ((*it)["point_p1"].is_array())
+					{
+						pointP1(0)=(*it)["point_p1"][0];
+						pointP1(1)=(*it)["point_p1"][1];
+						pointP1(2)=(*it)["point_p1"][2];
+					}
+					else
+						throw(0);
+					
+					// point P2
+					Vector3d pointP2=Vector3d::Zero();
+					if ((*it)["point_p2"].is_array())
+					{
+						pointP2(0)=(*it)["point_p2"][0];
+						pointP2(1)=(*it)["point_p2"][1];
+						pointP2(2)=(*it)["point_p2"][2];
+					}
+					else
+						throw(0);
+
+					// material id
+					int material_id=0; 
+					if ((*it)["material_id"].is_number()) 
+					{
+					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					// create a new cuboid
+					BodyCuboid* iBody = new BodyCuboid();
+
+					if (iBody==NULL)
+					{
+						throw(0);
+					}
+					else
+					{
+						iBody->setId(id);
+						iBody->setPoints(pointP1,pointP2);
+						iBody->setMaterialId(material_id);
+					}
+
+					bodies.push_back(iBody);
 				}
-
-				int material_id=0; if (verifyData((*it),"material_id","number")) { material_id = ((*it)["material_id"]); }
-
-				// create a new cuboid
-				BodyCuboid* iBody = new BodyCuboid();
-				iBody->setId(id);
-				iBody->setPoints(pointP1,pointP2);
-				iBody->setMaterialId(material_id);
-
-				bodies.push_back(iBody);
 			}
 		}
+
+		if (bodies.empty()){
+
+			throw(0);
+		}
+
+		return bodies;
 	}
-
-	if (bodies.empty()){
-
-		Warning::printMessage("The body list was not created");
-		throw (0);
+	catch(...)
+	{
+		Warning::printMessage("Error in body definition in input file");
+		throw;
 	}
-
-	return bodies;
 }
 
 Vector3d Input::getGravity(){
 
-	Vector3d gravity=Vector3d::Zero();
-	
-	if (verifyData(inputFile, "gravity", "array")){
+	try
+	{
+		Vector3d gravity=Vector3d::Zero();
+		
+		// default value
+		if (inputFile["gravity"].is_null())
+		{
+			return gravity;
+		}
 
-		gravity.x()=inputFile["gravity"][0];
-		gravity.y()=inputFile["gravity"][1];
-		gravity.z()=inputFile["gravity"][2];
+		if (inputFile["gravity"].is_array())
+		{
+			gravity.x()=inputFile["gravity"][0];
+			gravity.y()=inputFile["gravity"][1];
+			gravity.z()=inputFile["gravity"][2];
+			return gravity;
+		}
+		
+		throw(0);
 	}
-	
-	return gravity;
+	catch(...)
+	{
+		Warning::printMessage("Error during reading gravity");
+		throw;
+	}
 }
 
 int Input::getResultNum(){
 
-	int results = 10;
+	try
+	{
+		int results = 10;
 
-	if (verifyData(inputFile, "results") && verifyData(inputFile["results"],"print","number")) {
-			
-			results = inputFile["results"]["print"];
+		if (inputFile["results"]["print"].is_null())
+		{
+			return results;
+		}		
+
+		if (inputFile["results"]["print"].is_number())
+		{
+			return inputFile["results"]["print"];
+		}
+		
+		throw(0);
 	}
-
-	return results;
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the number of results");
+		throw;
+	}
 }
 
 vector<string> Input::getResultFields() {
 
-	vector<string> fields;
-
-	if (verifyData(inputFile,"results") && verifyData(inputFile["results"],"fields","array")){
-
-		json::iterator it;
-		for( it=inputFile["results"]["fields"].begin(); 
-			it!=inputFile["results"]["fields"].end();it++)
+	try
+	{
+		vector<string> fields;
+		
+		if (inputFile["results"].is_null())
 		{
-			if ((*it).is_string()){
+			fields.push_back("displacement");
+			return fields;
+		}
 
+		if (inputFile["results"]["fields"].is_null())
+		{
+			throw(0);
+		}
+
+		// get all results fields
+		json::iterator it;
+		for( it=inputFile["results"]["fields"].begin();it!=inputFile["results"]["fields"].end();it++){
+
+			if ((*it).is_string()){
 				fields.push_back(*it);
 			}
 		}
-	}
-	
-	if (fields.empty()){
 
-		Warning::printMessage("The result fields list was not created");
-		throw (0);
+		if (fields.empty()){
+
+			throw (0);
+		}
+
+		return fields;
 	}
-	
-	return fields;
+	catch(...)
+	{
+		Warning::printMessage("Error during the field results creation");
+		throw;
+	}
 }
 
 ModelSetup::DampingType Input::getDampingType() {
@@ -344,18 +474,30 @@ ModelSetup::DampingType Input::getDampingType() {
 
 double Input::getDampingValue() {
 
-	if (verifyData(inputFile,"damping")&&verifyData(inputFile["damping"],"type","string"))
+	try
 	{
-		if (inputFile["damping"]["type"]=="local" && verifyData(inputFile["damping"],"value","number"))
-		{
-			return inputFile["damping"]["value"];
+		if (inputFile["damping"].is_null()){
+
+			return 0.0;
 		}
+
+		if (inputFile["damping"]["type"].is_string())
+		{
+			if (inputFile["damping"]["type"]=="local" && inputFile["damping"]["value"].is_number())
+			{
+				return inputFile["damping"]["value"];
+			}
+
+			throw (0);
+		}
+
+		throw (0);
 	}
-	
-	Warning::printMessage("Bad definition of damping value");
-	throw (0);
-	
-	return 0.0;
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of damping value");
+		throw;
+	}
 }
 
 static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrictions, string resPlane ) {
