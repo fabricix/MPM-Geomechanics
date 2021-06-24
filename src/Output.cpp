@@ -158,7 +158,7 @@ namespace Output{
         partFile<<"<Points>\n";
         
         // particle position
-        partFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+        partFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
             Vector3d pos=particles->at(i)->getPosition();
             partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
@@ -174,7 +174,7 @@ namespace Output{
         if (isFieldRequired("id")) {
 
             // particle Id
-            partFile<<"<DataArray type=\"Float32\" Name=\"Particle Id\" Format=\"ascii\">\n";
+            partFile<<"<DataArray type=\"UInt64\" Name=\"Particle Id\" Format=\"ascii\">\n";
             for (int i = 0; i < nPoints; ++i) {
                 partFile<<scientific<<particles->at(i)->getId()<<"\n";
             }
@@ -184,9 +184,19 @@ namespace Output{
         if (isFieldRequired("material")){
             
             // particle material Id
-            partFile<<"<DataArray type=\"Float32\" Name=\"Material Id\" Format=\"ascii\">\n";
+            partFile<<"<DataArray type=\"UInt32\" Name=\"Material Id\" Format=\"ascii\">\n";
             for (int i = 0; i < nPoints; ++i) {
                 partFile<<scientific<<particles->at(i)->getMaterialId()<<"\n";
+            }
+            partFile<<"</DataArray>\n";
+        }
+
+        if (isFieldRequired("active")){
+            
+            // particle active status
+            partFile<<"<DataArray type=\"UInt8\" Name=\"Particle Active\" Format=\"ascii\">\n";
+            for (int i = 0; i < nPoints; ++i) {
+                partFile<<scientific<<particles->at(i)->getActive()<<"\n";
             }
             partFile<<"</DataArray>\n";
         }
@@ -194,7 +204,7 @@ namespace Output{
         if (isFieldRequired("displacement")){
 
             // particle displacement
-            partFile<<"<DataArray type=\"Float32\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+            partFile<<"<DataArray type=\"Float64\" Name=\"Displacement\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
             for (int i = 0; i < nPoints; ++i) {
                 partFile<<scientific<<(particles->at(i)->getPosition()-particles->at(i)->getInitialPosition()).transpose()<<"\n";
             }
@@ -208,7 +218,7 @@ namespace Output{
         partFile<<"<Cells>\n";
 
         // connectivity
-        partFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
+        partFile<<"<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
         for (int i = 0; i < int(particles->size()); ++i)
         {
             partFile<<i<<"\n";
@@ -216,7 +226,7 @@ namespace Output{
         partFile<<"</DataArray>\n";
         
         // offsets
-        partFile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
+        partFile<<"<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
         for (int i = 0; i < int(particles->size()); ++i)
         {
             partFile<<i+1<<"\n";
@@ -278,7 +288,7 @@ namespace Output{
         gridFile<<"<Points>\n";
         
         // node position
-        gridFile<<"<DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
         vector<Node>* inodes = mesh->getNodes();
         for (int i = 0; i < nPoints; ++i) {
             Vector3d pos=inodes->at(i).getCoordinates();
@@ -293,21 +303,21 @@ namespace Output{
         gridFile<<"<PointData>\n";
         
         // local ID of nodes
-        gridFile<<"<DataArray type=\"Float32\" Name=\"Id\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"UInt64\" Name=\"Id\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
             gridFile<<scientific<<inodes->at(i).getId()<<"\n";
         }
         gridFile<<"</DataArray>\n";
 
         // active nodes
-        gridFile<<"<DataArray type=\"Float32\" Name=\"Active\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
             gridFile<<scientific<<(inodes->at(i).getActive())<<"\n";
         }
         gridFile<<"</DataArray>\n";
 
         // nodal mass
-        gridFile<<"<DataArray type=\"Float32\" Name=\"Mass\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
             gridFile<<scientific<<(inodes->at(i).getMass())<<"\n";
         }
@@ -320,7 +330,7 @@ namespace Output{
         gridFile<<"<Cells>\n";
 
         // connectivity
-        gridFile<<"<DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
         
         const int nCellsX = nCellsVec(0);
         const int nCellsY = nCellsVec(1);
@@ -344,7 +354,7 @@ namespace Output{
         gridFile<<"</DataArray>\n";
         
         // offsets
-        gridFile<<"<DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">\n";
+        gridFile<<"<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
         for (int i = 0; i < nCells; ++i) {
             gridFile<<""<<8*(i+1)<< "\n";
         }
@@ -352,6 +362,7 @@ namespace Output{
         
         // types
         int cellsType=gridType==CellType::POINTS?1:(gridType==CellType::CELLS?12:1);
+
         gridFile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
         for (int i = 0; i < nPoints; ++i) {
             gridFile<<cellsType<<"\n";

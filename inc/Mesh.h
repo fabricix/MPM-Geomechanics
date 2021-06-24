@@ -66,15 +66,6 @@ public:
     /// \param[in] ghosts Number of ghosts around the domain
     void setNumGhosts(int ghosts); 
     
-    /// \brief Set domain limits
-    /// \param[in] x_min Minimum X coordinate
-    /// \param[in] y_min Minimum Y coordinate
-    /// \param[in] z_min Minimum Z coordinate
-    /// \param[in] x_max Maximum X coordinate
-    /// \param[in] y_max Maximum Y coordinate
-    /// \param[in] z_max Maximum Z coordinate
-    void setLimits(double x_min, double y_min, double z_min, double x_max, double y_max, double z_max); 
-    
     /// \brief Set origin of coordinates
     /// \param[in] x X Coordinate
     /// \param[in] y Y Coordinate
@@ -160,6 +151,12 @@ public:
     /// X0, Y0, Z0, Xn, Yn and Zn.
     void setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions);
 
+    /// \brief Verify if the position is inside the limits
+    /// \param[in] point A vector containing the
+    /// coordinates of a point
+    /// \param[out] True if the point is inside the mesh
+    bool getIsInsideMesh(const Vector3d& point) const;
+
 private:
     
     int nGhosts; //!< number of ghost cells
@@ -214,12 +211,6 @@ private:
 inline void Mesh::activateNode(int nodeId, const bool activeValue) {
 
     gridNodes.at(nodeId).setActive(activeValue);
-}
-
-inline void Mesh::setLimits(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-
-    minLimit=Vector3d(minX,minY,minZ);
-    maxLimit=Vector3d(maxX,maxY,maxZ);
 }
 
 #endif /* MESH_H_ */

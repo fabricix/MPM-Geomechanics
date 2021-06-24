@@ -76,6 +76,13 @@ Particle::Particle(const Vector3d& position) {
 
 void Particle::updateContributionNodes(Mesh* mesh)
 {
+	// verify if the particle in inside the mesh
+	if (!mesh->getIsInsideMesh(position)){
+
+		setActive(false);
+		return;
+	}
+
 	// nodes that the particle contributed
 	const vector<int> nodesId = mesh->getContributionNodes(position);
 	
@@ -115,6 +122,7 @@ void Particle::updateContributionNodes(Mesh* mesh)
 
 void Particle::initializeValues(){
 
+	active=true;
 	id=0;
 	bodyId=0;
 

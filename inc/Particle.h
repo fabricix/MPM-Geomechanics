@@ -64,6 +64,10 @@ public:
 	///  
 	void updateDensity();
 
+	/// \brief Returns the particle active status
+	/// \return Particle active status
+	inline bool getActive() const { return this->active; }
+
 	/// \brief Returns the particle identification 
 	/// \return Particle identification
 	inline int getId() const { return this->id; }
@@ -110,7 +114,11 @@ public:
 
 	/// \brief Returns the contribution list
 	/// \return Contribution node structure
-	inline vector<Contribution>* const getContributionNodes() { return &(this->contributionNodes); }
+	inline vector<Contribution>* getContributionNodes() { return &(this->contributionNodes); }
+
+	/// \brief Configures the particle active status
+	/// \param[in] particle_active Particle active status
+	inline void setActive(bool particle_active) { this->active=particle_active; }
 
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
@@ -174,6 +182,7 @@ public:
 
 private:
 
+	bool active; //!< is particle active
 	int id;	//!< particle id
 	int bodyId; //!< body id
 

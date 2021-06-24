@@ -71,9 +71,9 @@ protected:
 
 inline Material::Material(int id, double density, MaterialType type) {
 	
-	this->setDensity(density);
-	this->setId(id);
-	this->setType(type);
+	this->density=density;
+	this->id=id;
+	this->type=type;
 }
 
 inline Material::~Material() {

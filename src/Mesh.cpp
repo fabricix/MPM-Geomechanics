@@ -247,6 +247,11 @@ void Mesh::createGrid(void) {
 
     // update boundaries
     configureBoundaries();
+
+    // set max limits of the mesh
+    maxLimit.x()=nCells.x()*cellDim.x()+minLimit.x();
+    maxLimit.y()=nCells.y()*cellDim.y()+minLimit.y();
+    maxLimit.z()=nCells.z()*cellDim.z()+minLimit.z();
 }
 
 void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {
@@ -342,4 +347,11 @@ void Mesh::configureBoundaries(){
     boundary.setNodesPlaneXn(nodesPlaneXn);
     boundary.setNodesPlaneYn(nodesPlaneYn);
     boundary.setNodesPlaneZn(nodesPlaneZn);
+}
+
+bool Mesh::getIsInsideMesh(const Vector3d& point) const {
+
+    if (point.x()>maxLimit.x()||point.y()>maxLimit.y()||point.z()>maxLimit.z()) return false;
+    if (point.x()<minLimit.x()||point.y()<minLimit.y()||point.z()<minLimit.z()) return false;
+    return true;
 }

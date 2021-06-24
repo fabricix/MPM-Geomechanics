@@ -78,6 +78,9 @@ void Update::particleDensity(vector<Body*>* bodies) {
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
 
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+			
 			// update density
 			particles->at(i)->updateDensity();
 		}
@@ -94,6 +97,9 @@ void Update::particleStress(vector<Body*>* bodies) {
 
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// update particle stress
 			particles->at(i)->updateStress();
@@ -114,6 +120,9 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -160,6 +169,9 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
 
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
@@ -204,13 +216,17 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 			// witch type of restriction
 			switch(plane->type) {
 
+				// free condition
+				case Boundary::BoundaryType::FREE:
+					break;
+
 				// fixed condition
 				case Boundary::BoundaryType::FIXED:
 
 					// set all momentum components as zero
 					nodeI.setMomentum(Vector3d::Zero());
 				
-				break;
+					break;
 				
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
@@ -240,7 +256,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 					// set the boundary nodal momentum
 					nodeI.setMomentum(momentum);
 
-				break;
+					break;
 			}
 		}
 	}
@@ -286,6 +302,10 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 			
 			// witch type of restriction
 			switch(plane->type) {
+
+				// free condition
+				case Boundary::BoundaryType::FREE:
+					break;
 
 				// fixed condition
 				case Boundary::BoundaryType::FIXED:
@@ -366,6 +386,9 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
 
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+			
 			// update the contribution nodes
 			particles->at(i)->updateContributionNodes(mesh);
 		}

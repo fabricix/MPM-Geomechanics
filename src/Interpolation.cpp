@@ -38,6 +38,9 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
 
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
@@ -84,6 +87,9 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
 
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
@@ -122,6 +128,9 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -170,6 +179,9 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -220,6 +232,9 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -276,6 +291,9 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 
 		// for each particle 
 		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particles can contribute
+			if (!particles->at(i)->getActive()) { continue; }
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();

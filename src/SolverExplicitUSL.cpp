@@ -101,7 +101,7 @@ void SolverExplicitUSL::Solve( ){
 	}
 
 	// write the Eulerian mesh
-	Output::writeGrid(mesh,Output::POINTS);
+	Output::writeGrid(mesh,Output::CELLS);
 
 	// write results series
 	Output::writeResultsSeries();

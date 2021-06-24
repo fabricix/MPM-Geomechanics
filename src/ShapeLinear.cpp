@@ -18,7 +18,7 @@ ShapeLinear::~ShapeLinear() {
 	
 }
 
-double ShapeLinear::computeShape(double xpi, double L, double lp)
+double ShapeLinear::computeShape(double xpi, double L, double)
 {   
     // xpi = relative position of particle respect to the node, xp-xi
     // L = cell dimention
@@ -42,7 +42,7 @@ double ShapeLinear::computeShape(double xpi, double L, double lp)
     return 0.0;
 }
 
-double ShapeLinear::computeGradient(double xip, double L, double lp)
+double ShapeLinear::computeGradient(double xip, double L, double)
 {   
     // xip = relative position of particle respect to the node, xp-xi
     // L = cell dimension
@@ -66,7 +66,7 @@ double ShapeLinear::computeGradient(double xip, double L, double lp)
     return 0.0;
 }
 
-void ShapeLinear::update(const Vector3d& posParticle, const Vector3d& posNode, const Vector3d& cellDim, const Vector3d& particleSize){
+void ShapeLinear::update(const Vector3d& posParticle, const Vector3d& posNode, const Vector3d& cellDim, const Vector3d&){
 
     // update shape functions
     const double Sx = computeShape(posParticle(0)-posNode(0), cellDim(0), 0.0);
