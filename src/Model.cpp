@@ -10,6 +10,8 @@
 #include <cmath>
 using std::floor;
 
+#include <omp.h>
+
 namespace ModelSetup {
 
 	///
@@ -135,4 +137,11 @@ namespace ModelSetup {
 	// interpolation functions
 	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
+
+	void setNumThreads(unsigned nThreads) {
+
+		#ifdef _OPENMP
+		omp_set_num_threads((nThreads>0&&nThreads<=omp_get_num_procs())?nThreads:omp_get_num_procs());
+		#endif
+	}
 }

@@ -226,9 +226,18 @@ void MPM::setupResults(){
 	Output::configureResultFiels(Input::getResultFields());
 }
 
+void setThreads() {
+
+	// configures the number of threads
+	ModelSetup::setNumThreads(Input::getNumThreads());
+}
+
 void MPM::createModel(){
 
 	try{
+		// set number of threads
+		setThreads();
+
 		// set the simulation time 
 		setSimulationTime();
 		

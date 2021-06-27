@@ -298,6 +298,10 @@ namespace Input {
 	/// \return boundary_restriction_vector A vector containing 
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
 	vector<Boundary::BoundaryType> getMeshBoundaryConditions();
+	
+	/// \brief Return number of threads defined in the input file
+	/// \return n_threads Number of threads
+	unsigned getNumThreads();
 };
 
 #endif /* INPUT_H_ */

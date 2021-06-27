@@ -11,6 +11,8 @@
 #include "BodyCuboid.h"
 #include "Warning.h"
 
+#include <omp.h>
+
 #include <fstream>
 using std::ifstream;
 
@@ -545,6 +547,30 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
 	}
 	catch (...) {
 		Warning::printMessage("Error during reading the boundary conditions");
+		throw;
+	}
+}
+
+unsigned Input::getNumThreads() {
+
+	try
+	{
+		if(inputFile["n_threads"].is_null() || !inputFile["n_threads"].is_number()) {
+			
+			#ifdef _OPENMP
+			return omp_get_num_procs();
+			#endif
+
+			return 	1;
+		}
+		else
+		{
+			return inputFile["n_threads"];
+		}
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the number of threads");
 		throw;
 	}
 }

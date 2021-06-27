@@ -179,6 +179,10 @@ namespace ModelSetup {
 	/// \param[in] interpolation_functions_type Interpolation
 	/// functions type ModelSetup::InterpolationFunctionType
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType interpolation_functions_type);
+	
+	/// \brief Configure the number of threads in the model
+	/// \param[in] nThreads Number of threads
+	void setNumThreads(unsigned nThreads);
 };
 
 #endif /* MODEL_H_ */

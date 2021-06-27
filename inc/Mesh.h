@@ -154,7 +154,7 @@ public:
     /// \brief Verify if the position is inside the limits
     /// \param[in] point A vector containing the
     /// coordinates of a point
-    /// \param[out] True if the point is inside the mesh
+    /// \return True if the point is inside the mesh
     bool getIsInsideMesh(const Vector3d& point) const;
 
 private:

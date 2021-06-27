@@ -383,7 +383,8 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 		
-		// for each particle 
+		// for each particle
+		#pragma omp parallel for
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
