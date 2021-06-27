@@ -76,6 +76,11 @@ using Eigen::Vector3d;
 /// | damping | define the damping type | -- |
 /// | local | define the local damping value | double |
 ///
+/// ## Parallelization
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | n_threads | define the number of threads in  the simulation | unsigned |
+///
 /// ## Simulation Time
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -167,7 +172,9 @@ using Eigen::Vector3d;
 ///
 /// 	"shape_function":"GIMP",
 ///
-/// 	"time":2,
+///		"n_threads":4,
+///
+/// 	"time":2,	
 ///
 /// 	"time_step":0.001,
 ///
