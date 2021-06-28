@@ -13,6 +13,7 @@ void Update::nodalVelocity(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
+	#pragma omp parallel for
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{	
 		// get node handle
@@ -32,6 +33,7 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
+	#pragma omp parallel for
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
 		// get node handle
@@ -54,6 +56,7 @@ void Update::resetNodalValues(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
+	#pragma omp parallel for
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
 		// get node handle
@@ -75,7 +78,8 @@ void Update::particleDensity(vector<Body*>* bodies) {
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
-		// for each particle 
+		// for each particle
+		#pragma omp parallel for
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -95,7 +99,8 @@ void Update::particleStress(vector<Body*>* bodies) {
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
-		// for each particle 
+		// for each particle
+		#pragma omp parallel for
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -119,6 +124,7 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle 
+		#pragma omp parallel for
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -167,6 +173,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
+		#pragma omp parallel for
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -206,6 +213,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	// for each boundary node
+	#pragma omp parallel for
 	for (size_t i = 0; i < plane->nodes.size(); ++i){
 
 		// get node handle
@@ -293,6 +301,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	// get boundary nodes
+	#pragma omp parallel for
 	for (size_t i = 0; i < plane->nodes.size(); ++i) {
 
 		// get node handle 

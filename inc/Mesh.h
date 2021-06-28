@@ -137,10 +137,10 @@ public:
     /// \brief Return the nodes contributing at point
     /// \param[in] point A vector containing the 
     /// coordinates of a point
-    /// \return Contributed nodes. A list containing the indexes
+    /// \param[in] contributionIds A vector that will contain the indexes
     /// of the nodes that the a particle placed in the coordinate point
     /// contributes
-    vector<int> getContributionNodes(const Vector3d& point) const;
+    void getContributionNodes(const Vector3d& point, vector<int>& contributionIds) const;
 
     /// \brief return mesh boundaries
     /// \param[out] boundary_pointer A pointer to the Boundary structure

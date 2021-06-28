@@ -161,13 +161,13 @@ vector<int> Mesh::getNodesInCell(const Vector3d& position) const {
     return v;
 }
 
-vector<int> Mesh::getContributionNodes(const Vector3d& position) const {
+void Mesh::getContributionNodes(const Vector3d& position, vector<int>& contributionIds) const {
 
     const int cellId = getParentCellIdConstribution(position);
     const int nXY = nRows.x()*nRows.y();
     const int nX = nRows.x();
 
-    vector<int> contributionIds(27,0);
+    contributionIds.resize(27,0);
 
     contributionIds.at(0) = cellId+0;
     contributionIds.at(1) = cellId+1;
@@ -198,8 +198,6 @@ vector<int> Mesh::getContributionNodes(const Vector3d& position) const {
     contributionIds.at(24) = cellId+nX+nX+0+nXY*2;
     contributionIds.at(25) = cellId+nX+nX+1+nXY*2;
     contributionIds.at(26) = cellId+nX+nX+2+nXY*2;
-    
-    return contributionIds;
 }
 
 //

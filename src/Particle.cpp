@@ -84,7 +84,8 @@ void Particle::updateContributionNodes(Mesh* mesh)
 	}
 
 	// nodes that the particle contributed
-	const vector<int> nodesId = mesh->getContributionNodes(position);
+	vector<int> nodesId;
+	mesh->getContributionNodes(position,nodesId);
 	
 	// reference to grid nodes
 	vector<Node>* gNodes = mesh->getNodes();
