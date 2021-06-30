@@ -48,20 +48,30 @@ void SolverExplicitUSL::Solve( ){
 		// update contribution nodes
 		Update::contributionNodes(mesh,bodies);
 		
-		// nodal mass
-		Interpolation::nodalMass(mesh,bodies);
+		#pragma omp parallel sections num_threads(2)
+		{
+			// nodal mass
+			#pragma omp section
+			Interpolation::nodalMass(mesh,bodies);
 
-		// nodal momentum
-		Interpolation::nodalMomentum(mesh,bodies);
+			// nodal momentum
+			#pragma omp section
+			Interpolation::nodalMomentum(mesh,bodies);
+		}
 		
 		// impose essential boundary condition on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
-		// nodal internal force
-		Interpolation::nodalInternalForce(mesh,bodies);
+		#pragma omp parallel sections num_threads(2)
+		{
+			// nodal internal force
+			#pragma omp section
+			Interpolation::nodalInternalForce(mesh,bodies);
 		
-		// nodal external force
-		Interpolation::nodalExternalForce(mesh,bodies);
+			// nodal external force
+			#pragma omp section
+			Interpolation::nodalExternalForce(mesh,bodies);
+		}
 
 		// nodal total force
 		Update::nodalTotalForce(mesh);
@@ -81,12 +91,17 @@ void SolverExplicitUSL::Solve( ){
 		// nodal velocity
 		Update::nodalVelocity(mesh);
 
-		// calculate particle strain increment
-		Interpolation::particleStrainIncrement(mesh,bodies,dt);
+		#pragma omp parallel sections num_threads(2)
+		{
+			// calculate particle strain increment
+			#pragma omp section
+			Interpolation::particleStrainIncrement(mesh,bodies,dt);
 		
-		// calculate particle vorticity increment
-		Interpolation::particleVorticityIncrement(mesh,bodies,dt);
-		
+			// calculate particle vorticity increment
+			#pragma omp section
+			Interpolation::particleVorticityIncrement(mesh,bodies,dt);
+		}
+
 		// update particle density
 		Update::particleDensity(bodies);
 		

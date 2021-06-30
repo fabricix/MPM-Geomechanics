@@ -35,7 +35,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
-		// for each particle 
+		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -61,7 +61,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 				
 				// add the weighted mass in node
 				if (nodalMass!=0.0) {
-
+		
 					// the node is inactivate if he does not have mass
 					nodeI.setActive(true);
 
