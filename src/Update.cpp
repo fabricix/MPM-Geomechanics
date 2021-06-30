@@ -13,17 +13,13 @@ void Update::nodalVelocity(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for
+	#pragma omp parallel for shared(gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{	
-		// get node handle
-		Node& nodeI = gNodes->at(i);
-
-		if(nodeI.getActive()){
+		if(!gNodes->at(i).getActive()){ continue; }
 		
-			// update the velocity
-			nodeI.updateVelocity();
-		}
+		// update the velocity
+		gNodes->at(i).updateVelocity();
 	}
 }
 
@@ -33,20 +29,16 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for
+	#pragma omp parallel for shared (gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
-		// get node handle
-		Node& nodeI = gNodes->at(i);
+		if(!gNodes->at(i).getActive()){ continue; }
 
-		if(nodeI.getActive()) {
-
-			// update damping forces
-			nodeI.updateDampingForce();
+		// update damping forces
+		gNodes->at(i).updateDampingForce();
 			
-			// update total forces
-			nodeI.updateTotalForce();
-		}
+		// update total forces
+		gNodes->at(i).updateTotalForce();
 	}
 }
 
@@ -56,17 +48,13 @@ void Update::resetNodalValues(Mesh* mesh) {
 	vector<Node>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for
+	#pragma omp parallel for shared (gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
-		// get node handle
-		Node& nodeI = gNodes->at(i);
+		if(!gNodes->at(i).getActive()){ continue; }
 
-		if(nodeI.getActive()) {
-			
-			// reset values
-			nodeI.resetValues();
-		}
+		// reset values
+		gNodes->at(i).resetValues();
 	}
 }
 
@@ -79,7 +67,7 @@ void Update::particleDensity(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for
+		#pragma omp parallel for shared (particles) private(bodies, ibody)
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -100,7 +88,7 @@ void Update::particleStress(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for
+		#pragma omp parallel for shared (particles) private(bodies, ibody)
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -124,7 +112,7 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle 
-		#pragma omp parallel for
+		#pragma omp parallel for shared (particles, nodes, dt) private(mesh, bodies, ibody)
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -173,7 +161,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for
+		#pragma omp parallel for shared(particles, nodes, dt) private(ibody, bodies, mesh)
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -213,7 +201,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	// for each boundary node
-	#pragma omp parallel for
+	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i){
 
 		// get node handle
@@ -301,7 +289,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
 
 	// get boundary nodes
-	#pragma omp parallel for
+	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i) {
 
 		// get node handle 
@@ -393,7 +381,7 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 		
 		// for each particle
-		#pragma omp parallel for
+		#pragma omp parallel for shared(particles, mesh) private(bodies, ibody)
 		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute

@@ -7,21 +7,18 @@
 
 #include "Integration.h"
 
-void Integration::nodalMomentum(Mesh* mesh, double dt){
+void Integration::nodalMomentum(Mesh* mesh, double dt) {
 
 	// get mesh
 	vector<Node>* nodes = mesh->getNodes();
 
 	// for each node
+	#pragma omp parallel for shared(nodes, dt) private(mesh)
 	for (size_t i = 0; i < nodes->size(); ++i) {
 
-		// get node handle
-		Node& nodeI = nodes->at(i);
-
-		if (nodeI.getActive()){
+		if (!nodes->at(i).getActive()){ continue; }
 			
-			// integrate nodal momentum
-			nodeI.integrateMomentum(dt);
-		}
+		// integrate nodal momentum
+		nodes->at(i).integrateMomentum(dt);
 	}
 }
