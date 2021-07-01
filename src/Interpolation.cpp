@@ -45,29 +45,25 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 			// get the particle mass
-			double pMass = particles->at(i)->getMass();
+			const double pMass = particles->at(i)->getMass();
 
 			// for each node in the contribution list 
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get the contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// compute the weighted nodal mass
-				double nodalMass = pMass*contribI.getWeight();
+				const double nodalMass = pMass*contribution->at(j).getWeight();
 				
-				// add the weighted mass in node
-				if (nodalMass!=0.0) {
+				// check any mass in node
+				if (nodalMass==0.0) { continue; }
 		
-					// the node is inactivate if he does not have mass
-					nodeI.setActive(true);
+				// the node is inactivate if he doesn't have mass
+				nodeI->setActive(true);
 
-					// add mass at node
-					nodeI.addMass(nodalMass);
-				}
+				// add mass at node
+				nodeI->addMass(nodalMass);
 			}
 		}
 	}
@@ -102,14 +98,11 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get the contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// add the weighted momentum in node
-				nodeI.addMomentum(pMass*pVelocity*contribI.getWeight());
+				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
 			}
 		}
 	}
@@ -144,23 +137,20 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradients
-				const Vector3d gradient = contribI.getGradients();
+				const Vector3d gradient = contribution->at(j).getGradients();
 
 				// compute the particle's contribution to the nodal internal force
-				Vector3d internalForce = Vector3d::Zero();
+				Vector3d internalForce;
 				internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
 				internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
 				internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
 
 				// add the internal force contribution in node
-				nodeI.addInternalForce(internalForce);
+				nodeI->addInternalForce(internalForce);
 			}
 		}
 	}
@@ -192,14 +182,11 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// add weighted force in node
-				nodeI.addExternalForce(pExtForce*contribI.getWeight());
+				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
 			}
 		}
 	}
@@ -245,17 +232,14 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get the contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradient
-				const Vector3d dN = contribI.getGradients();
+				const Vector3d dN = contribution->at(j).getGradients();
 
 				// get nodal velocity
-				const Vector3d v = nodeI.getVelocity();
+				const Vector3d v = nodeI->getVelocity();
 
 				// compute the nodal contribution to the particle strain increment
 
@@ -304,17 +288,14 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contribution structure
-				const Contribution contribI = contribution->at(j);
-
 				// get contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// get nodal gradient
-				const Vector3d dN = contribI.getGradients();
+				const Vector3d dN = contribution->at(j).getGradients();
 
 				// get nodal velocity
-				const Vector3d v = nodeI.getVelocity();
+				const Vector3d v = nodeI->getVelocity();
 
 				// compute the nodal contribution to the particle spin increment
 
