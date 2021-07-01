@@ -6,7 +6,7 @@
  */
 
 #include "Model.h"
-#include "Node.h"
+#include "Mesh/Node.h"
 
 #include "Eigen/Core"
 using Eigen::Vector3d;

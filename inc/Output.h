@@ -8,9 +8,9 @@
 #ifndef OUTPUT_H_
 #define OUTPUT_H_
 
-#include "Mesh.h"
-#include "Particle.h"
-#include "Body.h"
+#include "Mesh/Mesh.h"
+#include "Particle/Particle.h"
+#include "Body/Body.h"
 
 /// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.

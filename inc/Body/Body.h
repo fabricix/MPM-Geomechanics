@@ -11,8 +11,8 @@
 #include<vector>
 using std::vector;
 
-#include "Particle.h"
-#include "Material.h"
+#include "Particle/Particle.h"
+#include "Materials/Material.h"
 
 /// \class Body
 /// \brief Represents a body

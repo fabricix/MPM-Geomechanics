@@ -9,8 +9,8 @@
 #define SOLVEREXPLICITUSL_H_
 
 #include "Solver.h"
-#include "Body.h"
-#include "Mesh.h"
+#include "Body/Body.h"
+#include "Mesh/Mesh.h"
 
 /// \class SolverExplicitUSL
 /// \brief Represents the operations to solve explicitly the

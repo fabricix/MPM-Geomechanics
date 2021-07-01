@@ -11,9 +11,9 @@ using std::vector;
 #include <cmath>
 using std::floor;
 
-#include "Mesh.h"
+#include "Mesh/Mesh.h"
 #include "Warning.h"
-#include "Particle.h"
+#include "Particle/Particle.h"
 
 Mesh::Mesh() {
 

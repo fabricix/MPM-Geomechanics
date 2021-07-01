@@ -8,7 +8,7 @@
 #ifndef INTEGRATION_H_
 #define INTEGRATION_H_
 
-#include "Mesh.h"
+#include "Mesh/Mesh.h"
 
 /// \namespace Integration
 /// \brief Represents the integration operations in the MPM.

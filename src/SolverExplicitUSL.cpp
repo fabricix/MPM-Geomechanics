@@ -11,7 +11,7 @@ using std::vector;
 #include <iostream>
 using std::cout;
 
-#include "SolverExplicitUSL.h"
+#include "Solver/SolverExplicitUSL.h"
 #include "Model.h"
 #include "Integration.h"
 #include "Interpolation.h"

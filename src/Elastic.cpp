@@ -8,7 +8,7 @@
 #include <cmath>
 using std::sqrt;
 
-#include "Elastic.h"
+#include "Materials/Elastic.h"
 
 void Elastic::updateStress(Particle* particle) const {
 

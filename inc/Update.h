@@ -8,8 +8,8 @@
 #ifndef UPDATE_H_
 #define UPDATE_H_
 
-#include "Mesh.h"
-#include "Body.h"
+#include "Mesh/Mesh.h"
+#include "Body/Body.h"
 
 /// \namespace Update
 /// \brief Represents operations to update values in nodes and particles.

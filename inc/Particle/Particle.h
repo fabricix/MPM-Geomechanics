@@ -13,10 +13,10 @@ using Eigen::Matrix3d;
 using Eigen::Vector3d;
 
 #include "Contribution.h"
-#include "Mesh.h"
+#include "Mesh/Mesh.h"
 #include "Model.h"
-#include "Shape.h"
-#include "Material.h"
+#include "Shape/Shape.h"
+#include "Materials/Material.h"
 
 #include <vector>
 

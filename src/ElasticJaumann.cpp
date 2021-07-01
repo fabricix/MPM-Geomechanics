@@ -5,7 +5,7 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-#include "ElasticJaumann.h"
+#include "Materials/ElasticJaumann.h"
 
 void ElasticJaumann::updateStress(Particle* particle) const {
 

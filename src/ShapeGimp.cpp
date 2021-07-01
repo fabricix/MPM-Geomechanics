@@ -8,7 +8,7 @@
 #include <cstdlib>
 using std::abs;
 
-#include "ShapeGimp.h"
+#include "Shape/ShapeGimp.h"
 
 ShapeGimp::ShapeGimp():Shape(){
 	

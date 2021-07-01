@@ -9,8 +9,8 @@
 using std::string;
 using std::to_string;
 
-#include "Particle.h"
-#include "Mesh.h"
+#include "Particle/Particle.h"
+#include "Mesh/Mesh.h"
 
 int Particle::totalParticles=0;
 

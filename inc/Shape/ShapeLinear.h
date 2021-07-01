@@ -8,7 +8,7 @@
 #ifndef SHAPELINEAR_H_
 #define SHAPELINEAR_H_
 
-#include <Shape.h>
+#include "Shape/Shape.h"
 
 /// \class ShapeLinear
 /// \brief Represents the Linear shape functions used in the interpolation process.

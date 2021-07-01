@@ -6,9 +6,9 @@
  */
 
 #include "Input.h"
-#include "SolverExplicitUSL.h"
-#include "Elastic.h"
-#include "BodyCuboid.h"
+#include "Solver/SolverExplicitUSL.h"
+#include "Materials/Elastic.h"
+#include "Body/BodyCuboid.h"
 #include "Warning.h"
 
 #include <omp.h>

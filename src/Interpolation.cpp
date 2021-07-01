@@ -7,8 +7,8 @@
 
 #include "Interpolation.h"
 #include "Contribution.h"
-#include "Particle.h"
-#include "Body.h"
+#include "Particle/Particle.h"
+#include "Body/Body.h"
 
 ///
 /// From particle to node:

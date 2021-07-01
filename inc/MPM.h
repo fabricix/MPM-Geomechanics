@@ -22,13 +22,13 @@
 #ifndef MPM_H_
 #define MPM_H_
 
-#include "Mesh.h"
-#include "Body.h"
+#include "Mesh/Mesh.h"
+#include "Body/Body.h"
 #include "Model.h"
 #include "Output.h"
 #include "Input.h"
 #include "States.h"
-#include "Solver.h"
+#include "Solver/Solver.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM

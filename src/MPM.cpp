@@ -7,12 +7,12 @@
 
 #include "MPM.h"
 #include "Warning.h"
-#include "SolverExplicitUSL.h"
+#include "Solver/SolverExplicitUSL.h"
 #include "Warning.h"
-#include "Elastic.h"
-#include "BodyCuboid.h"
-#include "ShapeGimp.h"
-#include "ShapeLinear.h"
+#include "Materials/Elastic.h"
+#include "Body/BodyCuboid.h"
+#include "Shape/ShapeGimp.h"
+#include "Shape/ShapeLinear.h"
 #include "Loads.h"
 
 #include "Json/json.hpp"

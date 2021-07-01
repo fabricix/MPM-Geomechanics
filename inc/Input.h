@@ -18,8 +18,8 @@ using json = nlohmann::json;
 using Eigen::Vector3i;
 using Eigen::Vector3d;
 
-#include "Solver.h"
-#include "Material.h"
+#include "Solver/Solver.h"
+#include "Materials/Material.h"
 #include "Model.h"
 #include "Boundary.h"
 

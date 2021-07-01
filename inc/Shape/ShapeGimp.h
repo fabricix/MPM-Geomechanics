@@ -8,7 +8,7 @@
 #ifndef SHAPEGIMP_H_
 #define SHAPEGIMP_H_
 
-#include <Shape.h>
+#include "Shape/Shape.h"
 
 /// \class ShapeGimp
 /// \brief Represents the GIMP shape functions used in the interpolation process.

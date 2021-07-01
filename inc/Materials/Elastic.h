@@ -8,8 +8,8 @@
 #ifndef ELASTIC_H_
 #define ELASTIC_H_
 
-#include <Material.h>
-#include "Particle.h"
+#include "Materials/Material.h"
+#include "Particle/Particle.h"
 
 /// \class Elastic
 /// \brief Represents an elastic material.

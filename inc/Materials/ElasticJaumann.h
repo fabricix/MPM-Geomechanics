@@ -8,7 +8,7 @@
 #ifndef ELASTICJAUMANN_H_
 #define ELASTICJAUMANN_H_
 
-#include <Elastic.h>
+#include "Materials/Elastic.h"
 
 /// \class ElasticJaumann
 /// \brief Represents an elastic material with the Jaumann rate correction

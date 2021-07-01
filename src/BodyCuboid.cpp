@@ -5,7 +5,7 @@
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-#include "BodyCuboid.h"
+#include "Body/BodyCuboid.h"
 
 void BodyCuboid::create(Mesh& mesh, Material* material) {
 

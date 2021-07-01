@@ -8,7 +8,7 @@
 #ifndef BODYCUBOID_H_
 #define BODYCUBOID_H_
 
-#include <Body.h>
+#include <Body/Body.h>
 
 /// \class BodyCuboid
 /// \brief Represents cuboid in 3D

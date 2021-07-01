@@ -8,7 +8,7 @@
 #ifndef LOADS_H_
 #define LOADS_H_
 
-#include <Body.h>
+#include "Body/Body.h"
 
 #include <vector>
 using std::vector;
