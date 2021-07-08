@@ -57,7 +57,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 				const double nodalMass = pMass*contribution->at(j).getWeight();
 				
 				// check any mass in node
-				if (nodalMass==0.0) { continue; }
+				if (nodalMass<=0.0) { continue; }
 		
 				// the node is inactivate if he doesn't have mass
 				nodeI->setActive(true);

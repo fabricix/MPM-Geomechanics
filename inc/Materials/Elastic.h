@@ -56,7 +56,7 @@ public:
 	/// \param[out] sound_speed Sound speed
 	virtual double getSoundSpeed( ) const;
 	
-private:
+protected:
 	
 	double Young; //!< Young's modulus \f$E\f$
 	
@@ -66,12 +66,10 @@ private:
 inline Elastic::Elastic(int id, double density, double young, double poisson)
 : Material(id, density, Material::MaterialType::ELASTIC)
 {
-	this->setYoung(young);
-	this->setPoisson(poisson);
+	this->Young=young;
+	this->Poisson=poisson;
 }
 
-inline Elastic::~Elastic() {
-	
-}
+inline Elastic::~Elastic() { }
 
 #endif /* ELASTIC_H_ */

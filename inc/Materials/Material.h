@@ -18,7 +18,7 @@ public:
 
 	/// \enum MaterialType
 	/// Describes the material's constitutive model type
-	enum MaterialType{ NONE, ELASTIC };
+	enum MaterialType{ NONE, ELASTIC, ELASTOPLASTIC };
 
 	/// \brief Default constructor
 	///

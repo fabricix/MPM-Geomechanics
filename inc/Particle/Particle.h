@@ -108,6 +108,10 @@ public:
 	/// \return Particle strain increment
 	inline const Matrix3d& getStrainIncrement() const { return this->strainIncrement; }
 
+	/// \brief Returns the strain
+	/// \return Total particle strain 
+	inline const Matrix3d& getStrain() const { return this->strain; }
+
 	/// \brief Returns the vorticity increment
 	/// \return Particle vorticity (spin) increment 
 	inline const Matrix3d& getVorticityIncrement() const { return this->vorticityIncrement; }
@@ -154,7 +158,7 @@ public:
 
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
-	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; }
+	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }
 
 	/// \brief Configures the vorticity increment
 	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
@@ -178,7 +182,11 @@ public:
 
 	/// \brief Returns o number of particles created
 	/// \return Total created particles
-	static int getTotalParticles(); 
+	static int getTotalParticles();
+
+	/// \brief Add a plastic strain increment
+	/// \param[in] deltaPlasticStrain Plastic strain increment
+	inline void addPlasticStrain(double deltaPlasticStrain) { this->plasticStrain+=deltaPlasticStrain; }
 
 private:
 

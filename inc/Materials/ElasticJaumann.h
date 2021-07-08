@@ -38,8 +38,6 @@ inline ElasticJaumann::ElasticJaumann(int id, double density, double young, doub
 
 }
 
-ElasticJaumann::~ElasticJaumann() {
-
-}
+inline ElasticJaumann::~ElasticJaumann() { }
 
 #endif /* ELASTICJAUMANN_H_ */

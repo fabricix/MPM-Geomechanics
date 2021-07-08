@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Solver/SolverExplicitUSL.h"
 #include "Materials/Elastic.h"
+#include "Materials/MohrCoulomb.h"
 #include "Body/BodyCuboid.h"
 #include "Warning.h"
 
@@ -241,19 +242,36 @@ vector<Material*> Input::getMaterialList(){
 			json::iterator it;
 			for(it = inputFile["material"].begin(); it!=inputFile["material"].end();it++){
 				
-				// elastic material
+				// verify material type
 				if (!(*it)["type"].is_null() && (*it)["type"].is_string()){
 					
+					// elastic material
 					if ((*it)["type"] == "elastic")
 					{
-						int id=0; 
-						if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+						// material properties
+						int id=0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
 						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
 						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
 						
 						// create a new elastic material
 						materials.push_back(new Elastic(id, density, young, poisson));
+					}
+					// mohr-coulomb material
+					else if ((*it)["type"] == "mohr-coulomb")
+					{	
+						// material properties
+						int id=0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
+						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
+						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
+						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
+						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
+						double tensile=0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
+						
+						// create a new material
+						materials.push_back(new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile));	
 					}
 				}
 			}
