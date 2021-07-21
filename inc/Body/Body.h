@@ -61,7 +61,7 @@ public:
 	/// \param[in] particle_list A vector containing pointers to particles
 	inline void insertParticles(const vector<Particle*>& particle_list) { this->particles.insert(this->particles.end(),particle_list.begin(),particle_list.end()); }
 	
-private:
+protected:
 	
 	int id; //!< body identification
 

@@ -48,23 +48,6 @@ using Eigen::Vector3d;
 /// | point_p1 | define the a lower left point in a cuboid | array |
 /// | point_p2 | define the a higher right point in a cuboid | array |
 ///
-/// ### Cuboid definition
-///
-/// ```
-///	                            Cuboid
-///                           ----------
-///                          |\         |\ 
-///                          | \        | \ 
-///    z                     |  \       |  \ 
-///    |                     |    ----------+ <-- Point 2
-///    |                     |   |      |   |
-///    +---- y   Point 1 --> + --|------    |
-///     \                     \  |       \  |
-///      \                     \ |        \ |
-///       x                     \|         \|
-///                               ---------- 
-/// ```
-///
 /// ## Loads
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -117,31 +100,6 @@ using Eigen::Vector3d;
 /// | plane_Xn | Plane which normal points to the positive part of the axis X | -- | 
 /// | plane_Yn | Plane which normal points to the positive part of the axis Y | -- | 
 /// | plane_Zn | Plane which normal points to the positive part of the axis Z | -- | 
-///
-/// ### Definition of the planes for setting boundary conditions
-///
-/// ```
-///                     Boundaries of the Mesh
-///                             
-///                          +----------+
-///                          |\          \ 
-///                          | \ Plane Zn \ 
-///    z                     |  \          \ 
-///    |       Plane Y0 ------>  +----------+  <------ Plane Yn
-///    |                     |   |          |
-///    +---- y   		     +   |          |       
-///     \                     \  | Plane Xn |
-///      \                     \ |          |
-///       x                     \|          |
-///                              +----------+ 
-///
-///
-/// Plane X0 : Plane which normal points to the negative direction of axis X
-/// Plane Xn : Plane which normal points to the positive direction of axis X
-///
-/// ```
-/// **Note**: If any boundary condition is defined in the input file, sliding boundary condition
-/// is chosen, by default, for all planes.
 ///
 /// ## Materials
 ///	| Keyword | Description | Data type |

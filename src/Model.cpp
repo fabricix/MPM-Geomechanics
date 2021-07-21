@@ -141,7 +141,7 @@ namespace ModelSetup {
 	void setNumThreads(unsigned nThreads) {
 
 		#ifdef _OPENMP
-		omp_set_num_threads((nThreads>0&&nThreads<=omp_get_num_procs())?nThreads:omp_get_num_procs());
+		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
 		#endif
 	}
 }

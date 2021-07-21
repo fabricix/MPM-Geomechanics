@@ -12,6 +12,23 @@
 
 /// \class BodyCuboid
 /// \brief Represents cuboid in 3D
+/// 
+/// ### Cuboid definition
+///
+/// ```
+///	                            Cuboid
+///                           ----------
+///                          |\         |\ 
+///                          | \        | \ 
+///    z                     |  \       |  \ 
+///    |                     |    ----------+ <-- Point 2
+///    |                     |   |      |   |
+///    +---- y   Point 1 --> + --|------    |
+///     \                     \  |       \  |
+///      \                     \ |        \ |
+///       x                     \|         \|
+///                               ---------- 
+/// ```
 class BodyCuboid: public Body {
 
 public:

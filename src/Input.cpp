@@ -10,6 +10,7 @@
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
 #include "Body/BodyCuboid.h"
+#include "Body/BodyPolygon.h"
 #include "Warning.h"
 
 #include <omp.h>
@@ -358,6 +359,94 @@ vector<Body*> Input::getBodyList(){
 					}
 
 					bodies.push_back(iBody);
+				}
+
+				if ((*it)["type"] == "polygon_2d") {
+
+					// body id
+					int id=0; 
+					if ((*it)["id"].is_number()){
+						id = ((*it)["id"]);
+					}
+					else
+						throw(0);
+
+					// material id
+					int material_id=0; 
+					if ((*it)["material_id"].is_number()) 
+					{
+					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					// extrude direction
+					string extrude_direction=""; 
+					if ((*it)["extrude_direction"].is_string()) 
+					{
+					 	extrude_direction = ((*it)["extrude_direction"]);
+					}
+					else
+						throw(0);
+
+					// extrude displacement
+					double extrude_displacement=0; 
+					if ((*it)["extrude_displacement"].is_number()) 
+					{
+					 	extrude_displacement = ((*it)["extrude_displacement"]);
+					}
+					else
+						throw(0);
+
+					// discretization length
+					double discretization_length=0; 
+					if ((*it)["discretization_length"].is_number()) 
+					{
+					 	discretization_length = ((*it)["discretization_length"]);
+					}
+					else
+						throw(0);
+
+					// points
+					vector<Vector3d> polygon_points;
+					if ((*it)["points"].is_array()) 
+					{
+					 	for (size_t i = 0; i < (*it)["points"].size(); ++i)
+					 	{
+					 		// point position
+					 		double px = (*it)["points"].at(i).at(0);
+					 		double py = (*it)["points"].at(i).at(1);
+					 		double pz = (*it)["points"].at(i).at(2);
+
+					 		polygon_points.push_back(Vector3d(px,py,pz));
+					 	}
+					 	
+					 	if (polygon_points.size()!=0)
+					 	{
+					 		// create a new polygon body
+					 		BodyPolygon* iBody = new BodyPolygon();
+
+							if (iBody==NULL)
+							{
+								throw(0);
+							}
+							else
+							{
+								iBody->setId(id);
+								iBody->setPoints(polygon_points);
+								iBody->setMaterialId(material_id);
+								iBody->setExtrudeDirection(extrude_direction);
+								iBody->setExtrudeDisplacement(extrude_displacement);
+								iBody->setDiscretizationLength(discretization_length);
+							}
+						
+							bodies.push_back(iBody);
+					 	}
+					 	else
+					 		throw(0);
+					}
+					else
+						throw(0);
 				}
 			}
 		}

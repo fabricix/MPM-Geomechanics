@@ -10,8 +10,16 @@
 /// \section intro_sec Introduction
 ///
 /// The MPM-Geomechanics is a Material Point Method implementation
-/// using C++ and Object Oriented Programming to simulating geomechanical
-/// problems in 3D.
+/// using C++ and Object Oriented Programming to simulating 
+/// geomechanical problems in 3D.
+///
+/// The main objectives of this program are:
+///
+/// - to provide a computational tool suitable for solve 
+/// geomechanical problems involving large deformations.
+///
+/// - to provide a open-source framework for MPM simulations
+/// in geomechanics.
 ///
 /// \section install_sec Installation
 ///

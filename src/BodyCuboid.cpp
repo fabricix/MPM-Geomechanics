@@ -20,9 +20,6 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 	particleSize.x()=cellDimension.x()/particlesInDirection.x();
 	particleSize.y()=cellDimension.y()/particlesInDirection.y();
 	particleSize.z()=cellDimension.z()/particlesInDirection.z();
-
-	// particle volume
-	// double particleVolume=particleSize.x()*particleSize.y()*particleSize.z();
 	 
 	// number of cells in bounding box
 	Vector3d nCellsBoundingBox;
@@ -34,9 +31,6 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 	double dx = cellDimension.x();
 	double dy = cellDimension.y();
 	double dz = cellDimension.z();
-
-	// vector of particles
-	vector<Particle*> particles;
 
 	// create the particles and put it in the space
 	for (int i = 0; i < nCellsBoundingBox.x(); ++i){
@@ -98,16 +92,15 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 				pt8.z() -= (dz*0.25);
 
 				// push all particles in the body's particle vector
-				particles.push_back(new Particle(pt1,material,particleSize));
-				particles.push_back(new Particle(pt2,material,particleSize));
-				particles.push_back(new Particle(pt3,material,particleSize));
-				particles.push_back(new Particle(pt4,material,particleSize));
-				particles.push_back(new Particle(pt5,material,particleSize));
-				particles.push_back(new Particle(pt6,material,particleSize));
-				particles.push_back(new Particle(pt7,material,particleSize));
-				particles.push_back(new Particle(pt8,material,particleSize));
+				Body::particles.push_back(new Particle(pt1,material,particleSize));
+				Body::particles.push_back(new Particle(pt2,material,particleSize));
+				Body::particles.push_back(new Particle(pt3,material,particleSize));
+				Body::particles.push_back(new Particle(pt4,material,particleSize));
+				Body::particles.push_back(new Particle(pt5,material,particleSize));
+				Body::particles.push_back(new Particle(pt6,material,particleSize));
+				Body::particles.push_back(new Particle(pt7,material,particleSize));
+				Body::particles.push_back(new Particle(pt8,material,particleSize));
 			}
 		}   
 	}
-	setParticles(particles);
 }

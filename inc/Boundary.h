@@ -13,6 +13,32 @@ using std::vector;
 
 /// \class Boundary
 /// \brief Mesh boundary nodes
+///
+/// ### Definition of the planes for setting boundary conditions
+///
+/// ```
+///                     Boundaries of the Mesh
+///                             
+///                          +----------+
+///                          |\          \ 
+///                          | \ Plane Zn \ 
+///    z                     |  \          \ 
+///    |       Plane Y0 ------>  +----------+  <------ Plane Yn
+///    |                     |   |          |
+///    +---- y   		     +   |          |       
+///     \                     \  | Plane Xn |
+///      \                     \ |          |
+///       x                     \|          |
+///                              +----------+ 
+///
+///
+/// Plane X0 : Plane which normal points to the negative direction of axis X
+/// Plane Xn : Plane which normal points to the positive direction of axis X
+///
+/// ```
+/// **Note**: If any boundary condition is defined in the input file, sliding boundary condition
+/// is chosen, by default, for all planes.
+///
 class Boundary {
 
 public:
