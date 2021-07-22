@@ -121,7 +121,7 @@ void Particle::updateContributionNodes(Mesh* mesh)
 // private methods
 // 
 
-void Particle::initializeValues(){
+void Particle::initializeValues() {
 
 	active=true;
 	id=0;
@@ -143,8 +143,6 @@ void Particle::initializeValues(){
 	strain.setZero();
 	strainIncrement.setZero();
 	vorticityIncrement.setZero();
-	deformationGradientIncrement.setZero();
-	velocityGradient.setZero();
 
 	contributionNodes.clear();
 	contributionNodes.resize(ModelSetup::getContributionNodesNum());

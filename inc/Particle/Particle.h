@@ -188,7 +188,7 @@ public:
 	/// \param[in] deltaPlasticStrain Plastic strain increment
 	inline void addPlasticStrain(double deltaPlasticStrain) { this->plasticStrain+=deltaPlasticStrain; }
 
-private:
+protected:
 
 	bool active; //!< is particle active
 	int id;	//!< particle id
@@ -210,8 +210,6 @@ private:
 	Matrix3d strain; //!< particle strain
 	Matrix3d strainIncrement; //!< particle strain increment
 	Matrix3d vorticityIncrement; //!< particle vorticity increment
-	Matrix3d deformationGradientIncrement; //!< particle deformation gradient increment
-	Matrix3d velocityGradient; //!< particle deformation gradient
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
 	Shape* shape; //!< shape function representation
