@@ -15,7 +15,7 @@ using std::vector;
 #include "Materials/Material.h"
 
 /// \class Body
-/// \brief Represents a body
+/// \brief Represents a body in the space forming by a group of materials points and identified by a number.
 class Body {
 
 public:

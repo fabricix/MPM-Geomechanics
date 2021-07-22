@@ -11,9 +11,12 @@
 #include <Body/Body.h>
 
 /// \class BodyCuboid
-/// \brief Represents cuboid in 3D
+/// \brief Is a type of Body representing a cuboid in 3D
 /// 
 /// ### Cuboid definition
+/// 
+/// The cuboid in geometrically defined by the coordinates of the lower left point (Point 1) 
+/// and the higher right point (Point 2). See Figure bellow.
 ///
 /// ```
 ///	                            Cuboid
@@ -73,8 +76,6 @@ inline BodyCuboid::BodyCuboid():Body() {
 	materialId=-1;
 }
 
-inline  BodyCuboid::~BodyCuboid() {
-	
-}
+inline  BodyCuboid::~BodyCuboid() { }
 
 #endif /* BODYCUBOID_H_ */
