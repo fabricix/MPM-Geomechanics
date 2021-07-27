@@ -3,7 +3,7 @@
 
 	"shape_function":"GIMP",
 
-	"time":0.1,
+	"time":2,
 
 	"time_step":0.001,
 
@@ -19,7 +19,7 @@
 
 	"results":
 	{
-		"print":3,
+		"print":10,
 		"fields":["id","displacement","material","active"]
 	},
 
@@ -42,13 +42,16 @@
 
 	"material":
 	{
-		"elastic":
+		"plastic":
 		{
-			"type":"elastic",
+			"type":"mohr-coulomb",
 			"id":1,
 			"young":50e4,
 			"density":2000,
-			"poisson":0.2
+			"poisson":0.2,
+			"friction":30.0,
+			"cohesion":1500.0
+
 		}
 	},
 

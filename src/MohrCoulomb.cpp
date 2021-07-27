@@ -14,9 +14,6 @@ using namespace Eigen;
 #include <Materials/MohrCoulomb.h>
 #include "Warning.h"
 
-//#define NDEBUG
-#include <assert.h>
-
 #ifndef PI
 #define PI 3.141592653589793
 #endif
@@ -48,7 +45,6 @@ void MohrCoulomb::updateStress(Particle* particle) const {
     double s1 = eigensolver.eigenvalues()[0];
     double s2 = eigensolver.eigenvalues()[1];
     double s3 = eigensolver.eigenvalues()[2];
-    assert((s1<s2||s1<s3||s2<s3));
 
     // model definition variables
     double Nfi  = (1.0+sin(friction*PI/180.0))/(1.0-sin(friction*PI/180.0));
@@ -56,6 +52,9 @@ void MohrCoulomb::updateStress(Particle* particle) const {
 
     // tensile strengh
     double st = cohesion/tan(friction*PI/180.0);
+    
+    // verify if the tensile cut-off in inside the failure criteria
+    if (this->tensile<st){ st=this->tensile; }
 
     // shear and tensile failure criteria
     double fs = s1 - s3*Nfi + 2.0*cohesion*sqrt(Nfi);

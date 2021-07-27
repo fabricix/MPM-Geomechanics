@@ -15,6 +15,9 @@
 
 #include <omp.h>
 
+#include <limits>
+using std::numeric_limits;
+
 #include <fstream>
 using std::ifstream;
 
@@ -269,7 +272,7 @@ vector<Material*> Input::getMaterialList(){
 						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
 						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
-						double tensile=0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
+						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 						
 						// create a new material
 						materials.push_back(new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile));	
