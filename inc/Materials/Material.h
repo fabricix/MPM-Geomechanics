@@ -8,6 +8,9 @@
 #ifndef MATERIAL_H_
 #define MATERIAL_H_
 
+#include "Eigen/Core"
+using Eigen::Vector3d;
+
 class Particle;
 
 /// \class Material
@@ -44,6 +47,14 @@ public:
 	/// \param[in] material_density Material density 
 	inline void setDensity(double material_density) { this->density=material_density; }
 	
+	/// \brief Configures the material porosity
+	/// \param[in] material_porosity Material porosity
+	inline void setPorosity(double material_porosity) { this->porosity=material_porosity; }
+
+	/// \brief Configures the material hydraulic conductivity
+	/// \param[in] hydraulic_conductivity Material hydraulic conductivity
+	inline void setHydraulicConductivity(Vector3d hydraulic_conductivity) { this->hydraulicConductivity=hydraulic_conductivity; }
+
 	/// \brief Configures the material type
 	/// \param[in] material_type Material::MaterialType
 	inline void setType(MaterialType material_type) { this->type=material_type; }
@@ -64,7 +75,13 @@ protected:
 	
 	int id; //!< material identification
 
-	double density; //!< density \f$\rho\f$
+	double density; //!< initial material density \f$\rho^{0}\f$ or initial solid density in two-phase calculations \f$\rho^{s,0}\f$
+
+	double densityFluid; //!< initial density of the fluid phase in two-phase calculations \f$\rho^{f,0}\f$
+
+	double porosity; //!< initial porosity \f$n^0\f$
+
+	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
 	
 	MaterialType type; //!< material type
 };
@@ -74,10 +91,11 @@ inline Material::Material(int id, double density, MaterialType type) {
 	this->density=density;
 	this->id=id;
 	this->type=type;
+	this->porosity=0.0;
+	this->densityFluid=0.0;
+	this->hydraulicConductivity.setZero();
 }
 
-inline Material::~Material() {
-
-}
+inline Material::~Material() { }
 
 #endif /* MATERIAL_H_ */
