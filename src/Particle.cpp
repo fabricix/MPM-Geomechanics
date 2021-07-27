@@ -14,62 +14,34 @@ using std::to_string;
 
 int Particle::totalParticles=0;
 
-Particle::Particle() {
-
-	initializeValues();
-
-	totalParticles++;
-
-	setId(totalParticles);
-}
-
 Particle::Particle(const Vector3d& position, Material* material, const Vector3d& size){
 
-	initializeValues();
+	this->active=true;
+	this->id=totalParticles;
+	this->bodyId=0;
 
-	setPosition(position);
+	this->density=material!=0?material->getDensity():0.0;
+	this->mass=size.x()*size.y()*size.z()*this->density;
+	this->volume=0.0;
+	this->initialVolume=0.0;
+	this->plasticStrain=0.0;
+
+	this->initialPosition=position;
+	this->position=position;
+	this->velocity.setZero();
+	this->externalForce.setZero();
+	this->size=size;
+
+	this->stress.setZero();
+	this->strain.setZero();
+	this->strainIncrement.setZero();
+	this->vorticityIncrement.setZero();
+
+	this->contributionNodes.clear();
+	this->contributionNodes.resize(ModelSetup::getContributionNodesNum());
 	
-	setInitialPosition(position);
-	
-	setMaterial(material);
-
-	setDensity(material!=0?material->getDensity():0.0);
-
-	setSize(size);
-
-	setMass(size.x()*size.y()*size.z()*getDensity());
-
-	setId(totalParticles);
-
-	totalParticles++;
-}
-
-Particle::Particle(const Vector3d& position, Material* material) {
-
-	initializeValues();
-
-	setPosition(position);
-	
-	setInitialPosition(position);
-
-	setMaterial(material);
-
-	setDensity(material!=0?material->getDensity():0.0);
-
-	setId(totalParticles);
-
-	totalParticles++;
-}
-
-Particle::Particle(const Vector3d& position) {
-
-	initializeValues();
-
-	setPosition(position);
-
-	setInitialPosition(position);
-
-	setId(totalParticles);
+	this->shape=0;
+	this->material=material;
 
 	totalParticles++;
 }
@@ -120,36 +92,6 @@ void Particle::updateContributionNodes(Mesh* mesh)
 //
 // private methods
 // 
-
-void Particle::initializeValues() {
-
-	active=true;
-	id=0;
-	bodyId=0;
-
-	mass=0.0;
-	density=0.0;
-	volume=0.0;
-	initialVolume=0.0;
-	plasticStrain=0.0;
-
-	initialPosition.setZero();
-	position.setZero();
-	velocity.setZero();
-	externalForce.setZero();
-	size.setZero();
-
-	stress.setZero();
-	strain.setZero();
-	strainIncrement.setZero();
-	vorticityIncrement.setZero();
-
-	contributionNodes.clear();
-	contributionNodes.resize(ModelSetup::getContributionNodesNum());
-	
-	shape=0;
-	material=0;
-}
 
 void Particle::updateDensity() {
 

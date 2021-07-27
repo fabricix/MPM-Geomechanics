@@ -30,19 +30,6 @@ class Particle {
 
 public:
 
-	/// Default constructor
-	/// 
-	Particle(); 
-
-	/// \brief Create a particle
-	/// \param[in] position Particle position
-	Particle(const Vector3d& position);
-
-	/// \brief Create a particle
-	/// \param[in] position Particle position
-	/// \param[in] material Material
-	Particle(const Vector3d& position, Material* material);
-	
 	/// \brief Create a particle
 	/// \param[in] position Particle position
 	/// \param[in] material Material
@@ -216,10 +203,6 @@ protected:
 	Material* material; //!< material pointer
 
 	static int totalParticles; //!< total particle in the model
-	
-	/// Initialize all attributes in the particles
-	///
-	void initializeValues();
 };
 
 inline Particle::~Particle() {
