@@ -44,9 +44,22 @@ using Eigen::Vector3d;
 /// | type | define a type of body | string |
 /// | id | define a body identification | integer |
 /// | material_id | used to setup a defined material to the body | integer |
-/// | cuboid | cuboid body type | -- |
+
+/// ### Cuboid
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | ----------|
+/// | cuboid | cuboid body type | body type |
 /// | point_p1 | define the a lower left point in a cuboid | array |
 /// | point_p2 | define the a higher right point in a cuboid | array |
+
+/// ### Polygon extrusion
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | ----------|
+/// | polygon_2d | body created by a 2D polygon | body type |
+/// | extrude_direction | direction of the extrusion during the polygon body type | string |
+/// | extrude_displacement| magnitude of the displacement in the extrude direction | double |
+/// | discretization_length | cell dimension of the auxiliary mesh during the creation of the polygon body type  | double |
+/// | points | 3D coordinate points | array |
 ///
 /// ## Loads
 ///	| Keyword | Description | Data type |
@@ -108,9 +121,22 @@ using Eigen::Vector3d;
 /// | id | material identification | integer |
 /// | density | mass density | double |
 /// | type | used to specify the material constitutive model | string |
+///
+/// ## Linear Elastic
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
 /// | elastic | elastic material type | -- |
 /// | poisson | Poisson's ratio of the material | double |
 /// | young | Young's modulus of the material | double |
+///
+/// ## Mohr-Coulomb
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | mohr-coulomb | Mohr-Coulomb elasto plastic material type | -- |
+/// | friction | Angle of internal friction in degree | double |
+/// | cohesion | Material Cohesion | double |
+/// | dilation | Material dilation | double |
+/// | tensile  | Tensile cut-off   | double |
 ///
 /// ## Results
 ///	| Keyword | Description | Data type |

@@ -57,6 +57,7 @@
 /// material points in each direction inside a cell;
 /// 3. puts the material points beginning by the left lower point of the bounding box, 
 /// verifying if the material point is inside the polygon.
+///
 class BodyPolygon: public Body {
 
 public:
