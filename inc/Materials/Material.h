@@ -39,6 +39,14 @@ public:
 	/// \return Material density
 	inline double getDensity() const { return this->density; }
 
+	/// \brief Returns fluid density on material
+	/// \return Fluid density
+	inline double getDensityFluid() const { return this->densityFluid; }
+
+	/// \brief Returns material porosity
+	/// \return Material porosity
+	inline double getPorosity() const { return this->porosity; }
+
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
 	inline void setId(int material_id) { this->id=material_id; }

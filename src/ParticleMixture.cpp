@@ -11,24 +11,25 @@
 ParticleMixture::ParticleMixture(const Vector3d& position, Material* material, const Vector3d& size):
 Particle(position, material, size)
 {
-    // TODO
-
-    // this->massFluid=0; //!< fluid mass
+    // local variables
     
-    // this->densityFluid=0; //!< particle density
+    double porosity = material!=0?material->getPorosity():0.0;
 
-    // this->pressure=0; //!< fluid pressure
+    // configure members
 
-    // this->initialPorosity=0; //!< initial porosity of the medium
+    this->densityFluid = material!=0?material->getDensityFluid():0.0;
 
-    // this->porosity=0; //!< porosity of the medium
+    this->massFluid = this->densityFluid*porosity*(size.x()*size.y()*size.z());
     
-    // Vector3d velocityFluid; //!< fluid velocity
+    this->pressure=0; 
+
+    this->porosity = porosity;
     
-    // Vector3d externalForceFluid; //!< external force of fluid
+    this->velocityFluid.setZero();
+    
+    this->externalForceFluid.setZero();
 
-    // Matrix3d strainIncrementFluid; //!< fluid strain increment
-
+    this->strainIncrementFluid.setZero();
 }
 
 ParticleMixture::~ParticleMixture() { }

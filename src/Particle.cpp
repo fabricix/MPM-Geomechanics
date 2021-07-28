@@ -16,12 +16,18 @@ int Particle::totalParticles=0;
 
 Particle::Particle(const Vector3d& position, Material* material, const Vector3d& size){
 
+	// local variables
+
+	double porosity = material!=0?material->getPorosity():0.0;
+	
+	// configures members
+	
 	this->active=true;
 	this->id=totalParticles;
 	this->bodyId=0;
 
 	this->density=material!=0?material->getDensity():0.0;
-	this->mass=size.x()*size.y()*size.z()*this->density;
+	this->mass=(size.x()*size.y()*size.z())*this->density*(1-porosity);
 	this->plasticStrain=0.0;
 
 	this->initialPosition=position;

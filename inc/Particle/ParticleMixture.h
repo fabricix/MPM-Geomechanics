@@ -26,15 +26,15 @@ public:
 
 private:
 
-    double massFluid; //!< fluid mass in mixture: \f$m^{f,t}\f$
-    double densityFluid; //!< current fluid density in mixture: \f$\rho^{f,t}\f
-    double pressure; //!< current fluid pressure in mixture: \f$p^{f,t}\f$
-    double porosity; //!< current porosity of the mixture: \f$n^{t}\f$
+    double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$
+    double densityFluid; //!< current fluid density in mixture: \f$\rho^{f}\f$
+    double pressure; //!< current fluid pressure in mixture: \f$p^{f}\f$
+    double porosity; //!< current porosity of the mixture: \f$n\f$
     
-    Vector3d velocityFluid; //!< current fluid velocity in mixture: \f$v_i^{f,t}\f$
-    Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{\text{ext},f,t}\f$
-    Vector3d internalForceFluid; //!< current internal force of fluid in mixture: \f$f_i^{\text{int},f,t}\f$
-    Matrix3d strainIncrementFluid; //!< current fluid strain increment in mixture: \f$\Delta \epsilon_{ij}^{f,t}\f$
+    Vector3d velocityFluid; //!< current fluid velocity in mixture: \f$v_i^{f}\f$
+    Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{\text{ext},f}\f$
+    Vector3d internalForceFluid; //!< current internal force of fluid in mixture: \f$f_i^{\text{int},f}\f$
+    Matrix3d strainIncrementFluid; //!< current fluid strain increment in mixture: \f$\Delta \epsilon_{ij}^{f}\f$
 };
 
 #endif /* INC_PARTICLE_PARTICLEMIXTURE_H_ */
