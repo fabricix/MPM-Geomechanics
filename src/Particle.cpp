@@ -22,8 +22,6 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 
 	this->density=material!=0?material->getDensity():0.0;
 	this->mass=size.x()*size.y()*size.z()*this->density;
-	this->volume=0.0;
-	this->initialVolume=0.0;
 	this->plasticStrain=0.0;
 
 	this->initialPosition=position;

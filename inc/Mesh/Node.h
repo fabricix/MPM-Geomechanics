@@ -105,7 +105,7 @@ public:
 	
 	/// \brief Delete all values stored in node
 	///
-	void resetValues();
+	virtual void resetValues();
 
 	/// \brief Calculate the total nodal force
 	///
@@ -125,27 +125,19 @@ public:
 
 private:
 
-	bool active; //!< is active node
+	bool active; //!< is active node: \f$\text{active}\f$
 
-	int id; //!< nodal identification
+	int id; //!< nodal identification: \f$\text{id}\f$
 
-	double mass; //!< nodal mass
-	
-	Vector3d coordinates; //!< node coordinates
+	double mass; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$
 
-	Vector3d momentum; //!< nodal momentum
-
-	Vector3d velocity; //!< nodal velocity
-
-	Vector3d acceleration; //!< nodal acceleration
-
-	Vector3d externalForce; //!<  total external force
-
-	Vector3d internalForce; //!< nodal internal force
-
-	Vector3d dampingForce; //!< nodal damping force
-	
-	Vector3d totalForce; //!< nodal total force
+	Vector3d coordinates; //!< nodal coordinates: \f$x_{iI}\f$
+	Vector3d momentum; //!< nodal momentum: \f$p_{iI}\f$, or momentum in solid in two-phase calculations: \f$p_{iI}^{s}\f$
+	Vector3d velocity; //!< nodal velocity: \f$v_{iI}\f$, or velocity in solid in two-phase calculations: \f$v_{iI}^{s}\f$
+	Vector3d externalForce; //!< nodal external force: \f$f_{iI}^{\text{ext}}\f$, or external force in solid in two-phase calculations: \f$f_{iI}^{\text{ext},s}\f$
+	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{\text{int}}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{\text{int},s}\f$
+	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{\text{dmp}}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{\text{dmp},s}\f$
+	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
 };
 
 inline Node::Node() {
@@ -156,7 +148,6 @@ inline Node::Node() {
     coordinates.setZero();
     momentum.setZero();
     velocity.setZero();
-    acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
     totalForce.setZero();
@@ -168,13 +159,10 @@ inline void Node::resetValues()
     active=false;
     mass=0.0;
     momentum.setZero();
-    acceleration.setZero();
     externalForce.setZero();
     internalForce.setZero();
 }
 
-inline Node::~Node() {
-
-}
+inline Node::~Node() { }
 
 #endif /* NODE_H_ */

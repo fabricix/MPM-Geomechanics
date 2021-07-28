@@ -181,26 +181,24 @@ protected:
 	int id;	//!< particle id
 	int bodyId; //!< body id
 
-	double mass; //!< particle mass
-	double density;	//!< particle density
-	double volume; //!< particle volume
-	double initialVolume; //!< initial particle volume
-	double plasticStrain; //!< effective plastic strain
+	double mass; //!< particle mass: \f$m_p\f$
+	double density;	//!< current particle density: \f$\rho_p\f$
+	double plasticStrain; //!< current effective plastic strain: \f$\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\f$
 
-	Vector3d position; //!< particle position
-	Vector3d initialPosition; //!< particle initial position
-	Vector3d velocity; //!< particle velocity
-	Vector3d externalForce;	//!< external force
-	Vector3d size; //!< size in each direction
+	Vector3d position; //!< current particle position: \f$x_{ip}\f$
+	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
+	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
+	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^\text{ext}\f$
+	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
 	
-	Matrix3d stress; //!< particle stress
-	Matrix3d strain; //!< particle strain
-	Matrix3d strainIncrement; //!< particle strain increment
-	Matrix3d vorticityIncrement; //!< particle vorticity increment
+	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
+	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$
+	Matrix3d strainIncrement; //!< current particle strain increment: \f$\Delta \epsilon_{ijp}\f$
+	Matrix3d vorticityIncrement; //!< particle vorticity increment: \f$\Delta \Omega _{ijp}\f$
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
-	Shape* shape; //!< shape function representation
-	Material* material; //!< material pointer
+	Shape* shape; //!< shape functions values (see class Shape)
+	Material* material; //!< particle material (see class Material)
 
 	static int totalParticles; //!< total particle in the model
 };
