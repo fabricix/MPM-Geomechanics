@@ -32,6 +32,10 @@ public:
     /// \param[in] fluid_mass_increment Nodal mass increment 
     virtual inline void addMassFluid(double fluid_mass_increment) { this->massFluid+=fluid_mass_increment; }
 
+    /// \brief Add fluid momentum increment to the nodal momentum of fluid
+    /// \param[in] fluid_momentum_increment Vector containing the nodal momentum increment of fluid
+    virtual inline void addMomentumFluid(const Vector3d& fluid_momentum_increment) { this->momentumFluid+=fluid_momentum_increment; }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$

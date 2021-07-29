@@ -88,8 +88,12 @@ public:
 	inline const Vector3d& getExternalForce() const { return this->externalForce; } 
 
 	/// \brief Returns particle velocity
-	/// \return Particle current velocity
+	/// \return Current velocity
 	inline const Vector3d& getVelocity() const { return this->velocity; }
+
+	/// \brief Returns velocity of fluid
+	/// \return Current velocity of fluid
+	virtual inline const Vector3d* getVelocityFluid() const { return NULL; }
 
 	/// \brief Returns the current particle stress tensor
 	/// \return Particle stress

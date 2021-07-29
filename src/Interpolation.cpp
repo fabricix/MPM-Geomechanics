@@ -90,6 +90,9 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 
 void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 
+	// two-phase calculation
+	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
+
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
 
@@ -114,6 +117,12 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 			// get particle mass
 			const double pMass = particles->at(i)->getMass();
 			
+			// get particle fluid velocity
+			const Vector3d pVelocityFluid = isTwoPhase ? *(particles->at(i)->getVelocityFluid()) : Vector3d::Zero();
+
+			// get particle fluid mass
+			const double pMassFluid = isTwoPhase ? particles->at(i)->getMassFluid() : 0.0;
+
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
@@ -122,6 +131,12 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 
 				// add the weighted momentum in node
 				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+
+				if (isTwoPhase) {
+
+					// add the weighted momentum of fluid in node
+					nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
+				}
 			}
 		}
 	}

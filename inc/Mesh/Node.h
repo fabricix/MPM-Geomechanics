@@ -98,6 +98,10 @@ public:
 	/// \brief Add a momentum increment to the nodal momentum
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
 	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }
+
+	/// \brief Add a momentum increment to the nodal momentum
+	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
+	virtual inline void addMomentumFluid(const Vector3d& momentum_increment) { return; }
 		
 	/// \brief Add a internal force increment to the nodal internal force
 	/// \param[in] internal_force_increment Vector containing nodal internal force increment 

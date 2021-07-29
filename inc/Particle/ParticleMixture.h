@@ -29,6 +29,10 @@ public:
     /// \return Particle mass
     virtual inline double getMassFluid() const { return this->massFluid; }
 
+    /// \brief Returns velocity of fluid
+    /// \return Current velocity of fluid
+    virtual inline const Vector3d* getVelocityFluid() const { return &(this->velocityFluid); }
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$
