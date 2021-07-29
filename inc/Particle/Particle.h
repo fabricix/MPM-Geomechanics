@@ -67,6 +67,10 @@ public:
 	/// \return Particle mass
 	inline double getMass() const { return this->mass; }
 
+    /// \brief Returns fluid mass of the particle
+    /// \return Particle fluid mass
+    virtual inline double getMassFluid() const { return 0.0; }
+
 	/// \brief Returns the current particle density
 	/// \return Particle density
 	inline double getDensity() const { return this->density; }

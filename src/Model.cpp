@@ -17,12 +17,16 @@ namespace ModelSetup {
 	///
 	/// Data members
 	///
+	
+	// coupled hydro-mechanical analisys 
+	bool twoPhaseCalculationActive=false; //!< is two-phase calculation active
 
 	// contact
 	bool contactActive=false; //!< is contact active
 	
 	// gravity
 	bool gravityActive=false; //!< is gravity active
+
 	Vector3d gravity(0,0,-9.81); //!< gravity vector
 	
 	// axisymmetric model
@@ -76,7 +80,6 @@ namespace ModelSetup {
 	// contribution nodes
 	unsigned getContributionNodesNum() { return contributionNodes; }
 
-
 	// total time
 	double getTime() { return time; }
 	void setTime(double d) { time=d; }
@@ -112,6 +115,10 @@ namespace ModelSetup {
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
 
+	// coupled analisys
+	bool getTwoPhaseActive() { return twoPhaseCalculationActive; }
+	void setTwoPhaseActive(bool d) { twoPhaseCalculationActive=d; }
+
 	// axisymmetric analisys
 	bool getAxisymetricActive() { return axisymetricActive; }
 	void setAxisymetricActive(bool d) { axisymetricActive=d; }
@@ -138,7 +145,7 @@ namespace ModelSetup {
 	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
 
-	void setNumThreads(unsigned nThreads) {
+	void setNumThreads(unsigned nThreads){
 
 		#ifdef _OPENMP
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());

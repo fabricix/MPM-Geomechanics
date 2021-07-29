@@ -28,6 +28,10 @@ public:
     ///
     virtual void resetValues();
 
+    /// \brief Add fluid mass increment to the nodal mass
+    /// \param[in] fluid_mass_increment Nodal mass increment 
+    virtual inline void addMassFluid(double fluid_mass_increment) { this->massFluid+=fluid_mass_increment; }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$

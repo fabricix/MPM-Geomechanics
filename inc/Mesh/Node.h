@@ -90,7 +90,11 @@ public:
 	/// \brief Add a mass increment to the nodal mass
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }
-		
+
+	/// \brief Add fluid mass increment to the nodal mass
+	/// \param[in] fluid_mass_increment Nodal mass increment 
+	virtual inline void addMassFluid(double fluid_mass_increment) { return; }
+
 	/// \brief Add a momentum increment to the nodal momentum
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
 	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }

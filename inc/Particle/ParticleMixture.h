@@ -21,8 +21,13 @@ public:
     /// \param[in] material Material
     /// \param[in] size Particle size in each direction
 	ParticleMixture(const Vector3d& position, Material* material, const Vector3d& size);
-	
+
+    /// \brief Default virtual destructor
     virtual ~ParticleMixture();
+
+    /// \brief Returns the mass of the particle
+    /// \return Particle mass
+    virtual inline double getMassFluid() const { return this->massFluid; }
 
 private:
 

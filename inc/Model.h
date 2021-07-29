@@ -183,6 +183,14 @@ namespace ModelSetup {
 	/// \brief Configure the number of threads in the model
 	/// \param[in] nThreads Number of threads
 	void setNumThreads(unsigned nThreads);
+
+	/// \brief Return if two-phase calculation is active
+	/// \return True if two-phase calculation is active
+	bool getTwoPhaseActive();
+
+	/// \brief Configure if two-phase calculation is active
+	/// \param[in] two_phase_calculation_active 
+	void setTwoPhaseActive(bool two_phase_calculation_active);
 };
 
 #endif /* MODEL_H_ */
