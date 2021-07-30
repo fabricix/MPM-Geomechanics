@@ -26,8 +26,53 @@
 
 void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 
-	// two-phase calculation
-	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// get the particle mass
+			const double pMass = particles->at(i)->getMass();
+
+			// for each node in the contribution list 
+			for (size_t j = 0; j < contribution->size(); ++j) {
+
+				// get the contributing node
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+
+				// compute the weighted nodal mass
+				const double nodalMass = pMass*contribution->at(j).getWeight();
+				
+				// check any mass in node
+				if (nodalMass<=0.0) { continue; }
+		
+				// the node is inactivate if he doesn't have mass
+				nodeI->setActive(true);
+
+				// add mass at node
+				nodeI->addMass(nodalMass);
+			}
+		}
+	}
+}
+
+void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
+
+	// check if is two-phase calculations
+	if(!ModelSetup::getTwoPhaseActive()) return;
 
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
@@ -47,51 +92,32 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// get solid particle mass
-			const double pMass = particles->at(i)->getMass();
+			// get the particle mass
+			const double pMassFluid = particles->at(i)->getMassFluid();
 
-			// get fluid particle mass
-			double pMassFluid = isTwoPhase ? particles->at(i)->getMassFluid() : 0.0;
-			
 			// for each node in the contribution list 
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
 				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
-				// compute the weighted solid nodal mass
-				const double nodalMass = pMass*contribution->at(j).getWeight();
+				// compute the weighted nodal mass
+				const double nodalMassFluid = pMassFluid*contribution->at(j).getWeight();
 				
 				// check any mass in node
-				if (nodalMass<=0.0) { continue; }
+				if (nodalMassFluid<=0.0) { continue; }
 		
 				// the node is inactivate if he doesn't have mass
 				nodeI->setActive(true);
 
 				// add mass at node
-				nodeI->addMass(nodalMass);
-
-				if(isTwoPhase){
-		
-					// compute the weighted fluid nodal mass
-					const double nodalMassFluid = pMassFluid*contribution->at(j).getWeight();
-
-					// check any fluid mass in node
-					if (nodalMassFluid>0.0) {
-
-						// add fluid mass at node
-						nodeI->addMassFluid(nodalMassFluid);
-					}
-				}
+				nodeI->addMassFluid(nodalMassFluid);
 			}
 		}
 	}
 }
 
 void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
-
-	// two-phase calculation
-	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
 
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
@@ -117,12 +143,6 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 			// get particle mass
 			const double pMass = particles->at(i)->getMass();
 			
-			// get particle fluid velocity
-			const Vector3d pVelocityFluid = isTwoPhase ? *(particles->at(i)->getVelocityFluid()) : Vector3d::Zero();
-
-			// get particle fluid mass
-			const double pMassFluid = isTwoPhase ? particles->at(i)->getMassFluid() : 0.0;
-
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
@@ -131,12 +151,6 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 
 				// add the weighted momentum in node
 				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
-
-				if (isTwoPhase) {
-
-					// add the weighted momentum of fluid in node
-					nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
-				}
 			}
 		}
 	}

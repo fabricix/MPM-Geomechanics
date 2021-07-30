@@ -26,6 +26,11 @@ namespace Interpolation {
 	/// \param[in] bodies A list of Bodies
 	void nodalMass(Mesh* mesh, vector<Body*>* bodies);
 	
+	/// \brief Interpolate fluid mass from particles to nodes
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list of Bodies
+	void nodalMassFuid(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate momentum from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
