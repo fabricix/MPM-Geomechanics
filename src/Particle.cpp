@@ -27,7 +27,7 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 	this->bodyId=0;
 
 	this->density=material!=0?material->getDensity():0.0;
-	this->mass=(size.x()*size.y()*size.z())*this->density*(1-porosity);
+	this->mass=(size.x()*size.y()*size.z())*this->density*(1.0-porosity);
 	this->plasticStrain=0.0;
 
 	this->initialPosition=position;
