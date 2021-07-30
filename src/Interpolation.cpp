@@ -292,10 +292,10 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 			// get particle stress
-			const Matrix3d pStress = particles->at(i)->getStress();
+			const Matrix3d pPressure = particles->at(i)->getPressureFluid()*Matrix3d::Identity();
 			
 			// get the particle volume
-			const double pVolume = particles->at(i)->getMass()/particles->at(i)->getDensity();
+			const double pVolumeFluid = particles->at(i)->getMassFluid()/particles->at(i)->getDensityFluid();
 
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
@@ -307,13 +307,13 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 				const Vector3d gradient = contribution->at(j).getGradients();
 
 				// compute the particle's contribution to the nodal internal force
-				Vector3d internalForce;
-				internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
-				internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
-				internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
+				Vector3d internalForceFluid;
+				internalForceFluid.x()=(pPressure(0,0)*gradient(0)+pPressure(1,0)*gradient(1)+pPressure(2,0)*gradient(2))*pVolumeFluid;
+				internalForceFluid.y()=(pPressure(0,1)*gradient(0)+pPressure(1,1)*gradient(1)+pPressure(2,1)*gradient(2))*pVolumeFluid;
+				internalForceFluid.z()=(pPressure(0,2)*gradient(0)+pPressure(1,2)*gradient(1)+pPressure(2,2)*gradient(2))*pVolumeFluid;
 
-				// add the internal force contribution in node
-				nodeI->addInternalForce(internalForce);
+				// add the internal of fluid force contribution in node
+				nodeI->addInternalForceFluid(internalForceFluid);
 			}
 		}
 	}

@@ -33,12 +33,24 @@ public:
     /// \return Current velocity of fluid
     virtual inline const Vector3d* getVelocityFluid() const { return &(this->velocityFluid); }
 
+    /// \brief Returns pressure of fluid
+    /// \return Current pore pressure of fluid
+    virtual inline double getPressureFluid() const { return this->pressureFluid; }
+
+    /// \brief Returns current porosity
+    /// \return Current porosity of mixture
+    virtual inline double getPorosity() const { return this->porosityMixture; }
+
+    /// \brief Returns the current particle density of fluid
+    /// \return Particle density of fluid
+    virtual inline double getDensityFluid() const { return this->densityFluid; }
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$
     double densityFluid; //!< current fluid density in mixture: \f$\rho^{f}\f$
-    double pressure; //!< current fluid pressure in mixture: \f$p^{f}\f$
-    double porosity; //!< current porosity of the mixture: \f$n\f$
+    double pressureFluid; //!< current fluid pressure in mixture: \f$p^{f}\f$
+    double porosityMixture; //!< current porosity of the mixture: \f$n\f$
     
     Vector3d velocityFluid; //!< current fluid velocity in mixture: \f$v_i^{f}\f$
     Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{\text{ext},f}\f$

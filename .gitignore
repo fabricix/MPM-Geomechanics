@@ -8,3 +8,8 @@ doxygen/latex
 .cproject
 .project
 *.vtu
+*.pvd
+*.wmv
+*.mp4
+*.ods
+*.pvsm

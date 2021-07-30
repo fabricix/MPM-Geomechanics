@@ -75,6 +75,10 @@ public:
 	/// \return Particle density
 	inline double getDensity() const { return this->density; }
 
+	/// \brief Returns the current particle density of fluid
+	/// \return Particle density of fluid
+	virtual inline double getDensityFluid() const { return 0.0; }
+
 	/// \brief Returns the current particle position
 	/// \return Particle current position
 	inline const Vector3d& getPosition() const { return this->position; } 
@@ -182,6 +186,14 @@ public:
 	/// \brief Add a plastic strain increment
 	/// \param[in] deltaPlasticStrain Plastic strain increment
 	inline void addPlasticStrain(double deltaPlasticStrain) { this->plasticStrain+=deltaPlasticStrain; }
+
+	/// \brief Returns pressure of fluid
+    /// \return Current pore pressure of fluid
+    virtual inline double getPressureFluid() const { return 0.0; }
+
+    /// \brief Returns current porosity
+    /// \return Current porosity of mixture
+    virtual inline double getPorosity() const { return 0.0; }
 
 protected:
 

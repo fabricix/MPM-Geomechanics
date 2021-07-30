@@ -22,25 +22,57 @@ class Body;
 namespace Interpolation {
 	
 	/// \brief Interpolate mass from particles to nodes
+	///
+	/// \f$ m_I^s = \sum_p m_p^s N_{Ip}\f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list of Bodies
 	void nodalMass(Mesh* mesh, vector<Body*>* bodies);
 	
 	/// \brief Interpolate fluid mass from particles to nodes
+	///
+	/// \f$ m_I^f = \sum_p m_p^f N_{Ip}\f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list of Bodies
 	void nodalMassFuid(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Interpolate momentum from particles to nodes
+	///
+	/// \f$ p_{iI}^s = \sum_p p_{ip}^s N_{Ip}\f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	void nodalMomentum(Mesh* mesh, vector<Body*>* bodies);
 	
+	/// \brief Interpolate fluid momentum from particles to nodes
+	///
+	/// \f$ p_{iI}^f = \sum_p p_{ip}^f N_{Ip}\f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	void nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate internal force from particles to nodes
+	/// 
+	/// In one phase calculation:
+	/// \f$ f_{iI}^{\text{int}}=-\sum_p \sigma_{ijp} V_p N_{Ip,i}\f$
+	///
+	/// In two phase calculation:
+	/// \f$ f_{iI}^{\text{int},s}=-\sum_p \sigma_{ijp}' N_{Ip,i} V_p + \sum_p p^f N_{Ip,i} V_p\f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	void nodalInternalForce(Mesh* mesh, vector<Body*>* bodies);
 	
+	/// \brief Interpolate internal force of fluid from particles to nodes
+	///
+	/// \f$ f_{iI}^{\text{int},f}= \sum_p n p^f N_{Ip,i} V_p\f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	void nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate external force from particles to nodes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers

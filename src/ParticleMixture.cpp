@@ -21,9 +21,9 @@ Particle(position, material, size)
 
     this->massFluid = this->densityFluid*porosity*(size.x()*size.y()*size.z());
     
-    this->pressure=0.0; 
+    this->pressureFluid=0.0;
 
-    this->porosity = porosity;
+    this->porosityMixture = porosity;
     
     this->velocityFluid.setZero();
     

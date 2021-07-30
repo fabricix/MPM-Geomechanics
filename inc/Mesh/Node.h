@@ -99,13 +99,17 @@ public:
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
 	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }
 
-	/// \brief Add a momentum increment to the nodal momentum
-	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
-	virtual inline void addMomentumFluid(const Vector3d& momentum_increment) { return; }
+	/// \brief Add fluid momentum increment to the nodal momentum of fluid
+	/// \param[in] fluid_momentum_increment Vector containing the nodal momentum increment of fluid
+	virtual inline void addMomentumFluid(const Vector3d& fluid_momentum_increment) { return; }
 		
 	/// \brief Add a internal force increment to the nodal internal force
 	/// \param[in] internal_force_increment Vector containing nodal internal force increment 
 	inline void addInternalForce(const Vector3d& internal_force_increment) { this->internalForce+=internal_force_increment; }
+	
+	/// \brief Add a internal force increment of fluid to the nodal internal force
+	/// \param[in] internal_force_increment Vector containing nodal internal force increment of fluid
+	virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) { return; }
 		
 	/// \brief Add a external force increment to the nodal external force
 	/// \param[in] external_force_increment Vector containing nodal external force increment 

@@ -36,6 +36,10 @@ public:
     /// \param[in] fluid_momentum_increment Vector containing the nodal momentum increment of fluid
     virtual inline void addMomentumFluid(const Vector3d& fluid_momentum_increment) { this->momentumFluid+=fluid_momentum_increment; }
 
+    /// \brief Add a internal force increment of fluid to the nodal internal force
+    /// \param[in] internal_force_increment Vector containing nodal internal force increment of fluid
+    virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) {  this->internalForceFluid+=internal_force_fluid_increment; }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$
