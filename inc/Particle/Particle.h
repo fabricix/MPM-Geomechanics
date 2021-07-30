@@ -91,6 +91,10 @@ public:
 	/// \return Particle external force
 	inline const Vector3d& getExternalForce() const { return this->externalForce; } 
 
+	/// \brief Returns the external force of fluid in particle
+	/// \return Particle external force of fluid
+	virtual inline const Vector3d* getExternalForceFluid() const { return NULL; }
+
 	/// \brief Returns particle velocity
 	/// \return Current velocity
 	inline const Vector3d& getVelocity() const { return this->velocity; }
@@ -151,10 +155,6 @@ public:
 	/// \param[in] particle_velocity Current particle velocity
 	inline void setVelocity(const Vector3d& particle_velocity) { this->velocity = particle_velocity; }
 
-	/// \brief Configures the external force in particle
-	/// \param[in] external_force Particle external force
-	inline void setExternalForce(const Vector3d& external_force) { this->externalForce=external_force; }
-
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
 	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }
@@ -178,6 +178,10 @@ public:
 	/// \brief Adds a external force increment
 	/// \param[in] delta_external_force External force increment
 	inline void addExternalForce(const Vector3d& delta_external_force) { this->externalForce+=delta_external_force; }
+
+	/// \brief Adds a external fluid force increment
+	/// \param[in] delta_external_fluid_force External fluid force increment
+	virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) { return; }
 
 	/// \brief Returns o number of particles created
 	/// \return Total created particles

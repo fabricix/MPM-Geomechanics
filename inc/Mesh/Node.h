@@ -114,6 +114,10 @@ public:
 	/// \brief Add a external force increment to the nodal external force
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
 	inline void addExternalForce(const Vector3d& external_force_increment) { this->externalForce+=external_force_increment; }
+
+	/// \brief Add a external force of fluid increment to the nodal external force
+	/// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
+	virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) { return; }
 	
 	/// \brief Delete all values stored in node
 	///

@@ -18,6 +18,9 @@ namespace Loads{
 		// get gravity
 		Vector3d gravity = ModelSetup::getGravity();
 
+		// is two-phase calculations 
+		bool isTwoPhase = ModelSetup::getTwoPhaseActive();
+
 		// for each body
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
@@ -32,6 +35,15 @@ namespace Loads{
 
 				// compute the gravitational force
 				particle->addExternalForce(particle->getMass()*gravity);
+
+				if (isTwoPhase)
+				{
+					// body force of fluid to solid phase
+					particle->addExternalForce(particle->getMassFluid()*gravity);
+
+					// body force of fluid in fluid phase
+					particle->addExternalForceFluid(particle->getMassFluid()*gravity);
+				}
 			}
 		}
 	}

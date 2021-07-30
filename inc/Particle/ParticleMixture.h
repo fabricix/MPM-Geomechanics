@@ -33,6 +33,10 @@ public:
     /// \return Current velocity of fluid
     virtual inline const Vector3d* getVelocityFluid() const { return &(this->velocityFluid); }
 
+    /// \brief Returns the external force of fluid in particle
+    /// \return Particle external force of fluid
+    virtual inline const Vector3d* getExternalForceFluid() const { return &(this->externalForceFluid); }
+
     /// \brief Returns pressure of fluid
     /// \return Current pore pressure of fluid
     virtual inline double getPressureFluid() const { return this->pressureFluid; }
@@ -44,6 +48,10 @@ public:
     /// \brief Returns the current particle density of fluid
     /// \return Particle density of fluid
     virtual inline double getDensityFluid() const { return this->densityFluid; }
+
+    /// \brief Adds a external fluid force increment
+    /// \param[in] delta_external_fluid_force External fluid force increment
+    virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) { this->externalForceFluid+=delta_external_fluid_force; }
 
 private:
 

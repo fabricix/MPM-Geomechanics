@@ -38,7 +38,11 @@ public:
 
     /// \brief Add a internal force increment of fluid to the nodal internal force
     /// \param[in] internal_force_increment Vector containing nodal internal force increment of fluid
-    virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) {  this->internalForceFluid+=internal_force_fluid_increment; }
+    virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) { this->internalForceFluid+=internal_force_fluid_increment; }
+
+    /// \brief Add a external force of fluid increment to the nodal external force
+    /// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
+    virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) { this->externalForceFluid+=external_force_fluid_increment; }
 
 private:
 

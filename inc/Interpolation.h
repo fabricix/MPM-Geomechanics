@@ -74,9 +74,20 @@ namespace Interpolation {
 	void nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Interpolate external force from particles to nodes
+	///
+	/// \f$ f_{iI}^{\text{ext,s}}=\sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	void nodalExternalForce(Mesh* mesh, vector<Body*>* bodies);
+
+	/// \brief Interpolate external force of fluid from particles to nodes
+	///
+	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	void nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Interpolate the strain increment at particle
 	/// \param[in] mesh Mesh reference

@@ -355,6 +355,45 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
+void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
+
+	// check if is two-phase calculations
+	if(!ModelSetup::getTwoPhaseActive()) return;
+	
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// get particle external force
+			const Vector3d pExtForceFluid = *(particles->at(i)->getExternalForceFluid());
+
+			// for each node in the contribution list
+			for (size_t j = 0; j < contribution->size(); ++j) {
+
+				// get contributing node
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+
+				// add weighted force in node
+				nodeI->addExternalForceFluid(pExtForceFluid*contribution->at(j).getWeight());
+			}
+		}
+	}
+}
+
 ///
 /// From node to particle:
 ///		
