@@ -2,7 +2,8 @@ Debug/
 Release/
 sublime/
 doxygen/html
-doxygen/latex 
+doxygen/latex
+doxygen/output.txt 
 .settings/
 .tracecompass/
 .cproject
