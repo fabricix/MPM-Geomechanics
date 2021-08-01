@@ -381,6 +381,9 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			// get particle external force
 			const Vector3d pExtForceFluid = *(particles->at(i)->getExternalForceFluid());
 
+			// get particle drag force 
+			const Vector3d pDragForceFluid = particles->at(i)->getDragForceFluid();
+
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
@@ -388,7 +391,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
 
 				// add weighted force in node
-				nodeI->addExternalForceFluid(pExtForceFluid*contribution->at(j).getWeight());
+				nodeI->addExternalForceFluid((pExtForceFluid+pDragForceFluid)*contribution->at(j).getWeight());
 			}
 		}
 	}

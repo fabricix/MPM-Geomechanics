@@ -47,6 +47,10 @@ public:
 	/// \return Material porosity
 	inline double getPorosity() const { return this->porosity; }
 
+	/// \brief Returns Hydraulic conductivity
+	/// \return Hydraulic Conductivity
+	inline Vector3d getHydraulicConductivity() const { return this->hydraulicConductivity; }
+
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
 	inline void setId(int material_id) { this->id=material_id; }
