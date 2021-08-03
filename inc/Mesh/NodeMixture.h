@@ -73,6 +73,10 @@ public:
     ///
     virtual void integrateMomentum(double dt);
 
+    /// \brief Return the nodal mass of fluid phase
+    /// \return Nodal mass of fluid phase
+    virtual inline double getMassFluid() const { return massFluid; }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$

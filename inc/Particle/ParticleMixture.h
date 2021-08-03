@@ -57,6 +57,10 @@ public:
     /// \param[in] delta_external_fluid_force External fluid force increment
     virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) { this->externalForceFluid+=delta_external_fluid_force; }
 
+    /// \brief Configures particle velocity of fluid phase
+    /// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
+    virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) { this->velocityFluid=particle_velocity_fluid;}
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$

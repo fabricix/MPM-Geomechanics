@@ -41,11 +41,23 @@ namespace Update {
 	void particleStress(vector<Body*>* bodies);
 	
 	/// \brief Update the particle velocity
+	///
+	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}/m_I \Delta t\f$ 
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
 	void particleVelocity(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
+	/// \brief Update the particle velocity fluid
+	///
+	/// \f$ v_{ip}^{f,t+1/2} = v_{ip}^{f,t-1/2} + \sum_I N_{ip} f_^f{iI}/m_I \Delta t \f$  
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies List of Body pointers
+	/// \param[in] time_step Time step
+	void particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
+
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers

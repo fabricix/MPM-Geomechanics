@@ -155,6 +155,10 @@ public:
 	/// \param[in] particle_velocity Current particle velocity
 	inline void setVelocity(const Vector3d& particle_velocity) { this->velocity = particle_velocity; }
 
+	/// \brief Configures particle velocity of fluid phase
+	/// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
+	virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) { return; }
+
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
 	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }

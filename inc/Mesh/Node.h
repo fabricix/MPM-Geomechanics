@@ -71,6 +71,10 @@ public:
 	/// \return Nodal mass
 	inline double getMass() const { return this->mass; }
 	
+	/// \brief Return the nodal mass of fluid phase
+	/// \return Nodal mass of fluid phase
+	virtual inline double getMassFluid() const { return 0.0; }
+
 	/// \brief Return the nodal coordinates
 	/// \return Vector containing the nodal
 	/// coordinates
