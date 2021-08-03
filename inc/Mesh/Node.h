@@ -54,6 +54,11 @@ public:
 	/// nodal force
 	inline void setTotalForce(const Vector3d& total_nodal_force) { this->totalForce=total_nodal_force; }
 
+	/// \brief Configure the total nodal force in fluid phase
+	/// \param[in] total_nodal_force_fluid Vector containing the total
+	/// nodal force in fluid phase
+	virtual inline void setTotalForceFluid(const Vector3d& total_nodal_force_fluid) { return; }
+
 	/// \brief Return the nodal identification
 	/// \return Nodal identification 
 	inline int getId() const { return this->id; }
@@ -91,6 +96,10 @@ public:
 	/// \return Vector containing the nodal total force
 	inline const Vector3d& getTotalForce() const { return this->totalForce; }
 		
+	/// \brief Return the nodal total force of fluid phase
+	/// \return Vector containing the nodal total force of fluid phase
+	virtual inline const Vector3d* getTotalForceFluid() const { return NULL; }
+
 	/// \brief Return the nodal velocity
 	/// \return Vector containing the nodal velocity
 	inline const Vector3d& getVelocity() const { return this->velocity; }
@@ -133,11 +142,11 @@ public:
 
 	/// \brief Calculate the total nodal force
 	///
-	inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce; }
+	virtual inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce; }
 
 	/// \brief Calculate the damping nodal force
 	///
-	void updateDampingForce();
+	virtual void updateDampingForce();
 
 	/// \brief Update nodal velocity
 	///
@@ -147,7 +156,7 @@ public:
 	///
 	inline void integrateMomentum(double dt) { this->momentum = this->momentum + this->totalForce*dt; }
 
-private:
+protected:
 
 	bool active; //!< is active node: \f$\text{active}\f$
 

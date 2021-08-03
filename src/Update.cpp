@@ -448,6 +448,88 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
+void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+
+	// get boundary nodes
+	#pragma omp parallel for shared(plane, nodes, dir)
+	for (size_t i = 0; i < plane->nodes.size(); ++i) {
+
+		// get node handle 
+		Node& nodeI = nodes->at(plane->nodes.at(i));
+
+		if (nodeI.getActive()) {
+			
+			// witch type of restriction
+			switch(plane->restrictionFluid) {
+
+				// free condition
+				case Boundary::BoundaryType::FREE:
+					break;
+
+				// fixed condition
+				case Boundary::BoundaryType::FIXED:
+
+					// set all force component as zero 
+					nodeI.setTotalForceFluid(Vector3d::Zero());
+					break;
+				
+				// perpendicular restriction
+				case Boundary::BoundaryType::SLIDING:
+					
+					// get current boundary nodal force of fluid phase
+					Vector3d force = *(nodeI.getTotalForceFluid());
+					
+					// witch direction of the normal vector
+					switch(dir) {
+
+						// normal pointed to x
+						case Update::Direction::X :
+							force.x()=0.0;
+							break;
+
+						// normal pointed to y
+						case Update::Direction::Y :
+							force.y()=0.0;
+							break;
+
+						// normal pointed to z
+						case Update::Direction::Z :
+							force.z()=0.0;
+							break;
+					}
+
+					// set boundary nodal force in fluid phase
+					nodeI.setTotalForceFluid(force);
+					break;
+			}
+		}
+	}
+}
+
+void Update::boundaryConditionsForceFluid(Mesh* mesh) {
+
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// plane X0 is the plane passing for the origin and points to -x axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
+
+	// plane Y0 is the plane passing for the origin and points to -y axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
+
+	// plane Z0 is the plane passing for the origin and points to -z axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
+	
+	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
+
+	// plane Yn is the plane passing for the maximum x coordinate and points to y axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
+
+	// plane Zn is the plane passing for the maximum x coordinate and points to z axes
+	setPlaneForceFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+}
+
 void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 
 	// for each body

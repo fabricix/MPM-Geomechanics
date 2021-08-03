@@ -18,7 +18,7 @@ namespace Update {
 	/// \enum Direction
 	/// \brief Principal direction in the model.
 	/// This enumeration is used to update the boundary conditions in each direction
-	enum Direction {X, Y, Z};
+	enum Direction {X=0, Y=1, Z=2};
 
 	/// \brief Update the nodal velocity
 	/// \param[in] mesh Mesh reference
@@ -57,6 +57,11 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	void boundaryConditionsForce(Mesh* mesh);
 	
+	/// \brief Apply essential boundary condition in 
+	/// terms of force of fluid phase
+	/// \param[in] mesh Mesh reference
+	void boundaryConditionsForceFluid(Mesh* mesh);
+
 	/// \brief Apply essential boundary condition in
 	/// terms of momentum
 	/// \param[in] mesh Mesh reference
@@ -76,9 +81,14 @@ namespace Update {
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
-	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneForce(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
 	
+	/// \brief Configure the force in fluid phase in each node in boundary planes
+	/// \param[in] boundary Boundary plane
+	/// \param[in] nodes Node list pointer
+	/// \param[in] direction Direction to apply de boundary condition 
+	void setPlaneForceFluid(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+
 	/// \brief Configure the momentum in each node in boundary planes
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer

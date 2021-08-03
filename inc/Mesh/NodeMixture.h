@@ -52,6 +52,23 @@ public:
     /// \return Vector containing the nodal momentum of fluid phase
     virtual inline const Vector3d* getMomentumFluid() const { return &(this->momentumFluid); }
 
+    /// \brief Calculate the total nodal force
+    ///
+    virtual void updateTotalForce();
+
+    /// \brief Calculate the damping nodal force
+    ///
+    virtual void updateDampingForce();
+
+    /// \brief Configure the total nodal force in fluid phase
+    /// \param[in] total_nodal_force_fluid Vector containing the total
+    /// nodal force in fluid phase
+    virtual inline void setTotalForceFluid(const Vector3d& total_nodal_force_fluid) { this->totalForceFluid=total_nodal_force_fluid; }
+
+    /// \brief Return the nodal total force of fluid phase
+    /// \return Vector containing the nodal total force of fluid phase
+    virtual inline const Vector3d* getTotalForceFluid() const { return &(this->totalForceFluid); }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$
