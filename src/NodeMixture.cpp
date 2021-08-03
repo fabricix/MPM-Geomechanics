@@ -12,8 +12,8 @@ NodeMixture::~NodeMixture() {
 	// TODO Auto-generated destructor stub
 }
 
-void NodeMixture::updateTotalForce()
-{
+void NodeMixture::updateTotalForce(){
+
     // total force of fluid phase
     this->totalForceFluid = this->internalForceFluid + this->externalForceFluid + this->dampingForceFluid;
 
@@ -52,4 +52,13 @@ void NodeMixture::updateDampingForce() {
         default:
             (this->dampingForceFluid).setZero();     
     }
+}
+
+void NodeMixture::integrateMomentum(double dt) { 
+
+    // intetrate momentum of solid phase
+    Node::integrateMomentum(dt);
+
+    // integrate moemntum of fluid phase
+    this->momentum = this->momentum + this->totalForce*dt;
 }

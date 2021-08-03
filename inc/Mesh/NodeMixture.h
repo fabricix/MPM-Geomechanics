@@ -69,6 +69,10 @@ public:
     /// \return Vector containing the nodal total force of fluid phase
     virtual inline const Vector3d* getTotalForceFluid() const { return &(this->totalForceFluid); }
 
+    /// brief Integrate momentum
+    ///
+    virtual void integrateMomentum(double dt);
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$
