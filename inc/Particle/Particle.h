@@ -121,7 +121,7 @@ public:
 
 	/// \brief Returns the strain increment of fluid
 	/// \return Particle strain increment of fluid
-	inline const Matrix3d* getStrainIncrementFluid() const { return NULL; }
+	virtual inline const Matrix3d* getStrainIncrementFluid() const { return NULL; }
 
 	/// \brief Returns the strain
 	/// \return Total particle strain 
@@ -236,7 +236,7 @@ protected:
 	Vector3d position; //!< current particle position: \f$x_{ip}\f$
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
 	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
-	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^\text{ext}\f$
+	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^ext\f$
 	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$

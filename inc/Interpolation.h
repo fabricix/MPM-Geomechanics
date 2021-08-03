@@ -56,10 +56,10 @@ namespace Interpolation {
 	/// \brief Interpolate internal force from particles to nodes
 	/// 
 	/// In one phase calculation:
-	/// \f$ f_{iI}^{\text{int}}=-\sum_p \sigma_{ijp} V_p N_{Ip,i}\f$
+	/// \f$ f_{iI}^{int}=-\sum_p \sigma_{ijp} V_p N_{Ip,i}\f$
 	///
 	/// In two phase calculation:
-	/// \f$ f_{iI}^{\text{int},s}=-\sum_p \sigma_{ijp}' N_{Ip,i} V_p + \sum_p p^f N_{Ip,i} V_p\f$
+	/// \f$ f_{iI}^{int,s}=-\sum_p \sigma_{ijp}' N_{Ip,i} V_p + \sum_p p^f N_{Ip,i} V_p\f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
@@ -67,7 +67,7 @@ namespace Interpolation {
 	
 	/// \brief Interpolate internal force of fluid from particles to nodes
 	///
-	/// \f$ f_{iI}^{\text{int},f}= \sum_p n p^f N_{Ip,i} V_p\f$
+	/// \f$ f_{iI}^{int,f}= \sum_p n p^f N_{Ip,i} V_p\f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
@@ -76,10 +76,10 @@ namespace Interpolation {
 	/// \brief Interpolate external force from particles to nodes
 	///
 	/// In one phase calculations:
-	/// \f$ f_{iI}^{\text{ext}}=\sum_p b_{ip} m_p N_{Ip} \f$
+	/// \f$ f_{iI}^{ext} = \sum_p b_{ip} m_p N_{Ip} \f$
 	///
 	/// In two phase calculations:
-	/// \f$ f_{iI}^{\text{ext,s}} = \sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
+	/// \f$ f_{iI}^{ext,s} = \sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
@@ -87,11 +87,11 @@ namespace Interpolation {
 
 	/// \brief Interpolate external force of fluid from particles to nodes
 	///
-	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
+	/// \f$ f_{iI}^{ext,f}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
 	///
 	/// At the moment, only the principal values of the hydraulic conductivity in 3D are considered, then:
 	///
-	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
+	/// \f$ f_{iI}^{ext,f}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers

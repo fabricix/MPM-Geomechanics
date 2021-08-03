@@ -91,9 +91,9 @@ private:
 
     Vector3d momentumFluid; //!< nodal momentum of fluid: \f$p_{iI}^{f}\f$
     Vector3d velocityFluid; //!< nodal velocity of fluid: \f$v_{iI}^{f}\f$
-    Vector3d externalForceFluid; //!< nodal external force of fluid: \f$f_{iI}^{\text{ext},f}\f$
-    Vector3d internalForceFluid; //!< nodal internal force of fluid: \f$f_{iI}^{\text{int},f}\f$
-    Vector3d dampingForceFluid; //!< nodal damping force of fluid: \f$f_{iI}^{\text{dmp},f}\f$
+    Vector3d externalForceFluid; //!< nodal external force of fluid: \f$f_{iI}^{ext,f}\f$
+    Vector3d internalForceFluid; //!< nodal internal force of fluid: \f$f_{iI}^{int,f}\f$
+    Vector3d dampingForceFluid; //!< nodal damping force of fluid: \f$f_{iI}^{dmp,f}\f$
     Vector3d totalForceFluid; //!< nodal total force of fluid: \f$f_{iI}^{f}\f$
 };
 

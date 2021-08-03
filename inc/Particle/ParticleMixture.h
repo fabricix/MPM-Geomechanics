@@ -89,8 +89,8 @@ private:
     double porosityMixture; //!< current porosity of the mixture: \f$n\f$
     
     Vector3d velocityFluid; //!< current fluid velocity in mixture: \f$v_i^{f}\f$
-    Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{\text{ext},f}\f$
-    Vector3d internalForceFluid; //!< current internal force of fluid in mixture: \f$f_i^{\text{int},f}\f$
+    Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{ext,f}\f$
+    Vector3d internalForceFluid; //!< current internal force of fluid in mixture: \f$f_i^{int,f}\f$
     Matrix3d strainIncrementFluid; //!< current fluid strain increment in mixture: \f$\Delta \epsilon_{ij}^{f}\f$
 };
 

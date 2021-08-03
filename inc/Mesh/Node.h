@@ -166,18 +166,18 @@ public:
 
 protected:
 
-	bool active; //!< is active node: \f$\text{active}\f$
+	bool active; //!< is active node
 
-	int id; //!< nodal identification: \f$\text{id}\f$
+	int id; //!< nodal identification
 
 	double mass; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$
 
 	Vector3d coordinates; //!< nodal coordinates: \f$x_{iI}\f$
 	Vector3d momentum; //!< nodal momentum: \f$p_{iI}\f$, or momentum in solid in two-phase calculations: \f$p_{iI}^{s}\f$
 	Vector3d velocity; //!< nodal velocity: \f$v_{iI}\f$, or velocity in solid in two-phase calculations: \f$v_{iI}^{s}\f$
-	Vector3d externalForce; //!< nodal external force: \f$f_{iI}^{\text{ext}}\f$, or external force in solid in two-phase calculations: \f$f_{iI}^{\text{ext},s}\f$
-	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{\text{int}}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{\text{int},s}\f$
-	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{\text{dmp}}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{\text{dmp},s}\f$
+	Vector3d externalForce; //!< nodal external force: \f$f_{iI}^{ext}\f$, or external force in solid in two-phase calculations: \f$f_{iI}^{ext,s}\f$
+	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{int}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{int,s}\f$
+	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
 };
 
