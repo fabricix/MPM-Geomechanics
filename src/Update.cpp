@@ -79,6 +79,27 @@ void Update::particleDensity(vector<Body*>* bodies) {
 	}
 }
 
+void Update::particlePorosity(vector<Body*>* bodies) {
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+			
+			// update density
+			particles->at(i)->updatePorosity();
+		}
+	}
+}
+
 void Update::particleStress(vector<Body*>* bodies) {
 
 	// for each body
@@ -96,6 +117,27 @@ void Update::particleStress(vector<Body*>* bodies) {
 
 			// update particle stress
 			particles->at(i)->updateStress();
+		}
+	}
+}
+
+void Update::particlePressure(vector<Body*>* bodies, double dt) {
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// update particle stress
+			particles->at(i)->updatePressure(dt);
 		}
 	}
 }

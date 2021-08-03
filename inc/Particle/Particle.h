@@ -47,9 +47,17 @@ public:
 	///  
 	inline void updateStress() { material->updateStress(this); }
 
+	/// \brief Update the particle pressure
+	///  
+	virtual inline void updatePressure(double dt) { return; }
+
 	/// \brief Update the particle density
 	///  
-	void updateDensity();
+	virtual void updateDensity();
+	
+	/// \brief Update the particle porosity
+	///
+	virtual inline void updatePorosity() { return; }
 
 	/// \brief Returns the particle active status
 	/// \return Particle active status
@@ -110,6 +118,10 @@ public:
 	/// \brief Returns the strain increment
 	/// \return Particle strain increment
 	inline const Matrix3d& getStrainIncrement() const { return this->strainIncrement; }
+
+	/// \brief Returns the strain increment of fluid
+	/// \return Particle strain increment of fluid
+	inline const Matrix3d* getStrainIncrementFluid() const { return NULL; }
 
 	/// \brief Returns the strain
 	/// \return Total particle strain 

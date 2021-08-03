@@ -51,6 +51,10 @@ public:
 	/// \return Hydraulic Conductivity
 	inline Vector3d getHydraulicConductivity() const { return this->hydraulicConductivity; }
 
+	/// \brief Returns Bulk modulus of fluid in mixture 
+	/// \return Bulk modulus of fluid
+	inline double getBulkModulusFluid() const { return this->bullkModulusFluid; }
+
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
 	inline void setId(int material_id) { this->id=material_id; }
@@ -94,6 +98,8 @@ protected:
 	double porosity; //!< initial porosity \f$n^0\f$
 
 	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
+
+	double bullkModulusFluid; //!< elastic volumetric modulus of fluid in mixtre \f$K^f\f$
 	
 	MaterialType type; //!< material type
 };

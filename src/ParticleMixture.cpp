@@ -45,3 +45,49 @@ Vector3d ParticleMixture::getDragForceFluid() const {
 
     return drag;
 }
+
+void ParticleMixture::updateDensity() {
+
+    // update density of solid
+    Particle::updateDensity();
+
+    // update density of fluid
+
+    // volumetric strain increment
+    double volStrainInc = strainIncrementFluid.trace();
+    
+    // update particle density
+    if ((1.0+volStrainInc)!=0.0){
+
+        densityFluid = densityFluid / (1.0+volStrainInc);
+    }
+}
+
+void ParticleMixture::updatePorosity() {
+
+    double volumeSolid = Particle::getMass()/Particle::getDensity();
+    double volumeFluid = this->getMassFluid()/this->getDensityFluid();
+    
+    this->porosityMixture = volumeFluid/(volumeFluid+volumeSolid);
+}
+
+void ParticleMixture::updatePressure(double dt) {
+
+    // volumetric modulus of fluid
+    double kw = material->getBulkModulusFluid();
+
+    // porosity of mixture
+    double n = this->porosityMixture;
+
+    // volumetric strain rate of solid
+    double vs = Particle::getStrainIncrement().trace()/dt;
+
+    // volumetric strain rate of fluid
+    double vf = (*(this->getStrainIncrementFluid())).trace()/dt;
+
+    // pressure increment
+    double dp = - dt * kw / n * ( (1 - n)*vs + n*vf );
+
+    // update pressure
+    this->pressureFluid+=dp;
+}

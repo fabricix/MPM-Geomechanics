@@ -36,10 +36,19 @@ namespace Update {
 	/// \param[in] bodies List of Body pointers
 	void particleDensity(vector<Body*>* bodies);
 	
+	/// \brief Updates the porosity of the mixture
+	/// \param[in] bodies List of Body pointers
+	void particlePorosity(vector<Body*>* bodies);
+
 	/// \brief Update the particles' stress
 	/// \param[in] bodies List of Body pointers
 	void particleStress(vector<Body*>* bodies);
 	
+	/// \brief Update the particles pressure
+	/// \param[in] bodies List of Body pointers
+	/// \param[in] dt Time step
+	void particlePressure(vector<Body*>* bodies, double dt);
+
 	/// \brief Update the particle velocity
 	///
 	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}/m_I \Delta t\f$ 

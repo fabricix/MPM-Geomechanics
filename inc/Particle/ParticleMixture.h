@@ -25,6 +25,14 @@ public:
     /// \brief Default virtual destructor
     virtual ~ParticleMixture();
 
+    /// \brief Update the particle density
+    ///  
+    virtual void updateDensity();
+
+    /// \brief Update the particle porosity
+    ///
+    virtual void updatePorosity();
+
     /// \brief Returns the mass of the particle
     /// \return Particle mass
     virtual inline double getMassFluid() const { return this->massFluid; }
@@ -64,6 +72,14 @@ public:
     /// \brief Configures the strain increment of fluid phase
     /// \param[in] strain_increment_fluid Particle strain increment of fluid phase
     virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment_fluid) { this->strainIncrementFluid=strain_increment_fluid; }
+
+    /// \brief Returns the strain increment of fluid
+    /// \return Particle strain increment of fluid
+    virtual inline const Matrix3d* getStrainIncrementFluid() const { return &(this->strainIncrementFluid); }
+
+    /// \brief Update the particle pressure
+    ///  
+    virtual void updatePressure(double dt);
 
 private:
 
