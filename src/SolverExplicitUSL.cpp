@@ -18,13 +18,7 @@ using std::cout;
 #include "Update.h"
 #include "Output.h"
 
-SolverExplicitUSL::SolverExplicitUSL():Solver() {
-
-}
-
-SolverExplicitUSL::~SolverExplicitUSL() {
-	
-}
+SolverExplicitUSL::SolverExplicitUSL():Solver() { }
 
 void SolverExplicitUSL::Solve( ){
 

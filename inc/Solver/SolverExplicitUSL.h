@@ -9,8 +9,6 @@
 #define SOLVEREXPLICITUSL_H_
 
 #include "Solver.h"
-#include "Body/Body.h"
-#include "Mesh/Mesh.h"
 
 /// \class SolverExplicitUSL
 /// \brief Represents the operations to solve explicitly the
@@ -22,10 +20,6 @@ public:
 	/// \brief Default constructor
 	///
 	SolverExplicitUSL();
-	
-	/// \brief Default destructor
-	///
-	virtual ~SolverExplicitUSL();
 	
 	/// \brief Solve the problem in time
 	///

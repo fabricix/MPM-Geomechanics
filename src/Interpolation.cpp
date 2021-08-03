@@ -71,9 +71,6 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 
 void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 
-	// check if is two-phase calculations
-	if(!ModelSetup::getTwoPhaseActive()) return;
-
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
 

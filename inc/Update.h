@@ -15,6 +15,11 @@
 /// \brief Represents operations to update values in nodes and particles.
 namespace Update {
 
+	/// \enum Direction
+	/// \brief Principal direction in the model.
+	/// This enumeration is used to update the boundary conditions in each direction
+	enum Direction {X, Y, Z};
+
 	/// \brief Update the nodal velocity
 	/// \param[in] mesh Mesh reference
 	void nodalVelocity(Mesh* mesh);
@@ -57,6 +62,11 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	void boundaryConditionsMomentum(Mesh* mesh);
 	
+	/// \brief Apply essential boundary condition in
+	/// terms of momentum of fluid phase
+	/// \param[in] mesh Mesh reference
+	void boundaryConditionsMomentumFluid(Mesh* mesh);
+
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of bodies
@@ -75,6 +85,13 @@ namespace Update {
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneMomentum(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+
+	/// \brief Configure the momentum of fluid phase in each node in boundary planes
+	/// \param[in] boundary Boundary plane
+	/// \param[in] nodes Node list pointer
+	/// \param[in] direction Direction to apply de boundary condition 
+	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
+	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
 };
 
 #endif /* UPDATE_H_ */

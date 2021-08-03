@@ -85,6 +85,10 @@ namespace Interpolation {
 	///
 	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
 	///
+	/// At the moment, only the principal values of the hydraulic conductivity in 3D are considered, thus:
+	///
+	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	void nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies);

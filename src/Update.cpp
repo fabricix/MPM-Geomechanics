@@ -210,7 +210,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 		if (nodeI.getActive()) {
 
 			// witch type of restriction
-			switch(plane->type) {
+			switch(plane->restriction) {
 
 				// free condition
 				case Boundary::BoundaryType::FREE:
@@ -234,17 +234,17 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 					switch(dir) {
 
 						// normal pointed to x
-						case 0:
+						case Update::Direction::X :
 							momentum.x()=0.0;
 							break;
 
 						// normal pointed to y
-						case 1:
+						case Update::Direction::Y :
 							momentum.y()=0.0;
 							break;
 
 						// normal pointed to z
-						case 2:
+						case Update::Direction::Z :
 							momentum.z()=0.0;
 							break;
 					}
@@ -258,32 +258,112 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 	}
 }
 
+void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+
+	// for each boundary node
+	#pragma omp parallel for shared(plane, nodes, dir)
+	for (size_t i = 0; i < plane->nodes.size(); ++i){
+
+		// get node handle
+		Node& nodeI = nodes->at(plane->nodes.at(i));
+
+		if (nodeI.getActive()) {
+
+			// witch type of restriction of fluid
+			switch(plane->restrictionFluid) {
+
+				// free condition
+				case Boundary::BoundaryType::FREE:
+					break;
+
+				// fixed condition
+				case Boundary::BoundaryType::FIXED:
+
+					// set all momentum components as zero
+					nodeI.setMomentumFluid(Vector3d::Zero());
+				
+					break;
+				
+				// perpendicular restriction
+				case Boundary::BoundaryType::SLIDING:
+					
+					// get current boundary nodal momentum of fluid
+					Vector3d momentum = *(nodeI.getMomentumFluid());
+					
+					// witch direction of the normal vector
+					switch(dir) {
+
+						// normal pointed to x
+						case Update::Direction::X :
+							momentum.x()=0.0;
+							break;
+
+						// normal pointed to y
+						case Update::Direction::Y :
+							momentum.y()=0.0;
+							break;
+
+						// normal pointed to z
+						case Update::Direction::Z :
+							momentum.z()=0.0;
+							break;
+					}
+
+					// set the boundary nodal momentum
+					nodeI.setMomentumFluid(momentum);
+
+					break;
+			}
+		}
+	}
+}
+
+void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
+
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// plane X0 is the plane passing for the origin and points to -x axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
+
+	// plane Y0 is the plane passing for the origin and points to -y axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
+
+	// plane Z0 is the plane passing for the origin and points to -z axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
+	
+	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
+
+	// plane Yn is the plane passing for the maximum y coordinate and points to y axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
+
+	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
+	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+}
+
 void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
 
-	// use 0 for impose restrictions in x direction
-	// use 1 for impose restrictions in y direction
-	// use 2 for impose restrictions in z direction
-
 	// plane X0 is the plane passing for the origin and points to -x axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, 0);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
 
 	// plane Y0 is the plane passing for the origin and points to -y axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, 1);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
 
 	// plane Z0 is the plane passing for the origin and points to -z axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, 2);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
 	
 	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneXn(), nodes, 0);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
 
 	// plane Yn is the plane passing for the maximum y coordinate and points to y axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, 1);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 
 	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, 2);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
@@ -298,7 +378,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 		if (nodeI.getActive()) {
 			
 			// witch type of restriction
-			switch(plane->type) {
+			switch(plane->restriction) {
 
 				// free condition
 				case Boundary::BoundaryType::FREE:
@@ -321,17 +401,17 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 					switch(dir) {
 
 						// normal pointed to x
-						case 0:
+						case Update::Direction::X :
 							force.x()=0.0;
 							break;
 
 						// normal pointed to y
-						case 1:
+						case Update::Direction::Y :
 							force.y()=0.0;
 							break;
 
 						// normal pointed to z
-						case 2:
+						case Update::Direction::Z :
 							force.z()=0.0;
 							break;
 					}
@@ -349,27 +429,23 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 	// get nodes
 	vector<Node>* nodes = mesh->getNodes();
 
-	// use 0 for impose restrictions in x direction
-	// use 1 for impose restrictions in y direction
-	// use 2 for impose restrictions in z direction
-
 	// plane X0 is the plane passing for the origin and points to -x axes
-	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, 0);
+	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
 
 	// plane Y0 is the plane passing for the origin and points to -y axes
-	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, 1);
+	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
 
 	// plane Z0 is the plane passing for the origin and points to -z axes
-	setPlaneForce(mesh->getBoundary()->getPlaneZ0(), nodes, 2);
+	setPlaneForce(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
 	
 	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
-	setPlaneForce(mesh->getBoundary()->getPlaneXn(), nodes, 0);
+	setPlaneForce(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
 
 	// plane Yn is the plane passing for the maximum x coordinate and points to y axes
-	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, 1);
+	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 
 	// plane Zn is the plane passing for the maximum x coordinate and points to z axes
-	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, 2);
+	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
 void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {

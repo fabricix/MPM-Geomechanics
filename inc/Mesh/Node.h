@@ -45,6 +45,10 @@ public:
 	/// \param[in] nodal_momentum Vector containing the nodal momentum
 	inline void setMomentum(const Vector3d& nodal_momentum) { this->momentum=nodal_momentum; }
 	
+	/// \brief Configure the nodal momentum of fluid phase
+	/// \param[in] nodal_momentum_fluid Vector containing the nodal momentum of fluid phase
+	virtual inline void setMomentumFluid(const Vector3d& nodal_momentum_fluid) { return; }
+
 	/// \brief Configure the total nodal force
 	/// \param[in] total_nodal_force Vector containing the total
 	/// nodal force
@@ -70,7 +74,11 @@ public:
 	/// \brief Return the nodal momentum
 	/// \return Vector containing the nodal momentum
 	inline const Vector3d& getMomentum() const { return this->momentum; }
-		
+	
+	/// \brief Return the nodal momentum of fluid phase
+	/// \return Vector containing the nodal momentum of fluid phase
+	virtual inline const Vector3d* getMomentumFluid() const { return NULL; }
+
 	/// \brief Return the nodal internal force
 	/// \return Vector containing the nodal internal force
 	inline const Vector3d& getInternalForce() const { return this->internalForce; }
@@ -108,7 +116,7 @@ public:
 	inline void addInternalForce(const Vector3d& internal_force_increment) { this->internalForce+=internal_force_increment; }
 	
 	/// \brief Add a internal force increment of fluid to the nodal internal force
-	/// \param[in] internal_force_increment Vector containing nodal internal force increment of fluid
+	/// \param[in] internal_force_fluid_increment Vector containing nodal internal force increment of fluid
 	virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) { return; }
 		
 	/// \brief Add a external force increment to the nodal external force

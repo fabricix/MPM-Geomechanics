@@ -55,7 +55,8 @@ public:
 	/// \brief Represents the nodes and the type of restrictions
 	struct planeBoundary
 	{
-		BoundaryType type; //!< type of restrictions to be applied to the nodes
+		BoundaryType restriction; //!< type of restrictions to be applied to the solid phase
+		BoundaryType restrictionFluid; //!< type of restrictions to be applied to the fluid phase
 		vector<int> nodes; //!< nodes in plane
 	};
 
@@ -119,10 +120,19 @@ public:
 	/// \param[in] restriction Type of restriction Boundary::BoundaryType
 	inline void setRestrictions(Boundary::BoundaryType restriction);
 
+	/// \brief Configure the restrictions of the boundary nodes
+	/// \param[in] restriction Type of restriction Boundary::BoundaryType
+	inline void setRestrictionsFluid(Boundary::BoundaryType restriction);
+
 	/// \brief Configure the restrictions of the boundary nodes by plane
 	/// \param[in] restriction Type of restriction Boundary::BoundaryType
 	/// \param[in] plane Plane to be applied the restriction
 	inline void setRestrictions(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction);
+
+	/// \brief Configure the restrictions of the boundary nodes by plane
+	/// \param[in] restriction Type of restriction Boundary::BoundaryType
+	/// \param[in] plane Plane to be applied the restriction
+	inline void setRestrictionsFluid(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction);
 
 private:
 
@@ -142,20 +152,29 @@ private:
 inline Boundary::Boundary(){
 
 	setRestrictions(Boundary::BoundaryType::SLIDING);
+	setRestrictionsFluid(Boundary::BoundaryType::SLIDING);
 }
 
-inline Boundary::~Boundary() {
-	
-}
+inline Boundary::~Boundary() { }
 
 inline void Boundary::setRestrictions(Boundary::BoundaryType restriction) {
 	
-	planeX0.type=restriction;
-	planeY0.type=restriction;
-	planeZ0.type=restriction;
-	planeXn.type=restriction;
-	planeYn.type=restriction;
-	planeZn.type=restriction;
+	planeX0.restriction=restriction;
+	planeY0.restriction=restriction;
+	planeZ0.restriction=restriction;
+	planeXn.restriction=restriction;
+	planeYn.restriction=restriction;
+	planeZn.restriction=restriction;
+}
+
+inline void Boundary::setRestrictionsFluid(Boundary::BoundaryType restriction) {
+	
+	planeX0.restrictionFluid=restriction;
+	planeY0.restrictionFluid=restriction;
+	planeZ0.restrictionFluid=restriction;
+	planeXn.restrictionFluid=restriction;
+	planeYn.restrictionFluid=restriction;
+	planeZn.restrictionFluid=restriction;
 }
 
 inline void Boundary::setRestrictions(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction) {
@@ -163,27 +182,57 @@ inline void Boundary::setRestrictions(Boundary::BoundaryPlane plane, Boundary::B
 	switch (plane)
 	{
 		case BoundaryPlane::X0:
-			planeX0.type=restriction;
+			planeX0.restriction=restriction;
 			break;
 		
 		case BoundaryPlane::Y0:
-			planeY0.type=restriction;
+			planeY0.restriction=restriction;
 			break;
 
 		case BoundaryPlane::Z0:
-			planeZ0.type=restriction;
+			planeZ0.restriction=restriction;
 			break;
 
 		case BoundaryPlane::Xn:
-			planeXn.type=restriction;
+			planeXn.restriction=restriction;
 			break;
 		
 		case BoundaryPlane::Yn:
-			planeYn.type=restriction;
+			planeYn.restriction=restriction;
 			break;
 
 		case BoundaryPlane::Zn:
-			planeZn.type=restriction;
+			planeZn.restriction=restriction;
+			break;
+	}
+}
+
+inline void Boundary::setRestrictionsFluid(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction) {
+	
+	switch (plane)
+	{
+		case BoundaryPlane::X0:
+			planeX0.restrictionFluid=restriction;
+			break;
+		
+		case BoundaryPlane::Y0:
+			planeY0.restrictionFluid=restriction;
+			break;
+
+		case BoundaryPlane::Z0:
+			planeZ0.restrictionFluid=restriction;
+			break;
+
+		case BoundaryPlane::Xn:
+			planeXn.restrictionFluid=restriction;
+			break;
+		
+		case BoundaryPlane::Yn:
+			planeYn.restrictionFluid=restriction;
+			break;
+
+		case BoundaryPlane::Zn:
+			planeZn.restrictionFluid=restriction;
 			break;
 	}
 }
