@@ -164,5 +164,3 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 	// write results series
 	Output::writeResultsSeries();
 }
-
-

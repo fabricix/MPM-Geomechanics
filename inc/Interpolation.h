@@ -23,7 +23,7 @@ namespace Interpolation {
 	
 	/// \brief Interpolate mass from particles to nodes
 	///
-	/// \f$ m_I^s = \sum_p m_p^s N_{Ip}\f$
+	/// \f$ m_I = \sum_p m_p N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list of Bodies
@@ -39,7 +39,7 @@ namespace Interpolation {
 
 	/// \brief Interpolate momentum from particles to nodes
 	///
-	/// \f$ p_{iI}^s = \sum_p p_{ip}^s N_{Ip}\f$
+	/// \f$ p_{iI} = \sum_p p_{ip} N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
@@ -75,7 +75,11 @@ namespace Interpolation {
 
 	/// \brief Interpolate external force from particles to nodes
 	///
-	/// \f$ f_{iI}^{\text{ext,s}}=\sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
+	/// In one phase calculations:
+	/// \f$ f_{iI}^{\text{ext}}=\sum_p b_{ip} m_p N_{Ip} \f$
+	///
+	/// In two phase calculations:
+	/// \f$ f_{iI}^{\text{ext,s}} = \sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
@@ -85,7 +89,7 @@ namespace Interpolation {
 	///
 	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
 	///
-	/// At the moment, only the principal values of the hydraulic conductivity in 3D are considered, thus:
+	/// At the moment, only the principal values of the hydraulic conductivity in 3D are considered, then:
 	///
 	/// \f$ f_{iI}^{\text{ext,f}}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
 	///
@@ -94,18 +98,27 @@ namespace Interpolation {
 	void nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
 	/// \brief Interpolate the strain increment at particle
+	///
+	/// \f$ \Delta \epsilon_{ijp} = \frac{1}{2}(N_{Ip,j} v_{iI} + N_{Ip,i} v_{jI}) \f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
 
 	/// \brief Interpolate the strain increment of fluid at particle
+	///
+	/// \f$ \Delta \epsilon_{ijp}^f = \frac{1}{2}(N_{Ip,j} v_{iI}^f + N_{Ip,i} v_{jI}^f) \f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
 	/// \brief Interpolate the vorticity increment at particle
+	///
+	/// \f$ \Delta \Omega_{ijp}^f = \frac{1}{2}(N_{Ip,j} v_{iI} - N_{Ip,i} v_{jI}) \f$
+	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
