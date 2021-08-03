@@ -18,7 +18,7 @@ namespace Update {
 	/// \enum Direction
 	/// \brief Principal direction in the model.
 	/// This enumeration is used to update the boundary conditions in each direction
-	enum Direction {X=0, Y=1, Z=2};
+	enum Direction {X, Y, Z};
 
 	/// \brief Update the nodal velocity
 	///

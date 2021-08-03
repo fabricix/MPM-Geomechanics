@@ -51,7 +51,8 @@ void ParticleMixture::updateDensity() {
     // update density of solid
     Particle::updateDensity();
 
-    // update density of fluid
+    // only saturated particle can be update
+    if (this->getSaturation()<=0.0) { return; }
 
     // volumetric strain increment
     double volStrainInc = strainIncrementFluid.trace();
@@ -65,6 +66,9 @@ void ParticleMixture::updateDensity() {
 
 void ParticleMixture::updatePorosity() {
 
+    // only saturated particle can be update
+    if (this->getSaturation()<=0.0) { return; }
+
     double volumeSolid = Particle::getMass()/Particle::getDensity();
     double volumeFluid = this->getMassFluid()/this->getDensityFluid();
     
@@ -72,6 +76,9 @@ void ParticleMixture::updatePorosity() {
 }
 
 void ParticleMixture::updatePressure(double dt) {
+
+    // only saturated particle can be update
+    if (this->getSaturation()<=0.0) { return; }
 
     // volumetric modulus of fluid
     double kw = material->getBulkModulusFluid();

@@ -85,6 +85,9 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
+			
+			// only saturated particles can interpolate mass of fluid
+			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -173,6 +176,9 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
 
+			// only saturated particles can interpolate mass of fluid
+			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
+
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
@@ -227,7 +233,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			// particle pressure
 			Matrix3d pPressure;
 			
-			if (isTwoPhase) {
+			if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
 
 				// get pore pressure pressure
 				pPressure = particles->at(i)->getPressureFluid()*Matrix3d::Identity();
@@ -251,7 +257,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
 				internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
 
-				if (isTwoPhase)
+				if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
 				{
 					internalForce.x()+=(pPressure(0,0)*gradient(0)+pPressure(1,0)*gradient(1)+pPressure(2,0)*gradient(2))*pVolume;
 					internalForce.y()+=(pPressure(0,1)*gradient(0)+pPressure(1,1)*gradient(1)+pPressure(2,1)*gradient(2))*pVolume;
@@ -284,6 +290,9 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
+
+			// only saturated particles can interpolate mass of fluid
+			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -371,6 +380,9 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
+
+			// only saturated particles can interpolate mass of fluid
+			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
@@ -480,6 +492,9 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
+
+			// only saturated particles can interpolate mass of fluid
+			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
 
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();

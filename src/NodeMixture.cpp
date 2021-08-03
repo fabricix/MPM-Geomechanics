@@ -69,5 +69,8 @@ void NodeMixture::updateVelocity(){
     Node::updateVelocity();
 
     // update node velocity of fluid
-    this->velocityFluid = this->momentumFluid / this->massFluid; 
+    if (this->massFluid>0.0)
+    {
+        this->velocityFluid = this->momentumFluid / this->massFluid; 
+    }
 }

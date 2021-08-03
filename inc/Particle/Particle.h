@@ -219,6 +219,10 @@ public:
     /// \return Current porosity of mixture
     virtual inline double getPorosity() const { return 0.0; }
 
+    /// \brief Returns Saturation of fluid in void in mixture
+    /// \return saturation
+    virtual inline double getSaturation() const { return 0.0; }
+
     /// \brief Returns the drag force of fluid in particle
     /// \return Particle drag force of fluid
     virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }

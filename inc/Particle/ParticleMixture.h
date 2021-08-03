@@ -81,6 +81,10 @@ public:
     ///  
     virtual void updatePressure(double dt);
 
+    /// \brief Returns Saturation of fluid in void in mixture
+    /// \return saturation
+    virtual inline double getSaturation() const { return 1.0; }
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$
