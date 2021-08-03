@@ -149,6 +149,55 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	}
 }
 
+void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
+
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle 
+		#pragma omp parallel for shared (particles, nodes, dt) private(mesh, bodies, ibody)
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// initialize the velocity rate vector
+			Vector3d velocityRate = Vector3d::Zero();
+			
+			// for each node in the contribution list
+			for (size_t j = 0; j < contribution->size(); ++j)
+			{	
+				// get the contributing node structure
+				const Contribution contribI = contribution->at(j);
+
+				// get the contributing node handle
+				Node& nodeI = nodes->at(contribI.getNodeId());
+
+				if (nodeI.getMassFluid()!=0.0) {
+
+					// compute the velocity rate contribution
+					velocityRate+= (*(nodeI.getTotalForceFluid()))*contribI.getWeight()/nodeI.getMassFluid();
+				}
+			}
+
+			// get particle handle
+			Particle* particleP = particles->at(i);
+
+			// update particle velocity
+			particleP->setVelocityFluid(*particleP->getVelocityFluid()+velocityRate*dt);
+		}
+	}
+}
+
 void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
