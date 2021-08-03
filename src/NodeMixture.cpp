@@ -18,11 +18,15 @@ void NodeMixture::updateTotalForce()
     this->totalForceFluid = this->internalForceFluid + this->externalForceFluid + this->dampingForceFluid;
 
     // total force of solid phase
-    Node::totalForce = Node::internalForce + Node::externalForce + Node::dampingForce + this->totalForceFluid;
+    Node::totalForce = Node::internalForce + Node::externalForce + Node::dampingForce - this->totalForceFluid;
 }
 
 void NodeMixture::updateDampingForce() { 
 
+    // update damping force of solid phase
+    Node::updateDampingForce();
+
+    // update damping force of fluid phase
     switch(ModelSetup::getDampingType()) {
 
         case ModelSetup::DampingType::LOCAL:
