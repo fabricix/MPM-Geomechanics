@@ -163,6 +163,10 @@ public:
 	/// \param[in] strain_increment Particle strain increment
 	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }
 
+	/// \brief Configures the strain increment of fluid phase
+	/// \param[in] strain_increment Particle strain increment of fluid phase
+	virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment) { return; }
+
 	/// \brief Configures the vorticity increment
 	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
 	inline void setVorticityIncrement(const Matrix3d& vorticity_increment) { this->vorticityIncrement=vorticity_increment; }

@@ -108,6 +108,10 @@ public:
 	/// \return Vector containing the nodal velocity
 	inline const Vector3d& getVelocity() const { return this->velocity; }
 
+	/// \brief Return the nodal velocity of fluid phase
+	/// \return Vector containing the nodal velocity of fluid phase
+	virtual inline const Vector3d* getVelocityFluid() const { return NULL; }
+
 	/// \brief Add a mass increment to the nodal mass
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }

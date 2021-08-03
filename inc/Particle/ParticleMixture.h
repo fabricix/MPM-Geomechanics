@@ -61,6 +61,10 @@ public:
     /// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
     virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) { this->velocityFluid=particle_velocity_fluid;}
 
+    /// \brief Configures the strain increment of fluid phase
+    /// \param[in] strain_increment_fluid Particle strain increment of fluid phase
+    virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment_fluid) { this->strainIncrementFluid=strain_increment_fluid; }
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$

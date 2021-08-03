@@ -77,6 +77,14 @@ public:
     /// \return Nodal mass of fluid phase
     virtual inline double getMassFluid() const { return massFluid; }
 
+    /// \brief Update nodal velocity of mixture
+    ///
+    virtual void updateVelocity();
+
+    /// \brief Return the nodal velocity of fluid phase
+    /// \return Vector containing the nodal velocity of fluid phase
+    virtual inline const Vector3d* getVelocityFluid() const { return &(this->velocityFluid); }
+
 private:
 
     double massFluid; //!< nodal mass of fluid: \f$m_I^{f}\f$

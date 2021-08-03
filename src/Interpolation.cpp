@@ -464,6 +464,62 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 	}
 }
 
+void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
+
+	// get nodes
+	vector<Node>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// initialize a matrix for strain increment computation
+			Matrix3d dstrain = Matrix3d::Zero();
+			
+			// for each node in the contribution list
+			for (size_t j = 0; j < contribution->size(); ++j) {
+
+				// get the contributing node
+				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+
+				// get the nodal gradient
+				const Vector3d dN = contribution->at(j).getGradients();
+
+				// get nodal velocity
+				const Vector3d v = *(nodeI->getVelocityFluid());
+
+				// compute the nodal contribution to the particle strain increment
+
+				dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
+				dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
+				dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
+
+				dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt; // y,x
+				dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt; // y,y
+				dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt; // y,z
+				
+				dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt; // z,x
+				dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
+				dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
+			}
+
+			// set total particle strain increment
+			particles->at(i)->setStrainIncrementFluid(dstrain);
+		}
+	}
+}
+
 void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes

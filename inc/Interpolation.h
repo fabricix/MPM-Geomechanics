@@ -98,6 +98,12 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
+
+	/// \brief Interpolate the strain increment of fluid at particle
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	/// \param[in] time_step Time step
+	void particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
 	/// \brief Interpolate the vorticity increment at particle
 	/// \param[in] mesh Mesh reference
