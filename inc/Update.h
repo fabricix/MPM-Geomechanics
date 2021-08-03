@@ -21,10 +21,22 @@ namespace Update {
 	enum Direction {X=0, Y=1, Z=2};
 
 	/// \brief Update the nodal velocity
+	///
+	/// \f$ v_{i I}= p_{i I} / m_{I} \f$
+	///
 	/// \param[in] mesh Mesh reference
 	void nodalVelocity(Mesh* mesh);
 	
 	/// \brief Update the nodal total force
+	///
+	/// In one phase calculations:
+	///
+	/// \f$ f_{iI}^{tot} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dmp} \f$
+	///
+	/// In two phase calculations:
+	///
+	/// \f$ f_{iI}^{tot,s} = f_{iI}^{int,s} + f_{iI}^{ext,s} + f_{iI}^{dmp,s} - \dot{v}_{iI}^f m_I^f \f$
+	///
 	/// \param[in] mesh Mesh reference
 	void nodalTotalForce(Mesh* mesh); 
 	
@@ -33,10 +45,24 @@ namespace Update {
 	void resetNodalValues(Mesh* mesh);
 	
 	/// \brief Updates the particles' density
+	///
+	/// In one phase calculations:
+	///
+	/// \f$ \rho_{p}^{t+1}=\rho_{p}^{t} /\left(1+\Delta \epsilon_{i i p}^{t-1/2}\right) \f$
+	///
+	/// In two phase calculation:
+	/// 
+	/// \f$ \rho_{p}^{t+1,s}=\rho_{p}^{t,s} /\left(1+\Delta \epsilon_{i i p}^{t-1/2,s}\right) \f$
+	///
+	/// \f$ \rho_{p}^{t+1,f}=\rho_{p}^{t,f} /\left(1+\Delta \epsilon_{i i p}^{t-1/2,f}\right) \f$
+	///
 	/// \param[in] bodies List of Body pointers
 	void particleDensity(vector<Body*>* bodies);
 	
 	/// \brief Updates the porosity of the mixture
+	///
+	/// \f$ n^{t+1} = V^{t+1,f}/(V^{t+1,f}+V^{t+1,s})\f$
+	///
 	/// \param[in] bodies List of Body pointers
 	void particlePorosity(vector<Body*>* bodies);
 
@@ -45,13 +71,16 @@ namespace Update {
 	void particleStress(vector<Body*>* bodies);
 	
 	/// \brief Update the particles pressure
+	///
+	/// \f$ p_p^{t+1,f} = p_p^{t,f} - \Delta t K_w / n^{t+1} ((1-n^{t+1}) v_{i,i}^{t+1/2,s}+ n^{t+1} v_{i,i}^{t+1/2,f} ) \f$
+	///
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] dt Time step
 	void particlePressure(vector<Body*>* bodies, double dt);
 
 	/// \brief Update the particle velocity
 	///
-	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}/m_I \Delta t\f$ 
+	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}^{t}/m_I \Delta t\f$ 
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers
@@ -60,7 +89,7 @@ namespace Update {
 	
 	/// \brief Update the particle velocity fluid
 	///
-	/// \f$ v_{ip}^{f,t+1/2} = v_{ip}^{f,t-1/2} + \sum_I N_{ip} f_^f{iI}/m_I \Delta t \f$  
+	/// \f$ v_{ip}^{f,t+1/2} = v_{ip}^{f,t-1/2} + \sum_I N_{ip} f_{iI}^{t,f}/m_I^f \Delta t \f$  
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers
