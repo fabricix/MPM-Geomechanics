@@ -148,8 +148,13 @@ public:
 
     /// \brief Configures the restriction of the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes
-    /// X0, Y0, Z0, Xn, Yn and Zn.
+    /// X0, Y0, Z0, Xn, Yn and Zn
     void setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions);
+
+    /// \brief Configures the restriction of fluid phase at the boundary nodes
+    /// \param[in] restrictions Vector containing the restriction to the planes
+    /// X0, Y0, Z0, Xn, Yn and Zn
+    void setBoundaryRestrictionsFluid(vector<Boundary::BoundaryType> restrictions);
 
     /// \brief Verify if the position is inside the limits
     /// \param[in] point A vector containing the

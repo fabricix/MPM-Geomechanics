@@ -109,6 +109,7 @@ using Eigen::Vector3d;
 /// | cells_dimension | used to define the cell dimension in each direction | array |
 /// | origin | used to define the origin of coordinates | array |
 /// | boundary_conditions | used to set the mesh boundary conditions | -- |
+/// | boundary_conditions_fluid | used to set the mesh boundary conditions of fluid | -- |
 /// | sliding | boundary condition that can move perpendicular to the normal of the boundary plane | string |
 /// | fixed | boundary condition that can not move in any direction | string |
 /// | free | boundary condition that can move freely in all directions | string |
@@ -295,6 +296,11 @@ namespace Input {
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
 	vector<Boundary::BoundaryType> getMeshBoundaryConditions();
 	
+	/// \brief Return the mesh boundary conditions of fluid
+	/// \return boundary_restriction_vector A vector containing 
+	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
+	vector<Boundary::BoundaryType> getMeshBoundaryConditionsFluid();
+
 	/// \brief Return number of threads defined in the input file
 	/// \return n_threads Number of threads
 	unsigned getNumThreads();

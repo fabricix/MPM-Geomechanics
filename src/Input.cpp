@@ -665,6 +665,35 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
 	}
 }
 
+vector<Boundary::BoundaryType> Input::getMeshBoundaryConditionsFluid() {
+
+	try{
+		// initialize the vector as sliding restriction
+		vector<Boundary::BoundaryType> restrictions(6,Boundary::BoundaryType::SLIDING);
+
+		// if not defined set all sliding boundaries
+		if(inputFile["mesh"]["boundary_conditions_fluid"].is_null()) {
+			return 	restrictions;
+		}
+
+		// Planes X0, Y0 and Z0
+		setRestriction(0,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_X0"]);
+		setRestriction(1,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Y0"]);
+		setRestriction(2,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Z0"]);
+
+		// Planes Xn, Yn and Zn
+		setRestriction(3,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Xn"]);
+		setRestriction(4,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Yn"]);
+		setRestriction(5,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Zn"]);
+
+		return restrictions;
+	}
+	catch (...) {
+		Warning::printMessage("Error during reading the boundary conditions in fluid");
+		throw;
+	}
+}
+
 unsigned Input::getNumThreads() {
 
 	try

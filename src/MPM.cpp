@@ -143,6 +143,12 @@ void MPM::setupMesh(){
 
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
+
+	if (ModelSetup::getTwoPhaseActive()){
+		
+		// configure the mesh boundary conditions of fluid
+		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
+	}
 }
 
 void MPM::setupMaterialList(){
