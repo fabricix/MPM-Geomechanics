@@ -83,6 +83,11 @@ using Eigen::Vector3d;
 /// | time | define the simulation time | double |
 /// | time_step | define the time step | double |
 ///
+/// ## Two phase simulations
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | n_phases | define number of phases in the simulations (default is 1) | int |
+
 /// ## Stress update scheme
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -293,6 +298,10 @@ namespace Input {
 	/// \brief Return number of threads defined in the input file
 	/// \return n_threads Number of threads
 	unsigned getNumThreads();
+
+	/// \brief Return the number of phases in the simulation
+	/// \return n_phases Number of phases in the simulation
+	unsigned getNumberPhases();
 };
 
 #endif /* INPUT_H_ */

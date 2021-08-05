@@ -113,22 +113,29 @@ private:
 	///
 	void setInterpolationFunctions();
 	
-	/// \brief Configure the particles
+	/// \brief Configure particles
 	///
 	void setupParticles();
 	
-	/// \brief Configure the loads in the model
+	/// \brief Configure loads in the model
 	///
 	void setupLoads();
 	
-	/// \brief Configure the results to be written
+	/// \brief Configure results to be written
 	///
 	void setupResults();
 	
-	/// \brief Configure the dampig forces
+	/// \brief Configure dampig forces
 	/// 
 	void setupDamping();
-};
 
+	/// \bried Configure number of phases in the simulation
+	///
+	void setNumberPhasesInSimulation();
+
+	/// \bried Configure number of threads
+	///
+	void setThreads();
+};
 
 #endif /* MPM_H_ */

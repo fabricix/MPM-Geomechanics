@@ -226,10 +226,16 @@ void MPM::setupResults(){
 	Output::configureResultFiels(Input::getResultFields());
 }
 
-void setThreads() {
+void MPM::setThreads() {
 
 	// configures the number of threads
 	ModelSetup::setNumThreads(Input::getNumThreads());
+}
+
+void MPM::setNumberPhasesInSimulation() {
+
+	// configures the number of phases in the simulation
+	ModelSetup::setTwoPhaseActive(Input::getNumberPhases()>1?true:false);
 }
 
 void MPM::createModel(){
@@ -243,6 +249,9 @@ void MPM::createModel(){
 		
 		// set the interpolation functions
 		setInterpolationFunctions();
+
+		// set the munber of phases in the simulations
+		setNumberPhasesInSimulation();
 
 		// setup the mesh
 		setupMesh();

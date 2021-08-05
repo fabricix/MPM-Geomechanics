@@ -21,6 +21,10 @@ using std::numeric_limits;
 #include <fstream>
 using std::ifstream;
 
+#include<string>
+using std::string;
+using std::to_string;
+
 namespace Input {
 
 	json inputFile; //!< data structure containing all the model information
@@ -681,6 +685,47 @@ unsigned Input::getNumThreads() {
 	catch(...)
 	{
 		Warning::printMessage("Error during reading the number of threads");
+		throw;
+	}
+}
+
+
+unsigned Input::getNumberPhases(){
+
+	try
+	{
+		string keyword = "n_phases";
+
+		// default simulations is one phase
+		if(inputFile[keyword].is_null()) { return 1; }
+
+		// define the number of phases by an input
+		if(inputFile[keyword].is_number()) {
+			
+			unsigned nPhases = inputFile[keyword];
+
+			if (nPhases>0 && nPhases<=2){
+
+				return nPhases; 	
+			}
+			else{
+
+				throw(nPhases);
+			}
+		}
+
+		throw(keyword);
+	}
+
+	catch(std::string& keyword)
+	{
+		Warning::printMessage("The keyword: \""+string(keyword)+"\" must be a number");
+		throw;
+	}
+
+	catch(unsigned nPhases)
+	{
+		Warning::printMessage("The number of phases must be 1 or 2 (input = "+to_string(nPhases)+")");
 		throw;
 	}
 }

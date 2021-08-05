@@ -15,11 +15,11 @@ using Eigen::Vector3d;
 using std::string;
 
 /// \namespace ModelSetup
-/// \brief Contain the configuration variables that defines an specific simulation. 
+/// \brief Contain the configuration variables that defines an specific simulation
 namespace ModelSetup {
 
 	/// \enum StressUpdateScheme
-	/// \brief Defines the type of scheme used to update the stress.
+	/// \brief Defines the type of scheme used to update the stress
 	enum StressUpdateScheme{ USF, USL, MUSL };
 
 	/// \enum DampingType
@@ -27,11 +27,11 @@ namespace ModelSetup {
 	enum DampingType{ UNDAMPED, LOCAL, RAYLEIGH, ARTIFICIAL_VISCOSITY };
 	
 	/// \enum OperationalSystem
-	/// \brief Defines the current operational system.
+	/// \brief Defines the current operational system
 	enum OperationalSystem{ WINDOWS, LINUX };
 
 	/// \enum InterpolationFunctionType
-	/// \brief Defines the type of interpolation function.
+	/// \brief Defines the type of interpolation function
 	enum InterpolationFunctionType{ LINEAR, GIMP };
 
 	/// \brief Return true is the system is Windows
@@ -42,7 +42,7 @@ namespace ModelSetup {
 	/// \return True if is Linux system
 	bool getLinuxSystem();
 	
-	/// \brief Return the number of nodes that a particle contributes.
+	/// \brief Return the number of nodes that a particle contributes
 	/// \return The number of nodes that a particle contributes
 	unsigned getContributionNodesNum();
 	
