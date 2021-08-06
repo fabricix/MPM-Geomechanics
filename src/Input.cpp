@@ -273,6 +273,8 @@ vector<Material*> Input::getMaterialList(){
 				// verify material type
 				if (!(*it)["type"].is_null() && (*it)["type"].is_string()){
 					
+					Material* material = NULL;
+
 					// elastic material
 					if ((*it)["type"] == "elastic")
 					{
@@ -283,8 +285,9 @@ vector<Material*> Input::getMaterialList(){
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
 						
 						// create a new elastic material
-						materials.push_back(new Elastic(id, density, young, poisson));
+						material = new Elastic(id, density, young, poisson);
 					}
+
 					// mohr-coulomb material
 					else if ((*it)["type"] == "mohr-coulomb")
 					{	
@@ -299,8 +302,36 @@ vector<Material*> Input::getMaterialList(){
 						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 						
 						// create a new material
-						materials.push_back(new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile));	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile);	
 					}
+
+					// set up the two phases parameters
+					if (ModelSetup::getTwoPhaseActive() && material!=NULL)
+					{
+						double density_fluid=0.0; if ((*it)["density_fluid"].is_number()) { density_fluid = ((*it)["density_fluid"]); }
+						double porosity=0.0; if ((*it)["porosity"].is_number()) { porosity = ((*it)["porosity"]); }
+						double bulk_fluid=0.0; if ((*it)["bulk_fluid"].is_number()) { bulk_fluid = ((*it)["bulk_fluid"]); }
+
+						Vector3d hydraulic_conductivity(0,0,0); 
+						if ((*it)["hydraulic_conductivity"].is_array()) { 
+
+							hydraulic_conductivity.x() = ((*it)["hydraulic_conductivity"])[0];
+							hydraulic_conductivity.y() = ((*it)["hydraulic_conductivity"])[1];
+							hydraulic_conductivity.z() = ((*it)["hydraulic_conductivity"])[2];
+						}
+
+						material->setDensityFluid(density_fluid);
+						material->setPorosity(porosity);
+						material->setBulkModulusFluid(bulk_fluid);
+						material->setHydraulicConductivity(hydraulic_conductivity);
+					}
+
+					if (material!=NULL){
+
+						// set up the current material
+						materials.push_back(material);
+					}
+
 				}
 			}
 		}
