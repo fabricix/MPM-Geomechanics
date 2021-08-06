@@ -27,7 +27,7 @@
 void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -51,7 +51,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// compute the weighted nodal mass
 				const double nodalMass = pMass*contribution->at(j).getWeight();
@@ -72,7 +72,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -99,7 +99,7 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// compute the weighted nodal mass
 				const double nodalMassFluid = pMassFluid*contribution->at(j).getWeight();
@@ -120,7 +120,7 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -147,7 +147,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// add the weighted momentum in node
 				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
@@ -162,7 +162,7 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 	if(!ModelSetup::getTwoPhaseActive()) return;
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -192,7 +192,7 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// add the weighted momentum in node
 				nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
@@ -207,7 +207,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -246,7 +246,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradients
 				const Vector3d gradient = contribution->at(j).getGradients();
@@ -277,7 +277,7 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	if(!ModelSetup::getTwoPhaseActive()) return;
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -307,7 +307,7 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradients
 				const Vector3d gradient = contribution->at(j).getGradients();
@@ -328,7 +328,7 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -352,7 +352,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// add weighted force in node
 				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
@@ -367,7 +367,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	if(!ModelSetup::getTwoPhaseActive()) return;
 	
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -397,7 +397,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// add weighted force in node
 				nodeI->addExternalForceFluid((pExtForceFluid+pDragForceFluid)*contribution->at(j).getWeight());
@@ -423,7 +423,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -447,7 +447,7 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
@@ -479,7 +479,7 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -506,7 +506,7 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
@@ -538,7 +538,7 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -562,7 +562,7 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = &nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				// get nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();

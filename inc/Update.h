@@ -131,27 +131,27 @@ namespace Update {
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
-	void setPlaneForce(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+	void setPlaneForce(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
 	
 	/// \brief Configure the force in fluid phase in each node in boundary planes
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
-	void setPlaneForceFluid(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+	void setPlaneForceFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
 
 	/// \brief Configure the momentum in each node in boundary planes
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneMomentum(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+	void setPlaneMomentum(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
 
 	/// \brief Configure the momentum of fluid phase in each node in boundary planes
 	/// \param[in] boundary Boundary plane
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
-	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node>* nodes, unsigned direction);
+	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
 };
 
 #endif /* UPDATE_H_ */

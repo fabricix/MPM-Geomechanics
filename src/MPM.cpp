@@ -34,11 +34,9 @@ MPM::MPM() {
 	solver=0;
 }
 
-MPM::~MPM() {
+MPM::~MPM() { }
 
-}
-
-void MPM::readInputFile(int argc, char **argv){
+void MPM::readInputFile(int argc, char **argv) {
 	
 	try{
 		if (argc!=2){
@@ -59,7 +57,7 @@ void MPM::readInputFile(int argc, char **argv){
 	}
 }
 
-void MPM::setSimulationTime(){
+void MPM::setSimulationTime() {
 	
 	ModelSetup::setTime(Input::getSimulationTime());
 	
@@ -82,7 +80,7 @@ void MPM::setInterpolationFunctions() {
 	ModelSetup::setInterpolationFunction(Input::getInterpolationFunction());
 }
 
-void MPM::setTimeStep(){
+void MPM::setTimeStep() {
 
 	// input time step
 	ModelSetup::setTimeStep(Input::getTimeStep());
@@ -127,7 +125,7 @@ void MPM::setTimeStep(){
 	}
 }
 
-void MPM::setupMesh(){
+void MPM::setupMesh() {
 	
 	// number of cells
 	mesh.setNumCells(Input::getCellsNum());
@@ -139,29 +137,29 @@ void MPM::setupMesh(){
 	mesh.setOrigin(Input::getOrigin());
 
 	// create the mesh
-	mesh.createGrid();
+	mesh.createGrid(ModelSetup::getTwoPhaseActive());
 
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
 	if (ModelSetup::getTwoPhaseActive()){
-		
+
 		// configure the mesh boundary conditions of fluid
 		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
 	}
 }
 
-void MPM::setupMaterialList(){
+void MPM::setupMaterialList() {
 
 	materials=Input::getMaterialList();
 }
 
-void MPM::setupBodyList(){
+void MPM::setupBodyList() {
 
 	bodies=Input::getBodyList();
 }
 
-void MPM::createBodies(){
+void MPM::createBodies() {
 
 	for (size_t i = 0; i < bodies.size(); ++i){
 
@@ -179,7 +177,7 @@ void MPM::createBodies(){
 	}
 }
 
-void MPM::setupParticles(){
+void MPM::setupParticles() {
 
 	for (size_t i = 0; i < bodies.size(); ++i){
 
@@ -205,7 +203,7 @@ void MPM::setupParticles(){
 	}
 }
 
-void MPM::setupLoads(){
+void MPM::setupLoads() {
 
 	// gravity
 	ModelSetup::setGravity(Input::getGravity());
@@ -223,7 +221,7 @@ void MPM::setupDamping() {
 	}
 }
 
-void MPM::setupResults(){
+void MPM::setupResults() {
 
 	// number of results
 	ModelSetup::setResultNum(Input::getResultNum());
@@ -244,7 +242,7 @@ void MPM::setNumberPhasesInSimulation() {
 	ModelSetup::setTwoPhaseActive(Input::getNumberPhases()>1?true:false);
 }
 
-void MPM::createModel(){
+void MPM::createModel() {
 
 	try{
 		// set number of threads

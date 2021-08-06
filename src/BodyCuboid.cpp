@@ -6,6 +6,8 @@
  */
 
 #include "Body/BodyCuboid.h"
+#include "Particle/ParticleMixture.h"
+#include "Model.h"
 
 void BodyCuboid::create(Mesh& mesh, Material* material) {
 
@@ -31,6 +33,9 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 	double dx = cellDimension.x();
 	double dy = cellDimension.y();
 	double dz = cellDimension.z();
+
+	// verify if is two phase calculations
+	bool is_two_phase = ModelSetup::getTwoPhaseActive();
 
 	// create the particles and put it in the space
 	for (int i = 0; i < nCellsBoundingBox.x(); ++i){
@@ -92,14 +97,14 @@ void BodyCuboid::create(Mesh& mesh, Material* material) {
 				pt8.z() -= (dz*0.25);
 
 				// push all particles in the body's particle vector
-				Body::particles.push_back(new Particle(pt1,material,particleSize));
-				Body::particles.push_back(new Particle(pt2,material,particleSize));
-				Body::particles.push_back(new Particle(pt3,material,particleSize));
-				Body::particles.push_back(new Particle(pt4,material,particleSize));
-				Body::particles.push_back(new Particle(pt5,material,particleSize));
-				Body::particles.push_back(new Particle(pt6,material,particleSize));
-				Body::particles.push_back(new Particle(pt7,material,particleSize));
-				Body::particles.push_back(new Particle(pt8,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt1,material,particleSize) : new Particle(pt1,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt2,material,particleSize) : new Particle(pt2,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt3,material,particleSize) : new Particle(pt3,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt4,material,particleSize) : new Particle(pt4,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt5,material,particleSize) : new Particle(pt5,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt6,material,particleSize) : new Particle(pt6,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt7,material,particleSize) : new Particle(pt7,material,particleSize));
+				Body::particles.push_back(is_two_phase ? new ParticleMixture(pt8,material,particleSize) : new Particle(pt8,material,particleSize));
 			}
 		}   
 	}

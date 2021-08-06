@@ -39,8 +39,8 @@ public:
     virtual ~Mesh();
 
     /// \brief Create a structured mesh grid
-    ///
-    void createGrid();
+    /// \param[in] is_two_phase_simulation True if two phase simulation is required
+    void createGrid( bool is_two_phase_simulation );
 
     /// \brief Set cells dimension in each direction
     /// \param[in] cell_dimension_x Cell dimesion in x
@@ -96,7 +96,7 @@ public:
     
     /// \brief Return nodes in mesh
     /// \return A pointer to the mesh nodes
-    inline vector<Node>* getNodes() { return &(this->gridNodes); }
+    inline vector<Node*>* getNodes() { return &(this->gridNodes); }
 
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension
@@ -176,7 +176,7 @@ private:
     
     Vector3d maxLimit; //!< high coordinates of domain without ghosts
     
-    vector<Node> gridNodes; //!< all nodes in mesh
+    vector<Node*> gridNodes; //!< all nodes in mesh
     
     Boundary boundary; //!< mesh boundary
     
@@ -215,7 +215,7 @@ private:
 
 inline void Mesh::activateNode(int nodeId, const bool activeValue) {
 
-    gridNodes.at(nodeId).setActive(activeValue);
+    gridNodes.at(nodeId)->setActive(activeValue);
 }
 
 #endif /* MESH_H_ */

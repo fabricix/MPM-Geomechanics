@@ -7,6 +7,8 @@
 
 #include "Body/BodyPolygon.h"
 #include "Geometry.h"
+#include "Model.h"
+#include "Particle/ParticleMixture.h"
 
 #include <math.h>
 
@@ -66,6 +68,9 @@ void BodyPolygon::create(Mesh& mesh, Material* material) {
 		ncelly = (int)std::ceil((maxPoint.y()-minPoint.y())/dy);
 		ncellz = (int)std::ceil(this->extrudeDisplacement/dz);
 	}
+
+	// verify if is two phase calculations
+	bool is_two_phase = ModelSetup::getTwoPhaseActive();
 
 	// reference point
 	Vector3d p1 = minPoint;
@@ -138,14 +143,14 @@ void BodyPolygon::create(Mesh& mesh, Material* material) {
 				pt8.z() -= (dz*0.25);
 				
 				// check if the points are inside the polygon
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt1,this->extrudeDirection)) Body::particles.push_back(new Particle(pt1,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt2,this->extrudeDirection)) Body::particles.push_back(new Particle(pt2,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt3,this->extrudeDirection)) Body::particles.push_back(new Particle(pt3,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt4,this->extrudeDirection)) Body::particles.push_back(new Particle(pt4,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt5,this->extrudeDirection)) Body::particles.push_back(new Particle(pt5,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt6,this->extrudeDirection)) Body::particles.push_back(new Particle(pt6,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt7,this->extrudeDirection)) Body::particles.push_back(new Particle(pt7,material,particleSize));
-				if(Geometry::getInsidePolygon(this->polygonPoints,pt8,this->extrudeDirection)) Body::particles.push_back(new Particle(pt8,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt1,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt1,material,particleSize) : new Particle(pt1,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt2,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt2,material,particleSize) : new Particle(pt2,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt3,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt3,material,particleSize) : new Particle(pt3,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt4,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt4,material,particleSize) : new Particle(pt4,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt5,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt5,material,particleSize) : new Particle(pt5,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt6,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt6,material,particleSize) : new Particle(pt6,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt7,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt7,material,particleSize) : new Particle(pt7,material,particleSize));
+				if(Geometry::getInsidePolygon(this->polygonPoints,pt8,this->extrudeDirection)) Body::particles.push_back(is_two_phase ? new ParticleMixture(pt8,material,particleSize) : new Particle(pt8,material,particleSize));
 			}
 		}
 	}

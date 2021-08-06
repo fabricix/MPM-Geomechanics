@@ -10,15 +10,15 @@
 void Integration::nodalMomentum(Mesh* mesh, double dt) {
 
 	// get mesh
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each node
 	#pragma omp parallel for shared(nodes, dt) private(mesh)
 	for (size_t i = 0; i < nodes->size(); ++i) {
 
-		if (!nodes->at(i).getActive()){ continue; }
+		if (!nodes->at(i)->getActive()){ continue; }
 			
 		// integrate nodal momentum
-		nodes->at(i).integrateMomentum(dt);
+		nodes->at(i)->integrateMomentum(dt);
 	}
 }

@@ -10,51 +10,51 @@
 void Update::nodalVelocity(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* gNodes = mesh->getNodes();
+	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
 	#pragma omp parallel for shared(gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i)
 	{	
-		if(!gNodes->at(i).getActive()){ continue; }
+		if(!gNodes->at(i)->getActive()){ continue; }
 		
 		// update the velocity
-		gNodes->at(i).updateVelocity();
+		gNodes->at(i)->updateVelocity();
 	}
 }
 
 void Update::nodalTotalForce(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* gNodes = mesh->getNodes();
+	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
 	#pragma omp parallel for shared (gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
-		if(!gNodes->at(i).getActive()){ continue; }
+		if(!gNodes->at(i)->getActive()){ continue; }
 
 		// update damping forces
-		gNodes->at(i).updateDampingForce();
+		gNodes->at(i)->updateDampingForce();
 			
 		// update total forces
-		gNodes->at(i).updateTotalForce();
+		gNodes->at(i)->updateTotalForce();
 	}
 }
 
 void Update::resetNodalValues(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* gNodes = mesh->getNodes();
+	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
 	#pragma omp parallel for shared (gNodes) private(mesh)
 	for (size_t i = 0; i < gNodes->size(); ++i) {
 
-		if(!gNodes->at(i).getActive()){ continue; }
+		if(!gNodes->at(i)->getActive()){ continue; }
 
 		// reset values
-		gNodes->at(i).resetValues();
+		gNodes->at(i)->resetValues();
 	}
 }
 
@@ -145,7 +145,7 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -173,12 +173,12 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 				const Contribution contribI = contribution->at(j);
 
 				// get the contributing node handle
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI.getMass()!=0.0) {
+				if (nodeI->getMass()!=0.0) {
 
 					// compute the velocity rate contribution
-					velocityRate+=nodeI.getTotalForce()*contribI.getWeight()/nodeI.getMass();
+					velocityRate+=nodeI->getTotalForce()*contribI.getWeight()/nodeI->getMass();
 				}
 			}
 
@@ -194,7 +194,7 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -222,12 +222,12 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 				const Contribution contribI = contribution->at(j);
 
 				// get the contributing node handle
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI.getMassFluid()!=0.0) {
+				if (nodeI->getMassFluid()!=0.0) {
 
 					// compute the velocity rate contribution
-					velocityRate+= (*(nodeI.getTotalForceFluid()))*contribI.getWeight()/nodeI.getMassFluid();
+					velocityRate+= (*(nodeI->getTotalForceFluid()))*contribI.getWeight()/nodeI->getMassFluid();
 				}
 			}
 
@@ -243,7 +243,7 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -271,12 +271,12 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 				const Contribution contribI = contribution->at(j);
 
 				// get the contributing node
-				Node& nodeI = nodes->at(contribI.getNodeId());
+				Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI.getMass()!=0.0){
+				if (nodeI->getMass()!=0.0){
 
 					// compute the position rate contribution
-					positionRate+=nodeI.getMomentum()*contribI.getWeight()/nodeI.getMass();
+					positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
 				}
 			}
 
@@ -289,16 +289,16 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	}
 }
 
-void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i){
 
 		// get node handle
-		Node& nodeI = nodes->at(plane->nodes.at(i));
+		Node* nodeI = nodes->at(plane->nodes.at(i));
 
-		if (nodeI.getActive()) {
+		if (nodeI->getActive()) {
 
 			// witch type of restriction
 			switch(plane->restriction) {
@@ -311,7 +311,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 				case Boundary::BoundaryType::FIXED:
 
 					// set all momentum components as zero
-					nodeI.setMomentum(Vector3d::Zero());
+					nodeI->setMomentum(Vector3d::Zero());
 				
 					break;
 				
@@ -319,7 +319,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 				case Boundary::BoundaryType::SLIDING:
 					
 					// get current boundary nodal momentum
-					Vector3d momentum = nodeI.getMomentum();
+					Vector3d momentum = nodeI->getMomentum();
 					
 					// witch direction of the normal vector
 					switch(dir) {
@@ -341,7 +341,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 					}
 
 					// set the boundary nodal momentum
-					nodeI.setMomentum(momentum);
+					nodeI->setMomentum(momentum);
 
 					break;
 			}
@@ -349,16 +349,16 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node>
 	}
 }
 
-void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i){
 
 		// get node handle
-		Node& nodeI = nodes->at(plane->nodes.at(i));
+		Node* nodeI = nodes->at(plane->nodes.at(i));
 
-		if (nodeI.getActive()) {
+		if (nodeI->getActive()) {
 
 			// witch type of restriction of fluid
 			switch(plane->restrictionFluid) {
@@ -371,7 +371,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 				case Boundary::BoundaryType::FIXED:
 
 					// set all momentum components as zero
-					nodeI.setMomentumFluid(Vector3d::Zero());
+					nodeI->setMomentumFluid(Vector3d::Zero());
 				
 					break;
 				
@@ -379,7 +379,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 				case Boundary::BoundaryType::SLIDING:
 					
 					// get current boundary nodal momentum of fluid
-					Vector3d momentum = *(nodeI.getMomentumFluid());
+					Vector3d momentum = *(nodeI->getMomentumFluid());
 					
 					// witch direction of the normal vector
 					switch(dir) {
@@ -401,7 +401,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 					}
 
 					// set the boundary nodal momentum
-					nodeI.setMomentumFluid(momentum);
+					nodeI->setMomentumFluid(momentum);
 
 					break;
 			}
@@ -412,7 +412,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// plane X0 is the plane passing for the origin and points to -x axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
@@ -436,7 +436,7 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// plane X0 is the plane passing for the origin and points to -x axes
 	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
@@ -457,16 +457,16 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
-void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i) {
 
 		// get node handle 
-		Node& nodeI = nodes->at(plane->nodes.at(i));
+		Node* nodeI = nodes->at(plane->nodes.at(i));
 
-		if (nodeI.getActive()) {
+		if (nodeI->getActive()) {
 			
 			// witch type of restriction
 			switch(plane->restriction) {
@@ -479,14 +479,14 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 				case Boundary::BoundaryType::FIXED:
 
 					// set all force component as zero 
-					nodeI.setTotalForce(Vector3d::Zero());
+					nodeI->setTotalForce(Vector3d::Zero());
 					break;
 				
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 					
 					// get current boundary nodal force
-					Vector3d force = nodeI.getTotalForce();
+					Vector3d force = nodeI->getTotalForce();
 					
 					// witch direction of the normal vector
 					switch(dir) {
@@ -508,7 +508,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 					}
 
 					// set boundary nodal force
-					nodeI.setTotalForce(force);
+					nodeI->setTotalForce(force);
 					break;
 			}
 		}
@@ -518,7 +518,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node>* n
 void Update::boundaryConditionsForce(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// plane X0 is the plane passing for the origin and points to -x axes
 	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
@@ -539,16 +539,16 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
-void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node>* nodes, unsigned dir) {
+void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (size_t i = 0; i < plane->nodes.size(); ++i) {
 
 		// get node handle 
-		Node& nodeI = nodes->at(plane->nodes.at(i));
+		Node* nodeI = nodes->at(plane->nodes.at(i));
 
-		if (nodeI.getActive()) {
+		if (nodeI->getActive()) {
 			
 			// witch type of restriction
 			switch(plane->restrictionFluid) {
@@ -561,14 +561,14 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 				case Boundary::BoundaryType::FIXED:
 
 					// set all force component as zero 
-					nodeI.setTotalForceFluid(Vector3d::Zero());
+					nodeI->setTotalForceFluid(Vector3d::Zero());
 					break;
 				
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 					
 					// get current boundary nodal force of fluid phase
-					Vector3d force = *(nodeI.getTotalForceFluid());
+					Vector3d force = *(nodeI->getTotalForceFluid());
 					
 					// witch direction of the normal vector
 					switch(dir) {
@@ -590,7 +590,7 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 					}
 
 					// set boundary nodal force in fluid phase
-					nodeI.setTotalForceFluid(force);
+					nodeI->setTotalForceFluid(force);
 					break;
 			}
 		}
@@ -600,7 +600,7 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 void Update::boundaryConditionsForceFluid(Mesh* mesh) {
 
 	// get nodes
-	vector<Node>* nodes = mesh->getNodes();
+	vector<Node*>* nodes = mesh->getNodes();
 
 	// plane X0 is the plane passing for the origin and points to -x axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);

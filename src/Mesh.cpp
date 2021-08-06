@@ -12,6 +12,8 @@ using std::vector;
 using std::floor;
 
 #include "Mesh/Mesh.h"
+#include "Mesh/Node.h"
+#include "Mesh/NodeMixture.h"
 #include "Warning.h"
 #include "Particle/Particle.h"
 
@@ -204,19 +206,25 @@ void Mesh::getContributionNodes(const Vector3d& position, vector<int>& contribut
 // public methods
 //
 
-void Mesh::createGrid(void) {
+void Mesh::createGrid(bool is_two_phase_simulation) {
 
     // set the rows in each direction
     nRows.x() = nCells.x()+2*nGhosts+1;
     nRows.y() = nCells.y()+2*nGhosts+1;
     nRows.z() = nCells.z()+2*nGhosts+1;
 
-    // resize the node vector
-    gridNodes.resize(nRows.x()*nRows.y()*nRows.z());
+    // create the node vector
+    gridNodes.clear();
+    
+    for (int i = 0; i < nRows.x()*nRows.y()*nRows.z() ; ++i) {
+
+        gridNodes.push_back(is_two_phase_simulation ? new NodeMixture() : new Node());
+    }
 
     // initialize nodes
     for (size_t i=0;i<gridNodes.size();i++){
-    	gridNodes.at(i).setCoordinates(Vector3d(0.0,0.0,0.0));
+
+    	gridNodes.at(i)->setCoordinates(Vector3d(0.0,0.0,0.0));
     }
 
     // create a grid
@@ -235,10 +243,10 @@ void Mesh::createGrid(void) {
                 int nodeId=(j*nRows.x()+i)+(nRows.y()*nRows.x()*k);
 
                 // set node id
-                gridNodes[nodeId].setId(nodeId);
+                gridNodes[nodeId]->setId(nodeId);
 
                 // grid node position
-                gridNodes[nodeId].setCoordinates(Vector3d(x,y,z));
+                gridNodes[nodeId]->setCoordinates(Vector3d(x,y,z));
             }
         }
     }
@@ -312,10 +320,10 @@ void Mesh::configureBoundaries(){
     for (size_t i = 0; i < gridNodes.size(); ++i)
     {
         // node coordinates
-        Vector3d nodeCoordinates=gridNodes.at(i).getCoordinates();
+        Vector3d nodeCoordinates=gridNodes.at(i)->getCoordinates();
         
         // node id
-        int nodeId = gridNodes.at(i).getId();
+        int nodeId = gridNodes.at(i)->getId();
 
         // plane X0
         if (nodeCoordinates.x()<=minLimitsGhosts.x())
