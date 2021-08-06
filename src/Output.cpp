@@ -201,6 +201,16 @@ namespace Output{
             partFile<<"</DataArray>\n";
         }
 
+        if (isFieldRequired("pressure")){
+            
+            // fluid pressure
+            partFile<<"<DataArray type=\"Float64\" Name=\"Pressure\" Format=\"ascii\">\n";
+            for (int i = 0; i < nPoints; ++i) {
+                partFile<<scientific<<particles->at(i)->getPressureFluid()<<"\n";
+            }
+            partFile<<"</DataArray>\n";
+        }
+
         if (isFieldRequired("displacement")){
 
             // particle displacement

@@ -153,6 +153,7 @@ using Eigen::Vector3d;
 /// | id | particle identification field | -- |
 /// | displacement | particle displacement field  | -- |
 /// | material | particle material field | -- |
+/// | pressure | fluid pressure | -- |
 ///
 /// ## Input file example
 ///
