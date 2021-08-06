@@ -7,6 +7,7 @@
 
 #include "Input.h"
 #include "Solver/SolverExplicitUSL.h"
+#include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
 #include "Body/BodyCuboid.h"
@@ -87,25 +88,44 @@ Solver* Input::getSolver() {
 	
 	try
 	{	
+		string key = "stress_scheme_update";
+		
 		// default value
-		if (inputFile["stress_scheme_update"].is_null())
-		{
-			return new SolverExplicitUSL();			
+		if (inputFile[key].is_null()) {
+
+			if (ModelSetup::getTwoPhaseActive()) { 
+
+				return new SolverExplicitTwoPhaseUSL(); 
+			}
+
+			return new SolverExplicitUSL();
 		}
 
-		if (inputFile["stress_scheme_update"].is_string()) {
+		if (inputFile[key].is_string()) {
 
 			// USL scheme
-			if(inputFile["stress_scheme_update"]=="USL") {
+			if(inputFile[key]=="USL") {
+
+				if (ModelSetup::getTwoPhaseActive()) { 
+
+					return new SolverExplicitTwoPhaseUSL(); 
+				}
 
 				return new SolverExplicitUSL();
 			}
 
-			throw (0);
+			throw (key);
 		}
 		
 		throw(0);
 	}
+
+	catch(string& key)
+	{
+		Warning::printMessage("Error in keyword: "+key);
+		throw;
+	}
+	
 	catch(...)
 	{
 		Warning::printMessage("Error in solver definition in input file");
