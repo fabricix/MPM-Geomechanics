@@ -129,11 +129,11 @@ private:
 	/// 
 	void setupDamping();
 
-	/// \bried Configure number of phases in the simulation
+	/// \brief Configure number of phases in the simulation
 	///
 	void setNumberPhasesInSimulation();
 
-	/// \bried Configure number of threads
+	/// \brief Configure number of threads
 	///
 	void setThreads();
 };

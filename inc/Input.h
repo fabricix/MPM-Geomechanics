@@ -36,7 +36,7 @@ using Eigen::Vector3d;
 /// "cells_dimension":[1,1,1], ...` 
 /// Next is presented the complete list of keyword for using in the input file,
 /// organized according the characteristic to be configured. 
-///
+
 /// ## Bodies
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | ----------|
@@ -52,6 +52,22 @@ using Eigen::Vector3d;
 /// | point_p1 | define the a lower left point in a cuboid | array |
 /// | point_p2 | define the a higher right point in a cuboid | array |
 
+/// #### Cuboid definition example
+///
+/// ```
+/// "body":
+/// {
+/// 	"cuboid":
+/// 	{
+/// 		"type":"cuboid",
+/// 		"id":1,
+/// 		"point_p1":[2,2,2],
+/// 		"point_p2":[7,7,7],
+/// 		"material_id":1
+/// 	}
+/// }
+/// ```
+
 /// ### Polygon extrusion
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | ----------|
@@ -60,47 +76,118 @@ using Eigen::Vector3d;
 /// | extrude_displacement| magnitude of the displacement in the extrude direction | double |
 /// | discretization_length | cell dimension of the auxiliary mesh during the creation of the polygon body type  | double |
 /// | points | 3D coordinate points | array |
+
+/// #### Polygon extrusion definition example
 ///
+///  ```
+/// "body":
+/// {
+/// 	"soil":
+/// 	{
+/// 		"type":"polygon_2d",
+/// 		"extrude_direction":"y",
+/// 		"extrude_displacement":2,
+/// 		"discretization_length":0.5,
+/// 		"id":1,
+/// 		"points":
+/// 		[
+/// 			[0,     0,      0],
+/// 			[2.001, 0,      0],
+/// 			[0,     0,  2.001]
+/// 		],
+/// 		"material_id":1
+/// 	}
+/// }
+/// ```
+
 /// ## Loads
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | gravity | define the body force intensity | array |
+
+/// ### Load definition example
 ///
+/// ```
+/// "gravity":[0.0,0.0,-9.81],
+/// ```
+
 /// ## Damping
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | damping | define the damping type | -- |
 /// | local | define the local damping value | double |
+
+/// ### Damping definition example
 ///
+/// ```
+/// "damping":
+/// {
+/// 	"type":"local",
+/// 	"value":0.0
+/// }
+/// ```
+
 /// ## Parallelization
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | n_threads | define the number of threads in  the simulation | unsigned |
+
+/// ### Paralelization definition example
 ///
-/// ## Simulation Time
+/// ```
+/// "n_threads":1,
+/// ```
+
+/// ## Simulation time
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | time | define the simulation time | double |
 /// | time_step | define the time step | double |
 ///
+
+/// ## Simulation time definition example
+///
+/// ```
+/// "time":2,
+/// ```
+
 /// ## Two phase simulations
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | n_phases | define number of phases in the simulations (default is 1) | int |
+
+/// ### Two phase simulation definition example
+///
+/// ```
+/// "n_phases":2,
+/// ```
 
 /// ## Stress update scheme
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | stress_scheme_update | used to define the type of stress update scheme| string |
 /// | USL | Update Stress Last scheme type | -- |
+
+/// ### Stress update scheme definition example
+/// 
+/// ```
+/// "stress_scheme_update":"USL",
+/// ```
+
 /// 
 /// ## Shape Functions
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | shape_function | define the type of nodal interpolation function | string |
 /// | GIMP | generalized interpolation material point shape function type | -- |
-/// | linear | linear shape function type | -- |
-/// 
+/// | linear | linear shape function type | -- | 
+
+/// ### Shape functions definition example
+///
+/// ```
+///  "shape_function":"GIMP",
+/// ```
+
 /// ## Mesh
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -119,7 +206,28 @@ using Eigen::Vector3d;
 /// | plane_Xn | Plane which normal points to the positive part of the axis X | -- | 
 /// | plane_Yn | Plane which normal points to the positive part of the axis Y | -- | 
 /// | plane_Zn | Plane which normal points to the positive part of the axis Z | -- | 
+
+/// ### Mesh definition example
 ///
+/// ```
+/// "mesh":
+///	{
+/// 	"cells_dimension":[1,1,1],
+/// 	"cells_number":[10,10,10],
+/// 	"origin":[0,0,0],
+///
+///		"boundary_conditions":
+/// 	{
+/// 		"plane_X0":"fixed",
+/// 		"plane_Y0":"fixed",
+/// 		"plane_Z0":"fixed",
+/// 		"plane_Xn":"sliding",
+/// 		"plane_Yn":"sliding",
+/// 		"plane_Zn":"free"
+/// 	}
+/// },
+/// ```
+
 /// ## Materials
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -127,14 +235,14 @@ using Eigen::Vector3d;
 /// | id | material identification | integer |
 /// | density | mass density | double |
 /// | type | used to specify the material constitutive model | string |
-///
+
 /// ## Linear Elastic
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | elastic | elastic material type | -- |
 /// | poisson | Poisson's ratio of the material | double |
 /// | young | Young's modulus of the material | double |
-///
+
 /// ## Mohr-Coulomb
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -143,7 +251,25 @@ using Eigen::Vector3d;
 /// | cohesion | Material Cohesion | double |
 /// | dilation | Material dilation | double |
 /// | tensile  | Tensile cut-off   | double |
+
+/// ### Material definition example
 ///
+/// ```
+/// "material":
+/// {
+/// 	"plastic":
+/// 	{
+/// 		"type":"mohr-coulomb",
+/// 		"id":1,
+/// 		"young":50e4,
+/// 		"density":2000,
+/// 		"poisson":0.2,
+/// 		"friction":30.0,
+/// 		"cohesion":1500.0
+/// 	}
+/// },
+/// ```
+
 /// ## Results
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -154,8 +280,18 @@ using Eigen::Vector3d;
 /// | displacement | particle displacement field  | -- |
 /// | material | particle material field | -- |
 /// | pressure | fluid pressure | -- |
+
+/// ### Results definition example
 ///
-/// ## Input file example
+/// ```
+/// "results":
+///	{
+/// 	"print":50,
+/// 	"fields":["id","displacement","material"]
+/// },
+/// ```
+
+/// ## Complete input file definition example
 ///
 /// ```
 /// {
