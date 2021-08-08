@@ -129,4 +129,16 @@ namespace Geometry {
 		box.push_back(pmin);
 		box.push_back(pmax);
 	}
+
+	bool getInsideBox(Vector3d p1, Vector3d p2, Vector3d position)
+	{
+		if (p1.x()<=position.x() && p1.y()<=position.y() && p1.z()<=position.z())
+		{
+			if (position.x()<=p2.x() && position.y()<=p2.y() && position.z()<=p2.z())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

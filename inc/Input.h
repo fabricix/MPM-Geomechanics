@@ -22,6 +22,7 @@ using Eigen::Vector3d;
 #include "Materials/Material.h"
 #include "Model.h"
 #include "Boundary.h"
+#include "Loads.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -104,11 +105,28 @@ using Eigen::Vector3d;
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | gravity | define the body force intensity | array |
+/// | load_box | distribute a load in particles inside the box | -- |
 
 /// ### Load definition example
+///	
+/// #### Gravity load Example
 ///
 /// ```
 /// "gravity":[0.0,0.0,-9.81],
+/// ```
+/// 
+/// #### Distributed load in box example
+///
+/// ```
+///	"load_distributed_box":
+///	{
+///		"load_1":
+///		{
+///			"point_p1":[0,0,6],
+///			"point_p2":[5,1,10],
+///			"load":[0,0,-10]
+///		}
+///	}
 /// ```
 
 /// ## Damping
@@ -234,6 +252,10 @@ using Eigen::Vector3d;
 /// | material | used to define materials | -- |
 /// | id | material identification | integer |
 /// | density | mass density | double |
+/// | density_fluid | mass density of fluid in mixture| double |
+/// | porosity | porosity of mixture| double |
+/// | bulk_fluid | volumetric modulus of fluid in mixture | double |
+/// | hydraulic_conductivity | principal values of the hydraulic conductivity of fluid in mixture | array (1x3) |
 /// | type | used to specify the material constitutive model | string |
 
 /// ## Linear Elastic
@@ -280,6 +302,7 @@ using Eigen::Vector3d;
 /// | displacement | particle displacement field  | -- |
 /// | material | particle material field | -- |
 /// | pressure | fluid pressure | -- |
+/// | external_force | total external force in particle | -- |
 
 /// ### Results definition example
 ///
@@ -445,6 +468,10 @@ namespace Input {
 	/// \brief Return the number of phases in the simulation
 	/// \return n_phases Number of phases in the simulation
 	unsigned getNumberPhases();
+	
+	/// \brief Return loads distributed in particles inside a box
+	/// \return loads_distributed_box  Loads distributed in particles inside a box
+	vector<Loads::LoadDistributedBox> getLoadDistributedBox();
 };
 
 #endif /* INPUT_H_ */

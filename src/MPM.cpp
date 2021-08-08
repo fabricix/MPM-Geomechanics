@@ -208,6 +208,9 @@ void MPM::setupLoads() {
 	// gravity
 	ModelSetup::setGravity(Input::getGravity());
 	Loads::setGravity(bodies);
+
+	// set external forces
+	Loads::setLoadDistributedBox(bodies, Input::getLoadDistributedBox());
 }
 
 void MPM::setupDamping() {

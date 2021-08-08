@@ -32,6 +32,12 @@ namespace Geometry {
     /// \param[in] points A group of points
     /// \param[out] box The bounding box formed by two points, the left-lower point and the right-upper point
     void getBoundingBox(const vector<Vector3d>& points, vector<Vector3d>& box);
+
+    /// \brief Verify if a point is inside a box
+    /// \param[in] p1 Left and lower point of the box
+    /// \param[in] p2 Right and upper point of the box
+    /// \param[out] value True if the point is inside the box, false otherwise
+    bool getInsideBox(Vector3d p1, Vector3d p2, Vector3d position);
 }
 
 #endif /* GEOMETRY_H_ */

@@ -13,6 +13,7 @@
 #include "Body/BodyCuboid.h"
 #include "Body/BodyPolygon.h"
 #include "Warning.h"
+#include "Loads.h"
 
 #include <omp.h>
 
@@ -769,7 +770,6 @@ unsigned Input::getNumThreads() {
 	}
 }
 
-
 unsigned Input::getNumberPhases(){
 
 	try
@@ -806,6 +806,59 @@ unsigned Input::getNumberPhases(){
 	catch(unsigned nPhases)
 	{
 		Warning::printMessage("The number of phases must be 1 or 2 (input = "+to_string(nPhases)+")");
+		throw;
+	}
+}
+
+vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
+
+	try{
+		vector<Loads::LoadDistributedBox> load_box_distributed;
+
+		string key = "load_distributed_box";
+
+		if (!inputFile[key].is_null()){
+		
+			json::iterator it;
+			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+
+				Loads::LoadDistributedBox iload;
+
+				Vector3d p1(0,0,0), p2(0,0,0), load(0,0,0); 
+				
+				if ((*it)["point_p1"].is_array()) { 
+					p1.x() = ((*it)["point_p1"])[0]; 
+					p1.y() = ((*it)["point_p1"])[1]; 
+					p1.z() = ((*it)["point_p1"])[2];
+
+					iload.pointP1 = p1;
+				}
+
+				if ((*it)["point_p2"].is_array()) { 
+					p2.x() = ((*it)["point_p2"])[0]; 
+					p2.y() = ((*it)["point_p2"])[1]; 
+					p2.z() = ((*it)["point_p2"])[2]; 
+
+					iload.pointP2 = p2;
+				}
+
+				if ((*it)["load"].is_array()) { 
+					load.x() = ((*it)["load"])[0]; 
+					load.y() = ((*it)["load"])[1]; 
+					load.z() = ((*it)["load"])[2]; 
+
+					iload.load = load;
+				}
+
+				load_box_distributed.push_back(iload);
+			}
+		}
+
+		return load_box_distributed;
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error in load box definition");
 		throw;
 	}
 }

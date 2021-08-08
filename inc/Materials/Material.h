@@ -53,7 +53,7 @@ public:
 
 	/// \brief Returns Bulk modulus of fluid in mixture 
 	/// \return Bulk modulus of fluid
-	inline double getBulkModulusFluid() const { return this->bullkModulusFluid; }
+	inline double getBulkModulusFluid() const { return this->bulkModulusFluid; }
 
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
@@ -63,9 +63,17 @@ public:
 	/// \param[in] material_density Material density 
 	inline void setDensity(double material_density) { this->density=material_density; }
 	
+	/// \brief Configures fluid density in material 
+	/// \param[in] fluid_density Fluid density
+	inline void setDensityFluid(double fluid_density) { this->densityFluid=fluid_density; }
+
 	/// \brief Configures the material porosity
 	/// \param[in] material_porosity Material porosity
 	inline void setPorosity(double material_porosity) { this->porosity=material_porosity; }
+
+	/// \brief Configures the volumetric modulus of fluid
+	/// \param[in] bulk_fluid Bulk modulus of fluid
+	inline void setBulkModulusFluid(double bulk_fluid) { this->bulkModulusFluid=bulk_fluid; }
 
 	/// \brief Configures the material hydraulic conductivity
 	/// \param[in] hydraulic_conductivity Material hydraulic conductivity
@@ -97,21 +105,22 @@ protected:
 
 	double porosity; //!< initial porosity \f$n^0\f$
 
-	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
+	double bulkModulusFluid; //!< elastic volumetric modulus of fluid in mixtre \f$K^f\f$
 
-	double bullkModulusFluid; //!< elastic volumetric modulus of fluid in mixtre \f$K^f\f$
+	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
 	
 	MaterialType type; //!< material type
 };
 
 inline Material::Material(int id, double density, MaterialType type) {
 	
-	this->density=density;
 	this->id=id;
-	this->type=type;
-	this->porosity=0.0;
+	this->density=density;
 	this->densityFluid=0.0;
+	this->porosity=0.0;
+	this->bulkModulusFluid=0.0;
 	this->hydraulicConductivity.setZero();
+	this->type=type;
 }
 
 inline Material::~Material() { }
