@@ -6,7 +6,7 @@
  */
 
 #include <Particle/ParticleMixture.h>
-
+#include <Eigen/Dense>
 
 ParticleMixture::ParticleMixture(const Vector3d& position, Material* material, const Vector3d& size):
 Particle(position, material, size)
@@ -48,8 +48,14 @@ Vector3d ParticleMixture::getDragForceFluid() const {
 
 void ParticleMixture::updateDensity() {
 
-    // update density of solid
-    Particle::updateDensity();
+    // The solid density is not updated because
+    // of the hipoteses of zero solid density variation
+    // during the derivation of the constitutive equation 
+    // of the pressure 
+
+    // The density of the fluid can be updated
+    // because there are not any hipoteses 
+    // regarding its variation in time
 
     // only saturated particle can be update
     if (this->getSaturation()<=0.0) { return; }
@@ -58,7 +64,7 @@ void ParticleMixture::updateDensity() {
     double volStrainInc = strainIncrementFluid.trace();
     
     // update particle density
-    if ((1.0+volStrainInc)!=0.0){
+    if ((1.0+volStrainInc)!=0.0) {
 
         densityFluid = densityFluid / (1.0+volStrainInc);
     }
@@ -69,10 +75,14 @@ void ParticleMixture::updatePorosity() {
     // only saturated particle can be update
     if (this->getSaturation()<=0.0) { return; }
 
-    double volumeSolid = Particle::getMass()/Particle::getDensity();
-    double volumeFluid = this->getMassFluid()/this->getDensityFluid();
+    // compute the jacobian of the motion: J = V^{n+1}/V^0 = det (F)
+    double J = this->deformationGradient.determinant();
     
-    this->porosityMixture = volumeFluid/(volumeFluid+volumeSolid);
+    // update porosity
+    if (J!=0){
+
+        this->porosityMixture = 1.0-(1.0-this->material->getPorosity())/J;
+    }
 }
 
 void ParticleMixture::updatePressure(double dt) {

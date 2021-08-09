@@ -22,9 +22,9 @@ namespace Loads {
     /// particles inside the cuboid defined by point p1 and p2
     struct LoadDistributedBox
     {
-        Vector3d pointP1;
-        Vector3d pointP2;
-        Vector3d load;
+        Vector3d pointP1; //!< left lower point of the box
+        Vector3d pointP2; //!< right upper point of the box
+        Vector3d load; //!< load to be distributed in particles inside the box
     };
 
 	/// \brief Configures the gravity load in particles
@@ -34,8 +34,7 @@ namespace Loads {
     /// \brief Configure distributed load in particles
     /// \param[in] bodies A list containing Body pointers 
     /// \param[in] loads A list containing loads to be applied
-    void setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistributedBox> loads);
-
+    void setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistributedBox> loads); 
 };
 
 #endif /* LOADS_H_ */

@@ -227,6 +227,14 @@ public:
     /// \return Particle drag force of fluid
     virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }
 
+	/// \brief Configures defomation gradient
+    /// \param[in] deformation_gradient Particle deformation gradient
+    inline void setDeformationGradient(const Matrix3d& deformation_gradient) { this->deformationGradient=deformation_gradient; }
+
+    /// \brief Returns deformation gradient
+    /// \return Particle deforamtion gradient
+    inline const Matrix3d& getDeformationGradient() const { return this->deformationGradient; }
+
 protected:
 
 	bool active; //!< is particle active
@@ -247,6 +255,7 @@ protected:
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$
 	Matrix3d strainIncrement; //!< current particle strain increment: \f$\Delta \epsilon_{ijp}\f$
 	Matrix3d vorticityIncrement; //!< particle vorticity increment: \f$\Delta \Omega _{ijp}\f$
+	Matrix3d deformationGradient; //!< particle deformation gradient: \f$\F_{ijp}=\partial x_i / \partial X_j \f$
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
 	Shape* shape; //!< shape functions values (see class Shape)

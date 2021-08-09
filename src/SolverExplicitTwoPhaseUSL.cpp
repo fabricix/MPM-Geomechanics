@@ -124,7 +124,7 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		// nodal velocity
 		Update::nodalVelocity(mesh);
 
-		#pragma omp parallel sections num_threads(2)
+		#pragma omp parallel sections num_threads(4)
 		{
 			// calculate particle strain increment
 			#pragma omp section
@@ -137,6 +137,10 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 			// calculate particle vorticity increment
 			#pragma omp section
 			Interpolation::particleVorticityIncrement(mesh,bodies,dt);
+
+			// calculate particle deformation gradient
+			#pragma omp section
+			Interpolation::particleDeformationGradient(mesh,bodies,dt);
 		}
 
 		// update particle density

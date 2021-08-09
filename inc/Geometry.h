@@ -36,7 +36,8 @@ namespace Geometry {
     /// \brief Verify if a point is inside a box
     /// \param[in] p1 Left and lower point of the box
     /// \param[in] p2 Right and upper point of the box
-    /// \param[out] value True if the point is inside the box, false otherwise
+    /// \param[in] position Point to be evaluated the function
+    /// \return True if the point is inside the box, false otherwise
     bool getInsideBox(Vector3d p1, Vector3d p2, Vector3d position);
 }
 

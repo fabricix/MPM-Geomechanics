@@ -40,6 +40,7 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 	this->strain.setZero();
 	this->strainIncrement.setZero();
 	this->vorticityIncrement.setZero();
+	this->deformationGradient=Matrix3d::Identity();
 
 	this->contributionNodes.clear();
 	this->contributionNodes.resize(ModelSetup::getContributionNodesNum());

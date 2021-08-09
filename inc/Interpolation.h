@@ -123,6 +123,15 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
+
+	/// \brief Interpolate the deformation gradient at particle
+	///
+	/// \f$ \F_{ijp}^{s,n+1} = (\delta_{ik} + \delta t \sum_I N_{Ip,k} v_{iI}^{s,n}) \F_{kjp}^{s,n} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	/// \param[in] time_step Time step
+	void particleDeformationGradient(Mesh* mesh, vector<Body*>* bodies, double time_step);
 };
 
 #endif /* INTERPOLATION_H_ */
