@@ -126,7 +126,7 @@ namespace Interpolation {
 
 	/// \brief Interpolate the deformation gradient at particle
 	///
-	/// \f$ \F_{ijp}^{s,n+1} = (\delta_{ik} + \delta t \sum_I N_{Ip,k} v_{iI}^{s,n}) \F_{kjp}^{s,n} \f$
+	/// \f$ F_{ijp}^{s,n+1} = (\delta_{ik} + \delta t \sum_I N_{Ip,k} v_{iI}^{s,n}) F_{kjp}^{s,n} \f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
