@@ -9,7 +9,6 @@
 #include "Model.h"
 #include "Geometry.h"
 
-
 void Loads::setGravity(vector<Body*>& bodies) {
 
 	// return if gravity is not activated
@@ -83,6 +82,83 @@ void Loads::setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistr
 				{
 					particles->at(i)->addExternalForce(loads.at(iload).load/totalParticles);
 				}
+			}
+		}
+	}
+}
+
+void setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::PressureBox> loads) {
+
+	// for each pressure box
+	for (size_t iload = 0; iload < loads.size(); ++iload)
+	{
+		// configures pressure in particles inside the box
+		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
+
+			// get particles
+			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
+
+			// for each particle 
+			for (size_t i = 0; i < particles->size(); ++i) {
+
+				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition()))
+				{
+					particles->at(i)->setPressureFluid(loads.at(iload).pressure);
+				}
+			}
+		}
+	}
+}
+
+void setInitialPorePressureBox(vector<Body*>& bodies, vector<Loads::PressureBox> loads) {
+
+	// for each pressure box
+	for (size_t iload = 0; iload < loads.size(); ++iload)
+	{
+		// configures pressure in particles inside the box
+		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
+
+			// get particles
+			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
+
+			// for each particle 
+			for (size_t i = 0; i < particles->size(); ++i) {
+
+				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition()))
+				{
+					particles->at(i)->setPressureFluid(loads.at(iload).pressure);
+				}
+			}
+		}
+	}
+}
+
+
+void setInitialPorePressureMaterial(vector<Body*>& bodies, vector<Loads::PressureMaterial> loads) {
+
+	// for each load box
+	for (size_t iload = 0; iload < loads.size(); ++iload)
+	{
+		// get material
+		int materialId = loads.at(iload).materialId;
+		
+		// get pressure
+		double pressure = loads.at(iload).pressure;
+
+		// set pressure in particles with material
+		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
+
+			// get particles
+			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
+
+			// for each particle 
+			for (size_t i = 0; i < particles->size(); ++i) {
+
+				if (particles->at(i)->getMaterialId()==materialId){
+
+					particles->at(i)->setPressureFluid(pressure);
+				}
+				
 			}
 		}
 	}

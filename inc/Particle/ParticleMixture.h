@@ -85,6 +85,10 @@ public:
     /// \return saturation
     virtual inline double getSaturation() const { return 1.0; }
 
+    /// \brief Configure the pressure of fluid
+    /// \param[in] pressure Pressure of the fluid
+    virtual inline void setPressureFluid(double pressure) { this->pressureFluid=pressure; }
+
 private:
 
     double massFluid; //!< fluid mass in mixture: \f$m^{f}\f$

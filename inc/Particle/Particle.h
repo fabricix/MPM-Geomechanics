@@ -215,6 +215,10 @@ public:
     /// \return Current pore pressure of fluid
     virtual inline double getPressureFluid() const { return 0.0; }
 
+	/// \brief Configure the pressure of fluid
+    /// \param[in] pressure Pressure of the fluid
+    virtual inline void setPressureFluid(double pressure) { return; }
+
     /// \brief Returns current porosity
     /// \return Current porosity of mixture
     virtual inline double getPorosity() const { return 0.0; }
