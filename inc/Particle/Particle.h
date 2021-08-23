@@ -163,6 +163,10 @@ public:
 	/// \param[in] particle_size Current particle size
 	inline void setSize(const Vector3d& particle_size) { this->size=particle_size; } 
 
+	/// \brief Return particle size in each direction
+	/// \return particle_size Current particle size
+	inline const Vector3d& getSize( ) { return this->size; } 
+
 	/// \brief Configures particle velocity
 	/// \param[in] particle_velocity Current particle velocity
 	inline void setVelocity(const Vector3d& particle_velocity) { this->velocity = particle_velocity; }
@@ -259,7 +263,7 @@ protected:
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$
 	Matrix3d strainIncrement; //!< current particle strain increment: \f$\Delta \epsilon_{ijp}\f$
 	Matrix3d vorticityIncrement; //!< particle vorticity increment: \f$\Delta \Omega _{ijp}\f$
-	Matrix3d deformationGradient; //!< particle deformation gradient: \f$\F_{ijp}=\partial x_i / \partial X_j \f$
+	Matrix3d deformationGradient; //!< particle deformation gradient: \f$ F_{ijp}=\partial x_i / \partial X_j \f$
 
 	vector<Contribution> contributionNodes; //!< id of nodes that the particle contributes
 	Shape* shape; //!< shape functions values (see class Shape)

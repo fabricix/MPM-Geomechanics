@@ -17,7 +17,7 @@ using std::vector;
 
 int main(int argc, char **argv)
 {
-	// print welcome streen 
+	// print splash
 	Output::welcomeScreen();
 
 	// create a mpm instance
