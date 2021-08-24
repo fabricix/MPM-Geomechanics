@@ -37,6 +37,15 @@ namespace Loads {
         double pressure; //!< pressure in particles inside the box
     };
 
+    /// \struct PressureBoundaryForceBox
+    /// \brief Structure to represent a boundary force in fluid due the action of the pressure
+    struct PressureBoundaryForceBox
+    {
+        Vector3d pointP1; //!< left lower point of the box
+        Vector3d pointP2; //!< right upper point of the box
+        Vector3d pressureForce; //!< force due the pressure applied at the boundary
+    };
+
     /// \struct PressureMaterial
     /// \brief Structure to represent a material with a pressure.
     /// Pressure is applied to particles with the specified material id.
@@ -46,16 +55,21 @@ namespace Loads {
         double pressure; //!< pressure in particles inside the box
     };
 
-    /// \struct PresureParticleId
+    /// \struct PrescribedPorePressure
     /// \brief Structure to represent a particle with a pressure.
     /// Pressure is applied to particles with the specified index.
-    struct PressureParticleIndex{
+    struct PrescribedPorePressure{
 
         int bodyIndex; //!< body index in body vector
         int particleIndex; //!< particle index in particle vector
         double pressure; //!< pressure to be applied to the particle
 
-        PressureParticleIndex(int body_index, int particle_index, double pressure_value) {
+        /// \fn PrescribedPorePressure
+        /// \brief Structure constructor
+        /// \param[in] body_index Body index
+        /// \param[in] particle_index Particle index
+        /// \param[in] pressure_value Pressure value
+        PrescribedPorePressure(int body_index, int particle_index, double pressure_value) {
             
             bodyIndex=body_index;
             particleIndex=particle_index;
@@ -77,12 +91,6 @@ namespace Loads {
     /// \param[in] pressures A list containing pressures to be applied
     void setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::PressureBox> pressures);
 
-    /// \brief Configure boundary force due the prescribed pore pressure at boundary
-    /// \param[in] bodies A list containing Body pointers 
-    /// \param[in] pressures A list containing pressures to be applied
-    /// at boundary as \f$ f_{iI}^{w,ext,\Gamma}=-\sum_p p^\Gamma_p N_{Ip} \Delta A \f$
-    void setPorePressureTraction(vector<Body*>& bodies, vector<Loads::PressureBox> pressures);
-
     /// \brief Configure initial pore pressure in particles inside of a box
     /// \param[in] bodies A list containing Body pointers 
     /// \param[in] pressures A list containing pressures to be applied
@@ -98,8 +106,11 @@ namespace Loads {
     void updatePrescribedPorePressure(vector<Body*>& bodies);
     
     /// \brief Set external boundary force in fluid phase due the prescribed pore pressure in particles
-    /// \param[in] bodies A list containing Body pointers 
-    void setPorePressureTraction(vector<Body*>& bodies);
+    ///
+    /// \f$ f_{i}^{w,ext,\Gamma} = \int t(x_i)^\Gamma \Delta A \f$
+    /// \param[in] bodies A list containing Body pointers
+    /// \param[in] loads A list of pressure force boxes
+    void setPrescribedPorePressureBoundaryForceBox(vector<Body*>& bodies, vector<Loads::PressureBoundaryForceBox> loads);
 };
 
 #endif /* LOADS_H_ */
