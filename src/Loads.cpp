@@ -11,7 +11,8 @@
 
 namespace Loads 
 {
-	vector<PressureParticleIndex> prescribedPorePressure;
+	// list of particles with prescribed pore pressure
+	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
 }
 
 void Loads::setGravity(vector<Body*>& bodies) {
@@ -58,7 +59,7 @@ void Loads::setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistr
 	for (size_t iload = 0; iload < loads.size(); ++iload)
 	{
 		// get total particle in the box 
-		double totalParticles = 0.0;
+		int totalParticles = 0;
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
 			// get particles
@@ -67,14 +68,15 @@ void Loads::setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistr
 			// for each particle 
 			for (size_t i = 0; i < particles->size(); ++i) {
 
-				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition()))
-				{
+				// verify if the particle is inside the box and count total particles
+				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition())){
+
 					totalParticles++;
 				}
 			}
 		}
 
-		// add distributed load in particles
+		// distributed load between  particles
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
 			// get particles
@@ -83,6 +85,7 @@ void Loads::setLoadDistributedBox(vector<Body*>& bodies, vector<Loads::LoadDistr
 			// for each particle 
 			for (size_t i = 0; i < particles->size(); ++i) {
 
+				// distributed the load in particles inside the box
 				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition()))
 				{
 					particles->at(i)->addExternalForce(loads.at(iload).load/totalParticles);
@@ -97,7 +100,7 @@ void Loads::setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::Pr
 	// for each pressure box
 	for (size_t iload = 0; iload < loads.size(); ++iload)
 	{
-		// configures pressure in particles inside the box
+		// for each body
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
 			// get particles
@@ -106,9 +109,35 @@ void Loads::setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::Pr
 			// for each particle 
 			for (size_t ipart = 0; ipart < particles->size(); ++ipart) {
 
+				// verify if particle is inside the box and store its index for set up the pressure during simulation
 				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(ipart)->getPosition()))
 				{
-					Loads::prescribedPorePressure.push_back(Loads::PressureParticleIndex(ibody,ipart,loads.at(iload).pressure));
+					Loads::prescribedPorePressureParticlesList.push_back(Loads::PrescribedPorePressure(ibody,ipart,loads.at(iload).pressure));
+				}
+			}
+		}
+	}
+}
+
+void Loads::setPrescribedPorePressureBoundaryForceBox(vector<Body*>& bodies, vector<Loads::PressureBoundaryForceBox> loads) {
+
+	// for each pressure force box
+	for (size_t iload = 0; iload < loads.size(); ++iload)
+	{
+		// for each body
+		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
+
+			// get particles
+			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
+
+			// for each particle 
+			for (size_t ipart = 0; ipart < particles->size(); ++ipart) {
+
+				// verify is particle is inside the box and configure the pressure force
+				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(ipart)->getPosition()))
+				{
+					// set external boundary condition of fluid phase
+					bodies.at(ibody)->getParticles()->at(ipart)->addExternalForceFluid(-loads.at(iload).pressureForce);
 				}
 			}
 		}
@@ -117,12 +146,15 @@ void Loads::setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::Pr
 
 void Loads::updatePrescribedPorePressure(vector<Body*>& bodies) {
 
-	for (size_t i = 0; i < Loads::prescribedPorePressure.size(); ++i)
-	{
-		const int ibody = Loads::prescribedPorePressure.at(i).bodyIndex;
-		const int ipart = Loads::prescribedPorePressure.at(i).particleIndex;
-		const double ipressure = Loads::prescribedPorePressure.at(i).pressure;
+	// for each particle in prescribed pressure list
+	for (size_t i = 0; i < Loads::prescribedPorePressureParticlesList.size(); ++i)
+	{	
+		// get bodies and particles indexes and pressure value
+		const int ibody = Loads::prescribedPorePressureParticlesList.at(i).bodyIndex;
+		const int ipart = Loads::prescribedPorePressureParticlesList.at(i).particleIndex;
+		const double ipressure = Loads::prescribedPorePressureParticlesList.at(i).pressure;
 
+		// setup pressure at particle
 		bodies.at(ibody)->getParticles()->at(ipart)->setPressureFluid(ipressure);
 	}
 }
@@ -132,7 +164,7 @@ void Loads::setInitialPorePressureBox(vector<Body*>& bodies, vector<Loads::Press
 	// for each pressure box
 	for (size_t iload = 0; iload < loads.size(); ++iload)
 	{
-		// configures pressure in particles inside the box
+		// for each body
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
 			// get particles
@@ -141,6 +173,7 @@ void Loads::setInitialPorePressureBox(vector<Body*>& bodies, vector<Loads::Press
 			// for each particle 
 			for (size_t i = 0; i < particles->size(); ++i) {
 
+				// verify is the particle is inside the box and configure the pressure
 				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(i)->getPosition()))
 				{
 					particles->at(i)->setPressureFluid(loads.at(iload).pressure);
@@ -161,13 +194,13 @@ void Loads::setInitialPorePressureMaterial(vector<Body*>& bodies, vector<Loads::
 		// get pressure
 		double pressure = loads.at(iload).pressure;
 
-		// set pressure in particles with material
+		// for each material 
 		for (size_t ibody = 0; ibody < bodies.size(); ++ibody){
 
 			// get particles
 			vector<Particle*>* particles = bodies.at(ibody)->getParticles();
 
-			// for each particle 
+			// verify the material of each particle and setup the pressure 
 			for (size_t i = 0; i < particles->size(); ++i) {
 
 				if (particles->at(i)->getMaterialId()==materialId){
@@ -177,26 +210,5 @@ void Loads::setInitialPorePressureMaterial(vector<Body*>& bodies, vector<Loads::
 				
 			}
 		}
-	}
-}
-
-void Loads::setPorePressureTraction(vector<Body*>& bodies) {
-
-	for (size_t i = 0; i < Loads::prescribedPorePressure.size(); ++i)
-	{
-		// body index
-		const int ibody = Loads::prescribedPorePressure.at(i).bodyIndex;
-		
-		// particle index
-		const int iparticle = Loads::prescribedPorePressure.at(i).particleIndex;
-		
-		// pressure
-		const double pressure = Loads::prescribedPorePressure.at(i).pressure;
-		
-		// particle size
-		const Vector3d size = bodies.at(ibody)->getParticles()->at(iparticle)->getSize();
-
-		// set external boudanry condition of fluid phase
-		bodies.at(ibody)->getParticles()->at(iparticle)->addExternalForceFluid(-size*pressure);
 	}
 }
