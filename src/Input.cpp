@@ -862,3 +862,199 @@ vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 		throw;
 	}
 }
+
+vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
+
+	try{
+		vector<Loads::PressureBox> pressure_box_list;
+
+		string key = "prescribed_pressure_box";
+
+		if (!inputFile[key].is_null()){
+		
+			json::iterator it;
+			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+
+				Loads::PressureBox ipressure_box;
+
+				Vector3d p1(0,0,0), p2(0,0,0);
+
+				double pressure(0); 
+				
+				if ((*it)["point_p1"].is_array()) { 
+					p1.x() = ((*it)["point_p1"])[0]; 
+					p1.y() = ((*it)["point_p1"])[1]; 
+					p1.z() = ((*it)["point_p1"])[2];
+
+					ipressure_box.pointP1 = p1;
+				}
+
+				if ((*it)["point_p2"].is_array()) { 
+					p2.x() = ((*it)["point_p2"])[0]; 
+					p2.y() = ((*it)["point_p2"])[1]; 
+					p2.z() = ((*it)["point_p2"])[2]; 
+
+					ipressure_box.pointP2 = p2;
+				}
+
+				if ((*it)["pressure"].is_number()) { 
+					pressure = ((*it)["pressure"]); 
+
+					ipressure_box.pressure = pressure;
+				}
+
+				pressure_box_list.push_back(ipressure_box);
+			}
+		}
+
+		return pressure_box_list;
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error in prescibed pressure box definition");
+		throw;
+	}
+}
+
+vector<Loads::PressureBox> Input::getInitialPressureBox() {
+
+	try{
+		vector<Loads::PressureBox> pressure_box_list;
+
+		string key = "initial_pressure_box";
+
+		if (!inputFile[key].is_null()){
+		
+			json::iterator it;
+			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+
+				Loads::PressureBox ipressure_box;
+
+				Vector3d p1(0,0,0), p2(0,0,0);
+
+				double pressure(0); 
+				
+				if ((*it)["point_p1"].is_array()) { 
+					p1.x() = ((*it)["point_p1"])[0]; 
+					p1.y() = ((*it)["point_p1"])[1]; 
+					p1.z() = ((*it)["point_p1"])[2];
+
+					ipressure_box.pointP1 = p1;
+				}
+
+				if ((*it)["point_p2"].is_array()) { 
+					p2.x() = ((*it)["point_p2"])[0]; 
+					p2.y() = ((*it)["point_p2"])[1]; 
+					p2.z() = ((*it)["point_p2"])[2]; 
+
+					ipressure_box.pointP2 = p2;
+				}
+
+				if ((*it)["pressure"].is_number()) { 
+					pressure = ((*it)["pressure"]); 
+
+					ipressure_box.pressure = pressure;
+				}
+
+				pressure_box_list.push_back(ipressure_box);
+			}
+		}
+
+		return pressure_box_list;
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error in initial pressure box definition");
+		throw;
+	}
+}
+
+vector<Loads::PressureMaterial> Input::getInitialPressureMaterial() {
+
+	try{
+		vector<Loads::PressureMaterial> pressure_material_list;
+
+		string key = "initial_pressure_material";
+
+		if (!inputFile[key].is_null()){
+		
+			json::iterator it;
+			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+
+				Loads::PressureMaterial ipressure_material;
+				
+				if ((*it)["material"].is_number()) { 
+
+					ipressure_material.materialId = ((*it)["material_id"]);
+				}
+
+				if ((*it)["pressure"].is_number()) { 
+
+					ipressure_material.pressure = ((*it)["pressure"]); 
+				}
+
+				pressure_material_list.push_back(ipressure_material);
+			}
+		}
+
+		return pressure_material_list;
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error in initial pressure by material definition");
+		throw;
+	}
+}
+
+vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
+
+	try{
+		vector<Loads::PressureBoundaryForceBox> pressure_box_list;
+
+		string key = "pressure_force_box";
+
+		if (!inputFile[key].is_null()){
+		
+			json::iterator it;
+			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+
+				Loads::PressureBoundaryForceBox ipressure_box;
+
+				Vector3d p1(0,0,0), p2(0,0,0), force(0,0,0);
+				
+				if ((*it)["point_p1"].is_array()) { 
+					p1.x() = ((*it)["point_p1"])[0]; 
+					p1.y() = ((*it)["point_p1"])[1]; 
+					p1.z() = ((*it)["point_p1"])[2];
+
+					ipressure_box.pointP1 = p1;
+				}
+
+				if ((*it)["point_p2"].is_array()) { 
+					p2.x() = ((*it)["point_p2"])[0]; 
+					p2.y() = ((*it)["point_p2"])[1]; 
+					p2.z() = ((*it)["point_p2"])[2]; 
+
+					ipressure_box.pointP2 = p2;
+				}
+
+				if ((*it)["pressure_force"].is_array()) { 
+					force.x() = ((*it)["pressure_force"])[0]; 
+					force.y() = ((*it)["pressure_force"])[1]; 
+					force.z() = ((*it)["pressure_force"])[2]; 
+
+					ipressure_box.pressureForce = force;
+				}
+
+				pressure_box_list.push_back(ipressure_box);
+			}
+		}
+
+		return pressure_box_list;
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error in pressure force box definition");
+		throw;
+	}
+}

@@ -55,6 +55,9 @@ using Eigen::Vector3d;
 
 /// #### Cuboid definition example
 ///
+/// The next example shows the definition of a cuboid body type witch volume extends from 
+/// point `P1=(2,2,2)` to the point `P2=(7,7,7)` and witch material has `id=1`.
+///
 /// ```
 /// "body":
 /// {
@@ -105,9 +108,9 @@ using Eigen::Vector3d;
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
 /// | gravity | define the body force intensity | array |
-/// | load_box | distribute a load in particles inside the box | -- |
+/// | load_box | distribute a load in particles inside a box | -- |
 
-/// ### Load definition example
+/// ### Load definition examples
 ///	
 /// #### Gravity load Example
 ///
@@ -129,6 +132,41 @@ using Eigen::Vector3d;
 ///	}
 /// ```
 
+/// ## Pore pressure
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | prescribed_pressure_box | prescribe a pore pressure in particles inside a box | -- |
+/// | initial_pressure_box | configure initial pore pressure in particles inside a box | -- |
+///
+/// ### Pore pressure definition examples
+///
+/// #### Prescribed pore pressure in particles inside a box example
+///
+/// ```
+///	"prescribed_pressure_box":
+///	{
+///		"pressure_prescibed_1":
+///		{
+///			"point_p1":[0,0,6],
+///			"point_p2":[5,1,10],
+///			"pressure":10
+///		}
+///	}
+
+/// #### Initial pore pressure in particles inside a box example
+///
+/// ```
+///	"initial_pressure_box":
+///	{
+///		"pressure_initial_1":
+///		{
+///			"point_p1":[0,0,6],
+///			"point_p2":[5,1,10],
+///			"pressure":10
+///		}
+///	}
+
+///
 /// ## Damping
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
@@ -472,6 +510,22 @@ namespace Input {
 	/// \brief Return loads distributed in particles inside a box
 	/// \return loads_distributed_box  Loads distributed in particles inside a box
 	vector<Loads::LoadDistributedBox> getLoadDistributedBox();
+	
+	/// \brief Return prescribed pressure in particles inside a box
+	/// \return pressure_prescribed_box  Pressures prescribed in particles
+	vector<Loads::PressureBox> getPrescribedPressureBox();
+
+	/// \brief Return initial pore pressure in particles inside a box
+	/// \return pressure_initial_box  Initial pressures in particles
+	vector<Loads::PressureBox> getInitialPressureBox();
+
+	/// \brief Return initial pore pressure in particles by material id
+	/// \return pressure_initial_material  Initial pressures in particles
+	vector<Loads::PressureMaterial> getInitialPressureMaterial();
+
+	/// \brief Return pore pressure force in particles inside a box
+	/// \return pressure_force  Pore pressure force
+	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
 };
 
 #endif /* INPUT_H_ */

@@ -211,6 +211,16 @@ void MPM::setupLoads() {
 
 	// set external forces
 	Loads::setLoadDistributedBox(bodies, Input::getLoadDistributedBox());
+
+	// set prescribed pore pressures
+	Loads::setPrescribedPorePressureBox(bodies, Input::getPrescribedPressureBox());
+	
+	// set initial pore pressure
+	Loads::setInitialPorePressureBox(bodies, Input::getInitialPressureBox());
+	Loads::setInitialPorePressureMaterial(bodies, Input::getInitialPressureMaterial());
+	
+	// set traction pore pressure forces
+	Loads::setPrescribedPorePressureBoundaryForceBox(bodies, Input::getPressureBoundaryForceBox());
 }
 
 void MPM::setupDamping() {
