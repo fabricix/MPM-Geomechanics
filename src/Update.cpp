@@ -6,6 +6,7 @@
  */
 
 #include "Update.h"
+#include "Loads.h"
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -140,6 +141,9 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 			particles->at(i)->updatePressure(dt);
 		}
 	}
+
+	// set up prescribed pore pressure
+	Loads::updatePrescribedPorePressure(bodies);
 }
 
 void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {

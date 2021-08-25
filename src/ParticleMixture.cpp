@@ -103,7 +103,7 @@ void ParticleMixture::updatePressure(double dt) {
     double vf = (*(this->getStrainIncrementFluid())).trace()/dt;
 
     // pressure increment
-    double dp = - dt * kw / n * ( (1 - n)*vs + n*vf );
+    double dp = -dt*kw/n*((1-n)*vs+n*vf);
 
     // update pressure
     this->pressureFluid+=dp;

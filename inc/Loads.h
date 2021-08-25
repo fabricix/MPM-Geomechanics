@@ -103,7 +103,7 @@ namespace Loads {
 
     /// \brief Set prescribed pore pressure in particles
     /// \param[in] bodies A list containing Body pointers 
-    void updatePrescribedPorePressure(vector<Body*>& bodies);
+    void updatePrescribedPorePressure(vector<Body*>* bodies);
     
     /// \brief Set external boundary force in fluid phase due the prescribed pore pressure in particles
     ///
