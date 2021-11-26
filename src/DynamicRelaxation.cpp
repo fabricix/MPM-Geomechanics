@@ -73,7 +73,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
                 // only active particle can contribute
                 if (!particles->at(i)->getActive()) { continue; }
                 
-                // set nul velocity
+                // set null velocity
                 particles->at(i)->setVelocity(Vector3d(0,0,0));
             }
         }
