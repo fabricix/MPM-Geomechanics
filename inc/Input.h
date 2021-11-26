@@ -152,6 +152,7 @@ using Eigen::Vector3d;
 ///			"pressure":10
 ///		}
 ///	}
+/// ```
 
 /// #### Initial pore pressure in particles inside a box example
 ///
@@ -165,13 +166,16 @@ using Eigen::Vector3d;
 ///			"pressure":10
 ///		}
 ///	}
+/// ```
 
-///
 /// ## Damping
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | --------- |
-/// | damping | define the damping type | -- |
-/// | local | define the local damping value | double |
+/// | damping | define damping in the model | -- |
+/// | type | define damping type | string |
+/// | value | define the local damping value | double |
+///
+/// See damping type in ModelSetup::DampingType
 
 /// ### Damping definition example
 ///
@@ -188,7 +192,7 @@ using Eigen::Vector3d;
 /// | --------| ----------- | --------- |
 /// | n_threads | define the number of threads in  the simulation | unsigned |
 
-/// ### Paralelization definition example
+/// ### Parallelization definition example
 ///
 /// ```
 /// "n_threads":1,

@@ -24,7 +24,7 @@ namespace ModelSetup {
 
 	/// \enum DampingType
 	/// \brief Defines the type of damping
-	enum DampingType{ UNDAMPED, LOCAL, RAYLEIGH, ARTIFICIAL_VISCOSITY, KINETIC_DYNAMIC_RELAXATION };
+	enum DampingType{ UNDAMPED, LOCAL, KINETIC_DYNAMIC_RELAXATION };
 	
 	/// \enum OperationalSystem
 	/// \brief Defines the current operational system
