@@ -17,6 +17,7 @@ using std::cout;
 #include "Interpolation.h"
 #include "Update.h"
 #include "Output.h"
+#include "DynamicRelaxation.h"
 
 SolverExplicitUSL::SolverExplicitUSL():Solver() { }
 
@@ -104,6 +105,9 @@ void SolverExplicitUSL::Solve( ){
 		
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
+
+		// verify the static solution requirements
+		DynamicRelaxation::setStaticSolution(bodies,loopCounter);
 
 		// advance in time
 		iTime+=dt;

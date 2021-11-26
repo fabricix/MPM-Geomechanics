@@ -11,6 +11,7 @@
 #include "Interpolation.h"
 #include "Update.h"
 #include "Output.h"
+#include "DynamicRelaxation.h"
 
 #include <vector>
 using std::vector;
@@ -157,6 +158,9 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
+
+		// verify the static solution requirements
+		DynamicRelaxation::setStaticSolution(bodies,loopCounter);
 
 		// advance in time
 		iTime+=dt;
