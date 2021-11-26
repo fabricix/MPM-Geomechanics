@@ -27,8 +27,9 @@ void NodeMixture::updateDampingForce() {
     Node::updateDampingForce();
 
     // update damping force of fluid phase
-    switch(ModelSetup::getDampingType()) {
-
+    switch(ModelSetup::getDampingType())
+    {
+    	// local damping force
         case ModelSetup::DampingType::LOCAL:
         {
             double alpha = ModelSetup::getDampingLocal();
@@ -46,9 +47,10 @@ void NodeMixture::updateDampingForce() {
         }
         break;
 
-        case ModelSetup::DampingType::RAYLEIGH:
-        case ModelSetup::DampingType::ARTIFICIAL_VISCOSITY:
+        // undamped system
         case ModelSetup::DampingType::UNDAMPED:
+
+        // default case
         default:
             (this->dampingForceFluid).setZero();     
     }

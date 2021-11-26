@@ -225,9 +225,10 @@ void MPM::setupLoads() {
 
 void MPM::setupDamping() {
 
+	// set damping type
 	ModelSetup::setDampingType(Input::getDampingType());
 
-	// setup local damping value
+	// set local damping value
 	if (ModelSetup::getDampingType()==ModelSetup::LOCAL){
 
 		ModelSetup::setDampingLocalValue(Input::getDampingValue());

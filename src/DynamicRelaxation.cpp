@@ -16,7 +16,7 @@ namespace DynamicRelaxation {
 
 void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter) { 
 
-    // verify the damping type
+    // damping type verification
     if (ModelSetup::getDampingType() != ModelSetup::KINETIC_DYNAMIC_RELAXATION)
     {
         return;
@@ -29,7 +29,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
         return;
     }
 
-    // get bodies
+    // compute the model's kinetic energy
     for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
 
         // get particles
@@ -39,14 +39,14 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
         #pragma omp parallel for reduction(+:currentKineticEnergy) shared(particles) private(bodies, ibody)
         for (size_t i = 0; i < particles->size(); ++i) {
 
-            // only active particle can contribute
+            // verify active particle
             if (!particles->at(i)->getActive()) { continue; }
             
             // get mass and velocity
             const double mass = particles->at(i)->getMass();
             const Vector3d velocity = particles->at(i)->getVelocity();
 
-            // add kinetic energy
+            // add kinetic energy contribution
             currentKineticEnergy+=0.5*mass*(velocity.x()*velocity.x()+velocity.y()*velocity.y()+velocity.z()*velocity.z());
         }
     }
@@ -54,13 +54,10 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
     // compute the kinetic energy increment
     double deltaKineticEnergy = currentKineticEnergy - lastKineticEnergy;
 
-    // check if there are a peak
+    // check if there was a peak
     if (deltaKineticEnergy < 0.0)
     {   
-        // set new current
-        currentKineticEnergy  = 0.0;
-
-        // get bodies
+        // set null particles' velocities 
         for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
 
             // get particles
@@ -70,13 +67,16 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
             #pragma omp parallel for shared(particles) private(bodies, ibody)
             for (size_t i = 0; i < particles->size(); ++i) {
 
-                // only active particle can contribute
+                // verify active particle
                 if (!particles->at(i)->getActive()) { continue; }
                 
                 // set null velocity
                 particles->at(i)->setVelocity(Vector3d(0,0,0));
             }
         }
+
+        // set current kinetic energy
+        currentKineticEnergy  = 0.0;
     }
 
     // update last kinetic energy

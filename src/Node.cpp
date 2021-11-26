@@ -13,8 +13,9 @@ using Eigen::Vector3d;
 
 void Node::updateDampingForce() { 
 
-	switch(ModelSetup::getDampingType()) {
-
+	switch(ModelSetup::getDampingType())
+	{
+		// local damping force
 		case ModelSetup::DampingType::LOCAL:
 		{
 			double alpha = ModelSetup::getDampingLocal();
@@ -32,9 +33,10 @@ void Node::updateDampingForce() {
 		}
 		break;
 
-		case ModelSetup::DampingType::RAYLEIGH:
-		case ModelSetup::DampingType::ARTIFICIAL_VISCOSITY:
+		// undamped system
 		case ModelSetup::DampingType::UNDAMPED:
+
+		// default case
 		default:
 			(this->dampingForce).setZero();		
 	}

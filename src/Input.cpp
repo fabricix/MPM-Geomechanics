@@ -622,14 +622,21 @@ ModelSetup::DampingType Input::getDampingType() {
 
 	try
 	{
-		if (inputFile["damping"].is_null())
+		if (inputFile["damping"].is_null()){
 			return ModelSetup::DampingType::UNDAMPED;
+		}
 
-		if (inputFile["damping"]["type"].is_null())
+		if (inputFile["damping"]["type"].is_null()){
 			throw(0);
+		}
 		
-		if(inputFile["damping"]["type"]=="local")
+		if(inputFile["damping"]["type"]=="local"){
 			return ModelSetup::DampingType::LOCAL;
+		}
+
+		if(inputFile["damping"]["type"]=="kinetic"){
+			return ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION;
+		}
 
 		throw(0);
 	}

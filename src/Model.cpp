@@ -24,9 +24,10 @@ namespace ModelSetup {
 	// contact
 	bool contactActive=false; //!< is contact active
 	
-	// gravity
+	// gravity active
 	bool gravityActive=false; //!< is gravity active
 
+	// gravity dafault value
 	Vector3d gravity(0,0,-9.81); //!< gravity vector
 	
 	// axisymmetric model
@@ -47,16 +48,18 @@ namespace ModelSetup {
 	// time
 	double dt=0.0; //!< time step
 	double time=0.0; //!< simulation time
-	double dtFraction=0.25; //!< fraction of critical time step
+	double dtFraction=0.25; //!< dafault critical time step fraction
 
-	// damping
+	// default damping
 	DampingType damping=DampingType::UNDAMPED; //!< damping type
+	
+	// default lodal damping value
 	double localDamping=0.0; //!< local damping value
 
 	// input file
 	string inputFile=""; //!< input file name
 
-	// stress update scheme
+	// default stress update scheme
 	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
 
 	// operational system
@@ -66,7 +69,7 @@ namespace ModelSetup {
 	OperationalSystem operationalSystem=OperationalSystem::LINUX; //!< operational system
     #endif
 
-	// interpolation function
+	// default interpolation functions
     InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP; //!< interpolation function type
 	
 	///
