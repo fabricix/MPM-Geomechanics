@@ -268,7 +268,7 @@ void MPM::createModel() {
 		// set the interpolation functions
 		setInterpolationFunctions();
 
-		// set the munber of phases in the simulations
+		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
 
 		// setup the mesh

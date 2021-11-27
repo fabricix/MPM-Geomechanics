@@ -11,7 +11,6 @@
 namespace DynamicRelaxation {
 
     double lastKineticEnergy=0.0;
-    double currentKineticEnergy=0.0;
 }
 
 void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter) { 
@@ -28,6 +27,9 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
         lastKineticEnergy = 0.0;
         return;
     }
+        
+    // current kinetic energy
+    double currentKineticEnergy=0.0;
 
     // compute the model's kinetic energy
     for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -76,7 +78,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
         }
 
         // set current kinetic energy
-        currentKineticEnergy  = 0.0;
+        currentKineticEnergy = 0.0;
     }
 
     // update last kinetic energy
