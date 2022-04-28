@@ -228,7 +228,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			const Matrix3d pStress = particles->at(i)->getStress();
 			
 			// get the particle volume
-			double pVolume = particles->at(i)->getMass()/particles->at(i)->getDensity();
+			double pVolume = particles->at(i)->getCurrentVolume();
 
 			// particle pressure
 			Matrix3d pPressure;
@@ -237,9 +237,6 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 				// get pore pressure pressure
 				pPressure = particles->at(i)->getPressureFluid()*Matrix3d::Identity();
-				
-				// in two phase calculation the volume is the total volume, Vt = Vs / (1-n)
-				pVolume /= (1.0-particles->at(i)->getPorosity());
 			}
 
 			// for each node in the contribution list
@@ -297,12 +294,15 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// get particle stress
+			// get particle pressure
 			const Matrix3d pPressure = particles->at(i)->getPressureFluid()*Matrix3d::Identity();
 			
-			// get the particle volume
-			const double pVolumeFluid = particles->at(i)->getMassFluid()/particles->at(i)->getDensityFluid();
+			// get current particle volume
+			const double pVolume = particles->at(i)->getCurrentVolume();
 
+			// get current porosity
+			const double porosity = particles->at(i)->getPorosity();
+			
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
@@ -314,9 +314,9 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 				// compute the particle's contribution to the nodal internal force
 				Vector3d internalForceFluid;
-				internalForceFluid.x()=(pPressure(0,0)*gradient(0)+pPressure(1,0)*gradient(1)+pPressure(2,0)*gradient(2))*pVolumeFluid;
-				internalForceFluid.y()=(pPressure(0,1)*gradient(0)+pPressure(1,1)*gradient(1)+pPressure(2,1)*gradient(2))*pVolumeFluid;
-				internalForceFluid.z()=(pPressure(0,2)*gradient(0)+pPressure(1,2)*gradient(1)+pPressure(2,2)*gradient(2))*pVolumeFluid;
+				internalForceFluid.x()=(pPressure(0,0)*gradient(0)+pPressure(1,0)*gradient(1)+pPressure(2,0)*gradient(2))*pVolume*porosity;
+				internalForceFluid.y()=(pPressure(0,1)*gradient(0)+pPressure(1,1)*gradient(1)+pPressure(2,1)*gradient(2))*pVolume*porosity;
+				internalForceFluid.z()=(pPressure(0,2)*gradient(0)+pPressure(1,2)*gradient(1)+pPressure(2,2)*gradient(2))*pVolume*porosity;
 
 				// add the internal of fluid force contribution in node
 				nodeI->addInternalForceFluid(internalForceFluid);

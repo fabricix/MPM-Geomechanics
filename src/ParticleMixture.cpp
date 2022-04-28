@@ -46,30 +46,6 @@ Vector3d ParticleMixture::getDragForceFluid() const {
     return drag;
 }
 
-void ParticleMixture::updateDensity() {
-
-    // The solid density is not updated because
-    // of the hipoteses of zero solid density variation
-    // during the derivation of the constitutive equation 
-    // of the pressure 
-
-    // The density of the fluid can be updated
-    // because there are not any hipoteses 
-    // regarding its variation in time
-
-    // only saturated particle can be update
-    if (this->getSaturation()<=0.0) { return; }
-
-    // volumetric strain increment
-    double volStrainInc = strainIncrementFluid.trace();
-    
-    // update particle density
-    if ((1.0+volStrainInc)!=0.0) {
-
-        densityFluid = densityFluid / (1.0+volStrainInc);
-    }
-}
-
 void ParticleMixture::updatePorosity() {
 
     // only saturated particle can be update
@@ -97,14 +73,33 @@ void ParticleMixture::updatePressure(double dt) {
     double n = this->porosityMixture;
 
     // volumetric strain rate of solid
-    double vs = Particle::getStrainIncrement().trace()/dt;
+    double grad_vs = Particle::getStrainIncrement().trace()/dt;
 
     // volumetric strain rate of fluid
-    double vf = (*(this->getStrainIncrementFluid())).trace()/dt;
+    double grad_vf = (*(this->getStrainIncrementFluid())).trace()/dt;
 
     // pressure increment
-    double dp = -dt*kw/n*((1-n)*vs+n*vf);
+    double dp = -dt*kw/n*((1-n)*grad_vs+n*grad_vf);
 
     // update pressure
     this->pressureFluid+=dp;
+}
+
+double ParticleMixture::getCurrentVolume() const {
+
+    // compute the jacobian of the motion: J = V^{n+1}/V^0 = det (F)
+    double J = this->deformationGradient.determinant();
+    
+    // initial volume
+    double initialVolume = Particle::getInitialVolume();
+
+    // current volume
+    double volume = initialVolume;
+
+    // calculate the current volume
+    if (J!=0){
+        volume = J*initialVolume;
+    }
+
+    return volume;
 }

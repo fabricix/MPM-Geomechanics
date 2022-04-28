@@ -25,10 +25,6 @@ public:
     /// \brief Default virtual destructor
     virtual ~ParticleMixture();
 
-    /// \brief Update the particle density
-    ///  
-    virtual void updateDensity();
-
     /// \brief Update the particle porosity
     ///
     virtual void updatePorosity();
@@ -88,6 +84,10 @@ public:
     /// \brief Configure the pressure of fluid
     /// \param[in] pressure Pressure of the fluid
     virtual inline void setPressureFluid(double pressure) { this->pressureFluid=pressure; }
+
+    /// \brief Returns current particle volume
+    /// \return Particle volume
+    virtual double getCurrentVolume() const;
 
 private:
 

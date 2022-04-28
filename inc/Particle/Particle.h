@@ -53,7 +53,7 @@ public:
 
 	/// \brief Update the particle density
 	///  
-	virtual void updateDensity();
+	void updateDensity();
 	
 	/// \brief Update the particle porosity
 	///
@@ -86,6 +86,14 @@ public:
 	/// \brief Returns the current particle density of fluid
 	/// \return Particle density of fluid
 	virtual inline double getDensityFluid() const { return 0.0; }
+
+	/// \brief Returns current particle volume
+	/// \return Particle volume
+	virtual inline double getCurrentVolume() const { return this->mass/this->density; }
+
+	/// \brief Returns initial particle volume
+	/// \return Initial particle volume
+	inline double getInitialVolume() const { return this->size.x()*this->size.y()*this->size.z(); }
 
 	/// \brief Returns the current particle position
 	/// \return Particle current position

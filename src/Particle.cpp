@@ -94,10 +94,6 @@ void Particle::updateContributionNodes(Mesh* mesh)
 	}
 }
 
-//
-// private methods
-// 
-
 void Particle::updateDensity() {
 
 	// volumetric strain increment
