@@ -211,6 +211,16 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 		
+		if (isFieldRequired("plastic_strain")){
+			
+			// effective plastic strain
+			partFile<<"<DataArray type=\"Float64\" Name=\"Effective Plastic Strain\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getPlasticStrain()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+
 		if (isFieldRequired("external_force")){
 
 			// external force in particle

@@ -345,6 +345,7 @@ using Eigen::Vector3d;
 /// | material | particle material field | -- |
 /// | pressure | fluid pressure | -- |
 /// | external_force | total external force in particle | -- |
+/// | plastic_strain | effective plastic strain in particle | -- |
 
 /// ### Results definition example
 ///
