@@ -61,8 +61,8 @@ void NodeMixture::integrateMomentum(double dt) {
     // intetrate momentum of solid phase
     Node::integrateMomentum(dt);
 
-    // integrate moemntum of fluid phase
-    this->momentum = this->momentum + this->totalForce*dt;
+    // integrate momentum of fluid phase
+    this->momentumFluid = this->momentumFluid + this->totalForceFluid*dt;
 }
 
 void NodeMixture::updateVelocity(){ 

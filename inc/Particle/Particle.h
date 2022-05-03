@@ -223,6 +223,10 @@ public:
 	/// \param[in] deltaPlasticStrain Plastic strain increment
 	inline void addPlasticStrain(double deltaPlasticStrain) { this->plasticStrain+=deltaPlasticStrain; }
 
+	/// \brief Get effective plastic strain
+	/// \return plasticStrain Effective plastic strain
+	inline double getPlasticStrain() const { return this->plasticStrain; }
+
 	/// \brief Returns pressure of fluid
     /// \return Current pore pressure of fluid
     virtual inline double getPressureFluid() const { return 0.0; }

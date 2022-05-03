@@ -239,7 +239,7 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 			Particle* particleP = particles->at(i);
 
 			// update particle velocity
-			particleP->setVelocityFluid(*particleP->getVelocityFluid()+velocityRate*dt);
+			particleP->setVelocityFluid((*particleP->getVelocityFluid())+velocityRate*dt);
 		}
 	}
 }

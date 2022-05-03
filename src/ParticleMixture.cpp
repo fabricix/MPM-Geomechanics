@@ -36,7 +36,7 @@ ParticleMixture::~ParticleMixture() { }
 
 Vector3d ParticleMixture::getDragForceFluid() const {
 
-    double mgn = this->massFluid*(ModelSetup::getGravity()).norm()*this->porosityMixture;
+    double mgn = this->massFluid*9.81*this->porosityMixture;
 
     Vector3d drag;
     drag.x()=-mgn/this->material->getHydraulicConductivity().x()*(this->velocityFluid.x()-Particle::velocity.x());

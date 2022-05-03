@@ -3,7 +3,7 @@
 
 	"shape_function":"GIMP",
 
-	"time":0.1,
+	"time":0.01,
 
 	"time_step":0.0001,
 
@@ -28,7 +28,7 @@
 	"mesh":
 	{	
 		"cells_dimension":[0.2,0.2,0.2],
-		"cells_number":[5,5,51],
+		"cells_number":[5,5,53],
 		"origin":[0,0,0],
 		
 		"boundary_conditions":
@@ -38,9 +38,9 @@
 			"plane_Z0":"sliding",
 			"plane_Xn":"sliding",
 			"plane_Yn":"sliding",
-			"plane_Zn":"sliding"
+			"plane_Zn":"free"
 		},
-
+		
 		"boundary_conditions_fluid":
 		{
 			"plane_X0":"sliding",
@@ -90,7 +90,7 @@
 		}
 	},
 
-	"NOprescribed_pressure_box":
+	"prescribed_pressure_box":
 	{
 		"pressure_prescibed_1":
 		{
