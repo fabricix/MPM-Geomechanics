@@ -182,7 +182,7 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// get particle velocity
+			// get particle velocity of fluid
 			const Vector3d pVelocityFluid = *(particles->at(i)->getVelocityFluid());
 
 			// get particle mass
@@ -231,12 +231,12 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			double pVolume = particles->at(i)->getCurrentVolume();
 
 			// particle pressure
-			Matrix3d pPressure;
+			double pPressure;
 			
 			if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
 
 				// get pore pressure pressure
-				pPressure = particles->at(i)->getPressureFluid()*Matrix3d::Identity();
+				pPressure = particles->at(i)->getPressureFluid();
 			}
 
 			// for each node in the contribution list
@@ -256,9 +256,9 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 				if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
 				{
-					internalForce.x()+=(pPressure(0,0)*gradient(0)+pPressure(1,0)*gradient(1)+pPressure(2,0)*gradient(2))*pVolume;
-					internalForce.y()+=(pPressure(0,1)*gradient(0)+pPressure(1,1)*gradient(1)+pPressure(2,1)*gradient(2))*pVolume;
-					internalForce.z()+=(pPressure(0,2)*gradient(0)+pPressure(1,2)*gradient(1)+pPressure(2,2)*gradient(2))*pVolume;
+					internalForce.x()+=pPressure*gradient(0)*pVolume;
+					internalForce.y()+=pPressure*gradient(1)*pVolume;
+					internalForce.z()+=pPressure*gradient(2)*pVolume;
 				}
 
 				// add the internal force contribution in node

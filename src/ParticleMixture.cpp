@@ -87,19 +87,14 @@ void ParticleMixture::updatePressure(double dt) {
 
 double ParticleMixture::getCurrentVolume() const {
 
-    // compute the jacobian of the motion: J = V^{n+1}/V^0 = det (F)
-    double J = this->deformationGradient.determinant();
+    // compute the jacobian of the motion: J = V^{s,n+1}/V^{s,0} = det (F)
+    double J = Particle::getDeformationGradient().determinant();
     
     // initial volume
     double initialVolume = Particle::getInitialVolume();
 
     // current volume
-    double volume = initialVolume;
-
-    // calculate the current volume
-    if (J!=0){
-        volume = J*initialVolume;
-    }
+    double volume = (J!=0) ? J*initialVolume : initialVolume;
 
     return volume;
 }
