@@ -112,7 +112,11 @@ void Loads::setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::Pr
 				// verify if particle is inside the box and store its index for set up the pressure during simulation
 				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(ipart)->getPosition()))
 				{
+					// create the particle list
 					Loads::prescribedPorePressureParticlesList.push_back(Loads::PrescribedPorePressure(ibody,ipart,loads.at(iload).pressure));
+
+					// set the pressure in particle
+					particles->at(ipart)->setPressureFluid(loads.at(iload).pressure);
 				}
 			}
 		}
