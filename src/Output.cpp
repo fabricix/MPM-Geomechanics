@@ -241,6 +241,52 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("stress")){
+
+			// particle stress xx
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_XX\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(0,0)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+			// particle stress yy
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_YY\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(1,1)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+			// particle stress zz
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_ZZ\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(2,2)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+			// particle stress xy
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_XY\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(0,1)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+			// particle stress xz
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_XZ\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(0,2)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+			// particle stress yz
+			partFile<<"<DataArray type=\"Float64\" Name=\"Stress_YZ\" NumberOfComponents=\"1\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getStress()(1,2)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+
+		}
+
 		// end point data
 		partFile<<"</PointData>\n";
 		

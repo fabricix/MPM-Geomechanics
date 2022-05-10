@@ -346,6 +346,7 @@ using Eigen::Vector3d;
 /// | pressure | fluid pressure | -- |
 /// | external_force | total external force in particle | -- |
 /// | plastic_strain | effective plastic strain in particle | -- |
+/// | stress | particle stress | -- |
 
 /// ### Results definition example
 ///
