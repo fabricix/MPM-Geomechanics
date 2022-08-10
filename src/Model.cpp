@@ -48,7 +48,7 @@ namespace ModelSetup {
 	// time
 	double dt=0.0; //!< time step
 	double time=0.0; //!< simulation time
-	double dtFraction=0.25; //!< dafault critical time step fraction
+	double dt_critical_multiplier=0.25; //!< dafault critical time step fraction
 
 	// default damping
 	DampingType damping=DampingType::UNDAMPED; //!< damping type
@@ -96,8 +96,8 @@ namespace ModelSetup {
 	// time step
 	double getTimeStep() { return dt; }
 	void setTimeStep(double d) { dt=d; }
-	double getTimeStepFraction() { return dtFraction; }
-	void setTimeStepFraction(double d) { dtFraction=d; }
+	double getCriticalTimeStepMultiplier() { return dt_critical_multiplier; }
+	void setCriticalTimeStepMultiplier(double d) { dt_critical_multiplier=d; }
 
 	// threads
 	unsigned getThreads() { return nThreads; }

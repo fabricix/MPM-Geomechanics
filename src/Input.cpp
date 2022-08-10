@@ -174,9 +174,12 @@ double Input::getTimeStep(){
 
 	try
 	{
-		if (inputFile["time_step"].is_number()){
-
-			// return time step
+		if (inputFile["time_step"].is_null() || !inputFile["time_step"].is_number() )
+		{ 
+			return 0;
+		}
+		else
+		{
 			return inputFile["time_step"];
 		}
 		throw(0);
@@ -188,8 +191,30 @@ double Input::getTimeStep(){
 	}
 }
 
-Vector3i Input::getCellsNum() {
+double Input::getCriticalTimeStepMultiplier()
+{
+	try
+	{
+		string key = "critical_time_step_multiplier";
+		
+		if (!inputFile[key].is_null() && inputFile[key].is_number())
+		{
+			return inputFile[key];
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	catch(...)
+	{
+		Warning::printMessage("Bad definition of time step multiplier");
+		throw;
+	}	
+}
 
+Vector3i Input::getCellsNum()
+{
 	try
 	{
 		if(inputFile["mesh"]["cells_number"].is_array()){

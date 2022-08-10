@@ -445,6 +445,14 @@ namespace Input {
 	/// \return Time step
 	double getTimeStep();
 	
+	/// \brief Return the time step
+	/// \return Time step
+	double getTimeStep();
+	
+	/// \brief Return critical time step multiplier
+	/// \return Critical time step multiplier
+	double getCriticalTimeStepMultiplier();
+
 	/// \brief Return the solver to be used in the model.
 	///
 	/// After read the input file this class creates an Solver instance and returns its pointer.

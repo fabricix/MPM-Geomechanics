@@ -74,13 +74,13 @@ namespace ModelSetup {
 	/// \return Number of steps
 	unsigned getResultSteps();
 
-	/// \brief Return the fraction of time steps
-	/// \return Time step fraction
-	double getTimeStepFraction();
+	/// \brief Return the critical sime step multiplier
+	/// \return Time step multiplier
+	double getCriticalTimeStepMultiplier();
 	
 	/// \brief Configures the fraction of critical time step
-	/// \param[in] time_step_fraction Time step fraction
-	void setTimeStepFraction(double time_step_fraction);
+	/// \param[in] critical_time_step_multiplier Critical time step multiplier
+	void setCriticalTimeStepMultiplier(double critical_time_step_multiplier);
 
 	/// \brief Return the number of threads in the simulation
 	/// \return Number of threads

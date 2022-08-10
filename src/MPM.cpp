@@ -82,27 +82,21 @@ void MPM::setInterpolationFunctions() {
 
 void MPM::setTimeStep() {
 
-	// input time step
+	// time step
 	ModelSetup::setTimeStep(Input::getTimeStep());
 
-	if(ModelSetup::getTimeStep()<=0.0){
-
-		Warning::printMessage("Time step must be greater that zero");
-		throw (0);
-	}
+	// critical time step multiplier
+	ModelSetup::setCriticalTimeStepMultiplier(Input::getCriticalTimeStepMultiplier()>0 ? Input::getCriticalTimeStepMultiplier(): ModelSetup::getCriticalTimeStepMultiplier());
 
 	// verify the Courant-Friedrichs-Lewy condition
 	
-	// maximum sound speed
+	// maximum sound speed of materials
 	double maxSoundSpeed = 0.0;
 	for (size_t i = 0; i < materials.size(); ++i){
 
 		double currentSoundSpeed = materials.at(i)->getSoundSpeed();
 		
-		if (currentSoundSpeed>maxSoundSpeed) {
-		
-			maxSoundSpeed=currentSoundSpeed;
-		}
+		if (currentSoundSpeed>maxSoundSpeed) { maxSoundSpeed=currentSoundSpeed;	}
 	}
 
 	// mean cells dimensions
@@ -113,9 +107,15 @@ void MPM::setTimeStep() {
 	{
 		double criticalTimeStep = cellsDimention/maxSoundSpeed;
 
-		if (ModelSetup::getTimeStep()>criticalTimeStep){
+		if (ModelSetup::getTimeStep()!=0 && ModelSetup::getTimeStep()>criticalTimeStep){
 
 			Warning::printMessage("time step is greater than critical time step: "+to_string(criticalTimeStep));
+		}
+
+		else if (ModelSetup::getTimeStep()==0)
+		{
+			// set the default time step using critical time step multiplier
+			ModelSetup::setTimeStep(ModelSetup::getCriticalTimeStepMultiplier()*criticalTimeStep);
 		}
 	}
 	else
