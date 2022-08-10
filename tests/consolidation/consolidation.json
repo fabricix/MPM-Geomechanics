@@ -3,23 +3,17 @@
 
 	"shape_function":"GIMP",
 
-	"time":0.01,
+	"time":0.001,
 
-	"time_step":0.0001,
+	"time_step":0.00001,
 
 	"gravity":[0.0,0.0,0],
 
 	"n_threads":1,
 
-	"damping":
-	{
-		"type":"local",
-		"value":0.0
-	},
-
 	"results":
 	{
-		"print":10,
+		"print":100,
 		"fields":["id","displacement","material","active","pressure","external_force","stress"]
 	},
 
@@ -27,8 +21,8 @@
 
 	"mesh":
 	{	
-		"cells_dimension":[0.2,0.2,0.2],
-		"cells_number":[5,5,53],
+		"cells_dimension":[0.25,0.25,0.25],
+		"cells_number":[4,4,50],
 		"origin":[0,0,0],
 		
 		"boundary_conditions":
@@ -100,7 +94,7 @@
 		}
 	},
 
-	"load_distributed_box":
+	"NO_load_distributed_box":
 	{
 		"load_1":
 		{

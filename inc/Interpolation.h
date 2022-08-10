@@ -21,7 +21,7 @@ class Body;
 /// from nodes to particle back.
 namespace Interpolation {
 	
-	/// \brief Interpolate mass from particles to nodes
+	/// \brief Interpolate solid mass from particles to nodes
 	///
 	/// \f$ m_I = \sum_p m_p N_{Ip}\f$
 	///
@@ -37,7 +37,7 @@ namespace Interpolation {
 	/// \param[in] bodies A list of Bodies
 	void nodalMassFuid(Mesh* mesh, vector<Body*>* bodies);
 
-	/// \brief Interpolate momentum from particles to nodes
+	/// \brief Interpolate solid momentum from particles to nodes
 	///
 	/// \f$ p_{iI} = \sum_p p_{ip} N_{Ip}\f$
 	///
@@ -53,7 +53,7 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	void nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies);
 
-	/// \brief Interpolate internal force from particles to nodes
+	/// \brief Interpolate internal force of solid from particles to nodes
 	/// 
 	/// In one phase calculation:
 	/// \f$ f_{iI}^{int}=-\sum_p \sigma_{ijp} V_p N_{Ip,i}\f$
@@ -73,7 +73,7 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	void nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
-	/// \brief Interpolate external force from particles to nodes
+	/// \brief Interpolate external force of solid from particles to nodes
 	///
 	/// In one phase calculations:
 	/// \f$ f_{iI}^{ext} = \sum_p b_{ip} m_p N_{Ip} \f$
@@ -97,7 +97,19 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	void nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
-	/// \brief Interpolate the strain increment at particle
+	/// \brief Interpolate drag force of fluid from particles to nodes
+	///
+	/// \f$ f_{iI}^{drag,f}= \sum_p \frac{m_p^f n g}{k_{ijp}}(v^w_{jp}-v^s_{jp})N_{Ip} \f$
+	///
+	/// At the moment, only the principal values of the hydraulic conductivity in 3D are considered, then:
+	///
+	/// \f$ f_{iI}^{drag,f}= \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	void nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies);
+
+	/// \brief Interpolate the strain increment of solid at particle
 	///
 	/// \f$ \Delta \epsilon_{ijp} = \frac{1}{2}(N_{Ip,j} v_{iI} + N_{Ip,i} v_{jI}) \f$
 	///
@@ -115,16 +127,16 @@ namespace Interpolation {
 	/// \param[in] time_step Time step
 	void particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
 	
-	/// \brief Interpolate the vorticity increment at particle
+	/// \brief Interpolate vorticity increment of solid at particle
 	///
-	/// \f$ \Delta \Omega_{ijp}^f = \frac{1}{2}(N_{Ip,j} v_{iI} - N_{Ip,i} v_{jI}) \f$
+	/// \f$ \Delta \Omega_{ijp} = \frac{1}{2}(N_{Ip,j} v_{iI} - N_{Ip,i} v_{jI}) \f$
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double time_step);
 
-	/// \brief Interpolate the deformation gradient at particle
+	/// \brief Interpolate deformation gradient of solid at particle
 	///
 	/// \f$ F_{ijp}^{s,n+1} = (\delta_{ik} + \delta t \sum_I N_{Ip,k} v_{iI}^{s,n}) F_{kjp}^{s,n} \f$
 	///

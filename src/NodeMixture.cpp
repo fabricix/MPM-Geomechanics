@@ -17,7 +17,7 @@ void NodeMixture::updateTotalForce(){
     // total force of fluid phase
     this->totalForceFluid = this->internalForceFluid + this->externalForceFluid + this->dampingForceFluid;
 
-    // total force of solid phase
+    // total force on mixture
     Node::totalForce = Node::internalForce + Node::externalForce + Node::dampingForce - this->totalForceFluid;
 }
 
@@ -62,7 +62,7 @@ void NodeMixture::integrateMomentum(double dt) {
     Node::integrateMomentum(dt);
 
     // integrate momentum of fluid phase
-    this->momentumFluid = this->momentumFluid + this->totalForceFluid*dt;
+    this->momentumFluid += this->totalForceFluid*dt;
 }
 
 void NodeMixture::updateVelocity(){ 

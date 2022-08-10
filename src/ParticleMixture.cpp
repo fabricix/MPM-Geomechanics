@@ -36,12 +36,10 @@ ParticleMixture::~ParticleMixture() { }
 
 Vector3d ParticleMixture::getDragForceFluid() const {
 
-    double mgn = this->massFluid*9.81*this->porosityMixture;
-
     Vector3d drag;
-    drag.x()=-mgn/this->material->getHydraulicConductivity().x()*(this->velocityFluid.x()-Particle::velocity.x());
-    drag.y()=-mgn/this->material->getHydraulicConductivity().y()*(this->velocityFluid.y()-Particle::velocity.y());
-    drag.z()=-mgn/this->material->getHydraulicConductivity().z()*(this->velocityFluid.z()-Particle::velocity.z());
+    drag.x()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().x()*(this->velocityFluid.x()-Particle::velocity.x());
+    drag.y()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().y()*(this->velocityFluid.y()-Particle::velocity.y());
+    drag.z()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().z()*(this->velocityFluid.z()-Particle::velocity.z());
 
     return drag;
 }
@@ -93,8 +91,6 @@ double ParticleMixture::getCurrentVolume() const {
     // initial volume
     double initialVolume = Particle::getInitialVolume();
 
-    // current volume
-    double volume = (J!=0) ? J*initialVolume : initialVolume;
-
-    return volume;
+    // return current volume
+    return (J!=0) ? J*initialVolume : initialVolume;
 }

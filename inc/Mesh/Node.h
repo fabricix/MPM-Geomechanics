@@ -162,7 +162,7 @@ public:
 
 	/// brief Integrate momentum
 	///
-	virtual inline void integrateMomentum(double dt) { this->momentum = this->momentum + this->totalForce*dt; }
+	virtual inline void integrateMomentum(double dt) { this->momentum +=  this->totalForce*dt; }
 
 protected:
 

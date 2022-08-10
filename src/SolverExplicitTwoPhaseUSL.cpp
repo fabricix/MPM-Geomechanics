@@ -77,9 +77,9 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 			Update::boundaryConditionsMomentumFluid(mesh);
 		}
 
-		#pragma omp parallel sections num_threads(4)
+		#pragma omp parallel sections num_threads(5)
 		{
-			// nodal internal force
+			// nodal internal force of mixture
 			#pragma omp section
 			Interpolation::nodalInternalForce(mesh,bodies);
 
@@ -87,13 +87,17 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 			#pragma omp section
 			Interpolation::nodalInternalForceFluid(mesh,bodies);
 		
-			// nodal external force
+			// nodal external force of mixture
 			#pragma omp section
 			Interpolation::nodalExternalForce(mesh,bodies);
 
 			// nodal external force of fluid phase
 			#pragma omp section
 			Interpolation::nodalExternalForceFluid(mesh,bodies);
+
+			// nodal drag force of fluid
+			#pragma omp section
+			Interpolation::nodalDragForceFluid(mesh,bodies);
 		}
 
 		// nodal total force in mixture
