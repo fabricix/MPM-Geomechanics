@@ -617,7 +617,8 @@ vector<string> Input::getResultFields() {
 
 		if (inputFile["results"]["fields"].is_null())
 		{
-			throw(0);
+			fields.push_back("all");
+			return fields;
 		}
 
 		// get all results fields

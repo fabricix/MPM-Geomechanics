@@ -48,7 +48,7 @@ namespace Output{
 
 		for (size_t i = 0; i < printFields.size(); ++i) {
 
-			if (printFields.at(i)==ifield) {
+			if (printFields.at(i)==ifield || printFields.at(i)=="all" ) {
 
 				return true;
 			}
