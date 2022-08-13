@@ -1,0 +1,92 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":0.5,
+
+	"time_step":0.001,
+
+	"gravity":[0.0,0.0,0],
+
+	"n_threads":2,
+
+	"n_phases":1,
+
+	"damping":
+	{
+		"type":"local",
+		"value":0.00
+	},
+
+	"results":
+	{
+		"print":50,
+		"fields":["id","displacement","material","active","pressure","external_force"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[1,1,1],
+		"cells_number":[10,1,10],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		},
+
+		"boundary_conditions_fluid":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"elastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":10e6,
+			"density":2000,
+			"poisson":0.2,
+			"density_fluid":1000,
+			"porosity":0.3,
+			"bulk_fluid":100e6,
+			"hydraulic_conductivity":[0.01,0.01,0.01]
+		}
+	},
+
+	"body":
+	{
+		"cuboid":
+		{
+			"type":"cuboid",
+			"id":1,
+			"point_p1":[0,0,0],
+			"point_p2":[10,1,9],
+			"material_id":1
+		}
+	},
+
+	"load_distributed_box":
+	{
+		"load_1":
+		{
+			"point_p1":[0,0,6],
+			"point_p2":[5,1,10],
+			"load":[0,0,-10]
+		}
+	}
+}
