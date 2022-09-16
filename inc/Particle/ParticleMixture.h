@@ -69,6 +69,10 @@ public:
     /// \param[in] strain_increment_fluid Particle strain increment of fluid phase
     virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment_fluid) { this->strainIncrementFluid=strain_increment_fluid; }
 
+    /// \brief Configures the material in the particle
+    /// \param[in] material Material
+    virtual void setMaterial(Material* material);
+    
     /// \brief Returns the strain increment of fluid
     /// \return Particle strain increment of fluid
     virtual inline const Matrix3d* getStrainIncrementFluid() const { return &(this->strainIncrementFluid); }

@@ -32,6 +32,18 @@ Particle(position, material, size)
     this->strainIncrementFluid.setZero();
 }
 
+void ParticleMixture::setMaterial(Material* material) { 
+
+    // update quantities in solid particle
+    Particle::setMaterial(material);
+
+    // update attributes of the mixture
+    double porosity = material!=0?material->getPorosity():0.0;
+    this->porosityMixture = porosity;
+    this->densityFluid = material!=0?material->getDensityFluid():0.0;
+    this->massFluid = this->densityFluid*porosity*(size.x()*size.y()*size.z());
+}
+
 ParticleMixture::~ParticleMixture() { }
 
 Vector3d ParticleMixture::getDragForceFluid() const {

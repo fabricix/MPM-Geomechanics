@@ -105,3 +105,14 @@ void Particle::updateDensity() {
 		density = density / (1.0+volStrainInc);
 	}
 }
+
+void Particle::setMaterial(Material* material) { 
+
+	// set material pointer
+	this->material=material;
+
+	// update attributes
+	double porosity = material!=0?material->getPorosity():0.0;
+	this->density=material!=0?material->getDensity():0.0;
+	this->mass=(size.x()*size.y()*size.z())*this->density*(1.0-porosity);
+}
