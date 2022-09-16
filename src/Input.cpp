@@ -12,6 +12,9 @@
 #include "Materials/MohrCoulomb.h"
 #include "Body/BodyCuboid.h"
 #include "Body/BodyPolygon.h"
+#include "Body/BodyParticle.h"
+#include "Particle/Particle.h"
+#include "Particle/ParticleMixture.h"
 #include "Warning.h"
 #include "Loads.h"
 
@@ -445,6 +448,7 @@ vector<Body*> Input::getBodyList(){
 					bodies.push_back(iBody);
 				}
 
+				// 2d polygon type
 				if ((*it)["type"] == "polygon_2d") {
 
 					// body id
@@ -531,6 +535,109 @@ vector<Body*> Input::getBodyList(){
 					}
 					else
 						throw(0);
+				}
+
+				// particle list body type
+				if ((*it)["type"]=="particles")
+				{
+					// body id
+					int id=0; 
+					if ((*it)["id"].is_number()){
+						id = ((*it)["id"]);
+					}
+					else
+						throw(0);
+
+					// material id
+					int material_id=0; 
+					if ((*it)["material_id"].is_number()) 
+					{
+					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					// particle list
+					
+					// particle's material id
+					std::vector<unsigned> paricles_id;
+					if ((*it)["particles"]["id"].is_array()) 
+					{
+					 	for (size_t i = 0; i < (*it)["particles"]["id"].size(); ++i)
+					 	{
+					 		// particle id
+					 		paricles_id.push_back((*it)["particles"]["id"].at(i));
+					 	}
+					}
+					else
+						throw(0);
+
+					// particle position
+					std::vector<Vector3d> particles_position;
+					if ((*it)["particles"]["position"].is_array()) 
+					{
+					 	for (size_t i = 0; i < (*it)["particles"]["position"].size(); ++i)
+					 	{
+					 		// particle position
+					 		double px = (*it)["particles"]["position"].at(i).at(0);
+					 		double py = (*it)["particles"]["position"].at(i).at(1);
+					 		double pz = (*it)["particles"]["position"].at(i).at(2);
+
+					 		particles_position.push_back(Vector3d(px,py,pz));
+					 	}
+					}
+					else
+						throw(0);
+
+					// particle volume
+					std::vector<double> particles_volume;
+					if ((*it)["particles"]["volume"].is_array()) 
+					{
+					 	for (size_t i = 0; i < (*it)["particles"]["volume"].size(); ++i)
+					 	{
+					 		// particle volume
+					 		particles_volume.push_back((*it)["particles"]["volume"].at(i));
+					 	}
+					}
+					else
+						throw(0);
+
+					// particle length
+					std::vector<double> particles_length;
+					if ((*it)["particles"]["length"].is_array()) 
+					{
+					 	for (size_t i = 0; i < (*it)["particles"]["length"].size(); ++i)
+					 	{
+					 		// particle length
+					 		particles_length.push_back((*it)["particles"]["length"].at(i));
+					 	}
+					}
+					else
+						throw(0);
+
+					// create the body
+					BodyParticle* iBody = new BodyParticle();
+
+					if (iBody==NULL)
+					{
+						throw(0);
+					}
+					else
+					{
+						iBody->setId(id);
+						iBody->setMaterialId(material_id);
+						unsigned n_particles = (*it)["particles"]["id"].size();
+						std::vector<Particle*> particle_list;
+						bool is_two_phase = ModelSetup::getTwoPhaseActive();
+						for (size_t i = 0; i < n_particles; ++i)
+						{
+							Vector3d pt1 = particles_position.at(i);
+							Vector3d particleSize(particles_length.at(i),particles_length.at(i),particles_length.at(i));
+							particle_list.push_back(is_two_phase ? (new ParticleMixture(pt1,NULL,particleSize)) : (new Particle(pt1,NULL,particleSize)));
+						}
+						iBody->insertParticles(particle_list);
+					}
+					bodies.push_back(iBody);
 				}
 			}
 		}
