@@ -46,6 +46,38 @@ using Eigen::Vector3d;
 /// | id | define a body identification | integer |
 /// | material_id | used to setup a defined material to the body | integer |
 
+/// ### Particles
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | ----------|
+/// | particles | define particles | -- |
+/// | id | identification | integer |
+/// | position | initial position | array | 
+/// | volume | initial volume | integer |
+/// | length | initial size | integer |
+
+/// #### Example of Body defined by particles 
+///
+/// The next example shows the definition of body forming by one particle
+///
+/// ```
+/// "body":
+/// 	{
+/// 		"soil":
+/// 		{
+/// 			"type":"particles",
+/// 			"id":1,
+/// 			"material_id":1,	
+/// 			"particles":
+/// 			{
+/// 				"id":[1],
+/// 				"position":[[0.5,0.5,0.5]],
+/// 				"volume":[1],
+/// 				"length":[1]
+/// 			}
+/// 		}
+/// 	}
+/// ```
+
 /// ### Cuboid
 ///	| Keyword | Description | Data type |
 /// | --------| ----------- | ----------|

@@ -48,7 +48,7 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		
 		#pragma omp parallel sections num_threads(4)
 		{
-			// nodal mass
+			// nodal mass of solid
 			#pragma omp section
 			Interpolation::nodalMass(mesh,bodies);
 

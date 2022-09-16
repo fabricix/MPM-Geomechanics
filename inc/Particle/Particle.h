@@ -201,7 +201,7 @@ public:
 
 	/// \brief Configures the material in the particle
 	/// \param[in] material Material
-	inline void setMaterial(Material* material) { this->material=material; }
+	virtual void setMaterial(Material* material);
 
 	/// \brief Configures the shape function in the particle
 	/// \param[in] shape Shape

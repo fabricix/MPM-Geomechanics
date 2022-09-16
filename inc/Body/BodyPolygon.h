@@ -66,7 +66,7 @@ public:
     ///
 	BodyPolygon();
 
-    /// \brief Default constructor
+    /// \brief Default destruction
     ///
 	virtual ~BodyPolygon();
 

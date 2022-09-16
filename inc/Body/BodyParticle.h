@@ -60,12 +60,4 @@ private:
     int materialId; //!< material identification
 };
 
-inline BodyParticle::BodyParticle():Body() {
-
-	this->materialId=-1;
-}
-
-inline  BodyParticle::~BodyParticle() { }
-
-
 #endif /* INC_BODY_BODYPARTICLE_H_ */
