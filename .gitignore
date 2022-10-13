@@ -14,3 +14,5 @@ doxygen/output.txt
 *.mp4
 *.ods
 *.pvsm
+*.o
+MPM-Geomechanics

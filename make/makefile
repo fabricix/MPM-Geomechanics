@@ -4,7 +4,13 @@ CC = g++
 # compiler flags
 #  -g : adds debugging information to the executable file
 #  -Wall : turn on compiler warnings
-CFLAGS = -Wall -g
+# -fopenmp: openmp for share parallel computing
+
+# Debug flags
+# CFLAGS = -Wall -g
+
+# Release flags
+CFLAGS = -fopenmp
 
 # include directory
 INC=-I../inc

@@ -1,30 +1,53 @@
-/*
- * MPM.h
+
+ /* MPM.h
  *
  *  Created on: 13 de abr de 2021
  *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
  */
 
-/// \mainpage MPM-Geomechanics Documentation
+/// \mainpage MPM-Geomechanics
 ///
 /// \section intro_sec Introduction
 ///
-/// The MPM-Geomechanics is a Material Point Method implementation
-/// using C++ and Object Oriented Programming to simulating 
-/// geomechanical problems in 3D.
+/// The MPM-Geomechanics is an implementation of the Material Point Method to simulate large strain geomechanical problems.
 ///
 /// The main objectives of this program are:
 ///
-/// - to provide a computational tool suitable for solve 
-/// geomechanical problems involving large deformations.
+/// - Provide an open source platform suitable for the study and application of MPM in various geomechanical problems.
 ///
-/// - to provide a open-source framework for MPM simulations
-/// in geomechanics.
+/// - provide an adequate computational tool to simulate geomechanical problems involving large deformations.
 ///
-/// \section install_sec Installation
+/// \section program_features Program Features
+/// The main features of the program are:
 ///
-/// \subsection step1 Step 1: ...
-/// ...
+/// - Three-dimensional formulation
+/// - Dynamic formulation
+/// - Shared memory parallelization
+/// - Elastic constitutive models
+/// - Elasto-plastic constitutive models
+/// - Softening/Hardening by deformation
+/// - Coupled hydromechanical formulation (in development)
+///
+/// \section program_compilation Compilation
+///
+/// The `/make` directory contains the makefile. To compile the program run make in the `/make` folder:
+///
+/// `/make$ make`
+///
+/// \section program_documentation Documentation
+///
+/// The program documentation is generated using Doxygen. The DoxyFile file is located in the `/doxygen` directory. To generate the documentation, run:
+///
+/// `/doxygen$ doxygen`
+///
+/// The HTML documentation is located in the `/doxygen/html` directory. To generate the PDF file, run make inside the `doxy/latex` directory.
+///
+/// `/doxygen/latex$ make`
+///
+/// \section program_execution Execution
+/// In order the run the program call it with the name of the input file, for example:
+///
+/// `/make$ ./MPM-Geomechanics example.json`
 ///
 
 #ifndef MPM_H_
@@ -138,4 +161,4 @@ private:
 	void setThreads();
 };
 
-#endif /* MPM_H_ */
+#endif /* MPM_H_ 
