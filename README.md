@@ -18,11 +18,11 @@ The main features of the program are:
 - Elastic constitutive models
 - Elasto-plastic constitutive models
 - Softening/Hardening by deformation
-- Coupled hydromechanical formulation (in development)
+- Coupled hydromechanical formulation (under development)
 
 ## Compilation
 
-The `/make` directory contains the makefile. To compile the program run make in the `/make` folder:
+To compile the program run make in the `/make` folder:
 
 ```bash
 /make$ make
@@ -30,7 +30,7 @@ The `/make` directory contains the makefile. To compile the program run make in 
 
 ## Documentation
 
-The program documentation is generated using Doxygen. The DoxyFile file is located in the `/doxygen` directory. To generate the documentation, run:
+The program documentation is generated using Doxygen.To generate the documentation, run:
 
 ```bash
 /doxygen$ doxygen
@@ -41,9 +41,10 @@ The HTML documentation is located in the `/doxygen/html` directory. To generate 
 ```bash
 /doxygen/latex$ make
 ```
+
 ## Execution
 
-In order the run the program call it with the name of the input file, for example:
+In order the run the program execute it with the name of the input file:
 
 ```bash
 $ MPM-Geomechanics example.json
