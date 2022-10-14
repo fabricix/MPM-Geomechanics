@@ -7,7 +7,7 @@
 
 /// \mainpage MPM-Geomechanics
 ///
-/// \section intro_sec Introduction
+/// \section program_intro Introduction
 ///
 /// The MPM-Geomechanics is an implementation of the Material Point Method to simulate large strain geomechanical problems.
 ///

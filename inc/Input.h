@@ -27,6 +27,8 @@ using Eigen::Vector3d;
 /// \namespace Input
 /// \brief Operations to read the input file.
 ///
+///  In this section topics related with the input data file are considered in details.
+///
 /// ## Definition
 ///
 /// The keywords are the way to setup the numerical model. 
