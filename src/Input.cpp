@@ -626,7 +626,7 @@ vector<Body*> Input::getBodyList(){
 					{
 						iBody->setId(id);
 						iBody->setMaterialId(material_id);
-						unsigned n_particles = (*it)["particles"]["id"].size();
+						unsigned n_particles = static_cast<unsigned int>((*it)["particles"]["id"].size());
 						std::vector<Particle*> particle_list;
 						bool is_two_phase = ModelSetup::getTwoPhaseActive();
 						for (size_t i = 0; i < n_particles; ++i)

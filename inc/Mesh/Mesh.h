@@ -92,7 +92,7 @@ public:
 
     /// \brief Return total nodes in mesh
     /// \return Total nodes in the mesh
-    inline int getNumNodes() const { return this->gridNodes.size(); }
+    inline unsigned int getNumNodes() const { return (unsigned int) this->gridNodes.size(); }
     
     /// \brief Return nodes in mesh
     /// \return A pointer to the mesh nodes

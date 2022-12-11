@@ -144,7 +144,7 @@ namespace Output{
 		partFile.precision(4);
 
 		// particle data
-		int nPoints=particles->size();
+		int nPoints= static_cast<unsigned int>(particles->size());
 
 		// write results
 		partFile<<"<?xml version=\"1.0\"?>\n";

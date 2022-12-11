@@ -25,7 +25,7 @@ public:
 
 	/// \brief Default constructor
 	///
-	Material(int id=-1,double density=0, MaterialType=MaterialType::NONE);
+	Material(int id=-1, double density=0, MaterialType type = MaterialType::NONE);
 	
 	/// \brief Default destructor
 	///

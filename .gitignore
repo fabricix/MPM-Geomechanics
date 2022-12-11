@@ -15,4 +15,7 @@ doxygen/output.txt
 *.ods
 *.pvsm
 *.o
+*.exe
+.vs
+.vscode
 MPM-Geomechanics

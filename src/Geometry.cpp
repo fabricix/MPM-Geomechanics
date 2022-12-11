@@ -53,7 +53,7 @@ namespace Geometry {
 				vec_ver.push_back(polygon.at(i).x());
 			}
 
-			return pnpoly(polygon.size(), vec_hor, vec_ver, point.z(), point.x());
+			return pnpoly(static_cast<unsigned int> (polygon.size()), vec_hor, vec_ver, point.z(), point.x());
 		}
 
 		// Extrude direction in z
@@ -71,7 +71,7 @@ namespace Geometry {
 				vec_ver.push_back(polygon.at(i).y());
 			}
 
-			return pnpoly(polygon.size(), vec_hor, vec_ver, point.x(), point.y());
+			return pnpoly(static_cast<unsigned int>(polygon.size()), vec_hor, vec_ver, point.x(), point.y());
 		}
 
 		// Extrude direction in x
@@ -89,7 +89,7 @@ namespace Geometry {
 				vec_ver.push_back(polygon.at(i).z());
 			}
 
-			return pnpoly(polygon.size(), vec_hor, vec_ver, point.y(), point.z());
+			return pnpoly(static_cast<unsigned int>(polygon.size()), vec_hor, vec_ver, point.y(), point.z());
 		}
 
 		return false;

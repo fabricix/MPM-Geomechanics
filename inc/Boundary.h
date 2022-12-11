@@ -58,6 +58,8 @@ public:
 		BoundaryType restriction; //!< type of restrictions to be applied to the solid phase
 		BoundaryType restrictionFluid; //!< type of restrictions to be applied to the fluid phase
 		vector<int> nodes; //!< nodes in plane
+		
+		planeBoundary() : restriction(BoundaryType::FIXED), restrictionFluid(BoundaryType::FIXED) {};
 	};
 
 	/// \brief Default constructor

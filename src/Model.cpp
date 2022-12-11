@@ -62,13 +62,6 @@ namespace ModelSetup {
 	// default stress update scheme
 	StressUpdateScheme stress=StressUpdateScheme::USL; //!< current stress scheme
 
-	// operational system
-    #if defined (_WIN64) || defined(_WIN32)
-	OperationalSystem operationalSystem=OperationalSystem::WINDOWS; //!< operational system
-    #elif defined (linux) || defined(__linux__)
-	OperationalSystem operationalSystem=OperationalSystem::LINUX; //!< operational system
-    #endif
-
 	// default interpolation functions
     InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP; //!< interpolation function type
 	
@@ -76,10 +69,6 @@ namespace ModelSetup {
 	/// Function members
 	///
 
-	// operational system
-	bool getWindowsSystem() { return operationalSystem==OperationalSystem::WINDOWS?true:false; }
-	bool getLinuxSystem() { return operationalSystem==OperationalSystem::LINUX?true:false; }
-		
 	// contribution nodes
 	unsigned getContributionNodesNum() { return contributionNodes; }
 
@@ -91,7 +80,7 @@ namespace ModelSetup {
 	unsigned getResultNum() { return resultNumber; }
 	void
 	setResultNum(unsigned d) { resultNumber=d; }
-	unsigned getResultSteps() { return floor(time/dt)/resultNumber; }
+	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
 
 	// time step
 	double getTimeStep() { return dt; }

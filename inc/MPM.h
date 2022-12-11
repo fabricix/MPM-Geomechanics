@@ -161,4 +161,4 @@ private:
 	void setThreads();
 };
 
-#endif /* MPM_H_ 
+#endif /* MPM_H_ */
