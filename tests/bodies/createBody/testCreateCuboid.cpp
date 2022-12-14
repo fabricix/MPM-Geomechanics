@@ -22,10 +22,10 @@ using std::to_string;
 using Eigen::Vector3d;
 
 #include "MPM.h"
-#include "Particle.h"
-#include "Body.h"
-#include "BodyCuboid.h"
-#include "Elastic.h"
+#include "Particle/Particle.h"
+#include "Body/Body.h"
+#include "Body/BodyCuboid.h"
+#include "Materials/Elastic.h"
 
 int main(int argc, char **argv)
 {
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	mesh.setNumCells(10,10,10);
 	mesh.setCellDimension(1,1,1);
 	mesh.setNumGhosts(2);
-	mesh.createGrid();
+	mesh.createGrid(false);
 
 	// create two materials
 	Elastic elastic1(10,1.0,1.0,0.3);
@@ -50,10 +50,10 @@ int main(int argc, char **argv)
 	body2.create(mesh,&elastic2);
 
 	// create an output object
-	Output::writeGrid(mesh,Output::POINTS);
+	Output::writeGrid(&mesh,Output::POINTS);
 
 	vector<Body*> bodies {&body1,&body2};
-	Output::writeBodies(bodies);
+	Output::writeBodies(&bodies);
 
 	Output::writeResultsSeries();
 
