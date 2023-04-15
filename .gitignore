@@ -18,4 +18,5 @@ doxygen/output.txt
 *.exe
 .vs
 .vscode
+*.sublime-workspace
 MPM-Geomechanics
