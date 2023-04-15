@@ -10,13 +10,9 @@ using std::abs;
 
 #include "Shape/ShapeLinear.h"
 
-ShapeLinear::ShapeLinear():Shape() {
+ShapeLinear::ShapeLinear():Shape() { }
 
-}
-
-ShapeLinear::~ShapeLinear() {
-	
-}
+ShapeLinear::~ShapeLinear() { }
 
 double ShapeLinear::computeShape(double xpi, double L, double)
 {   

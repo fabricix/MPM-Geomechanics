@@ -13,13 +13,9 @@
 #include <math.h>
 
 BodyPolygon::BodyPolygon():
-materialId(0),extrudeDirection(""),extrudeDisplacement(0),distretizationLength(0) {
+materialId(0),extrudeDirection(""),extrudeDisplacement(0),distretizationLength(0) { }
 
-}
-
-BodyPolygon::~BodyPolygon() {
-
-}
+BodyPolygon::~BodyPolygon() { }
 
 void BodyPolygon::create(Mesh& mesh, Material* material) {
 
