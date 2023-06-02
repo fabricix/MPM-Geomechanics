@@ -71,6 +71,10 @@ public:
 	/// \return Material identification
 	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; } 
 
+	/// \brief Returns the particle's body Id
+	/// \return Body identification
+	inline int getBodyId() const { return this->bodyId; }
+
 	/// \brief Returns the mass of the particle
 	/// \return Particle mass
 	inline double getMass() const { return this->mass; }
@@ -150,6 +154,10 @@ public:
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
 	inline void setId(int particle_id) { this->id=particle_id; }
+
+	/// \brief Configures the set particle's body Id
+	/// \param[in] Body identification
+	inline void setBodyId(int body_id) { this->bodyId=body_id; }
 
 	/// \brief Configures particle mass
 	/// \param[in] particle_mass Particle mass

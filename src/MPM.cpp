@@ -185,6 +185,9 @@ void MPM::setupParticles() {
 
 		for (size_t j = 0; j < particles->size(); ++j){
 
+			// set body id
+			particles->at(j)->setBodyId(bodies.at(i)->getId());
+
 			// set shape function
 			switch(ModelSetup::getInterpolationFunction()){
 

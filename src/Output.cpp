@@ -287,6 +287,16 @@ namespace Output{
 
 		}
 
+		if (isFieldRequired("body")){
+			
+			// particle body Id
+			partFile<<"<DataArray type=\"UInt32\" Name=\"Body Id\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getBodyId()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+
 		// end point data
 		partFile<<"</PointData>\n";
 		
@@ -513,7 +523,7 @@ namespace Output{
 		string programDescription="A material point method program for geomechanics";
 		string programWeb="https://github.com/fabricix/MPM-Geomechanics";
 		string programVersion="0.1";
-		string programAuthor="Fabricio Fernández <fabricio.hmf@gmail.com>";
+		string programAuthor="Fabricio Fernandez <fabricio.hmf@gmail.com>";
 		string hLines(width-2,'-');
 		string hSpaces(width-2,' ');
 		string hSpacesArterisc(width-6,' ');

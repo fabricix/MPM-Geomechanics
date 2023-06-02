@@ -63,7 +63,7 @@ namespace Warning
     void printMessage(string what)
     {
 		bool enable_virtual_terminal_processing = true;
-
+#if 0 
 		#if defined (_WIN64) || defined(_WIN32)
 		HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 		enable_virtual_terminal_processing=SetConsoleMode(hStdout, ENABLE_VIRTUAL_TERMINAL_PROCESSING);
@@ -78,7 +78,7 @@ namespace Warning
 			SetConsoleTextAttribute(hStdout, csbiInfo.wAttributes);
 		}
 		#endif
-
+#endif
 		if (enable_virtual_terminal_processing) {
 			string color_set_1 = esc + bold + ";" + red + "m";
 			string color_set_2 = esc + currentFormat + ";" + currentColor + "m";
