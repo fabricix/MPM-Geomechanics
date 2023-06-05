@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
 	// write the results in a csv file
 	ofstream outputfile;
-	outputfile.open("MohrCoulombVerificationTest.csv");
+	outputfile.open("MohrCoulombVerificationMPM.csv");
 	outputfile<<"stress,strain\n";
 
 	for(size_t i=0; i<resultStrain.size();i++){
