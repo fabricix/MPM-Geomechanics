@@ -29,7 +29,7 @@ ax.set_title('Mohr-Coulomb Verification')
 ax.legend()
 
 # Save the figure in PDF format for publication use
-plt.savefig('MhorCoulombVerification.pdf', format='pdf')
+plt.savefig('MohrCoulombVerification.pdf', format='pdf')
 
 # Show the plot
 plt.show()
