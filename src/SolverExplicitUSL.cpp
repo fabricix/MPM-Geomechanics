@@ -23,7 +23,7 @@ SolverExplicitUSL::SolverExplicitUSL():Solver() { }
 
 void SolverExplicitUSL::Solve( ){
 
-	// simulation variables
+	// initialize simulation variables
 	double time=ModelSetup::getTime();
 	double dt=ModelSetup::getTimeStep();
 	int resultSteps=ModelSetup::getResultSteps();
@@ -33,12 +33,8 @@ void SolverExplicitUSL::Solve( ){
 	// solve in time
 	while(iTime<time) {
 
-		// write results
-		if (loopCounter++%resultSteps==0){
-
-			Output::writeBodies(bodies,iTime);
-			cout<<"Time = "<<iTime<<"\n";
-		}
+		// write results in the result step
+		Output::writeResultInStep(loopCounter++,resultSteps,bodies,iTime);
 
 		// update contribution nodes
 		Update::contributionNodes(mesh,bodies);

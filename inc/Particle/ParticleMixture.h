@@ -25,23 +25,23 @@ public:
     /// \brief Default virtual destructor
     virtual ~ParticleMixture();
 
-    /// \brief Update the particle porosity
+    /// \brief Update the porosity of the skeleton
     ///
     virtual void updatePorosity();
 
-    /// \brief Returns the mass of the particle
-    /// \return Particle mass
+    /// \brief Returns the mass of the fluid
+    /// \return Fluid mass
     virtual inline double getMassFluid() const { return this->massFluid; }
 
-    /// \brief Returns velocity of fluid
-    /// \return Current velocity of fluid
+    /// \brief Returns velocity of the fluid
+    /// \return Current fluid velocity
     virtual inline const Vector3d* getVelocityFluid() const { return &(this->velocityFluid); }
 
-    /// \brief Returns the external force of fluid in particle
+    /// \brief Returns the external force of fluid
     /// \return Particle external force of fluid
     virtual inline const Vector3d* getExternalForceFluid() const { return &(this->externalForceFluid); }
 
-    /// \brief Returns the drag force of fluid in particle
+    /// \brief Returns the drag force of fluid in skeleton
     /// \return Particle drag force of fluid
     virtual Vector3d getDragForceFluid() const;
 

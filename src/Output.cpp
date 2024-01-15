@@ -521,9 +521,7 @@ namespace Output{
 		// information
 		string programName="MPM-Geomechanics";
 		string programDescription="A material point method program for geomechanics";
-		string programWeb="https://github.com/fabricix/MPM-Geomechanics";
-		string programVersion="0.1";
-		string programAuthor="Fabricio Fernandez <fabricio.hmf@gmail.com>";
+		string programAuthor="Prof. Fabricio Fernandez <fabricio.fernandez@ucn.cl>";
 		string hLines(width-2,'-');
 		string hSpaces(width-2,' ');
 		string hSpacesArterisc(width-6,' ');
@@ -535,9 +533,7 @@ namespace Output{
 		cout<<"|"+hSpaces+"|"<<"\n";
 		cout<<"|"<<right<<setw(50)<<programDescription<<setw(5)<<right<<"|\n";
 		cout<<"|"+hSpaces+"|"<<"\n";
-		cout<<"|"<<left<<"web: "<<programWeb<<setw(6)<<right<<"|\n";
-		cout<<"|"<<left<<"author: "<<programAuthor<<setw(4)<<right<<"|\n";
-		cout<<"|"<<left<<"version: "<<programVersion<<setw(43)<<right<<"|\n";
+		cout<<"|"<<left<<programAuthor<<setw(3)<<right<<"|\n";
 		cout<<"|"+hSpaces+"|"<<"\n";
 		cout<<left<<" "<<setw(width)<<hLines<<"\n\n";
 	}
@@ -547,5 +543,14 @@ namespace Output{
 		 int width = 55;
 		 string hLines(width,'-');
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n\n";
+	}
+
+	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	{
+		if (loopCounter%resultSteps==0)
+		{
+			writeBodies(bodies,iTime);
+			cout<<"Time = "<<iTime<<"\n";
+		}
 	}
 }

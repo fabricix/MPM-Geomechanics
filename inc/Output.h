@@ -57,6 +57,10 @@ namespace Output {
 	/// \return True if the field must be written
 	bool isFieldRequired (string field);
 
+	/// \brief Write results if the step is the step result
+	/// 
+	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime);
+
 	/// \brief Print initial program screen
 	///
 	void welcomeScreen();

@@ -113,7 +113,7 @@ void Loads::setPrescribedPorePressureBox(vector<Body*>& bodies, vector<Loads::Pr
 				if(Geometry::getInsideBox(loads.at(iload).pointP1, loads.at(iload).pointP2, particles->at(ipart)->getPosition()))
 				{
 					// create the particle list
-					Loads::prescribedPorePressureParticlesList.push_back(Loads::PrescribedPorePressure(static_cast<unsigned int>(ibody),ipart,loads.at(iload).pressure));
+					Loads::prescribedPorePressureParticlesList.push_back(Loads::PrescribedPorePressure(static_cast<unsigned int>(ibody), static_cast<unsigned int>(ipart),loads.at(iload).pressure));
 
 					// set the pressure in particle
 					particles->at(ipart)->setPressureFluid(loads.at(iload).pressure);

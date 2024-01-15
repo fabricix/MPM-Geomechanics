@@ -75,20 +75,20 @@ public:
 	/// \return Body identification
 	inline int getBodyId() const { return this->bodyId; }
 
-	/// \brief Returns the mass of the particle
-	/// \return Particle mass
+	/// \brief Returns solid mass
+	/// \return Solid mass
 	inline double getMass() const { return this->mass; }
 
-    /// \brief Returns fluid mass of the particle
-    /// \return Particle fluid mass
+    /// \brief Returns fluid mass in mixture
+    /// \return Fluid mass in mixture
     virtual inline double getMassFluid() const { return 0.0; }
 
-	/// \brief Returns the current particle density
-	/// \return Particle density
+	/// \brief Returns the current solid density
+	/// \return Density of the solid
 	inline double getDensity() const { return this->density; }
 
-	/// \brief Returns the current particle density of fluid
-	/// \return Particle density of fluid
+	/// \brief Returns the current density of fluid
+	/// \return Density of the fluid
 	virtual inline double getDensityFluid() const { return 0.0; }
 
 	/// \brief Returns current particle volume
