@@ -409,6 +409,13 @@ namespace Output{
 		}
 		gridFile<<"</DataArray>\n";
 
+		// nodal velocity
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
 		// end point data
 		gridFile<<"</PointData>\n";
 		

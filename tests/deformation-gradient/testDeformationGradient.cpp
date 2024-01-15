@@ -146,7 +146,7 @@ int main(int argc, char **argv)
 
 #endif
 
-	// interpolate the defomation gradient at the particle
+	// interpolate the deformation gradient at the particle
 	// dFp = (I + dt grad_Ip v_I)
 	//  Fp^(n+1) = dFp^(n) Fp^(n)
 	Interpolation::particleDeformationGradient(&mesh, &body_vector, ModelSetup::getTimeStep());
