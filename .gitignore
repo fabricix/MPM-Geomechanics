@@ -20,4 +20,5 @@ doxygen/output.txt
 .vscode
 *.sublime-workspace
 *.code-workspace
+*.sublime-project
 MPM-Geomechanics
