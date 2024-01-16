@@ -61,7 +61,7 @@ void ParticleMixture::updatePorosity() {
     // only saturated particle can be update
     if (this->getSaturation()<=0.0) { return; }
 
-    // compute the jacobian of the motion: J = V^{n+1}/V^0 = det (F)
+    // compute the Jacobian of the motion: J = V^{n+1}/V^0 = det (F)
     double J = this->deformationGradient.determinant();
     
     // update porosity

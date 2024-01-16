@@ -80,7 +80,7 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		Vector3d shapeFn = shape->getShape();
 		Vector3d derivateFn = shape->getDerivate();
 
-		// update weight
+		// set weight
 		contributionNodes.at(i).setWeight(shapeFn.x()*shapeFn.y()*shapeFn.z());
 
 		// update gradients

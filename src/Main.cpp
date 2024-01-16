@@ -12,8 +12,8 @@ using std::endl;
 #include <vector>
 using std::vector;
 
-#include <MPM.h>
-#include <Output.h>
+#include "MPM.h"
+#include "Output.h"
 
 int main(int argc, char **argv)
 {
