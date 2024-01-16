@@ -9,17 +9,17 @@
 
 	"gravity":[0.0,0.0,-9.81],
 
-	"n_threads":2,
+	"n_threads":4,
 
 	"damping":
 	{
-		"type":"kinetic",
-		"value":0.0
+		"type":"local",
+		"value":0.1
 	},
 
 	"results":
 	{
-		"print":10,
+		"print":250,
 		"fields":["id","displacement","material","active"]
 	},
 

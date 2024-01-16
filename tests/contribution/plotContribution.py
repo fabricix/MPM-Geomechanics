@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# load the MPM++ results 
+# load the MPM-Geomechanics results 
 mpm_cpp=[]
 mpm_cpp.append(pd.read_csv("particle0.csv"))
 mpm_cpp.append(pd.read_csv("particle1.csv"))
@@ -34,8 +34,8 @@ plt.close('all')
 for i in range(len(mpm_cpp)):
 
     fig, ax = plt.subplots()
-    rects1 = ax.bar(x - width/2, mpm_cpp[i].w, width, label='Weight-MPM++',color='b')
-    rects2 = ax.bar(x + width/2, mpm_puc[i].w, width, label='Weight-MPM-PUCRio',color='r')
+    rects1 = ax.bar(x - width/2, mpm_cpp[i].w, width, label='MPM-Geomechanics',color='b')
+    rects2 = ax.bar(x + width/2, mpm_puc[i].w, width, label='MPM-PUCRio',color='r')
     
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_title('Particle %d'%i)
