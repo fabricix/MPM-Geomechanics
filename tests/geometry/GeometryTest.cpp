@@ -43,31 +43,31 @@ int main(int argc, char **argv)
     //     |__\
     //     p1  p2
 
-    // check if the poins are inside
+    // check if the points are inside the triangle
 
-    testInsidePoint(poligon,Vector3d(-0.1,0,0),"y"); // false
+    testInsidePoint(poligon,Vector3d(-0.1,0,0),"z"); // false
 
-    testInsidePoint(poligon,Vector3d(-0.1,,0-0.1),"y"); // false
+    testInsidePoint(poligon,Vector3d(-0.1,0,-0.1),"z"); // false
 
-    testInsidePoint(poligon,Vector3d(0,0,-0.1),"y"); // false
+    testInsidePoint(poligon,Vector3d(0,0,-0.1),"z"); // false
 
-    testInsidePoint(poligon,Vector3d(0,0,0),"y"); // true
+    testInsidePoint(poligon,Vector3d(0,0,0),"z"); // true
 
-    testInsidePoint(poligon,Vector3d(2,0,0),"y"); // false (the upper bound is out)
+    testInsidePoint(poligon,Vector3d(2,0,0),"z"); // false (the upper bound is out)
 
-    testInsidePoint(poligon,Vector3d(1,0,1),"y"); // false (the upper bound is out)
+    testInsidePoint(poligon,Vector3d(1,0,1),"z"); // false (the upper bound is out)
 
-    testInsidePoint(poligon,Vector3d(0,0,2),"y"); // false (the upper bound is out)
+    testInsidePoint(poligon,Vector3d(0,0,2),"z"); // false (the upper bound is out)
 
-    testInsidePoint(poligon,Vector3d(0,0,2.1),"y"); // false
+    testInsidePoint(poligon,Vector3d(0,0,2.1),"z"); // false
 
-    testInsidePoint(poligon,Vector3d(1,0,0),"y"); // true
+    testInsidePoint(poligon,Vector3d(1,0,0),"z"); // true
 
-    testInsidePoint(poligon,Vector3d(2-tol,0,0),"y"); // true
+    testInsidePoint(poligon,Vector3d(2-tol,0,0),"z"); // true
 
-    testInsidePoint(poligon,Vector3d(1-tol,1-tol,0),"y"); // true
+    testInsidePoint(poligon,Vector3d(1-tol,1-tol,0),"z"); // true
 
-    testInsidePoint(poligon,Vector3d(0,2-tol,0),"y"); // true
+    testInsidePoint(poligon,Vector3d(0,2-tol,0),"z"); // true
 
     return 0;
 }
