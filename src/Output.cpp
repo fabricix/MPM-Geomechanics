@@ -528,7 +528,7 @@ namespace Output{
 		// information
 		string programName="MPM-Geomechanics";
 		string programDescription="A material point method program for geomechanics";
-		string programAuthor="Prof. Fabricio Fernandez <fabricio.fernandez@ucn.cl>";
+		string programAuthor=" Prof Fabricio Fernandez <fabricio.fernandez@ucn.cl>";
 		string hLines(width-2,'-');
 		string hSpaces(width-2,' ');
 		string hSpacesArterisc(width-6,' ');
