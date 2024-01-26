@@ -24,6 +24,8 @@ Particle(position, material, size)
     this->pressureFluid=0.0;
 
     this->porosityMixture = porosity;
+
+    this->initialPorosityMixture = porosity;
     
     this->velocityFluid.setZero();
     
@@ -67,7 +69,7 @@ void ParticleMixture::updatePorosity() {
     // update porosity
     if (J!=0){
 
-        this->porosityMixture = 1.0-(1.0-this->material->getPorosity())/J;
+        this->porosityMixture = 1.0 - ( 1.0 - this->getInitialPorosity() ) / J;
     }
 }
 
@@ -97,12 +99,11 @@ void ParticleMixture::updatePressure(double dt) {
 
 double ParticleMixture::getCurrentVolume() const {
 
-    // compute the jacobian of the motion: J = V^{s,n+1}/V^{s,0} = det (F)
-    double J = Particle::getDeformationGradient().determinant();
-    
-    // initial volume
-    double initialVolume = Particle::getInitialVolume();
-
-    // return current volume
-    return (J!=0) ? J*initialVolume : initialVolume;
+    // mixture volume
+    double totalMass = Particle::getMass() + ParticleMixture::getMassFluid();
+    double porosity = ParticleMixture::getPorosity();
+    double fluidDensity = ParticleMixture::getDensityFluid();
+    double solidDensity = Particle::getDensity();
+    double currentVolumeMixture = totalMass / (porosity * fluidDensity + (1 - porosity) * solidDensity);
+    return currentVolumeMixture;
 }

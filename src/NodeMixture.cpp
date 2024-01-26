@@ -14,10 +14,10 @@ NodeMixture::~NodeMixture() {
 
 void NodeMixture::updateTotalForce(){
 
-    // total force of fluid phase
+    // total force of fluid in mixture
     this->totalForceFluid = this->internalForceFluid + this->externalForceFluid + this->dampingForceFluid;
 
-    // total force on mixture
+    // total force of solid in mixture
     Node::totalForce = Node::internalForce + Node::externalForce + Node::dampingForce - this->totalForceFluid;
 }
 

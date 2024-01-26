@@ -224,7 +224,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// get particle stress
+			// get effective stress of solid
 			const Matrix3d pStress = particles->at(i)->getStress();
 			
 			// get the particle volume

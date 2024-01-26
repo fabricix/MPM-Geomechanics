@@ -316,7 +316,6 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set all momentum components as zero
 					nodeI->setMomentum(Vector3d::Zero());
-				
 					break;
 				
 				// perpendicular restriction
@@ -346,7 +345,6 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
-
 					break;
 			}
 		}
@@ -376,7 +374,6 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 
 					// set all momentum components as zero
 					nodeI->setMomentumFluid(Vector3d::Zero());
-				
 					break;
 				
 				// perpendicular restriction
@@ -406,7 +403,6 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 
 					// set the boundary nodal momentum
 					nodeI->setMomentumFluid(momentum);
-
 					break;
 			}
 		}

@@ -38,7 +38,7 @@ void Loads::setGravity(vector<Body*>& bodies) {
 			// get particle handle
 			Particle* particle = particles->at(i);
 
-			// compute the gravitational force
+			// compute the gravitational force of solid
 			particle->addExternalForce(particle->getMass()*gravity);
 
 			if (isTwoPhase)

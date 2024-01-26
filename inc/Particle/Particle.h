@@ -255,12 +255,12 @@ public:
     /// \return Particle drag force of fluid
     virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }
 
-	/// \brief Configures defomation gradient
+	/// \brief Configures deformation gradient
     /// \param[in] deformation_gradient Particle deformation gradient
     inline void setDeformationGradient(const Matrix3d& deformation_gradient) { this->deformationGradient=deformation_gradient; }
 
     /// \brief Returns deformation gradient
-    /// \return Particle deforamtion gradient
+    /// \return Particle deformation gradient
     inline const Matrix3d& getDeformationGradient() const { return this->deformationGradient; }
 
 protected:

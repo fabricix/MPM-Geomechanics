@@ -7,7 +7,7 @@
 	
 	"damping":{
 
-		"type":"localNoViscous",
+		"type":"local",
 		"alpha":0.05
 	},
 
