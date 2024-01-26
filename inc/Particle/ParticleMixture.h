@@ -53,6 +53,10 @@ public:
     /// \return Current porosity of mixture
     virtual inline double getPorosity() const { return this->porosityMixture; }
 
+    /// \brief Returns initial porosity
+    /// \return initial porosity of mixture
+    virtual inline double getInitialPorosity() const { return this->initialPorosityMixture; }
+
     /// \brief Returns the current particle density of fluid
     /// \return Particle density of fluid
     virtual inline double getDensityFluid() const { return this->densityFluid; }
@@ -99,6 +103,7 @@ private:
     double densityFluid; //!< current fluid density in mixture: \f$\rho^{f}\f$
     double pressureFluid; //!< current fluid pressure in mixture: \f$p^{f}\f$
     double porosityMixture; //!< current porosity of the mixture: \f$n\f$
+    double initialPorosityMixture; //!< initial porosity of the mixture: \f$n^{0}\f$
     
     Vector3d velocityFluid; //!< current fluid velocity in mixture: \f$v_i^{f}\f$
     Vector3d externalForceFluid; //!< current external force of fluid in mixture: \f$f_i^{ext,f}\f$

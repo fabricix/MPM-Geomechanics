@@ -19,7 +19,7 @@ using std::vector;
 #include <iostream>
 using std::cout;
 
-SolverExplicitTwoPhaseUSL::SolverExplicitTwoPhaseUSL():Solver() { }
+SolverExplicitTwoPhaseUSL::SolverExplicitTwoPhaseUSL() : Solver() { }
 
 void SolverExplicitTwoPhaseUSL::Solve( ){
 
@@ -52,7 +52,7 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 			#pragma omp section
 			Interpolation::nodalMassFuid(mesh,bodies);
 
-			// nodal momentum
+			// nodal momentum of solid
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh,bodies);
 
