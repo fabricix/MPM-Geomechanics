@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\BodyCuboid.cpp" />
+    <ClCompile Include="..\..\src\BodyParticle.cpp" />
+    <ClCompile Include="..\..\src\BodyPolygon.cpp" />
+    <ClCompile Include="..\..\src\Contact.cpp" />
+    <ClCompile Include="..\..\src\DynamicRelaxation.cpp" />
+    <ClCompile Include="..\..\src\Elastic.cpp" />
+    <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
+    <ClCompile Include="..\..\src\Geometry.cpp" />
+    <ClCompile Include="..\..\src\Input.cpp" />
+    <ClCompile Include="..\..\src\Integration.cpp" />
+    <ClCompile Include="..\..\src\Interpolation.cpp" />
+    <ClCompile Include="..\..\src\Loads.cpp" />
+    <ClCompile Include="..\..\src\Main.cpp" />
+    <ClCompile Include="..\..\src\Mesh.cpp" />
+    <ClCompile Include="..\..\src\Model.cpp" />
+    <ClCompile Include="..\..\src\MohrCoulomb.cpp" />
+    <ClCompile Include="..\..\src\MPM.cpp" />
+    <ClCompile Include="..\..\src\Node.cpp" />
+    <ClCompile Include="..\..\src\NodeMixture.cpp" />
+    <ClCompile Include="..\..\src\Output.cpp" />
+    <ClCompile Include="..\..\src\Particle.cpp" />
+    <ClCompile Include="..\..\src\ParticleMixture.cpp" />
+    <ClCompile Include="..\..\src\ShapeGimp.cpp" />
+    <ClCompile Include="..\..\src\ShapeLinear.cpp" />
+    <ClCompile Include="..\..\src\SolverExplicitTwoPhaseUSL.cpp" />
+    <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
+    <ClCompile Include="..\..\src\States.cpp" />
+    <ClCompile Include="..\..\src\Update.cpp" />
+    <ClCompile Include="..\..\src\Warning.cpp" />
+    <ClCompile Include="..\..\tests\inputFile\inputFileTest.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\geometry\GeometryTest.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\deformation-gradient\testDeformationGradient.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\Body\Body.h" />
+    <ClInclude Include="..\..\inc\Body\BodyCuboid.h" />
+    <ClInclude Include="..\..\inc\Body\BodyParticle.h" />
+    <ClInclude Include="..\..\inc\Body\BodyPolygon.h" />
+    <ClInclude Include="..\..\inc\Boundary.h" />
+    <ClInclude Include="..\..\inc\Contact.h" />
+    <ClInclude Include="..\..\inc\Contribution.h" />
+    <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
+    <ClInclude Include="..\..\inc\Geometry.h" />
+    <ClInclude Include="..\..\inc\Input.h" />
+    <ClInclude Include="..\..\inc\Integration.h" />
+    <ClInclude Include="..\..\inc\Interpolation.h" />
+    <ClInclude Include="..\..\inc\Loads.h" />
+    <ClInclude Include="..\..\inc\Materials\Elastic.h" />
+    <ClInclude Include="..\..\inc\Materials\ElasticJaumann.h" />
+    <ClInclude Include="..\..\inc\Materials\Material.h" />
+    <ClInclude Include="..\..\inc\Materials\MohrCoulomb.h" />
+    <ClInclude Include="..\..\inc\Mesh\Mesh.h" />
+    <ClInclude Include="..\..\inc\Mesh\Node.h" />
+    <ClInclude Include="..\..\inc\Mesh\NodeMixture.h" />
+    <ClInclude Include="..\..\inc\Model.h" />
+    <ClInclude Include="..\..\inc\MPM.h" />
+    <ClInclude Include="..\..\inc\Output.h" />
+    <ClInclude Include="..\..\inc\Particle\Particle.h" />
+    <ClInclude Include="..\..\inc\Particle\ParticleMixture.h" />
+    <ClInclude Include="..\..\inc\Shape\Shape.h" />
+    <ClInclude Include="..\..\inc\Shape\ShapeGimp.h" />
+    <ClInclude Include="..\..\inc\Shape\ShapeLinear.h" />
+    <ClInclude Include="..\..\inc\Solver\Solver.h" />
+    <ClInclude Include="..\..\inc\Solver\SolverExplicitTwoPhaseUSL.h" />
+    <ClInclude Include="..\..\inc\Solver\SolverExplicitUSL.h" />
+    <ClInclude Include="..\..\inc\States.h" />
+    <ClInclude Include="..\..\inc\Update.h" />
+    <ClInclude Include="..\..\inc\Warning.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="tests">
+      <UniqueIdentifier>{79959925-3cdc-4835-a40d-2c4af2309106}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
