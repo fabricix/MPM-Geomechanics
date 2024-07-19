@@ -22,3 +22,4 @@ doxygen/output.txt
 *.code-workspace
 *.sublime-project
 MPM-Geomechanics
+/make/VS/MPM-Geomechanics.vcxproj.user
