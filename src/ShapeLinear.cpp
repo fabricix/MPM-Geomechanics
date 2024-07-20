@@ -17,7 +17,7 @@ ShapeLinear::~ShapeLinear() { }
 double ShapeLinear::computeShape(double xpi, double L, double)
 {   
     // xpi = relative position of particle respect to the node, xp-xi
-    // L = cell dimention
+    // L = cell dimension
     // lp = half current particle size
 
     if(abs(xpi)>=L){

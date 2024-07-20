@@ -1,28 +1,28 @@
-## MPM-Geomechanics
+# MPM-Geomechanics simulator
 
-The MPM-Geomechanics is an implementation of the Material Point Method to simulate large strain geomechanical problems.
+## Motivation
 
-The main objectives of this program are:
+MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
 
-- Provide an open source platform suitable for the study and application of MPM in various geomechanical problems.
+This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics. In this method the motion equation is solve in an fixed mesh (Eulerian mesh) and the solution is interpolated to points that can move freely inside the mesh, carrying all the mechanical information like strain, stress, temperature, etc. The points allows us to transport all properties inside the mesh during the simulation (Lagrangian points).
 
-- provide an adequate computational tool to simulate geomechanical problems involving large deformations.
+The objective of this repository is to provide a platform for developing the MPM for the study of geomechanical problems involving large deformations and distortions.
 
-## Program Features
+## Collaboration
 
-The main features of the program are:
+If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl.
 
-- Three-dimensional formulation
-- Dynamic formulation
-- Shared memory parallelization
-- Elastic constitutive models
-- Elasto-plastic constitutive models
-- Softening/Hardening by deformation
-- Coupled hydromechanical formulation (under development)
+## Program features
+
+The main features of the program in the actuality are: 
+- Three-dimensional formulation (can simulated 2D plane strain problems too)
+- Dynamic formulation (suitable for earthquake and general dynamic problems)
+- Shared memory parallelization (for computational time reduction)
+- Several constitutive models for soils and rock, including softening and hardening options.
 
 ## Compilation
 
-To compile the program run make in the `/make` folder:
+To compile using make:
 
 ```bash
 /make$ make
@@ -30,22 +30,15 @@ To compile the program run make in the `/make` folder:
 
 ## Documentation
 
-The program documentation is generated using Doxygen.To generate the documentation, run:
+To generate the code documentation using doxygen run: 
 
 ```bash
 /doxygen$ doxygen
 ```
+and the HTML documentation will be located in `/doxygen/html`.
 
-The HTML documentation is located in the `/doxygen/html` directory. To generate the PDF file, run make inside the `doxy/latex` directory.
+To generate the documentation in PDF, run the make command in `doxy/latex`.
 
 ```bash
 /doxygen/latex$ make
-```
-
-## Execution
-
-In order the run the program execute it with the name of the input file:
-
-```bash
-$ MPM-Geomechanics example.json
 ```
