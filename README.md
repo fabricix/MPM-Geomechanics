@@ -4,7 +4,7 @@
 
 MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
 
-This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics. In this method the motion equation is solve in an fixed mesh (Eulerian mesh) and the solution is interpolated to points that can move freely inside the mesh, carrying all the mechanical information like strain, stress, temperature, etc. The points allows us to transport all properties inside the mesh during the simulation (Lagrangian points).
+This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics. In this method the motion equation is solved in an fixed mesh (Eulerian mesh) and the solution is interpolated to points that can move freely inside the mesh, carrying all the mechanical information like strain, stress, temperature, etc. The points allows us to transport all properties inside the mesh during the simulation (Lagrangian points).
 
 The objective of this repository is to provide a platform for developing the MPM for the study of geomechanical problems involving large deformations and distortions.
 
@@ -25,7 +25,7 @@ The main features of the program in the actuality are:
 To compile using make:
 
 ```bash
-/make$ make
+cd make && make
 ```
 
 ## Documentation
@@ -33,12 +33,12 @@ To compile using make:
 To generate the code documentation using doxygen run: 
 
 ```bash
-/doxygen$ doxygen
+cd doxygen && doxygen
 ```
 and the HTML documentation will be located in `/doxygen/html`.
 
 To generate the documentation in PDF, run the make command in `doxy/latex`.
 
 ```bash
-/doxygen/latex$ make
+cd /doxygen/latex && make
 ```
