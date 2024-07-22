@@ -10,7 +10,18 @@ The objective of this repository is to provide a platform for developing the MPM
 
 ## Collaboration
 
-If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl.
+If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl. There are several topics for developing in this project, here there are a few of them:
+- contact method
+- axisymmetric formulation 
+- implicit and semi-implicit integration
+- particle domain update using uGIMP and CPDI
+- termo-mechanics formulation
+- update stress scheme USF and MUSL
+- damage constitutive models
+- viscous constitutive models
+- critical state constitutive models
+- MPI implementation for process optimization
+- ...
 
 ## Program features
 
@@ -27,6 +38,7 @@ To compile using make:
 ```bash
 cd make && make
 ```
+Make sure you have installed OpenMP.
 
 ## Documentation
 
