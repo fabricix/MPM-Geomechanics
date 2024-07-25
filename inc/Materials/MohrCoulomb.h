@@ -34,6 +34,14 @@ public:
     ///
 	virtual ~MohrCoulomb();
 
+    /// \brief exponential law used for softening \f$ y(x) = y_f-(y_i-y_f)e^{\eta x}\f$
+    /// \param[in] x Independent variable \f$x\f$
+    /// \param[in] eta Shape parameter \f$\eta\f$
+    /// \param[in] y_initial Peak value \f$y_i\f$
+    /// \param[in] y_final Residual value \f$y_f\f$
+    /// \param[out] y_current Current value \f$y(x)\f$
+    double exponentialLaw(double x, double eta, double y_initial, double y_final) const;
+
 protected:
 
     double friction; //!< internal friction angle in degree, \f$\phi\f$

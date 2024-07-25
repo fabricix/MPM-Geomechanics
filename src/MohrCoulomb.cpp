@@ -13,6 +13,7 @@ using namespace Eigen;
 #include <Materials/Material.h>
 #include <Materials/MohrCoulomb.h>
 #include "Warning.h"
+#include "MohrCoulomb.h"
 
 #ifndef PI
 #define PI 3.141592653589793
@@ -29,6 +30,10 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
 }
 
 MohrCoulomb::~MohrCoulomb() { }
+
+double MohrCoulomb::exponentialLaw(double x, double eta, double y_initial, double y_final) const {
+    return y_final+(y_initial-y_final)*std::exp(-n*x);
+}
 
 void MohrCoulomb::updateStress(Particle* particle) const {
 
