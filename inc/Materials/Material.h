@@ -105,7 +105,7 @@ protected:
 
 	double porosity; //!< initial porosity \f$n^0\f$
 
-	double bulkModulusFluid; //!< elastic volumetric modulus of fluid in mixtre \f$K^f\f$
+	double bulkModulusFluid; //!< elastic volumetric modulus of fluid in mixture \f$K^f\f$
 
 	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
 	

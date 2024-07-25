@@ -13,30 +13,31 @@ using namespace Eigen;
 #include <Materials/Material.h>
 #include <Materials/MohrCoulomb.h>
 #include "Warning.h"
-#include "MohrCoulomb.h"
 
 #ifndef PI
 #define PI 3.141592653589793
 #endif
 
-MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile)
+MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening)
 :ElasticJaumann(id, density, young, poisson) {
 
+    // model parameters
     this->friction=friction;
     this->cohesion=cohesion;
-    this->dilation=dilation;
     this->tensile=tensile;
+    this->dilation=dilation;
+
+    // configure softening
+    this->softening=softening;
+    
+    // configure material type
     type=Material::MaterialType::ELASTOPLASTIC;
 }
 
 MohrCoulomb::~MohrCoulomb() { }
 
-double MohrCoulomb::exponentialLaw(double x, double eta, double y_initial, double y_final) const {
-    return y_final+(y_initial-y_final)*std::exp(-n*x);
-}
-
-void MohrCoulomb::updateStress(Particle* particle) const {
-
+void MohrCoulomb::updateStress(Particle *particle) const
+{
     // update stress as elastic stress
     ElasticJaumann::updateStress(particle);
     
@@ -55,11 +56,16 @@ void MohrCoulomb::updateStress(Particle* particle) const {
     double Nfi  = (1.0+sin(friction*PI/180.0))/(1.0-sin(friction*PI/180.0));
     double Npsi = (1.0+sin(dilation*PI/180.0))/(1.0-sin(dilation*PI/180.0));
 
-    // tensile strengh
+    // tensile strength
     double st = cohesion/tan(friction*PI/180.0);
     
     // verify if the tensile cut-off in inside the failure criteria
     if (this->tensile<st){ st=this->tensile; }
+
+    // apply tensile softening
+    if(!this->softening.softening_type== MohrCoulomb::Softening::SofteningType::NONE && this->softening.tensile_softening_active){
+        if(!this->softening.softening_type== MohrCoulomb::Softening::SofteningType::EXPONENTIAL) st = softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,st,this->softening.tensile_residual);
+    }
 
     // shear and tensile failure criteria
     double fs = s1 - s3*Nfi + 2.0*cohesion*sqrt(Nfi);

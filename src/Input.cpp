@@ -330,8 +330,21 @@ vector<Material*> Input::getMaterialList(){
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
 						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 						
+						// create a new softening object
+						MohrCoulomb::Softening softening;
+						if ((*it)["softening_type"].is_string() && (*it)["softening_type"]=="exponential")
+						{
+						// exponential softening configuration 
+						if ((*it)["friction_residual"].is_number()) { softening.friction_residual = ((*it)["friction_residual"]); }
+						if ((*it)["cohesion_residual"].is_number()) { softening.cohesion_residual = ((*it)["cohesion_residual"]); }
+						if ((*it)["tensile_residual"].is_number()) { softening.tensile_residual = ((*it)["tensile_residual"]); }
+						if ((*it)["friction_softening_active"].is_boolean()) { softening.friction_softening_active = ((*it)["friction_softening_active"]); }
+						if ((*it)["cohesion_softening_active"].is_boolean()) { softening.cohesion_softening_active = ((*it)["cohesion_softening_active"]); }
+						if ((*it)["tensile_softening_active"].is_boolean()) { softening.tensile_softening_active = ((*it)["tensile_softening_active"]); }
+						}
+						
 						// create a new material
-						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
 					}
 
 					// set up the two phases parameters
