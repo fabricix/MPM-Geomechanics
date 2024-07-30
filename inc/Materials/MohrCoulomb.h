@@ -32,11 +32,13 @@ public:
         bool friction_residual;
         bool cohesion_residual;
         bool tensile_residual;
+        bool dilation_residual;
 
         // parameters to be affected by the softening
         bool friction_softening_active;
         bool cohesion_softening_active;
         bool tensile_softening_active;
+        bool dilation_softening_active;
 
         /// \brief This function provide an exponential law used for softening, a reduction of the material strength parameters. This function has this form: \f$ y(x) = y_f-(y_i-y_f)e^{-\eta x}\f$.
         /// \param[in] x Independent variable \f$x\f$
@@ -58,12 +60,15 @@ public:
             this->friction_residual = false;
             this->cohesion_residual = false;
             this->tensile_residual = false;
+            this->dilation_residual = false;
 
             // parameters to be affected by the softening
             this->friction_softening_active = false;
             this->cohesion_softening_active = false;
             this->tensile_softening_active = false;
+            this->dilation_softening_active = false;
         }
+
     } ;
 
     /// \brief Create a Mohr-Coulomb elasto-plastic material
