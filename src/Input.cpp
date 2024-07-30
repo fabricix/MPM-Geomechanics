@@ -444,6 +444,17 @@ vector<Body*> Input::getBodyList(){
 					else
 						throw(0);
 
+					// initial velocity
+					Vector3d initial_velocity=Vector3d::Zero(); 
+					if ((*it)["initial_velocity"].is_array()) 
+					{
+					 	initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(1) = (*it)["initial_velocity"][1];
+						initial_velocity(2) = (*it)["initial_velocity"][2];
+					}
+					else
+						throw(0);
+
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
@@ -456,6 +467,7 @@ vector<Body*> Input::getBodyList(){
 						iBody->setId(id);
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
+						iBody->setInitialVelocity(initial_velocity);
 					}
 
 					bodies.push_back(iBody);
