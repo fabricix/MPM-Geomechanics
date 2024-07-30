@@ -45,6 +45,10 @@ public:
 	/// \return Body identification
 	inline int getId() const { return this->id; }
 
+	/// \brief Return the initial velocity of the body
+	/// \return Initial body velocity
+	inline Vector3d getInitialVelocity() const { return this->initial_velocity; }
+
 	/// \brief Return the particles forming the body
 	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
@@ -52,6 +56,10 @@ public:
 	/// \brief Configure the id of the body
 	/// \param[in] body_id Body identification 
 	inline void setId(int body_id) { this->id=body_id; }
+
+	/// \brief Configure the initial velocity of the body
+	/// \param[in] initial_velocity Body identification 
+	inline void setInitialVelocity(Vector3d initial_velocity) { this->initial_velocity=initial_velocity; }
 
 	/// \brief Configure the particles in the body
 	/// \param[in] particle_list A vector containing pointers to the particle
@@ -64,17 +72,11 @@ public:
 protected:
 	
 	int id; //!< body identification
-
+	Vector3d initial_velocity; //!< initial velocity of the body
 	vector<Particle*> particles; //!< material points forming the body  
 };
 
-
-inline Body::Body():id(-1) {
-	
-}
-
-inline Body::~Body() {
-	
-}
+inline Body::Body():id(-1),initial_velocity(0,0,0) { }
+inline Body::~Body() { }
 
 #endif /* BODY_H_ */
