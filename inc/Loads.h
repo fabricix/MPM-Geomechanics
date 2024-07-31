@@ -111,6 +111,10 @@ namespace Loads {
     /// \param[in] bodies A list containing Body pointers
     /// \param[in] loads A list of pressure force boxes
     void setPrescribedPorePressureBoundaryForceBox(vector<Body*>& bodies, vector<Loads::PressureBoundaryForceBox> loads);
+
+    /// \brief Set initial velocity in bodies
+    /// \param[in] bodies A list containing Body pointers
+    void setInitialVelocity(vector<Body*>& bodies);
 };
 
 #endif /* LOADS_H_ */

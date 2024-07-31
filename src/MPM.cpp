@@ -198,6 +198,7 @@ void MPM::setupParticles() {
 				case ModelSetup::GIMP:
 					particles->at(j)->setShape(new ShapeGimp);
 					break;
+
 				default:
 				Warning::printMessage("Bad definition of shape function in particle");
 				throw (0);
@@ -224,6 +225,10 @@ void MPM::setupLoads() {
 	
 	// set traction pore pressure forces
 	Loads::setPrescribedPorePressureBoundaryForceBox(bodies, Input::getPressureBoundaryForceBox());
+
+	// set initial velocity
+	Loads::setInitialVelocity(bodies);
+
 }
 
 void MPM::setupDamping() {
