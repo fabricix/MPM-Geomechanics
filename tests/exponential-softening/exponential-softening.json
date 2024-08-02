@@ -1,0 +1,93 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":2,
+
+	"time_step":6e-5,
+
+	"gravity":[0.0,0.0,-9.81],
+
+	"n_threads":2,
+
+	"n_phases":1,
+
+	"damping":
+	{
+		"type":"local",
+		"value":0.00
+	},
+
+	"results":
+	{
+		"print":50,
+		"fields":["id","displacement","material","active","pressure","external_force"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[0.25,0.25,0.25],
+		"cells_number":[48,1,32],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"elastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":100e6,
+			"density":2700,
+			"poisson":0.25
+		},
+
+		"plastic":
+		{
+			"id":2,
+			"type":"mohr-coulomb",
+			"young":100e6,
+			"density":2700,
+			"poisson":0.25,
+			"friction":30.0,
+			"cohesion":6e6,
+			"softening":"exponential",
+			"softening.exponential.eta":50,
+			"softening.tensile.residual":1.0,
+			"softening.tensile.active":true
+		}
+	},
+
+	"body":
+	{
+		"body_1":
+		{
+			"type":"cuboid",
+			"id":1,
+			"point_p1":[5.75,0,0],
+			"point_p2":[6.25,0.25,2],
+			"material_id":1,
+			"initial_velocity":[0,0,-5]
+		},
+		
+		"body_2":
+		{
+			"type":"cuboid",
+			"id":2,
+			"point_p1":[2,0,4],
+			"point_p2":[10,0.25,6],
+			"material_id":2
+		}
+	}
+}

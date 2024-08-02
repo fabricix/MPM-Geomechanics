@@ -34,6 +34,30 @@ namespace Input {
 
 	json inputFile; //!< data structure containing all the model information
 	string inputFileName; //!< file name to be read
+
+	using json = nlohmann::json;
+
+	template<typename T>
+	T get_number(const json& j, const std::string& key, T default_value = T()) {
+		if (j.contains(key) && j[key].is_number()) {
+			return j[key].get<T>();
+		}
+		return default_value;
+	}
+
+	bool get_boolean(const json& j, const std::string& key, bool default_value = false) {
+		if (j.contains(key) && j[key].is_boolean()) {
+			return j[key].get<bool>();
+		}
+		return default_value;
+	}
+
+	std::string get_string(const json& j, const std::string& key, const std::string& default_value = "") {
+		if (j.contains(key) && j[key].is_string()) {
+			return j[key].get<std::string>();
+		}
+		return default_value;
+	}
 }
 
 inline const json& Input::getJson() {
@@ -330,17 +354,19 @@ vector<Material*> Input::getMaterialList(){
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
 						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 						
-						// create a new softening object
+						// create a new softening object and configure it
 						MohrCoulomb::Softening softening;
-						if ((*it)["softening_type"].is_string() && (*it)["softening_type"]=="exponential")
+						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
 						{
-						// exponential softening configuration 
-						if ((*it)["friction_residual"].is_number()) { softening.friction_residual = ((*it)["friction_residual"]); }
-						if ((*it)["cohesion_residual"].is_number()) { softening.cohesion_residual = ((*it)["cohesion_residual"]); }
-						if ((*it)["tensile_residual"].is_number()) { softening.tensile_residual = ((*it)["tensile_residual"]); }
-						if ((*it)["friction_softening_active"].is_boolean()) { softening.friction_softening_active = ((*it)["friction_softening_active"]); }
-						if ((*it)["cohesion_softening_active"].is_boolean()) { softening.cohesion_softening_active = ((*it)["cohesion_softening_active"]); }
-						if ((*it)["tensile_softening_active"].is_boolean()) { softening.tensile_softening_active = ((*it)["tensile_softening_active"]); }
+							softening.exponential_shape_factor = get_number((*it),"softening.exponential.eta",0);
+							
+							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
+							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 
+							softening.tensile_residual = get_number((*it),"softening.tensile.residual",tensile);
+
+							softening.friction_softening_active = get_boolean((*it),"softening.friction.active",false);
+							softening.cohesion_softening_active = get_boolean((*it),"softening.cohesion.active",false);
+							softening.tensile_softening_active = get_boolean((*it),"softening.tensile.active",false);
 						}
 						
 						// create a new material
@@ -446,14 +472,12 @@ vector<Body*> Input::getBodyList(){
 
 					// initial velocity
 					Vector3d initial_velocity=Vector3d::Zero(); 
-					if ((*it)["initial_velocity"].is_array()) 
+					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array())
 					{
 					 	initial_velocity(0) = (*it)["initial_velocity"][0];
 						initial_velocity(1) = (*it)["initial_velocity"][1];
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
-					else
-						throw(0);
 
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();

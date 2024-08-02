@@ -48,6 +48,7 @@ public:
         /// \param[out] y_current Current value \f$y(x)\f$
         inline double exponentialSoftening (double x, double eta, double y_i, double y_f) const {return y_f+(y_i-y_f)*std::exp(-eta*x);};
 
+        /// Default constructor
         Softening() {
 
             // softening type
