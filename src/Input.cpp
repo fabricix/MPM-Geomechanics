@@ -352,14 +352,14 @@ vector<Material*> Input::getMaterialList(){
 						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
 						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
-						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
-						
+						double tensile = 0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
+
 						// create a new softening object and configure it
 						MohrCoulomb::Softening softening;
 						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
 						{
+							softening.softening_type = get_string((*it),"softening","")=="EXPONENTIAL"? MohrCoulomb::Softening::SofteningType::EXPONENTIAL: MohrCoulomb::Softening::SofteningType::NONE;
 							softening.exponential_shape_factor = get_number((*it),"softening.exponential.eta",0);
-							
 							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
 							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 
 							softening.tensile_residual = get_number((*it),"softening.tensile.residual",tensile);

@@ -24,9 +24,8 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
     // model parameters
     this->friction=friction;
     this->cohesion=cohesion;
-    this->tensile=tensile;
+    this->tensile = (this->tensile==0 && tan(this->friction*PI/180.0)!=0) ? this->cohesion/tan(this->friction*PI/180.0) : this->tensile;
     this->dilation=dilation;
-
     // configure softening
     this->softening=softening;
     
