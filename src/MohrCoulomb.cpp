@@ -24,12 +24,12 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
     // model parameters
     this->friction=friction;
     this->cohesion=cohesion;
-    this->tensile = tensile; 
+    this->tensile=tensile; 
     this->dilation=dilation;
-    
-    // verify the tensile strength inside the failure criteria
+
+    // default tensile strength
     this->tensile = (this->tensile == 0 && tan(this->friction * PI / 180.0) != 0) ? this->cohesion / tan(this->friction * PI / 180.0) : this->tensile;
-    
+
     // configure softening
     this->softening=softening;
     
@@ -54,7 +54,7 @@ void MohrCoulomb::updateStress(Particle *particle) const
     double s1 = eigensolver.eigenvalues()[0];
     double s2 = eigensolver.eigenvalues()[1];
     double s3 = eigensolver.eigenvalues()[2];
-
+    
     // current parameters of strength
     double cohesion_curr = this->softening.cohesion_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->cohesion,this->softening.cohesion_residual) : this->cohesion;
 

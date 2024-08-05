@@ -62,9 +62,10 @@
 			"poisson":0.25,
 			"friction":30.0,
 			"cohesion":6e6,
+			"tensile":3e6,
 			"softening":"exponential",
 			"softening.exponential.eta":50,
-			"softening.tensile.residual":1.0,
+			"softening.tensile.residual":1e-6,
 			"softening.tensile.active":true
 		}
 	},
