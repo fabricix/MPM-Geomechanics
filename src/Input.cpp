@@ -358,7 +358,7 @@ vector<Material*> Input::getMaterialList(){
 						MohrCoulomb::Softening softening;
 						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
 						{
-							softening.softening_type = get_string((*it),"softening","")=="EXPONENTIAL"? MohrCoulomb::Softening::SofteningType::EXPONENTIAL: MohrCoulomb::Softening::SofteningType::NONE;
+							softening.softening_type = MohrCoulomb::Softening::SofteningType::EXPONENTIAL;
 							softening.exponential_shape_factor = get_number((*it),"softening.exponential.eta",0);
 							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
 							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 

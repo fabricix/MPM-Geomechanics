@@ -29,10 +29,10 @@ public:
         double exponential_shape_factor;
 
         // residual values
-        bool friction_residual;
-        bool cohesion_residual;
-        bool tensile_residual;
-        bool dilation_residual;
+        double friction_residual;
+        double cohesion_residual;
+        double tensile_residual;
+        double dilation_residual;
 
         // parameters to be affected by the softening
         bool friction_softening_active;
@@ -58,10 +58,10 @@ public:
             this->exponential_shape_factor = 0.0;
 
             // residual values
-            this->friction_residual = false;
-            this->cohesion_residual = false;
-            this->tensile_residual = false;
-            this->dilation_residual = false;
+            this->friction_residual = 0.0;
+            this->cohesion_residual = 0.0;
+            this->tensile_residual = 0.0;
+            this->dilation_residual = 0.0;
 
             // parameters to be affected by the softening
             this->friction_softening_active = false;
