@@ -7,7 +7,7 @@
 
 	"time_step":6e-5,
 
-	"gravity":[0.0,0.0,-9.81],
+	"gravity":[0.0,0.0,0],
 
 	"n_threads":2,
 
@@ -79,7 +79,7 @@
 			"point_p1":[5.75,0,0],
 			"point_p2":[6.25,0.25,2],
 			"material_id":1,
-			"initial_velocity":[0,0,-5]
+			"initial_velocity":[0,0,0]
 		},
 		
 		"body_2":
@@ -88,7 +88,8 @@
 			"id":2,
 			"point_p1":[2,0,4],
 			"point_p2":[10,0.25,6],
-			"material_id":2
+			"material_id":2,
+			"initial_velocity":[0,0,-5]
 		}
 	}
 }
