@@ -16,6 +16,7 @@ doxygen/output.txt
 *.pvsm
 *.o
 *.exe
+*.ogv
 .vs
 .vscode
 *.sublime-workspace
