@@ -34,6 +34,30 @@ namespace Input {
 
 	json inputFile; //!< data structure containing all the model information
 	string inputFileName; //!< file name to be read
+
+	using json = nlohmann::json;
+
+	template<typename T>
+	T get_number(const json& j, const std::string& key, T default_value = T()) {
+		if (j.contains(key) && j[key].is_number()) {
+			return j[key].get<T>();
+		}
+		return default_value;
+	}
+
+	bool get_boolean(const json& j, const std::string& key, bool default_value = false) {
+		if (j.contains(key) && j[key].is_boolean()) {
+			return j[key].get<bool>();
+		}
+		return default_value;
+	}
+
+	std::string get_string(const json& j, const std::string& key, const std::string& default_value = "") {
+		if (j.contains(key) && j[key].is_string()) {
+			return j[key].get<std::string>();
+		}
+		return default_value;
+	}
 }
 
 inline const json& Input::getJson() {
@@ -328,10 +352,25 @@ vector<Material*> Input::getMaterialList(){
 						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
 						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
-						double tensile=numeric_limits<double>::max(); if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
+						double tensile = 0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
+
+						// create a new softening object and configure it
+						MohrCoulomb::Softening softening;
+						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
+						{
+							softening.softening_type = MohrCoulomb::Softening::SofteningType::EXPONENTIAL;
+							softening.exponential_shape_factor = get_number((*it),"softening.exponential.eta",0);
+							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
+							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 
+							softening.tensile_residual = get_number((*it),"softening.tensile.residual",tensile);
+
+							softening.friction_softening_active = get_boolean((*it),"softening.friction.active",false);
+							softening.cohesion_softening_active = get_boolean((*it),"softening.cohesion.active",false);
+							softening.tensile_softening_active = get_boolean((*it),"softening.tensile.active",false);
+						}
 						
 						// create a new material
-						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
 					}
 
 					// set up the two phases parameters
@@ -431,6 +470,15 @@ vector<Body*> Input::getBodyList(){
 					else
 						throw(0);
 
+					// initial velocity
+					Vector3d initial_velocity=Vector3d::Zero(); 
+					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array())
+					{
+					 	initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(1) = (*it)["initial_velocity"][1];
+						initial_velocity(2) = (*it)["initial_velocity"][2];
+					}
+
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
@@ -443,6 +491,7 @@ vector<Body*> Input::getBodyList(){
 						iBody->setId(id);
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
+						iBody->setInitialVelocity(initial_velocity);
 					}
 
 					bodies.push_back(iBody);

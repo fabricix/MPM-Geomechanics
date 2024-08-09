@@ -47,6 +47,7 @@ using Eigen::Vector3d;
 /// | type | define a type of body | string |
 /// | id | define a body identification | integer |
 /// | material_id | used to setup a defined material to the body | integer |
+/// | initial_velocity | used to setup the initial velocity to the body | integer |
 
 /// ### Particles
 ///	| Keyword | Description | Data type |

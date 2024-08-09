@@ -39,6 +39,7 @@ objects = BodyCuboid.o \
 	Particle.o \
 	ParticleMixture.o \
 	ShapeGimp.o \
+	Softening.o \
 	ShapeLinear.o \
 	SolverExplicitTwoPhaseUSL.o \
 	SolverExplicitUSL.o \
@@ -97,6 +98,8 @@ ParticleMixture.o : ../src/ParticleMixture.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../src/ParticleMixture.cpp	
 ShapeGimp.o : ../src/ShapeGimp.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../src/ShapeGimp.cpp	
+Softening.o : ../src/Softening.cpp
+	$(CC) $(CFLAGS) $(INC) -c ../src/Softening.cpp	
 ShapeLinear.o : ../src/ShapeLinear.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../src/ShapeLinear.cpp	
 SolverExplicitTwoPhaseUSL.o : ../src/SolverExplicitTwoPhaseUSL.cpp

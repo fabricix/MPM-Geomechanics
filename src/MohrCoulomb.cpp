@@ -18,20 +18,29 @@ using namespace Eigen;
 #define PI 3.141592653589793
 #endif
 
-MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile)
+MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening)
 :ElasticJaumann(id, density, young, poisson) {
 
+    // model parameters
     this->friction=friction;
     this->cohesion=cohesion;
+    this->tensile=tensile; 
     this->dilation=dilation;
-    this->tensile=tensile;
+
+    // default tensile strength
+    this->tensile = (this->tensile == 0 && tan(this->friction * PI / 180.0) != 0) ? this->cohesion / tan(this->friction * PI / 180.0) : this->tensile;
+
+    // configure softening
+    this->softening=softening;
+    
+    // configure material type
     type=Material::MaterialType::ELASTOPLASTIC;
 }
 
 MohrCoulomb::~MohrCoulomb() { }
 
-void MohrCoulomb::updateStress(Particle* particle) const {
-
+void MohrCoulomb::updateStress(Particle *particle) const
+{
     // update stress as elastic stress
     ElasticJaumann::updateStress(particle);
     
@@ -41,24 +50,29 @@ void MohrCoulomb::updateStress(Particle* particle) const {
     // compute principal values and directions
     Eigen::SelfAdjointEigenSolver<Matrix3d> eigensolver(trialStress);
 
-    // principal values
+    // principal stresses
     double s1 = eigensolver.eigenvalues()[0];
     double s2 = eigensolver.eigenvalues()[1];
     double s3 = eigensolver.eigenvalues()[2];
-
-    // model definition variables
-    double Nfi  = (1.0+sin(friction*PI/180.0))/(1.0-sin(friction*PI/180.0));
-    double Npsi = (1.0+sin(dilation*PI/180.0))/(1.0-sin(dilation*PI/180.0));
-
-    // tensile strengh
-    double st = cohesion/tan(friction*PI/180.0);
     
-    // verify if the tensile cut-off in inside the failure criteria
-    if (this->tensile<st){ st=this->tensile; }
+    // current parameters of strength
+    double cohesion_curr = this->softening.cohesion_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->cohesion,this->softening.cohesion_residual) : this->cohesion;
 
-    // shear and tensile failure criteria
-    double fs = s1 - s3*Nfi + 2.0*cohesion*sqrt(Nfi);
-    double ft = st - s3;
+    double friction_curr = this->softening.friction_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->friction,this->softening.friction_residual) : this->friction;
+
+    double tensile_curr = this->softening.tensile_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->tensile,this->softening.tensile_residual) : this->tensile;
+    
+    double dilation_curr = this->softening.dilation_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->dilation,this->softening.dilation_residual) : this->dilation;
+    
+    // model definition variables
+    double Nfi  = (1.0+sin(friction_curr*PI/180.0))/(1.0-sin(friction_curr*PI/180.0));
+    double Npsi = (1.0+sin(dilation_curr*PI/180.0))/(1.0-sin(dilation_curr*PI/180.0));
+
+    // shear failure criteria
+    double fs = s1 - s3*Nfi + 2.0*cohesion_curr*sqrt(Nfi);
+
+    // tensile failure criteria
+    double ft = tensile_curr - s3;
 
     // composite yield criteria
     if (ft<0.0 || fs<0.0)
@@ -72,8 +86,8 @@ void MohrCoulomb::updateStress(Particle* particle) const {
         
         // straight line dividing shear and tensile failure type
         double ap = sqrt(1.0+(Nfi*Nfi))+Nfi;
-        double sp = st*Nfi-2.0*cohesion*sqrt(Nfi);
-        double hy = s3 - st + ap*(s1-sp);
+        double sp = tensile_curr*Nfi-2.0*cohesion_curr*sqrt(Nfi);
+        double hy = s3 - tensile_curr + ap*(s1-sp);
         
         // plastic strain matrix
         Matrix3d dep = Matrix3d::Zero();
@@ -96,7 +110,7 @@ void MohrCoulomb::updateStress(Particle* particle) const {
         else if (ft<0.0 && hy>0.0)
         {
             // tensile failure correction
-            double lt  = (st-s3)/a1;
+            double lt  = (tensile_curr-s3)/a1;
             s1N = s1 + lt*a2;
             s2N = s2 + lt*a2;
             s3N = s3 + lt*a1;

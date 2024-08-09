@@ -11,11 +11,12 @@ doxygen/output.txt
 *.vtu
 *.pvd
 *.wmv
-*.mp4
+.mp4
 *.ods
 *.pvsm
 *.o
 *.exe
+*.ogv
 .vs
 .vscode
 *.sublime-workspace

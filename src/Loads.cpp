@@ -216,3 +216,18 @@ void Loads::setInitialPorePressureMaterial(vector<Body*>& bodies, vector<Loads::
 		}
 	}
 }
+
+void Loads::setInitialVelocity(vector<Body*>& bodies) {
+
+	// for each body
+	for (auto& body : bodies) {
+
+		// get particles
+		auto* particles = body->getParticles();
+
+		// apply initial velocity
+		for (auto& particle : *particles) {
+			particle->setVelocity(body->getInitialVelocity());
+		}
+	}
+}

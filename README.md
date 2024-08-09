@@ -54,3 +54,11 @@ To generate the documentation in PDF, run the make command in `doxy/latex`.
 ```bash
 cd /doxygen/latex && make
 ```
+
+## Examples
+
+### Exponential softening model to simulate fracturing process in rock
+
+In this example an elastoplastic body impacts over an elastic body. The fracturing process in rock masses is captured using an exponential strain softening over tensile strength in the elastoplastic material: $\sigma^t(\epsilon_p^{pleff}) = \sigma^t_{final}-(\sigma^t_{initial}-\sigma^t_{final})e^{-\eta \epsilon_p^{pleff}}$, where $\eta$ is the shape factor and $\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}$ is the effective plastic strain.
+
+![](/tests/exponential-softening/exponential-softening-test.mp4)
