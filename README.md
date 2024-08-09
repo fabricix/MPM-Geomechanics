@@ -63,3 +63,5 @@ In this example an elastoplastic body impacts over an elastic body. The fracturi
 
 ![](/tests/exponential-softening/exponential-softening-test.gif)
 In this animation an elasto-plastic body impacts over an elastic body. The elasto-plastic model includes the exponential softening over the tensile strength in order to reproduce the fracturing process in the body.
+
+See ``/test/exponential-softening/exponential-softening.json`` input file for simulation details.
