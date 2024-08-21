@@ -13,25 +13,12 @@ namespace DynamicRelaxation {
     double lastKineticEnergy=0.0;
 }
 
-void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter) { 
+double DynamicRelaxation::computeKineticEnergy(vector<Body*>* bodies)
+{
+    // initial value for energy
+    double currentKineticEnergy (0.0);
 
-    // damping type verification
-    if (ModelSetup::getDampingType() != ModelSetup::KINETIC_DYNAMIC_RELAXATION)
-    {
-        return;
-    }
-
-    // first iteration
-    if (loopCounter == 1)
-    {
-        lastKineticEnergy = 0.0;
-        return;
-    }
-        
-    // current kinetic energy
-    double currentKineticEnergy=0.0;
-
-    // compute the model's kinetic energy
+    // for each body
     for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
 
         // get particles
@@ -48,10 +35,31 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
             const double mass = particles->at(i)->getMass();
             const Vector3d velocity = particles->at(i)->getVelocity();
 
-            // add kinetic energy contribution
-            currentKineticEnergy+=0.5*mass*(velocity.x()*velocity.x()+velocity.y()*velocity.y()+velocity.z()*velocity.z());
+            // compute the particle kinetic energy contribution
+            currentKineticEnergy += 0.5*mass*(velocity.x()*velocity.x()+velocity.y()*velocity.y()+velocity.z()*velocity.z());
         }
     }
+
+    return currentKineticEnergy;
+}
+
+void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter) { 
+
+    // damping type verification
+    if (ModelSetup::getDampingType() != ModelSetup::KINETIC_DYNAMIC_RELAXATION)
+    {
+        return;
+    }
+
+    // first iteration
+    if (loopCounter == 1)
+    {
+        lastKineticEnergy = 0.0;
+        return;
+    }
+        
+    // current kinetic energy
+    double currentKineticEnergy = computeKineticEnergy(bodies);
 
     // compute the kinetic energy increment
     double deltaKineticEnergy = currentKineticEnergy - lastKineticEnergy;
@@ -59,7 +67,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
     // check if there was a peak
     if (deltaKineticEnergy < 0.0)
     {   
-        // set null particles' velocities 
+        // set null velocity in the peak energy condition
         for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
 
             // get particles

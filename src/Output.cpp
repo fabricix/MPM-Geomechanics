@@ -14,6 +14,7 @@
 #endif
 
 #include "Output.h"
+#include <DynamicRelaxation.h>
 
 #include <iostream>
 using std::cout;
@@ -557,7 +558,7 @@ namespace Output{
 		if (loopCounter%resultSteps==0)
 		{
 			writeBodies(bodies,iTime);
-			cout<<"Time = "<<iTime<<"\n";
+			cout<<"Time = "<<scientific<<iTime<<"\tEnergy = "<<scientific<<DynamicRelaxation::computeKineticEnergy(bodies)<<"\n";
 		}
 	}
 }

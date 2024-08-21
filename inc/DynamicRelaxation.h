@@ -12,7 +12,9 @@
 
 namespace DynamicRelaxation {
 
-    void setStaticSolution(vector<Body*>* bodies, int loopCounter);
+    double computeKineticEnergy(vector<Body *> *bodies);
+
+    void setStaticSolution(vector<Body *> *bodies, int loopCounter);
 }
 
 #endif /* INC_DYNAMICRELAXATION_H_ */
