@@ -31,7 +31,7 @@ The main features of the program in the actuality are:
 - Shared memory parallelization (for computational time reduction)
 - Several constitutive models for soils and rock, including softening and hardening options.
 
-## Compilation
+## Documentation and Compilation
 
 To compile using make:
 
@@ -39,8 +39,6 @@ To compile using make:
 cd make && make
 ```
 Make sure you have installed OpenMP.
-
-## Documentation
 
 To generate the code documentation using doxygen run: 
 
