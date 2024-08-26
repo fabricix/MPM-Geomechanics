@@ -68,7 +68,14 @@ For more details of this simulation see the input file [slope-failure.json](http
 
 In this example an elastoplastic body impacts over an elastic body. The fracturing process in rock masses is captured using an exponential strain softening over tensile strength in the elastoplastic material: $\sigma^t(\epsilon_p^{pleff}) = \sigma^t_{final}-(\sigma^t_{initial}-\sigma^t_{final})e^{-\eta \epsilon_p^{pleff}}$, where $\eta$ is the shape factor and $\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}$ is the effective plastic strain.
 
+#### Example 1
+
 ![](/tests/exponential-softening/exponential-softening-test.gif)
 In this animation an elasto-plastic body impacts over an elastic body. The elasto-plastic model includes the exponential softening over the tensile strength in order to reproduce the fracturing process in the body.
 
 See [exponential-softening.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/exponential-softening/exponential-softening.json) input file for simulation details.
+
+
+#### Example 2
+![](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
+
