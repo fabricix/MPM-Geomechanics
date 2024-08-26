@@ -12,6 +12,7 @@ using std::floor;
 
 #include <omp.h>
 
+
 namespace ModelSetup {
 
 	///
@@ -49,6 +50,9 @@ namespace ModelSetup {
 	double dt=0.0; //!< time step
 	double time=0.0; //!< simulation time
 	double dt_critical_multiplier=0.25; //!< dafault critical time step fraction
+
+	// initial time simulation
+    std::chrono::system_clock::time_point initialSimulationTime;
 
 	// default damping
 	DampingType damping=DampingType::UNDAMPED; //!< damping type
@@ -111,7 +115,10 @@ namespace ModelSetup {
 	bool getTwoPhaseActive() { return twoPhaseCalculationActive; }
 	void setTwoPhaseActive(bool d) { twoPhaseCalculationActive=d; }
 
-	// axisymmetric analisys
+    void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime) { ModelSetup::initialSimulationTime = initialTime; }
+    std::chrono::system_clock::time_point getInitialSimulationTime() { return ModelSetup::initialSimulationTime;  }
+
+    // axisymmetric analisys
 	bool getAxisymetricActive() { return axisymetricActive; }
 	void setAxisymetricActive(bool d) { axisymetricActive=d; }
 

@@ -14,6 +14,8 @@ using Eigen::Vector3d;
 #include<string>
 using std::string;
 
+#include <chrono>
+
 /// \namespace ModelSetup
 /// \brief Contain the configuration variables that defines an specific simulation
 namespace ModelSetup {
@@ -191,6 +193,14 @@ namespace ModelSetup {
 	/// \brief Configure if two-phase calculation is active
 	/// \param[in] two_phase_calculation_active 
 	void setTwoPhaseActive(bool two_phase_calculation_active);
+    
+    /// \brief Set initial simulation time
+	/// \param[in] initialTime 
+	void setInitialSimulationTime( std::chrono::system_clock::time_point initialTime);
+
+	/// \brief Get initial simulation time
+	/// \param[out] initialTime
+	std::chrono::system_clock::time_point getInitialSimulationTime( );
 };
 
 #endif /* MODEL_H_ */

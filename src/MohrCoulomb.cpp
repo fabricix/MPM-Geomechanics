@@ -57,11 +57,8 @@ void MohrCoulomb::updateStress(Particle *particle) const
     
     // current parameters of strength
     double cohesion_curr = this->softening.cohesion_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->cohesion,this->softening.cohesion_residual) : this->cohesion;
-
     double friction_curr = this->softening.friction_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->friction,this->softening.friction_residual) : this->friction;
-
-    double tensile_curr = this->softening.tensile_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->tensile,this->softening.tensile_residual) : this->tensile;
-    
+    double tensile_curr  = this->softening.tensile_softening_active  ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->tensile, this->softening.tensile_residual)  : this->tensile ;
     double dilation_curr = this->softening.dilation_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->dilation,this->softening.dilation_residual) : this->dilation;
     
     // model definition variables

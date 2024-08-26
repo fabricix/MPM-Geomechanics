@@ -34,9 +34,6 @@ int main(int argc, char **argv)
 
 	// finish the program
 	mpm.end();
-	
-	// print farewell screen
-	Output::farewellScreen();
 
 	return 0;
 }

@@ -330,16 +330,8 @@ void MPM::solve(){
 		exit(EXIT_FAILURE);
 	}
 	else{
-
-		auto start = std::chrono::system_clock::now();
-
+		ModelSetup::setInitialSimulationTime(std::chrono::system_clock::now());
 		solver->Solve();
-
-		auto end = std::chrono::system_clock::now();
-		
-		std::chrono::duration<double> elapsed_seconds = end-start;
-	
-		cout<<"\nElapsed time: "<<elapsed_seconds.count()<<" seconds\n";
 	}
 }
 

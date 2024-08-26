@@ -520,8 +520,30 @@ namespace Output{
 		serieFile <<"\t</Collection>\n";
 		serieFile <<"</VTKFile>\n";
 	}
+	
+	void moveCursor(int row, int col) {
+		std::cout << "\033[" << row << ";" << col << "H";
+	}
+
+	void clearScreen() {
+		std::cout << "\033[2J\033[1;1H";
+	}
+
+	void showProgressBar(double progress, int width = 47) {
+		std::cout << "[";
+		int pos = static_cast<int>(width * progress);
+		for (int i = 0; i < width; ++i) {
+			if (i < pos) std::cout << "=";
+			else if (i == pos) std::cout << ">";
+			else std::cout << " ";
+		}
+		std::cout << "] " << int(progress * 100.0) << " %\r";
+		std::cout.flush();
+	}
 
 	void welcomeScreen() {
+
+  		clearScreen();
 
 		// common format
 		int width = 55;
@@ -529,7 +551,7 @@ namespace Output{
 		// information
 		string programName="MPM-Geomechanics";
 		string programDescription="A material point method program for geomechanics";
-		string programAuthor=" Prof Fabricio Fernandez <fabricio.fernandez@ucn.cl>";
+		string programAuthor="";
 		string hLines(width-2,'-');
 		string hSpaces(width-2,' ');
 		string hSpacesArterisc(width-6,' ');
@@ -541,8 +563,6 @@ namespace Output{
 		cout<<"|"+hSpaces+"|"<<"\n";
 		cout<<"|"<<right<<setw(50)<<programDescription<<setw(5)<<right<<"|\n";
 		cout<<"|"+hSpaces+"|"<<"\n";
-		cout<<"|"<<left<<programAuthor<<setw(3)<<right<<"|\n";
-		cout<<"|"+hSpaces+"|"<<"\n";
 		cout<<left<<" "<<setw(width)<<hLines<<"\n\n";
 	}
 
@@ -552,13 +572,56 @@ namespace Output{
 		 string hLines(width,'-');
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n\n";
 	}
+ 
+	void updateTerminal(vector<Body*>* bodies, double itime)
+	{
+		// get total kinetic energy
+		double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
+		
+		// hours to minutes and seconds
+    	std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - ModelSetup::getInitialSimulationTime() ;
+		auto hours = std::chrono::duration_cast<std::chrono::hours>(elapsed_seconds);
+    	auto minutes = std::chrono::duration_cast<std::chrono::minutes>(elapsed_seconds) - hours;
+		double seconds = elapsed_seconds.count() - (hours.count() * 3600 + minutes.count() * 60);
+		
+		// move cursor to write header
+        moveCursor(9, 1);
+        std::cout << "Time         : " << std::setw(8) << std::fixed << std::setprecision(6) << itime << " s" << std::endl;
+        std::cout << "Energy       : " << std::setw(8) << std::fixed << std::setprecision(2) << ienergy << " J" << std::endl;
+        std::cout << "Particles    : " << Particle::getTotalParticles() << std::endl;
+        std::cout << "Threads      : " << ModelSetup::getThreads() << std::endl;
+        std::cout << "Time Step    : " << ModelSetup::getTimeStep() << " s" << std::endl;
+		std::cout << "Elapsed time : "<< hours.count() << " h : " << minutes.count() << " m, " << std::fixed << std::setprecision(2) << seconds << " s"<<std::endl;
+
+        // show the progress bar
+        double progress = itime / ModelSetup::getTime();
+        moveCursor(16, 1);
+        showProgressBar(progress);
+		
+		int width = 55;
+		string hLines(width,'-');
+		cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
+
+        // open the simulation CSV file
+        std::ofstream csv_file("simulation_data.csv", std::ios::app);
+        if (!csv_file.is_open()) {
+            std::cerr << "Error in opening the CSV file" << std::endl;
+        }
+
+        // write energy and time
+        csv_file << itime << "," << ienergy << "\n";
+        csv_file.close();
+	}
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
 		if (loopCounter%resultSteps==0)
 		{
+			// write model results
 			writeBodies(bodies,iTime);
-			cout<<"Time = "<<scientific<<iTime<<"\tEnergy = "<<scientific<<DynamicRelaxation::computeKineticEnergy(bodies)<<"\n";
+
+			// update terminal
+			updateTerminal(bodies,iTime);
 		}
 	}
 }
