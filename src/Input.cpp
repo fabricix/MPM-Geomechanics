@@ -475,7 +475,7 @@ vector<Body*> Input::getBodyList(){
 				}
 
 				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
-				Vector3i particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
+				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
 				if ((*it)["particles_per_direction"].is_array()) {
 					particles_in_direction(0) = (*it)["particles_per_direction"][0];
 					particles_in_direction(1) = (*it)["particles_per_direction"][1];

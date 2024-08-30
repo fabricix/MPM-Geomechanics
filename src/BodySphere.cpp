@@ -22,7 +22,7 @@ void BodySphere::create(Mesh& mesh, Material* material) {
     Vector3d cellDimension = mesh.getCellDimension();
 
 	// particles in each direction
-	Vector3i particlesInDirection(2,2,2);
+    Vector3d particlesInDirection = this->particlesPerDirection;
 
     // particle size
     Vector3d particleSize;
