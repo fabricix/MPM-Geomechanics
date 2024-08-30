@@ -13,6 +13,7 @@
 #include "Body/BodyCuboid.h"
 #include "Body/BodyPolygon.h"
 #include "Body/BodyParticle.h"
+#include "Body/BodySphere.h"
 #include "Particle/Particle.h"
 #include "Particle/ParticleMixture.h"
 #include "Warning.h"
@@ -428,6 +429,76 @@ vector<Body*> Input::getBodyList(){
 			json::iterator it;
 			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) {
 				
+			// sphere body
+			if ((*it)["type"] == "sphere") {
+
+				// body id
+				int id = 0;
+				if ((*it)["id"].is_number()) {
+					id = ((*it)["id"]);
+				} else {
+					throw(0);
+				}
+
+				// center of the sphere
+				Vector3d center = Vector3d::Zero();
+				if ((*it)["center"].is_array()) {
+					center(0) = (*it)["center"][0];
+					center(1) = (*it)["center"][1];
+					center(2) = (*it)["center"][2];
+				} else {
+					throw(0);
+				}
+
+				// diameter of the sphere
+				double diameter = 0.0;
+				if ((*it)["diameter"].is_number()) {
+					diameter = ((*it)["diameter"]);
+				} else {
+					throw(0);
+				}
+
+				// material id
+				int material_id = 0;
+				if ((*it)["material_id"].is_number()) {
+					material_id = ((*it)["material_id"]);
+				} else {
+					throw(0);
+				}
+
+				// initial velocity
+				Vector3d initial_velocity = Vector3d::Zero();
+				if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array()) {
+					initial_velocity(0) = (*it)["initial_velocity"][0];
+					initial_velocity(1) = (*it)["initial_velocity"][1];
+					initial_velocity(2) = (*it)["initial_velocity"][2];
+				}
+
+				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
+				Vector3i particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
+				if ((*it)["particles_per_direction"].is_array()) {
+					particles_in_direction(0) = (*it)["particles_per_direction"][0];
+					particles_in_direction(1) = (*it)["particles_per_direction"][1];
+					particles_in_direction(2) = (*it)["particles_per_direction"][2];
+				}
+
+				// create a new sphere
+				BodySphere* iBody = new BodySphere();
+				if (iBody == NULL) {
+					throw(0);
+				} else {
+					iBody->setId(id);
+					iBody->setCenter(center);
+					iBody->setDiameter(diameter);
+					iBody->setMaterialId(material_id);
+					iBody->setInitialVelocity(initial_velocity);
+					iBody->setParticlesPerDirection(particles_in_direction);
+				}
+
+				bodies.push_back(iBody);
+}
+
+
 				// cuboid body
 				if ((*it)["type"] == "cuboid") {
 

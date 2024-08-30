@@ -39,6 +39,7 @@
     <ClCompile Include="..\..\tests\deformation-gradient\testDeformationGradient.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\BodySphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="..\..\inc\States.h" />
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
+    <ClInclude Include="..\..\inc\Body\BodySphere.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">
