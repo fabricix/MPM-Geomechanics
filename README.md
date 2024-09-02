@@ -38,7 +38,7 @@ The main features of the program in the actuality are:
 To compile using make:
 
 ```bash
-cd make && make
+make -f make/makefile
 ```
 Make sure you have installed OpenMP.
 
