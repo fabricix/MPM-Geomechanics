@@ -25,4 +25,4 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y build-essential
 
     - name: Build with Makefile
-      run: make -f make/makefile all
+      run: make -f make/makefile
