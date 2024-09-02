@@ -24,3 +24,4 @@ doxygen/output.txt
 *.sublime-project
 MPM-Geomechanics
 /make/VS/MPM-Geomechanics.vcxproj.user
+simulation_data.csv

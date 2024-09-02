@@ -1,0 +1,86 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":2.5,
+
+	"time_step":0.001,
+
+	"gravity":[0.0,0.0,0],
+
+	"n_threads":2,
+
+	"damping":
+	{
+		"type":"local",
+		"value":0.0
+	},
+
+	"results":
+	{
+		"print":50,
+		"fields":["id","displacement","material","active"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[0.5,0.5,0.5],
+		"cells_number":[20,20,20],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"plastic":
+		{
+			"type":"mohr-coulomb",
+			"id":1,
+			"young":50e4,
+			"density":2000,
+			"poisson":0.2,
+			"friction":30.0,
+			"cohesion":1500.0
+		},
+
+		"plastic-softening":
+		{
+			"id":2,
+			"type":"mohr-coulomb",
+			"young":50e6,
+			"density":2700,
+			"poisson":0.25,
+			"friction":25.0,
+			"cohesion":1e6,
+			"tensile":2e6,
+			"softening":"exponential",
+			"softening.exponential.eta":150,
+			"softening.tensile.residual":1e-6,
+			"softening.tensile.active":true
+		}
+	},
+
+	"body":
+	{
+		"bloc":
+		{
+			"type":"sphere",
+			"id":1,
+			"center":[2,2,6],
+			"diameter":3,
+			"material_id":2,
+			"particles_per_direction":[2,2,2],
+			"initial_velocity":[0,0,-15]
+		}
+	}
+}
