@@ -63,7 +63,7 @@ You can download the latest compiled files from the [GitHub Actions](https://git
 1. Go to the [Actions page](https://github.com/your-username/MPM-Geomechanics/actions).
 2. Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
-4. Download the `compiled-binaries` artifact to get the installers.
+4. Download the `compiled-binaries` artifact to get the compiled code.
 
 ## Examples
 
