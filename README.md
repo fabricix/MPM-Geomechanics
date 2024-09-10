@@ -56,6 +56,15 @@ To generate the documentation in PDF, run the make command in `doxy/latex`.
 cd /doxygen/latex && make
 ```
 
+## Compiled binaries
+
+You can download the latest compiled files from the [GitHub Actions](https://github.com/your-username/MPM-Geomechanics/actions) section in GitHub. Just follow these steps:
+
+1. Go to the [Actions page](https://github.com/your-username/MPM-Geomechanics/actions).
+2. Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
+3. At the bottom, you will find the available artifacts under the **Artifacts** section.
+4. Download the `compiled-binaries` artifact to get the installers.
+
 ## Examples
 
 ### Slope failure
