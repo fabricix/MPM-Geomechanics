@@ -1,0 +1,44 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen -y
+
+      - name: Install LaTeX for PDF generation
+        run: sudo apt-get install -y texlive-full
+
+      - name: Generate Documentation (HTML and PDF)
+        run: |
+          cd doxigen
+          doxygen Doxyfile
+
+      - name: Archive the generated PDF
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation-pdf
+          path: doxige/latex/refman.pdf
+
+      - name: Deploy to GitHub Pages (for HTML documentation)
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doxige/html
+
+       - name: Copy PDF to GitHub Pages directory
+        run: cp doxigen/latex/refman.pdf ./doxigen/html/documentation.pdf
+  
