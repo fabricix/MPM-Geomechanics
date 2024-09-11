@@ -17,6 +17,9 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get install doxygen -y
 
+      - name: Install Graphviz (if needed for diagrams)
+        run: sudo apt-get install graphviz -y
+
       - name: Install LaTeX for PDF generation
         run: sudo apt-get install -y texlive-full
 
