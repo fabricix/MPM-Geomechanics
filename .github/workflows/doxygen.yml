@@ -22,7 +22,7 @@ jobs:
 
       - name: Generate Documentation (HTML and PDF)
         run: |
-          cd doxigen
+          cd doxygen
           doxygen Doxyfile
 
       - name: Archive the generated PDF
@@ -39,5 +39,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./doxige/html
       - name: Copy PDF to GitHub Pages directory
-        run: cp doxigen/latex/refman.pdf ./doxigen/html/documentation.pdf
+        run: cp doxygen/latex/refman.pdf ./doxygen/html/documentation.pdf
   
