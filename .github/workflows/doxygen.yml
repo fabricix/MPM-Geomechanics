@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: documentation-pdf
-          path: doxige/latex/refman.pdf
+          path: doxygen/latex/refman.pdf
 
       - name: Deploy to GitHub Pages (for HTML documentation)
         if: github.ref == 'refs/heads/main'
@@ -38,6 +38,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./doxige/html
+          publish_branch: gh-pages
+          
       - name: Copy PDF to GitHub Pages directory
         run: cp doxygen/latex/refman.pdf ./doxygen/html/documentation.pdf
-  
