@@ -34,6 +34,13 @@ The main features of the program in the actuality are:
 - Shared memory parallelization (for computational time reduction)
 - Several constitutive models for soils and rock, including softening and hardening options.
 
+## Compiled binaries
+
+1. Go to the [Actions page](https://github.com/fabricix/MPM-Geomechanics/actions).
+2. Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
+3. At the bottom, you will find the available artifacts under the **Artifacts** section.
+4. Download the `compiled-binaries` artifact to get the compiled code.
+
 ## Documentation and Compilation
 
 To compile using make:
