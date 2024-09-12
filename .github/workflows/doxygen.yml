@@ -27,6 +27,8 @@ jobs:
         run: |
           cd doxygen
           doxygen Doxyfile
+          cd latex
+          make
 
       - name: Archive the generated PDF
         if: github.ref == 'refs/heads/main'
