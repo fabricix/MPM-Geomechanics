@@ -11,6 +11,7 @@
 
 #if defined (_WIN64) || defined(_WIN32)
 #include <direct.h>
+#include <windows.h>
 #endif
 
 #include "Output.h"
@@ -520,13 +521,14 @@ namespace Output{
 		serieFile <<"\t</Collection>\n";
 		serieFile <<"</VTKFile>\n";
 	}
-	
-	void moveCursor(int row, int col) {
-		std::cout << "\033[" << row << ";" << col << "H";
-	}
 
 	void clearScreen() {
-		std::cout << "\033[2J\033[1;1H";
+	
+		#ifdef _WIN32
+    		system("cls");
+		#else
+    		std::cout << "\033[2J\033[1;1H" << std::flush; // Clear screen for Unix systems
+		#endif
 	}
 
 	void showProgressBar(double progress, int width = 47) {
@@ -542,8 +544,6 @@ namespace Output{
 	}
 
 	void welcomeScreen() {
-
-  		clearScreen();
 
 		// common format
 		int width = 55;
@@ -567,7 +567,6 @@ namespace Output{
 	}
 
 	void farewellScreen() {
-
 		 int width = 55;
 		 string hLines(width,'-');
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n\n";
@@ -575,6 +574,10 @@ namespace Output{
  
 	void updateTerminal(vector<Body*>* bodies, double itime)
 	{
+		clearScreen();
+		
+		welcomeScreen();
+
 		// get total kinetic energy
 		double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
 		
@@ -583,21 +586,20 @@ namespace Output{
 		auto hours = std::chrono::duration_cast<std::chrono::hours>(elapsed_seconds);
     	auto minutes = std::chrono::duration_cast<std::chrono::minutes>(elapsed_seconds) - hours;
 		double seconds = elapsed_seconds.count() - (hours.count() * 3600 + minutes.count() * 60);
-		
-		// move cursor to write header
-        moveCursor(9, 1);
-        std::cout << "Time         : " << std::setw(8) << std::fixed << std::setprecision(6) << itime << " s" << std::endl;
-        std::cout << "Energy       : " << std::setw(8) << std::fixed << std::setprecision(2) << ienergy << " J" << std::endl;
+
+        std::cout << "Time         : " << std::setw(8) << std::fixed << std::setprecision(4) << itime << "s" << std::endl;
+        std::cout << "Energy       : " << std::setw(8) << std::scientific << std::setprecision(2) << ienergy << "J" << std::endl;
         std::cout << "Particles    : " << Particle::getTotalParticles() << std::endl;
         std::cout << "Threads      : " << ModelSetup::getThreads() << std::endl;
-        std::cout << "Time Step    : " << ModelSetup::getTimeStep() << " s" << std::endl;
-		std::cout << "Elapsed time : "<< hours.count() << " h : " << minutes.count() << " m, " << std::fixed << std::setprecision(2) << seconds << " s"<<std::endl;
+        std::cout << "Time Step    : " << ModelSetup::getTimeStep() << "s" << std::endl;
+		std::cout << "Elapsed time : "<< hours.count() << "h : " << minutes.count() << "m, " << std::fixed << std::setprecision(2) << seconds << "s"<<std::endl;
 
         // show the progress bar
         double progress = itime / ModelSetup::getTime();
-        moveCursor(16, 1);
-        showProgressBar(progress);
-		
+        
+		cout << "\n";
+
+        showProgressBar(progress);		
 		int width = 55;
 		string hLines(width,'-');
 		cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
@@ -607,8 +609,6 @@ namespace Output{
         if (!csv_file.is_open()) {
             std::cerr << "Error in opening the CSV file" << std::endl;
         }
-
-        // write energy and time
         csv_file << itime << "," << ienergy << "\n";
         csv_file.close();
 	}
