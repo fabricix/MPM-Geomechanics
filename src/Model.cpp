@@ -29,7 +29,7 @@ namespace ModelSetup {
 	bool gravityActive=false; //!< is gravity active
 
 	// gravity dafault value
-	Vector3d gravity(0,0,-9.81); //!< gravity vector
+	Vector3d gravity(0,0,-10); //!< gravity vector
 	
 	// axisymmetric model
 	bool axisymetricActive=false; //!< is axisymmetric model

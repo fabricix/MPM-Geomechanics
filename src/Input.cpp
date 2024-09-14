@@ -61,24 +61,17 @@ namespace Input {
 	}
 }
 
-inline const json& Input::getJson() {
+inline const json& Input::getJson( ) { return inputFile; }
 
-	return inputFile; 
-}
-
-inline string Input::getFileName() { 
-
-	return inputFileName; 
-}
+inline string Input::getFileName( ) { return inputFileName; }
 
 void Input::readInputFile(string filename) {
-
 
 	try{
 		// configures the input file	
 		inputFileName = filename;
 		
-		if (inputFileName!=""){
+		if ( inputFileName != "" ) {
 
 			// read the file
 			ifstream i(inputFileName);
@@ -91,7 +84,7 @@ void Input::readInputFile(string filename) {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in input file name");
+		Warning::printMessage("Was not possible read the file,\nplease check the input file name...");
 		throw;
 	}
 }
@@ -99,16 +92,18 @@ void Input::readInputFile(string filename) {
 double Input::getSimulationTime(){
 	
 	try{
-		if(inputFile["time"].is_number()) {
-
-			return inputFile["time"];
+		double time = get_number(inputFile,"time",0);
+		
+		if(time>0) 
+		{ 
+			return time; 
 		}
 		else
 			throw(0);
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in input file name");
+		Warning::printMessage("Simulation time must be greater than zero");
 		throw;
 	}
 }
