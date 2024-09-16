@@ -332,6 +332,7 @@ void MPM::solve(){
 	else{
 		ModelSetup::setInitialSimulationTime(std::chrono::system_clock::now());
 		solver->Solve();
+		Output::printElapsedTime();
 	}
 }
 

@@ -563,58 +563,60 @@ namespace Output{
 		cout<<"|"+hSpaces+"|"<<"\n";
 		cout<<"|"<<right<<setw(50)<<programDescription<<setw(5)<<right<<"|\n";
 		cout<<"|"+hSpaces+"|"<<"\n";
-		cout<<left<<" "<<setw(width)<<hLines<<"\n\n";
+		cout<<left<<" "<<setw(width)<<hLines<<"\n";
 	}
 
 	void farewellScreen() {
 		 int width = 55;
 		 string hLines(width,'-');
-		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n\n";
+		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
 	}
- 
+
 	void updateTerminal(vector<Body*>* bodies, double itime)
 	{
-		clearScreen();
-		
-		welcomeScreen();
+		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
+		std::cout <<"Energy: "<< std::setw(8) << std::scientific << std::setprecision(4) << DynamicRelaxation::computeKineticEnergy(bodies) << " J, ";
+		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
+	} 
 
-		// get total kinetic energy
-		double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
-		
-		// hours to minutes and seconds
-    	std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - ModelSetup::getInitialSimulationTime() ;
-		auto hours = std::chrono::duration_cast<std::chrono::hours>(elapsed_seconds);
-    	auto minutes = std::chrono::duration_cast<std::chrono::minutes>(elapsed_seconds) - hours;
-		double seconds = elapsed_seconds.count() - (hours.count() * 3600 + minutes.count() * 60);
-
-        std::cout << "Time         : " << std::setw(8) << std::fixed << std::setprecision(4) << itime << "s" << std::endl;
-        std::cout << "Energy       : " << std::setw(8) << std::scientific << std::setprecision(2) << ienergy << "J" << std::endl;
-        std::cout << "Particles    : " << Particle::getTotalParticles() << std::endl;
-        std::cout << "Threads      : " << ModelSetup::getThreads() << std::endl;
-        std::cout << "Time Step    : " << ModelSetup::getTimeStep() << "s" << std::endl;
-		std::cout << "Elapsed time : "<< hours.count() << "h : " << minutes.count() << "m, " << std::fixed << std::setprecision(2) << seconds << "s"<<std::endl;
-
-        // show the progress bar
-        double progress = itime / ModelSetup::getTime();
-        
-		cout << "\n";
-
-        showProgressBar(progress);		
-		int width = 55;
-		string hLines(width,'-');
-		cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
-
-        // open the simulation CSV file
-        std::ofstream csv_file("simulation_data.csv", std::ios::app);
-        if (!csv_file.is_open()) {
-            std::cerr << "Error in opening the CSV file" << std::endl;
-        }
-        csv_file << itime << "," << ienergy << "\n";
-        csv_file.close();
+	void printModelInfo(vector<Body*>* bodies, double itime)
+	{
+		std::cout << "     Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
+		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
+		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;
+		std::cout << "  Threads : " << ModelSetup::getThreads() << std::endl;
+		std::cout << "  Results : " << ModelSetup::getResultNum() << std::endl;
 	}
+
+	void initializeCSVFile(const std::string& filename) {
+		// Check if the file exists
+		if (std::ifstream(filename)) {
+			// If it exists, delete the file
+			std::remove(filename.c_str());
+		}
+	}
+
+	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
+    // Get total kinetic energy
+    double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
+    
+    // Open the simulation CSV file in append mode
+    std::ofstream csv_file("simulation_data.csv", std::ios::app);
+    if (!csv_file.is_open()) {
+        std::cerr << "Error opening the CSV file" << std::endl;
+    }
+    
+    // Write time and energy to the file
+    csv_file << iTime << "," << ienergy << "\n";
+    
+    // Close the file
+    csv_file.close();
+}
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
+		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("simulation_data.csv");}
+
 		if (loopCounter%resultSteps==0)
 		{
 			// write model results
@@ -622,6 +624,18 @@ namespace Output{
 
 			// update terminal
 			updateTerminal(bodies,iTime);
+
+			writeCSVEnergyFile(bodies,iTime);
 		}
+	}
+
+	void printElapsedTime() {
+		// hours to minutes and seconds
+		std::chrono::duration<double> elapsed_seconds = std::chrono::system_clock::now() - ModelSetup::getInitialSimulationTime();
+		auto hours = std::chrono::duration_cast<std::chrono::hours>(elapsed_seconds);
+		auto minutes = std::chrono::duration_cast<std::chrono::minutes>(elapsed_seconds) - hours;
+		double seconds = elapsed_seconds.count() - (hours.count() * 3600 + minutes.count() * 60);
+		std::cout << "\nElapsed time: " << hours.count() << " h, " << minutes.count() << " m, " << std::fixed << std::setprecision(2) << seconds << " s" << std::endl;
+		farewellScreen();
 	}
 }

@@ -68,6 +68,10 @@ namespace Output {
 	/// \brief Print final program screen
 	///
 	void farewellScreen();
+
+	/// \brief Print elapsed time
+	///
+	void printElapsedTime();
 }
 
 #endif /* OUTPUT_H_ */

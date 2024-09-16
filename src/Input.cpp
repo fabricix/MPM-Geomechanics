@@ -137,10 +137,8 @@ Solver* Input::getSolver() {
 
 				return new SolverExplicitUSL();
 			}
-
 			throw (key);
 		}
-		
 		throw(0);
 	}
 
