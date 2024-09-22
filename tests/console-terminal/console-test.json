@@ -1,11 +1,13 @@
 {
 	"stress_scheme_update":"USL",
 
+	"save_state":true,
+
 	"shape_function":"GIMP",
 
 	"time":1,
 
-	"time_step":0.001,
+	"time_step":0.004,
 
 	"gravity":[0.0,0.0,-9.81],
 

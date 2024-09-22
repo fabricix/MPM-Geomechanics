@@ -22,7 +22,8 @@ doxygen/output.txt
 *.sublime-workspace
 *.code-workspace
 *.sublime-project
-simulation_data.csv
 MPM-Geomechanics
 /make/VS/MPM-Geomechanics.vcxproj.user
-simulation_data.csv
+time-energy.csv
+simulation-data.csv
+particle_stress_data.json

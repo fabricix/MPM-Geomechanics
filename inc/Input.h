@@ -471,6 +471,14 @@ namespace Input {
 	/// \brief Return the file name
 	/// \return File name
 	string getFileName();
+
+	/// \brief Return load state activated
+	/// \return true for load state activated 
+	bool getLoadState();
+
+	/// \brief Return save state activated
+	/// \return true for load state activated
+	bool getSaveState();
 	
 	/// \brief Return the simulation time
 	/// \return Simulation time

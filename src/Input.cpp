@@ -65,6 +65,10 @@ inline const json& Input::getJson( ) { return inputFile; }
 
 inline string Input::getFileName( ) { return inputFileName; }
 
+bool Input::getLoadState() { return Input::get_boolean(Input::getJson(), "load_state", false); };
+
+bool Input::getSaveState() { return Input::get_boolean(Input::getJson(), "save_state", false); };
+
 void Input::readInputFile(string filename) {
 
 	try{
@@ -92,7 +96,7 @@ void Input::readInputFile(string filename) {
 double Input::getSimulationTime(){
 	
 	try{
-		double time = get_number(inputFile,"time",0);
+		double time = get_number(inputFile,"time",0.0);
 		
 		if(time>0) 
 		{ 

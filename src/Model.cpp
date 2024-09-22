@@ -24,6 +24,10 @@ namespace ModelSetup {
 
 	// contact
 	bool contactActive=false; //!< is contact active
+
+	// state
+	bool loadState = false; //!< if state need to be loaded
+	bool saveState = false; //!< if state need to be salved
 	
 	// gravity active
 	bool gravityActive=false; //!< is gravity active
@@ -72,6 +76,12 @@ namespace ModelSetup {
 	///
 	/// Function members
 	///
+
+	bool getLoadState() { return loadState; }
+	void setLoadState(bool st) { loadState = st; }
+
+	bool getSaveState() { return saveState; }
+	void setSaveState(bool st) { saveState = st; }
 
 	// contribution nodes
 	unsigned getContributionNodesNum() { return contributionNodes; }

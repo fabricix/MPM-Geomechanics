@@ -1,27 +1,15 @@
-/*
- * States.h
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+
+#include <string>
+#include "Particle/Particle.h"
 
 #ifndef STATES_H_
 #define STATES_H_
 
-/// \class States
-/// \brief Represents model states that
-/// can be loaded before a simulation.
-class States {
+namespace States {
 
-public:
-	
-	/// \brief Default constructor
-	///
-	States();
+	void saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles);
 
-	/// \brief Default destructor
-	///
-	virtual ~States();
-};
+	void loadParticleStress(const std::string& filename, std::vector<Particle*>& particles);
+}
 
 #endif /* STATES_H_ */

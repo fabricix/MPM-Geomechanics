@@ -44,6 +44,15 @@ namespace ModelSetup {
 	/// \return True if is Linux system
 	bool getLinuxSystem();
 	
+	bool getLoadState();
+
+	void setLoadState(bool st);
+
+	bool getSaveState();
+
+	void setSaveState(bool st);
+
+
 	/// \brief Return the number of nodes that a particle contributes
 	/// \return The number of nodes that a particle contributes
 	unsigned getContributionNodesNum();

@@ -179,6 +179,10 @@ void MPM::createBodies() {
 
 void MPM::setupParticles() {
 
+	// clear particle list
+	particles.clear();
+
+	// set body id and shape function
 	for (size_t i = 0; i < bodies.size(); ++i){
 
 		vector<Particle*>* particles = bodies.at(i)->getParticles();
@@ -189,8 +193,8 @@ void MPM::setupParticles() {
 			particles->at(j)->setBodyId(bodies.at(i)->getId());
 
 			// set shape function
-			switch(ModelSetup::getInterpolationFunction()){
-
+			switch(ModelSetup::getInterpolationFunction())
+			{
 				case ModelSetup::LINEAR:
 					particles->at(j)->setShape(new ShapeLinear);
 					break;
@@ -203,6 +207,9 @@ void MPM::setupParticles() {
 				Warning::printMessage("Bad definition of shape function in particle");
 				throw (0);
 			}
+
+			// register particle is material point list
+			this->particles.push_back(particles->at(j));
 		}
 	}
 }
@@ -264,6 +271,26 @@ void MPM::setNumberPhasesInSimulation() {
 	ModelSetup::setTwoPhaseActive(Input::getNumberPhases()>1?true:false);
 }
 
+void MPM::loadState()
+{
+	ModelSetup::setLoadState(Input::getLoadState());
+
+	if ( ModelSetup::getLoadState() ) 
+	{
+		States::loadParticleStress("particle_stress_data.json", particles);
+	}
+}
+
+void MPM::saveState()
+{
+	ModelSetup::setSaveState(Input::getSaveState());
+
+	if ( ModelSetup::getSaveState() )
+	{
+		States::saveParticleStress("particle_stress_data.json", particles);
+	}
+}
+
 void MPM::createModel() {
 
 	try{
@@ -299,6 +326,9 @@ void MPM::createModel() {
 
 		// configures the particles in the model
 		setupParticles();
+
+		// load previous state
+		loadState();
 
 		// configures the loads
 		setupLoads();
