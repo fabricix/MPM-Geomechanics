@@ -64,10 +64,6 @@ void States::loadParticleStress(const std::string& filename, std::vector<Particl
 
         Particle* particle = particles.at(particleData["index"]);
 
-        auto position = particleData["position"];
-
-        particle->setPosition(Vector3d(position[0], position[1], position[2]));
-
         auto stress = particleData["stress"];
 
         Matrix3d sigma;
