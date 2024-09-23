@@ -69,7 +69,6 @@ void States::loadParticleStress(const std::string& filename, std::vector<Particl
         Matrix3d sigma;
 
         sigma.setZero();
-
         for (int i = 0; i < sigma.rows(); i++) { 
         
             for (int j = 0; j < sigma.cols(); j++) {
