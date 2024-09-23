@@ -238,6 +238,7 @@ using Eigen::Vector3d;
 /// | --------| ----------- | --------- |
 /// | time | define the simulation time | double |
 /// | time_step | define the time step | double |
+/// | critical_time_step_multiplier | define the time step by a fraction of the critical time step | double |
 ///
 
 /// ## Simulation time definition example
@@ -245,6 +246,18 @@ using Eigen::Vector3d;
 /// ```
 /// "time":2,
 /// ```
+
+/// ## Time step definition example
+///
+/// ```
+/// "time_step":1e-4,
+/// ```
+///
+/// The time step of the simulation can be defined by the critical time multiplier:
+/// ```
+/// 	"critical_time_step_multiplier":0.25,
+/// ```
+/// So, in this case the time step will be 0.25 of the critical time step.
 
 /// ## Two phase simulations
 ///	| Keyword | Description | Data type |
@@ -458,6 +471,24 @@ using Eigen::Vector3d;
 /// }
 /// ```
 
+///
+/// ## Save/Load States
+/// These keywords allow to load and save model states, for example this can be used to load the initial stresses resulting of a previous analysis
+///	| Keyword | Description | Data type |
+/// | --------| ----------- | --------- |
+/// | load_state | activate load model state | bool |
+/// | save_state | activate save model state | bool |
+///
+/// Example
+/// To save the state of the model 
+/// ```
+/// "save_state":true,
+/// ```
+/// And for loading the salved state
+/// ```
+/// "load_state":true,
+/// ```
+
 namespace Input {
 	
 	/// \brief Read the input file
@@ -471,6 +502,14 @@ namespace Input {
 	/// \brief Return the file name
 	/// \return File name
 	string getFileName();
+
+	/// \brief Return load state activated
+	/// \return true for load state activated 
+	bool getLoadState();
+
+	/// \brief Return save state activated
+	/// \return true for load state activated
+	bool getSaveState();
 	
 	/// \brief Return the simulation time
 	/// \return Simulation time

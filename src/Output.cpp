@@ -601,7 +601,7 @@ namespace Output{
     double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
     
     // Open the simulation CSV file in append mode
-    std::ofstream csv_file("simulation_data.csv", std::ios::app);
+    std::ofstream csv_file("time-energy.csv", std::ios::app);
     if (!csv_file.is_open()) {
         std::cerr << "Error opening the CSV file" << std::endl;
     }
@@ -615,7 +615,7 @@ namespace Output{
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
-		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("simulation_data.csv");}
+		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
 
 		if (loopCounter%resultSteps==0)
 		{

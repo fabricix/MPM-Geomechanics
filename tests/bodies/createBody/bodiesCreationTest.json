@@ -45,6 +45,14 @@
       "young":10e1,
       "density":2600,
       "poisson":0.3
+    },
+    "elastic_1":
+    {
+      "type":"elastic",
+      "id":2,
+      "young":10e1,
+      "density":2600,
+      "poisson":0.3
     }
   },
 
@@ -89,7 +97,7 @@
     {
       "type":"particles",
       "id":4,
-      "material_id":1,    
+      "material_id":2,    
       "particles":
       {
           "id":[1,2,3],
