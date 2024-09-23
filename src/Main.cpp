@@ -32,6 +32,9 @@ int main(int argc, char **argv)
 	// solve the problem in time
 	mpm.solve();
 
+	// save state
+	mpm.saveState();
+
 	// finish the program
 	mpm.end();
 

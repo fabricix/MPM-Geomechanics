@@ -94,11 +94,20 @@ public:
 	///
 	void end();
 
+	/// \brief Load model state
+	///
+	void loadState();
+
+	/// \brief Save model state
+	///
+	void saveState();
 private:
 	
 	Mesh mesh; //!< grid mesh
 
 	vector<Body*> bodies; //!< bodies discretized by material points
+
+	vector<Particle*> particles; //!< material points list
 
 	vector<Material*> materials; //!< bodies discretized by material points
 	
@@ -155,6 +164,7 @@ private:
 	/// \brief Configure number of phases in the simulation
 	///
 	void setNumberPhasesInSimulation();
+
 
 	/// \brief Configure number of threads
 	///

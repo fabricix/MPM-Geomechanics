@@ -1,28 +1,27 @@
 {
 	"stress_scheme_update":"USL",
 
-	"save_state":true,
-
 	"shape_function":"GIMP",
 
-	"time":1,
+	"time":2e-1,
 
-	"time_step":0.004,
+	"critical_time_step_multiplier":0.25,
 
-	"gravity":[0.0,0.0,-9.81],
+	"load_state":true,
+
+	"gravity":[0.0,0.0,-10.0],
 
 	"n_threads":10,
 
 	"damping":
 	{
-		"type":"local",
-		"value":0.0
+		"type":"kinetic"
 	},
 
 	"results":
 	{
-		"print":50,
-		"fields":["id","displacement","material","active","plastic_strain"]
+		"print":10,
+		"fields":["id","displacement","material","stress","plastic_strain"]
 	},
 
 	"mesh":
@@ -46,13 +45,11 @@
 	{
 		"plastic":
 		{
-			"type":"mohr-coulomb",
+			"type":"elastic",
 			"id":1,
-			"young":70e6,
+			"young":100e6,
 			"density":2100,
-			"poisson":0.3,
-			"friction":20.0,
-			"cohesion":1.0e3
+			"poisson":0.25
 		}
 	},
 
