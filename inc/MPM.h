@@ -94,8 +94,12 @@ public:
 	///
 	void end();
 
+	/// \brief Load model state
+	///
 	void loadState();
 
+	/// \brief Save model state
+	///
 	void saveState();
 private:
 	

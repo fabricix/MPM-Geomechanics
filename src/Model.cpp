@@ -25,7 +25,7 @@ namespace ModelSetup {
 	// contact
 	bool contactActive=false; //!< is contact active
 
-	// state
+	// states
 	bool loadState = false; //!< if state need to be loaded
 	bool saveState = false; //!< if state need to be salved
 	
@@ -53,7 +53,7 @@ namespace ModelSetup {
 	// time
 	double dt=0.0; //!< time step
 	double time=0.0; //!< simulation time
-	double dt_critical_multiplier=0.25; //!< dafault critical time step fraction
+	double dt_critical_multiplier = 0.25; //!< dafault critical time step fraction
 
 	// initial time simulation
     std::chrono::system_clock::time_point initialSimulationTime;
@@ -61,7 +61,7 @@ namespace ModelSetup {
 	// default damping
 	DampingType damping=DampingType::UNDAMPED; //!< damping type
 	
-	// default lodal damping value
+	// default local damping value
 	double localDamping=0.0; //!< local damping value
 
 	// input file
@@ -77,9 +77,9 @@ namespace ModelSetup {
 	/// Function members
 	///
 
+    // states 
 	bool getLoadState() { return loadState; }
 	void setLoadState(bool st) { loadState = st; }
-
 	bool getSaveState() { return saveState; }
 	void setSaveState(bool st) { saveState = st; }
 
@@ -92,8 +92,7 @@ namespace ModelSetup {
 
 	// results
 	unsigned getResultNum() { return resultNumber; }
-	void
-	setResultNum(unsigned d) { resultNumber=d; }
+	void setResultNum(unsigned d) { resultNumber=d; }
 	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
 
 	// time step
@@ -125,6 +124,7 @@ namespace ModelSetup {
 	bool getTwoPhaseActive() { return twoPhaseCalculationActive; }
 	void setTwoPhaseActive(bool d) { twoPhaseCalculationActive=d; }
 
+    // simulation time
     void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime) { ModelSetup::initialSimulationTime = initialTime; }
     std::chrono::system_clock::time_point getInitialSimulationTime() { return ModelSetup::initialSimulationTime;  }
 
@@ -153,7 +153,8 @@ namespace ModelSetup {
 	// interpolation functions
 	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
-
+    
+	// openMP threads
 	void setNumThreads(unsigned nThreads){
 
 		#ifdef _OPENMP

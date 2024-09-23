@@ -44,14 +44,21 @@ namespace ModelSetup {
 	/// \return True if is Linux system
 	bool getLinuxSystem();
 	
+	/// \brief Return true is load state is activated
+	/// \return True is load state is activated
 	bool getLoadState();
 
+	/// \brief Set load state activated
+	/// \param[in] load_state_activated Flag to load an state
 	void setLoadState(bool st);
 
+	/// \brief Return true is save state is activated
+	/// \return True is save state is activated
 	bool getSaveState();
 
+	/// \brief Set save state activated
+	/// \param[in] save_state_activated Flag to save an state
 	void setSaveState(bool st);
-
 
 	/// \brief Return the number of nodes that a particle contributes
 	/// \return The number of nodes that a particle contributes

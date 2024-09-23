@@ -7,8 +7,14 @@
 
 namespace States {
 
+	/// \brief Save the particles stress into a json file
+	/// \param[in] filename File name
+	/// \param[in] particles List containing pointers to particles
 	void saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles);
 
+	/// \brief Load the particles stress from a json file
+	/// \param[in] filename File name
+	/// \param[in] particles List containing pointers to particles
 	void loadParticleStress(const std::string& filename, std::vector<Particle*>& particles);
 }
 
