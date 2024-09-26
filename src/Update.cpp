@@ -318,7 +318,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					nodeI->setMomentum(Vector3d::Zero());
 					break;
 				
-				// perpendicular restriction
+				// sliding restriction
 				case Boundary::BoundaryType::SLIDING:
 					
 					// get current boundary nodal momentum

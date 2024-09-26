@@ -575,7 +575,7 @@ namespace Output{
 	void updateTerminal(vector<Body*>* bodies, double itime)
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
-		std::cout <<"Energy: "<< std::setw(8) << std::scientific << std::setprecision(4) << DynamicRelaxation::computeKineticEnergy(bodies) << " J, ";
+		std::cout <<"Energy: "<< std::setw(8) << std::scientific << std::setprecision(4) << DynamicRelaxation::computeKineticEnergy(bodies) << " J - ";
 		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
 	} 
 
@@ -607,7 +607,10 @@ namespace Output{
     }
     
     // Write time and energy to the file
-    csv_file << iTime << "," << ienergy << "\n";
+    if(iTime==0)
+		csv_file << "time,energy" << "\n";
+    
+	csv_file << iTime << "," << ienergy << "\n";
     
     // Close the file
     csv_file.close();
