@@ -296,6 +296,9 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
+	double dt = ModelSetup::getTimeStep();
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
+
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < plane->nodes.size(); ++i){
@@ -321,32 +324,44 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				
 				// sliding restriction
 				case Boundary::BoundaryType::SLIDING:
-					
+				{
+
 					// get current boundary nodal momentum
 					Vector3d momentum = nodeI->getMomentum();
-					
+
 					// witch direction of the normal vector
-					switch(dir) {
+					switch (dir) {
 
 						// normal pointed to x
-						case Update::Direction::X :
-							momentum.x()=0.0;
-							break;
+					case Update::Direction::X:
+						momentum.x() = 0.0;
+						break;
 
 						// normal pointed to y
-						case Update::Direction::Y :
-							momentum.y()=0.0;
-							break;
+					case Update::Direction::Y:
+						momentum.y() = 0.0;
+						break;
 
 						// normal pointed to z
-						case Update::Direction::Z :
-							momentum.z()=0.0;
-							break;
+					case Update::Direction::Z:
+						momentum.z() = 0.0;
+						break;
 					}
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
 					break;
+				}
+				case Boundary::BoundaryType::EARTHQUAKE:
+				{
+					double mass = nodeI->getMass();
+
+					Eigen::Vector3d newMomentum = mass * interpolatedAcceleration * dt;
+
+					nodeI->setMomentum(newMomentum);
+
+					break;
+				}
 			}
 		}
 	}

@@ -51,9 +51,10 @@ namespace ModelSetup {
 	unsigned resultNumber=10; //!< number of results to write
 
 	// time
-	double dt=0.0; //!< time step
-	double time=0.0; //!< simulation time
+	double dt = 0.0; //!< time step
+	double time = 0.0; //!< simulation time
 	double dt_critical_multiplier = 0.25; //!< dafault critical time step fraction
+	double currentTime = 0.0; //!< current simulation time
 
 	// initial time simulation
     std::chrono::system_clock::time_point initialSimulationTime;
@@ -72,6 +73,10 @@ namespace ModelSetup {
 
 	// default interpolation functions
     InterpolationFunctionType interpolationType = InterpolationFunctionType::GIMP; //!< interpolation function type
+	
+    // seismic analysis
+	bool seismicAnalysisActive = false; //!< is seismic analysis
+
 	
 	///
 	/// Function members
@@ -120,13 +125,16 @@ namespace ModelSetup {
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
 
-	// coupled analisys
+	// coupled analysis
 	bool getTwoPhaseActive() { return twoPhaseCalculationActive; }
 	void setTwoPhaseActive(bool d) { twoPhaseCalculationActive=d; }
 
     // simulation time
     void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime) { ModelSetup::initialSimulationTime = initialTime; }
     std::chrono::system_clock::time_point getInitialSimulationTime() { return ModelSetup::initialSimulationTime;  }
+	
+	double getCurrentTime() { return currentTime; }
+	void setCurrentTime(bool a) { currentTime = a; }
 
     // axisymmetric analisys
 	bool getAxisymetricActive() { return axisymetricActive; }
@@ -161,4 +169,10 @@ namespace ModelSetup {
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
 		#endif
 	}
+
+	// Seismic analysis
+	string seismic_file_name = "base_acceleration.csv";
+	string getSeismicFileName() {return seismic_file_name;}
+	bool getSeismicAnalysis() {return seismicAnalysisActive;}
+	void setSeismicAnalysis(bool a) {seismicAnalysisActive = a;}
 }

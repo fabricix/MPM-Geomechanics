@@ -202,6 +202,8 @@ namespace ModelSetup {
 	/// \param[in] nThreads Number of threads
 	void setNumThreads(unsigned nThreads);
 
+	bool getSeismicAnalysis();
+
 	/// \brief Return if two-phase calculation is active
 	/// \return True if two-phase calculation is active
 	bool getTwoPhaseActive();
@@ -217,6 +219,12 @@ namespace ModelSetup {
 	/// \brief Get initial simulation time
 	/// \param[out] initialTime
 	std::chrono::system_clock::time_point getInitialSimulationTime( );
+
+	std::string getSeismicFileName();
+
+	double getCurrentTime();
+
+	void setCurrentTime(bool a);
 };
 
 #endif /* MODEL_H_ */

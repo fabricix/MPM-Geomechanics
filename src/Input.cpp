@@ -947,6 +947,10 @@ static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrict
 	{
 		restrictions.at(index)=Boundary::BoundaryType::SLIDING;
 	}
+	else if (resPlane=="earthquake")
+	{
+		restrictions.at(index)=Boundary::BoundaryType::EARTHQUAKE;
+	}
 	else
 	{
 		throw(0);
@@ -1176,7 +1180,7 @@ vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in prescibed pressure box definition");
+		Warning::printMessage("Error in prescribed pressure box definition");
 		throw;
 	}
 }
@@ -1324,7 +1328,6 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 };
 
-
 SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
 	SeismicData data;
 	std::ifstream file(filename);
@@ -1335,9 +1338,9 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 
 	std::string line;
 
-	// Si el CSV tiene encabezados, saltar la primera línea
+	// ignore headers if we have ones
 	if (hasHeader && std::getline(file, line)) {
-		// Puedes procesar los encabezados si es necesario
+		// headers manipulations if needed 
 	}
 
 	while (std::getline(file, line)) {
@@ -1345,39 +1348,25 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 		std::string item;
 		double t;
 		Eigen::Vector3d acc(0.0, 0.0, 0.0);
-		Eigen::Vector3d vel(0.0, 0.0, 0.0);
 
-		// Leer el tiempo
+		// read time
 		if (!std::getline(ss, item, ',')) continue;
 		t = std::stod(item);
 
-		// Leer la aceleración en X
+		// ax
 		if (!std::getline(ss, item, ',')) continue;
 		acc.x() = std::stod(item);
 
-		// Leer la aceleración en Y
+		// ay
 		if (!std::getline(ss, item, ',')) continue;
 		acc.y() = std::stod(item);
 
-		// Leer la aceleración en Z
+		// az
 		if (!std::getline(ss, item, ',')) continue;
 		acc.z() = std::stod(item);
 
-		// Leer la velocidad en X
-		if (!std::getline(ss, item, ',')) continue;
-		vel.x() = std::stod(item);
-
-		// Leer la velocidad en Y
-		if (!std::getline(ss, item, ',')) continue;
-		vel.y() = std::stod(item);
-
-		// Leer la velocidad en Z
-		if (!std::getline(ss, item, ',')) continue;
-		vel.z() = std::stod(item);
-
 		data.time.push_back(t);
 		data.acceleration.push_back(acc);
-		data.velocity.push_back(vel);
 	}
 
 	file.close();
