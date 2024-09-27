@@ -45,7 +45,7 @@ public:
 
 	/// \enum BoundaryType
 	/// \brief Determines the type of restrictions to be imposed to the mesh.
-	enum BoundaryType{ FREE, FIXED, SLIDING };
+	enum BoundaryType{ FREE, FIXED, SLIDING, EARTHQUAKE };
 
 	/// \enum BoundaryPlane
 	/// \brief Planes at the mesh boundary

@@ -7,6 +7,7 @@
 
 #include "Update.h"
 #include "Loads.h"
+#include <Interpolation.h>
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -433,6 +434,7 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
+
 void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 	// get nodes
@@ -455,7 +457,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
-}
+} 
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
@@ -640,4 +642,76 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 			particles->at(i)->updateContributionNodes(mesh);
 		}
 	}
+}
+
+// function to get the normal of a direction
+static Eigen::Vector3d getNormal(Update::Direction dir) {
+	Eigen::Vector3d normal = Eigen::Vector3d::Zero();
+
+	switch (dir) {
+	case Update::Direction::X:
+		normal.x() = 1.0;
+		break;
+	case Update::Direction::Y:
+		normal.y() = 1.0;
+		break;
+	case Update::Direction::Z:
+		normal.z() = 1.0;
+		break;
+	default:
+		// to handle additional cases
+		break;
+	}
+	return normal;
+}
+
+void Update::applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plane, std::vector<Node*>* nodes, double itime, const Loads::SeismicData& seismicData, Update::Direction dir) {
+    
+	// interpolate acceletarion and velocity in current time
+    Eigen::Vector3d interpolatedAcceleration = Interpolation::interpolateVector(seismicData.time, seismicData.acceleration, itime);
+	double dt = ModelSetup::getTimeStep();
+
+    // for each node in boundary
+    #pragma omp parallel for shared(plane, nodes)
+    for (int i = 0; i < plane->nodes.size(); ++i){
+        
+        Node* nodeI = nodes->at(plane->nodes.at(i));
+
+        if (nodeI->getActive()) {
+            
+            switch(plane->restriction) {
+            
+                case Boundary::BoundaryType::FREE:
+                    break;
+
+                case Boundary::BoundaryType::FIXED:
+             
+                    nodeI->setMomentum(Eigen::Vector3d::Zero());
+                    break;
+				
+				case Boundary::BoundaryType::SLIDING:
+				{
+					Eigen::Vector3d normal = getNormal(dir);
+
+					Eigen::Vector3d momentum = nodeI->getMomentum();
+
+					// project the momentum over tangentiual plane
+					momentum -= momentum.dot(normal) * normal;
+
+					nodeI->setMomentum(momentum);
+				}
+				break;
+
+                case Boundary::BoundaryType::EARTHQUAKE:
+                    {
+						double mass = nodeI->getMass();
+
+						Eigen::Vector3d newMomentum = mass * interpolatedAcceleration * dt;
+
+						nodeI->setMomentum(newMomentum);                        
+                    }
+                break;
+            }
+        }
+    }
 }

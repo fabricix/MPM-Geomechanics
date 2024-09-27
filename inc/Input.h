@@ -614,6 +614,8 @@ namespace Input {
 	/// \brief Return pore pressure force in particles inside a box
 	/// \return pressure_force  Pore pressure force
 	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
+
+	Loads::SeismicData readSeismicData(const std::string& filename, bool hasHeader);
 };
 
 #endif /* INPUT_H_ */
