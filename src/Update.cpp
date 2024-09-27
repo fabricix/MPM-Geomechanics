@@ -667,7 +667,7 @@ static Eigen::Vector3d getNormal(Update::Direction dir) {
 
 void Update::applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plane, std::vector<Node*>* nodes, double itime, const Loads::SeismicData& seismicData, Update::Direction dir) {
     
-	// interpolate acceletarion and velocity in current time
+	// interpolate acceleration and velocity in current time
     Eigen::Vector3d interpolatedAcceleration = Interpolation::interpolateVector(seismicData.time, seismicData.acceleration, itime);
 	double dt = ModelSetup::getTimeStep();
 
@@ -695,7 +695,7 @@ void Update::applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plan
 
 					Eigen::Vector3d momentum = nodeI->getMomentum();
 
-					// project the momentum over tangentiual plane
+					// project the momentum over tangential plane
 					momentum -= momentum.dot(normal) * normal;
 
 					nodeI->setMomentum(momentum);
@@ -703,13 +703,13 @@ void Update::applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plan
 				break;
 
                 case Boundary::BoundaryType::EARTHQUAKE:
-                    {
-						double mass = nodeI->getMass();
+				{
+					double mass = nodeI->getMass();
 
-						Eigen::Vector3d newMomentum = mass * interpolatedAcceleration * dt;
+					Eigen::Vector3d newMomentum = mass * interpolatedAcceleration * dt;
 
-						nodeI->setMomentum(newMomentum);                        
-                    }
+					nodeI->setMomentum(newMomentum);                
+				}
                 break;
             }
         }
