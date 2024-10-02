@@ -689,23 +689,23 @@ void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodie
 	}
 }
 
-// Función para interpolar valores de tipo Eigen::Vector3d en el tiempo itime
+// Funciï¿½n para interpolar valores de tipo Eigen::Vector3d en el tiempo itime
 Eigen::Vector3d Interpolation::interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime) {
 	
 	if (itime <= times.front()) return values.front();
 	if (itime >= times.back()) return values.back();
 
-	// Encontrar el índice del tiempo inmediatamente superior a itime
+	// Encontrar el indice del tiempo inmediatamente superior a itime
 	auto upper = std::upper_bound(times.begin(), times.end(), itime);
 	size_t idx = std::distance(times.begin(), upper) - 1;
 
-	// Valores adyacentes para la interpolación
+	// Valores adyacentes para la interpolaciï¿½n
 	double t0 = times[idx];
 	double t1 = times[idx + 1];
 	Eigen::Vector3d v0 = values[idx];
 	Eigen::Vector3d v1 = values[idx + 1];
 
-	// Interpolación lineal para cada componente
+	// Interpolacion lineal para cada componente
 	double factor = (itime - t0) / (t1 - t0);
 	Eigen::Vector3d interpolatedValue = v0 + factor * (v1 - v0);
 

@@ -354,12 +354,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				}
 				case Boundary::BoundaryType::EARTHQUAKE:
 				{
-					double mass = nodeI->getMass();
-
-					Eigen::Vector3d newMomentum = mass * interpolatedAcceleration * dt;
-
-					nodeI->setMomentum(newMomentum);
-
+					nodeI->setMomentum( nodeI->getMomentum() + nodeI->getMass() * interpolatedAcceleration * dt);
 					break;
 				}
 			}
@@ -394,7 +389,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 				
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
-					
+				{	
 					// get current boundary nodal momentum of fluid
 					Vector3d momentum = *(nodeI->getMomentumFluid());
 					
@@ -420,6 +415,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 					// set the boundary nodal momentum
 					nodeI->setMomentumFluid(momentum);
 					break;
+				}
 			}
 		}
 	}
@@ -476,6 +472,8 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
+
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < plane->nodes.size(); ++i) {
@@ -501,7 +499,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 				
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
-					
+				{
 					// get current boundary nodal force
 					Vector3d force = nodeI->getTotalForce();
 					
@@ -527,6 +525,13 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					// set boundary nodal force
 					nodeI->setTotalForce(force);
 					break;
+				}
+				
+				case Boundary::BoundaryType::EARTHQUAKE:
+				{
+					nodeI->setTotalForce(nodeI->getTotalForce() + nodeI->getMass() * interpolatedAcceleration);
+					break;
+				}
 			}
 		}
 	}

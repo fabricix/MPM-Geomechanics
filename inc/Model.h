@@ -204,6 +204,8 @@ namespace ModelSetup {
 
 	bool getSeismicAnalysis();
 
+	void setSeismicAnalysis(bool a);
+
 	/// \brief Return if two-phase calculation is active
 	/// \return True if two-phase calculation is active
 	bool getTwoPhaseActive();

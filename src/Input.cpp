@@ -950,6 +950,7 @@ static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrict
 	else if (resPlane=="earthquake")
 	{
 		restrictions.at(index)=Boundary::BoundaryType::EARTHQUAKE;
+		ModelSetup::setSeismicAnalysis(true);
 	}
 	else
 	{
