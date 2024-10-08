@@ -1330,8 +1330,11 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 };
 
 SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
+	
 	SeismicData data;
+	
 	std::ifstream file(filename);
+	
 	if (!file.is_open()) {
 		std::cerr << "Error during opening seismic data: " << filename << std::endl;
 		return data;
@@ -1345,10 +1348,12 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 	}
 
 	while (std::getline(file, line)) {
+	
 		std::stringstream ss(line);
 		std::string item;
 		double t;
 		Eigen::Vector3d acc(0.0, 0.0, 0.0);
+		Eigen::Vector3d vel(0.0, 0.0, 0.0);
 
 		// read time
 		if (!std::getline(ss, item, ',')) continue;
@@ -1366,8 +1371,21 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 		if (!std::getline(ss, item, ',')) continue;
 		acc.z() = std::stod(item);
 
+		// vx
+		if (!std::getline(ss, item, ',')) continue;
+		vel.x() = std::stod(item);
+
+		// vy
+		if (!std::getline(ss, item, ',')) continue;
+		vel.y() = std::stod(item);
+
+		// vz
+		if (!std::getline(ss, item, ',')) continue;
+		vel.z() = std::stod(item);
+
 		data.time.push_back(t);
 		data.acceleration.push_back(acc);
+		data.velocity.push_back(vel);
 	}
 
 	file.close();
