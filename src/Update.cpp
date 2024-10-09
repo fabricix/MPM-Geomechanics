@@ -356,14 +356,23 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					nodeI->setMomentum(momentum);
 					break;
 				}
-				// earthquake boundary condition
-				case Boundary::BoundaryType::EARTHQUAKE:
-				{
-					nodeI->setMomentum(nodeI->getMass() * interpolatedVelocity);
-					break;
-				}
 			}
 		}
+	}
+}
+
+static void setPlaneEarthquakeMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+
+	if(plane->restriction != Boundary::BoundaryType::EARTHQUAKE) return;
+
+	Eigen::Vector3d interpolatedVelocity = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().velocity, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
+
+	#pragma omp parallel for shared(plane, nodes)
+	for (int i = 0; i < plane->nodes.size(); ++i){
+
+		Node* nodeI = nodes->at(plane->nodes.at(i));
+	
+		nodeI->setMomentum(nodeI->getMass() * interpolatedVelocity);
 	}
 }
 
@@ -472,11 +481,17 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+
+	// set earthquake boundary condition
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneX0(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneXn(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneY0(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneYn(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZ0(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZn(), nodes);
 } 
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
-
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -535,14 +550,24 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					nodeI->setTotalForce(force);
 					break;
 				}
-				// earthquake boundary condition
-				case Boundary::BoundaryType::EARTHQUAKE:
-				{
-					nodeI->setTotalForce(nodeI->getMass() * interpolatedAcceleration);
-					break;
-				}
 			}
 		}
+	}
+}
+
+static void setPlaneEarthquakeForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes) {
+
+	if(plane->restriction != Boundary::BoundaryType::EARTHQUAKE) return;
+
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
+
+	// get boundary nodes
+	#pragma omp parallel for shared(plane, nodes)
+	for (int i = 0; i < plane->nodes.size(); ++i) {
+
+		Node* nodeI = nodes->at(plane->nodes.at(i));
+
+		nodeI->setTotalForce(nodeI->getMass() * interpolatedAcceleration);
 	}
 }
 
@@ -568,6 +593,14 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 
 	// plane Zn is the plane passing for the maximum x coordinate and points to z axes
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+
+	// earthquake boudaty condition
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneX0());
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneXn());
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneY0());
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneYn());
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZ0());
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZn());
 }
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
