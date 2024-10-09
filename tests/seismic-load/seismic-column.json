@@ -28,7 +28,7 @@
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[10,10,15],
+    "cells_number":[20,20,20],
     "origin":[0,0,0],
     
     "boundary_conditions":
@@ -60,8 +60,8 @@
     {
       "type":"cuboid",
       "id":1,
-      "point_p1":[0.2,0.2,0],
-      "point_p2":[0.5,0.5,1],
+      "point_p1":[0.5,0.5,0],
+      "point_p2":[0.7,0.7,1],
       "material_id":1
     }
     }
