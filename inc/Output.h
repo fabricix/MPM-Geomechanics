@@ -69,6 +69,8 @@ namespace Output {
 	///
 	void farewellScreen();
 
+	void writeResultInStep(Mesh* mesh, int loopCounter, vector<Body*>* bodies, double iTime, int resultSteps);
+
 	/// \brief Print elapsed time
 	///
 	void printElapsedTime();

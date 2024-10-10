@@ -70,8 +70,10 @@ namespace Output{
 		// grid
 		bool gridFolderExist=false;
 		string gridFolderName="grid";
-		string gridFileName="eulerianGrid.vtu";
-		
+		string gridFileName="eulerianGrid";
+		string gridFileTimeSerie = "eulerianTimeSerie";
+		vector<double> nodalFilesTime;
+
 		// particles
 		bool particleFolderExist=false;
 		string particleFolderName="particles";
@@ -342,6 +344,144 @@ namespace Output{
 		partFile.close();
 	}
 
+	void writeGrid(Mesh* mesh, double iTime, CellType gridType)
+	{
+		// define edian
+		if (Folders::edian == "") {
+			defineEdian();
+		}
+
+		// create grid folder
+		if (!Folders::gridFolderExist) {
+			createGridFolder();
+		}
+		// add time in loop time vector
+		Folders::nodalFilesTime.push_back(iTime);
+
+		// open grid file
+		ofstream gridFile;
+		gridFile.open(Folders::gridFolderName + "/" + "nodal_values_"+ to_string(Folders::nodalFilesTime.size()) + ".vtu");
+		gridFile.precision(4);
+
+		// mesh data
+		int nPoints = mesh->getNumNodes();
+		Vector3i nCellsVec = mesh->getTotalCells();
+		int nCells = nCellsVec(0) * nCellsVec(1) * nCellsVec(2);
+
+		// write results
+		gridFile << "<?xml version=\"1.0\"?>\n";
+		gridFile << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"" << Folders::edian.c_str() << "\">\n";
+		gridFile << "<UnstructuredGrid>\n";
+
+		// piece
+		gridFile << fixed << "<Piece NumberOfPoints=\"" << nPoints << "\" NumberOfCells=\"" << nCells << "\">\n";
+
+		// points
+		gridFile << "<Points>\n";
+
+		// node position
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+		vector<Node*>* inodes = mesh->getNodes();
+		for (int i = 0; i < nPoints; ++i) {
+			Vector3d pos = inodes->at(i)->getCoordinates();
+			gridFile << scientific << pos(0) << " " << pos(1) << " " << pos(2) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// end points
+		gridFile << "</Points>\n";
+
+		// point data
+		gridFile << "<PointData>\n";
+
+		// local ID of nodes
+		gridFile << "<DataArray type=\"UInt64\" Name=\"Id\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << inodes->at(i)->getId() << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// active nodes
+		gridFile << "<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getActive()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// nodal mass
+		gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getMass()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// nodal velocity
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// end point data
+		gridFile << "</PointData>\n";
+
+		// cells
+		gridFile << "<Cells>\n";
+
+		// connectivity
+		gridFile << "<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
+
+		const int nCellsX = nCellsVec(0);
+		const int nCellsY = nCellsVec(1);
+		const int nCellsZ = nCellsVec(2);
+
+		for (int k = 0; k < nCellsZ; ++k) {
+			for (int j = 0; j < nCellsY; ++j) {
+				for (int i = 0; i < nCellsX; ++i) {
+					gridFile << scientific
+						<< k * (nCellsY + 1) * (nCellsX + 1) + j * (nCellsX + 1) + i << " "
+						<< k * (nCellsY + 1) * (nCellsX + 1) + j * (nCellsX + 1) + i + 1 << " "
+						<< k * (nCellsX + 1) * (nCellsY + 1) + (j + 1) * (nCellsX)+i + 2 + j << " "
+						<< k * (nCellsX + 1) * (nCellsY + 1) + (j + 1) * (nCellsX)+i + 1 + j << " "
+						<< k * (nCellsY + 1) * (nCellsX + 1) + j * (nCellsX + 1) + i + (nCellsX + 1) * (nCellsY + 1) << " "
+						<< k * (nCellsY + 1) * (nCellsX + 1) + j * (nCellsX + 1) + i + (nCellsX + 1) * (nCellsY + 1) + 1 << " "
+						<< k * (nCellsX + 1) * (nCellsY + 1) + (j + 1) * (nCellsX)+i + 2 + j + (nCellsX + 1) * (nCellsY + 1) << " "
+						<< k * (nCellsX + 1) * (nCellsY + 1) + (j + 1) * (nCellsX)+i + 1 + j + (nCellsX + 1) * (nCellsY + 1) << "\n";
+				}
+			}
+		}
+		gridFile << "</DataArray>\n";
+
+		// offsets
+		gridFile << "<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
+		for (int i = 0; i < nCells; ++i) {
+			gridFile << "" << 8 * (i + 1) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// types
+		int cellsType = gridType == CellType::POINTS ? 1 : (gridType == CellType::CELLS ? 12 : 1);
+
+		gridFile << "<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << cellsType << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// end cells
+		gridFile << "</Cells>\n";
+
+		// end piece
+		gridFile << "</Piece>\n";
+
+		// end file
+		gridFile << "</UnstructuredGrid>\n";
+		gridFile << "</VTKFile>\n";
+
+		// close file
+		gridFile.close();
+	}
+	
 	void writeGrid(Mesh* mesh, CellType gridType){
 
 		// define edian
@@ -356,7 +496,7 @@ namespace Output{
 		
 		// open grid file
 		ofstream gridFile;
-		gridFile.open(Folders::gridFolderName+"/"+Folders::gridFileName);
+		gridFile.open(Folders::gridFolderName+"/"+Folders::gridFileName + ".vtu");
 		gridFile.precision(4);
 
 		// mesh data
@@ -616,18 +756,30 @@ namespace Output{
     csv_file.close();
 }
 
-	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(Mesh* mesh, int loopCounter, vector<Body*>* bodies, double iTime, int resultSteps)
 	{
-		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
+		// only in t=0
+		if (iTime == 0) { 
+			// update general info of the model in terminal
+			printModelInfo(bodies, iTime); 
 
+			// initialize the energy file
+			initializeCSVFile("time-energy.csv");
+		}
+
+		// results in steps
 		if (loopCounter%resultSteps==0)
 		{
-			// write model results
+			// write particles
 			writeBodies(bodies,iTime);
+
+			// write nodes
+			writeGrid(mesh, iTime, Output::CELLS);
 
 			// update terminal
 			updateTerminal(bodies,iTime);
 
+			// write energy file
 			writeCSVEnergyFile(bodies,iTime);
 		}
 	}
