@@ -72,7 +72,7 @@ namespace Output{
 		string gridFolderName="grid";
 		string gridFileName="eulerianGrid";
 		string gridFileTimeSerie = "eulerianTimeSerie";
-		vector<double> nodalFilesTime;
+		vector<double> gridFilesTime;
 
 		// particles
 		bool particleFolderExist=false;
@@ -356,11 +356,11 @@ namespace Output{
 			createGridFolder();
 		}
 		// add time in loop time vector
-		Folders::nodalFilesTime.push_back(iTime);
+		Folders::gridFilesTime.push_back(iTime);
 
 		// open grid file
 		ofstream gridFile;
-		gridFile.open(Folders::gridFolderName + "/" + "nodal_values_"+ to_string(Folders::nodalFilesTime.size()) + ".vtu");
+		gridFile.open(Folders::gridFolderName + "/" + Folders::gridFileName + "_" + to_string(Folders::gridFilesTime.size()) + ".vtu");
 		gridFile.precision(4);
 
 		// mesh data
@@ -647,19 +647,43 @@ namespace Output{
 		}
 
 		// open particle serie file
-		ofstream serieFile;
-		serieFile.open(Folders::particleFolderName+"/"+Folders::particleFileTimeSerie+".pvd");
+		ofstream serieParticlesFile;
+		serieParticlesFile.open(Folders::particleFolderName+"/"+Folders::particleFileTimeSerie+".pvd");
 
-		// write the file
-		serieFile <<"<?xml version=\"1.0\"?>\n";
-		serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
-		serieFile <<"\t<Collection>\n";
+		// write particle serie file file
+		serieParticlesFile <<"<?xml version=\"1.0\"?>\n";
+		serieParticlesFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+		serieParticlesFile <<"\t<Collection>\n";
 		for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
 		{
-			serieFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
+			serieParticlesFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
 		}
-		serieFile <<"\t</Collection>\n";
-		serieFile <<"</VTKFile>\n";
+		serieParticlesFile <<"\t</Collection>\n";
+		serieParticlesFile <<"</VTKFile>\n";
+
+		// write grid series
+		if (true)
+		{
+			// create grid folder
+			if (!Folders::gridFolderExist) {
+				createGridFolder();
+			}
+
+			// open grid serie file
+			ofstream serieGridFile;
+			serieGridFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
+
+			// write grid serie file
+			serieGridFile << "<?xml version=\"1.0\"?>\n";
+			serieGridFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+			serieGridFile << "\t<Collection>\n";
+			for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i)
+			{
+				serieGridFile << "\t\t<DataSet timestep=\"" << Folders::gridFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
+			}
+			serieGridFile << "\t</Collection>\n";
+			serieGridFile << "</VTKFile>\n";
+		}
 	}
 
 	void clearScreen() {
