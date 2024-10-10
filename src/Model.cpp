@@ -50,6 +50,8 @@ namespace ModelSetup {
 	// results
 	unsigned resultNumber=10; //!< number of results to write
 
+	bool printGridResults = false; //! if true the nodal values are write in time
+
 	// time
 	double dt=0.0; //!< time step
 	double time=0.0; //!< simulation time
@@ -94,6 +96,8 @@ namespace ModelSetup {
 	unsigned getResultNum() { return resultNumber; }
 	void setResultNum(unsigned d) { resultNumber=d; }
 	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
+	bool getPrintGridResults() { return printGridResults; }
+	void setPrintGridResults(bool a) { printGridResults=a; }
 
 	// time step
 	double getTimeStep() { return dt; }

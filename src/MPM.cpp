@@ -255,7 +255,10 @@ void MPM::setupResults() {
 	// number of results
 	ModelSetup::setResultNum(Input::getResultNum());
 	
-	// configures the fields
+	// set print nodal values
+	ModelSetup::setPrintGridResults(Input::getPrintGridResults());
+
+	// configures the particle fields
 	Output::configureResultFiels(Input::getResultFields());
 }
 

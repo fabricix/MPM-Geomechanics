@@ -565,6 +565,10 @@ namespace Input {
 	/// \return Number of results to be written
 	int getResultNum();
 
+	/// \brief Return if nodal values need to be printed
+	/// \return true if the nodal values need to be printed
+	bool getPrintGridResults();
+
 	/// \brief Return the fields to be written
 	///
 	vector<string> getResultFields();

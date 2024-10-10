@@ -92,6 +92,14 @@ namespace ModelSetup {
 	/// \return Number of steps
 	unsigned getResultSteps();
 
+	/// \brief Return true if the nodal values need to be printed
+	/// \return true if nodal values need to be printed
+	bool getPrintGridResults();
+
+	/// \brief Set if the nodal values need to be printed
+	/// \param[in] true if nodal values need to be printed
+	void setPrintGridResults(bool);
+
 	/// \brief Return the critical sime step multiplier
 	/// \return Time step multiplier
 	double getCriticalTimeStepMultiplier();

@@ -827,6 +827,8 @@ int Input::getResultNum(){
 	}
 }
 
+bool Input::getPrintGridResults() { return Input::get_boolean(Input::getJson(), "print_nodal_values", false); };
+
 vector<string> Input::getResultFields() {
 
 	try

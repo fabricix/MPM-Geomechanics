@@ -346,6 +346,8 @@ namespace Output{
 
 	void writeGrid(Mesh* mesh, double iTime, CellType gridType)
 	{
+		if (!ModelSetup::getPrintGridResults()) return;
+
 		// define edian
 		if (Folders::edian == "") {
 			defineEdian();
@@ -662,7 +664,7 @@ namespace Output{
 		serieParticlesFile <<"</VTKFile>\n";
 
 		// write grid series
-		if (true)
+		if (ModelSetup::getPrintGridResults())
 		{
 			// create grid folder
 			if (!Folders::gridFolderExist) {
@@ -799,7 +801,7 @@ namespace Output{
 
 			// write nodes
 			writeGrid(mesh, iTime, Output::POINTS);
-
+			
 			// update terminal
 			updateTerminal(bodies,iTime);
 
