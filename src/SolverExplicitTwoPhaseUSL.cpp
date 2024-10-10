@@ -39,6 +39,9 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		// write results in step
 		Output::writeResultInStep(mesh, loopCounter++, bodies, iTime, resultSteps);
 
+		// reset all nodal values
+		Update::resetNodalValues(mesh);
+
 		// update contribution nodes
 		Update::contributionNodes(mesh,bodies);
 		
@@ -155,9 +158,6 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 
 		// update particle stress
 		Update::particleStress(bodies);
-		
-		// reset all nodal values
-		Update::resetNodalValues(mesh);
 
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies,loopCounter);

@@ -798,7 +798,7 @@ namespace Output{
 			writeBodies(bodies,iTime);
 
 			// write nodes
-			writeGrid(mesh, iTime, Output::CELLS);
+			writeGrid(mesh, iTime, Output::POINTS);
 
 			// update terminal
 			updateTerminal(bodies,iTime);

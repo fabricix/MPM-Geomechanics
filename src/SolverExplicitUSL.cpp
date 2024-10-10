@@ -34,7 +34,10 @@ void SolverExplicitUSL::Solve( ){
 	while(iTime<time) {
 
 		// write results in step
-		Output::writeResultInStep(mesh, loopCounter++, bodies,iTime, resultSteps);
+		Output::writeResultInStep(mesh, loopCounter++, bodies, iTime, resultSteps);
+
+		// reset all nodal values
+		Update::resetNodalValues(mesh);
 
 		// update contribution nodes
 		Update::contributionNodes(mesh,bodies);
@@ -98,9 +101,6 @@ void SolverExplicitUSL::Solve( ){
 		
 		// update particle stress
 		Update::particleStress(bodies);
-		
-		// reset all nodal values
-		Update::resetNodalValues(mesh);
 
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies,loopCounter);
