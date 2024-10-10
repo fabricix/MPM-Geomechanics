@@ -11,6 +11,8 @@
 
 	"n_threads":2,
 
+	"print_nodal_values":true,
+	
 	"damping":
 	{
 		"type":"local",
