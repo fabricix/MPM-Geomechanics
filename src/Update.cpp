@@ -455,18 +455,11 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 
-	// set earthquake boundary condition, set p = v_equake * nodal_mass
-	
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneX0(), nodes);
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneY0(), nodes);
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZ0(), nodes);
-
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneXn(), nodes);
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneYn(), nodes);
-	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZn(), nodes);
 } 
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -551,15 +544,6 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 
-	// earthquake boundary condition, set f = nodal_mass * a_earth_quake
-
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneX0(),nodes);
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneY0(),nodes);
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZ0(),nodes);
-
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneXn(),nodes);
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneYn(),nodes);
-	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZn(),nodes);
 }
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
