@@ -157,7 +157,7 @@ private:
 	///
 	void setupResults();
 	
-	/// \brief Configure dampig forces
+	/// \brief Configure damping forces
 	/// 
 	void setupDamping();
 
@@ -169,6 +169,9 @@ private:
 	/// \brief Configure number of threads
 	///
 	void setThreads();
+
+	bool getSeismicAnalysis();
+	void setSeismicAnalysis(bool);
 };
 
 #endif /* MPM_H_ */

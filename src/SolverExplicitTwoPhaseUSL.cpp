@@ -163,7 +163,7 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		DynamicRelaxation::setStaticSolution(bodies,loopCounter);
 
 		// advance in time
-		iTime+=dt;
+		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
 	// write the Eulerian mesh

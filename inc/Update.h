@@ -10,6 +10,7 @@
 
 #include "Mesh/Mesh.h"
 #include "Body/Body.h"
+#include <Loads.h>
 
 /// \namespace Update
 /// \brief Represents operations to update values in nodes and particles.
@@ -101,7 +102,7 @@ namespace Update {
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
 	void particlePosition(Mesh* mesh, vector<Body*>* bodies, double time_step);
-	
+
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
 	/// \param[in] mesh Mesh reference
@@ -152,6 +153,7 @@ namespace Update {
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
+	
 };
 
 #endif /* UPDATE_H_ */

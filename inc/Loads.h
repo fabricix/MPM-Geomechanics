@@ -13,6 +13,9 @@
 #include <vector>
 using std::vector;
 
+#include "Eigen/Core"
+using Eigen::Vector3d;
+
 /// \namespace Loads
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
@@ -77,7 +80,16 @@ namespace Loads {
         }
     };
 
-	/// \brief Configures the gravity load in particles
+    // TODO doxygen
+    struct SeismicData {
+        std::vector<double> time;
+        std::vector<Eigen::Vector3d> acceleration;
+        std::vector<Eigen::Vector3d> velocity;
+    };
+
+    Loads::SeismicData& getSeismicData();
+
+    /// \brief Configures the gravity load in particles
 	/// \param[in] bodies A list containing Body pointers 
 	void setGravity(vector<Body*>& bodies);
     
@@ -115,6 +127,9 @@ namespace Loads {
     /// \brief Set initial velocity in bodies
     /// \param[in] bodies A list containing Body pointers
     void setInitialVelocity(vector<Body*>& bodies);
+
+    void setSeismicData();
+    SeismicData& Loads::getSeismicData();
 };
 
 #endif /* LOADS_H_ */

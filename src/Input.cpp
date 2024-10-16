@@ -31,6 +31,14 @@ using std::ifstream;
 using std::string;
 using std::to_string;
 
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+using namespace Loads;
+
+
 namespace Input {
 
 	json inputFile; //!< data structure containing all the model information
@@ -939,6 +947,11 @@ static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrict
 	{
 		restrictions.at(index)=Boundary::BoundaryType::SLIDING;
 	}
+	else if (resPlane=="earthquake")
+	{
+		restrictions.at(index)=Boundary::BoundaryType::EARTHQUAKE;
+		ModelSetup::setSeismicAnalysis(true);
+	}
 	else
 	{
 		throw(0);
@@ -1168,7 +1181,7 @@ vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in prescibed pressure box definition");
+		Warning::printMessage("Error in prescribed pressure box definition");
 		throw;
 	}
 }
@@ -1265,40 +1278,40 @@ vector<Loads::PressureMaterial> Input::getInitialPressureMaterial() {
 
 vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 
-	try{
+	try {
 		vector<Loads::PressureBoundaryForceBox> pressure_box_list;
 
 		string key = "pressure_force_box";
 
-		if (!inputFile[key].is_null()){
-		
+		if (!inputFile[key].is_null()) {
+
 			json::iterator it;
-			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+			for (it = inputFile[key].begin(); it != inputFile[key].end(); it++) {
 
 				Loads::PressureBoundaryForceBox ipressure_box;
 
-				Vector3d p1(0,0,0), p2(0,0,0), force(0,0,0);
-				
-				if ((*it)["point_p1"].is_array()) { 
-					p1.x() = ((*it)["point_p1"])[0]; 
-					p1.y() = ((*it)["point_p1"])[1]; 
+				Vector3d p1(0, 0, 0), p2(0, 0, 0), force(0, 0, 0);
+
+				if ((*it)["point_p1"].is_array()) {
+					p1.x() = ((*it)["point_p1"])[0];
+					p1.y() = ((*it)["point_p1"])[1];
 					p1.z() = ((*it)["point_p1"])[2];
 
 					ipressure_box.pointP1 = p1;
 				}
 
-				if ((*it)["point_p2"].is_array()) { 
-					p2.x() = ((*it)["point_p2"])[0]; 
-					p2.y() = ((*it)["point_p2"])[1]; 
-					p2.z() = ((*it)["point_p2"])[2]; 
+				if ((*it)["point_p2"].is_array()) {
+					p2.x() = ((*it)["point_p2"])[0];
+					p2.y() = ((*it)["point_p2"])[1];
+					p2.z() = ((*it)["point_p2"])[2];
 
 					ipressure_box.pointP2 = p2;
 				}
 
-				if ((*it)["pressure_force"].is_array()) { 
-					force.x() = ((*it)["pressure_force"])[0]; 
-					force.y() = ((*it)["pressure_force"])[1]; 
-					force.z() = ((*it)["pressure_force"])[2]; 
+				if ((*it)["pressure_force"].is_array()) {
+					force.x() = ((*it)["pressure_force"])[0];
+					force.y() = ((*it)["pressure_force"])[1];
+					force.z() = ((*it)["pressure_force"])[2];
 
 					ipressure_box.pressureForce = force;
 				}
@@ -1309,9 +1322,73 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 
 		return pressure_box_list;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in pressure force box definition");
 		throw;
 	}
+};
+
+SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
+	
+	SeismicData data;
+	
+	std::ifstream file(filename);
+	
+	if (!file.is_open()) {
+		std::cerr << "Error during opening seismic data: " << filename << std::endl;
+		return data;
+	}
+
+	std::string line;
+
+	// ignore headers if we have ones
+	if (hasHeader && std::getline(file, line)) {
+		// headers manipulations if needed 
+	}
+
+	while (std::getline(file, line)) {
+	
+		std::stringstream ss(line);
+		std::string item;
+		double t;
+		Eigen::Vector3d acc(0.0, 0.0, 0.0);
+		Eigen::Vector3d vel(0.0, 0.0, 0.0);
+
+		// read time
+		if (!std::getline(ss, item, ',')) continue;
+		t = std::stod(item);
+
+		// ax
+		if (!std::getline(ss, item, ',')) continue;
+		acc.x() = std::stod(item);
+
+		// ay
+		if (!std::getline(ss, item, ',')) continue;
+		acc.y() = std::stod(item);
+
+		// az
+		if (!std::getline(ss, item, ',')) continue;
+		acc.z() = std::stod(item);
+
+		// vx
+		if (!std::getline(ss, item, ',')) continue;
+		vel.x() = std::stod(item);
+
+		// vy
+		if (!std::getline(ss, item, ',')) continue;
+		vel.y() = std::stod(item);
+
+		// vz
+		if (!std::getline(ss, item, ',')) continue;
+		vel.z() = std::stod(item);
+
+		data.time.push_back(t);
+		data.acceleration.push_back(acc);
+		data.velocity.push_back(vel);
+	}
+
+	file.close();
+
+	return data;
 }

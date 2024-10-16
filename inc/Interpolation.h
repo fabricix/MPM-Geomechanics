@@ -8,6 +8,9 @@
 #ifndef INTERPOLATION_H_
 #define INTERPOLATION_H_
 
+#include "Eigen/Core"
+using Eigen::Vector3d;
+
 #include<vector>
 using std::vector;
 
@@ -144,6 +147,9 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	/// \param[in] time_step Time step
 	void particleDeformationGradient(Mesh* mesh, vector<Body*>* bodies, double time_step);
+
+	Eigen::Vector3d interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime);
 };
 
 #endif /* INTERPOLATION_H_ */
+
