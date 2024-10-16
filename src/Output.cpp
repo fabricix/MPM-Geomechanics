@@ -301,6 +301,24 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("weights")) {
+
+			// effective plastic strain
+			partFile << "<DataArray type=\"Float64\" Name=\"Contribution Nodes Weights\" NumberOfComponents=\"27\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+
+				// get nodes and weights that the particle contributes
+				const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+				// for each node in the contribution list 
+				for (size_t j = 0; j < contribution->size(); ++j) {
+
+					partFile << scientific << contribution->at(j).getWeight() << " ";
+				}
+				partFile << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		// end point data
 		partFile<<"</PointData>\n";
 		
