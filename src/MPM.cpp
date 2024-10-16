@@ -143,7 +143,6 @@ void MPM::setupMesh() {
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
 	if (ModelSetup::getTwoPhaseActive()){
-
 		// configure the mesh boundary conditions of fluid
 		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
 	}
@@ -236,6 +235,8 @@ void MPM::setupLoads() {
 	// set initial velocity
 	Loads::setInitialVelocity(bodies);
 
+	// set seismic acceleration
+	Loads::setSeismicData();
 }
 
 void MPM::setupDamping() {

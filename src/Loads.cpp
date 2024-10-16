@@ -8,12 +8,18 @@
 #include "Loads.h"
 #include "Model.h"
 #include "Geometry.h"
+#include "Input.h"
 
 namespace Loads 
 {
 	// list of particles with prescribed pore pressure
 	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
+
+	// seismic data
+	SeismicData seismicRecord;
 }
+
+Loads::SeismicData& Loads::getSeismicData(){ return seismicRecord ;}
 
 void Loads::setGravity(vector<Body*>& bodies) {
 
@@ -230,4 +236,12 @@ void Loads::setInitialVelocity(vector<Body*>& bodies) {
 			particle->setVelocity(body->getInitialVelocity());
 		}
 	}
+}
+
+void Loads::setSeismicData()
+{
+	if(!ModelSetup::getSeismicAnalysis()) return;
+
+	// set seismic data
+	seismicRecord = Input::readSeismicData(ModelSetup::getSeismicFileName(),false);
 }
