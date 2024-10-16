@@ -243,6 +243,16 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("velocity")) {
+
+			// particle velocity
+			partFile << "<DataArray type=\"Float64\" Name=\"Velocity\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile << scientific << particles->at(i)->getVelocity() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		if (isFieldRequired("stress")){
 
 			// particle stress xx

@@ -102,7 +102,7 @@ namespace Update {
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
 	void particlePosition(Mesh* mesh, vector<Body*>* bodies, double time_step);
-	
+
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
 	/// \param[in] mesh Mesh reference
@@ -127,8 +127,6 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of bodies
 	void contributionNodes(Mesh* mesh, vector<Body*>* bodies);
-
-	void applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plane, std::vector<Node*>* nodes, double itime, const Loads::SeismicData& seismicData, Update::Direction dir);
 
 	/// \brief Configure the force in each node in boundary planes
 	/// \param[in] boundary Boundary plane
@@ -155,9 +153,7 @@ namespace Update {
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
-
-	void applyBoundaryConditionsWithEarthquake(Boundary::planeBoundary* plane, std::vector<Node*>* nodes, double itime, const Loads::SeismicData& seismicData);
-
+	
 };
 
 #endif /* UPDATE_H_ */

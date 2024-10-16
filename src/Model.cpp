@@ -77,7 +77,6 @@ namespace ModelSetup {
     // seismic analysis
 	bool seismicAnalysisActive = false; //!< is seismic analysis
 
-	
 	///
 	/// Function members
 	///
@@ -132,9 +131,8 @@ namespace ModelSetup {
     // simulation time
     void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime) { ModelSetup::initialSimulationTime = initialTime; }
     std::chrono::system_clock::time_point getInitialSimulationTime() { return ModelSetup::initialSimulationTime;  }
-	
 	double getCurrentTime() { return currentTime; }
-	void setCurrentTime(bool a) { currentTime = a; }
+	void setCurrentTime(double a) { currentTime = a; }
 
     // axisymmetric analisys
 	bool getAxisymetricActive() { return axisymetricActive; }

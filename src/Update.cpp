@@ -7,7 +7,7 @@
 
 #include "Update.h"
 #include "Loads.h"
-#include <Interpolation.h>
+#include "Interpolation.h"
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -295,10 +295,8 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	double dt = ModelSetup::getTimeStep();
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
 	Eigen::Vector3d interpolatedVelocity = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().velocity, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
-
+	
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < plane->nodes.size(); ++i){
@@ -358,7 +356,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				}
 				// earthquake boundary condition
 				case Boundary::BoundaryType::EARTHQUAKE:
-				{
+				{ 
 					nodeI->setMomentum(nodeI->getMass() * interpolatedVelocity);
 					break;
 				}
@@ -537,7 +535,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 				}
 				// earthquake boundary condition
 				case Boundary::BoundaryType::EARTHQUAKE:
-				{
+				{ 
 					nodeI->setTotalForce(nodeI->getMass() * interpolatedAcceleration);
 					break;
 				}
@@ -671,24 +669,4 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 			particles->at(i)->updateContributionNodes(mesh);
 		}
 	}
-}
-
-static Eigen::Vector3d getNormal(Update::Direction dir) {
-	Eigen::Vector3d normal = Eigen::Vector3d::Zero();
-
-	switch (dir) {
-	case Update::Direction::X:
-		normal.x() = 1.0;
-		break;
-	case Update::Direction::Y:
-		normal.y() = 1.0;
-		break;
-	case Update::Direction::Z:
-		normal.z() = 1.0;
-		break;
-	default:
-		// additional cases
-		break;
-	}
-	return normal;
 }
