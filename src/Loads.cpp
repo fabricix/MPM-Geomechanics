@@ -242,6 +242,7 @@ void Loads::setSeismicData()
 {
 	if(!ModelSetup::getSeismicAnalysis()) return;
 
-	// set seismic data
-	seismicRecord = Input::readSeismicData(ModelSetup::getSeismicFileName(),false);
+	bool has_header = true;
+
+	seismicRecord = Input::readSeismicData(ModelSetup::getSeismicFileName(), has_header);
 }

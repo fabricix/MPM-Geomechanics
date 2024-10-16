@@ -80,7 +80,10 @@ namespace Loads {
         }
     };
 
-    // TODO doxygen
+    /**
+     * @brief Seismic data structure to manage acceleration and velocity of an earthquake record.
+     * 
+     */
     struct SeismicData
     {
         std::vector<double> time;
@@ -88,8 +91,17 @@ namespace Loads {
         std::vector<Eigen::Vector3d> velocity;
     };
 
+    /**
+     * @brief Set the Seismic Data object
+     * 
+     */
     void setSeismicData();
 
+    /**
+     * @brief Get the Seismic Data object
+     * 
+     * @return SeismicData& 
+     */
     SeismicData& getSeismicData();
 
     /// \brief Configures the gravity load in particles
