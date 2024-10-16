@@ -88,6 +88,8 @@ namespace Loads {
         std::vector<Eigen::Vector3d> velocity;
     };
 
+    void setSeismicData();
+
     SeismicData& getSeismicData();
 
     /// \brief Configures the gravity load in particles
@@ -128,9 +130,6 @@ namespace Loads {
     /// \brief Set initial velocity in bodies
     /// \param[in] bodies A list containing Body pointers
     void setInitialVelocity(vector<Body*>& bodies);
-
-    void setSeismicData();
-    SeismicData& Loads::getSeismicData();
 };
 
 #endif /* LOADS_H_ */
