@@ -429,22 +429,14 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// plane X0 is the plane passing for the origin and points to -x axes
+	// set p=0 in fixed nodes
+
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
-
-	// plane Y0 is the plane passing for the origin and points to -y axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
-
-	// plane Z0 is the plane passing for the origin and points to -z axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
 	
-	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
-
-	// plane Yn is the plane passing for the maximum y coordinate and points to y axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
-
-	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
@@ -453,28 +445,28 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// plane X0 is the plane passing for the origin and points to -x axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
-
-	// plane Y0 is the plane passing for the origin and points to -y axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
-
-	// plane Z0 is the plane passing for the origin and points to -z axes
-	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
+	// set p = 0 in fixed direction
 	
-	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
+	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
+	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
+
 	setPlaneMomentum(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
-
-	// plane Yn is the plane passing for the maximum y coordinate and points to y axes
 	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
-
-	// plane Zn is the plane passing for the maximum z coordinate and points to z axes
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+
+	// set earthquake boundary condition, set p = v_equake * nodal_mass
+	
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneX0(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneY0(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZ0(), nodes);
+
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneXn(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneYn(), nodes);
+	setPlaneEarthquakeMomentum(mesh->getBoundary()->getPlaneZn(), nodes);
 } 
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
-
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -545,27 +537,29 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 }
 
 void Update::boundaryConditionsForce(Mesh* mesh) {
-
+	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// plane X0 is the plane passing for the origin and points to -x axes
+	 // set f = 0 in fixed direction
+
 	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
-
-	// plane Y0 is the plane passing for the origin and points to -y axes
 	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
-
-	// plane Z0 is the plane passing for the origin and points to -z axes
 	setPlaneForce(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
-	
-	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
+
 	setPlaneForce(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
-
-	// plane Yn is the plane passing for the maximum x coordinate and points to y axes
 	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
-
-	// plane Zn is the plane passing for the maximum x coordinate and points to z axes
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+
+	// earthquake boundary condition, set f = nodal_mass * a_earth_quake
+
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneX0(),nodes);
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneY0(),nodes);
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZ0(),nodes);
+
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneXn(),nodes);
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneYn(),nodes);
+	setPlaneEarthquakeForce(mesh->getBoundary()->getPlaneZn(),nodes);
 }
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
@@ -630,23 +624,14 @@ void Update::boundaryConditionsForceFluid(Mesh* mesh) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-
-	// plane X0 is the plane passing for the origin and points to -x axes
+		
+	// set f=0 in fixed nodes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
-
-	// plane Y0 is the plane passing for the origin and points to -y axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
-
-	// plane Z0 is the plane passing for the origin and points to -z axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
 	
-	// plane Xn is the plane passing for the maximum x coordinate and points to x axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
-
-	// plane Yn is the plane passing for the maximum x coordinate and points to y axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
-
-	// plane Zn is the plane passing for the maximum x coordinate and points to z axes
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 

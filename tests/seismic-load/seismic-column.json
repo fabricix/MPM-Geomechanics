@@ -9,7 +9,7 @@
 
   "gravity":[0.0,0.0,0.0],
 
-  "n_threads":1,
+  "n_threads":5,
 
   "damping":
   {
@@ -38,7 +38,7 @@
       "plane_Z0":"earthquake",
       "plane_Xn":"sliding",
       "plane_Yn":"sliding",
-      "plane_Zn":"free"
+      "plane_Zn":"sliding"
     }
   },
 
@@ -60,8 +60,8 @@
     {
       "type":"cuboid",
       "id":1,
-      "point_p1":[0.2, 0.2, 0.0],
-      "point_p2":[0.5, 0.5, 1.0],
+      "point_p1":[4,4,0],
+      "point_p2":[5,5,2],
       "material_id":1
     }
 
