@@ -81,13 +81,14 @@ namespace Loads {
     };
 
     // TODO doxygen
-    struct SeismicData {
+    struct SeismicData
+    {
         std::vector<double> time;
         std::vector<Eigen::Vector3d> acceleration;
         std::vector<Eigen::Vector3d> velocity;
     };
 
-    Loads::SeismicData& getSeismicData();
+    SeismicData& getSeismicData();
 
     /// \brief Configures the gravity load in particles
 	/// \param[in] bodies A list containing Body pointers 
