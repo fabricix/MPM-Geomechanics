@@ -76,6 +76,8 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	void nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies);
 
+	void nodalSilentForce(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate external force of solid from particles to nodes
 	///
 	/// In one phase calculations:

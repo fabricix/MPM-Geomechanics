@@ -106,6 +106,16 @@ void Particle::updateDensity() {
 	}
 }
 
+Vector3d Particle::getSilentForce()
+{
+	Vector3d silent_force;
+
+	// TODO implement silent force
+	silent_force.setZero();
+	
+	return silent_force;
+}
+
 void Particle::setMaterial(Material* material) { 
 
 	// set material pointer

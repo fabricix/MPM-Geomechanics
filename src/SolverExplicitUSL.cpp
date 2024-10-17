@@ -63,6 +63,10 @@ void SolverExplicitUSL::Solve()
 			// nodal external force
 			#pragma omp section
 			Interpolation::nodalExternalForce(mesh, bodies);
+
+			// nodal external force
+			#pragma omp section
+			Interpolation::nodalSilentForce(mesh, bodies);
 		}
 
 		// nodal total force

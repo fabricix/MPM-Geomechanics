@@ -140,6 +140,9 @@ public:
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
 	inline void addExternalForce(const Vector3d& external_force_increment) { this->externalForce+=external_force_increment; }
 
+	inline void addSilentForce(const Vector3d& silent_force_increment) { this->silentForce += silent_force_increment; }
+
+
 	/// \brief Add a external force of fluid increment to the nodal external force
 	/// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
 	virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) { return; }
@@ -177,6 +180,7 @@ protected:
 	Vector3d velocity; //!< nodal velocity: \f$v_{iI}\f$, or velocity in solid in two-phase calculations: \f$v_{iI}^{s}\f$
 	Vector3d externalForce; //!< nodal external force: \f$f_{iI}^{ext}\f$, or external force in solid in two-phase calculations: \f$f_{iI}^{ext,s}\f$
 	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{int}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{int,s}\f$
+	Vector3d silentForce; //!< nodal silent force: \f$ f_{iI}^{silent} = (\sigma_{normal} + \tau)_i dA\f$
 	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
 };
@@ -187,12 +191,15 @@ inline Node::Node() {
     id=0;
     mass=0.0;
     coordinates.setZero();
-    momentum.setZero();
+    
+	// TODO: refactoring this with resetVAlues()
+	momentum.setZero();
     velocity.setZero();
     externalForce.setZero();
     internalForce.setZero();
     totalForce.setZero();
     dampingForce.setZero();
+	silentForce.setZero();
 }
 
 inline void Node::resetValues()
@@ -202,6 +209,7 @@ inline void Node::resetValues()
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();
+	silentForce.setZero();
 }
 
 inline Node::~Node() { }

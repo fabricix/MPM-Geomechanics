@@ -111,6 +111,10 @@ public:
 	/// \return Particle external force
 	inline const Vector3d& getExternalForce() const { return this->externalForce; } 
 
+	/// \brief Returns silent force in particle
+	/// \return Particle silent force
+	Vector3d getSilentForce();
+
 	/// \brief Returns the external force of fluid in particle
 	/// \return Particle external force of fluid
 	virtual inline const Vector3d* getExternalForceFluid() const { return NULL; }
@@ -277,6 +281,7 @@ protected:
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
 	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
 	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^ext\f$
+	Vector3d silentForce;//!< particle silent force: \f$f_{ip}^sil\f$
 	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
@@ -290,6 +295,9 @@ protected:
 	Material* material; //!< particle material (see class Material)
 
 	static int totalParticles; //!< total particle in the model
+
+	bool silentParticle; //! true if a silent particle
+	Vector3i silentDirection; //! if silent particle acts in planes X0 or Xn, silentDirection.x()=1
 };
 
 inline Particle::~Particle() {
