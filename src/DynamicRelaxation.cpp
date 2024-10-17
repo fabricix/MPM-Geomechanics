@@ -25,7 +25,7 @@ double DynamicRelaxation::computeKineticEnergy(vector<Body*>* bodies)
         vector<Particle*>* particles = bodies->at(ibody)->getParticles();
         
         // for each particle
-        #pragma omp parallel for reduction(+:currentKineticEnergy) shared(particles) private(bodies, ibody)
+        #pragma omp parallel for reduction(+:currentKineticEnergy) shared(particles)
         for (int i = 0; i < particles->size(); ++i) {
 
             // verify active particle
@@ -74,7 +74,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
             vector<Particle*>* particles = bodies->at(ibody)->getParticles();
             
             // for each particle
-            #pragma omp parallel for shared(particles) private(bodies, ibody)
+            #pragma omp parallel for shared(particles)
             for (int i = 0; i < particles->size(); ++i) {
 
                 // verify active particle

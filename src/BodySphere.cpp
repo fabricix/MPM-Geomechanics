@@ -42,9 +42,9 @@ void BodySphere::create(Mesh& mesh, Material* material) {
 
     // calculate the number of cells in each direction
     Vector3i nCellsBoundingBox;
-    nCellsBoundingBox.x() = std::ceil((maxPoint.x() - minPoint.x()) / cellDimension.x());
-    nCellsBoundingBox.y() = std::ceil((maxPoint.y() - minPoint.y()) / cellDimension.y());
-    nCellsBoundingBox.z() = std::ceil((maxPoint.z() - minPoint.z()) / cellDimension.z());
+    nCellsBoundingBox.x() = static_cast<int>( std::ceil((maxPoint.x() - minPoint.x()) / cellDimension.x()));
+    nCellsBoundingBox.y() = static_cast<int>( std::ceil((maxPoint.y() - minPoint.y()) / cellDimension.y()));
+    nCellsBoundingBox.z() = static_cast<int>( std::ceil((maxPoint.z() - minPoint.z()) / cellDimension.z()));
 
     // create the particles within the sphere
     for (int i = 0; i < nCellsBoundingBox.x(); ++i) {

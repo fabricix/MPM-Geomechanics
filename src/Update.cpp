@@ -15,7 +15,7 @@ void Update::nodalVelocity(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared(gNodes) private(mesh)
+	#pragma omp parallel for shared(gNodes)
 	for (int i = 0; i < gNodes->size(); ++i)
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -31,7 +31,7 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared (gNodes) private(mesh)
+	#pragma omp parallel for shared (gNodes)
 	for (int i = 0; i < gNodes->size(); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -50,7 +50,7 @@ void Update::resetNodalValues(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared (gNodes) private(mesh)
+	#pragma omp parallel for shared (gNodes)
 	for (int i = 0; i < gNodes->size(); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -69,7 +69,7 @@ void Update::particleDensity(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		#pragma omp parallel for shared (particles)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -90,7 +90,7 @@ void Update::particlePorosity(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		#pragma omp parallel for shared (particles)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -111,7 +111,7 @@ void Update::particleStress(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		#pragma omp parallel for shared (particles)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -132,7 +132,7 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared (particles) private(bodies, ibody)
+		#pragma omp parallel for shared (particles)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -158,7 +158,7 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle 
-		#pragma omp parallel for shared (particles, nodes, dt) private(mesh, bodies, ibody)
+		#pragma omp parallel for shared (particles, nodes, dt)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -207,7 +207,7 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle 
-		#pragma omp parallel for shared (particles, nodes, dt) private(mesh, bodies, ibody)
+		#pragma omp parallel for shared (particles, nodes, dt)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -256,7 +256,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared(particles, nodes, dt) private(ibody, bodies, mesh)
+		#pragma omp parallel for shared(particles, nodes, dt)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
@@ -628,7 +628,7 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 		
 		// for each particle
-		#pragma omp parallel for shared(particles, mesh) private(bodies, ibody)
+		#pragma omp parallel for shared(particles, mesh)
 		for (int i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute

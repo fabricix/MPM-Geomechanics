@@ -23,7 +23,6 @@ SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
 
 void SolverExplicitUSL::Solve()
 {
-
 	// initialize simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();

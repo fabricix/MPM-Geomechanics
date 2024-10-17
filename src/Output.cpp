@@ -594,7 +594,6 @@ namespace Output{
 		std::cout << "     Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
 		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
 		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;
-		std::cout << "  Threads : " << ModelSetup::getThreads() << std::endl;
 		std::cout << "  Results : " << ModelSetup::getResultNum() << std::endl;
 	}
 
