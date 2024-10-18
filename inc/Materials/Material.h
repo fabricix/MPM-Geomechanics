@@ -95,6 +95,14 @@ public:
 	/// \param[out] sound_speed Sound speed
 	virtual double getSoundSpeed( ) const = 0;
 
+	/// \brief Get P (compresional) wave
+	/// \param[out] sound_speed Sound speed
+	virtual double getCompressionalWaveSpeed() const =0 ;
+
+	/// \brief Get S (shear) wave
+	/// \param[out] sound_speed Sound speed
+	virtual double getShearWaveSpeed() const = 0;
+
 protected:
 	
 	int id; //!< material identification

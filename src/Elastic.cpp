@@ -31,7 +31,18 @@ void Elastic::updateStress(Particle* particle) const {
 }
 
 double Elastic::getSoundSpeed( ) const {
-
 	// sound speed
 	return sqrt(Young*(1.0-Poisson)/(1.0+Poisson)/(1.0-2.0*Poisson)/density);
+}
+
+double Elastic::getCompressionalWaveSpeed() const {
+	// compresional wave
+	return sqrt(Young * (1.0 - Poisson) / ((1.0 + Poisson) * (1.0 - 2.0 * Poisson) * density));
+}
+
+double Elastic::getShearWaveSpeed() const {
+	// shear modulus
+	double shearModulus = Young / (2.0 * (1.0 + Poisson));
+	// shear wave velocity
+	return sqrt(shearModulus / density);
 }

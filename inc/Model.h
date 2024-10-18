@@ -220,7 +220,7 @@ namespace ModelSetup {
     
     /// \brief Set initial simulation time
 	/// \param[in] initialTime 
-	void setInitialSimulationTime( std::chrono::system_clock::time_point initialTime);
+	void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime);
 
 	/// \brief Get initial simulation time
 	/// \param[out] initialTime

@@ -346,7 +346,7 @@ void Interpolation::nodalSilentForce(Mesh* mesh, vector<Body*>* bodies)
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 			// get particle silent force
-			const Vector3d pSilentForce = particles->at(i)->getSilentForce();
+			const Vector3d pSilentForce = particles->at(i)->getSilentForce(mesh->getCellDimension());
 
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {

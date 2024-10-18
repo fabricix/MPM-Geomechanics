@@ -34,6 +34,9 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 	this->position=position;
 	this->velocity.setZero();
 	this->externalForce.setZero();
+	
+	this->silentParticle = false;
+
 	this->size=size;
 
 	this->stress.setZero();
@@ -106,13 +109,46 @@ void Particle::updateDensity() {
 	}
 }
 
-Vector3d Particle::getSilentForce()
-{
-	Vector3d silent_force;
+Vector3d Particle::getSilentForce(Vector3d cell_dimension)
+{	
+	// check if silent particle
+	if (!this->silentParticle) return Vector3d(0.0, 0.0, 0.0);
 
-	// TODO implement silent force
-	silent_force.setZero();
+	// get sound waves
+	double p_wave_velocity = this->material->getCompressionalWaveSpeed();
+	double s_wave_velocity = this->material->getShearWaveSpeed();
 	
+	// calculate the silent force
+	Vector3d silent_force(0.0,0.0,0.0);
+
+	// init local variables
+	double stress_normal(0.0), tangencial_1(0.0), tangencial_2(0.0);
+
+	// silent in x direction
+	if (this->silentDirection.x())
+	{
+		stress_normal = - this->mass * p_wave_velocity * this->velocity.x() / cell_dimension.x();
+		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.y() / cell_dimension.x() ;
+		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.z() / cell_dimension.x();
+		silent_force += Vector3d(stress_normal, tangencial_1, tangencial_2);
+	}
+	// silent force in y direction
+	if (this->silentDirection.y())
+	{
+		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.x() / cell_dimension.y();
+		stress_normal = - this->mass * p_wave_velocity * this->velocity.y() / cell_dimension.y();
+		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.z() / cell_dimension.y();
+		silent_force += Vector3d(tangencial_1, stress_normal, tangencial_2);
+	}
+	// silent force in z direction
+	if (this->silentDirection.z())
+	{
+		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.x() / cell_dimension.z();
+		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.y() / cell_dimension.z();
+		stress_normal = - this->mass * p_wave_velocity * this->velocity.z() / cell_dimension.z();
+		silent_force += Vector3d(tangencial_1, tangencial_2, stress_normal);
+	}
+
 	return silent_force;
 }
 

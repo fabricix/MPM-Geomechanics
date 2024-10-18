@@ -54,6 +54,9 @@ public:
 	/// \brief Update the particle density
 	///  
 	void updateDensity();
+
+	/// \brief Returns the siletn for for non reflecting boundary condition
+	Vector3d getSilentForce(Vector3d cell_dimension);
 	
 	/// \brief Update the particle porosity
 	///
@@ -110,10 +113,6 @@ public:
 	/// \brief Returns the external force in particle
 	/// \return Particle external force
 	inline const Vector3d& getExternalForce() const { return this->externalForce; } 
-
-	/// \brief Returns silent force in particle
-	/// \return Particle silent force
-	Vector3d getSilentForce();
 
 	/// \brief Returns the external force of fluid in particle
 	/// \return Particle external force of fluid
@@ -281,7 +280,6 @@ protected:
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
 	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
 	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^ext\f$
-	Vector3d silentForce;//!< particle silent force: \f$f_{ip}^sil\f$
 	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$

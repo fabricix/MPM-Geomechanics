@@ -55,6 +55,14 @@ public:
 	/// \brief Get sound speed
 	/// \param[out] sound_speed Sound speed
 	virtual double getSoundSpeed( ) const;
+
+	/// \brief Get P (compresional) wave
+	/// \param[out] sound_speed Sound speed
+	virtual double getCompressionalWaveSpeed() const;
+
+	/// \brief Get S (shear) wave
+	/// \param[out] sound_speed Sound speed
+	virtual double getShearWaveSpeed() const;
 	
 protected:
 	
