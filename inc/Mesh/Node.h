@@ -153,7 +153,7 @@ public:
 
 	/// \brief Calculate the total nodal force
 	///
-	virtual inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce; }
+	virtual inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce + this->silentForce; }
 
 	/// \brief Calculate the damping nodal force
 	///
