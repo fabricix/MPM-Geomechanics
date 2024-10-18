@@ -3,9 +3,9 @@
 
   "shape_function":"GIMP",
 
-  "time":10e-1,
+  "time":0.1,
 
- "critical_time_step_multiplier":0.25,
+ "time_step":2e-6,
 
   "gravity":[0.0,0.0,0.0],
 
@@ -20,7 +20,7 @@
   "results":
   {
     "print":100,
-    "fields":["id","displacement","velocity","material","active","body","silent_active"]
+    "fields":["id","displacement","velocity","material","active","body","silent_active","external_force"]
   },
 
   "n_phases":1,
@@ -42,18 +42,13 @@
     }
   },
 
-  "silent_particles":
-  {
-    "normal_plane_Z":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.2,0.2,0.5]}
-  },
-
   "material":
   {
     "elastic_1":
     {
       "type":"elastic",
       "id":1,
-      "young":10e6,
+      "young":11e6,
       "density":2500,
       "poisson":0.25
     }
@@ -66,9 +61,20 @@
       "type":"cuboid",
       "id":1,
       "point_p1":[0.0,0.0,0.0],
-      "point_p2":[0.2,0.2,1],
+      "point_p2":[0.2,0.2,1.0],
       "material_id":1
     }
 
-    }
+  },
+
+  "silent_particles":
+  {
+    "normal_plane_Z":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.2,0.2,0.1]}
+  },
+
+  "load_distributed_box":
+	{
+		"load_1": { "point_p1":[0,0,0.95], "point_p2":[0.2,0.2,1], "load":[0,0,0.0016]}
+	}
+
   }
