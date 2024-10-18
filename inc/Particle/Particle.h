@@ -266,6 +266,9 @@ public:
     /// \return Particle deformation gradient
     inline const Matrix3d& getDeformationGradient() const { return this->deformationGradient; }
 
+	/// \brief Active and configure direction in silent particle
+	inline void setSilent(bool active, Eigen::Vector3i direction) { this->silentParticle=active; this->silentDirection=direction; }
+
 protected:
 
 	bool active; //!< is particle active

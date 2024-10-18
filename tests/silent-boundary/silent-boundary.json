@@ -42,6 +42,12 @@
     }
   },
 
+  "silent_particles":
+  {
+    "normal_plane_Z":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.0,0.0,0.0]},
+    "normal_plane_X":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.0,0.0,0.0]}
+  },
+
   "material":
   {
     "elastic_1":

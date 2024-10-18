@@ -101,6 +101,10 @@ public:
 	/// \brief Save model state
 	///
 	void saveState();
+
+	/// @brief Configure silent particles
+	void setupSilentParticles();
+	
 private:
 	
 	Mesh mesh; //!< grid mesh

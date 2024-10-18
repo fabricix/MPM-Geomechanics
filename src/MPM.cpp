@@ -292,6 +292,29 @@ void MPM::saveState()
 	}
 }
 
+void MPM::setupSilentParticles() {
+
+	// input data
+    std::vector<Geometry::Box> boxes;
+    std::vector<Vector3i> directions;
+    Input::readSilentParticles(boxes, directions);
+
+    // verify vectors size
+    if (boxes.size() != directions.size()) {
+		Warning::printMessage("Bad silent particle definition\n");
+        return;
+    }
+
+    // configure silent particles in boxes
+    for (size_t j = 0; j < boxes.size(); j++) {
+        for (size_t i = 0; i < particles.size(); i++) {
+            if (Geometry::getInsideBox(boxes.at(j).point_1, boxes.at(j).point_2, particles.at(i)->getPosition())) {
+                particles.at(i)->setSilent(true, directions.at(j));
+            }
+        }
+    }
+}
+
 void MPM::createModel() {
 
 	try{
@@ -334,12 +357,14 @@ void MPM::createModel() {
 		// configures the loads
 		setupLoads();
 
-		// configures the damping
+		// configure damping
 		setupDamping();
+
+		// configure silent particles
+		setupSilentParticles();
 
 		// configures the results
 		setupResults();
-
 	}
 	catch(...)
 	{

@@ -1333,32 +1333,37 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 void Input::readSilentParticles( std::vector< Geometry::Box >& boxes, std::vector<Vector3i>& directions)
 {
 	try {
-		
-		if (!inputFile["silent_particles"].is_null())
-		{
-			json::iterator it;
-			for (it = inputFile["silent_particles"].begin(); it != inputFile["silent_particles"].end(); it++) {
 
-				Vector3d point_1, point_2;
-				Vector3i direction;
+		if (inputFile.contains("silent_particles")) {
+			
+			auto silentParticles = inputFile["silent_particles"];
 
-				if ((*it)["point_p1"].is_array()) {
-					auto point_p1_array = (*it)["point_p1"];
-					point_1 = Vector3d{ point_p1_array[0], point_p1_array[1], point_p1_array[2] };
-				}
+			for (auto& element : silentParticles.items())
+			{
+				std::string key = element.key();
 
-				if ((*it)["point_p2"].is_array()) {
-					auto point_p2_array = (*it)["point_p2"];
-					point_2 = Vector3d{ point_p2_array[0], point_p2_array[1], point_p2_array[2] };
-				}
+				if(key=="normal_plane_X") {	directions.push_back(Vector3i(1,0,0)); }
+				if(key=="normal_plane_Y") {	directions.push_back(Vector3i(0,1,0)); }
+				if(key=="normal_plane_Z") {	directions.push_back(Vector3i(0,0,1)); }
 				
-				if ((*it)["direction"].is_array()) {
-					auto direction_array = (*it)["direction"];
-					direction = Vector3i{ direction_array[0], direction_array[1], direction_array[2] };
-				}
+				auto value = element.value();
 
-				boxes.push_back(Geometry::Box(point_1, point_2));
-				directions.push_back(direction);
+				if (value["type"] == "box" && value.contains("point_1") && value.contains("point_2"))
+				{
+					Vector3d point1 = {
+						value["point_1"][0],
+						value["point_1"][1],
+						value["point_1"][2]
+					};
+
+					Vector3d point2 = {
+						value["point_2"][0],
+						value["point_2"][1],
+						value["point_2"][2]
+					};
+					
+					boxes.push_back(Geometry::Box(point1,point2));
+				}
 			}
 		}
 	}
