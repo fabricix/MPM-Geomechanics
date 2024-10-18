@@ -269,6 +269,9 @@ public:
 	/// \brief Active and configure direction in silent particle
 	inline void setSilent(bool active, Eigen::Vector3i direction) { this->silentParticle=active; this->silentDirection=direction; }
 
+	/// \brief Return true if this is a silent particle
+	inline bool getIfSilentParticle( ) const {return this->silentParticle;}
+
 protected:
 
 	bool active; //!< is particle active

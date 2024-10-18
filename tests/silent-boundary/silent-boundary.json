@@ -3,7 +3,7 @@
 
   "shape_function":"GIMP",
 
-  "time":10,
+  "time":10e-1,
 
  "critical_time_step_multiplier":0.25,
 
@@ -20,7 +20,7 @@
   "results":
   {
     "print":100,
-    "fields":["id","displacement","velocity","material","active","body"]
+    "fields":["id","displacement","velocity","material","active","body","silent_active"]
   },
 
   "n_phases":1,
@@ -28,7 +28,7 @@
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[12,12,15],
+    "cells_number":[2,2,15],
     "origin":[0,0,0],
     
     "boundary_conditions":
@@ -44,8 +44,7 @@
 
   "silent_particles":
   {
-    "normal_plane_Z":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.0,0.0,0.0]},
-    "normal_plane_X":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.0,0.0,0.0]}
+    "normal_plane_Z":{ "type":"box", "point_1":[0.0,0.0,0.0], "point_2":[0.2,0.2,0.5]}
   },
 
   "material":
@@ -54,7 +53,7 @@
     {
       "type":"elastic",
       "id":1,
-      "young":8e6,
+      "young":10e6,
       "density":2500,
       "poisson":0.25
     }
@@ -62,12 +61,12 @@
 
   "body":
   {
-    "columns_1":
+    "body_1":
     {
       "type":"cuboid",
       "id":1,
-      "point_p1":[0.4,0.4,0],
-      "point_p2":[0.7,0.7,1.4],
+      "point_p1":[0.0,0.0,0.0],
+      "point_p2":[0.2,0.2,1],
       "material_id":1
     }
 

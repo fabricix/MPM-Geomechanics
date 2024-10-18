@@ -223,6 +223,16 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("silent_active")){
+			
+			// silent particle active
+			partFile<<"<DataArray type=\"UInt8\" Name=\"Silent Particle\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getIfSilentParticle()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+
 		if (isFieldRequired("external_force")){
 
 			// external force in particle
