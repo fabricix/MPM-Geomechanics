@@ -39,6 +39,22 @@ namespace Geometry {
     /// \param[in] position Point to be evaluated the function
     /// \return True if the point is inside the box, false otherwise
     bool getInsideBox(Vector3d p1, Vector3d p2, Vector3d position);
+
+    /// <summary>
+    /// Box struct for geometry operations
+    /// </summary>
+    struct Box {
+        
+        Vector3d point_1;
+        Vector3d point_2;
+        
+        Box() = default;
+
+        Box(const Vector3d& point_1, const Vector3d& point_2)
+            : point_1(point_1), point_2(point_2)
+        {
+        }
+    };
 }
 
 #endif /* GEOMETRY_H_ */

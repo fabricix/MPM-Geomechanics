@@ -18,6 +18,7 @@
 #include "Particle/ParticleMixture.h"
 #include "Warning.h"
 #include "Loads.h"
+#include "Geometry.h"
 
 #include <omp.h>
 
@@ -1328,6 +1329,45 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 		throw;
 	}
 };
+
+void Input::readSilentParticles( std::vector< Geometry::Box >& boxes, std::vector<Vector3i>& directions)
+{
+	try {
+		
+		if (!inputFile["silent_particles"].is_null())
+		{
+			json::iterator it;
+			for (it = inputFile["silent_particles"].begin(); it != inputFile["silent_particles"].end(); it++) {
+
+				Vector3d point_1, point_2;
+				Vector3i direction;
+
+				if ((*it)["point_p1"].is_array()) {
+					auto point_p1_array = (*it)["point_p1"];
+					point_1 = Vector3d{ point_p1_array[0], point_p1_array[1], point_p1_array[2] };
+				}
+
+				if ((*it)["point_p2"].is_array()) {
+					auto point_p2_array = (*it)["point_p2"];
+					point_2 = Vector3d{ point_p2_array[0], point_p2_array[1], point_p2_array[2] };
+				}
+				
+				if ((*it)["direction"].is_array()) {
+					auto direction_array = (*it)["direction"];
+					direction = Vector3i{ direction_array[0], direction_array[1], direction_array[2] };
+				}
+
+				boxes.push_back(Geometry::Box(point_1, point_2));
+				directions.push_back(direction);
+			}
+		}
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error in silent particle definition");
+		throw;
+	}
+}
 
 SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
 	

@@ -142,7 +142,6 @@ public:
 
 	inline void addSilentForce(const Vector3d& silent_force_increment) { this->silentForce += silent_force_increment; }
 
-
 	/// \brief Add a external force of fluid increment to the nodal external force
 	/// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
 	virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) { return; }
@@ -154,7 +153,7 @@ public:
 	/// \brief Calculate the total nodal force
 	///
 	virtual inline void updateTotalForce() { this->totalForce = this->internalForce + this->externalForce + this->dampingForce + this->silentForce; }
-
+	
 	/// \brief Calculate the damping nodal force
 	///
 	virtual void updateDampingForce();

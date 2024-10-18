@@ -23,6 +23,7 @@ using Eigen::Vector3d;
 #include "Model.h"
 #include "Boundary.h"
 #include "Loads.h"
+#include "Geometry.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -614,6 +615,8 @@ namespace Input {
 	/// \brief Return pore pressure force in particles inside a box
 	/// \return pressure_force  Pore pressure force
 	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
+
+	void readSilentParticles(std::vector<Geometry::Box>& boxes, std::vector<Vector3i>& directions);
 
 	Loads::SeismicData readSeismicData(const std::string& filename, bool hasHeader);
 };
