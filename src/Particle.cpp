@@ -118,10 +118,7 @@ Vector3d Particle::getSilentForce(Vector3d cell_dimension)
 	double p_wave_velocity = this->material->getCompressionalWaveSpeed();
 	double s_wave_velocity = this->material->getShearWaveSpeed();
 	
-	// calculate the silent force
-	Vector3d silent_force(0.0,0.0,0.0);
-
-	// init local variables
+	// initialize normal and tangential components
 	double stress_normal(0.0), tangencial_1(0.0), tangencial_2(0.0);
 
 	// silent in x direction
@@ -130,7 +127,7 @@ Vector3d Particle::getSilentForce(Vector3d cell_dimension)
 		stress_normal = - this->mass * p_wave_velocity * this->velocity.x() / cell_dimension.x();
 		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.y() / cell_dimension.x() ;
 		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.z() / cell_dimension.x();
-		silent_force += Vector3d(stress_normal, tangencial_1, tangencial_2);
+		return Vector3d(stress_normal, tangencial_1, tangencial_2);
 	}
 	// silent force in y direction
 	if (this->silentDirection.y())
@@ -138,7 +135,7 @@ Vector3d Particle::getSilentForce(Vector3d cell_dimension)
 		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.x() / cell_dimension.y();
 		stress_normal = - this->mass * p_wave_velocity * this->velocity.y() / cell_dimension.y();
 		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.z() / cell_dimension.y();
-		silent_force += Vector3d(tangencial_1, stress_normal, tangencial_2);
+		return Vector3d(tangencial_1, stress_normal, tangencial_2);
 	}
 	// silent force in z direction
 	if (this->silentDirection.z())
@@ -146,10 +143,10 @@ Vector3d Particle::getSilentForce(Vector3d cell_dimension)
 		tangencial_1  = - this->mass * s_wave_velocity * this->velocity.x() / cell_dimension.z();
 		tangencial_2  = - this->mass * s_wave_velocity * this->velocity.y() / cell_dimension.z();
 		stress_normal = - this->mass * p_wave_velocity * this->velocity.z() / cell_dimension.z();
-		silent_force += Vector3d(tangencial_1, tangencial_2, stress_normal);
+		return Vector3d(tangencial_1, tangencial_2, stress_normal);
 	}
-
-	return silent_force;
+	// return default value
+	return Vector3d(0.0, 0.0, 0.0);
 }
 
 void Particle::setMaterial(Material* material) { 
