@@ -2,6 +2,7 @@ Debug/
 Release/
 sublime/
 doxygen/html
+doxygen/docs
 doxygen/latex
 doxygen/output.txt 
 .settings/

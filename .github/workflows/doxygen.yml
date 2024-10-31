@@ -22,7 +22,7 @@ jobs:
 
       - name: Generate Documentation
         run:
-          doxygen /doxygen/Doxyfile
+          doxygen Doxyfile
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
