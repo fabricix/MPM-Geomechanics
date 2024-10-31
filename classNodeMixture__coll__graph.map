@@ -1,0 +1,5 @@
+<map id="NodeMixture" name="NodeMixture">
+<area shape="rect" id="node1" title="Represents a mesh node for calculations using the mixture theory." alt="" coords="23,320,130,347"/>
+<area shape="rect" id="node2" href="$classNode.html" title="Represents a mesh node." alt="" coords="177,213,233,240"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,84,32"/>
+</map>

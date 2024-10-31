@@ -1,0 +1,6 @@
+<map id="BodySphere" name="BodySphere">
+<area shape="rect" id="node1" title="Is a type of Body representing a sphere in 3D." alt="" coords="183,173,283,200"/>
+<area shape="rect" id="node2" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="146,96,201,123"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="218,5,297,32"/>
+</map>

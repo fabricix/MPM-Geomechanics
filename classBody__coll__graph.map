@@ -1,0 +1,5 @@
+<map id="Body" name="Body">
+<area shape="rect" id="node1" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="123,95,178,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node3" title=" " alt="" coords="182,5,261,32"/>
+</map>

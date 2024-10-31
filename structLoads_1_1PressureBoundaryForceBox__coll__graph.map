@@ -1,0 +1,4 @@
+<map id="Loads::PressureBoundaryForceBox" name="Loads::PressureBoundaryForceBox">
+<area shape="rect" id="node1" title="Structure to represent a boundary force in fluid due the action of the pressure." alt="" coords="5,124,252,151"/>
+<area shape="rect" id="node2" title=" " alt="" coords="89,5,168,32"/>
+</map>

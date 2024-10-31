@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MPM-Geomechanics: Main Page</title>
+<title>MPM-Geomechanics: MPM-Geomechanics</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,11 +68,46 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">MPM-Geomechanics Documentation</div>  </div>
+<div class="title">MPM-Geomechanics </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><h1><a class="anchor" id="program_intro"></a>
+Introduction</h1>
+<p>The MPM-Geomechanics is an implementation of the <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method to simulate large strain geomechanical problems.</p>
+<p>The main objectives of this program are:</p>
+<ul>
+<li>Provide an open source platform suitable for the study and application of <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> in various geomechanical problems.</li>
+<li>provide an adequate computational tool to simulate geomechanical problems involving large deformations.</li>
+</ul>
+<h1><a class="anchor" id="program_features"></a>
+Program Features</h1>
+<p>The main features of the program are:</p>
+<ul>
+<li>Three-dimensional formulation</li>
+<li>Dynamic formulation</li>
+<li>Shared memory parallelization</li>
+<li><a class="el" href="classElastic.html" title="Represents an elastic material.">Elastic</a> constitutive models</li>
+<li>Elasto-plastic constitutive models</li>
+<li>Softening/Hardening by deformation</li>
+<li>Coupled hydromechanical formulation (in development)</li>
+</ul>
+<h1><a class="anchor" id="program_compilation"></a>
+Compilation</h1>
+<p>The <code>/make</code> directory contains the makefile. To compile the program run make in the <code>/make</code> folder:</p>
+<p><code>/make$ make</code></p>
+<h1><a class="anchor" id="program_documentation"></a>
+Documentation</h1>
+<p>The program documentation is generated using Doxygen. The DoxyFile file is located in the <code>/doxygen</code> directory. To generate the documentation, run:</p>
+<p><code>/doxygen$ doxygen</code></p>
+<p>The HTML documentation is located in the <code>/doxygen/html</code> directory. To generate the PDF file, run make inside the <code>doxy/latex</code> directory.</p>
+<p><code>/doxygen/latex$ make</code></p>
+<h1><a class="anchor" id="program_execution"></a>
+Execution</h1>
+<p>In order the run the program call it with the name of the input file, for example:</p>
+<p><code>/make$ ./MPM-Geomechanics example.json</code> </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

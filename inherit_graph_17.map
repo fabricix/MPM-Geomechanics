@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="5,31,68,57"/>
+<area shape="rect" id="node2" href="$classShapeGimp.html" title="Represents the GIMP shape functions used in the interpolation process." alt="" coords="119,5,216,32"/>
+<area shape="rect" id="node3" href="$classShapeLinear.html" title="Represents the Linear shape functions used in the interpolation process." alt="" coords="116,56,219,83"/>
+</map>

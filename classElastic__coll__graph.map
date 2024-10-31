@@ -1,0 +1,5 @@
+<map id="Elastic" name="Elastic">
+<area shape="rect" id="node1" title="Represents an elastic material." alt="" coords="12,171,77,197"/>
+<area shape="rect" id="node2" href="$classMaterial.html" title="Represents a material." alt="" coords="7,95,83,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,84,32"/>
+</map>

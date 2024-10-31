@@ -1,0 +1,8 @@
+<map id="BodyPolygon" name="BodyPolygon">
+<area shape="rect" id="node1" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="224,184,331,211"/>
+<area shape="rect" id="node2" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="123,95,178,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="182,5,261,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="202,95,353,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="377,95,436,121"/>
+</map>

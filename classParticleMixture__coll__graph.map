@@ -1,0 +1,9 @@
+<map id="ParticleMixture" name="ParticleMixture">
+<area shape="rect" id="node1" title="A material point for calculations using the mixture theory." alt="" coords="300,380,420,407"/>
+<area shape="rect" id="node2" href="$classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="324,304,395,331"/>
+<area shape="rect" id="node3" title=" " alt="" coords="277,133,450,159"/>
+<area shape="rect" id="node4" href="$classMaterial.html" title="Represents a material." alt="" coords="86,133,162,159"/>
+<area shape="rect" id="node5" title=" " alt="" coords="151,5,230,32"/>
+<area shape="rect" id="node7" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="190,133,252,159"/>
+<area shape="rect" id="node6" title=" " alt="" coords="645,133,725,159"/>
+</map>

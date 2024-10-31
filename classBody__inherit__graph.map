@@ -1,0 +1,7 @@
+<map id="Body" name="Body">
+<area shape="rect" id="node1" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="217,5,272,32"/>
+<area shape="rect" id="node2" href="$classBodyCuboid.html" title="Is a type of Body representing a cuboid in 3D." alt="" coords="5,80,105,107"/>
+<area shape="rect" id="node3" href="$classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="129,80,232,107"/>
+<area shape="rect" id="node4" href="$classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="257,80,363,107"/>
+<area shape="rect" id="node5" href="$classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="388,80,488,107"/>
+</map>

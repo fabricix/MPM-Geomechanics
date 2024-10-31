@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classMaterial.html" title="Represents a material." alt="" coords="5,5,81,32"/>
+<area shape="rect" id="node2" href="$classElastic.html" title="Represents an elastic material." alt="" coords="129,5,195,32"/>
+<area shape="rect" id="node3" href="$classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="243,5,365,32"/>
+<area shape="rect" id="node4" href="$classMohrCoulomb.html" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="413,5,527,32"/>
+</map>
