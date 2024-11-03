@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('Elastic_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_508cbffc9888f29a0b75cd03909f2b66.html">Materials</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Elastic.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="Elastic_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Elastic.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 4 de mai de 2021</span></div>
@@ -87,8 +104,8 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef ELASTIC_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define ELASTIC_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Materials/Material.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Particle/Particle.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Material_8h.html">Materials/Material.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Particle_8h.html">Particle/Particle.h</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classElastic.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classElastic.html">Elastic</a>: <span class="keyword">public</span> <a class="code" href="classMaterial.html">Material</a> {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
@@ -129,6 +146,8 @@ $(function() {
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classElastic.html#a061f85d60ee4ce7572193652f7659859">   73</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classElastic.html#a061f85d60ee4ce7572193652f7659859">Elastic::~Elastic</a>() { }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* ELASTIC_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aMaterial_8h_html"><div class="ttname"><a href="Material_8h.html">Material.h</a></div></div>
+<div class="ttc" id="aParticle_8h_html"><div class="ttname"><a href="Particle_8h.html">Particle.h</a></div></div>
 <div class="ttc" id="aclassElastic_html"><div class="ttname"><a href="classElastic.html">Elastic</a></div><div class="ttdoc">Represents an elastic material.</div><div class="ttdef"><b>Definition:</b> Elastic.h:16</div></div>
 <div class="ttc" id="aclassElastic_html_a03ee435222a72268fca4e6763ad995e3"><div class="ttname"><a href="classElastic.html#a03ee435222a72268fca4e6763ad995e3">Elastic::Poisson</a></div><div class="ttdeci">double Poisson</div><div class="ttdoc">Poisson's ratio .</div><div class="ttdef"><b>Definition:</b> Elastic.h:63</div></div>
 <div class="ttc" id="aclassElastic_html_a061f85d60ee4ce7572193652f7659859"><div class="ttname"><a href="classElastic.html#a061f85d60ee4ce7572193652f7659859">Elastic::~Elastic</a></div><div class="ttdeci">virtual ~Elastic()</div><div class="ttdoc">Default destructor.</div><div class="ttdef"><b>Definition:</b> Elastic.h:73</div></div>
@@ -147,9 +166,13 @@ $(function() {
 <div class="ttc" id="aclassMaterial_html_aaaec00187d5d2d1827eb7b7a684cf439"><div class="ttname"><a href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">Material::MaterialType</a></div><div class="ttdeci">MaterialType</div><div class="ttdef"><b>Definition:</b> Material.h:24</div></div>
 <div class="ttc" id="aclassParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdoc">Represents a Lagrangian material point This class contain all Lagrangian variables that represents th...</div><div class="ttdef"><b>Definition:</b> Particle.h:29</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_508cbffc9888f29a0b75cd03909f2b66.html">Materials</a></li><li class="navelem"><a class="el" href="Elastic_8h.html">Elastic.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

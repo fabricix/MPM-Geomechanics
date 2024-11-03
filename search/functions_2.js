@@ -1,14 +1,15 @@
 var searchData=
 [
-  ['computegradient_523',['computeGradient',['../classShapeGimp.html#aec66a5261e3b4dcc6895eebfa0457912',1,'ShapeGimp::computeGradient()'],['../classShapeLinear.html#a5aa2c2710b253785549a49b0ab9df6fb',1,'ShapeLinear::computeGradient()'],['../classShape.html#ace2d591e1020c4d4a0cee59c65340b2c',1,'Shape::computeGradient(double pI_position, double cell_dimension, double lp)=0']]],
-  ['computeshape_524',['computeShape',['../classShape.html#a821108891fd1b3d8a51895d04259b9f1',1,'Shape::computeShape()'],['../classShapeGimp.html#a6b9bf93afe40d0b02249cfffeb35b1f2',1,'ShapeGimp::computeShape()'],['../classShapeLinear.html#a8e6a7e7e501e2fdaab1825480cb561d2',1,'ShapeLinear::computeShape()']]],
-  ['configureboundaries_525',['configureBoundaries',['../classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1',1,'Mesh']]],
-  ['configureresultfiels_526',['configureResultFiels',['../namespaceOutput.html#a53978f5e750be3407e4386574952b099',1,'Output']]],
-  ['contact_527',['Contact',['../classContact.html#ae39444f378e6de7fd6c3e60981949af5',1,'Contact']]],
-  ['contribution_528',['Contribution',['../classContribution.html#a59775497d673b49ac00b19f525bc1b05',1,'Contribution']]],
-  ['contributionnodes_529',['contributionNodes',['../namespaceUpdate.html#ac4eb098fb4c61f394ab338f8aa43d546',1,'Update']]],
-  ['create_530',['create',['../classBodyParticle.html#a43162cdfd14c6fb97cc9a7d7f00469a9',1,'BodyParticle::create()'],['../classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2',1,'BodyPolygon::create()'],['../classBodySphere.html#ae11521fe762994be934ea9be213558ed',1,'BodySphere::create()'],['../classBodyCuboid.html#a67c37738ebb9cb1bb98d79c62b7b2aec',1,'BodyCuboid::create()'],['../classBody.html#af9e08d3de1fbdb9077eb73d8133f5062',1,'Body::create()']]],
-  ['createbodies_531',['createBodies',['../classMPM.html#a4120e0647c81b3b85508fde13055e189',1,'MPM']]],
-  ['creategrid_532',['createGrid',['../classMesh.html#aab02fa9f299965727bebe70b12624e96',1,'Mesh']]],
-  ['createmodel_533',['createModel',['../classMPM.html#a7330c25c84634d4086f1f173985ba587',1,'MPM']]]
+  ['computegradient_654',['computeGradient',['../classShapeGimp.html#aec66a5261e3b4dcc6895eebfa0457912',1,'ShapeGimp::computeGradient()'],['../classShapeLinear.html#a5aa2c2710b253785549a49b0ab9df6fb',1,'ShapeLinear::computeGradient()'],['../classShape.html#ace2d591e1020c4d4a0cee59c65340b2c',1,'Shape::computeGradient()']]],
+  ['computekineticenergy_655',['computeKineticEnergy',['../namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4',1,'DynamicRelaxation']]],
+  ['computeshape_656',['computeShape',['../classShape.html#a821108891fd1b3d8a51895d04259b9f1',1,'Shape::computeShape()'],['../classShapeGimp.html#a6b9bf93afe40d0b02249cfffeb35b1f2',1,'ShapeGimp::computeShape()'],['../classShapeLinear.html#a8e6a7e7e501e2fdaab1825480cb561d2',1,'ShapeLinear::computeShape()']]],
+  ['configureboundaries_657',['configureBoundaries',['../classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1',1,'Mesh']]],
+  ['configureresultfiels_658',['configureResultFiels',['../namespaceOutput.html#a53978f5e750be3407e4386574952b099',1,'Output']]],
+  ['contact_659',['Contact',['../classContact.html#ae39444f378e6de7fd6c3e60981949af5',1,'Contact']]],
+  ['contribution_660',['Contribution',['../classContribution.html#a59775497d673b49ac00b19f525bc1b05',1,'Contribution']]],
+  ['contributionnodes_661',['contributionNodes',['../namespaceUpdate.html#ac4eb098fb4c61f394ab338f8aa43d546',1,'Update']]],
+  ['create_662',['create',['../classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2',1,'BodyPolygon::create()'],['../classBodySphere.html#ae11521fe762994be934ea9be213558ed',1,'BodySphere::create()'],['../classBodyParticle.html#a43162cdfd14c6fb97cc9a7d7f00469a9',1,'BodyParticle::create()'],['../classBodyCuboid.html#a67c37738ebb9cb1bb98d79c62b7b2aec',1,'BodyCuboid::create()'],['../classBody.html#af9e08d3de1fbdb9077eb73d8133f5062',1,'Body::create()']]],
+  ['createbodies_663',['createBodies',['../classMPM.html#a4120e0647c81b3b85508fde13055e189',1,'MPM']]],
+  ['creategrid_664',['createGrid',['../classMesh.html#aab02fa9f299965727bebe70b12624e96',1,'Mesh']]],
+  ['createmodel_665',['createModel',['../classMPM.html#a7330c25c84634d4086f1f173985ba587',1,'MPM']]]
 ];

@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classMaterial.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,7 +89,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
@@ -93,7 +114,7 @@ Inheritance diagram for Material:</div>
 <area shape="rect" href="classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,155,128,181"/>
 <area shape="rect" href="classMohrCoulomb.html" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="10,229,123,256"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Material:</div>
 <div class="dyncontent">
@@ -102,25 +123,23 @@ Collaboration diagram for Material:</div>
 <area shape="rect" title="Represents a material." alt="" coords="7,95,83,121"/>
 <area shape="rect" title=" " alt="" coords="5,5,84,32"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <b>NONE</b>
-, <b>ELASTIC</b>
-, <b>ELASTOPLASTIC</b>
+<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">NONE</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42">ELASTIC</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae">ELASTOPLASTIC</a>
  }</td></tr>
 <tr class="separator:aaaec00187d5d2d1827eb7b7a684cf439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4fca8e76ddfb7e310071a258174de41d"><td class="memItemLeft" align="right" valign="top"><a id="a4fca8e76ddfb7e310071a258174de41d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a4fca8e76ddfb7e310071a258174de41d">Material</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=MaterialType::NONE)</td></tr>
-<tr class="memdesc:a4fca8e76ddfb7e310071a258174de41d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="memitem:a4fca8e76ddfb7e310071a258174de41d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a4fca8e76ddfb7e310071a258174de41d">Material</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=MaterialType::NONE)</td></tr>
+<tr class="memdesc:a4fca8e76ddfb7e310071a258174de41d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="classMaterial.html#a4fca8e76ddfb7e310071a258174de41d">More...</a><br /></td></tr>
 <tr class="separator:a4fca8e76ddfb7e310071a258174de41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c19452d71f54075df8f5405b03129f4"><td class="memItemLeft" align="right" valign="top"><a id="a2c19452d71f54075df8f5405b03129f4"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a2c19452d71f54075df8f5405b03129f4">~Material</a> ()</td></tr>
-<tr class="memdesc:a2c19452d71f54075df8f5405b03129f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:a2c19452d71f54075df8f5405b03129f4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a2c19452d71f54075df8f5405b03129f4">~Material</a> ()</td></tr>
+<tr class="memdesc:a2c19452d71f54075df8f5405b03129f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <a href="classMaterial.html#a2c19452d71f54075df8f5405b03129f4">More...</a><br /></td></tr>
 <tr class="separator:a2c19452d71f54075df8f5405b03129f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92772816435ab97fda35860e1b16d1ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a92772816435ab97fda35860e1b16d1ef">getId</a> () const</td></tr>
 <tr class="memdesc:a92772816435ab97fda35860e1b16d1ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the identification.  <a href="classMaterial.html#a92772816435ab97fda35860e1b16d1ef">More...</a><br /></td></tr>
@@ -173,33 +192,26 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a3c350361ffe39076a51722fff3346781"><td class="memItemLeft" align="right" valign="top"><a id="a3c350361ffe39076a51722fff3346781"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a></td></tr>
-<tr class="memdesc:a3c350361ffe39076a51722fff3346781"><td class="mdescLeft">&#160;</td><td class="mdescRight">material identification <br /></td></tr>
+<tr class="memitem:a3c350361ffe39076a51722fff3346781"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a></td></tr>
+<tr class="memdesc:a3c350361ffe39076a51722fff3346781"><td class="mdescLeft">&#160;</td><td class="mdescRight">material identification  <a href="classMaterial.html#a3c350361ffe39076a51722fff3346781">More...</a><br /></td></tr>
 <tr class="separator:a3c350361ffe39076a51722fff3346781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a450e3fe61d94b8fa58aac5a8f90507df"><td class="memItemLeft" align="right" valign="top"><a id="a450e3fe61d94b8fa58aac5a8f90507df"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a></td></tr>
-<tr class="memdesc:a450e3fe61d94b8fa58aac5a8f90507df"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial material density \(\rho^{0}\) or initial solid density in two-phase calculations \(\rho^{s,0}\) <br /></td></tr>
+<tr class="memitem:a450e3fe61d94b8fa58aac5a8f90507df"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a></td></tr>
+<tr class="memdesc:a450e3fe61d94b8fa58aac5a8f90507df"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial material density \(\rho^{0}\) or initial solid density in two-phase calculations \(\rho^{s,0}\)  <a href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">More...</a><br /></td></tr>
 <tr class="separator:a450e3fe61d94b8fa58aac5a8f90507df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68c4ef8534dedd53c4999b2df3016049"><td class="memItemLeft" align="right" valign="top"><a id="a68c4ef8534dedd53c4999b2df3016049"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a68c4ef8534dedd53c4999b2df3016049">densityFluid</a></td></tr>
-<tr class="memdesc:a68c4ef8534dedd53c4999b2df3016049"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial density of the fluid phase in two-phase calculations \(\rho^{f,0}\) <br /></td></tr>
+<tr class="memitem:a68c4ef8534dedd53c4999b2df3016049"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a68c4ef8534dedd53c4999b2df3016049">densityFluid</a></td></tr>
+<tr class="memdesc:a68c4ef8534dedd53c4999b2df3016049"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial density of the fluid phase in two-phase calculations \(\rho^{f,0}\)  <a href="classMaterial.html#a68c4ef8534dedd53c4999b2df3016049">More...</a><br /></td></tr>
 <tr class="separator:a68c4ef8534dedd53c4999b2df3016049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da7180771687fd58e2cf5e1778d8655"><td class="memItemLeft" align="right" valign="top"><a id="a1da7180771687fd58e2cf5e1778d8655"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a1da7180771687fd58e2cf5e1778d8655">porosity</a></td></tr>
-<tr class="memdesc:a1da7180771687fd58e2cf5e1778d8655"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial porosity \(n^0\) <br /></td></tr>
+<tr class="memitem:a1da7180771687fd58e2cf5e1778d8655"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a1da7180771687fd58e2cf5e1778d8655">porosity</a></td></tr>
+<tr class="memdesc:a1da7180771687fd58e2cf5e1778d8655"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial porosity \(n^0\)  <a href="classMaterial.html#a1da7180771687fd58e2cf5e1778d8655">More...</a><br /></td></tr>
 <tr class="separator:a1da7180771687fd58e2cf5e1778d8655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af273c3103e5a1ff733b77edd3da8a5ff"><td class="memItemLeft" align="right" valign="top"><a id="af273c3103e5a1ff733b77edd3da8a5ff"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff">bulkModulusFluid</a></td></tr>
-<tr class="memdesc:af273c3103e5a1ff733b77edd3da8a5ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">elastic volumetric modulus of fluid in mixture \(K^f\) <br /></td></tr>
+<tr class="memitem:af273c3103e5a1ff733b77edd3da8a5ff"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff">bulkModulusFluid</a></td></tr>
+<tr class="memdesc:af273c3103e5a1ff733b77edd3da8a5ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">elastic volumetric modulus of fluid in mixture \(K^f\)  <a href="classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff">More...</a><br /></td></tr>
 <tr class="separator:af273c3103e5a1ff733b77edd3da8a5ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memItemLeft" align="right" valign="top"><a id="a17720043f6a8d8fdfe2fd76d59ffd12e"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e">hydraulicConductivity</a></td></tr>
-<tr class="memdesc:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">hydraulic conductivity of the fluid in the material \(k_i\) <br /></td></tr>
+<tr class="memitem:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e">hydraulicConductivity</a></td></tr>
+<tr class="memdesc:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">hydraulic conductivity of the fluid in the material \(k_i\)  <a href="classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e">More...</a><br /></td></tr>
 <tr class="separator:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab54be6694ca8c0adcd8450121bdf1592"><td class="memItemLeft" align="right" valign="top"><a id="ab54be6694ca8c0adcd8450121bdf1592"></a>
-<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a></td></tr>
-<tr class="memdesc:ab54be6694ca8c0adcd8450121bdf1592"><td class="mdescLeft">&#160;</td><td class="mdescRight">material type <br /></td></tr>
+<tr class="memitem:ab54be6694ca8c0adcd8450121bdf1592"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a></td></tr>
+<tr class="memdesc:ab54be6694ca8c0adcd8450121bdf1592"><td class="mdescLeft">&#160;</td><td class="mdescRight">material type  <a href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">More...</a><br /></td></tr>
 <tr class="separator:ab54be6694ca8c0adcd8450121bdf1592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -217,6 +229,83 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <p>Describes the material's constitutive model type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42"></a>ELASTIC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae"></a>ELASTOPLASTIC&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a4fca8e76ddfb7e310071a258174de41d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fca8e76ddfb7e310071a258174de41d">&#9670;&nbsp;</a></span>Material()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Material::Material </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>density</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a>&#160;</td>
+          <td class="paramname"><em>type</em> = <code>MaterialType::NONE</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+
+</div>
+</div>
+<a id="a2c19452d71f54075df8f5405b03129f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c19452d71f54075df8f5405b03129f4">&#9670;&nbsp;</a></span>~Material()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Material::~Material </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default destructor. </p>
 
 </div>
 </div>
@@ -413,12 +502,7 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 
 <p>Get sound speed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">sound_speed</td><td>Sound speed </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>sound_speed Sound speed </dd></dl>
 
 <p>Implemented in <a class="el" href="classElastic.html#a65dd0fef9eb6fbe6c73cb49515aa92d4">Elastic</a>.</p>
 
@@ -729,13 +813,186 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af273c3103e5a1ff733b77edd3da8a5ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af273c3103e5a1ff733b77edd3da8a5ff">&#9670;&nbsp;</a></span>bulkModulusFluid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::bulkModulusFluid</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>elastic volumetric modulus of fluid in mixture \(K^f\) </p>
+
+</div>
+</div>
+<a id="a450e3fe61d94b8fa58aac5a8f90507df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a450e3fe61d94b8fa58aac5a8f90507df">&#9670;&nbsp;</a></span>density</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::density</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>initial material density \(\rho^{0}\) or initial solid density in two-phase calculations \(\rho^{s,0}\) </p>
+
+</div>
+</div>
+<a id="a68c4ef8534dedd53c4999b2df3016049"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68c4ef8534dedd53c4999b2df3016049">&#9670;&nbsp;</a></span>densityFluid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::densityFluid</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>initial density of the fluid phase in two-phase calculations \(\rho^{f,0}\) </p>
+
+</div>
+</div>
+<a id="a17720043f6a8d8fdfe2fd76d59ffd12e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17720043f6a8d8fdfe2fd76d59ffd12e">&#9670;&nbsp;</a></span>hydraulicConductivity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Material::hydraulicConductivity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>hydraulic conductivity of the fluid in the material \(k_i\) </p>
+
+</div>
+</div>
+<a id="a3c350361ffe39076a51722fff3346781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c350361ffe39076a51722fff3346781">&#9670;&nbsp;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Material::id</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>material identification </p>
+
+</div>
+</div>
+<a id="a1da7180771687fd58e2cf5e1778d8655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1da7180771687fd58e2cf5e1778d8655">&#9670;&nbsp;</a></span>porosity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::porosity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>initial porosity \(n^0\) </p>
+
+</div>
+</div>
+<a id="ab54be6694ca8c0adcd8450121bdf1592"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab54be6694ca8c0adcd8450121bdf1592">&#9670;&nbsp;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> Material::type</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>material type </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="Material_8h_source.html">Material.h</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classMaterial.html">Material</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

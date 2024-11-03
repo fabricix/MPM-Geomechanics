@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('Input_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Input.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="Input_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Input.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 13 de abr de 2021</span></div>
@@ -91,17 +108,17 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using</span> std::string;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Json/json.hpp&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">using</span> json = nlohmann::json;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="Input_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">   15</a></span>&#160;<span class="keyword">using</span> <a class="code" href="Input_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a> = <a class="code" href="Input_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">nlohmann::json</a>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;Eigen/Core&quot;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">using</span> Eigen::Vector3i;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">using</span> Eigen::Vector3d;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;Solver/Solver.h&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;Materials/Material.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;Model.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;Boundary.h&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;Loads.h&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Solver_8h.html">Solver/Solver.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Material_8h.html">Materials/Material.h</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Model_8h.html">Model.h</a>&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Boundary_8h.html">Boundary.h</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Loads_8h.html">Loads.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
@@ -142,7 +159,7 @@ $(function() {
 <div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    </div>
 <div class="line"><a name="l00496"></a><span class="lineno"><a class="line" href="namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0">  496</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0">readInputFile</a>(<span class="keywordtype">string</span> file_name);</div>
 <div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    </div>
-<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="namespaceInput.html#a1e500d38bd9d674ae32713d73a67e83f">  500</a></span>&#160;    <span class="keyword">const</span> json&amp; <a class="code" href="namespaceInput.html#a1e500d38bd9d674ae32713d73a67e83f">getJson</a>();</div>
+<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="namespaceInput.html#a1e500d38bd9d674ae32713d73a67e83f">  500</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="Input_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a>&amp; <a class="code" href="namespaceInput.html#a1e500d38bd9d674ae32713d73a67e83f">getJson</a>();</div>
 <div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
 <div class="line"><a name="l00504"></a><span class="lineno"><a class="line" href="namespaceInput.html#af336494f96212aa307fcd9c00a9b29a1">  504</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="namespaceInput.html#af336494f96212aa307fcd9c00a9b29a1">getFileName</a>();</div>
 <div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
@@ -200,10 +217,16 @@ $(function() {
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160; </div>
 <div class="line"><a name="l00616"></a><span class="lineno"><a class="line" href="namespaceInput.html#adfcfc98ae0523dbc8faba4a1935e5026">  616</a></span>&#160;    vector&lt;Loads::PressureBoundaryForceBox&gt; <a class="code" href="namespaceInput.html#adfcfc98ae0523dbc8faba4a1935e5026">getPressureBoundaryForceBox</a>();</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160; </div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    <a class="code" href="structLoads_1_1SeismicData.html">Loads::SeismicData</a> readSeismicData(<span class="keyword">const</span> std::string&amp; filename, <span class="keywordtype">bool</span> hasHeader);</div>
+<div class="line"><a name="l00618"></a><span class="lineno"><a class="line" href="namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44">  618</a></span>&#160;    <a class="code" href="structLoads_1_1SeismicData.html">Loads::SeismicData</a> <a class="code" href="namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44">readSeismicData</a>(<span class="keyword">const</span> std::string&amp; filename, <span class="keywordtype">bool</span> hasHeader);</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;};</div>
 <div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160; </div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INPUT_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBoundary_8h_html"><div class="ttname"><a href="Boundary_8h.html">Boundary.h</a></div></div>
+<div class="ttc" id="aInput_8h_html_ab701e3ac61a85b337ec5c1abaad6742d"><div class="ttname"><a href="Input_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a></div><div class="ttdeci">nlohmann::json json</div><div class="ttdef"><b>Definition:</b> Input.h:15</div></div>
+<div class="ttc" id="aLoads_8h_html"><div class="ttname"><a href="Loads_8h.html">Loads.h</a></div></div>
+<div class="ttc" id="aMaterial_8h_html"><div class="ttname"><a href="Material_8h.html">Material.h</a></div></div>
+<div class="ttc" id="aModel_8h_html"><div class="ttname"><a href="Model_8h.html">Model.h</a></div></div>
+<div class="ttc" id="aSolver_8h_html"><div class="ttname"><a href="Solver_8h.html">Solver.h</a></div></div>
 <div class="ttc" id="aclassSolver_html"><div class="ttname"><a href="classSolver.html">Solver</a></div><div class="ttdoc">Represents the operations to solve the equations in time.</div><div class="ttdef"><b>Definition:</b> Solver.h:19</div></div>
 <div class="ttc" id="anamespaceInput_html"><div class="ttname"><a href="namespaceInput.html">Input</a></div><div class="ttdoc">Operations to read the input file.</div></div>
 <div class="ttc" id="anamespaceInput_html_a03682e70f00044043a1c60e9ac2ca248"><div class="ttname"><a href="namespaceInput.html#a03682e70f00044043a1c60e9ac2ca248">Input::getBodyList</a></div><div class="ttdeci">vector&lt; Body * &gt; getBodyList()</div><div class="ttdoc">Return the body list.</div></div>
@@ -228,6 +251,7 @@ $(function() {
 <div class="ttc" id="anamespaceInput_html_a9cf34cf90c282614af3b0b9657a73229"><div class="ttname"><a href="namespaceInput.html#a9cf34cf90c282614af3b0b9657a73229">Input::getCellDimension</a></div><div class="ttdeci">Vector3d getCellDimension()</div><div class="ttdoc">Return the cell dimension.</div></div>
 <div class="ttc" id="anamespaceInput_html_a9e455530dae38f474502540e4cf5e8ac"><div class="ttname"><a href="namespaceInput.html#a9e455530dae38f474502540e4cf5e8ac">Input::getMeshBoundaryConditionsFluid</a></div><div class="ttdeci">vector&lt; Boundary::BoundaryType &gt; getMeshBoundaryConditionsFluid()</div><div class="ttdoc">Return the mesh boundary conditions of fluid.</div></div>
 <div class="ttc" id="anamespaceInput_html_ab70b68fa9500415aa3c4fc7e26f3f999"><div class="ttname"><a href="namespaceInput.html#ab70b68fa9500415aa3c4fc7e26f3f999">Input::getInitialPressureMaterial</a></div><div class="ttdeci">vector&lt; Loads::PressureMaterial &gt; getInitialPressureMaterial()</div><div class="ttdoc">Return initial pore pressure in particles by material id.</div></div>
+<div class="ttc" id="anamespaceInput_html_ab7aeff2285506645ef6c121dec4a0d44"><div class="ttname"><a href="namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44">Input::readSeismicData</a></div><div class="ttdeci">Loads::SeismicData readSeismicData(const std::string &amp;filename, bool hasHeader)</div></div>
 <div class="ttc" id="anamespaceInput_html_abb1fa3d31849a7acf80a9796da0242b0"><div class="ttname"><a href="namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0">Input::readInputFile</a></div><div class="ttdeci">void readInputFile(string file_name)</div><div class="ttdoc">Read the input file.</div></div>
 <div class="ttc" id="anamespaceInput_html_ac817a10baf4c98d3f406dae86d0fcc60"><div class="ttname"><a href="namespaceInput.html#ac817a10baf4c98d3f406dae86d0fcc60">Input::getResultNum</a></div><div class="ttdeci">int getResultNum()</div><div class="ttdoc">Return the number of results.</div></div>
 <div class="ttc" id="anamespaceInput_html_adfc500416ce6c0043ff1b564f3e3c1f3"><div class="ttname"><a href="namespaceInput.html#adfc500416ce6c0043ff1b564f3e3c1f3">Input::getDampingType</a></div><div class="ttdeci">ModelSetup::DampingType getDampingType()</div><div class="ttdoc">Read the damping definition in the input file.</div></div>
@@ -239,9 +263,13 @@ $(function() {
 <div class="ttc" id="anamespaceModelSetup_html_a73c7cfb411f9b3b1062e5fbe694051ab"><div class="ttname"><a href="namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab">ModelSetup::InterpolationFunctionType</a></div><div class="ttdeci">InterpolationFunctionType</div><div class="ttdoc">Defines the type of interpolation function.</div><div class="ttdef"><b>Definition:</b> Model.h:37</div></div>
 <div class="ttc" id="astructLoads_1_1SeismicData_html"><div class="ttname"><a href="structLoads_1_1SeismicData.html">Loads::SeismicData</a></div><div class="ttdoc">Seismic data structure to manage acceleration and velocity of an earthquake record.</div><div class="ttdef"><b>Definition:</b> Loads.h:88</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="Input_8h.html">Input.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

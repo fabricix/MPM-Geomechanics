@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('namespaceOutput.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,7 +89,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#enum-members">Enumerations</a> &#124;
@@ -82,16 +103,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a35c444bc8f56abfa419ef5780fe9d83d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83d">CellType</a> { <b>POINTS</b>
-, <b>CELLS</b>
+<tr class="memitem:a35c444bc8f56abfa419ef5780fe9d83d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83d">CellType</a> { <a class="el" href="namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dace7a9247762e2a3fcd206c2cf670f53a">POINTS</a>
+, <a class="el" href="namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab">CELLS</a>
  }</td></tr>
 <tr class="separator:a35c444bc8f56abfa419ef5780fe9d83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a18bf51a63ec8982f003850dc841f6798"><td class="memItemLeft" align="right" valign="top"><a id="a18bf51a63ec8982f003850dc841f6798"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a18bf51a63ec8982f003850dc841f6798">initFieldsKeyWords</a> ()</td></tr>
-<tr class="memdesc:a18bf51a63ec8982f003850dc841f6798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the keywords of the fields. <br /></td></tr>
+<tr class="memitem:a18bf51a63ec8982f003850dc841f6798"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a18bf51a63ec8982f003850dc841f6798">initFieldsKeyWords</a> ()</td></tr>
+<tr class="memdesc:a18bf51a63ec8982f003850dc841f6798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the keywords of the fields.  <a href="namespaceOutput.html#a18bf51a63ec8982f003850dc841f6798">More...</a><br /></td></tr>
 <tr class="separator:a18bf51a63ec8982f003850dc841f6798"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa661f9945fbb1afebc0f4eb93716aa93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#aa661f9945fbb1afebc0f4eb93716aa93">writeGrid</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, <a class="el" href="namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83d">CellType</a> cell_type_representation=CellType::CELLS)</td></tr>
 <tr class="memdesc:aa661f9945fbb1afebc0f4eb93716aa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the grid mesh into a vtu file.  <a href="namespaceOutput.html#aa661f9945fbb1afebc0f4eb93716aa93">More...</a><br /></td></tr>
@@ -102,9 +122,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr class="memitem:a0105765d71a194fa7b37c102184df47d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a0105765d71a194fa7b37c102184df47d">writeBody</a> (<a class="el" href="classBody.html">Body</a> *body, double time=0.0)</td></tr>
 <tr class="memdesc:a0105765d71a194fa7b37c102184df47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the particles in a body.  <a href="namespaceOutput.html#a0105765d71a194fa7b37c102184df47d">More...</a><br /></td></tr>
 <tr class="separator:a0105765d71a194fa7b37c102184df47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5461f5ab587538f96486f9c49194b89"><td class="memItemLeft" align="right" valign="top"><a id="ad5461f5ab587538f96486f9c49194b89"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89">writeResultsSeries</a> ()</td></tr>
-<tr class="memdesc:ad5461f5ab587538f96486f9c49194b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the time series of the results. <br /></td></tr>
+<tr class="memitem:ad5461f5ab587538f96486f9c49194b89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89">writeResultsSeries</a> ()</td></tr>
+<tr class="memdesc:ad5461f5ab587538f96486f9c49194b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the time series of the results.  <a href="namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89">More...</a><br /></td></tr>
 <tr class="separator:ad5461f5ab587538f96486f9c49194b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad655a53d67a6ef825633d31329cff727"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#ad655a53d67a6ef825633d31329cff727">writeBodies</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies, double time=0.0)</td></tr>
 <tr class="memdesc:ad655a53d67a6ef825633d31329cff727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the particles forming bodies.  <a href="namespaceOutput.html#ad655a53d67a6ef825633d31329cff727">More...</a><br /></td></tr>
@@ -115,21 +134,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <tr class="memitem:a7c32e402d419f0ff6bc3358ea83a4a5a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a">isFieldRequired</a> (string field)</td></tr>
 <tr class="memdesc:a7c32e402d419f0ff6bc3358ea83a4a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify is the field must be written.  <a href="namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a">More...</a><br /></td></tr>
 <tr class="separator:a7c32e402d419f0ff6bc3358ea83a4a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacbbf228c1ffbf67601bf820d0c54035"><td class="memItemLeft" align="right" valign="top"><a id="aacbbf228c1ffbf67601bf820d0c54035"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#aacbbf228c1ffbf67601bf820d0c54035">writeResultInStep</a> (int loopCounter, int resultSteps, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies, double iTime)</td></tr>
-<tr class="memdesc:aacbbf228c1ffbf67601bf820d0c54035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write results if the step is the step result. <br /></td></tr>
+<tr class="memitem:aacbbf228c1ffbf67601bf820d0c54035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#aacbbf228c1ffbf67601bf820d0c54035">writeResultInStep</a> (int loopCounter, int resultSteps, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies, double iTime)</td></tr>
+<tr class="memdesc:aacbbf228c1ffbf67601bf820d0c54035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write results if the step is the step result.  <a href="namespaceOutput.html#aacbbf228c1ffbf67601bf820d0c54035">More...</a><br /></td></tr>
 <tr class="separator:aacbbf228c1ffbf67601bf820d0c54035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add7bb39c03192d2c4f8f887402f75ef4"><td class="memItemLeft" align="right" valign="top"><a id="add7bb39c03192d2c4f8f887402f75ef4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#add7bb39c03192d2c4f8f887402f75ef4">welcomeScreen</a> ()</td></tr>
-<tr class="memdesc:add7bb39c03192d2c4f8f887402f75ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print initial program screen. <br /></td></tr>
+<tr class="memitem:add7bb39c03192d2c4f8f887402f75ef4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#add7bb39c03192d2c4f8f887402f75ef4">welcomeScreen</a> ()</td></tr>
+<tr class="memdesc:add7bb39c03192d2c4f8f887402f75ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print initial program screen.  <a href="namespaceOutput.html#add7bb39c03192d2c4f8f887402f75ef4">More...</a><br /></td></tr>
 <tr class="separator:add7bb39c03192d2c4f8f887402f75ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a665354e2a7494ee4e419fa9fb09f67"><td class="memItemLeft" align="right" valign="top"><a id="a4a665354e2a7494ee4e419fa9fb09f67"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a4a665354e2a7494ee4e419fa9fb09f67">farewellScreen</a> ()</td></tr>
-<tr class="memdesc:a4a665354e2a7494ee4e419fa9fb09f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print final program screen. <br /></td></tr>
+<tr class="memitem:a4a665354e2a7494ee4e419fa9fb09f67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a4a665354e2a7494ee4e419fa9fb09f67">farewellScreen</a> ()</td></tr>
+<tr class="memdesc:a4a665354e2a7494ee4e419fa9fb09f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print final program screen.  <a href="namespaceOutput.html#a4a665354e2a7494ee4e419fa9fb09f67">More...</a><br /></td></tr>
 <tr class="separator:a4a665354e2a7494ee4e419fa9fb09f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef15c6487520aab16fb555c07dd9eda"><td class="memItemLeft" align="right" valign="top"><a id="a4ef15c6487520aab16fb555c07dd9eda"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a4ef15c6487520aab16fb555c07dd9eda">printElapsedTime</a> ()</td></tr>
-<tr class="memdesc:a4ef15c6487520aab16fb555c07dd9eda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print elapsed time. <br /></td></tr>
+<tr class="memitem:a4ef15c6487520aab16fb555c07dd9eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOutput.html#a4ef15c6487520aab16fb555c07dd9eda">printElapsedTime</a> ()</td></tr>
+<tr class="memdesc:a4ef15c6487520aab16fb555c07dd9eda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print elapsed time.  <a href="namespaceOutput.html#a4ef15c6487520aab16fb555c07dd9eda">More...</a><br /></td></tr>
 <tr class="separator:a4ef15c6487520aab16fb555c07dd9eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -147,6 +162,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
       </table>
 </div><div class="memdoc">
 <p>Describes the way that the cells are written in the mesh file </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a35c444bc8f56abfa419ef5780fe9d83dace7a9247762e2a3fcd206c2cf670f53a"></a>POINTS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab"></a>CELLS&#160;</td><td class="fielddoc"></td></tr>
+</table>
 
 </div>
 </div>
@@ -177,6 +196,44 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 </div>
 </div>
+<a id="a4a665354e2a7494ee4e419fa9fb09f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a665354e2a7494ee4e419fa9fb09f67">&#9670;&nbsp;</a></span>farewellScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::farewellScreen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print final program screen. </p>
+
+</div>
+</div>
+<a id="a18bf51a63ec8982f003850dc841f6798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18bf51a63ec8982f003850dc841f6798">&#9670;&nbsp;</a></span>initFieldsKeyWords()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::initFieldsKeyWords </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the keywords of the fields. </p>
+
+</div>
+</div>
 <a id="a7c32e402d419f0ff6bc3358ea83a4a5a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c32e402d419f0ff6bc3358ea83a4a5a">&#9670;&nbsp;</a></span>isFieldRequired()</h2>
 
@@ -201,6 +258,44 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the field must be written </dd></dl>
+
+</div>
+</div>
+<a id="a4ef15c6487520aab16fb555c07dd9eda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef15c6487520aab16fb555c07dd9eda">&#9670;&nbsp;</a></span>printElapsedTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::printElapsedTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print elapsed time. </p>
+
+</div>
+</div>
+<a id="add7bb39c03192d2c4f8f887402f75ef4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7bb39c03192d2c4f8f887402f75ef4">&#9670;&nbsp;</a></span>welcomeScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::welcomeScreen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print initial program screen. </p>
 
 </div>
 </div>
@@ -352,10 +447,75 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 
 </div>
 </div>
+<a id="aacbbf228c1ffbf67601bf820d0c54035"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacbbf228c1ffbf67601bf820d0c54035">&#9670;&nbsp;</a></span>writeResultInStep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::writeResultInStep </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>loopCounter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>resultSteps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *&#160;</td>
+          <td class="paramname"><em>bodies</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>iTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write results if the step is the step result. </p>
+
+</div>
+</div>
+<a id="ad5461f5ab587538f96486f9c49194b89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5461f5ab587538f96486f9c49194b89">&#9670;&nbsp;</a></span>writeResultsSeries()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Output::writeResultsSeries </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the time series of the results. </p>
+
+</div>
+</div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceOutput.html">Output</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

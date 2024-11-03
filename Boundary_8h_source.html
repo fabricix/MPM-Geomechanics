@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('Boundary_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Boundary.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="Boundary_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Boundary.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 27 de abr de 2021</span></div>
@@ -94,9 +111,9 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">   48</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>{ FREE, FIXED, SLIDING, EARTHQUAKE };</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">   48</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>{ <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a2db868e31ca79040aafb4151a8837274">FREE</a>, <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2">FIXED</a>, <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7">SLIDING</a>, <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a68f1c42fe9fd2e9eb35894a0fe3742f2">EARTHQUAKE</a> };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70">   52</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70">BoundaryPlane</a>{ X0, Y0, Z0, Xn, Yn, Zn };</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70">   52</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70">BoundaryPlane</a>{ <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a038d17d9e5dbead38560ff2cd1fd863a">X0</a>, <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a362aef5e1dd916dbe1cf4b7b640bc83a">Y0</a>, <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a23d22c43286af050896d307b11d54220">Z0</a>, <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a2f473b0116c885ef1cacb1198fe906a5">Xn</a>, <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70aea393263acceb14f7b3b2ff5f1a5ec92">Yn</a>, <a class="code" href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a8f45667adc58ab01a0a4f9da29f61bf1">Zn</a> };</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structBoundary_1_1planeBoundary.html">   56</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structBoundary_1_1planeBoundary.html">planeBoundary</a></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
@@ -104,7 +121,7 @@ $(function() {
 <div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673">   59</a></span>&#160;        <a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a> <a class="code" href="structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673">restrictionFluid</a>; </div>
 <div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structBoundary_1_1planeBoundary.html#a7927ae162c36d4744792b84fcce0a4b6">   60</a></span>&#160;        vector&lt;int&gt; <a class="code" href="structBoundary_1_1planeBoundary.html#a7927ae162c36d4744792b84fcce0a4b6">nodes</a>; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="structBoundary_1_1planeBoundary.html">planeBoundary</a>() : <a class="code" href="structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed">restriction</a>(<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>::FIXED), <a class="code" href="structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673">restrictionFluid</a>(<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>::FIXED) {};</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structBoundary_1_1planeBoundary.html#aab9db62139ab3f99259967e892aea84e">   62</a></span>&#160;        <a class="code" href="structBoundary_1_1planeBoundary.html#aab9db62139ab3f99259967e892aea84e">planeBoundary</a>() : <a class="code" href="structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed">restriction</a>(<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>::<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2">FIXED</a>), <a class="code" href="structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673">restrictionFluid</a>(<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">BoundaryType</a>::<a class="code" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2">FIXED</a>) {};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71">Boundary</a>();</div>
@@ -266,19 +283,34 @@ $(function() {
 <div class="ttc" id="aclassBoundary_html_a9b409e392a940936603484829db95fd2"><div class="ttname"><a href="classBoundary.html#a9b409e392a940936603484829db95fd2">Boundary::planeY0</a></div><div class="ttdeci">Boundary::planeBoundary planeY0</div><div class="ttdoc">boundary nodes at plane Y0</div><div class="ttdef"><b>Definition:</b> Boundary.h:143</div></div>
 <div class="ttc" id="aclassBoundary_html_ab01533221a53ad066f601d6d3e303fd6"><div class="ttname"><a href="classBoundary.html#ab01533221a53ad066f601d6d3e303fd6">Boundary::getPlaneYn</a></div><div class="ttdeci">const planeBoundary * getPlaneYn() const</div><div class="ttdoc">Return the nodes lower than the plane Yn, including ghosts.</div><div class="ttdef"><b>Definition:</b> Boundary.h:91</div></div>
 <div class="ttc" id="aclassBoundary_html_aba71309d646c3f90a59be7e8d8cefef5"><div class="ttname"><a href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">Boundary::BoundaryType</a></div><div class="ttdeci">BoundaryType</div><div class="ttdoc">Determines the type of restrictions to be imposed to the mesh.</div><div class="ttdef"><b>Definition:</b> Boundary.h:48</div></div>
+<div class="ttc" id="aclassBoundary_html_aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7"><div class="ttname"><a href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7">Boundary::SLIDING</a></div><div class="ttdeci">@ SLIDING</div><div class="ttdef"><b>Definition:</b> Boundary.h:48</div></div>
+<div class="ttc" id="aclassBoundary_html_aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2"><div class="ttname"><a href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2">Boundary::FIXED</a></div><div class="ttdeci">@ FIXED</div><div class="ttdef"><b>Definition:</b> Boundary.h:48</div></div>
+<div class="ttc" id="aclassBoundary_html_aba71309d646c3f90a59be7e8d8cefef5a2db868e31ca79040aafb4151a8837274"><div class="ttname"><a href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a2db868e31ca79040aafb4151a8837274">Boundary::FREE</a></div><div class="ttdeci">@ FREE</div><div class="ttdef"><b>Definition:</b> Boundary.h:48</div></div>
+<div class="ttc" id="aclassBoundary_html_aba71309d646c3f90a59be7e8d8cefef5a68f1c42fe9fd2e9eb35894a0fe3742f2"><div class="ttname"><a href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a68f1c42fe9fd2e9eb35894a0fe3742f2">Boundary::EARTHQUAKE</a></div><div class="ttdeci">@ EARTHQUAKE</div><div class="ttdef"><b>Definition:</b> Boundary.h:48</div></div>
 <div class="ttc" id="aclassBoundary_html_abca062bb068ec6ebde22832c5cc857cd"><div class="ttname"><a href="classBoundary.html#abca062bb068ec6ebde22832c5cc857cd">Boundary::getPlaneZn</a></div><div class="ttdeci">const planeBoundary * getPlaneZn() const</div><div class="ttdoc">Return the nodes lower than the plane Zn, including ghosts.</div><div class="ttdef"><b>Definition:</b> Boundary.h:95</div></div>
 <div class="ttc" id="aclassBoundary_html_adeb0e0829ffcadef5a2e7ec6b818cc7a"><div class="ttname"><a href="classBoundary.html#adeb0e0829ffcadef5a2e7ec6b818cc7a">Boundary::setNodesPlaneY0</a></div><div class="ttdeci">void setNodesPlaneY0(const vector&lt; int &gt; &amp;nodes_id)</div><div class="ttdoc">Configure the nodes lower than the plane Y0, including ghosts.</div><div class="ttdef"><b>Definition:</b> Boundary.h:103</div></div>
 <div class="ttc" id="aclassBoundary_html_aeee930e8466c648a52efaf975d970b48"><div class="ttname"><a href="classBoundary.html#aeee930e8466c648a52efaf975d970b48">Boundary::planeYn</a></div><div class="ttdeci">Boundary::planeBoundary planeYn</div><div class="ttdoc">boundary nodes at plane Yn</div><div class="ttdef"><b>Definition:</b> Boundary.h:149</div></div>
 <div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70">Boundary::BoundaryPlane</a></div><div class="ttdeci">BoundaryPlane</div><div class="ttdoc">Planes at the mesh boundary.</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70a038d17d9e5dbead38560ff2cd1fd863a"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a038d17d9e5dbead38560ff2cd1fd863a">Boundary::X0</a></div><div class="ttdeci">@ X0</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70a23d22c43286af050896d307b11d54220"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a23d22c43286af050896d307b11d54220">Boundary::Z0</a></div><div class="ttdeci">@ Z0</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70a2f473b0116c885ef1cacb1198fe906a5"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a2f473b0116c885ef1cacb1198fe906a5">Boundary::Xn</a></div><div class="ttdeci">@ Xn</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70a362aef5e1dd916dbe1cf4b7b640bc83a"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a362aef5e1dd916dbe1cf4b7b640bc83a">Boundary::Y0</a></div><div class="ttdeci">@ Y0</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70a8f45667adc58ab01a0a4f9da29f61bf1"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a8f45667adc58ab01a0a4f9da29f61bf1">Boundary::Zn</a></div><div class="ttdeci">@ Zn</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
+<div class="ttc" id="aclassBoundary_html_af26eedc4e6bdfcc2b12815b0afd0ca70aea393263acceb14f7b3b2ff5f1a5ec92"><div class="ttname"><a href="classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70aea393263acceb14f7b3b2ff5f1a5ec92">Boundary::Yn</a></div><div class="ttdeci">@ Yn</div><div class="ttdef"><b>Definition:</b> Boundary.h:52</div></div>
 <div class="ttc" id="aclassBoundary_html_af85a090ea7f530c32ac17d52f16aecdc"><div class="ttname"><a href="classBoundary.html#af85a090ea7f530c32ac17d52f16aecdc">Boundary::getPlaneZ0</a></div><div class="ttdeci">const planeBoundary * getPlaneZ0() const</div><div class="ttdoc">Return the nodes lower than the plane Z0, including ghosts.</div><div class="ttdef"><b>Definition:</b> Boundary.h:83</div></div>
 <div class="ttc" id="astructBoundary_1_1planeBoundary_html"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html">Boundary::planeBoundary</a></div><div class="ttdoc">Represents the nodes and the type of restrictions.</div><div class="ttdef"><b>Definition:</b> Boundary.h:57</div></div>
 <div class="ttc" id="astructBoundary_1_1planeBoundary_html_a7927ae162c36d4744792b84fcce0a4b6"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html#a7927ae162c36d4744792b84fcce0a4b6">Boundary::planeBoundary::nodes</a></div><div class="ttdeci">vector&lt; int &gt; nodes</div><div class="ttdoc">nodes in plane</div><div class="ttdef"><b>Definition:</b> Boundary.h:60</div></div>
+<div class="ttc" id="astructBoundary_1_1planeBoundary_html_aab9db62139ab3f99259967e892aea84e"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html#aab9db62139ab3f99259967e892aea84e">Boundary::planeBoundary::planeBoundary</a></div><div class="ttdeci">planeBoundary()</div><div class="ttdef"><b>Definition:</b> Boundary.h:62</div></div>
 <div class="ttc" id="astructBoundary_1_1planeBoundary_html_ad49b9bca323f684e1495797d0ca79673"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673">Boundary::planeBoundary::restrictionFluid</a></div><div class="ttdeci">BoundaryType restrictionFluid</div><div class="ttdoc">type of restrictions to be applied to the fluid phase</div><div class="ttdef"><b>Definition:</b> Boundary.h:59</div></div>
 <div class="ttc" id="astructBoundary_1_1planeBoundary_html_af080470dddc2a34c98b3b9bf200219ed"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed">Boundary::planeBoundary::restriction</a></div><div class="ttdeci">BoundaryType restriction</div><div class="ttdoc">type of restrictions to be applied to the solid phase</div><div class="ttdef"><b>Definition:</b> Boundary.h:58</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="Boundary_8h.html">Boundary.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('Update_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Update.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="Update_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Update.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 10 de mai de 2021</span></div>
@@ -87,13 +104,13 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef UPDATE_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define UPDATE_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Mesh/Mesh.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;Body/Body.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;Loads.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Mesh_8h.html">Mesh/Mesh.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Body_8h.html">Body/Body.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Loads_8h.html">Loads.h</a>&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceUpdate.html">Update</a> {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae">   22</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae">Direction</a> {X, Y, Z};</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae">   22</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae">Direction</a> {<a class="code" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f">X</a>, <a class="code" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a">Y</a>, <a class="code" href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e">Z</a>};</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="namespaceUpdate.html#a6d65ee56959a561441007d13172b647d">   29</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespaceUpdate.html#a6d65ee56959a561441007d13172b647d">nodalVelocity</a>(<a class="code" href="classMesh.html">Mesh</a>* mesh);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    </div>
@@ -136,11 +153,17 @@ $(function() {
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;};</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* UPDATE_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBody_8h_html"><div class="ttname"><a href="Body_8h.html">Body.h</a></div></div>
+<div class="ttc" id="aLoads_8h_html"><div class="ttname"><a href="Loads_8h.html">Loads.h</a></div></div>
+<div class="ttc" id="aMesh_8h_html"><div class="ttname"><a href="Mesh_8h.html">Mesh.h</a></div></div>
 <div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdoc">Class representing a rectangular grid mesh.</div><div class="ttdef"><b>Definition:</b> Mesh.h:29</div></div>
 <div class="ttc" id="anamespaceUpdate_html"><div class="ttname"><a href="namespaceUpdate.html">Update</a></div><div class="ttdoc">Represents operations to update values in nodes and particles.</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a1c8a39c6a5360d3b298bc939395c9889"><div class="ttname"><a href="namespaceUpdate.html#a1c8a39c6a5360d3b298bc939395c9889">Update::particleVelocityFluid</a></div><div class="ttdeci">void particleVelocityFluid(Mesh *mesh, vector&lt; Body * &gt; *bodies, double time_step)</div><div class="ttdoc">Update the particle velocity fluid.</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a2cc3c3a7f88f56f3ee69e95489485af8"><div class="ttname"><a href="namespaceUpdate.html#a2cc3c3a7f88f56f3ee69e95489485af8">Update::particleVelocity</a></div><div class="ttdeci">void particleVelocity(Mesh *mesh, vector&lt; Body * &gt; *bodies, double time_step)</div><div class="ttdoc">Update the particle velocity.</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a2cd2a66c096a164b7e316cb94eedf1ae"><div class="ttname"><a href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae">Update::Direction</a></div><div class="ttdeci">Direction</div><div class="ttdoc">Principal direction in the model. This enumeration is used to update the boundary conditions in each ...</div><div class="ttdef"><b>Definition:</b> Update.h:22</div></div>
+<div class="ttc" id="anamespaceUpdate_html_a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f"><div class="ttname"><a href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f">Update::X</a></div><div class="ttdeci">@ X</div><div class="ttdef"><b>Definition:</b> Update.h:22</div></div>
+<div class="ttc" id="anamespaceUpdate_html_a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e"><div class="ttname"><a href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e">Update::Z</a></div><div class="ttdeci">@ Z</div><div class="ttdef"><b>Definition:</b> Update.h:22</div></div>
+<div class="ttc" id="anamespaceUpdate_html_a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a"><div class="ttname"><a href="namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a">Update::Y</a></div><div class="ttdeci">@ Y</div><div class="ttdef"><b>Definition:</b> Update.h:22</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a54c87240c5f6f32d82cb430f2d8dadd4"><div class="ttname"><a href="namespaceUpdate.html#a54c87240c5f6f32d82cb430f2d8dadd4">Update::boundaryConditionsMomentum</a></div><div class="ttdeci">void boundaryConditionsMomentum(Mesh *mesh)</div><div class="ttdoc">Apply essential boundary condition in terms of momentum.</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a61a4d49cd03146de2ed1d548472e996f"><div class="ttname"><a href="namespaceUpdate.html#a61a4d49cd03146de2ed1d548472e996f">Update::particlePosition</a></div><div class="ttdeci">void particlePosition(Mesh *mesh, vector&lt; Body * &gt; *bodies, double time_step)</div><div class="ttdoc">Update particle position.</div></div>
 <div class="ttc" id="anamespaceUpdate_html_a6d65ee56959a561441007d13172b647d"><div class="ttname"><a href="namespaceUpdate.html#a6d65ee56959a561441007d13172b647d">Update::nodalVelocity</a></div><div class="ttdeci">void nodalVelocity(Mesh *mesh)</div><div class="ttdoc">Update the nodal velocity.</div></div>
@@ -160,9 +183,13 @@ $(function() {
 <div class="ttc" id="anamespaceUpdate_html_af604df8353a8a0e15d966e984ed43d6c"><div class="ttname"><a href="namespaceUpdate.html#af604df8353a8a0e15d966e984ed43d6c">Update::particleStress</a></div><div class="ttdeci">void particleStress(vector&lt; Body * &gt; *bodies)</div><div class="ttdoc">Update the particles' stress.</div></div>
 <div class="ttc" id="astructBoundary_1_1planeBoundary_html"><div class="ttname"><a href="structBoundary_1_1planeBoundary.html">Boundary::planeBoundary</a></div><div class="ttdoc">Represents the nodes and the type of restrictions.</div><div class="ttdef"><b>Definition:</b> Boundary.h:57</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="Update_8h.html">Update.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

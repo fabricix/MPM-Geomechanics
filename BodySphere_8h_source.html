@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('BodySphere_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">BodySphere.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="BodySphere_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * BodySphere.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 30 de ago de 2024</span></div>
@@ -87,7 +104,7 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef BODYSPHERE_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define BODYSPHERE_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;Body/Body.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Body_8h.html">Body/Body.h</a>&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classBodySphere.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classBodySphere.html">BodySphere</a>: <span class="keyword">public</span> <a class="code" href="classBody.html">Body</a> {</div>
@@ -98,15 +115,15 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classBodySphere.html#a9d68fea28bca83d21f33f33196094c87">   31</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classBodySphere.html#a9d68fea28bca83d21f33f33196094c87">~BodySphere</a>();</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> setDiameter(<span class="keywordtype">double</span> <a class="code" href="classBodySphere.html#ac81e013e0b40464c83535655727c5497">diameter</a>) { this-&gt;diameter = <a class="code" href="classBodySphere.html#ac81e013e0b40464c83535655727c5497">diameter</a>; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classBodySphere.html#a24a8cd75059ed585d9662fb12e7037bb">   33</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodySphere.html#a24a8cd75059ed585d9662fb12e7037bb">setDiameter</a>(<span class="keywordtype">double</span> <a class="code" href="classBodySphere.html#ac81e013e0b40464c83535655727c5497">diameter</a>) { this-&gt;diameter = <a class="code" href="classBodySphere.html#ac81e013e0b40464c83535655727c5497">diameter</a>; }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> setCenter( Vector3d <a class="code" href="classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c">center</a>) { this-&gt;center = <a class="code" href="classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c">center</a>; }</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classBodySphere.html#ad1152c98dd0b7dc6037255fecf179142">   35</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodySphere.html#ad1152c98dd0b7dc6037255fecf179142">setCenter</a>( Vector3d <a class="code" href="classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c">center</a>) { this-&gt;center = <a class="code" href="classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c">center</a>; }</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">   39</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">setMaterialId</a>(<span class="keywordtype">int</span> material_id) { this-&gt;<a class="code" href="classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e">materialId</a>=material_id; }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
 <div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">   43</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">getMaterialId</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;<a class="code" href="classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e">materialId</a>; }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> setParticlesPerDirection(Vector3d ppd) { this-&gt;<a class="code" href="classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d">particlesPerDirection</a> = ppd; }</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classBodySphere.html#a0c94a466e9fd85014226302058d8801f">   45</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodySphere.html#a0c94a466e9fd85014226302058d8801f">setParticlesPerDirection</a>(Vector3d ppd) { this-&gt;<a class="code" href="classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d">particlesPerDirection</a> = ppd; }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classBodySphere.html#ae11521fe762994be934ea9be213558ed">   47</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodySphere.html#ae11521fe762994be934ea9be213558ed">create</a>(<a class="code" href="classMesh.html">Mesh</a>&amp; mesh, <a class="code" href="classMaterial.html">Material</a>* material);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
@@ -125,8 +142,11 @@ $(function() {
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BODYSPHERE_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBody_8h_html"><div class="ttname"><a href="Body_8h.html">Body.h</a></div></div>
 <div class="ttc" id="aclassBodySphere_html"><div class="ttname"><a href="classBodySphere.html">BodySphere</a></div><div class="ttdoc">Is a type of Body representing a sphere in 3D.</div><div class="ttdef"><b>Definition:</b> BodySphere.h:21</div></div>
+<div class="ttc" id="aclassBodySphere_html_a0c94a466e9fd85014226302058d8801f"><div class="ttname"><a href="classBodySphere.html#a0c94a466e9fd85014226302058d8801f">BodySphere::setParticlesPerDirection</a></div><div class="ttdeci">void setParticlesPerDirection(Vector3d ppd)</div><div class="ttdef"><b>Definition:</b> BodySphere.h:45</div></div>
 <div class="ttc" id="aclassBodySphere_html_a1b1ecde2c844cf03e218d62ce971e70c"><div class="ttname"><a href="classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c">BodySphere::center</a></div><div class="ttdeci">Vector3d center</div><div class="ttdoc">Create a sphere in space.</div><div class="ttdef"><b>Definition:</b> BodySphere.h:54</div></div>
+<div class="ttc" id="aclassBodySphere_html_a24a8cd75059ed585d9662fb12e7037bb"><div class="ttname"><a href="classBodySphere.html#a24a8cd75059ed585d9662fb12e7037bb">BodySphere::setDiameter</a></div><div class="ttdeci">void setDiameter(double diameter)</div><div class="ttdef"><b>Definition:</b> BodySphere.h:33</div></div>
 <div class="ttc" id="aclassBodySphere_html_a2ec335ce4a1a891fdc71df00a8c6918d"><div class="ttname"><a href="classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d">BodySphere::particlesPerDirection</a></div><div class="ttdeci">Vector3d particlesPerDirection</div><div class="ttdoc">particles per direction</div><div class="ttdef"><b>Definition:</b> BodySphere.h:56</div></div>
 <div class="ttc" id="aclassBodySphere_html_a5b713f631f795d48a837d486d1e36dcd"><div class="ttname"><a href="classBodySphere.html#a5b713f631f795d48a837d486d1e36dcd">BodySphere::BodySphere</a></div><div class="ttdeci">BodySphere()</div><div class="ttdoc">Default constructor.</div></div>
 <div class="ttc" id="aclassBodySphere_html_a5d15944a986226c6d8d804f66bb51d4e"><div class="ttname"><a href="classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e">BodySphere::materialId</a></div><div class="ttdeci">int materialId</div><div class="ttdoc">material identification</div><div class="ttdef"><b>Definition:</b> BodySphere.h:60</div></div>
@@ -134,14 +154,19 @@ $(function() {
 <div class="ttc" id="aclassBodySphere_html_aa0cf7ecb83c57fc9dae01d1db2104145"><div class="ttname"><a href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">BodySphere::setMaterialId</a></div><div class="ttdeci">virtual void setMaterialId(int material_id)</div><div class="ttdoc">Configure the material id.</div><div class="ttdef"><b>Definition:</b> BodySphere.h:39</div></div>
 <div class="ttc" id="aclassBodySphere_html_abd845d8a4283b05809a7c99d85b7a0c0"><div class="ttname"><a href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">BodySphere::getMaterialId</a></div><div class="ttdeci">virtual int getMaterialId() const</div><div class="ttdoc">Return the material identification.</div><div class="ttdef"><b>Definition:</b> BodySphere.h:43</div></div>
 <div class="ttc" id="aclassBodySphere_html_ac81e013e0b40464c83535655727c5497"><div class="ttname"><a href="classBodySphere.html#ac81e013e0b40464c83535655727c5497">BodySphere::diameter</a></div><div class="ttdeci">double diameter</div><div class="ttdoc">diameter of the sphere</div><div class="ttdef"><b>Definition:</b> BodySphere.h:58</div></div>
+<div class="ttc" id="aclassBodySphere_html_ad1152c98dd0b7dc6037255fecf179142"><div class="ttname"><a href="classBodySphere.html#ad1152c98dd0b7dc6037255fecf179142">BodySphere::setCenter</a></div><div class="ttdeci">void setCenter(Vector3d center)</div><div class="ttdef"><b>Definition:</b> BodySphere.h:35</div></div>
 <div class="ttc" id="aclassBodySphere_html_ae11521fe762994be934ea9be213558ed"><div class="ttname"><a href="classBodySphere.html#ae11521fe762994be934ea9be213558ed">BodySphere::create</a></div><div class="ttdeci">virtual void create(Mesh &amp;mesh, Material *material)</div><div class="ttdoc">Create a body with particles and material.</div></div>
 <div class="ttc" id="aclassBody_html"><div class="ttname"><a href="classBody.html">Body</a></div><div class="ttdoc">Represents a body in the space forming by a group of materials points and identified by a number.</div><div class="ttdef"><b>Definition:</b> Body.h:19</div></div>
 <div class="ttc" id="aclassMaterial_html"><div class="ttname"><a href="classMaterial.html">Material</a></div><div class="ttdoc">Represents a material.</div><div class="ttdef"><b>Definition:</b> Material.h:18</div></div>
 <div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdoc">Class representing a rectangular grid mesh.</div><div class="ttdef"><b>Definition:</b> Mesh.h:29</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a></li><li class="navelem"><a class="el" href="BodySphere_8h.html">BodySphere.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

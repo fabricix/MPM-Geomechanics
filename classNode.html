@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classNode.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,7 +89,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -90,7 +111,7 @@ Inheritance diagram for Node:</div>
 <area shape="rect" title="Represents a mesh node." alt="" coords="31,5,87,32"/>
 <area shape="rect" href="classNodeMixture.html" title="Represents a mesh node for calculations using the mixture theory." alt="" coords="5,80,112,107"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Node:</div>
 <div class="dyncontent">
@@ -99,17 +120,15 @@ Collaboration diagram for Node:</div>
 <area shape="rect" title="Represents a mesh node." alt="" coords="17,183,73,209"/>
 <area shape="rect" title=" " alt="" coords="5,5,84,32"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa0840c3cb5c7159be6d992adecd2097c"><td class="memItemLeft" align="right" valign="top"><a id="aa0840c3cb5c7159be6d992adecd2097c"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aa0840c3cb5c7159be6d992adecd2097c">~Node</a> ()</td></tr>
-<tr class="memdesc:aa0840c3cb5c7159be6d992adecd2097c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:aa0840c3cb5c7159be6d992adecd2097c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aa0840c3cb5c7159be6d992adecd2097c">~Node</a> ()</td></tr>
+<tr class="memdesc:aa0840c3cb5c7159be6d992adecd2097c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <a href="classNode.html#aa0840c3cb5c7159be6d992adecd2097c">More...</a><br /></td></tr>
 <tr class="separator:aa0840c3cb5c7159be6d992adecd2097c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7a34779cad45d997bfd6d3d8043c75f"><td class="memItemLeft" align="right" valign="top"><a id="ad7a34779cad45d997bfd6d3d8043c75f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad7a34779cad45d997bfd6d3d8043c75f">Node</a> ()</td></tr>
-<tr class="memdesc:ad7a34779cad45d997bfd6d3d8043c75f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="memitem:ad7a34779cad45d997bfd6d3d8043c75f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad7a34779cad45d997bfd6d3d8043c75f">Node</a> ()</td></tr>
+<tr class="memdesc:ad7a34779cad45d997bfd6d3d8043c75f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="classNode.html#ad7a34779cad45d997bfd6d3d8043c75f">More...</a><br /></td></tr>
 <tr class="separator:ad7a34779cad45d997bfd6d3d8043c75f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa023865c342f1997b21b93e6ba96c4f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aa023865c342f1997b21b93e6ba96c4f9">setId</a> (int node_id)</td></tr>
 <tr class="memdesc:aa023865c342f1997b21b93e6ba96c4f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure node identification.  <a href="classNode.html#aa023865c342f1997b21b93e6ba96c4f9">More...</a><br /></td></tr>
@@ -198,71 +217,112 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:ab0b570cbda3976aaa915d195889f5c20"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ab0b570cbda3976aaa915d195889f5c20">addExternalForceFluid</a> (const Vector3d &amp;external_force_fluid_increment)</td></tr>
 <tr class="memdesc:ab0b570cbda3976aaa915d195889f5c20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a external force of fluid increment to the nodal external force.  <a href="classNode.html#ab0b570cbda3976aaa915d195889f5c20">More...</a><br /></td></tr>
 <tr class="separator:ab0b570cbda3976aaa915d195889f5c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b1560f9d7c52bfd84307901f6c35cac"><td class="memItemLeft" align="right" valign="top"><a id="a5b1560f9d7c52bfd84307901f6c35cac"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a5b1560f9d7c52bfd84307901f6c35cac">resetValues</a> ()</td></tr>
-<tr class="memdesc:a5b1560f9d7c52bfd84307901f6c35cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all values stored in node. <br /></td></tr>
+<tr class="memitem:a5b1560f9d7c52bfd84307901f6c35cac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a5b1560f9d7c52bfd84307901f6c35cac">resetValues</a> ()</td></tr>
+<tr class="memdesc:a5b1560f9d7c52bfd84307901f6c35cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all values stored in node.  <a href="classNode.html#a5b1560f9d7c52bfd84307901f6c35cac">More...</a><br /></td></tr>
 <tr class="separator:a5b1560f9d7c52bfd84307901f6c35cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a302b87a90c5372faaabc07077bb2ab74"><td class="memItemLeft" align="right" valign="top"><a id="a302b87a90c5372faaabc07077bb2ab74"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a302b87a90c5372faaabc07077bb2ab74">updateTotalForce</a> ()</td></tr>
-<tr class="memdesc:a302b87a90c5372faaabc07077bb2ab74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nodal force. <br /></td></tr>
+<tr class="memitem:a302b87a90c5372faaabc07077bb2ab74"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a302b87a90c5372faaabc07077bb2ab74">updateTotalForce</a> ()</td></tr>
+<tr class="memdesc:a302b87a90c5372faaabc07077bb2ab74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nodal force.  <a href="classNode.html#a302b87a90c5372faaabc07077bb2ab74">More...</a><br /></td></tr>
 <tr class="separator:a302b87a90c5372faaabc07077bb2ab74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="memItemLeft" align="right" valign="top"><a id="a6aad417d1f5ec1d2fde9bb1f4fcac0d8"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">updateDampingForce</a> ()</td></tr>
-<tr class="memdesc:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the damping nodal force. <br /></td></tr>
+<tr class="memitem:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">updateDampingForce</a> ()</td></tr>
+<tr class="memdesc:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the damping nodal force.  <a href="classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">More...</a><br /></td></tr>
 <tr class="separator:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memItemLeft" align="right" valign="top"><a id="a2c5e1e80ace265d6da48dad9aaf0e540"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540">updateVelocity</a> ()</td></tr>
-<tr class="memdesc:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity. <br /></td></tr>
+<tr class="memitem:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540">updateVelocity</a> ()</td></tr>
+<tr class="memdesc:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity.  <a href="classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540">More...</a><br /></td></tr>
 <tr class="separator:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ec4cc9f72890708bb0c0f7383723a7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a53ec4cc9f72890708bb0c0f7383723a7">integrateMomentum</a> (double dt)</td></tr>
 <tr class="separator:a53ec4cc9f72890708bb0c0f7383723a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a9f86329e8fb9d0bb3541929ba067088a"><td class="memItemLeft" align="right" valign="top"><a id="a9f86329e8fb9d0bb3541929ba067088a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a9f86329e8fb9d0bb3541929ba067088a">active</a></td></tr>
-<tr class="memdesc:a9f86329e8fb9d0bb3541929ba067088a"><td class="mdescLeft">&#160;</td><td class="mdescRight">is active node <br /></td></tr>
+<tr class="memitem:a9f86329e8fb9d0bb3541929ba067088a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a9f86329e8fb9d0bb3541929ba067088a">active</a></td></tr>
+<tr class="memdesc:a9f86329e8fb9d0bb3541929ba067088a"><td class="mdescLeft">&#160;</td><td class="mdescRight">is active node  <a href="classNode.html#a9f86329e8fb9d0bb3541929ba067088a">More...</a><br /></td></tr>
 <tr class="separator:a9f86329e8fb9d0bb3541929ba067088a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59a543130a10c95f1e8642cf8c5645e8"><td class="memItemLeft" align="right" valign="top"><a id="a59a543130a10c95f1e8642cf8c5645e8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a59a543130a10c95f1e8642cf8c5645e8">id</a></td></tr>
-<tr class="memdesc:a59a543130a10c95f1e8642cf8c5645e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal identification <br /></td></tr>
+<tr class="memitem:a59a543130a10c95f1e8642cf8c5645e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a59a543130a10c95f1e8642cf8c5645e8">id</a></td></tr>
+<tr class="memdesc:a59a543130a10c95f1e8642cf8c5645e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal identification  <a href="classNode.html#a59a543130a10c95f1e8642cf8c5645e8">More...</a><br /></td></tr>
 <tr class="separator:a59a543130a10c95f1e8642cf8c5645e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63e510fc9158eb15e751861bc14eae38"><td class="memItemLeft" align="right" valign="top"><a id="a63e510fc9158eb15e751861bc14eae38"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a63e510fc9158eb15e751861bc14eae38">mass</a></td></tr>
-<tr class="memdesc:a63e510fc9158eb15e751861bc14eae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal mass: \(m_{I}\), or solid mass in two-phase calculations: \(m_{I}^{s}\) <br /></td></tr>
+<tr class="memitem:a63e510fc9158eb15e751861bc14eae38"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a63e510fc9158eb15e751861bc14eae38">mass</a></td></tr>
+<tr class="memdesc:a63e510fc9158eb15e751861bc14eae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal mass: \(m_{I}\), or solid mass in two-phase calculations: \(m_{I}^{s}\)  <a href="classNode.html#a63e510fc9158eb15e751861bc14eae38">More...</a><br /></td></tr>
 <tr class="separator:a63e510fc9158eb15e751861bc14eae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="memItemLeft" align="right" valign="top"><a id="a924e2f81d6f9788fd5a3e35dfe8c6ae6"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6">coordinates</a></td></tr>
-<tr class="memdesc:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal coordinates: \(x_{iI}\) <br /></td></tr>
+<tr class="memitem:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6">coordinates</a></td></tr>
+<tr class="memdesc:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal coordinates: \(x_{iI}\)  <a href="classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6">More...</a><br /></td></tr>
 <tr class="separator:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b1d61e14d6c1a21f1b1f1bca435a861"><td class="memItemLeft" align="right" valign="top"><a id="a1b1d61e14d6c1a21f1b1f1bca435a861"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1b1d61e14d6c1a21f1b1f1bca435a861">momentum</a></td></tr>
-<tr class="memdesc:a1b1d61e14d6c1a21f1b1f1bca435a861"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal momentum: \(p_{iI}\), or momentum in solid in two-phase calculations: \(p_{iI}^{s}\) <br /></td></tr>
+<tr class="memitem:a1b1d61e14d6c1a21f1b1f1bca435a861"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1b1d61e14d6c1a21f1b1f1bca435a861">momentum</a></td></tr>
+<tr class="memdesc:a1b1d61e14d6c1a21f1b1f1bca435a861"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal momentum: \(p_{iI}\), or momentum in solid in two-phase calculations: \(p_{iI}^{s}\)  <a href="classNode.html#a1b1d61e14d6c1a21f1b1f1bca435a861">More...</a><br /></td></tr>
 <tr class="separator:a1b1d61e14d6c1a21f1b1f1bca435a861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e2717f38550e744950192866c31a8c7"><td class="memItemLeft" align="right" valign="top"><a id="a1e2717f38550e744950192866c31a8c7"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1e2717f38550e744950192866c31a8c7">velocity</a></td></tr>
-<tr class="memdesc:a1e2717f38550e744950192866c31a8c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal velocity: \(v_{iI}\), or velocity in solid in two-phase calculations: \(v_{iI}^{s}\) <br /></td></tr>
+<tr class="memitem:a1e2717f38550e744950192866c31a8c7"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1e2717f38550e744950192866c31a8c7">velocity</a></td></tr>
+<tr class="memdesc:a1e2717f38550e744950192866c31a8c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal velocity: \(v_{iI}\), or velocity in solid in two-phase calculations: \(v_{iI}^{s}\)  <a href="classNode.html#a1e2717f38550e744950192866c31a8c7">More...</a><br /></td></tr>
 <tr class="separator:a1e2717f38550e744950192866c31a8c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa85c7563e9ab15e7623e8d691141436e"><td class="memItemLeft" align="right" valign="top"><a id="aa85c7563e9ab15e7623e8d691141436e"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aa85c7563e9ab15e7623e8d691141436e">externalForce</a></td></tr>
-<tr class="memdesc:aa85c7563e9ab15e7623e8d691141436e"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal external force: \(f_{iI}^{ext}\), or external force in solid in two-phase calculations: \(f_{iI}^{ext,s}\) <br /></td></tr>
+<tr class="memitem:aa85c7563e9ab15e7623e8d691141436e"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aa85c7563e9ab15e7623e8d691141436e">externalForce</a></td></tr>
+<tr class="memdesc:aa85c7563e9ab15e7623e8d691141436e"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal external force: \(f_{iI}^{ext}\), or external force in solid in two-phase calculations: \(f_{iI}^{ext,s}\)  <a href="classNode.html#aa85c7563e9ab15e7623e8d691141436e">More...</a><br /></td></tr>
 <tr class="separator:aa85c7563e9ab15e7623e8d691141436e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1f099daeae52f3d36a9fe0f873ae760"><td class="memItemLeft" align="right" valign="top"><a id="ab1f099daeae52f3d36a9fe0f873ae760"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ab1f099daeae52f3d36a9fe0f873ae760">internalForce</a></td></tr>
-<tr class="memdesc:ab1f099daeae52f3d36a9fe0f873ae760"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal internal force: \(f_{iI}^{int}\), or internal force in solid in two-phase calculations: \(f_{iI}^{int,s}\) <br /></td></tr>
+<tr class="memitem:ab1f099daeae52f3d36a9fe0f873ae760"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ab1f099daeae52f3d36a9fe0f873ae760">internalForce</a></td></tr>
+<tr class="memdesc:ab1f099daeae52f3d36a9fe0f873ae760"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal internal force: \(f_{iI}^{int}\), or internal force in solid in two-phase calculations: \(f_{iI}^{int,s}\)  <a href="classNode.html#ab1f099daeae52f3d36a9fe0f873ae760">More...</a><br /></td></tr>
 <tr class="separator:ab1f099daeae52f3d36a9fe0f873ae760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1beeb10273f0b88112508a2e31a72f77"><td class="memItemLeft" align="right" valign="top"><a id="a1beeb10273f0b88112508a2e31a72f77"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1beeb10273f0b88112508a2e31a72f77">dampingForce</a></td></tr>
-<tr class="memdesc:a1beeb10273f0b88112508a2e31a72f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal damping force: \(f_{iI}^{dmp}\), or damping force in solid in two-phase calculations: \(f_{iI}^{dmp,s}\) <br /></td></tr>
+<tr class="memitem:a1beeb10273f0b88112508a2e31a72f77"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a1beeb10273f0b88112508a2e31a72f77">dampingForce</a></td></tr>
+<tr class="memdesc:a1beeb10273f0b88112508a2e31a72f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal damping force: \(f_{iI}^{dmp}\), or damping force in solid in two-phase calculations: \(f_{iI}^{dmp,s}\)  <a href="classNode.html#a1beeb10273f0b88112508a2e31a72f77">More...</a><br /></td></tr>
 <tr class="separator:a1beeb10273f0b88112508a2e31a72f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab06a209d998e817f6f93590436aece9d"><td class="memItemLeft" align="right" valign="top"><a id="ab06a209d998e817f6f93590436aece9d"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ab06a209d998e817f6f93590436aece9d">totalForce</a></td></tr>
-<tr class="memdesc:ab06a209d998e817f6f93590436aece9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal total force: \(f_{iI}\), or total force in solid in two-phase calculations: \(f_{iI}^{s}\) <br /></td></tr>
+<tr class="memitem:ab06a209d998e817f6f93590436aece9d"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ab06a209d998e817f6f93590436aece9d">totalForce</a></td></tr>
+<tr class="memdesc:ab06a209d998e817f6f93590436aece9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal total force: \(f_{iI}\), or total force in solid in two-phase calculations: \(f_{iI}^{s}\)  <a href="classNode.html#ab06a209d998e817f6f93590436aece9d">More...</a><br /></td></tr>
 <tr class="separator:ab06a209d998e817f6f93590436aece9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a mesh node. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa0840c3cb5c7159be6d992adecd2097c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0840c3cb5c7159be6d992adecd2097c">&#9670;&nbsp;</a></span>~Node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Node::~Node </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default destructor. </p>
+
+</div>
+</div>
+<a id="ad7a34779cad45d997bfd6d3d8043c75f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7a34779cad45d997bfd6d3d8043c75f">&#9670;&nbsp;</a></span>Node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Node::Node </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad9191309b6f3de3656ddf2406994655c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9191309b6f3de3656ddf2406994655c">&#9670;&nbsp;</a></span>addExternalForce()</h2>
 
@@ -951,6 +1011,35 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="a5b1560f9d7c52bfd84307901f6c35cac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b1560f9d7c52bfd84307901f6c35cac">&#9670;&nbsp;</a></span>resetValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::resetValues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Delete all values stored in node. </p>
+
+<p>Reimplemented in <a class="el" href="classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b">NodeMixture</a>.</p>
+
+</div>
+</div>
 <a id="ab36ad977b482adfba910741ddc7a60e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab36ad977b482adfba910741ddc7a60e9">&#9670;&nbsp;</a></span>setActive()</h2>
 
@@ -1227,13 +1316,343 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="a6aad417d1f5ec1d2fde9bb1f4fcac0d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">&#9670;&nbsp;</a></span>updateDampingForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Node::updateDampingForce </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the damping nodal force. </p>
+
+<p>Reimplemented in <a class="el" href="classNodeMixture.html#acf9ffdf17df8f2596f16e91be73c548b">NodeMixture</a>.</p>
+
+</div>
+</div>
+<a id="a302b87a90c5372faaabc07077bb2ab74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a302b87a90c5372faaabc07077bb2ab74">&#9670;&nbsp;</a></span>updateTotalForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Node::updateTotalForce </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the total nodal force. </p>
+
+<p>Reimplemented in <a class="el" href="classNodeMixture.html#aad23b55c873ceefba5e3496f5ff6c8e2">NodeMixture</a>.</p>
+
+</div>
+</div>
+<a id="a2c5e1e80ace265d6da48dad9aaf0e540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c5e1e80ace265d6da48dad9aaf0e540">&#9670;&nbsp;</a></span>updateVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::updateVelocity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9f86329e8fb9d0bb3541929ba067088a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f86329e8fb9d0bb3541929ba067088a">&#9670;&nbsp;</a></span>active</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Node::active</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>is active node </p>
+
+</div>
+</div>
+<a id="a924e2f81d6f9788fd5a3e35dfe8c6ae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a924e2f81d6f9788fd5a3e35dfe8c6ae6">&#9670;&nbsp;</a></span>coordinates</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::coordinates</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal coordinates: \(x_{iI}\) </p>
+
+</div>
+</div>
+<a id="a1beeb10273f0b88112508a2e31a72f77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1beeb10273f0b88112508a2e31a72f77">&#9670;&nbsp;</a></span>dampingForce</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::dampingForce</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal damping force: \(f_{iI}^{dmp}\), or damping force in solid in two-phase calculations: \(f_{iI}^{dmp,s}\) </p>
+
+</div>
+</div>
+<a id="aa85c7563e9ab15e7623e8d691141436e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa85c7563e9ab15e7623e8d691141436e">&#9670;&nbsp;</a></span>externalForce</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::externalForce</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal external force: \(f_{iI}^{ext}\), or external force in solid in two-phase calculations: \(f_{iI}^{ext,s}\) </p>
+
+</div>
+</div>
+<a id="a59a543130a10c95f1e8642cf8c5645e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59a543130a10c95f1e8642cf8c5645e8">&#9670;&nbsp;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Node::id</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal identification </p>
+
+</div>
+</div>
+<a id="ab1f099daeae52f3d36a9fe0f873ae760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f099daeae52f3d36a9fe0f873ae760">&#9670;&nbsp;</a></span>internalForce</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::internalForce</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal internal force: \(f_{iI}^{int}\), or internal force in solid in two-phase calculations: \(f_{iI}^{int,s}\) </p>
+
+</div>
+</div>
+<a id="a63e510fc9158eb15e751861bc14eae38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63e510fc9158eb15e751861bc14eae38">&#9670;&nbsp;</a></span>mass</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::mass</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal mass: \(m_{I}\), or solid mass in two-phase calculations: \(m_{I}^{s}\) </p>
+
+</div>
+</div>
+<a id="a1b1d61e14d6c1a21f1b1f1bca435a861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b1d61e14d6c1a21f1b1f1bca435a861">&#9670;&nbsp;</a></span>momentum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::momentum</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal momentum: \(p_{iI}\), or momentum in solid in two-phase calculations: \(p_{iI}^{s}\) </p>
+
+</div>
+</div>
+<a id="ab06a209d998e817f6f93590436aece9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab06a209d998e817f6f93590436aece9d">&#9670;&nbsp;</a></span>totalForce</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::totalForce</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal total force: \(f_{iI}\), or total force in solid in two-phase calculations: \(f_{iI}^{s}\) </p>
+
+</div>
+</div>
+<a id="a1e2717f38550e744950192866c31a8c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2717f38550e744950192866c31a8c7">&#9670;&nbsp;</a></span>velocity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Node::velocity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal velocity: \(v_{iI}\), or velocity in solid in two-phase calculations: \(v_{iI}^{s}\) </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="Node_8h_source.html">Node.h</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classNode.html">Node</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

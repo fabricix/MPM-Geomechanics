@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('namespaceInterpolation.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,7 +89,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
@@ -120,14 +141,47 @@ Functions</h2></td></tr>
 <tr class="memitem:ab40d47b2e6ec38905a4eca4eaec2b91c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInterpolation.html#ab40d47b2e6ec38905a4eca4eaec2b91c">particleDeformationGradient</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies, double time_step)</td></tr>
 <tr class="memdesc:ab40d47b2e6ec38905a4eca4eaec2b91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate deformation gradient of solid at particle.  <a href="namespaceInterpolation.html#ab40d47b2e6ec38905a4eca4eaec2b91c">More...</a><br /></td></tr>
 <tr class="separator:ab40d47b2e6ec38905a4eca4eaec2b91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf4f657fde41c48336f1d5030cd63958"><td class="memItemLeft" align="right" valign="top"><a id="acf4f657fde41c48336f1d5030cd63958"></a>
-Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>interpolateVector</b> (const std::vector&lt; double &gt; &amp;times, const std::vector&lt; Eigen::Vector3d &gt; &amp;values, double itime)</td></tr>
+<tr class="memitem:acf4f657fde41c48336f1d5030cd63958"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInterpolation.html#acf4f657fde41c48336f1d5030cd63958">interpolateVector</a> (const std::vector&lt; double &gt; &amp;times, const std::vector&lt; Eigen::Vector3d &gt; &amp;values, double itime)</td></tr>
 <tr class="separator:acf4f657fde41c48336f1d5030cd63958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the interpolation operations in the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>. </p>
 <p>This class allows to interpolate quantities from particles to node and from nodes to particle back. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="acf4f657fde41c48336f1d5030cd63958"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4f657fde41c48336f1d5030cd63958">&#9670;&nbsp;</a></span>interpolateVector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d Interpolation::interpolateVector </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>times</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; Eigen::Vector3d &gt; &amp;&#160;</td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>itime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3db0b8bfe941b0ec261a3aa7e19ac225"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3db0b8bfe941b0ec261a3aa7e19ac225">&#9670;&nbsp;</a></span>nodalDragForceFluid()</h2>
 
@@ -657,9 +711,13 @@ Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>interpolat
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceInterpolation.html">Interpolation</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classMesh.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,7 +89,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -96,17 +117,15 @@ Collaboration diagram for Mesh:</div>
 <area shape="rect" title=" " alt="" coords="277,257,355,284"/>
 <area shape="rect" title=" " alt="" coords="380,257,455,284"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2af137f1571af89172b9c102302c416b"><td class="memItemLeft" align="right" valign="top"><a id="a2af137f1571af89172b9c102302c416b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a2af137f1571af89172b9c102302c416b">Mesh</a> ()</td></tr>
-<tr class="memdesc:a2af137f1571af89172b9c102302c416b"><td class="mdescLeft">&#160;</td><td class="mdescRight">default constructor <br /></td></tr>
+<tr class="memitem:a2af137f1571af89172b9c102302c416b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a2af137f1571af89172b9c102302c416b">Mesh</a> ()</td></tr>
+<tr class="memdesc:a2af137f1571af89172b9c102302c416b"><td class="mdescLeft">&#160;</td><td class="mdescRight">default constructor  <a href="classMesh.html#a2af137f1571af89172b9c102302c416b">More...</a><br /></td></tr>
 <tr class="separator:a2af137f1571af89172b9c102302c416b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6a041191ed55c693254e945ce2869ff"><td class="memItemLeft" align="right" valign="top"><a id="ad6a041191ed55c693254e945ce2869ff"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">~Mesh</a> ()</td></tr>
-<tr class="memdesc:ad6a041191ed55c693254e945ce2869ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:ad6a041191ed55c693254e945ce2869ff"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">~Mesh</a> ()</td></tr>
+<tr class="memdesc:ad6a041191ed55c693254e945ce2869ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <a href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">More...</a><br /></td></tr>
 <tr class="separator:ad6a041191ed55c693254e945ce2869ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab02fa9f299965727bebe70b12624e96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#aab02fa9f299965727bebe70b12624e96">createGrid</a> (bool is_two_phase_simulation)</td></tr>
 <tr class="memdesc:aab02fa9f299965727bebe70b12624e96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a structured mesh grid.  <a href="classMesh.html#aab02fa9f299965727bebe70b12624e96">More...</a><br /></td></tr>
@@ -195,50 +214,88 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a8f4c4014a40a776f75ac943c188cfedf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a8f4c4014a40a776f75ac943c188cfedf">getParentCellIdConstribution</a> (const Vector3d &amp;point) const</td></tr>
 <tr class="memdesc:a8f4c4014a40a776f75ac943c188cfedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the id of the parent node contributing at the point.  <a href="classMesh.html#a8f4c4014a40a776f75ac943c188cfedf">More...</a><br /></td></tr>
 <tr class="separator:a8f4c4014a40a776f75ac943c188cfedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77996ce898ba1611f13edb1bb2cdd0f1"><td class="memItemLeft" align="right" valign="top"><a id="a77996ce898ba1611f13edb1bb2cdd0f1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1">configureBoundaries</a> ()</td></tr>
-<tr class="memdesc:a77996ce898ba1611f13edb1bb2cdd0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the boundary nodes index. <br /></td></tr>
+<tr class="memitem:a77996ce898ba1611f13edb1bb2cdd0f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1">configureBoundaries</a> ()</td></tr>
+<tr class="memdesc:a77996ce898ba1611f13edb1bb2cdd0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the boundary nodes index.  <a href="classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1">More...</a><br /></td></tr>
 <tr class="separator:a77996ce898ba1611f13edb1bb2cdd0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:adbcc26ba65b26ce2d1b3b8f697e94d27"><td class="memItemLeft" align="right" valign="top"><a id="adbcc26ba65b26ce2d1b3b8f697e94d27"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27">nGhosts</a></td></tr>
-<tr class="memdesc:adbcc26ba65b26ce2d1b3b8f697e94d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of ghost cells <br /></td></tr>
+<tr class="memitem:adbcc26ba65b26ce2d1b3b8f697e94d27"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27">nGhosts</a></td></tr>
+<tr class="memdesc:adbcc26ba65b26ce2d1b3b8f697e94d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of ghost cells  <a href="classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27">More...</a><br /></td></tr>
 <tr class="separator:adbcc26ba65b26ce2d1b3b8f697e94d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64370d667c6ea5953e6282ea0eff29ad"><td class="memItemLeft" align="right" valign="top"><a id="a64370d667c6ea5953e6282ea0eff29ad"></a>
-Vector3i&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a64370d667c6ea5953e6282ea0eff29ad">nCells</a></td></tr>
-<tr class="memdesc:a64370d667c6ea5953e6282ea0eff29ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of cells in each direction without ghost <br /></td></tr>
+<tr class="memitem:a64370d667c6ea5953e6282ea0eff29ad"><td class="memItemLeft" align="right" valign="top">Vector3i&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a64370d667c6ea5953e6282ea0eff29ad">nCells</a></td></tr>
+<tr class="memdesc:a64370d667c6ea5953e6282ea0eff29ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of cells in each direction without ghost  <a href="classMesh.html#a64370d667c6ea5953e6282ea0eff29ad">More...</a><br /></td></tr>
 <tr class="separator:a64370d667c6ea5953e6282ea0eff29ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92cada479e59250c2411dc220c72822d"><td class="memItemLeft" align="right" valign="top"><a id="a92cada479e59250c2411dc220c72822d"></a>
-Vector3i&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a92cada479e59250c2411dc220c72822d">nRows</a></td></tr>
-<tr class="memdesc:a92cada479e59250c2411dc220c72822d"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of rows in each direction <br /></td></tr>
+<tr class="memitem:a92cada479e59250c2411dc220c72822d"><td class="memItemLeft" align="right" valign="top">Vector3i&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a92cada479e59250c2411dc220c72822d">nRows</a></td></tr>
+<tr class="memdesc:a92cada479e59250c2411dc220c72822d"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of rows in each direction  <a href="classMesh.html#a92cada479e59250c2411dc220c72822d">More...</a><br /></td></tr>
 <tr class="separator:a92cada479e59250c2411dc220c72822d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a548aaa6c3a282e7ae4d358c88286a1f0"><td class="memItemLeft" align="right" valign="top"><a id="a548aaa6c3a282e7ae4d358c88286a1f0"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a548aaa6c3a282e7ae4d358c88286a1f0">cellDim</a></td></tr>
-<tr class="memdesc:a548aaa6c3a282e7ae4d358c88286a1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">cell dimension in each direction <br /></td></tr>
+<tr class="memitem:a548aaa6c3a282e7ae4d358c88286a1f0"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a548aaa6c3a282e7ae4d358c88286a1f0">cellDim</a></td></tr>
+<tr class="memdesc:a548aaa6c3a282e7ae4d358c88286a1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">cell dimension in each direction  <a href="classMesh.html#a548aaa6c3a282e7ae4d358c88286a1f0">More...</a><br /></td></tr>
 <tr class="separator:a548aaa6c3a282e7ae4d358c88286a1f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39fb26948af4a7ffdebb62e80b419052"><td class="memItemLeft" align="right" valign="top"><a id="a39fb26948af4a7ffdebb62e80b419052"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a39fb26948af4a7ffdebb62e80b419052">minLimit</a></td></tr>
-<tr class="memdesc:a39fb26948af4a7ffdebb62e80b419052"><td class="mdescLeft">&#160;</td><td class="mdescRight">lower coordinates domain without ghosts <br /></td></tr>
+<tr class="memitem:a39fb26948af4a7ffdebb62e80b419052"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a39fb26948af4a7ffdebb62e80b419052">minLimit</a></td></tr>
+<tr class="memdesc:a39fb26948af4a7ffdebb62e80b419052"><td class="mdescLeft">&#160;</td><td class="mdescRight">lower coordinates domain without ghosts  <a href="classMesh.html#a39fb26948af4a7ffdebb62e80b419052">More...</a><br /></td></tr>
 <tr class="separator:a39fb26948af4a7ffdebb62e80b419052"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a372edf56232cae8e5800a3d6bee6c71d"><td class="memItemLeft" align="right" valign="top"><a id="a372edf56232cae8e5800a3d6bee6c71d"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a372edf56232cae8e5800a3d6bee6c71d">maxLimit</a></td></tr>
-<tr class="memdesc:a372edf56232cae8e5800a3d6bee6c71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">high coordinates of domain without ghosts <br /></td></tr>
+<tr class="memitem:a372edf56232cae8e5800a3d6bee6c71d"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a372edf56232cae8e5800a3d6bee6c71d">maxLimit</a></td></tr>
+<tr class="memdesc:a372edf56232cae8e5800a3d6bee6c71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">high coordinates of domain without ghosts  <a href="classMesh.html#a372edf56232cae8e5800a3d6bee6c71d">More...</a><br /></td></tr>
 <tr class="separator:a372edf56232cae8e5800a3d6bee6c71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a039bc6f31faac277c78066cedae9fd11"><td class="memItemLeft" align="right" valign="top"><a id="a039bc6f31faac277c78066cedae9fd11"></a>
-vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a039bc6f31faac277c78066cedae9fd11">gridNodes</a></td></tr>
-<tr class="memdesc:a039bc6f31faac277c78066cedae9fd11"><td class="mdescLeft">&#160;</td><td class="mdescRight">all nodes in mesh <br /></td></tr>
+<tr class="memitem:a039bc6f31faac277c78066cedae9fd11"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a039bc6f31faac277c78066cedae9fd11">gridNodes</a></td></tr>
+<tr class="memdesc:a039bc6f31faac277c78066cedae9fd11"><td class="mdescLeft">&#160;</td><td class="mdescRight">all nodes in mesh  <a href="classMesh.html#a039bc6f31faac277c78066cedae9fd11">More...</a><br /></td></tr>
 <tr class="separator:a039bc6f31faac277c78066cedae9fd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae856f697db9b5c61445e64cff311c46a"><td class="memItemLeft" align="right" valign="top"><a id="ae856f697db9b5c61445e64cff311c46a"></a>
-<a class="el" href="classBoundary.html">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ae856f697db9b5c61445e64cff311c46a">boundary</a></td></tr>
-<tr class="memdesc:ae856f697db9b5c61445e64cff311c46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">mesh boundary <br /></td></tr>
+<tr class="memitem:ae856f697db9b5c61445e64cff311c46a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBoundary.html">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ae856f697db9b5c61445e64cff311c46a">boundary</a></td></tr>
+<tr class="memdesc:ae856f697db9b5c61445e64cff311c46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">mesh boundary  <a href="classMesh.html#ae856f697db9b5c61445e64cff311c46a">More...</a><br /></td></tr>
 <tr class="separator:ae856f697db9b5c61445e64cff311c46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing a rectangular grid mesh. </p>
 <p>A rectangular structured grid mesh is used to integrate the equation of motion. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2af137f1571af89172b9c102302c416b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2af137f1571af89172b9c102302c416b">&#9670;&nbsp;</a></span>Mesh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Mesh::Mesh </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>default constructor </p>
+
+</div>
+</div>
+<a id="ad6a041191ed55c693254e945ce2869ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a041191ed55c693254e945ce2869ff">&#9670;&nbsp;</a></span>~Mesh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Mesh::~Mesh </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7d787bca40818c5248ca13df066c92e7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d787bca40818c5248ca13df066c92e7">&#9670;&nbsp;</a></span>activateNode()</h2>
 
@@ -321,6 +378,33 @@ vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td cla
 
 </div>
 </div>
+<a id="a77996ce898ba1611f13edb1bb2cdd0f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77996ce898ba1611f13edb1bb2cdd0f1">&#9670;&nbsp;</a></span>configureBoundaries()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mesh::configureBoundaries </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the boundary nodes index. </p>
+
+</div>
+</div>
 <a id="aab02fa9f299965727bebe70b12624e96"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab02fa9f299965727bebe70b12624e96">&#9670;&nbsp;</a></span>createGrid()</h2>
 
@@ -371,12 +455,7 @@ vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td cla
 </div><div class="memdoc">
 
 <p>return mesh boundaries </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">boundary_pointer</td><td>A pointer to the <a class="el" href="classBoundary.html" title="Mesh boundary nodes.">Boundary</a> structure </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>boundary_pointer A pointer to the <a class="el" href="classBoundary.html" title="Mesh boundary nodes.">Boundary</a> structure </dd></dl>
 
 </div>
 </div>
@@ -1131,13 +1210,210 @@ vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td cla
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ae856f697db9b5c61445e64cff311c46a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae856f697db9b5c61445e64cff311c46a">&#9670;&nbsp;</a></span>boundary</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBoundary.html">Boundary</a> Mesh::boundary</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>mesh boundary </p>
+
+</div>
+</div>
+<a id="a548aaa6c3a282e7ae4d358c88286a1f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a548aaa6c3a282e7ae4d358c88286a1f0">&#9670;&nbsp;</a></span>cellDim</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Mesh::cellDim</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>cell dimension in each direction </p>
+
+</div>
+</div>
+<a id="a039bc6f31faac277c78066cedae9fd11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a039bc6f31faac277c78066cedae9fd11">&#9670;&nbsp;</a></span>gridNodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="classNode.html">Node</a>*&gt; Mesh::gridNodes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>all nodes in mesh </p>
+
+</div>
+</div>
+<a id="a372edf56232cae8e5800a3d6bee6c71d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a372edf56232cae8e5800a3d6bee6c71d">&#9670;&nbsp;</a></span>maxLimit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Mesh::maxLimit</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>high coordinates of domain without ghosts </p>
+
+</div>
+</div>
+<a id="a39fb26948af4a7ffdebb62e80b419052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39fb26948af4a7ffdebb62e80b419052">&#9670;&nbsp;</a></span>minLimit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Mesh::minLimit</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>lower coordinates domain without ghosts </p>
+
+</div>
+</div>
+<a id="a64370d667c6ea5953e6282ea0eff29ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64370d667c6ea5953e6282ea0eff29ad">&#9670;&nbsp;</a></span>nCells</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3i Mesh::nCells</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>number of cells in each direction without ghost </p>
+
+</div>
+</div>
+<a id="adbcc26ba65b26ce2d1b3b8f697e94d27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbcc26ba65b26ce2d1b3b8f697e94d27">&#9670;&nbsp;</a></span>nGhosts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Mesh::nGhosts</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>number of ghost cells </p>
+
+</div>
+</div>
+<a id="a92cada479e59250c2411dc220c72822d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92cada479e59250c2411dc220c72822d">&#9670;&nbsp;</a></span>nRows</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3i Mesh::nRows</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>number of rows in each direction </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="Mesh_8h_source.html">Mesh.h</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classMesh.html">Mesh</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

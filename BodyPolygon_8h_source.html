@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -20,6 +24,7 @@
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -53,6 +58,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('BodyPolygon_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,17 +89,12 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">BodyPolygon.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="BodyPolygon_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * BodyPolygon.h</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: 16 de jul de 2021</span></div>
@@ -87,66 +104,71 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef BODYPOLYGON_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define BODYPOLYGON_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;Body/Body.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="Body_8h.html">Body/Body.h</a>&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classBodyPolygon.html">   61</a></span>&#160;<span class="keyword">class </span><a class="code" href="classBodyPolygon.html">BodyPolygon</a>: <span class="keyword">public</span> <a class="code" href="classBody.html">Body</a> {</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classBodyPolygon.html">   59</a></span>&#160;<span class="keyword">class </span><a class="code" href="classBodyPolygon.html">BodyPolygon</a>: <span class="keyword">public</span> <a class="code" href="classBody.html">Body</a> {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a0175171ccda6931176b95895d1de3478">   67</a></span>&#160;    <a class="code" href="classBodyPolygon.html#a0175171ccda6931176b95895d1de3478">BodyPolygon</a>();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a65d0bb53c2ac19dd435887ee1fc397da">   71</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classBodyPolygon.html#a65d0bb53c2ac19dd435887ee1fc397da">~BodyPolygon</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">   75</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">setPoints</a>(vector&lt;Vector3d&gt; polygon_points) { this-&gt;<a class="code" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">polygonPoints</a>=polygon_points; }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">   79</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">setMaterialId</a>(<span class="keywordtype">int</span> material_id) { this-&gt;<a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>=material_id; }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    </div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">   83</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">getMaterialId</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;<a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>; }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">   88</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">create</a>(<a class="code" href="classMesh.html">Mesh</a>&amp; mesh, <a class="code" href="classMaterial.html">Material</a>* material);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">   92</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">setExtrudeDirection</a>(<span class="keywordtype">string</span> extrude_direction) { this-&gt;<a class="code" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">extrudeDirection</a>=extrude_direction; }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">   96</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">setExtrudeDisplacement</a>(<span class="keywordtype">double</span> extrude_displacement) { this-&gt;<a class="code" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">extrudeDisplacement</a>=extrude_displacement; }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">  100</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">setDiscretizationLength</a>(<span class="keywordtype">double</span> distretization_length) { this-&gt;<a class="code" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">distretizationLength</a>=distretization_length; }</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a0175171ccda6931176b95895d1de3478">   65</a></span>&#160;    <a class="code" href="classBodyPolygon.html#a0175171ccda6931176b95895d1de3478">BodyPolygon</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a65d0bb53c2ac19dd435887ee1fc397da">   69</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classBodyPolygon.html#a65d0bb53c2ac19dd435887ee1fc397da">~BodyPolygon</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">   73</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">setPoints</a>(vector&lt;Vector3d&gt; polygon_points) { this-&gt;<a class="code" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">polygonPoints</a>=polygon_points; }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">   77</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">setMaterialId</a>(<span class="keywordtype">int</span> material_id) { this-&gt;<a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>=material_id; }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">   81</a></span>&#160;    <span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">getMaterialId</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;<a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>; }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">   86</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">create</a>(<a class="code" href="classMesh.html">Mesh</a>&amp; mesh, <a class="code" href="classMaterial.html">Material</a>* material);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">   90</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">setExtrudeDirection</a>(<span class="keywordtype">string</span> extrude_direction) { this-&gt;<a class="code" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">extrudeDirection</a>=extrude_direction; }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">   94</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">setExtrudeDisplacement</a>(<span class="keywordtype">double</span> extrude_displacement) { this-&gt;<a class="code" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">extrudeDisplacement</a>=extrude_displacement; }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">   98</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">setDiscretizationLength</a>(<span class="keywordtype">double</span> distretization_length) { this-&gt;<a class="code" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">distretizationLength</a>=distretization_length; }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">  102</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>; </div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">  104</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">materialId</a>; </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">  104</a></span>&#160;    vector&lt;Vector3d&gt; <a class="code" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">polygonPoints</a>; </div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">  106</a></span>&#160;    vector&lt;Vector3d&gt; <a class="code" href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">polygonPoints</a>; </div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">  106</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">extrudeDirection</a>; </div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">  108</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">extrudeDirection</a>; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">  108</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">extrudeDisplacement</a>; </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">  110</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">extrudeDisplacement</a>; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">  112</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">distretizationLength</a>; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BODYPOLYGON_H_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="aclassBodyPolygon_html"><div class="ttname"><a href="classBodyPolygon.html">BodyPolygon</a></div><div class="ttdoc">Is a type of Body created by the extrusion of a 2D polygon.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:61</div></div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">  110</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">distretizationLength</a>; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BODYPOLYGON_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBody_8h_html"><div class="ttname"><a href="Body_8h.html">Body.h</a></div></div>
+<div class="ttc" id="aclassBodyPolygon_html"><div class="ttname"><a href="classBodyPolygon.html">BodyPolygon</a></div><div class="ttdoc">Is a type of Body created by the extrusion of a 2D polygon.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:59</div></div>
 <div class="ttc" id="aclassBodyPolygon_html_a0175171ccda6931176b95895d1de3478"><div class="ttname"><a href="classBodyPolygon.html#a0175171ccda6931176b95895d1de3478">BodyPolygon::BodyPolygon</a></div><div class="ttdeci">BodyPolygon()</div><div class="ttdoc">Default constructor.</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a115e3d227f3e53a599eafd8e3508f098"><div class="ttname"><a href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">BodyPolygon::distretizationLength</a></div><div class="ttdeci">double distretizationLength</div><div class="ttdoc">length of the local mesh used to create the body</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:112</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a1ab93cbd97a87bf715f1e32c552b8283"><div class="ttname"><a href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">BodyPolygon::setMaterialId</a></div><div class="ttdeci">virtual void setMaterialId(int material_id)</div><div class="ttdoc">Configure the material id.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:79</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a3355c23324724e374c8fe8af730d996b"><div class="ttname"><a href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">BodyPolygon::getMaterialId</a></div><div class="ttdeci">virtual int getMaterialId() const</div><div class="ttdoc">Return the material identification.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:83</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a4f875617a46ec15f4cb225b7b57e330c"><div class="ttname"><a href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">BodyPolygon::extrudeDisplacement</a></div><div class="ttdeci">double extrudeDisplacement</div><div class="ttdoc">extrude displacement</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:110</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a53a4d4af4930b9a24ec6398d181f8677"><div class="ttname"><a href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">BodyPolygon::setExtrudeDirection</a></div><div class="ttdeci">void setExtrudeDirection(string extrude_direction)</div><div class="ttdoc">Configures the extrude direction.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:92</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a5a403600dbba17a40f3a591d9efc7378"><div class="ttname"><a href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">BodyPolygon::setExtrudeDisplacement</a></div><div class="ttdeci">void setExtrudeDisplacement(double extrude_displacement)</div><div class="ttdoc">Configures the extrude displacement.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:96</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a115e3d227f3e53a599eafd8e3508f098"><div class="ttname"><a href="classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098">BodyPolygon::distretizationLength</a></div><div class="ttdeci">double distretizationLength</div><div class="ttdoc">length of the local mesh used to create the body</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:110</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a1ab93cbd97a87bf715f1e32c552b8283"><div class="ttname"><a href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">BodyPolygon::setMaterialId</a></div><div class="ttdeci">virtual void setMaterialId(int material_id)</div><div class="ttdoc">Configure the material id.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:77</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a3355c23324724e374c8fe8af730d996b"><div class="ttname"><a href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">BodyPolygon::getMaterialId</a></div><div class="ttdeci">virtual int getMaterialId() const</div><div class="ttdoc">Return the material identification.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:81</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a4f875617a46ec15f4cb225b7b57e330c"><div class="ttname"><a href="classBodyPolygon.html#a4f875617a46ec15f4cb225b7b57e330c">BodyPolygon::extrudeDisplacement</a></div><div class="ttdeci">double extrudeDisplacement</div><div class="ttdoc">extrude displacement</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:108</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a53a4d4af4930b9a24ec6398d181f8677"><div class="ttname"><a href="classBodyPolygon.html#a53a4d4af4930b9a24ec6398d181f8677">BodyPolygon::setExtrudeDirection</a></div><div class="ttdeci">void setExtrudeDirection(string extrude_direction)</div><div class="ttdoc">Configures the extrude direction.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:90</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a5a403600dbba17a40f3a591d9efc7378"><div class="ttname"><a href="classBodyPolygon.html#a5a403600dbba17a40f3a591d9efc7378">BodyPolygon::setExtrudeDisplacement</a></div><div class="ttdeci">void setExtrudeDisplacement(double extrude_displacement)</div><div class="ttdoc">Configures the extrude displacement.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:94</div></div>
 <div class="ttc" id="aclassBodyPolygon_html_a65d0bb53c2ac19dd435887ee1fc397da"><div class="ttname"><a href="classBodyPolygon.html#a65d0bb53c2ac19dd435887ee1fc397da">BodyPolygon::~BodyPolygon</a></div><div class="ttdeci">virtual ~BodyPolygon()</div><div class="ttdoc">Default destruction.</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a734484165b1e3c4ee93c7f2645bc8e02"><div class="ttname"><a href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">BodyPolygon::extrudeDirection</a></div><div class="ttdeci">string extrudeDirection</div><div class="ttdoc">extrude direction</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:108</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a94949f5b7bea34f7037cd0e454abe810"><div class="ttname"><a href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">BodyPolygon::setDiscretizationLength</a></div><div class="ttdeci">void setDiscretizationLength(double distretization_length)</div><div class="ttdoc">Configures the discretization parameter.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:100</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_a970abd4a7b3c3bb4978e35f418911ad2"><div class="ttname"><a href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">BodyPolygon::materialId</a></div><div class="ttdeci">int materialId</div><div class="ttdoc">material identification</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:104</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_ab398664abbdca4fe05830eb221e68563"><div class="ttname"><a href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">BodyPolygon::setPoints</a></div><div class="ttdeci">void setPoints(vector&lt; Vector3d &gt; polygon_points)</div><div class="ttdoc">Configure the geometrical points of the polygon.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:75</div></div>
-<div class="ttc" id="aclassBodyPolygon_html_ae545d09521335ddcca2897a7881cb4e6"><div class="ttname"><a href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">BodyPolygon::polygonPoints</a></div><div class="ttdeci">vector&lt; Vector3d &gt; polygonPoints</div><div class="ttdoc">geometrical definition of the polygon</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:106</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a734484165b1e3c4ee93c7f2645bc8e02"><div class="ttname"><a href="classBodyPolygon.html#a734484165b1e3c4ee93c7f2645bc8e02">BodyPolygon::extrudeDirection</a></div><div class="ttdeci">string extrudeDirection</div><div class="ttdoc">extrude direction</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:106</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a94949f5b7bea34f7037cd0e454abe810"><div class="ttname"><a href="classBodyPolygon.html#a94949f5b7bea34f7037cd0e454abe810">BodyPolygon::setDiscretizationLength</a></div><div class="ttdeci">void setDiscretizationLength(double distretization_length)</div><div class="ttdoc">Configures the discretization parameter.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:98</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_a970abd4a7b3c3bb4978e35f418911ad2"><div class="ttname"><a href="classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2">BodyPolygon::materialId</a></div><div class="ttdeci">int materialId</div><div class="ttdoc">material identification</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:102</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_ab398664abbdca4fe05830eb221e68563"><div class="ttname"><a href="classBodyPolygon.html#ab398664abbdca4fe05830eb221e68563">BodyPolygon::setPoints</a></div><div class="ttdeci">void setPoints(vector&lt; Vector3d &gt; polygon_points)</div><div class="ttdoc">Configure the geometrical points of the polygon.</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:73</div></div>
+<div class="ttc" id="aclassBodyPolygon_html_ae545d09521335ddcca2897a7881cb4e6"><div class="ttname"><a href="classBodyPolygon.html#ae545d09521335ddcca2897a7881cb4e6">BodyPolygon::polygonPoints</a></div><div class="ttdeci">vector&lt; Vector3d &gt; polygonPoints</div><div class="ttdoc">geometrical definition of the polygon</div><div class="ttdef"><b>Definition:</b> BodyPolygon.h:104</div></div>
 <div class="ttc" id="aclassBodyPolygon_html_af5b151c957a9d5ac977b333659a7c9b2"><div class="ttname"><a href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">BodyPolygon::create</a></div><div class="ttdeci">virtual void create(Mesh &amp;mesh, Material *material)</div><div class="ttdoc">Create a body in space using a polygon in 2D.</div></div>
 <div class="ttc" id="aclassBody_html"><div class="ttname"><a href="classBody.html">Body</a></div><div class="ttdoc">Represents a body in the space forming by a group of materials points and identified by a number.</div><div class="ttdef"><b>Definition:</b> Body.h:19</div></div>
 <div class="ttc" id="aclassMaterial_html"><div class="ttname"><a href="classMaterial.html">Material</a></div><div class="ttdoc">Represents a material.</div><div class="ttdef"><b>Definition:</b> Material.h:18</div></div>
 <div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdoc">Class representing a rectangular grid mesh.</div><div class="ttdef"><b>Definition:</b> Mesh.h:29</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a></li><li class="navelem"><a class="el" href="BodyPolygon_8h.html">BodyPolygon.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>
