@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('classBodySphere.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,8 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">BodySphere Member List</div></div>
 </div><!--header-->
@@ -113,20 +126,22 @@ $(function(){ initResizable(false); });
   <tr class="even"><td class="entry"><a class="el" href="classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e">materialId</a></td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classBody.html#af8aaa282121a6e26fdd9826514cc1098">particles</a></td><td class="entry"><a class="el" href="classBody.html">Body</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d">particlesPerDirection</a></td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>setCenter</b>(Vector3d center) (defined in <a class="el" href="classBodySphere.html">BodySphere</a>)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setDiameter</b>(double diameter) (defined in <a class="el" href="classBodySphere.html">BodySphere</a>)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBodySphere.html#ad1152c98dd0b7dc6037255fecf179142">setCenter</a>(Vector3d center)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classBodySphere.html#a24a8cd75059ed585d9662fb12e7037bb">setDiameter</a>(double diameter)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classBody.html#a610a132e5529972efa516e159acdb0bd">setId</a>(int body_id)</td><td class="entry"><a class="el" href="classBody.html">Body</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classBody.html#aa063e3828f4cfad904a361bce338e6fd">setInitialVelocity</a>(Vector3d initial_velocity)</td><td class="entry"><a class="el" href="classBody.html">Body</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">setMaterialId</a>(int material_id)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classBody.html#aa71e9b9b576b1ae73e2baebd86bf71ca">setParticles</a>(const vector&lt; Particle * &gt; &amp;particle_list)</td><td class="entry"><a class="el" href="classBody.html">Body</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>setParticlesPerDirection</b>(Vector3d ppd) (defined in <a class="el" href="classBodySphere.html">BodySphere</a>)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classBodySphere.html#a0c94a466e9fd85014226302058d8801f">setParticlesPerDirection</a>(Vector3d ppd)</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classBody.html#abe1c4da65568cf7978b6247affc461e3">~Body</a>()</td><td class="entry"><a class="el" href="classBody.html">Body</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classBodySphere.html#a9d68fea28bca83d21f33f33196094c87">~BodySphere</a>()</td><td class="entry"><a class="el" href="classBodySphere.html">BodySphere</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

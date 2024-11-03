@@ -26,8 +26,6 @@
 ///
 /// The extrude direction is the axis by with the polygon will be extruded.
 ///
-///```
-///
 /// Extrusion in x   Extrusion in y    Extrusion in z 
 ///
 ///  z               x                 y
@@ -37,7 +35,7 @@
 ///
 /// o : is the axis pointing out of the plane
 ///
-///```
+///
 /// ## Extrusion displacement
 ///
 /// Is the total displacement of the polygon through the extrusion direction.

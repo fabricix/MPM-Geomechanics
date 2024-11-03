@@ -50,7 +50,7 @@ namespace ModelSetup {
 
 	/// \brief Set load state activated
 	/// \param[in] load_state_activated Flag to load an state
-	void setLoadState(bool st);
+	void setLoadState(bool load_state_activated);
 
 	/// \brief Return true is save state is activated
 	/// \return True is save state is activated
@@ -58,7 +58,7 @@ namespace ModelSetup {
 
 	/// \brief Set save state activated
 	/// \param[in] save_state_activated Flag to save an state
-	void setSaveState(bool st);
+	void setSaveState(bool save_state_activated);
 
 	/// \brief Return the number of nodes that a particle contributes
 	/// \return The number of nodes that a particle contributes
@@ -203,7 +203,7 @@ namespace ModelSetup {
 	void setNumThreads(unsigned nThreads);
 	
 	/// \brief Return true if seismic analysis is active
-	/// \param[out] if_seismic_analysis_active 
+	/// \return if_seismic_analysis_active
 	bool getSeismicAnalysis();
 
 	/// \brief Configure if seismic analysis is active
@@ -223,18 +223,18 @@ namespace ModelSetup {
 	void setInitialSimulationTime( std::chrono::system_clock::time_point initialTime);
 
 	/// \brief Get initial simulation time
-	/// \param[out] initialTime
+	/// \return initialTime
 	std::chrono::system_clock::time_point getInitialSimulationTime( );
 
 	std::string getSeismicFileName();
 
 	/// \brief Get current simulation time
-	/// \param[out] currentTime
+	/// \return currentTime
 	double getCurrentTime();
 
     /// \brief Set current simulation time
 	/// \param[in] currentTime 
-	void setCurrentTime(double a);
+	void setCurrentTime(double currentTime);
 };
 
 #endif /* MODEL_H_ */

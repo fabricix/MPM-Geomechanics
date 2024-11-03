@@ -1,54 +1,96 @@
-
- /* MPM.h
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
-
+///
 /// \mainpage MPM-Geomechanics
 ///
 /// \section program_intro Introduction
 ///
-/// The MPM-Geomechanics is an implementation of the Material Point Method to simulate large strain geomechanical problems.
+/// The MPM-Geomechanics is a implementation of the Material Point Method (MPM) to simulate large strain geomechanical problems in 3D. The main objective of this program is to provide an open source platform suitable for the study and application of the MPM in various geomechanical problems were materials are subjected to extreme deformation conditions.
 ///
-/// The main objectives of this program are:
+/// MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
 ///
-/// - Provide an open source platform suitable for the study and application of MPM in various geomechanical problems.
+/// This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics:
 ///
-/// - provide an adequate computational tool to simulate geomechanical problems involving large deformations.
+/// 
+/// \f$ \frac{\partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i \f$
+///
+/// that can be expressed discretely, using the nodes of an Eulerian mesh:
+/// 
+/// \f$ \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} \f$
+/// 
+/// where \f$ p_{i I}=\sum_p S_{I p} p_{i p}\f$ is the momentum, \f$ f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p\f$ is the internal force, and \f$ f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A\f$ is the external force at node \f$ I \f$.
+///
+/// The function \f$ S_{I p} \f$ and its gradient \f$ S_{I p, j} \f$ are the weighting functions of node \f$ I \f$ evaluated at the position of particle \f$ p \f$, defined by \f$ S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV \f$ and \f$ S_{I p, j}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV \f$. 
+/// 
+/// The integration of the weight functions is performed analytically over the particle domain using linear functions for \f$ N_I\left(x_{ip}\right) \f$ and unit step functions for \f$ \chi_p\left(x_{ip}\right) \f$. 
+///
+/// For more details on the formulation and integration process, refer to: \ref program_theory_manual
 ///
 /// \section program_features Program Features
+///
 /// The main features of the program are:
 ///
-/// - Three-dimensional formulation
+/// - Three-dimensional 3D formulation
 /// - Dynamic formulation
-/// - Shared memory parallelization
-/// - Elastic constitutive models
-/// - Elasto-plastic constitutive models
-/// - Softening/Hardening by deformation
-/// - Coupled hydromechanical formulation (in development)
+/// - Shared memory parallelization using OpenMP
+/// - Many ways to crate bodies (polygons, particle list, pre-defined bodies)
+/// - Several constitutive models for soil and rock materials
+/// - Softening/hardening models to represent weakness during large deformations 
+/// - Coupled fluid-mechanical formulation (*under development*)
+///
+/// \section program_binaries Program compiled binaries
+/// For downloading the compiled binaries
+/// 1. Go to the [Actions page](https://github.com/fabricix/MPM-Geomechanics/actions).
+/// 2. Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
+/// 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
+/// 4. Download the `compiled-binaries` artifact to get the compiled code.
 ///
 /// \section program_compilation Compilation
 ///
-/// The `/make` directory contains the makefile. To compile the program run make in the `/make` folder:
+/// The best way to use the program is to compile it into your system.
 ///
-/// `/make$ make`
+/// ## Compilation in windows
+/// For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
+///
+/// Alternatively you can compile it by using command in a *Developer Command Prompt*: 
+/// 
+/// ```
+/// msbuild MPM-Geomechanics.sln -p:Configuration=Release
+/// ```
+///
+/// ## Compilation in Linux
+/// 
+/// For compile the code in a linux environment, execute the [make](https://www.gnu.org/software/make/) command into the make folder, in with is located de makefile `MPM-Geomechanics\build\make\makefile`:
+///  
+/// ```
+/// make
+/// ```
 ///
 /// \section program_documentation Documentation
+/// 
+/// The program documentation is generated using [Doxygen](https://www.doxygen.nl/index.html):
 ///
-/// The program documentation is generated using Doxygen. The DoxyFile file is located in the `/doxygen` directory. To generate the documentation, run:
+/// ```
+/// doxygen Doxyfile
+/// ```
 ///
-/// `/doxygen$ doxygen`
-///
-/// The HTML documentation is located in the `/doxygen/html` directory. To generate the PDF file, run make inside the `doxy/latex` directory.
-///
-/// `/doxygen/latex$ make`
+/// The HTML generated documentation is located in `/docs/index.html`.
 ///
 /// \section program_execution Execution
-/// In order the run the program call it with the name of the input file, for example:
 ///
-/// `/make$ ./MPM-Geomechanics example.json`
+/// In order to run simulations in several terminal, you can add the compiled code in the system `PATH`. After that, the common use is to call the program with the input file as argument:
 ///
+/// ```
+/// MPM-Geomechanics my_model.json
+/// ```
+/// \page program_theory_manual Theory manual
+///
+/// _Manual Theory under development_ 
+///
+/// References
+/// - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709
+/// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (MPM). Computational Particle Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7
+/// - Fernández, F., Vargas, E., Muller, A.L. et al. Material point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). https://doi.org/10.1007/s11440-023-02152-4
+/// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and MPM Approaches. Geotech Geol Eng (2023). https://doi.org/10.1007/s10706-023-02693-1.
+/// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. http://dx.doi.org/10.1016/j.tust.2021.103904
 
 #ifndef MPM_H_
 #define MPM_H_

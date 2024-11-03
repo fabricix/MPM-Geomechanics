@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('namespaceUpdate.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,8 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#enum-members">Enumerations</a> &#124;
@@ -104,11 +117,11 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a2cd2a66c096a164b7e316cb94eedf1ae" id="r_a2cd2a66c096a164b7e316cb94eedf1ae"><td class="memItemLeft" align="right" valign="top"><a id="a2cd2a66c096a164b7e316cb94eedf1ae" name="a2cd2a66c096a164b7e316cb94eedf1ae"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1ae">Direction</a> { <b>X</b>
-, <b>Y</b>
-, <b>Z</b>
+<tr class="memitem:a2cd2a66c096a164b7e316cb94eedf1ae" id="r_a2cd2a66c096a164b7e316cb94eedf1ae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1ae">Direction</a> { <a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f">X</a>
+, <a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a">Y</a>
+, <a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e">Z</a>
  }</td></tr>
-<tr class="memdesc:a2cd2a66c096a164b7e316cb94eedf1ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Principal direction in the model. This enumeration is used to update the boundary conditions in each direction. <br /></td></tr>
+<tr class="memdesc:a2cd2a66c096a164b7e316cb94eedf1ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Principal direction in the model. This enumeration is used to update the boundary conditions in each direction.  <a href="#a2cd2a66c096a164b7e316cb94eedf1ae">More...</a><br /></td></tr>
 <tr class="separator:a2cd2a66c096a164b7e316cb94eedf1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -173,7 +186,29 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents operations to update values in nodes and particles. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a2cd2a66c096a164b7e316cb94eedf1ae" name="a2cd2a66c096a164b7e316cb94eedf1ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cd2a66c096a164b7e316cb94eedf1ae">&#9670;&#160;</a></span>Direction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1ae">Update::Direction</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Principal direction in the model. This enumeration is used to update the boundary conditions in each direction. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f" name="a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f"></a>X&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a" name="a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a"></a>Y&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e" name="a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e"></a>Z&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="ad736c14ab7703c85030b4ddd9f162cdb" name="ad736c14ab7703c85030b4ddd9f162cdb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad736c14ab7703c85030b4ddd9f162cdb">&#9670;&#160;</a></span>boundaryConditionsForce()</h2>
 
@@ -755,10 +790,13 @@ Functions</h2></td></tr>
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceUpdate.html">Update</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

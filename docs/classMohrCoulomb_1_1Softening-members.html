@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('classMohrCoulomb_1_1Softening.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,12 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="classMohrCoulomb.html">MohrCoulomb</a></li><li class="navelem"><a class="el" href="classMohrCoulomb_1_1Softening.html">Softening</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">MohrCoulomb::Softening Member List</div></div>
 </div><!--header-->
@@ -102,26 +111,28 @@ $(function(){ initResizable(false); });
 
 <p>This is the complete list of members for <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>cohesion_residual</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>cohesion_softening_active</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>dilation_residual</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>dilation_softening_active</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>EXPONENTIAL</b> enum value (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>exponential_shape_factor</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a0299a7fac2f11761340b922dcf92a02f">cohesion_residual</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a1dd56daab18af3a15b24cbab50ff9584">cohesion_softening_active</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b">dilation_residual</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5">dilation_softening_active</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50a2bef45a66c7f32c02f9ad157ea14fec7">EXPONENTIAL</a> enum value</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a632b4797a008523607de352e48c2a65c">exponential_shape_factor</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a558bf48fc76822866cdc5586647bd90c">exponentialSoftening</a>(double x, double eta, double y_i, double y_f) const</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>friction_residual</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>friction_softening_active</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>NONE</b> enum value (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#ad911e563f41d0eda74e999666e2dab79">friction_residual</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a835c7e9a1e3cb7728847e7795a8060ff">friction_softening_active</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50a73d78f925d0bdd33349cfe7ec42b7067">NONE</a> enum value</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a691159644aec4d9fb49e6c24f92c1b43">Softening</a>()</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>softening_type</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SofteningType</b> enum name (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>tensile_residual</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>tensile_softening_active</b> (defined in <a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>)</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#ad4ee561e3ff9a65f09bb58881443b752">softening_type</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50">SofteningType</a> enum name</td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a2c8b0ba8e84b0c1604a39538c44636c5">tensile_residual</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html#a894bc119dee47163e798a35cbcd4731d">tensile_softening_active</a></td><td class="entry"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

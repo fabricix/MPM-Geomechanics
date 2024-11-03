@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('classElasticJaumann.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,8 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -116,7 +129,7 @@ Inheritance diagram for ElasticJaumann:</div>
 <area shape="rect" href="classMaterial.html" title="Represents a material." alt="" coords="29,5,96,32"/>
 <area shape="poly" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for ElasticJaumann:</div>
 <div class="dyncontent">
@@ -130,16 +143,15 @@ Collaboration diagram for ElasticJaumann:</div>
 <area shape="rect" title=" " alt="" coords="26,5,99,32"/>
 <area shape="poly" title=" " alt="" coords="65,48,65,95,60,95,60,48"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0c1d37dc77ae534a4c2c94ba40c8215e" id="r_a0c1d37dc77ae534a4c2c94ba40c8215e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c1d37dc77ae534a4c2c94ba40c8215e">ElasticJaumann</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>, double young, double poisson)</td></tr>
 <tr class="memdesc:a0c1d37dc77ae534a4c2c94ba40c8215e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a linear elastic material.  <br /></td></tr>
 <tr class="separator:a0c1d37dc77ae534a4c2c94ba40c8215e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9761a6dfe7b8df9cd6ba20ee3fe40bfc" id="r_a9761a6dfe7b8df9cd6ba20ee3fe40bfc"><td class="memItemLeft" align="right" valign="top"><a id="a9761a6dfe7b8df9cd6ba20ee3fe40bfc" name="a9761a6dfe7b8df9cd6ba20ee3fe40bfc"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ElasticJaumann</b> ()</td></tr>
-<tr class="memdesc:a9761a6dfe7b8df9cd6ba20ee3fe40bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:a9761a6dfe7b8df9cd6ba20ee3fe40bfc" id="r_a9761a6dfe7b8df9cd6ba20ee3fe40bfc"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9761a6dfe7b8df9cd6ba20ee3fe40bfc">~ElasticJaumann</a> ()</td></tr>
+<tr class="memdesc:a9761a6dfe7b8df9cd6ba20ee3fe40bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a9761a6dfe7b8df9cd6ba20ee3fe40bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfad190dd0fcf34258f0258e06d9c954" id="r_acfad190dd0fcf34258f0258e06d9c954"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfad190dd0fcf34258f0258e06d9c954">updateStress</a> (<a class="el" href="classParticle.html">Particle</a> *particle) const</td></tr>
 <tr class="memdesc:acfad190dd0fcf34258f0258e06d9c954"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> the stress in the particle.  <br /></td></tr>
@@ -148,9 +160,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ElasticJaumann</b
 <tr class="memitem:a750dfe1959b8c50d7d9da463e02409f8 inherit pub_methods_classElastic" id="r_a750dfe1959b8c50d7d9da463e02409f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElastic.html#a750dfe1959b8c50d7d9da463e02409f8">Elastic</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>, double young, double poisson)</td></tr>
 <tr class="memdesc:a750dfe1959b8c50d7d9da463e02409f8 inherit pub_methods_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a linear elastic material.  <br /></td></tr>
 <tr class="separator:a750dfe1959b8c50d7d9da463e02409f8 inherit pub_methods_classElastic"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a061f85d60ee4ce7572193652f7659859 inherit pub_methods_classElastic" id="r_a061f85d60ee4ce7572193652f7659859"><td class="memItemLeft" align="right" valign="top">
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Elastic</b> ()</td></tr>
-<tr class="memdesc:a061f85d60ee4ce7572193652f7659859 inherit pub_methods_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:a061f85d60ee4ce7572193652f7659859 inherit pub_methods_classElastic" id="r_a061f85d60ee4ce7572193652f7659859"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElastic.html#a061f85d60ee4ce7572193652f7659859">~Elastic</a> ()</td></tr>
+<tr class="memdesc:a061f85d60ee4ce7572193652f7659859 inherit pub_methods_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a061f85d60ee4ce7572193652f7659859 inherit pub_methods_classElastic"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b1d956de9bea44f0954ccf03b02b9be inherit pub_methods_classElastic" id="r_a0b1d956de9bea44f0954ccf03b02b9be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElastic.html#a0b1d956de9bea44f0954ccf03b02b9be">setYoung</a> (double young)</td></tr>
 <tr class="memdesc:a0b1d956de9bea44f0954ccf03b02b9be inherit pub_methods_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the Young's modulus.  <br /></td></tr>
@@ -171,13 +182,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Elastic</b> ()</t
 <tr class="memdesc:a65dd0fef9eb6fbe6c73cb49515aa92d4 inherit pub_methods_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sound speed.  <br /></td></tr>
 <tr class="separator:a65dd0fef9eb6fbe6c73cb49515aa92d4 inherit pub_methods_classElastic"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classMaterial"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classMaterial')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMaterial.html">Material</a></td></tr>
-<tr class="memitem:a4fca8e76ddfb7e310071a258174de41d inherit pub_methods_classMaterial" id="r_a4fca8e76ddfb7e310071a258174de41d"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>Material</b> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=MaterialType::NONE)</td></tr>
-<tr class="memdesc:a4fca8e76ddfb7e310071a258174de41d inherit pub_methods_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="memitem:a4fca8e76ddfb7e310071a258174de41d inherit pub_methods_classMaterial" id="r_a4fca8e76ddfb7e310071a258174de41d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a4fca8e76ddfb7e310071a258174de41d">Material</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">MaterialType::NONE</a>)</td></tr>
+<tr class="memdesc:a4fca8e76ddfb7e310071a258174de41d inherit pub_methods_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
 <tr class="separator:a4fca8e76ddfb7e310071a258174de41d inherit pub_methods_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c19452d71f54075df8f5405b03129f4 inherit pub_methods_classMaterial" id="r_a2c19452d71f54075df8f5405b03129f4"><td class="memItemLeft" align="right" valign="top">
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Material</b> ()</td></tr>
-<tr class="memdesc:a2c19452d71f54075df8f5405b03129f4 inherit pub_methods_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:a2c19452d71f54075df8f5405b03129f4 inherit pub_methods_classMaterial" id="r_a2c19452d71f54075df8f5405b03129f4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a2c19452d71f54075df8f5405b03129f4">~Material</a> ()</td></tr>
+<tr class="memdesc:a2c19452d71f54075df8f5405b03129f4 inherit pub_methods_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a2c19452d71f54075df8f5405b03129f4 inherit pub_methods_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92772816435ab97fda35860e1b16d1ef inherit pub_methods_classMaterial" id="r_a92772816435ab97fda35860e1b16d1ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a92772816435ab97fda35860e1b16d1ef">getId</a> () const</td></tr>
 <tr class="memdesc:a92772816435ab97fda35860e1b16d1ef inherit pub_methods_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the identification.  <br /></td></tr>
@@ -222,48 +231,39 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Material</b> ()</
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classMaterial"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classMaterial')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classMaterial.html">Material</a></td></tr>
-<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial" id="r_aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <b>NONE</b>
-, <b>ELASTIC</b>
-, <b>ELASTOPLASTIC</b>
+<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial" id="r_aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">NONE</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42">ELASTIC</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae">ELASTOPLASTIC</a>
  }</td></tr>
 <tr class="separator:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classElastic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classElastic')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classElastic.html">Elastic</a></td></tr>
-<tr class="memitem:a68fd6e866a2dec082c4dbe107de0d15b inherit pro_attribs_classElastic" id="r_a68fd6e866a2dec082c4dbe107de0d15b"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Young</b></td></tr>
-<tr class="memdesc:a68fd6e866a2dec082c4dbe107de0d15b inherit pro_attribs_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Young's modulus \(E\). <br /></td></tr>
+<tr class="memitem:a68fd6e866a2dec082c4dbe107de0d15b inherit pro_attribs_classElastic" id="r_a68fd6e866a2dec082c4dbe107de0d15b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElastic.html#a68fd6e866a2dec082c4dbe107de0d15b">Young</a></td></tr>
+<tr class="memdesc:a68fd6e866a2dec082c4dbe107de0d15b inherit pro_attribs_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Young's modulus \(E\).  <br /></td></tr>
 <tr class="separator:a68fd6e866a2dec082c4dbe107de0d15b inherit pro_attribs_classElastic"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03ee435222a72268fca4e6763ad995e3 inherit pro_attribs_classElastic" id="r_a03ee435222a72268fca4e6763ad995e3"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Poisson</b></td></tr>
-<tr class="memdesc:a03ee435222a72268fca4e6763ad995e3 inherit pro_attribs_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poisson's ratio \(\nu\). <br /></td></tr>
+<tr class="memitem:a03ee435222a72268fca4e6763ad995e3 inherit pro_attribs_classElastic" id="r_a03ee435222a72268fca4e6763ad995e3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classElastic.html#a03ee435222a72268fca4e6763ad995e3">Poisson</a></td></tr>
+<tr class="memdesc:a03ee435222a72268fca4e6763ad995e3 inherit pro_attribs_classElastic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poisson's ratio \(\nu\).  <br /></td></tr>
 <tr class="separator:a03ee435222a72268fca4e6763ad995e3 inherit pro_attribs_classElastic"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classMaterial"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classMaterial')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classMaterial.html">Material</a></td></tr>
-<tr class="memitem:a3c350361ffe39076a51722fff3346781 inherit pro_attribs_classMaterial" id="r_a3c350361ffe39076a51722fff3346781"><td class="memItemLeft" align="right" valign="top">
-int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="memdesc:a3c350361ffe39076a51722fff3346781 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">material identification <br /></td></tr>
+<tr class="memitem:a3c350361ffe39076a51722fff3346781 inherit pro_attribs_classMaterial" id="r_a3c350361ffe39076a51722fff3346781"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a></td></tr>
+<tr class="memdesc:a3c350361ffe39076a51722fff3346781 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">material identification  <br /></td></tr>
 <tr class="separator:a3c350361ffe39076a51722fff3346781 inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a450e3fe61d94b8fa58aac5a8f90507df inherit pro_attribs_classMaterial" id="r_a450e3fe61d94b8fa58aac5a8f90507df"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>density</b></td></tr>
-<tr class="memdesc:a450e3fe61d94b8fa58aac5a8f90507df inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial material density \(\rho^{0}\) or initial solid density in two-phase calculations \(\rho^{s,0}\) <br /></td></tr>
+<tr class="memitem:a450e3fe61d94b8fa58aac5a8f90507df inherit pro_attribs_classMaterial" id="r_a450e3fe61d94b8fa58aac5a8f90507df"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a></td></tr>
+<tr class="memdesc:a450e3fe61d94b8fa58aac5a8f90507df inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial material density \(\rho^{0}\) or initial solid density in two-phase calculations \(\rho^{s,0}\)  <br /></td></tr>
 <tr class="separator:a450e3fe61d94b8fa58aac5a8f90507df inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68c4ef8534dedd53c4999b2df3016049 inherit pro_attribs_classMaterial" id="r_a68c4ef8534dedd53c4999b2df3016049"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>densityFluid</b></td></tr>
-<tr class="memdesc:a68c4ef8534dedd53c4999b2df3016049 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial density of the fluid phase in two-phase calculations \(\rho^{f,0}\) <br /></td></tr>
+<tr class="memitem:a68c4ef8534dedd53c4999b2df3016049 inherit pro_attribs_classMaterial" id="r_a68c4ef8534dedd53c4999b2df3016049"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a68c4ef8534dedd53c4999b2df3016049">densityFluid</a></td></tr>
+<tr class="memdesc:a68c4ef8534dedd53c4999b2df3016049 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial density of the fluid phase in two-phase calculations \(\rho^{f,0}\)  <br /></td></tr>
 <tr class="separator:a68c4ef8534dedd53c4999b2df3016049 inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da7180771687fd58e2cf5e1778d8655 inherit pro_attribs_classMaterial" id="r_a1da7180771687fd58e2cf5e1778d8655"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>porosity</b></td></tr>
-<tr class="memdesc:a1da7180771687fd58e2cf5e1778d8655 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial porosity \(n^0\) <br /></td></tr>
+<tr class="memitem:a1da7180771687fd58e2cf5e1778d8655 inherit pro_attribs_classMaterial" id="r_a1da7180771687fd58e2cf5e1778d8655"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a1da7180771687fd58e2cf5e1778d8655">porosity</a></td></tr>
+<tr class="memdesc:a1da7180771687fd58e2cf5e1778d8655 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial porosity \(n^0\)  <br /></td></tr>
 <tr class="separator:a1da7180771687fd58e2cf5e1778d8655 inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af273c3103e5a1ff733b77edd3da8a5ff inherit pro_attribs_classMaterial" id="r_af273c3103e5a1ff733b77edd3da8a5ff"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>bulkModulusFluid</b></td></tr>
-<tr class="memdesc:af273c3103e5a1ff733b77edd3da8a5ff inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">elastic volumetric modulus of fluid in mixture \(K^f\) <br /></td></tr>
+<tr class="memitem:af273c3103e5a1ff733b77edd3da8a5ff inherit pro_attribs_classMaterial" id="r_af273c3103e5a1ff733b77edd3da8a5ff"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff">bulkModulusFluid</a></td></tr>
+<tr class="memdesc:af273c3103e5a1ff733b77edd3da8a5ff inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">elastic volumetric modulus of fluid in mixture \(K^f\)  <br /></td></tr>
 <tr class="separator:af273c3103e5a1ff733b77edd3da8a5ff inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17720043f6a8d8fdfe2fd76d59ffd12e inherit pro_attribs_classMaterial" id="r_a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memItemLeft" align="right" valign="top">
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>hydraulicConductivity</b></td></tr>
-<tr class="memdesc:a17720043f6a8d8fdfe2fd76d59ffd12e inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">hydraulic conductivity of the fluid in the material \(k_i\) <br /></td></tr>
+<tr class="memitem:a17720043f6a8d8fdfe2fd76d59ffd12e inherit pro_attribs_classMaterial" id="r_a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e">hydraulicConductivity</a></td></tr>
+<tr class="memdesc:a17720043f6a8d8fdfe2fd76d59ffd12e inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">hydraulic conductivity of the fluid in the material \(k_i\)  <br /></td></tr>
 <tr class="separator:a17720043f6a8d8fdfe2fd76d59ffd12e inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab54be6694ca8c0adcd8450121bdf1592 inherit pro_attribs_classMaterial" id="r_ab54be6694ca8c0adcd8450121bdf1592"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="memdesc:ab54be6694ca8c0adcd8450121bdf1592 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">material type <br /></td></tr>
+<tr class="memitem:ab54be6694ca8c0adcd8450121bdf1592 inherit pro_attribs_classMaterial" id="r_ab54be6694ca8c0adcd8450121bdf1592"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a></td></tr>
+<tr class="memdesc:ab54be6694ca8c0adcd8450121bdf1592 inherit pro_attribs_classMaterial"><td class="mdescLeft">&#160;</td><td class="mdescRight">material type  <br /></td></tr>
 <tr class="separator:ab54be6694ca8c0adcd8450121bdf1592 inherit pro_attribs_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -319,6 +319,33 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>hydraulicConducti
 
 </div>
 </div>
+<a id="a9761a6dfe7b8df9cd6ba20ee3fe40bfc" name="a9761a6dfe7b8df9cd6ba20ee3fe40bfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9761a6dfe7b8df9cd6ba20ee3fe40bfc">&#9670;&#160;</a></span>~ElasticJaumann()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ElasticJaumann::~ElasticJaumann </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default destructor. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="acfad190dd0fcf34258f0258e06d9c954" name="acfad190dd0fcf34258f0258e06d9c954"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acfad190dd0fcf34258f0258e06d9c954">&#9670;&#160;</a></span>updateStress()</h2>
@@ -361,10 +388,13 @@ Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>hydraulicConducti
 <li><a class="el" href="ElasticJaumann_8h_source.html">ElasticJaumann.h</a></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classElasticJaumann.html">ElasticJaumann</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

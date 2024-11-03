@@ -53,7 +53,7 @@ public:
 	inline virtual Material::MaterialType getType() const { return Material::getType(); }
 
 	/// \brief Get sound speed
-	/// \param[out] sound_speed Sound speed
+	/// \return sound_speed Sound speed
 	virtual double getSoundSpeed( ) const;
 	
 protected:

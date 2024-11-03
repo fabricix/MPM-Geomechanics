@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,19 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
-<div id="doc-content">
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('functions_func_g.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -92,7 +105,7 @@ $(function(){ initResizable(false); });
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented functions with links to the class documentation for each member:</div>
+<div class="textblock">Here is a list of all functions with links to the classes they belong to:</div>
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
 <li>getActive()&#160;:&#160;<a class="el" href="classNode.html#a55ae8f3711013106e6a3c3b296b18064">Node</a>, <a class="el" href="classParticle.html#a9fd18507abe7466d48bd16834250090f">Particle</a></li>
@@ -124,7 +137,7 @@ $(function(){ initResizable(false); });
 <li>getIsInsideMesh()&#160;:&#160;<a class="el" href="classMesh.html#a605f9e6e9198e4a5ab6a254057269309">Mesh</a></li>
 <li>getMass()&#160;:&#160;<a class="el" href="classNode.html#a2c6c49ca63e7eab7c9fed4c6c3fa2d10">Node</a>, <a class="el" href="classParticle.html#ad08e7b1d0cc7cb17bd0602caa4a22bc6">Particle</a></li>
 <li>getMassFluid()&#160;:&#160;<a class="el" href="classNode.html#aa70186a4875893fd6f3556d54fd1f9eb">Node</a>, <a class="el" href="classNodeMixture.html#af885eeffcec845405e08123b9f1a020f">NodeMixture</a>, <a class="el" href="classParticle.html#a815c15877edeff99e6cc8fc2435c73b0">Particle</a>, <a class="el" href="classParticleMixture.html#a5cfe0ee39b37c378bc5576b71507bd74">ParticleMixture</a></li>
-<li>getMaterialId()&#160;:&#160;<a class="el" href="classBody.html#a63af6b93b69a1410b8ff7b9cbd1edba2">Body</a>, <a class="el" href="classBodyCuboid.html#aa2f9a62944cb7b67eed732f19722aa33">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#aa4565f8d057cd8eb15ed69fa6e21c63f">BodyParticle</a>, <a class="el" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">BodySphere</a>, <a class="el" href="classParticle.html#a3b836223594cf1e4dae5adbbe7337841">Particle</a></li>
+<li>getMaterialId()&#160;:&#160;<a class="el" href="classBody.html#a63af6b93b69a1410b8ff7b9cbd1edba2">Body</a>, <a class="el" href="classBodyCuboid.html#aa2f9a62944cb7b67eed732f19722aa33">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#aa4565f8d057cd8eb15ed69fa6e21c63f">BodyParticle</a>, <a class="el" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">BodyPolygon</a>, <a class="el" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">BodySphere</a>, <a class="el" href="classParticle.html#a3b836223594cf1e4dae5adbbe7337841">Particle</a></li>
 <li>getMaxLimits()&#160;:&#160;<a class="el" href="classMesh.html#a07bbd4ff3c122b1a753e9929329abd34">Mesh</a></li>
 <li>getMinLimits()&#160;:&#160;<a class="el" href="classMesh.html#adaba9203135f187ef1cdca2962cccdc5">Mesh</a></li>
 <li>getMomentum()&#160;:&#160;<a class="el" href="classNode.html#adc6af862a33e6666cfd07cff4cf8af07">Node</a></li>
@@ -149,6 +162,7 @@ $(function(){ initResizable(false); });
 <li>getPosition()&#160;:&#160;<a class="el" href="classParticle.html#aef9b85bf1fe98da9d0d195f8545604ab">Particle</a></li>
 <li>getPressureFluid()&#160;:&#160;<a class="el" href="classParticle.html#ac31838bdfc87d31f053856798c873ce8">Particle</a>, <a class="el" href="classParticleMixture.html#a850940942bdf74e62cc57187afd0c0f4">ParticleMixture</a></li>
 <li>getSaturation()&#160;:&#160;<a class="el" href="classParticle.html#a7743b85e38213e91946ecb1a66abbe67">Particle</a>, <a class="el" href="classParticleMixture.html#af82045f902557d5e0587eab3f0a3337e">ParticleMixture</a></li>
+<li>getSeismicAnalysis()&#160;:&#160;<a class="el" href="classMPM.html#a2adf8850a2153f327f4c99fd68177d0a">MPM</a></li>
 <li>getShape()&#160;:&#160;<a class="el" href="classShape.html#a26e6bcdd3b784ea4290eb2be499f8365">Shape</a></li>
 <li>getShearModulus()&#160;:&#160;<a class="el" href="classElastic.html#ae3946d993bccac025f831d8aad477429">Elastic</a></li>
 <li>getSize()&#160;:&#160;<a class="el" href="classParticle.html#ac3e5204bd87ea498f93bc09ca77c87a1">Particle</a></li>
@@ -168,10 +182,12 @@ $(function(){ initResizable(false); });
 <li>getWeight()&#160;:&#160;<a class="el" href="classContribution.html#a78309e2347b9786d75b260cc40c54d86">Contribution</a></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

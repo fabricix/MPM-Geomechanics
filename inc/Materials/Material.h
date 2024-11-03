@@ -92,7 +92,7 @@ public:
 	virtual void updateStress(Particle* particle) const = 0;
 
 	/// \brief Get sound speed
-	/// \param[out] sound_speed Sound speed
+	/// \return sound_speed Sound speed
 	virtual double getSoundSpeed( ) const = 0;
 
 protected:

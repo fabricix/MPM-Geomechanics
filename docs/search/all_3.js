@@ -7,7 +7,7 @@ var searchData=
   ['dampingtype_4',['DampingType',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698',1,'ModelSetup']]],
   ['defined_20by_20particles_5',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]],
   ['definition_6',['Definition',['../namespaceInput.html#autotoc_md1',1,'']]],
-  ['definition_7',['definition',['../classBodyCuboid.html#autotoc_md40',1,'Cuboid definition'],['../classBodySphere.html#autotoc_md42',1,'Sphere definition']]],
+  ['definition_7',['definition',['../classBodyCuboid.html#autotoc_md42',1,'Cuboid definition'],['../classBodySphere.html#autotoc_md49',1,'Sphere definition']]],
   ['definition_20example_8',['definition example',['../namespaceInput.html#autotoc_md38',1,'Complete input file definition example'],['../namespaceInput.html#autotoc_md6',1,'Cuboid definition example'],['../namespaceInput.html#autotoc_md18',1,'Damping definition example'],['../namespaceInput.html#autotoc_md35',1,'Material definition example'],['../namespaceInput.html#autotoc_md31',1,'Mesh definition example'],['../namespaceInput.html#autotoc_md20',1,'Parallelization definition example'],['../namespaceInput.html#autotoc_md8',1,'Polygon extrusion definition example'],['../namespaceInput.html#autotoc_md37',1,'Results definition example'],['../namespaceInput.html#autotoc_md29',1,'Shape functions definition example'],['../namespaceInput.html#autotoc_md22',1,'Simulation time definition example'],['../namespaceInput.html#autotoc_md27',1,'Stress update scheme definition example'],['../namespaceInput.html#autotoc_md23',1,'Time step definition example'],['../namespaceInput.html#autotoc_md25',1,'Two phase simulation definition example']]],
   ['definition_20examples_9',['definition examples',['../namespaceInput.html#autotoc_md10',1,'Load definition examples'],['../namespaceInput.html#autotoc_md14',1,'Pore pressure definition examples']]],
   ['definition_20of_20the_20planes_20for_20setting_20boundary_20conditions_10',['Definition of the planes for setting boundary conditions',['../classBoundary.html#autotoc_md0',1,'']]],
@@ -17,7 +17,15 @@ var searchData=
   ['derivate_14',['derivate',['../classShape.html#a7cba38625675fd8164bc53319386dd51',1,'Shape']]],
   ['diameter_15',['diameter',['../classBodySphere.html#ac81e013e0b40464c83535655727c5497',1,'BodySphere']]],
   ['dilation_16',['dilation',['../classMohrCoulomb.html#a9718a4d56fc38f21cf55f7666e8f0811',1,'MohrCoulomb']]],
-  ['direction_17',['Direction',['../namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae',1,'Update']]],
-  ['distributed_20load_20in_20box_20example_18',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],
-  ['documentation_19',['Documentation',['../index.html#program_documentation',1,'']]]
+  ['dilation_5fresidual_17',['dilation_residual',['../classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b',1,'MohrCoulomb::Softening']]],
+  ['dilation_5fsoftening_5factive_18',['dilation_softening_active',['../classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5',1,'MohrCoulomb::Softening']]],
+  ['direction_19',['Direction',['../namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1ae',1,'Update']]],
+  ['direction_20',['Extrusion direction',['../classBodyPolygon.html#autotoc_md45',1,'']]],
+  ['discretization_20length_21',['The Discretization Length',['../classBodyPolygon.html#autotoc_md47',1,'']]],
+  ['displacement_22',['Extrusion displacement',['../classBodyPolygon.html#autotoc_md46',1,'']]],
+  ['distretizationlength_23',['distretizationLength',['../classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098',1,'BodyPolygon']]],
+  ['distributed_20load_20in_20box_20example_24',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],
+  ['documentation_25',['Documentation',['../index.html#program_documentation',1,'']]],
+  ['dynamicrelaxation_26',['DynamicRelaxation',['../namespaceDynamicRelaxation.html',1,'']]],
+  ['dynamicrelaxation_2eh_27',['DynamicRelaxation.h',['../DynamicRelaxation_8h.html',1,'']]]
 ];

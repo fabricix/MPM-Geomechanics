@@ -1,9 +1,11 @@
 <map id="Body" name="Body">
-<area shape="rect" id="Node000001" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="143,5,194,32"/>
+<area shape="rect" id="Node000001" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="203,5,254,32"/>
 <area shape="rect" id="Node000002" href="$classBodyCuboid.html" title="Is a type of Body representing a cuboid in 3D." alt="" coords="5,80,98,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,43,73,82,71,77,134,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,39,84,82,82,77,188,34"/>
 <area shape="rect" id="Node000003" href="$classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="121,80,216,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,48,172,80,166,80,166,48"/>
-<area shape="rect" id="Node000004" href="$classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="240,80,332,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="203,38,267,77,264,82,200,43"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,46,181,81,177,78,207,42"/>
+<area shape="rect" id="Node000004" href="$classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="241,80,339,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="251,42,282,78,278,81,247,46"/>
+<area shape="rect" id="Node000005" href="$classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="364,80,456,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="270,33,380,77,378,82,268,38"/>
 </map>

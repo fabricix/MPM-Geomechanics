@@ -156,7 +156,7 @@ public:
 	inline void setId(int particle_id) { this->id=particle_id; }
 
 	/// \brief Configures the set particle's body Id
-	/// \param[in] Body identification
+	/// \param[in] body_id identification
 	inline void setBodyId(int body_id) { this->bodyId=body_id; }
 
 	/// \brief Configures particle mass

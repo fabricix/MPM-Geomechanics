@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('ParticleMixture_8h_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,17 +104,11 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_94768b30a42d97981cb62acce7e6fa69.html">Particle</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">ParticleMixture.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<a href="ParticleMixture_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * ParticleMixture.h</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *  Created on: 22 de jul de 2021</span></div>
@@ -109,7 +118,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef INC_PARTICLE_PARTICLEMIXTURE_H_</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define INC_PARTICLE_PARTICLEMIXTURE_H_</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;Particle/Particle.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="Particle_8h.html">Particle/Particle.h</a>&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classParticleMixture.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classParticleMixture.html">ParticleMixture</a>: <span class="keyword">public</span> <a class="code hl_class" href="classParticle.html">Particle</a> {</div>
@@ -172,6 +181,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#endif </span><span class="comment">/* INC_PARTICLE_PARTICLEMIXTURE_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aParticle_8h_html"><div class="ttname"><a href="Particle_8h.html">Particle.h</a></div></div>
 <div class="ttc" id="aclassMaterial_html"><div class="ttname"><a href="classMaterial.html">Material</a></div><div class="ttdoc">Represents a material.</div><div class="ttdef"><b>Definition</b> Material.h:18</div></div>
 <div class="ttc" id="aclassParticleMixture_html"><div class="ttname"><a href="classParticleMixture.html">ParticleMixture</a></div><div class="ttdoc">A material point for calculations using the mixture theory.</div><div class="ttdef"><b>Definition</b> ParticleMixture.h:15</div></div>
 <div class="ttc" id="aclassParticleMixture_html_a0825b472125de1206c35499f5c0b4cd0"><div class="ttname"><a href="classParticleMixture.html#a0825b472125de1206c35499f5c0b4cd0">ParticleMixture::setStrainIncrementFluid</a></div><div class="ttdeci">virtual void setStrainIncrementFluid(const Matrix3d &amp;strain_increment_fluid)</div><div class="ttdoc">Configures the strain increment of fluid phase.</div><div class="ttdef"><b>Definition</b> ParticleMixture.h:74</div></div>
@@ -208,10 +218,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclassParticle_html_a58bb6267f20ebb153a1f0f0770ff6919"><div class="ttname"><a href="classParticle.html#a58bb6267f20ebb153a1f0f0770ff6919">Particle::position</a></div><div class="ttdeci">Vector3d position</div><div class="ttdoc">current particle position:</div><div class="ttdef"><b>Definition</b> Particle.h:276</div></div>
 <div class="ttc" id="aclassParticle_html_ac91045f938c0a55a031415b01f02ae5d"><div class="ttname"><a href="classParticle.html#ac91045f938c0a55a031415b01f02ae5d">Particle::size</a></div><div class="ttdeci">Vector3d size</div><div class="ttdoc">current size in each direction:</div><div class="ttdef"><b>Definition</b> Particle.h:280</div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_94768b30a42d97981cb62acce7e6fa69.html">Particle</a></li><li class="navelem"><a class="el" href="ParticleMixture_8h.html">ParticleMixture.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

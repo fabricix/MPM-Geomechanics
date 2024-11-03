@@ -45,7 +45,7 @@ public:
         /// \param[in] eta Shape parameter \f$\eta\f$
         /// \param[in] y_i Initial value \f$y_i\f$
         /// \param[in] y_f Final value \f$y_f\f$
-        /// \param[out] y_current Current value \f$y(x)\f$
+        /// \return Current value \f$y(x)\f$
         inline double exponentialSoftening (double x, double eta, double y_i, double y_f) const {return y_f+(y_i-y_f)*std::exp(-eta*x);};
 
         /// Default constructor

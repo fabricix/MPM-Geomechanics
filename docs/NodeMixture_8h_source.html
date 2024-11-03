@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('NodeMixture_8h_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,17 +104,11 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_545203c151dc83403fa84dd67015f62f.html">Mesh</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">NodeMixture.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<a href="NodeMixture_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * NodeMixture.h</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *  Created on: 23 de jul de 2021</span></div>
@@ -109,7 +118,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef INC_MESH_NODEMIXTURE_H_</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define INC_MESH_NODEMIXTURE_H_</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;Mesh/Node.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="Node_8h.html">Mesh/Node.h</a>&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classNodeMixture.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classNodeMixture.html">NodeMixture</a>: <span class="keyword">public</span> <a class="code hl_class" href="classNode.html">Node</a> {</div>
@@ -189,6 +198,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#endif </span><span class="comment">/* INC_MESH_NODEMIXTURE_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aNode_8h_html"><div class="ttname"><a href="Node_8h.html">Node.h</a></div></div>
 <div class="ttc" id="aclassNodeMixture_html"><div class="ttname"><a href="classNodeMixture.html">NodeMixture</a></div><div class="ttdoc">Represents a mesh node for calculations using the mixture theory.</div><div class="ttdef"><b>Definition</b> NodeMixture.h:15</div></div>
 <div class="ttc" id="aclassNodeMixture_html_a1007b744f9386c1d22d8d223eb22b3ba"><div class="ttname"><a href="classNodeMixture.html#a1007b744f9386c1d22d8d223eb22b3ba">NodeMixture::addExternalForceFluid</a></div><div class="ttdeci">virtual void addExternalForceFluid(const Vector3d &amp;external_force_fluid_increment)</div><div class="ttdoc">Add a external force of fluid increment to the nodal external force.</div><div class="ttdef"><b>Definition</b> NodeMixture.h:45</div></div>
 <div class="ttc" id="aclassNodeMixture_html_a152b0a3f69e5e7a65546100923f3e0c5"><div class="ttname"><a href="classNodeMixture.html#a152b0a3f69e5e7a65546100923f3e0c5">NodeMixture::externalForceFluid</a></div><div class="ttdeci">Vector3d externalForceFluid</div><div class="ttdoc">nodal external force of fluid:</div><div class="ttdef"><b>Definition</b> NodeMixture.h:94</div></div>
@@ -217,10 +227,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">Represents a mesh node.</div><div class="ttdef"><b>Definition</b> Node.h:16</div></div>
 <div class="ttc" id="aclassNode_html_a5b1560f9d7c52bfd84307901f6c35cac"><div class="ttname"><a href="classNode.html#a5b1560f9d7c52bfd84307901f6c35cac">Node::resetValues</a></div><div class="ttdeci">virtual void resetValues()</div><div class="ttdoc">Delete all values stored in node.</div><div class="ttdef"><b>Definition</b> Node.h:198</div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_545203c151dc83403fa84dd67015f62f.html">Mesh</a></li><li class="navelem"><a class="el" href="NodeMixture_8h.html">NodeMixture.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

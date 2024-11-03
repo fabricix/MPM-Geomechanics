@@ -143,7 +143,7 @@ public:
     void getContributionNodes(const Vector3d& point, vector<int>& contributionIds) const;
 
     /// \brief return mesh boundaries
-    /// \param[out] boundary_pointer A pointer to the Boundary structure
+    /// \return boundary_pointer A pointer to the Boundary structure
     inline Boundary* getBoundary() { return &(this->boundary); }
 
     /// \brief Configures the restriction of the boundary nodes

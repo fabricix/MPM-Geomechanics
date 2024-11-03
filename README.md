@@ -4,11 +4,13 @@
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml) 
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
 
+## Documentation
+
+See the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
+
 ## Motivation
 
-MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
-
-This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics. In this method the motion equation is solved in an fixed mesh (Eulerian mesh) and the solution is interpolated to points that can move freely inside the mesh, carrying all the mechanical information like strain, stress, temperature, etc. The points allows us to transport all properties inside the mesh during the simulation (Lagrangian points).
+MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
 
 The objective of this repository is to provide a platform for developing the MPM for the study of geomechanical problems involving large deformations and distortions.
 
@@ -44,25 +46,7 @@ The main features of the program in the actuality are:
 
 ## Documentation and Compilation
 
-To compile using make:
-
-```bash
-make -f make/makefile
-```
-Make sure you have installed OpenMP.
-
-To generate the code documentation using doxygen run: 
-
-```bash
-cd doxygen && doxygen
-```
-and the HTML documentation will be located in `/doxygen/html`.
-
-To generate the documentation in PDF, run the make command in `doxy/latex`.
-
-```bash
-cd /doxygen/latex && make
-```
+For generating documentation and compilation of the code please see the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
 
 ## Examples
 

@@ -1,14 +1,13 @@
 var searchData=
 [
-  ['tensile_0',['tensile',['../classMohrCoulomb.html#aba4be56e48b23dee2a7ea6f92031efd5',1,'MohrCoulomb']]],
-  ['the_20planes_20for_20setting_20boundary_20conditions_1',['Definition of the planes for setting boundary conditions',['../classBoundary.html#autotoc_md0',1,'']]],
-  ['time_2',['Simulation time',['../namespaceInput.html#autotoc_md21',1,'']]],
-  ['time_20definition_20example_3',['Simulation time definition example',['../namespaceInput.html#autotoc_md22',1,'']]],
-  ['time_20step_20definition_20example_4',['Time step definition example',['../namespaceInput.html#autotoc_md23',1,'']]],
-  ['totalforce_5',['totalForce',['../classNode.html#ab06a209d998e817f6f93590436aece9d',1,'Node']]],
-  ['totalforcefluid_6',['totalForceFluid',['../classNodeMixture.html#afa2378b4573980b6e24cb205bf6c428a',1,'NodeMixture']]],
-  ['totalparticles_7',['totalParticles',['../classParticle.html#afb7d35157679a6b5f50daebe4ac396da',1,'Particle']]],
-  ['two_20phase_20simulation_20definition_20example_8',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
-  ['two_20phase_20simulations_9',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
-  ['type_10',['type',['../classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592',1,'Material']]]
+  ['readinputfile_0',['readInputFile',['../classMPM.html#a0cf36c8797cfd5632d26b5d129df126e',1,'MPM::readInputFile()'],['../namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0',1,'Input::readInputFile(string file_name)']]],
+  ['readseismicdata_1',['readSeismicData',['../namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44',1,'Input']]],
+  ['registerbodies_2',['registerBodies',['../classSolver.html#a119ea70a054a7ad5cb7b2130fd6917a4',1,'Solver']]],
+  ['registermesh_3',['registerMesh',['../classSolver.html#a5ea32c377f50d8f7b3f8725ebb4bf71a',1,'Solver']]],
+  ['resetnodalvalues_4',['resetNodalValues',['../namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878',1,'Update']]],
+  ['resetvalues_5',['resetValues',['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()'],['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()']]],
+  ['restriction_6',['restriction',['../structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed',1,'Boundary::planeBoundary']]],
+  ['restrictionfluid_7',['restrictionFluid',['../structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673',1,'Boundary::planeBoundary']]],
+  ['results_8',['Results',['../namespaceInput.html#autotoc_md36',1,'']]],
+  ['results_20definition_20example_9',['Results definition example',['../namespaceInput.html#autotoc_md37',1,'']]]
 ];

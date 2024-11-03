@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('Loads_8h_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,17 +104,11 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">Loads.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<a href="Loads_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Loads.h</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *  Created on: 13 de abr de 2021</span></div>
@@ -109,7 +118,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef LOADS_H_</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define LOADS_H_</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;Body/Body.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="Body_8h.html">Body/Body.h</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">using </span>std::vector;</div>
@@ -175,9 +184,9 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00087" data-start="{" data-end="};">
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="structLoads_1_1SeismicData.html">   87</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structLoads_1_1SeismicData.html">SeismicData</a></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        std::vector&lt;double&gt; time;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        std::vector&lt;Eigen::Vector3d&gt; acceleration;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        std::vector&lt;Eigen::Vector3d&gt; velocity;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="structLoads_1_1SeismicData.html#a7bad550aec9970c15894c961572cd708">   89</a></span>        std::vector&lt;double&gt; <a class="code hl_variable" href="structLoads_1_1SeismicData.html#a7bad550aec9970c15894c961572cd708">time</a>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="structLoads_1_1SeismicData.html#a3403206d9cec69fc98e9b0e65cb38898">   90</a></span>        std::vector&lt;Eigen::Vector3d&gt; <a class="code hl_variable" href="structLoads_1_1SeismicData.html#a3403206d9cec69fc98e9b0e65cb38898">acceleration</a>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="structLoads_1_1SeismicData.html#a981c24f497a31813d49fec110c798f06">   91</a></span>        std::vector&lt;Eigen::Vector3d&gt; <a class="code hl_variable" href="structLoads_1_1SeismicData.html#a981c24f497a31813d49fec110c798f06">velocity</a>;</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    };</div>
 </div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
@@ -203,6 +212,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>};</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="preprocessor">#endif </span><span class="comment">/* LOADS_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBody_8h_html"><div class="ttname"><a href="Body_8h.html">Body.h</a></div></div>
 <div class="ttc" id="anamespaceLoads_html"><div class="ttname"><a href="namespaceLoads.html">Loads</a></div><div class="ttdoc">Operations to manage loads in the MPM model.</div></div>
 <div class="ttc" id="anamespaceLoads_html_a1a2299651bd04336c8233e10785aca1b"><div class="ttname"><a href="namespaceLoads.html#a1a2299651bd04336c8233e10785aca1b">Loads::setGravity</a></div><div class="ttdeci">void setGravity(vector&lt; Body * &gt; &amp;bodies)</div><div class="ttdoc">Configures the gravity load in particles.</div></div>
 <div class="ttc" id="anamespaceLoads_html_a2f4cbf0274418e75675e0f07616538d4"><div class="ttname"><a href="namespaceLoads.html#a2f4cbf0274418e75675e0f07616538d4">Loads::setLoadDistributedBox</a></div><div class="ttdeci">void setLoadDistributedBox(vector&lt; Body * &gt; &amp;bodies, vector&lt; Loads::LoadDistributedBox &gt; loads)</div><div class="ttdoc">Configure distributed load in particles inside of a box.</div></div>
@@ -235,11 +245,17 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="astructLoads_1_1PressureMaterial_html_a049b4bc25fe21610649f3ffb6f447692"><div class="ttname"><a href="structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692">Loads::PressureMaterial::materialId</a></div><div class="ttdeci">int materialId</div><div class="ttdoc">material id</div><div class="ttdef"><b>Definition</b> Loads.h:57</div></div>
 <div class="ttc" id="astructLoads_1_1PressureMaterial_html_a5ef74a16e12a0605381953242c0847eb"><div class="ttname"><a href="structLoads_1_1PressureMaterial.html#a5ef74a16e12a0605381953242c0847eb">Loads::PressureMaterial::pressure</a></div><div class="ttdeci">double pressure</div><div class="ttdoc">pressure in particles inside the box</div><div class="ttdef"><b>Definition</b> Loads.h:58</div></div>
 <div class="ttc" id="astructLoads_1_1SeismicData_html"><div class="ttname"><a href="structLoads_1_1SeismicData.html">Loads::SeismicData</a></div><div class="ttdoc">Seismic data structure to manage acceleration and velocity of an earthquake record.</div><div class="ttdef"><b>Definition</b> Loads.h:88</div></div>
+<div class="ttc" id="astructLoads_1_1SeismicData_html_a3403206d9cec69fc98e9b0e65cb38898"><div class="ttname"><a href="structLoads_1_1SeismicData.html#a3403206d9cec69fc98e9b0e65cb38898">Loads::SeismicData::acceleration</a></div><div class="ttdeci">std::vector&lt; Eigen::Vector3d &gt; acceleration</div><div class="ttdef"><b>Definition</b> Loads.h:90</div></div>
+<div class="ttc" id="astructLoads_1_1SeismicData_html_a7bad550aec9970c15894c961572cd708"><div class="ttname"><a href="structLoads_1_1SeismicData.html#a7bad550aec9970c15894c961572cd708">Loads::SeismicData::time</a></div><div class="ttdeci">std::vector&lt; double &gt; time</div><div class="ttdef"><b>Definition</b> Loads.h:89</div></div>
+<div class="ttc" id="astructLoads_1_1SeismicData_html_a981c24f497a31813d49fec110c798f06"><div class="ttname"><a href="structLoads_1_1SeismicData.html#a981c24f497a31813d49fec110c798f06">Loads::SeismicData::velocity</a></div><div class="ttdeci">std::vector&lt; Eigen::Vector3d &gt; velocity</div><div class="ttdef"><b>Definition</b> Loads.h:91</div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="Loads_8h.html">Loads.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

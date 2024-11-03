@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('classBody.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,8 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -109,15 +122,17 @@ Inheritance diagram for Body:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBody__inherit__graph.png" border="0" usemap="#aBody_inherit__map" alt="Inheritance graph"/></div>
 <map name="aBody_inherit__map" id="aBody_inherit__map">
-<area shape="rect" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="143,5,194,32"/>
+<area shape="rect" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="203,5,254,32"/>
 <area shape="rect" href="classBodyCuboid.html" title="Is a type of Body representing a cuboid in 3D." alt="" coords="5,80,98,107"/>
-<area shape="poly" title=" " alt="" coords="137,43,73,82,71,77,134,38"/>
+<area shape="poly" title=" " alt="" coords="190,39,84,82,82,77,188,34"/>
 <area shape="rect" href="classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="121,80,216,107"/>
-<area shape="poly" title=" " alt="" coords="172,48,172,80,166,80,166,48"/>
-<area shape="rect" href="classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="240,80,332,107"/>
-<area shape="poly" title=" " alt="" coords="203,38,267,77,264,82,200,43"/>
+<area shape="poly" title=" " alt="" coords="211,46,181,81,177,78,207,42"/>
+<area shape="rect" href="classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="241,80,339,107"/>
+<area shape="poly" title=" " alt="" coords="251,42,282,78,278,81,247,46"/>
+<area shape="rect" href="classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="364,80,456,107"/>
+<area shape="poly" title=" " alt="" coords="270,33,380,77,378,82,268,38"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Body:</div>
 <div class="dyncontent">
@@ -129,17 +144,15 @@ Collaboration diagram for Body:</div>
 <area shape="rect" title=" " alt="" coords="102,5,237,32"/>
 <area shape="poly" title=" " alt="" coords="159,47,142,74,121,97,117,94,138,70,154,44"/>
 </map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7727b0d8c998bbc2942e4c802e31e2eb" id="r_a7727b0d8c998bbc2942e4c802e31e2eb"><td class="memItemLeft" align="right" valign="top"><a id="a7727b0d8c998bbc2942e4c802e31e2eb" name="a7727b0d8c998bbc2942e4c802e31e2eb"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Body</b> ()</td></tr>
-<tr class="memdesc:a7727b0d8c998bbc2942e4c802e31e2eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="memitem:a7727b0d8c998bbc2942e4c802e31e2eb" id="r_a7727b0d8c998bbc2942e4c802e31e2eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7727b0d8c998bbc2942e4c802e31e2eb">Body</a> ()</td></tr>
+<tr class="memdesc:a7727b0d8c998bbc2942e4c802e31e2eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
 <tr class="separator:a7727b0d8c998bbc2942e4c802e31e2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe1c4da65568cf7978b6247affc461e3" id="r_abe1c4da65568cf7978b6247affc461e3"><td class="memItemLeft" align="right" valign="top"><a id="abe1c4da65568cf7978b6247affc461e3" name="abe1c4da65568cf7978b6247affc461e3"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Body</b> ()</td></tr>
-<tr class="memdesc:abe1c4da65568cf7978b6247affc461e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor. <br /></td></tr>
+<tr class="memitem:abe1c4da65568cf7978b6247affc461e3" id="r_abe1c4da65568cf7978b6247affc461e3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe1c4da65568cf7978b6247affc461e3">~Body</a> ()</td></tr>
+<tr class="memdesc:abe1c4da65568cf7978b6247affc461e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:abe1c4da65568cf7978b6247affc461e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9e08d3de1fbdb9077eb73d8133f5062" id="r_af9e08d3de1fbdb9077eb73d8133f5062"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9e08d3de1fbdb9077eb73d8133f5062">create</a> (<a class="el" href="classMesh.html">Mesh</a> &amp;mesh, <a class="el" href="classMaterial.html">Material</a> *material)=0</td></tr>
 <tr class="memdesc:af9e08d3de1fbdb9077eb73d8133f5062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a body with particles and material.  <br /></td></tr>
@@ -174,23 +187,75 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Body</b> ()</td><
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a8dea09ffc5c222b5d7bd623963dc6b26" id="r_a8dea09ffc5c222b5d7bd623963dc6b26"><td class="memItemLeft" align="right" valign="top"><a id="a8dea09ffc5c222b5d7bd623963dc6b26" name="a8dea09ffc5c222b5d7bd623963dc6b26"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="memdesc:a8dea09ffc5c222b5d7bd623963dc6b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">body identification <br /></td></tr>
+<tr class="memitem:a8dea09ffc5c222b5d7bd623963dc6b26" id="r_a8dea09ffc5c222b5d7bd623963dc6b26"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dea09ffc5c222b5d7bd623963dc6b26">id</a></td></tr>
+<tr class="memdesc:a8dea09ffc5c222b5d7bd623963dc6b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">body identification  <br /></td></tr>
 <tr class="separator:a8dea09ffc5c222b5d7bd623963dc6b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de1624a7d45c11479318ae05d1eb998" id="r_a6de1624a7d45c11479318ae05d1eb998"><td class="memItemLeft" align="right" valign="top"><a id="a6de1624a7d45c11479318ae05d1eb998" name="a6de1624a7d45c11479318ae05d1eb998"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>initial_velocity</b></td></tr>
-<tr class="memdesc:a6de1624a7d45c11479318ae05d1eb998"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial velocity of the body <br /></td></tr>
+<tr class="memitem:a6de1624a7d45c11479318ae05d1eb998" id="r_a6de1624a7d45c11479318ae05d1eb998"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6de1624a7d45c11479318ae05d1eb998">initial_velocity</a></td></tr>
+<tr class="memdesc:a6de1624a7d45c11479318ae05d1eb998"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial velocity of the body  <br /></td></tr>
 <tr class="separator:a6de1624a7d45c11479318ae05d1eb998"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8aaa282121a6e26fdd9826514cc1098" id="r_af8aaa282121a6e26fdd9826514cc1098"><td class="memItemLeft" align="right" valign="top"><a id="af8aaa282121a6e26fdd9826514cc1098" name="af8aaa282121a6e26fdd9826514cc1098"></a>
-vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>particles</b></td></tr>
+<tr class="memitem:af8aaa282121a6e26fdd9826514cc1098" id="r_af8aaa282121a6e26fdd9826514cc1098"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8aaa282121a6e26fdd9826514cc1098">particles</a></td></tr>
 <tr class="memdesc:af8aaa282121a6e26fdd9826514cc1098"><td class="mdescLeft">&#160;</td><td class="mdescRight">material points forming the body <br  />
- <br /></td></tr>
+  <br /></td></tr>
 <tr class="separator:af8aaa282121a6e26fdd9826514cc1098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a body in the space forming by a group of materials points and identified by a number. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7727b0d8c998bbc2942e4c802e31e2eb" name="a7727b0d8c998bbc2942e4c802e31e2eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7727b0d8c998bbc2942e4c802e31e2eb">&#9670;&#160;</a></span>Body()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Body::Body </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+
+</div>
+</div>
+<a id="abe1c4da65568cf7978b6247affc461e3" name="abe1c4da65568cf7978b6247affc461e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe1c4da65568cf7978b6247affc461e3">&#9670;&#160;</a></span>~Body()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Body::~Body </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="af9e08d3de1fbdb9077eb73d8133f5062" name="af9e08d3de1fbdb9077eb73d8133f5062"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9e08d3de1fbdb9077eb73d8133f5062">&#9670;&#160;</a></span>create()</h2>
 
@@ -227,7 +292,7 @@ vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classBodyCuboid.html#a67c37738ebb9cb1bb98d79c62b7b2aec">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#a43162cdfd14c6fb97cc9a7d7f00469a9">BodyParticle</a>, and <a class="el" href="classBodySphere.html#ae11521fe762994be934ea9be213558ed">BodySphere</a>.</p>
+<p>Implemented in <a class="el" href="classBodyCuboid.html#a67c37738ebb9cb1bb98d79c62b7b2aec">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#a43162cdfd14c6fb97cc9a7d7f00469a9">BodyParticle</a>, <a class="el" href="classBodyPolygon.html#af5b151c957a9d5ac977b333659a7c9b2">BodyPolygon</a>, and <a class="el" href="classBodySphere.html#ae11521fe762994be934ea9be213558ed">BodySphere</a>.</p>
 
 </div>
 </div>
@@ -313,7 +378,7 @@ vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td
 <p>Return the material id. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMaterial.html" title="Represents a material.">Material</a> identification </dd></dl>
 
-<p>Implemented in <a class="el" href="classBodyCuboid.html#aa2f9a62944cb7b67eed732f19722aa33">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#aa4565f8d057cd8eb15ed69fa6e21c63f">BodyParticle</a>, and <a class="el" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">BodySphere</a>.</p>
+<p>Implemented in <a class="el" href="classBodyCuboid.html#aa2f9a62944cb7b67eed732f19722aa33">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#aa4565f8d057cd8eb15ed69fa6e21c63f">BodyParticle</a>, <a class="el" href="classBodyPolygon.html#a3355c23324724e374c8fe8af730d996b">BodyPolygon</a>, and <a class="el" href="classBodySphere.html#abd845d8a4283b05809a7c99d85b7a0c0">BodySphere</a>.</p>
 
 </div>
 </div>
@@ -477,7 +542,7 @@ vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classBodyCuboid.html#a175ae5840558826cbded7fe89f616685">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#a867c8ac8d6281ee4912e75469fc7f8d9">BodyParticle</a>, and <a class="el" href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">BodySphere</a>.</p>
+<p>Implemented in <a class="el" href="classBodyCuboid.html#a175ae5840558826cbded7fe89f616685">BodyCuboid</a>, <a class="el" href="classBodyParticle.html#a867c8ac8d6281ee4912e75469fc7f8d9">BodyParticle</a>, <a class="el" href="classBodyPolygon.html#a1ab93cbd97a87bf715f1e32c552b8283">BodyPolygon</a>, and <a class="el" href="classBodySphere.html#aa0cf7ecb83c57fc9dae01d1db2104145">BodySphere</a>.</p>
 
 </div>
 </div>
@@ -514,14 +579,91 @@ vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8dea09ffc5c222b5d7bd623963dc6b26" name="a8dea09ffc5c222b5d7bd623963dc6b26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dea09ffc5c222b5d7bd623963dc6b26">&#9670;&#160;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Body::id</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>body identification </p>
+
+</div>
+</div>
+<a id="a6de1624a7d45c11479318ae05d1eb998" name="a6de1624a7d45c11479318ae05d1eb998"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6de1624a7d45c11479318ae05d1eb998">&#9670;&#160;</a></span>initial_velocity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3d Body::initial_velocity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>initial velocity of the body </p>
+
+</div>
+</div>
+<a id="af8aaa282121a6e26fdd9826514cc1098" name="af8aaa282121a6e26fdd9826514cc1098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8aaa282121a6e26fdd9826514cc1098">&#9670;&#160;</a></span>particles</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="classParticle.html">Particle</a>*&gt; Body::particles</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>material points forming the body <br  />
+ </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="Body_8h_source.html">Body.h</a></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classBody.html">Body</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

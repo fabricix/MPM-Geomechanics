@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -24,6 +26,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -57,17 +60,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('namespaceModelSetup.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,8 +104,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#enum-members">Enumerations</a> &#124;
@@ -104,27 +117,27 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a95c5a2eb8b98cbf15989237803593b6c" id="r_a95c5a2eb8b98cbf15989237803593b6c"><td class="memItemLeft" align="right" valign="top"><a id="a95c5a2eb8b98cbf15989237803593b6c" name="a95c5a2eb8b98cbf15989237803593b6c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95c5a2eb8b98cbf15989237803593b6c">StressUpdateScheme</a> { <b>USF</b>
-, <b>USL</b>
-, <b>MUSL</b>
+<tr class="memitem:a95c5a2eb8b98cbf15989237803593b6c" id="r_a95c5a2eb8b98cbf15989237803593b6c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95c5a2eb8b98cbf15989237803593b6c">StressUpdateScheme</a> { <a class="el" href="#a95c5a2eb8b98cbf15989237803593b6cafeb425bfed125fa9b2091b3ebf83f598">USF</a>
+, <a class="el" href="#a95c5a2eb8b98cbf15989237803593b6ca795ce8efa267e7ebc51a283bcb5d54a5">USL</a>
+, <a class="el" href="#a95c5a2eb8b98cbf15989237803593b6ca89c017f04104823dccb2502143916c59">MUSL</a>
  }</td></tr>
-<tr class="memdesc:a95c5a2eb8b98cbf15989237803593b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of scheme used to update the stress. <br /></td></tr>
+<tr class="memdesc:a95c5a2eb8b98cbf15989237803593b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of scheme used to update the stress.  <a href="#a95c5a2eb8b98cbf15989237803593b6c">More...</a><br /></td></tr>
 <tr class="separator:a95c5a2eb8b98cbf15989237803593b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00e7195f09f9bd709ef76fce4eb77698" id="r_a00e7195f09f9bd709ef76fce4eb77698"><td class="memItemLeft" align="right" valign="top"><a id="a00e7195f09f9bd709ef76fce4eb77698" name="a00e7195f09f9bd709ef76fce4eb77698"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698">DampingType</a> { <b>UNDAMPED</b>
-, <b>LOCAL</b>
-, <b>KINETIC_DYNAMIC_RELAXATION</b>
+<tr class="memitem:a00e7195f09f9bd709ef76fce4eb77698" id="r_a00e7195f09f9bd709ef76fce4eb77698"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698">DampingType</a> { <a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8">UNDAMPED</a>
+, <a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092">LOCAL</a>
+, <a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5">KINETIC_DYNAMIC_RELAXATION</a>
  }</td></tr>
-<tr class="memdesc:a00e7195f09f9bd709ef76fce4eb77698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of damping. <br /></td></tr>
+<tr class="memdesc:a00e7195f09f9bd709ef76fce4eb77698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of damping.  <a href="#a00e7195f09f9bd709ef76fce4eb77698">More...</a><br /></td></tr>
 <tr class="separator:a00e7195f09f9bd709ef76fce4eb77698"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840758c49dbf1762422cf753e2da09cb" id="r_a840758c49dbf1762422cf753e2da09cb"><td class="memItemLeft" align="right" valign="top"><a id="a840758c49dbf1762422cf753e2da09cb" name="a840758c49dbf1762422cf753e2da09cb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a840758c49dbf1762422cf753e2da09cb">OperationalSystem</a> { <b>WINDOWS</b>
-, <b>LINUX</b>
+<tr class="memitem:a840758c49dbf1762422cf753e2da09cb" id="r_a840758c49dbf1762422cf753e2da09cb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a840758c49dbf1762422cf753e2da09cb">OperationalSystem</a> { <a class="el" href="#a840758c49dbf1762422cf753e2da09cbacb5bab293b2e292d8dc4a13d79e08fb3">WINDOWS</a>
+, <a class="el" href="#a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22">LINUX</a>
  }</td></tr>
-<tr class="memdesc:a840758c49dbf1762422cf753e2da09cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the current operational system. <br /></td></tr>
+<tr class="memdesc:a840758c49dbf1762422cf753e2da09cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the current operational system.  <a href="#a840758c49dbf1762422cf753e2da09cb">More...</a><br /></td></tr>
 <tr class="separator:a840758c49dbf1762422cf753e2da09cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73c7cfb411f9b3b1062e5fbe694051ab" id="r_a73c7cfb411f9b3b1062e5fbe694051ab"><td class="memItemLeft" align="right" valign="top"><a id="a73c7cfb411f9b3b1062e5fbe694051ab" name="a73c7cfb411f9b3b1062e5fbe694051ab"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73c7cfb411f9b3b1062e5fbe694051ab">InterpolationFunctionType</a> { <b>LINEAR</b>
-, <b>GIMP</b>
+<tr class="memitem:a73c7cfb411f9b3b1062e5fbe694051ab" id="r_a73c7cfb411f9b3b1062e5fbe694051ab"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73c7cfb411f9b3b1062e5fbe694051ab">InterpolationFunctionType</a> { <a class="el" href="#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd">LINEAR</a>
+, <a class="el" href="#a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6">GIMP</a>
  }</td></tr>
-<tr class="memdesc:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of interpolation function. <br /></td></tr>
+<tr class="memdesc:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of interpolation function.  <a href="#a73c7cfb411f9b3b1062e5fbe694051ab">More...</a><br /></td></tr>
 <tr class="separator:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -138,15 +151,15 @@ Functions</h2></td></tr>
 <tr class="memitem:af616842da1c6a586a99fef0b02fc5c67" id="r_af616842da1c6a586a99fef0b02fc5c67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af616842da1c6a586a99fef0b02fc5c67">getLoadState</a> ()</td></tr>
 <tr class="memdesc:af616842da1c6a586a99fef0b02fc5c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true is load state is activated.  <br /></td></tr>
 <tr class="separator:af616842da1c6a586a99fef0b02fc5c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae051757190d7f773a2a7087fd55ac7a" id="r_aae051757190d7f773a2a7087fd55ac7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae051757190d7f773a2a7087fd55ac7a">setLoadState</a> (bool st)</td></tr>
-<tr class="memdesc:aae051757190d7f773a2a7087fd55ac7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set load state activated.  <br /></td></tr>
-<tr class="separator:aae051757190d7f773a2a7087fd55ac7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae769533ca3c33ec90709216ca3219160" id="r_ae769533ca3c33ec90709216ca3219160"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae769533ca3c33ec90709216ca3219160">setLoadState</a> (bool load_state_activated)</td></tr>
+<tr class="memdesc:ae769533ca3c33ec90709216ca3219160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set load state activated.  <br /></td></tr>
+<tr class="separator:ae769533ca3c33ec90709216ca3219160"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b24a55ce0f3b4af6103d9c1fcd4c967" id="r_a4b24a55ce0f3b4af6103d9c1fcd4c967"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b24a55ce0f3b4af6103d9c1fcd4c967">getSaveState</a> ()</td></tr>
 <tr class="memdesc:a4b24a55ce0f3b4af6103d9c1fcd4c967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true is save state is activated.  <br /></td></tr>
 <tr class="separator:a4b24a55ce0f3b4af6103d9c1fcd4c967"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a912436dba6b207fec2982f5e23b49f0a" id="r_a912436dba6b207fec2982f5e23b49f0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a912436dba6b207fec2982f5e23b49f0a">setSaveState</a> (bool st)</td></tr>
-<tr class="memdesc:a912436dba6b207fec2982f5e23b49f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set save state activated.  <br /></td></tr>
-<tr class="separator:a912436dba6b207fec2982f5e23b49f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52a1faeec98cc872b3511b6ca577422c" id="r_a52a1faeec98cc872b3511b6ca577422c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52a1faeec98cc872b3511b6ca577422c">setSaveState</a> (bool save_state_activated)</td></tr>
+<tr class="memdesc:a52a1faeec98cc872b3511b6ca577422c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set save state activated.  <br /></td></tr>
+<tr class="separator:a52a1faeec98cc872b3511b6ca577422c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a361e464df796d8ca7a2586134e2dbaf5" id="r_a361e464df796d8ca7a2586134e2dbaf5"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a361e464df796d8ca7a2586134e2dbaf5">getContributionNodesNum</a> ()</td></tr>
 <tr class="memdesc:a361e464df796d8ca7a2586134e2dbaf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of nodes that a particle contributes.  <br /></td></tr>
 <tr class="separator:a361e464df796d8ca7a2586134e2dbaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -267,19 +280,101 @@ Functions</h2></td></tr>
 <tr class="memitem:a33c1ffa724e176734a1cb73726e9e993" id="r_a33c1ffa724e176734a1cb73726e9e993"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33c1ffa724e176734a1cb73726e9e993">getInitialSimulationTime</a> ()</td></tr>
 <tr class="memdesc:a33c1ffa724e176734a1cb73726e9e993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get initial simulation time.  <br /></td></tr>
 <tr class="separator:a33c1ffa724e176734a1cb73726e9e993"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cd47bd6b391f22d9d4616f7cd7c399a" id="r_a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="memItemLeft" align="right" valign="top"><a id="a3cd47bd6b391f22d9d4616f7cd7c399a" name="a3cd47bd6b391f22d9d4616f7cd7c399a"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFileName</b> ()</td></tr>
+<tr class="memitem:a3cd47bd6b391f22d9d4616f7cd7c399a" id="r_a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cd47bd6b391f22d9d4616f7cd7c399a">getSeismicFileName</a> ()</td></tr>
 <tr class="separator:a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb60c7fe9462be3df5f21ba658c7b207" id="r_abb60c7fe9462be3df5f21ba658c7b207"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb60c7fe9462be3df5f21ba658c7b207">getCurrentTime</a> ()</td></tr>
 <tr class="memdesc:abb60c7fe9462be3df5f21ba658c7b207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current simulation time.  <br /></td></tr>
 <tr class="separator:abb60c7fe9462be3df5f21ba658c7b207"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0320c289ba0685141811538771b2ffd8" id="r_a0320c289ba0685141811538771b2ffd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0320c289ba0685141811538771b2ffd8">setCurrentTime</a> (double a)</td></tr>
-<tr class="memdesc:a0320c289ba0685141811538771b2ffd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current simulation time.  <br /></td></tr>
-<tr class="separator:a0320c289ba0685141811538771b2ffd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d6b80dd52b72f335482f5a6bd46372f" id="r_a7d6b80dd52b72f335482f5a6bd46372f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d6b80dd52b72f335482f5a6bd46372f">setCurrentTime</a> (double currentTime)</td></tr>
+<tr class="memdesc:a7d6b80dd52b72f335482f5a6bd46372f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current simulation time.  <br /></td></tr>
+<tr class="separator:a7d6b80dd52b72f335482f5a6bd46372f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contain the configuration variables that defines an specific simulation. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a00e7195f09f9bd709ef76fce4eb77698" name="a00e7195f09f9bd709ef76fce4eb77698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00e7195f09f9bd709ef76fce4eb77698">&#9670;&#160;</a></span>DampingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a00e7195f09f9bd709ef76fce4eb77698">ModelSetup::DampingType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type of damping. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8" name="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8"></a>UNDAMPED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092" name="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092"></a>LOCAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5" name="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5"></a>KINETIC_DYNAMIC_RELAXATION&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a73c7cfb411f9b3b1062e5fbe694051ab" name="a73c7cfb411f9b3b1062e5fbe694051ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73c7cfb411f9b3b1062e5fbe694051ab">&#9670;&#160;</a></span>InterpolationFunctionType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a73c7cfb411f9b3b1062e5fbe694051ab">ModelSetup::InterpolationFunctionType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type of interpolation function. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd" name="a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd"></a>LINEAR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6" name="a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6"></a>GIMP&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a840758c49dbf1762422cf753e2da09cb" name="a840758c49dbf1762422cf753e2da09cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840758c49dbf1762422cf753e2da09cb">&#9670;&#160;</a></span>OperationalSystem</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a840758c49dbf1762422cf753e2da09cb">ModelSetup::OperationalSystem</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the current operational system. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a840758c49dbf1762422cf753e2da09cbacb5bab293b2e292d8dc4a13d79e08fb3" name="a840758c49dbf1762422cf753e2da09cbacb5bab293b2e292d8dc4a13d79e08fb3"></a>WINDOWS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22" name="a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22"></a>LINUX&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a95c5a2eb8b98cbf15989237803593b6c" name="a95c5a2eb8b98cbf15989237803593b6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95c5a2eb8b98cbf15989237803593b6c">&#9670;&#160;</a></span>StressUpdateScheme</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a95c5a2eb8b98cbf15989237803593b6c">ModelSetup::StressUpdateScheme</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type of scheme used to update the stress. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a95c5a2eb8b98cbf15989237803593b6cafeb425bfed125fa9b2091b3ebf83f598" name="a95c5a2eb8b98cbf15989237803593b6cafeb425bfed125fa9b2091b3ebf83f598"></a>USF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a95c5a2eb8b98cbf15989237803593b6ca795ce8efa267e7ebc51a283bcb5d54a5" name="a95c5a2eb8b98cbf15989237803593b6ca795ce8efa267e7ebc51a283bcb5d54a5"></a>USL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a95c5a2eb8b98cbf15989237803593b6ca89c017f04104823dccb2502143916c59" name="a95c5a2eb8b98cbf15989237803593b6ca89c017f04104823dccb2502143916c59"></a>MUSL&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a2ab45e397605eae241efa8f575518d0e" name="a2ab45e397605eae241efa8f575518d0e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ab45e397605eae241efa8f575518d0e">&#9670;&#160;</a></span>getAxisymetricActive()</h2>
 
@@ -376,12 +471,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 </div><div class="memdoc">
 
 <p>Get current simulation time. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">currentTime</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>currentTime </dd></dl>
 
 </div>
 </div>
@@ -501,12 +591,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 </div><div class="memdoc">
 
 <p>Get initial simulation time. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">initialTime</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>initialTime </dd></dl>
 
 </div>
 </div>
@@ -686,13 +771,24 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 </div><div class="memdoc">
 
 <p>Return true if seismic analysis is active. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">if_seismic_analysis_active</td><td><br  />
- </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>if_seismic_analysis_active </dd></dl>
+
+</div>
+</div>
+<a id="a3cd47bd6b391f22d9d4616f7cd7c399a" name="a3cd47bd6b391f22d9d4616f7cd7c399a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cd47bd6b391f22d9d4616f7cd7c399a">&#9670;&#160;</a></span>getSeismicFileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ModelSetup::getSeismicFileName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -891,8 +987,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 
 </div>
 </div>
-<a id="a0320c289ba0685141811538771b2ffd8" name="a0320c289ba0685141811538771b2ffd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0320c289ba0685141811538771b2ffd8">&#9670;&#160;</a></span>setCurrentTime()</h2>
+<a id="a7d6b80dd52b72f335482f5a6bd46372f" name="a7d6b80dd52b72f335482f5a6bd46372f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d6b80dd52b72f335482f5a6bd46372f">&#9670;&#160;</a></span>setCurrentTime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -900,7 +996,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
         <tr>
           <td class="memname">void ModelSetup::setCurrentTime </td>
           <td>(</td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>a</em></span></td><td>)</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>currentTime</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1118,8 +1214,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 
 </div>
 </div>
-<a id="aae051757190d7f773a2a7087fd55ac7a" name="aae051757190d7f773a2a7087fd55ac7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae051757190d7f773a2a7087fd55ac7a">&#9670;&#160;</a></span>setLoadState()</h2>
+<a id="ae769533ca3c33ec90709216ca3219160" name="ae769533ca3c33ec90709216ca3219160"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae769533ca3c33ec90709216ca3219160">&#9670;&#160;</a></span>setLoadState()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1127,7 +1223,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
         <tr>
           <td class="memname">void ModelSetup::setLoadState </td>
           <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>st</em></span></td><td>)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>load_state_activated</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1193,8 +1289,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 
 </div>
 </div>
-<a id="a912436dba6b207fec2982f5e23b49f0a" name="a912436dba6b207fec2982f5e23b49f0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a912436dba6b207fec2982f5e23b49f0a">&#9670;&#160;</a></span>setSaveState()</h2>
+<a id="a52a1faeec98cc872b3511b6ca577422c" name="a52a1faeec98cc872b3511b6ca577422c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52a1faeec98cc872b3511b6ca577422c">&#9670;&#160;</a></span>setSaveState()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1202,7 +1298,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
         <tr>
           <td class="memname">void ModelSetup::setSaveState </td>
           <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>st</em></span></td><td>)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>save_state_activated</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1371,10 +1467,13 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getSeismicFile
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceModelSetup.html">ModelSetup</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>
