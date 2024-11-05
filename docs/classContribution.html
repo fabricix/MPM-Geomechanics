@@ -158,17 +158,19 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:acd8ca11b2f75001aed3533a7826f68f8" id="r_acd8ca11b2f75001aed3533a7826f68f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd8ca11b2f75001aed3533a7826f68f8">nodeId</a></td></tr>
-<tr class="memdesc:acd8ca11b2f75001aed3533a7826f68f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">identification of node  <br /></td></tr>
+<tr class="memdesc:acd8ca11b2f75001aed3533a7826f68f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">identification of node \( I \)  <br /></td></tr>
 <tr class="separator:acd8ca11b2f75001aed3533a7826f68f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b51bfbf5103349bf1890fbef503ca43" id="r_a1b51bfbf5103349bf1890fbef503ca43"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b51bfbf5103349bf1890fbef503ca43">weight</a></td></tr>
-<tr class="memdesc:a1b51bfbf5103349bf1890fbef503ca43"><td class="mdescLeft">&#160;</td><td class="mdescRight">weight value of a node at a particle  <br /></td></tr>
+<tr class="memdesc:a1b51bfbf5103349bf1890fbef503ca43"><td class="mdescLeft">&#160;</td><td class="mdescRight">weight value of a node at a particle position \( N_I(x_p) \)  <br /></td></tr>
 <tr class="separator:a1b51bfbf5103349bf1890fbef503ca43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d63ff976e6e6036b1c391df0dc00a38" id="r_a6d63ff976e6e6036b1c391df0dc00a38"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d63ff976e6e6036b1c391df0dc00a38">gradient</a></td></tr>
-<tr class="memdesc:a6d63ff976e6e6036b1c391df0dc00a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">gradient value of a node at a particle  <br /></td></tr>
+<tr class="memdesc:a6d63ff976e6e6036b1c391df0dc00a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">gradient value of a node at a particle position \( N_{I,j}(x_p)  = dN/dx_{I}(x_p), dN/dy_{I}(x_p), dN/dz_{I}(x_p) \).  <br /></td></tr>
 <tr class="separator:a6d63ff976e6e6036b1c391df0dc00a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the node that the particle contributes. </p>
+<p>During the interpolation process values stored in to the particles are calculated in mesh nodes using interpolation functions \( N_I(x_p) \) and its gradients \( N_{I,j}(x_p) \). Each of these functions are defined at the node \( I \) and evaluated at particle position \( x_p \).</p>
+<p>This class store the nodal id \( I \) and the values of \( N_I(x_p) \) and \( N_{I,j}(x_p) \). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a59775497d673b49ac00b19f525bc1b05" name="a59775497d673b49ac00b19f525bc1b05"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a59775497d673b49ac00b19f525bc1b05">&#9670;&#160;</a></span>Contribution()</h2>
@@ -429,7 +431,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>gradient value of a node at a particle </p>
+<p>gradient value of a node at a particle position \( N_{I,j}(x_p)  = dN/dx_{I}(x_p), dN/dy_{I}(x_p), dN/dz_{I}(x_p) \). </p>
 
 </div>
 </div>
@@ -453,7 +455,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>identification of node </p>
+<p>identification of node \( I \) </p>
 
 </div>
 </div>
@@ -477,7 +479,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>weight value of a node at a particle </p>
+<p>weight value of a node at a particle position \( N_I(x_p) \) </p>
 
 </div>
 </div>

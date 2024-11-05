@@ -12,7 +12,13 @@
 using Eigen::Vector3d;
 
 /// \class Contribution
-/// \brief Represents the node that the particle contributes.
+/// \brief Represents the node that the particle contributes
+///
+/// During the interpolation process values stored in to the particles are calculated in mesh nodes using interpolation functions \f$ N_I(x_p) \f$ and its gradients \f$ N_{I,j}(x_p) \f$. 
+/// Each of these functions are defined at the node \f$ I \f$ and evaluated at particle position \f$ x_p \f$. 
+///
+/// This class store the nodal id \f$ I \f$ and the values of \f$ N_I(x_p) \f$ and \f$ N_{I,j}(x_p) \f$.
+///
 class Contribution {
 
 public:
@@ -51,20 +57,18 @@ public:
 
 private:
 	
-	int nodeId; //!< identification of node
+	int nodeId; //!< identification of node \f$ I \f$
 
-	double weight; //!< weight value of a node at a particle
+	double weight; //!< weight value of a node at a particle position \f$ N_I(x_p) \f$
 
-	Vector3d gradient; //!< gradient value of a node at a particle
+	Vector3d gradient; //!< gradient value of a node at a particle position \f$ N_{I,j}(x_p)  = dN/dx_{I}(x_p), dN/dy_{I}(x_p), dN/dz_{I}(x_p) \f$.
 };
 
 inline Contribution::Contribution()
-:nodeId(0),weight(0.0),gradient(0.0,0.0,0.0) {
+:nodeId(0),weight(0.0),gradient(0.0,0.0,0.0) 
+{ }
 
-}
-
-inline Contribution::~Contribution() {
-	
-}
+inline Contribution::~Contribution() 
+{ }
 
 #endif /* CONTRIBUTION_H_ */
