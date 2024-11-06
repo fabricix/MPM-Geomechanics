@@ -81,16 +81,7 @@
 /// ```
 /// MPM-Geomechanics my_model.json
 /// ```
-/// \page program_theory_manual Theory manual
 ///
-/// _Manual Theory under development_ 
-///
-/// References
-/// - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709
-/// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (MPM). Computational Particle Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7
-/// - Fernández, F., Vargas, E., Muller, A.L. et al. Material point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). https://doi.org/10.1007/s11440-023-02152-4
-/// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and MPM Approaches. Geotech Geol Eng (2023). https://doi.org/10.1007/s10706-023-02693-1.
-/// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. http://dx.doi.org/10.1016/j.tust.2021.103904
 
 #ifndef MPM_H_
 #define MPM_H_

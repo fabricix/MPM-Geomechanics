@@ -971,7 +971,8 @@ INPUT                  = ./inc/ \
                          ./inc/Particle/ \
                          ./inc/Mesh/ \
                          ./inc/Shape/ \
-                         ./inc/Solver/
+                         ./inc/Solver/ \
+                         ./manual
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses
