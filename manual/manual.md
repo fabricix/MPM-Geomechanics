@@ -69,26 +69,29 @@ consequently, in the MPM context, the density, the acceleration and the stress f
 
 where \f$ \dot{p_{i p}} = m_p \dot{v_{ip}} = m_p a_{ip} \f$.
 
-Replacing these fields in the weak for of motion equation we have:
-
-\f[
-    -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
-\f]
+Replacing these fields in the weak form of the motion equation we have:
 
 \f[
 -\sum_p \int_{\Omega_p \cap \Omega} \sigma_{i j p} \chi_p \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \sum_p \int_{\Omega_p \cap \Omega} \frac{m_p}{V_p} b_{i p} \chi_p \delta u_i dV = \sum_p \int_{\Omega_p \cap \Omega} \frac{\dot{p}_p}{V_p} \chi_p a_i dV
 \f]
 
-The material domain \f$ \Omega \f$ is discretized in a set of points defined by nonzero characteristic functions over the particle representative volume [42]. 
+In the generalized interpolation material point method (GIMP), the resolution of this equation is carried out using a Petrov–Galerkin scheme where the characteristic functions \f$ \chi_p(x_i) \f$ are the trial functions and the nodal interpolation functions \f$ N_I(x_i) \f$ are the test functions. 
 
-The particle characteristic function vpðxi Þ defines the space occupied by the material point p. In the
-initial configuration, these functions must be such that:
+To arrive at this scheme, the virtual displacements are expressed using the nodal interpolation functions:
 
-can be expressed in a discrete form, using the nodes of the mesh: 
+\f[ \delta u_i=\sum_I N_{I p} \delta u_{i I} \f]
 
-\f$
+Note that the trial and test functions are such that:
+
+\f[ \sum_I N_{I}(x_i) = 1 \f]
+
+\f[ \sum_p \chi_p(x_i) = 1 \f]
+
+Therefore, the resulting discrete form of the motion equation is:
+
+\f[
 f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI}
-\f$
+\f]
 
 where 
 - \f$ p_{iI} = \sum_p S_{Ip} p_{Ip} \f$ is the nodal momentum
@@ -97,22 +100,56 @@ where
 
 Note that the function \f$ S_{Ip} \f$ and its gradient \f$ S_{Ip,j} \f$ are the weighting functions of node \f$ I \f$ evaluated at the position of particle \f$ p \f$.
 
-The interpolation functions are defined by 
+The GIMP shape functions are defined by 
 
-\f$
+\f[
 S_{Ip} = \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_I(x_i) dV 
-\f$ 
+\f] 
 
 and 
 
-\f$ 
+\f[ 
 S_{Ip,j} = \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV
-\f$ 
-    
+\f] 
+
+Note that these functions is also a partition of the unity:
+
+\f$ \sum_I S_{Ip} = 1 \f$
+
+The the weighting function need to be integrated over
+the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme.
+
+In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:
+
+\f[ 
+    \chi_p(x)=\left\{\begin{array}{cc}1 & x \in \Omega_p \\ 0 & x \notin \Omega_p\end{array}\right.
+\f]
+
+\f[
+    N_I(x)=\left\{\begin{array}{c}0 \quad\left|x-x_I\right| \geq L \\ 1+\left(x-x_I\right) / L \quad-L<x-x_I \leq 0 \\ 1-\left(x-x_I\right) / L \quad 0<x-x_I<L\end{array}\right.$
+\f]
+
 Where the integration is performed analytically within the particle domain.
 
-If we use linear functions for \f$ N_I(x_i) \f$ and unit step functions for \f$ \chi_p(x_i) \f$:
+\f[
+S_{I p}=\left\{\begin{array}{cc}0 & |\xi| \geq L+l_p \\ \left(L+l_p+\xi\right)^2 / 4 L l_p & -L-l_p<\xi \leq-L+l_p \\ 1+\xi / L & -L+l_p<\xi \leq-l_p \\ 1-\left(\xi^2+l_p^2\right) / 2 L l_p \quad-l_p<\xi \leq l_p \\ 1-\xi / L & l_p<\xi \leq L-l_p \\ \left(L+l_p-\xi\right)^2 / 4 L l_p & L-l_p<\xi \leq L+l_p\end{array}\right.
+\f]
 
+and
+
+\f[
+\nabla S_{I p}= \begin{cases}0 & \left|x_p-x_I\right| \geq L+l_p, \\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} & -L-l_p<x_p-x_I \leq-L+l_p, \\ \frac{1}{L} & -L+l_p<x_p-x_I \leq-l_p, \\ -\frac{x_p-x_I}{L l_p} & -l_p<x_p-x_I \leq l_p, \\ -\frac{1}{L} & l_p<x_p-x_I \leq L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leq L+l_p .\end{cases}
+\f]
+
+In which \f$ 2lp \f$ is the particle domain, \f$ L \f$ is the mesh size in 1D, and  is the relative particle position to node.
+
+Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:
+
+\f$
+S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta)
+\f$
+
+where \f$ \xi=x_p-x_I, \eta=y_p-y_I \f$ and \f$ \zeta=z_p-z \f$.
 ...
 
 # References

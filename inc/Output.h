@@ -15,7 +15,7 @@
 /// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.
 ///
-/// The results of a numerical simulation are the variables stored in particles in time. These files are written in two folders inside the working directory: `particles` and `grid`. In `particles` folder temporal results are written in `vtu` files and additional file `particleTimeSerie.pvd` is created at the end of the simulation containing information of `vtu` files and time.        
+/// The results of a numerical simulation are the variables stored in particles in time. These files are written in two folders inside the working directory: `particles` and `grid`. In `particles` folder temporal results are written in `vtu` files and additional file `particleTimeSerie.pvd` is created at the end of the simulation containing information of `vtu` files and time. 
 ///
 namespace Output {
 

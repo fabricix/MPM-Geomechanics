@@ -34,7 +34,9 @@ var NAVTREE =
     ] ],
     [ "Documentation", "index.html#program_documentation", null ],
     [ "Execution", "index.html#program_execution", null ],
-    [ "Theory manual", "program_theory_manual.html", null ],
+    [ "Theory manual", "program_theory_manual.html", [
+      [ "References", "program_theory_manual.html#autotoc_md53", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -71,8 +73,8 @@ var NAVTREEINDEX =
 "BodyCuboid_8h.html",
 "classBody.html#af8aaa282121a6e26fdd9826514cc1098",
 "classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540",
-"functions_n.html",
-"structLoads_1_1PressureMaterial.html#a5ef74a16e12a0605381953242c0847eb"
+"functions_m.html",
+"structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

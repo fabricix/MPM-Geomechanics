@@ -108,13 +108,142 @@ $(function(){initNavTree('program_theory_manual.html',''); initResizable(true); 
   <div class="headertitle"><div class="title">Theory manual</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><em>Manual Theory under development</em></p>
-<p>References</p><ul>
-<li>Zhang, X., Chen, Z., &amp; Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. <a href="http://site.ebrary.com/id/11285709">http://site.ebrary.com/id/11285709</a></li>
-<li>Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>). Computational <a class="el" href="classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th...">Particle</a> Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7</li>
-<li>Fernández, F., Vargas, E., Muller, A.L. et al. <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). <a href="https://doi.org/10.1007/s11440-023-02152-4">https://doi.org/10.1007/s11440-023-02152-4</a></li>
-<li>Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Approaches. Geotech Geol Eng (2023). <a href="https://doi.org/10.1007/s10706-023-02693-1">https://doi.org/10.1007/s10706-023-02693-1</a>.</li>
-<li>Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. <a href="http://dx.doi.org/10.1016/j.tust.2021.103904">http://dx.doi.org/10.1016/j.tust.2021.103904</a> </li>
+<div class="textblock"><p><b>Manual Theory under development</b></p>
+<h2><a class="anchor" id="autotoc_md50"></a>
+Material Point Method (MPM)</h2>
+<h3><a class="anchor" id="autotoc_md51"></a>
+Introduction to MPM</h3>
+<p>The <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method, or <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, is a hybrid Lagrangian-Eulerian method that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.</p>
+<p><img src="/manual/mpm_discretization.png" alt="" class="inline"/> Figure 1: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Discretization [2]</p>
+<p>In an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.</p>
+<p><img src="/manual/mpm_cycle.png" alt="" class="inline"/> Figure 2: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Cycle [3]</p>
+<h3><a class="anchor" id="autotoc_md52"></a>
+MPM Formulation</h3>
+<p><a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.</p>
+<p>The equation of motion in continuum mechanics</p>
+<p class="formulaDsp">
+\[
+\frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i
+\]
+</p>
+<p>where \( \sigma_{ij} \) is the Cauchy stress tensor, \( \rho \) is the density, \( b_i \) is the body force (regarding its mass), and \( a_i \) is the acceleration of any point of the continuum.</p>
+<p>Note that all equations are in tensor notation. So \( a_i \) is the acceleration vector with tree dimension in the space \( x, y, z \).</p>
+<p>The <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> formulation is obtained from the weak form of the motion equation and using a Petrov–Galerkin discretization scheme. The weak form of motion equation is obtained by multiplying the equation by arbitrary weighting functions, integrating this product over the domain, using integration by parts to reduce the order of the stress term and introducing the boundary conditions</p>
+<p class="formulaDsp">
+\[
+    -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
+\]
+</p>
+<p>where \( \delta u_i \) are virtual displacements, whose value in the boundary is \( \delta u_i |_{\Gamma} = 0 \) and \( t_i \) is an external traction acting on the boundary $\Gamma$.</p>
+<p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> context any field or property \( f(x_i) \) can approximated using the value stored in the particle \( f_p \):</p>
+<p class="formulaDsp">
+\[
+    f(x_i) = \sum f_p \chi_p (x_i)
+\]
+</p>
+<p>where \( \chi_p \) is the particle characteristic function that defines the volume occupied by the material point:</p>
+<p class="formulaDsp">
+\[ 
+    V_p = \int_{\Omega_p \cap \Omega} \chi_p(x_i) dV
+\]
+</p>
+<p>consequently, in the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> context, the density, the acceleration and the stress fields can be approximated by the values stored in particles:</p>
+<p class="formulaDsp">
+\[
+\rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i)
+\]
+</p>
+<p class="formulaDsp">
+\[
+\rho(x_i) a_i(x_i) = \sum_p \frac{\dot{p_{ip}}}{V_p} \chi_p(x_i)
+\]
+</p>
+<p class="formulaDsp">
+\[
+\sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i)
+\]
+</p>
+<p>where \( \dot{p_{i p}} = m_p \dot{v_{ip}} = m_p a_{ip} \).</p>
+<p>Replacing these fields in the weak form of the motion equation we have:</p>
+<p class="formulaDsp">
+\[
+-\sum_p \int_{\Omega_p \cap \Omega} \sigma_{i j p} \chi_p \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \sum_p \int_{\Omega_p \cap \Omega} \frac{m_p}{V_p} b_{i p} \chi_p \delta u_i dV = \sum_p \int_{\Omega_p \cap \Omega} \frac{\dot{p}_p}{V_p} \chi_p a_i dV
+\]
+</p>
+<p>In the generalized interpolation material point method (GIMP), the resolution of this equation is carried out using a Petrov–Galerkin scheme where the characteristic functions \( \chi_p(x_i) \) are the trial functions and the nodal interpolation functions \( N_I(x_i) \) are the test functions.</p>
+<p>To arrive at this scheme, the virtual displacements are expressed using the nodal interpolation functions:</p>
+<p class="formulaDsp">
+\[ \delta u_i=\sum_I N_{I p} \delta u_{i I} \]
+</p>
+<p>Note that the trial and test functions are such that:</p>
+<p class="formulaDsp">
+\[ \sum_I N_{I}(x_i) = 1 \]
+</p>
+<p class="formulaDsp">
+\[ \sum_p \chi_p(x_i) = 1 \]
+</p>
+<p>Therefore, the resulting discrete form of the motion equation is:</p>
+<p class="formulaDsp">
+\[
+f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI}
+\]
+</p>
+<p>where</p><ul>
+<li>\( p_{iI} = \sum_p S_{Ip} p_{Ip} \) is the nodal momentum</li>
+<li>\( f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p \) is the nodal internal force, and</li>
+<li>\( f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA \) is the external force at node \( I \).</li>
+</ul>
+<p>Note that the function \( S_{Ip} \) and its gradient \( S_{Ip,j} \) are the weighting functions of node \( I \) evaluated at the position of particle \( p \).</p>
+<p>The GIMP shape functions are defined by</p>
+<p class="formulaDsp">
+\[
+S_{Ip} = \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_I(x_i) dV 
+\]
+</p>
+<p>and</p>
+<p class="formulaDsp">
+\[ 
+S_{Ip,j} = \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV
+\]
+</p>
+<p>Note that these functions is also a partition of the unity:</p>
+<p>\( \sum_I S_{Ip} = 1 \)</p>
+<p>The the weighting function need to be integrated over the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme.</p>
+<p>In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:</p>
+<p class="formulaDsp">
+\[ 
+    \chi_p(x)=\left\{\begin{array}{cc}1 &amp; x \in \Omega_p \\ 0 &amp; x \notin \Omega_p\end{array}\right.
+\]
+</p>
+<p class="formulaDsp">
+\[
+    N_I(x)=\left\{\begin{array}{c}0 \quad\left|x-x_I\right| \geq L \\ 1+\left(x-x_I\right) / L \quad-L&lt;x-x_I \leq 0 \\ 1-\left(x-x_I\right) / L \quad 0&lt;x-x_I&lt;L\end{array}\right.$
+\]
+</p>
+<p>Where the integration is performed analytically within the particle domain.</p>
+<p class="formulaDsp">
+\[
+S_{I p}=\left\{\begin{array}{cc}0 &amp; |\xi| \geq L+l_p \\ \left(L+l_p+\xi\right)^2 / 4 L l_p &amp; -L-l_p&lt;\xi \leq-L+l_p \\ 1+\xi / L &amp; -L+l_p&lt;\xi \leq-l_p \\ 1-\left(\xi^2+l_p^2\right) / 2 L l_p \quad-l_p&lt;\xi \leq l_p \\ 1-\xi / L &amp; l_p&lt;\xi \leq L-l_p \\ \left(L+l_p-\xi\right)^2 / 4 L l_p &amp; L-l_p&lt;\xi \leq L+l_p\end{array}\right.
+\]
+</p>
+<p>and</p>
+<p class="formulaDsp">
+\[
+\nabla S_{I p}= \begin{cases}0 &amp; \left|x_p-x_I\right| \geq L+l_p, \\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} &amp; -L-l_p&lt;x_p-x_I \leq-L+l_p, \\ \frac{1}{L} &amp; -L+l_p&lt;x_p-x_I \leq-l_p, \\ -\frac{x_p-x_I}{L l_p} &amp; -l_p&lt;x_p-x_I \leq l_p, \\ -\frac{1}{L} &amp; l_p&lt;x_p-x_I \leq L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} &amp; L-l_p&lt;x_p-x_I \leq L+l_p .\end{cases}
+\]
+</p>
+<p>In which \( 2lp \) is the particle domain, \( L \) is the mesh size in 1D, and is the relative particle position to node.</p>
+<p>Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:</p>
+<p>\(
+S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta)
+\)</p>
+<p>where \( \xi=x_p-x_I, \eta=y_p-y_I \) and \( \zeta=z_p-z \).</p>
+<p>If we use linear functions for \( N_I(x_i) \) and unit step functions for \( \chi_p(x_i) \):</p>
+<p>...</p>
+<h1><a class="anchor" id="autotoc_md53"></a>
+References</h1>
+<ul>
+<li>Zhang, X., Chen, Z., &amp; Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. <a href="http://site.ebrary.com/id/11285709">http://site.ebrary.com/id/11285709</a> /// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>). Computational <a class="el" href="classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th...">Particle</a> Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7 /// - Fernández, F., Vargas, E., Muller, A.L. et al. <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). <a href="https://doi.org/10.1007/s11440-023-02152-4">https://doi.org/10.1007/s11440-023-02152-4</a> /// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Approaches. Geotech Geol Eng (2023). <a href="https://doi.org/10.1007/s10706-023-02693-1">https://doi.org/10.1007/s10706-023-02693-1</a>. /// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. <a href="http://dx.doi.org/10.1016/j.tust.2021.103904">http://dx.doi.org/10.1016/j.tust.2021.103904</a> </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
