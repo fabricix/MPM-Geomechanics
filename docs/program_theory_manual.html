@@ -134,7 +134,7 @@ MPM Formulation</h3>
     -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
 \]
 </p>
-<p>where \( \delta u_i \) are virtual displacements, whose value in the boundary is \( \delta u_i |_{\Gamma} = 0 \) and \( t_i \) is an external traction acting on the boundary $\Gamma$.</p>
+<p>where \( \delta u_i \) are virtual displacements, whose value in the boundary is \( \delta u_i |_{\Gamma} = 0 \) and \( t_i \) is an external traction acting on the boundary \( \Gamma \).</p>
 <p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> context any field or property \( f(x_i) \) can approximated using the value stored in the particle \( f_p \):</p>
 <p class="formulaDsp">
 \[
@@ -188,11 +188,10 @@ MPM Formulation</h3>
 f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI}
 \]
 </p>
-<p>where</p><ul>
-<li>\( p_{iI} = \sum_p S_{Ip} p_{Ip} \) is the nodal momentum</li>
-<li>\( f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p \) is the nodal internal force, and</li>
-<li>\( f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA \) is the external force at node \( I \).</li>
-</ul>
+<p>where</p>
+<p>\( p_{iI} = \sum_p S_{Ip} p_{Ip} \) is the nodal momentum,</p>
+<p>\( f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p \) is the nodal internal force, and</p>
+<p>\( f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA \) is the external force at node \( I \).</p>
 <p>Note that the function \( S_{Ip} \) and its gradient \( S_{Ip,j} \) are the weighting functions of node \( I \) evaluated at the position of particle \( p \).</p>
 <p>The GIMP shape functions are defined by</p>
 <p class="formulaDsp">
@@ -223,13 +222,24 @@ S_{Ip,j} = \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV
 <p>Where the integration is performed analytically within the particle domain.</p>
 <p class="formulaDsp">
 \[
-S_{I p}=\left\{\begin{array}{cc}0 &amp; |\xi| \geq L+l_p \\ \left(L+l_p+\xi\right)^2 / 4 L l_p &amp; -L-l_p&lt;\xi \leq-L+l_p \\ 1+\xi / L &amp; -L+l_p&lt;\xi \leq-l_p \\ 1-\left(\xi^2+l_p^2\right) / 2 L l_p \quad-l_p&lt;\xi \leq l_p \\ 1-\xi / L &amp; l_p&lt;\xi \leq L-l_p \\ \left(L+l_p-\xi\right)^2 / 4 L l_p &amp; L-l_p&lt;\xi \leq L+l_p\end{array}\right.
+S_{I p}=\left\{\begin{array}{ll}0 &amp; |\xi| \geq L+l_p \\ 
+\left(L+l_p+\xi\right)^2 / 4 L l_p &amp; -L-l_p&lt;\xi \leq-L+l_p \\ 
+1+\xi / L &amp; -L+l_p&lt;\xi \leq-l_p \\ 
+1-\left(\xi^2+l_p^2\right) / 2 L l_p &amp; \quad-l_p&lt;\xi \leq l_p \\ 
+1-\xi / L &amp; l_p&lt;\xi \leq L-l_p \\ 
+\left(L+l_p-\xi\right)^2 / 4 L l_p &amp; L-l_p&lt;\xi \leq L+l_p\end{array}\right.
 \]
 </p>
 <p>and</p>
 <p class="formulaDsp">
 \[
-\nabla S_{I p}= \begin{cases}0 &amp; \left|x_p-x_I\right| \geq L+l_p, \\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} &amp; -L-l_p&lt;x_p-x_I \leq-L+l_p, \\ \frac{1}{L} &amp; -L+l_p&lt;x_p-x_I \leq-l_p, \\ -\frac{x_p-x_I}{L l_p} &amp; -l_p&lt;x_p-x_I \leq l_p, \\ -\frac{1}{L} &amp; l_p&lt;x_p-x_I \leq L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} &amp; L-l_p&lt;x_p-x_I \leq L+l_p .\end{cases}
+\nabla S_{I p}= \begin{cases}0 &amp; \left|x_p-x_I\right| \geq L+l_p, \\ 
+\frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} &amp; -L-l_p&lt;x_p-x_I \leq-L+l_p, \\ 
+\frac{1}{L} &amp; -L+l_p&lt;x_p-x_I \leq-l_p, \\ 
+-\frac{x_p-x_I}{L l_p} &amp; -l_p&lt;x_p-x_I \leq l_p, \\ 
+-\frac{1}{L} &amp; l_p&lt;x_p-x_I \leq L-l_p, \\ 
+-\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} &amp; L-l_p&lt;x_p-x_I \leq L+l_p .
+\end{cases}
 \]
 </p>
 <p>In which \( 2lp \) is the particle domain, \( L \) is the mesh size in 1D, and is the relative particle position to node.</p>
@@ -238,9 +248,57 @@ S_{I p}=\left\{\begin{array}{cc}0 &amp; |\xi| \geq L+l_p \\ \left(L+l_p+\xi\righ
 S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta)
 \)</p>
 <p>where \( \xi=x_p-x_I, \eta=y_p-y_I \) and \( \zeta=z_p-z \).</p>
-<p>If we use linear functions for \( N_I(x_i) \) and unit step functions for \( \chi_p(x_i) \):</p>
-<p>...</p>
-<h1><a class="anchor" id="autotoc_md53"></a>
+<h3><a class="anchor" id="autotoc_md53"></a>
+Explicit MPM integration</h3>
+<p>The discrete form of the motion equation  \(
+f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \), is a second order ordinary differential equation in terms of displacement with respect to time, and can be solved by integration, using an explicit or implicit integration scheme.</p>
+<h3><a class="anchor" id="autotoc_md54"></a>
+Central difference Method</h3>
+<p>The displacement, the velocity and the acceleration at time \( t = 0, t^1, t^2, ... , t^n \) are knows, and the solution at time \( t^{n+1} \) is required.</p>
+<p>In central difference method, the velocity at \( t^{n+1/2} \) can be approximated as:</p>
+<p class="formulaDsp">
+\[ 
+    \dot{u}^{n+1/2} = ( u^{n+1} - u^{n} ) \Delta t\ 
+\]
+</p>
+<p>and, the acceleration in \( t^{n} \) can be approximated as:</p>
+<p class="formulaDsp">
+\[
+    \ddot{u}^{n} =  (\dot{u}^{n+1/2} - \dot u ^ {n-1/2})/\Delta t
+\]
+</p>
+<p>and therefore, the required displacement at \( t^{n+1} \) can be calculated as:</p>
+<p class="formulaDsp">
+\[
+
+u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t
+
+\]
+</p>
+<p>, where</p>
+<p class="formulaDsp">
+\[
+\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^ {n}  \Delta t
+\]
+</p>
+<p>The motion equation in \( t^{n} \) is:</p>
+<p class="formulaDsp">
+\[
+m \, \ddot u ^{n} = f ^{n}
+\]
+</p>
+<p>So,</p>
+<p class="formulaDsp">
+\[
+\ddot u ^{n} = f ^{n} / m
+\]
+</p>
+<p>and   </p><p class="formulaDsp">
+\[
+\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
+\]
+</p>
+<h1><a class="anchor" id="autotoc_md55"></a>
 References</h1>
 <ul>
 <li>Zhang, X., Chen, Z., &amp; Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. <a href="http://site.ebrary.com/id/11285709">http://site.ebrary.com/id/11285709</a> /// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>). Computational <a class="el" href="classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th...">Particle</a> Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7 /// - Fernández, F., Vargas, E., Muller, A.L. et al. <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). <a href="https://doi.org/10.1007/s11440-023-02152-4">https://doi.org/10.1007/s11440-023-02152-4</a> /// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Approaches. Geotech Geol Eng (2023). <a href="https://doi.org/10.1007/s10706-023-02693-1">https://doi.org/10.1007/s10706-023-02693-1</a>. /// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. <a href="http://dx.doi.org/10.1016/j.tust.2021.103904">http://dx.doi.org/10.1016/j.tust.2021.103904</a> </li>

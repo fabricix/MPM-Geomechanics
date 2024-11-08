@@ -39,7 +39,7 @@ The MPM formulation is obtained from the weak form of the motion equation and us
     -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
 \f]
 
-where \f$ \delta u_i \f$ are virtual displacements, whose value in the boundary is \f$ \delta u_i |_{\Gamma} = 0 \f$ and \f$ t_i \f$ is an external traction acting on the boundary $\Gamma$.
+where \f$ \delta u_i \f$ are virtual displacements, whose value in the boundary is \f$ \delta u_i |_{\Gamma} = 0 \f$ and \f$ t_i \f$ is an external traction acting on the boundary \f$ \Gamma \f$.
 
 In the MPM context any field or property \f$ f(x_i) \f$ can approximated using the value stored in the particle \f$ f_p \f$:
 
@@ -94,9 +94,12 @@ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI}
 \f]
 
 where 
-- \f$ p_{iI} = \sum_p S_{Ip} p_{Ip} \f$ is the nodal momentum
-- \f$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p \f$ is the nodal internal force, and
-- \f$ f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA \f$ is the external force at node \f$ I \f$.
+
+\f$ p_{iI} = \sum_p S_{Ip} p_{Ip} \f$ is the nodal momentum,
+
+\f$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p \f$ is the nodal internal force, and
+
+\f$ f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA \f$ is the external force at node \f$ I \f$.
 
 Note that the function \f$ S_{Ip} \f$ and its gradient \f$ S_{Ip,j} \f$ are the weighting functions of node \f$ I \f$ evaluated at the position of particle \f$ p \f$.
 
@@ -132,13 +135,24 @@ In the contiguous particle GIMP (cpGIMP) the characteristic function in defined 
 Where the integration is performed analytically within the particle domain.
 
 \f[
-S_{I p}=\left\{\begin{array}{cc}0 & |\xi| \geq L+l_p \\ \left(L+l_p+\xi\right)^2 / 4 L l_p & -L-l_p<\xi \leq-L+l_p \\ 1+\xi / L & -L+l_p<\xi \leq-l_p \\ 1-\left(\xi^2+l_p^2\right) / 2 L l_p \quad-l_p<\xi \leq l_p \\ 1-\xi / L & l_p<\xi \leq L-l_p \\ \left(L+l_p-\xi\right)^2 / 4 L l_p & L-l_p<\xi \leq L+l_p\end{array}\right.
+S_{I p}=\left\{\begin{array}{ll}0 & |\xi| \geq L+l_p \\ 
+\left(L+l_p+\xi\right)^2 / 4 L l_p & -L-l_p<\xi \leq-L+l_p \\ 
+1+\xi / L & -L+l_p<\xi \leq-l_p \\ 
+1-\left(\xi^2+l_p^2\right) / 2 L l_p & \quad-l_p<\xi \leq l_p \\ 
+1-\xi / L & l_p<\xi \leq L-l_p \\ 
+\left(L+l_p-\xi\right)^2 / 4 L l_p & L-l_p<\xi \leq L+l_p\end{array}\right.
 \f]
 
 and
 
 \f[
-\nabla S_{I p}= \begin{cases}0 & \left|x_p-x_I\right| \geq L+l_p, \\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} & -L-l_p<x_p-x_I \leq-L+l_p, \\ \frac{1}{L} & -L+l_p<x_p-x_I \leq-l_p, \\ -\frac{x_p-x_I}{L l_p} & -l_p<x_p-x_I \leq l_p, \\ -\frac{1}{L} & l_p<x_p-x_I \leq L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leq L+l_p .\end{cases}
+\nabla S_{I p}= \begin{cases}0 & \left|x_p-x_I\right| \geq L+l_p, \\ 
+\frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} & -L-l_p<x_p-x_I \leq-L+l_p, \\ 
+\frac{1}{L} & -L+l_p<x_p-x_I \leq-l_p, \\ 
+-\frac{x_p-x_I}{L l_p} & -l_p<x_p-x_I \leq l_p, \\ 
+-\frac{1}{L} & l_p<x_p-x_I \leq L-l_p, \\ 
+-\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leq L+l_p .
+\end{cases}
 \f]
 
 In which \f$ 2lp \f$ is the particle domain, \f$ L \f$ is the mesh size in 1D, and  is the relative particle position to node.
@@ -150,7 +164,63 @@ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta)
 \f$
 
 where \f$ \xi=x_p-x_I, \eta=y_p-y_I \f$ and \f$ \zeta=z_p-z \f$.
+
+### Explicit MPM integration
+
+The discrete form of the motion equation \f$
+f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \f$, is a second order ordinary differential equation in terms of displacement with respect to time, and can be solved by integration, using an explicit or implicit integration scheme.
+
+### Central difference Method  
+
+The displacement, the velocity and the acceleration at time \f$ t = 0, t^1, t^2, ... , t^n \f$ are knows, and the solution at time \f$ t^{n+1} \f$ is required.
+
+In central difference method, the velocity at \f$ t^{n+1/2} \f$ can be approximated as:
+
+\f[ 
+    \dot{u}^{n+1/2} = ( u^{n+1} - u^{n} ) \Delta t\ 
+\f]
+
+and, the acceleration in \f$ t^{n} \f$ can be approximated as:
+
+\f[
+    \ddot{u}^{n} =  (\dot{u}^{n+1/2} - \dot u ^ {n-1/2})/\Delta t
+\f]
+
+and therefore, the required displacement at \f$ t^{n+1} \f$ can be calculated as:
+
+\f[
+
+u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t
+
+\f]
+
+, where
+
+\f[
+\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^ {n}  \Delta t
+\f]
+
+The motion equation in \f$ t^{n} \f$ is:
+
+\f[
+m \, \ddot u ^{n} = f ^{n}
+\f]
+
+So,
+
+\f[
+\ddot u ^{n} = f ^{n} / m
+\f]
+
+and
+\f[
+\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
+\f]
+
+### Numerical implementation  
+
 ...
+
 
 # References
 - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709
