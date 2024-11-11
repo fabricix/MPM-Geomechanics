@@ -298,7 +298,17 @@ m \, \ddot u ^{n} = f ^{n}
 \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
 \]
 </p>
-<h1><a class="anchor" id="autotoc_md55"></a>
+<h3><a class="anchor" id="autotoc_md55"></a>
+Numerical implementation</h3>
+<ol type="1">
+<li>Calculate force \( f_n \)</li>
+<li>Calculate acceleration \( \ddot u ^{n} = f ^{n} / m \)</li>
+<li>Impose essential boundary conditions in terms of \( \ddot u ^{n} \)</li>
+<li><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> velocity \( \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t \)</li>
+<li><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> position \( u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t \)</li>
+<li>Let \( n = n + 1 \)</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md56"></a>
 References</h1>
 <ul>
 <li>Zhang, X., Chen, Z., &amp; Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. <a href="http://site.ebrary.com/id/11285709">http://site.ebrary.com/id/11285709</a> /// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>). Computational <a class="el" href="classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th...">Particle</a> Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7 /// - Fernández, F., Vargas, E., Muller, A.L. et al. <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). <a href="https://doi.org/10.1007/s11440-023-02152-4">https://doi.org/10.1007/s11440-023-02152-4</a> /// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Approaches. Geotech Geol Eng (2023). <a href="https://doi.org/10.1007/s10706-023-02693-1">https://doi.org/10.1007/s10706-023-02693-1</a>. /// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. <a href="http://dx.doi.org/10.1016/j.tust.2021.103904">http://dx.doi.org/10.1016/j.tust.2021.103904</a> </li>

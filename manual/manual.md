@@ -219,7 +219,12 @@ and
 
 ### Numerical implementation  
 
-...
+1. Calculate force \f$ f_n \f$
+2. Calculate acceleration \f$ \ddot u ^{n} = f ^{n} / m \f$
+3. Impose essential boundary conditions in terms of \f$ \ddot u ^{n} \f$
+4. Update velocity \f$ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t \f$
+5. Update position \f$ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t \f$
+6. Let \f$ n = n + 1 \f$
 
 
 # References
