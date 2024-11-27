@@ -241,11 +241,12 @@ The central difference method is conditionally stable, so the time step must be 
 
 In the MPM context the particles can has velocities in the begin ing of any time step, so the critical time speed can be written as:
 
-\f[ \Delta t_{cr} = l^e / max_p (c_p + |u_p| ) ]\f
+\f[ \Delta t_{cr} = l^e / max_p ( c_p +  |v_p| ) \f]
 
-In a structured regular mesh, \f[l^e]\f is the grid cell dimension.
+In a structured regular mesh, \f$ l^e \f$ is the grid cell dimension.
 
 # References
+
 - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709
 
 - Bathe, K.-J., & Bathe, K.-J. (1996). Finite element procedures. Prentice Hall.
