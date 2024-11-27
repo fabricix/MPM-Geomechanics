@@ -226,10 +226,26 @@ and
 5. Update position \f$ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t \f$
 6. Let \f$ n = n + 1 \f$
 
+### Stability Requirement
+The central difference method is conditionally stable, so the time step must be less that a certain value. For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
+
+\f[ \Delta t_{cr} = T_n \f]
+
+\f$ T_n \f$ is the smallest natural period of the system. For finite element method the critical time step of the central difference method can be expressed as:
+
+\f[ \Delta t_{cr} = min_e [ l^e / c ] \f]
+
+, where \f$ l^e \f$ is the characteristic length of the element and \f$ c \f$ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance can travel across the smallest characteristic element length withing a single time step. This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed is:
+
+\f[ c = \sqrt{ \frac {E (1-\nu)} {(1+\nu)(1-2\nu)\rho}}  \f]
+
+In the MPM context the particles can has velocities in the begin ing of any time step, so the critical time speed can be written as:
+
+\f[ \Delta t_{cr} = l^e / max_p (c_p + |u_p| ) ]\f
+
+In a structured regular mesh, \f[l^e]\f is the grid cell dimension.
 
 # References
 - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709
-/// - Fernández, Fabricio; Do Amaral Vargas, Eurípedes ; Quadros Velloso, Raquel. A 3D discretization procedure for the material point method (MPM). Computational Particle Mechanics, v. 7, p. 725-733, 2019.https://doi.org/10.1007/s40571-019-00303-7
-/// - Fernández, F., Vargas, E., Muller, A.L. et al. Material point method modeling in 3D of the failure and run-out processes of the Daguangbao landslide. Acta Geotech. (2023). https://doi.org/10.1007/s11440-023-02152-4
-/// - Fernández, F., Juajinoy, D.S.C., Vargas, E. et al. Basal Heave Stability Analysis of a Circular Shaft Excavation Considering FEM, NLA, and MPM Approaches. Geotech Geol Eng (2023). https://doi.org/10.1007/s10706-023-02693-1.
-/// - Fernández, F.; Rojas, J. E. ; Vargas Jr., E. A. ; Velloso, R. Q. ; Dias, D. Three-dimensional face stability analysis of shallow tunnels using numerical limit analysis and material point method. Tunnelling and Underground Space Technology, v. 112, p. 103904, 2021. http://dx.doi.org/10.1016/j.tust.2021.103904
+
+- Bathe, K.-J., & Bathe, K.-J. (1996). Finite element procedures. Prentice Hall.
