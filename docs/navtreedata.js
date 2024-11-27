@@ -35,7 +35,7 @@ var NAVTREE =
     [ "Documentation", "index.html#program_documentation", null ],
     [ "Execution", "index.html#program_execution", null ],
     [ "Theory manual", "program_theory_manual.html", [
-      [ "References", "program_theory_manual.html#autotoc_md57", null ]
+      [ "References", "program_theory_manual.html#autotoc_md58", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

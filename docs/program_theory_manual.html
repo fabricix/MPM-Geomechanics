@@ -254,7 +254,15 @@ Explicit MPM integration</h3>
 f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \), is a second order ordinary differential equation in terms of displacement with respect to time, and can be solved by integration, using an explicit or implicit integration scheme.</p>
 <h3><a class="anchor" id="autotoc_md54"></a>
 Central difference Method</h3>
-<p>The displacement, the velocity and the acceleration at time \( t = 0, t^1, t^2, ... , t^n \) are knows, and the solution at time \( t^{n+1} \) is required.</p>
+<p>The displacement, the velocity and the acceleration at time \( t = 0, t^1, t^2, ... , t^n \) are knows, and the values at time \( t^{n+1} \) are required, namely the solution of the problem.</p>
+<p>Time line:</p>
+<p class="formulaDsp">
+\[ 
+\text{---------+---------+---------+---------+---------+------&gt;}
+         n-1       n-1/2      n         n+1/2     n+1
+\text{        t          t         t         t         t       }
+\]
+</p>
 <p>In central difference method, the velocity at \( t^{n+1/2} \) can be approximated as:</p>
 <p class="formulaDsp">
 \[ 
@@ -327,7 +335,12 @@ Stability Requirement</h3>
 \[ \Delta t_{cr} = l^e / max_p ( c_p +  |v_p| ) \]
 </p>
 <p>In a structured regular mesh, \( l^e \) is the grid cell dimension.</p>
-<h1><a class="anchor" id="autotoc_md57"></a>
+<h2><a class="anchor" id="autotoc_md57"></a>
+Explicit MPM Scheme</h2>
+<p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> the particles stores all the material information and the mesh is used to integrate the motion equation \( \dot{p} = m \frac{dv}{dt} = f \). Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.</p>
+<p>The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. So, in the numerical integration the stresses could be updated at the beginning or at the end of each time step.</p>
+<p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> context the particles carries velocicies and accelerations and the nodes of the mesh are used to solved the motion equation. The nodal variables in \( t^n \) needs to be interpolated from particles.</p>
+<h1><a class="anchor" id="autotoc_md58"></a>
 References</h1>
 <ul>
 <li>Zhang, X., Chen, Z., &amp; Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. <a href="http://site.ebrary.com/id/11285709">http://site.ebrary.com/id/11285709</a></li>

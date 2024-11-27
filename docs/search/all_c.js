@@ -33,6 +33,7 @@ var searchData=
   ['mpm_20formulation_30',['MPM Formulation',['../program_theory_manual.html#autotoc_md52',1,'']]],
   ['mpm_20geomechanics_31',['MPM-Geomechanics',['../index.html',1,'']]],
   ['mpm_20integration_32',['Explicit MPM integration',['../program_theory_manual.html#autotoc_md53',1,'']]],
-  ['mpm_2eh_33',['MPM.h',['../MPM_8h.html',1,'']]],
-  ['musl_34',['MUSL',['../namespaceModelSetup.html#a95c5a2eb8b98cbf15989237803593b6ca89c017f04104823dccb2502143916c59',1,'ModelSetup']]]
+  ['mpm_20scheme_33',['Explicit MPM Scheme',['../program_theory_manual.html#autotoc_md57',1,'']]],
+  ['mpm_2eh_34',['MPM.h',['../MPM_8h.html',1,'']]],
+  ['musl_35',['MUSL',['../namespaceModelSetup.html#a95c5a2eb8b98cbf15989237803593b6ca89c017f04104823dccb2502143916c59',1,'ModelSetup']]]
 ];

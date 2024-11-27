@@ -172,7 +172,7 @@ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \f$, is a second order ordinary diffe
 
 ### Central difference Method  
 
-The displacement, the velocity and the acceleration at time \f$ t = 0, t^1, t^2, ... , t^n \f$ are knows, and the solution at time \f$ t^{n+1} \f$ is required.
+The displacement, the velocity and the acceleration at time \f$ t = 0, t^1, t^2, ... , t^n \f$ are knows, and the values at time \f$ t^{n+1} \f$ are required, namely the solution of the problem.
 
 In central difference method, the velocity at \f$ t^{n+1/2} \f$ can be approximated as:
 
@@ -244,6 +244,27 @@ In the MPM context the particles can has velocities in the begin ing of any time
 \f[ \Delta t_{cr} = l^e / max_p ( c_p +  |v_p| ) \f]
 
 In a structured regular mesh, \f$ l^e \f$ is the grid cell dimension.
+
+## Explicit MPM Scheme
+
+In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation \f$ \dot{p} = m \frac{dv}{dt} = f \f$. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.
+
+The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. The nodal velocities are used to calculate the strain and the vorticity tensor to update the stress. So, in the numerical integration the stresses could be updated with the velocities at the beginning or at the end of each time step. Regarding the velocity field used we have the Update Stress First - USF scheme or the Update Stress Last - USL scheme.
+
+**USF Scheme**
+In the USF scheme the velocities in \f$ n-1/2 \f$ are used to update the stress state:
+
+\f[ v_{iI}^{k-1/2} = p^{k-1/2}_{iI} / m_p = \sum_p S_{Ip} m_p v_{ip}^{i-1/2} / m_I^k \f]
+
+**USL Scheme**
+In the USL scheme the updated velocities in nodes \f$ n+1/2 \f$ are used to update the stress state:
+
+\f[ v_{iI}^{k+1/2} = p^{k+1/2}_{iI} / m_I^k \f]
+
+**MUSL Scheme**
+In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
+
+\f[ v_{iI}^{k+1/2} = \sum_p S_{Ip} m_p v_{ip}^{i+1/2} / m_I^k  \f]
 
 # References
 
