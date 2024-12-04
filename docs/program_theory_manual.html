@@ -114,9 +114,11 @@ Material Point Method (MPM)</h2>
 <h3><a class="anchor" id="autotoc_md51"></a>
 Introduction to MPM</h3>
 <p>The <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method, or <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, is a hybrid Lagrangian-Eulerian method that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.</p>
-<p><img src="/manual/mpm_discretization.png" alt="" class="inline"/> Figure 1: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Discretization [2]</p>
+<p><img src="mpm_discretization.png" alt="" class="inline"/>    </p>
+<p>Figure 1: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Discretization [2]</p>
 <p>In an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.</p>
-<p><img src="/manual/mpm_cycle.png" alt="" class="inline"/> Figure 2: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Cycle [3]</p>
+<p><img src="mpm_cycle.png" alt="" class="inline"/>    </p>
+<p>Figure 2: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Cycle [3]</p>
 <h3><a class="anchor" id="autotoc_md52"></a>
 MPM Formulation</h3>
 <p><a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.</p>
@@ -255,14 +257,6 @@ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \), is a second order ordinary differ
 <h3><a class="anchor" id="autotoc_md54"></a>
 Central difference Method</h3>
 <p>The displacement, the velocity and the acceleration at time \( t = 0, t^1, t^2, ... , t^n \) are knows, and the values at time \( t^{n+1} \) are required, namely the solution of the problem.</p>
-<p>Time line:</p>
-<p class="formulaDsp">
-\[ 
-\text{---------+---------+---------+---------+---------+------&gt;}
-         n-1       n-1/2      n         n+1/2     n+1
-\text{        t          t         t         t         t       }
-\]
-</p>
 <p>In central difference method, the velocity at \( t^{n+1/2} \) can be approximated as:</p>
 <p class="formulaDsp">
 \[ 
@@ -338,8 +332,19 @@ Stability Requirement</h3>
 <h2><a class="anchor" id="autotoc_md57"></a>
 Explicit MPM Scheme</h2>
 <p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> the particles stores all the material information and the mesh is used to integrate the motion equation \( \dot{p} = m \frac{dv}{dt} = f \). Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.</p>
-<p>The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. So, in the numerical integration the stresses could be updated at the beginning or at the end of each time step.</p>
-<p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> context the particles carries velocicies and accelerations and the nodes of the mesh are used to solved the motion equation. The nodal variables in \( t^n \) needs to be interpolated from particles.</p>
+<p>The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. The nodal velocities are used to calculate the strain and the vorticity tensor to update the stress. So, in the numerical integration the stresses could be updated with the velocities at the beginning or at the end of each time step. Regarding the velocity field used we have the <a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> Stress First - USF scheme or the <a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> Stress Last - USL scheme.</p>
+<p><b>USF Scheme</b> In the USF scheme the velocities in \( n-1/2 \) are used to update the stress state:</p>
+<p class="formulaDsp">
+\[ v_{iI}^{k-1/2} = p^{k-1/2}_{iI} / m_p = \sum_p S_{Ip} m_p v_{ip}^{i-1/2} / m_I^k \]
+</p>
+<p><b>USL Scheme</b> In the USL scheme the updated velocities in nodes \( n+1/2 \) are used to update the stress state:</p>
+<p class="formulaDsp">
+\[ v_{iI}^{k+1/2} = p^{k+1/2}_{iI} / m_I^k \]
+</p>
+<p><b>MUSL Scheme</b> In the Modified USL scheme, the updated particle velocities are used to update the stress state:</p>
+<p class="formulaDsp">
+\[ v_{iI}^{k+1/2} = \sum_p S_{Ip} m_p v_{ip}^{i+1/2} / m_I^k  \]
+</p>
 <h1><a class="anchor" id="autotoc_md58"></a>
 References</h1>
 <ul>

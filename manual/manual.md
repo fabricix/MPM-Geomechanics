@@ -10,12 +10,12 @@ The Material Point Method, or MPM, is a hybrid Lagrangian-Eulerian method that a
 In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved.
 The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.
 
-![](/manual/mpm_discretization.png)
+![](/manual/images/mpm_discretization.png)
 Figure 1: MPM Discretization [2]
 
 In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.
 
-![](/manual/mpm_cycle.png)
+![](/manual/images/mpm_cycle.png)
 Figure 2: MPM Cycle [3]
 
 ### MPM Formulation
