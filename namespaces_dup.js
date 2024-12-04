@@ -1,5 +1,14 @@
 var namespaces_dup =
 [
+    [ "Material Point Method (MPM)", "program_theory_manual.html#autotoc_md50", [
+      [ "Introduction to MPM", "program_theory_manual.html#autotoc_md51", null ],
+      [ "MPM Formulation", "program_theory_manual.html#autotoc_md52", null ],
+      [ "Explicit MPM integration", "program_theory_manual.html#autotoc_md53", null ],
+      [ "Central difference Method", "program_theory_manual.html#autotoc_md54", null ],
+      [ "Numerical implementation", "program_theory_manual.html#autotoc_md55", null ],
+      [ "Stability Requirement", "program_theory_manual.html#autotoc_md56", null ]
+    ] ],
+    [ "Explicit MPM Scheme", "program_theory_manual.html#autotoc_md57", null ],
     [ "DynamicRelaxation", "namespaceDynamicRelaxation.html", [
       [ "computeKineticEnergy", "namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4", null ],
       [ "setStaticSolution", "namespaceDynamicRelaxation.html#a1f54527a48bcdca9f6d8a3639a10d5f6", null ]
