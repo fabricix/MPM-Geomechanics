@@ -20,5 +20,6 @@ var searchData=
   ['nodemixture_2eh_17',['NodeMixture.h',['../NodeMixture_8h.html',1,'']]],
   ['nodes_18',['nodes',['../structBoundary_1_1planeBoundary.html#a7927ae162c36d4744792b84fcce0a4b6',1,'Boundary::planeBoundary']]],
   ['none_19',['NONE',['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da',1,'Material::NONE'],['../classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50a73d78f925d0bdd33349cfe7ec42b7067',1,'MohrCoulomb::Softening::NONE']]],
-  ['nrows_20',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]]
+  ['nrows_20',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]],
+  ['numerical_20implementation_21',['Numerical implementation',['../program_theory_manual.html#autotoc_md55',1,'']]]
 ];
