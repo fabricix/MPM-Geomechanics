@@ -3,9 +3,9 @@
 
   "shape_function":"GIMP",
 
-  "time":10,
+  "time":2,
 
- "critical_time_step_multiplier":0.25,
+ "time_step":1e-4,
 
   "gravity":[0.0,0.0,0.0],
 
@@ -48,7 +48,7 @@
     {
       "type":"elastic",
       "id":1,
-      "young":8e6,
+      "young":100e6,
       "density":2500,
       "poisson":0.25
     }
@@ -61,7 +61,7 @@
       "type":"cuboid",
       "id":1,
       "point_p1":[0.4,0.4,0],
-      "point_p2":[0.7,0.7,1.4],
+      "point_p2":[0.7,0.7,0.8],
       "material_id":1
     }
 
