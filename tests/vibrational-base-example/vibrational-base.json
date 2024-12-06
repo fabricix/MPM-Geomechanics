@@ -1,36 +1,17 @@
 {
-  "stress_scheme_update":"USL",
-
-  "shape_function":"GIMP",
-
   "time":2,
-
- "time_step":1e-4,
-
+  "time_step":1e-4,
   "gravity":[0.0,0.0,0.0],
-
-  "n_threads":1,
-
-  "damping":
-  {
-    "type":"local",
-    "value":0.0
-  },
-
   "results":
   {
     "print":100,
     "fields":["id","displacement","velocity","material","active","body"]
   },
-
-  "n_phases":1,
-
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
     "cells_number":[12,12,15],
     "origin":[0,0,0],
-    
     "boundary_conditions":
     {
       "plane_X0":"sliding",
@@ -41,10 +22,9 @@
       "plane_Zn":"sliding"
     }
   },
-
-  "material":
+  "materials":
   {
-    "elastic_1":
+    "material-1":
     {
       "type":"elastic",
       "id":1,
@@ -53,10 +33,9 @@
       "poisson":0.25
     }
  },
-
   "body":
   {
-    "columns_1":
+    "elastic-cuboid-body":
     {
       "type":"cuboid",
       "id":1,
@@ -64,6 +43,5 @@
       "point_p2":[0.7,0.7,0.8],
       "material_id":1
     }
-
-    }
+  }
   }

@@ -320,15 +320,18 @@ vector<Material*> Input::getMaterialList(){
 
 	try{
 
-		vector<Material*> materials;
+	vector<Material*> materials;
 
-		// setup the material list
-		if (!inputFile["material"].is_null()){
+	// Setup the material list
+	if (!inputFile["material"].is_null() || !inputFile["materials"].is_null()) {
 		
-			// loop aver all defined materials
-			json::iterator it;
-			for(it = inputFile["material"].begin(); it!=inputFile["material"].end();it++){
-				
+	// Determine the correct key
+	auto materialKey = inputFile["material"].is_null() ? "materials" : "material";
+
+    // Loop over all defined materials
+    json::iterator it;
+    for (it = inputFile[materialKey].begin(); it != inputFile[materialKey].end(); it++) {
+	
 				// verify material type
 				if (!(*it)["type"].is_null() && (*it)["type"].is_string()){
 					

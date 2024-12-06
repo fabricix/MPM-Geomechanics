@@ -53,7 +53,7 @@ namespace ModelSetup {
 	// time
 	double dt = 0.0; //!< time step
 	double time = 0.0; //!< simulation time
-	double dt_critical_multiplier = 0.25; //!< dafault critical time step fraction
+	double dt_critical_multiplier = 0.25; //!< default critical time step fraction
 	double currentTime = 0.0; //!< current simulation time
 
 	// initial time simulation
@@ -119,7 +119,6 @@ namespace ModelSetup {
 	const Vector3d& getGravity() { return gravity; }
 
 	void setGravity(const Vector3d& gravity_in) {
-		
 		gravity=gravity_in; 
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
