@@ -15,7 +15,9 @@ var searchData=
   ['totalforce_12',['totalForce',['../classNode.html#ab06a209d998e817f6f93590436aece9d',1,'Node']]],
   ['totalforcefluid_13',['totalForceFluid',['../classNodeMixture.html#afa2378b4573980b6e24cb205bf6c428a',1,'NodeMixture']]],
   ['totalparticles_14',['totalParticles',['../classParticle.html#afb7d35157679a6b5f50daebe4ac396da',1,'Particle']]],
-  ['two_20phase_20simulation_20definition_20example_15',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
-  ['two_20phase_20simulations_16',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
-  ['type_17',['type',['../classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592',1,'Material']]]
+  ['tutorial_20manual_15',['Tutorial manual',['../program_tutorial_manual.html',1,'']]],
+  ['tutorial_2emd_16',['tutorial.md',['../tutorial_8md.html',1,'']]],
+  ['two_20phase_20simulation_20definition_20example_17',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
+  ['two_20phase_20simulations_18',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
+  ['type_19',['type',['../classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592',1,'Material']]]
 ];

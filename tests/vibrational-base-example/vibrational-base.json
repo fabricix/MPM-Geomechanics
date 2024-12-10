@@ -1,12 +1,26 @@
 {
-  "time":2,
-  "time_step":1e-4,
-  "gravity":[0.0,0.0,0.0],
-  "results":
+  "body":
   {
-    "print":100,
-    "fields":["id","displacement","velocity","material","active","body"]
+    "elastic-cuboid-body":
+    {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[0.4,0.4,0],
+      "point_p2":[0.7,0.7,0.8],
+      "material_id":1
+    }
   },
+	"materials":
+  {
+    "material-1":
+    {
+      "type":"elastic",
+      "id":1,
+      "young":100e6,
+      "density":2500,
+      "poisson":0.25
+    }
+ },
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
@@ -22,26 +36,11 @@
       "plane_Zn":"sliding"
     }
   },
-  "materials":
+  "time":2,
+  "time_step":1e-4,
+  "results":
   {
-    "material-1":
-    {
-      "type":"elastic",
-      "id":1,
-      "young":100e6,
-      "density":2500,
-      "poisson":0.25
-    }
- },
-  "body":
-  {
-    "elastic-cuboid-body":
-    {
-      "type":"cuboid",
-      "id":1,
-      "point_p1":[0.4,0.4,0],
-      "point_p2":[0.7,0.7,0.8],
-      "material_id":1
-    }
+    "print":40,
+    "fields":["displacement","velocity"]
   }
-  }
+}
