@@ -2,7 +2,7 @@ var classContribution =
 [
     [ "Contribution", "classContribution.html#a59775497d673b49ac00b19f525bc1b05", null ],
     [ "~Contribution", "classContribution.html#ad9d66f32fc94101b3dafdda235a8d00f", null ],
-    [ "getGradients", "classContribution.html#ad4edb3f6d7b24f971ed20b4e365b8686", null ],
+    [ "getGradients", "classContribution.html#a18c082558180b5f06968e01fdc034a98", null ],
     [ "getNodeId", "classContribution.html#a5018df7fc0d9c53d6d8513c68eab5069", null ],
     [ "getWeight", "classContribution.html#a78309e2347b9786d75b260cc40c54d86", null ],
     [ "setGradients", "classContribution.html#a64e3d886e40b03c17d7192f3ab90cc2c", null ],

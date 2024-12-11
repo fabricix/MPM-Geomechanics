@@ -1,4 +1,5 @@
 <map id="Node" name="Node">
-<area shape="rect" id="node1" title="Represents a mesh node." alt="" coords="17,183,73,209"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,84,32"/>
+<area shape="rect" id="Node000001" title="Represents a mesh node." alt="" coords="15,192,68,219"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,78,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,48,44,192,39,192,39,48"/>
 </map>

@@ -26,7 +26,7 @@ var Model_8h =
     [ "getDamping", "Model_8h.html#a264dc98c9084c7618bc14578c7831b34", null ],
     [ "getDampingLocal", "Model_8h.html#a1b49393d1db4f133911bdaa206b92050", null ],
     [ "getDampingType", "Model_8h.html#a1ad71c0f7e778689c48d5e5d20e7df8e", null ],
-    [ "getGravity", "Model_8h.html#a93791e4b566ed9a1be8cee38a73c83bc", null ],
+    [ "getGravity", "Model_8h.html#aeabd837a4e0a3a11ea582bd0d8c115cc", null ],
     [ "getGravityActive", "Model_8h.html#ab3410f41984790799be0b620566eb230", null ],
     [ "getInitialSimulationTime", "Model_8h.html#a33c1ffa724e176734a1cb73726e9e993", null ],
     [ "getInputFile", "Model_8h.html#af4a92d671d765f250659dfa3b46b6149", null ],

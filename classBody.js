@@ -6,7 +6,7 @@ var classBody =
     [ "getId", "classBody.html#abbc57798cc4a6292f9dfb4a9b7310a35", null ],
     [ "getInitialVelocity", "classBody.html#a28c7284edacc764783afdaf3b69489d5", null ],
     [ "getMaterialId", "classBody.html#a63af6b93b69a1410b8ff7b9cbd1edba2", null ],
-    [ "getParticles", "classBody.html#a45da50a12d1d9a1ab515ab8b9d086b8d", null ],
+    [ "getParticles", "classBody.html#a3bbb2bf9a87abb437d979a3999647ae5", null ],
     [ "insertParticles", "classBody.html#aae40538ae00bb501c58729ee35c762b1", null ],
     [ "setId", "classBody.html#a610a132e5529972efa516e159acdb0bd", null ],
     [ "setInitialVelocity", "classBody.html#aa063e3828f4cfad904a361bce338e6fd", null ],

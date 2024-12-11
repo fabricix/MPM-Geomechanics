@@ -1,6 +1,9 @@
 <map id="MohrCoulomb" name="MohrCoulomb">
-<area shape="rect" id="node1" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="10,229,123,256"/>
-<area shape="rect" id="node2" href="$classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,155,128,181"/>
-<area shape="rect" id="node3" href="$classElastic.html" title="Represents an elastic material." alt="" coords="34,80,99,107"/>
-<area shape="rect" id="node4" href="$classMaterial.html" title="Represents a material." alt="" coords="29,5,105,32"/>
+<area shape="rect" id="Node000001" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="11,229,114,256"/>
+<area shape="rect" id="Node000002" href="$classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,155,120,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,197,65,229,60,229,60,197"/>
+<area shape="rect" id="Node000003" href="$classElastic.html" title="Represents an elastic material." alt="" coords="32,80,93,107"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="65,122,65,154,60,154,60,122"/>
+<area shape="rect" id="Node000004" href="$classMaterial.html" title="Represents a material." alt="" coords="29,5,96,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
 </map>

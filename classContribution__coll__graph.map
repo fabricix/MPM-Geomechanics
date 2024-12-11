@@ -1,4 +1,5 @@
 <map id="Contribution" name="Contribution">
-<area shape="rect" id="node1" title="Represents the node that the particle contributes." alt="" coords="5,95,108,121"/>
-<area shape="rect" id="node2" title=" " alt="" coords="17,5,96,32"/>
+<area shape="rect" id="Node000001" title="Represents the node that the particle contributes." alt="" coords="5,96,97,123"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="15,5,87,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,48,54,95,48,95,48,48"/>
 </map>
