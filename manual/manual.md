@@ -1,7 +1,5 @@
 \page program_theory_manual Theory manual
 
-**Manual Theory under development**
-
 ## Material Point Method (MPM)
 
 ### Introduction to MPM

@@ -37,6 +37,7 @@ var NAVTREE =
     [ "Theory manual", "program_theory_manual.html", [
       [ "References", "program_theory_manual.html#autotoc_md58", null ]
     ] ],
+    [ "Tutorial manual", "program_tutorial_manual.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -74,7 +75,7 @@ var NAVTREEINDEX =
 "classBody.html#af8aaa282121a6e26fdd9826514cc1098",
 "classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540",
 "functions_m.html",
-"structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692"
+"structLoads_1_1PressureMaterial.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

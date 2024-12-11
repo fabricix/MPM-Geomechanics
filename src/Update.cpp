@@ -295,8 +295,6 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedVelocity = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().velocity, ModelSetup::getCurrentTime()) : Vector3d{0,0,0} ;
-	
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < plane->nodes.size(); ++i){
@@ -310,10 +308,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 			switch(plane->restriction) 
 			{
 				// free condition
-				case Boundary::BoundaryType::FREE:
-				{
-					break;
-				}
+				case Boundary::BoundaryType::FREE: { break; }
+				
+				// earthquake condition
+				case Boundary::BoundaryType::EARTHQUAKE: { break; }
+
 				// fixed condition
 				case Boundary::BoundaryType::FIXED:
 				{
@@ -352,12 +351,6 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
-					break;
-				}
-				// earthquake boundary condition
-				case Boundary::BoundaryType::EARTHQUAKE:
-				{ 
-					nodeI->setMomentum(nodeI->getMass() * interpolatedVelocity);
 					break;
 				}
 			}
