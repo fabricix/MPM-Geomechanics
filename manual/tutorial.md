@@ -61,14 +61,14 @@ The complete JSON file with the keywords we write:
 
 When the "earthquake" keyword is defined in any plane in the mesh, the simulator will search for the acceleration record "base_acceleration.csv" in the working directory. This record must to be the data in the following structure: time, acceleration_x, acceleration_y, acceleration_z. The five first lines of the acceleration record is:
 
-    {
+    
         t,ax,ay,az
         0.0,-1.8849555921538759,-0.9424777960769379,-0.0
         5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
         0.0001,-1.884955220078568,-0.9424777495675233,-0.0
         0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
         ...
-    }
+    
 
 Note that the base acceleration record must to contain a header, that will be ignored during the reading acceleration data.
 
