@@ -75,14 +75,3 @@ In this example is tested the refinement mesh behavior. The fixed (left-bottom) 
 ![](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
 
 See [exponential-softening-refined.json](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.json) input file for simulation details.
-
-### Base acceleration
-In this example the model base is setting up to vibrate with an acceleration and velocity record. The input velocity and acceleration used is:
-
-![](/tests/vibrational-base-example/vibration-input-record.png)
-
-The response of the model is:
-
-![](/tests/vibrational-base-example/vibrational-base-response.gif)
-
-See the input file of this model in [vibrational-base.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/vibrational-base-example/vibrational-base.json) 
