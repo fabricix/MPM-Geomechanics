@@ -77,6 +77,7 @@
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
+    <ClInclude Include="..\..\inc\Mesh\NodeContact.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">

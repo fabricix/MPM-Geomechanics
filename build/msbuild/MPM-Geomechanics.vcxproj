@@ -200,6 +200,7 @@
     <ClInclude Include="..\..\inc\Materials\MohrCoulomb.h" />
     <ClInclude Include="..\..\inc\Mesh\Mesh.h" />
     <ClInclude Include="..\..\inc\Mesh\Node.h" />
+    <ClInclude Include="..\..\inc\Mesh\NodeContact.h" />
     <ClInclude Include="..\..\inc\Mesh\NodeMixture.h" />
     <ClInclude Include="..\..\inc\Model.h" />
     <ClInclude Include="..\..\inc\MPM.h" />
