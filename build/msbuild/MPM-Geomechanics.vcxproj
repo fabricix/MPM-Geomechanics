@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\MohrCoulomb.cpp" />
     <ClCompile Include="..\..\src\MPM.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
+    <ClCompile Include="..\..\src\NodeContact.cpp" />
     <ClCompile Include="..\..\src\NodeMixture.cpp" />
     <ClCompile Include="..\..\src\Output.cpp" />
     <ClCompile Include="..\..\src\Particle.cpp" />

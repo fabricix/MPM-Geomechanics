@@ -594,6 +594,10 @@ namespace Input {
 	/// \brief Return the number of phases in the simulation
 	/// \return n_phases Number of phases in the simulation
 	unsigned getNumberPhases();
+
+	/// \brief Return the contact method flag for the simulation
+	/// \return contact_method Flag for the simulation
+	unsigned getContactMethod();
 	
 	/// \brief Return loads distributed in particles inside a box
 	/// \return loads_distributed_box  Loads distributed in particles inside a box

@@ -137,7 +137,7 @@ void MPM::setupMesh() {
 	mesh.setOrigin(Input::getOrigin());
 
 	// create the mesh
-	mesh.createGrid(ModelSetup::getTwoPhaseActive());
+	mesh.createGrid(ModelSetup::getTwoPhaseActive(), ModelSetup::getContactActive());
 
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
@@ -272,6 +272,12 @@ void MPM::setNumberPhasesInSimulation() {
 	ModelSetup::setTwoPhaseActive(Input::getNumberPhases()>1?true:false);
 }
 
+void MPM::setContactMethodForSimulation() {
+
+	// configures the number of phases in the simulation
+	ModelSetup::setContactActive(Input::getContactMethod() == 1 ? true : false);
+}
+
 void MPM::loadState()
 {
 	ModelSetup::setLoadState(Input::getLoadState());
@@ -306,6 +312,9 @@ void MPM::createModel() {
 
 		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
+
+		// set contact method for the simulations
+		setContactMethodForSimulation();
 
 		// setup the mesh
 		setupMesh();

@@ -198,6 +198,10 @@ private:
 	///
 	void setNumberPhasesInSimulation();
 
+	/// \brief Configure number of phases in the simulation
+	///
+	void setContactMethodForSimulation();
+
 
 	/// \brief Configure number of threads
 	///

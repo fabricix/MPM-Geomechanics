@@ -40,7 +40,7 @@ public:
 
     /// \brief Create a structured mesh grid
     /// \param[in] is_two_phase_simulation True if two phase simulation is required
-    void createGrid( bool is_two_phase_simulation );
+    void createGrid( bool is_two_phase_simulation, bool is_contact_simulation);
 
     /// \brief Set cells dimension in each direction
     /// \param[in] cell_dimension_x Cell dimesion in x

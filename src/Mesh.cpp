@@ -14,6 +14,7 @@ using std::floor;
 #include "Mesh/Mesh.h"
 #include "Mesh/Node.h"
 #include "Mesh/NodeMixture.h"
+#include "Mesh/NodeContact.h"
 #include "Warning.h"
 #include "Particle/Particle.h"
 
@@ -206,7 +207,7 @@ void Mesh::getContributionNodes(const Vector3d& position, vector<int>& contribut
 // public methods
 //
 
-void Mesh::createGrid(bool is_two_phase_simulation) {
+void Mesh::createGrid(bool is_two_phase_simulation, bool is_contact_simulation) {
 
     // set the rows in each direction
     nRows.x() = nCells.x()+2*nGhosts+1;
@@ -218,7 +219,7 @@ void Mesh::createGrid(bool is_two_phase_simulation) {
     
     for (int i = 0; i < nRows.x()*nRows.y()*nRows.z() ; ++i) {
 
-        gridNodes.push_back(is_two_phase_simulation ? new NodeMixture() : new Node());
+        gridNodes.push_back(is_two_phase_simulation ? new NodeMixture() : is_contact_simulation ? new NodeContact() : new Node());
     }
 
     // initialize nodes

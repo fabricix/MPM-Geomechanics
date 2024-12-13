@@ -1083,6 +1083,33 @@ unsigned Input::getNumberPhases(){
 	}
 }
 
+unsigned Input::getContactMethod() {
+
+	try
+	{
+		string keyword = "contact_method";
+
+		// default simulations is one phase
+		if (inputFile[keyword].is_null()) { return 0; }
+
+		// define the number of phases by an input
+		if (inputFile[keyword].is_boolean()) {
+
+			unsigned contactMethodFlag = inputFile[keyword];
+
+			return contactMethodFlag;
+		}
+
+		throw(keyword);
+	}
+
+	catch (std::string& keyword)
+	{
+		Warning::printMessage("The keyword: \"" + string(keyword) + "\" must be a true/false value");
+		throw;
+	}
+}
+
 vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 
 	try{
