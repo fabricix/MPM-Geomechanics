@@ -19,6 +19,7 @@ var hierarchy =
     ] ],
     [ "Mesh", "classMesh.html", null ],
     [ "MPM", "classMPM.html", null ],
+    [ "Loads::NodalPointLoad", "structLoads_1_1NodalPointLoad.html", null ],
     [ "Node", "classNode.html", [
       [ "NodeMixture", "classNodeMixture.html", null ]
     ] ],

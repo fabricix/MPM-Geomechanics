@@ -107,7 +107,8 @@ $(function(){initNavTree('namespaceLoads.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Loads Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -119,6 +120,9 @@ $(function(){initNavTree('namespaceLoads.html',''); initResizable(true); });
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1LoadDistributedBox.html">LoadDistributedBox</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define a distributed load in particles inside the cuboid defined by point p1 and p2.  <a href="structLoads_1_1LoadDistributedBox.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1NodalPointLoad.html">NodalPointLoad</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a structure to store point loads.  <a href="structLoads_1_1NodalPointLoad.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1PrescribedPorePressure.html">PrescribedPorePressure</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to represent a particle with a pressure. Pressure is applied to particles with the specified index.  <a href="structLoads_1_1PrescribedPorePressure.html#details">More...</a><br /></td></tr>
@@ -168,10 +172,38 @@ Functions</h2></td></tr>
 <tr class="memitem:a9d91d188d9343c0d4b35705604b6b3d1" id="r_a9d91d188d9343c0d4b35705604b6b3d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d91d188d9343c0d4b35705604b6b3d1">setInitialVelocity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies)</td></tr>
 <tr class="memdesc:a9d91d188d9343c0d4b35705604b6b3d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial velocity in bodies.  <br /></td></tr>
 <tr class="separator:a9d91d188d9343c0d4b35705604b6b3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b671a26b22a970ebdb930b2c43a505" id="r_a70b671a26b22a970ebdb930b2c43a505"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70b671a26b22a970ebdb930b2c43a505">configureNodalPointLoads</a> (<a class="el" href="classMesh.html">Mesh</a> *)</td></tr>
+<tr class="separator:a70b671a26b22a970ebdb930b2c43a505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ad8a3ae1d06dccc3acb90569960068461" id="r_ad8a3ae1d06dccc3acb90569960068461"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structLoads_1_1PrescribedPorePressure.html">PrescribedPorePressure</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8a3ae1d06dccc3acb90569960068461">prescribedPorePressureParticlesList</a></td></tr>
+<tr class="separator:ad8a3ae1d06dccc3acb90569960068461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9be730a82af1e03b57cc4906e4931d" id="r_afe9be730a82af1e03b57cc4906e4931d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLoads_1_1SeismicData.html">SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe9be730a82af1e03b57cc4906e4931d">seismicRecord</a></td></tr>
+<tr class="separator:afe9be730a82af1e03b57cc4906e4931d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7863042b1bc1dad916b60d4f7aec821e" id="r_a7863042b1bc1dad916b60d4f7aec821e"><td class="memItemLeft" align="right" valign="top">std::vector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7863042b1bc1dad916b60d4f7aec821e">nodalPointLoad</a></td></tr>
+<tr class="separator:a7863042b1bc1dad916b60d4f7aec821e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Operations to manage loads in the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a70b671a26b22a970ebdb930b2c43a505" name="a70b671a26b22a970ebdb930b2c43a505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b671a26b22a970ebdb930b2c43a505">&#9670;&#160;</a></span>configureNodalPointLoads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Loads::configureNodalPointLoads </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac2794cc202d1527d21f610dd1bfc4310" name="ac2794cc202d1527d21f610dd1bfc4310"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac2794cc202d1527d21f610dd1bfc4310">&#9670;&#160;</a></span>getSeismicData()</h2>
 
@@ -435,6 +467,49 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a7863042b1bc1dad916b60d4f7aec821e" name="a7863042b1bc1dad916b60d4f7aec821e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7863042b1bc1dad916b60d4f7aec821e">&#9670;&#160;</a></span>nodalPointLoad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector Loads::nodalPointLoad</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad8a3ae1d06dccc3acb90569960068461" name="ad8a3ae1d06dccc3acb90569960068461"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8a3ae1d06dccc3acb90569960068461">&#9670;&#160;</a></span>prescribedPorePressureParticlesList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="structLoads_1_1PrescribedPorePressure.html">PrescribedPorePressure</a>&gt; Loads::prescribedPorePressureParticlesList</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe9be730a82af1e03b57cc4906e4931d" name="afe9be730a82af1e03b57cc4906e4931d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe9be730a82af1e03b57cc4906e4931d">&#9670;&#160;</a></span>seismicRecord</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structLoads_1_1SeismicData.html">SeismicData</a> Loads::seismicRecord</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

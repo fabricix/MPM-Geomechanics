@@ -5,7 +5,7 @@ var searchData=
   ['linear_20elastic_2',['Linear Elastic',['../namespaceInput.html#autotoc_md33',1,'']]],
   ['linux_3',['LINUX',['../namespaceModelSetup.html#a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22',1,'ModelSetup']]],
   ['linux_4',['Compilation in Linux',['../index.html#autotoc_md41',1,'']]],
-  ['load_5',['load',['../structLoads_1_1LoadDistributedBox.html#a40c36d1273d64d21ce2a39a5044efe34',1,'Loads::LoadDistributedBox']]],
+  ['load_5',['load',['../structLoads_1_1LoadDistributedBox.html#a40c36d1273d64d21ce2a39a5044efe34',1,'Loads::LoadDistributedBox::load'],['../structLoads_1_1NodalPointLoad.html#a42952a45bee43182ca85b6a1486f7565',1,'Loads::NodalPointLoad::load']]],
   ['load_20definition_20examples_6',['Load definition examples',['../namespaceInput.html#autotoc_md10',1,'']]],
   ['load_20example_7',['Gravity load Example',['../namespaceInput.html#autotoc_md11',1,'']]],
   ['load_20in_20box_20example_8',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],

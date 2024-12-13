@@ -10,16 +10,15 @@
 #include "Geometry.h"
 #include "Input.h"
 
-namespace Loads 
-{
-	// list of particles with prescribed pore pressure
-	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
+namespace Loads {
 
-	// seismic data
+	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
 	SeismicData seismicRecord;
+	std::vector <NodalPointLoad> nodalPointLoad;
+
 }
 
-Loads::SeismicData& Loads::getSeismicData(){ return seismicRecord ;}
+Loads::SeismicData& Loads::getSeismicData() { return seismicRecord; }
 
 void Loads::setGravity(vector<Body*>& bodies) {
 
@@ -167,6 +166,34 @@ void Loads::updatePrescribedPorePressure(vector<Body*>* bodies) {
 		// setup pressure at particle
 		bodies->at(ibody)->getParticles()->at(ipart)->setPressureFluid(ipressure);
 	}
+}
+
+void Loads::configureNodalPointLoads(Mesh* mesh)
+{
+	vector<Loads::NodalPointLoad> loadlist = Input::readNodalPointLoads();
+
+	for (auto& iload : loadlist)
+	{	
+		double min_distance = 1e10;
+		int node_id = -1;
+
+		// for each load point calculate the min distance inside the nodes
+		for (const auto& inode : mesh->getNodesInCell(iload.point))
+		{	
+			Vector3d xI = mesh->getNodes()->at(inode)->getCoordinates();
+			Vector3d xP = iload.point;
+
+			double new_distance = (xI - iload.point).norm();
+
+			if (new_distance <= min_distance)
+			{
+				min_distance = new_distance;
+				node_id = mesh->getNodes()->at(inode)->getId();
+			}
+		}
+	}
+	// set nodal-id load vector
+	nodalPointLoad = loadlist;
 }
 
 void Loads::setInitialPorePressureBox(vector<Body*>& bodies, vector<Loads::PressureBox> loads) {

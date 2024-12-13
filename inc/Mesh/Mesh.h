@@ -176,7 +176,7 @@ private:
     
     Vector3d maxLimit; //!< high coordinates of domain without ghosts
     
-    vector<Node*> gridNodes; //!< all nodes in mesh
+    std::vector<Node*> gridNodes; //!< all nodes in mesh
     
     Boundary boundary; //!< mesh boundary
     

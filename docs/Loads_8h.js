@@ -1,11 +1,13 @@
 var Loads_8h =
 [
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
+    [ "Loads::NodalPointLoad", "structLoads_1_1NodalPointLoad.html", "structLoads_1_1NodalPointLoad" ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
     [ "Loads::SeismicData", "structLoads_1_1SeismicData.html", "structLoads_1_1SeismicData" ],
+    [ "configureNodalPointLoads", "Loads_8h.html#a70b671a26b22a970ebdb930b2c43a505", null ],
     [ "getSeismicData", "Loads_8h.html#ac2794cc202d1527d21f610dd1bfc4310", null ],
     [ "setGravity", "Loads_8h.html#a1a2299651bd04336c8233e10785aca1b", null ],
     [ "setInitialPorePressureBox", "Loads_8h.html#ab69a7f18bdaf04c6fd6197f465ac9446", null ],
@@ -15,5 +17,8 @@ var Loads_8h =
     [ "setPrescribedPorePressureBoundaryForceBox", "Loads_8h.html#aab3e0ec525ab42f967dc058e7d057dde", null ],
     [ "setPrescribedPorePressureBox", "Loads_8h.html#af688d48cc51e2b6005d0088502120c55", null ],
     [ "setSeismicData", "Loads_8h.html#ab8f15227c16f8394a08a4d3586f80e11", null ],
-    [ "updatePrescribedPorePressure", "Loads_8h.html#a6f957fba555640cd03240c65124a35c2", null ]
+    [ "updatePrescribedPorePressure", "Loads_8h.html#a6f957fba555640cd03240c65124a35c2", null ],
+    [ "nodalPointLoad", "Loads_8h.html#a7863042b1bc1dad916b60d4f7aec821e", null ],
+    [ "prescribedPorePressureParticlesList", "Loads_8h.html#ad8a3ae1d06dccc3acb90569960068461", null ],
+    [ "seismicRecord", "Loads_8h.html#afe9be730a82af1e03b57cc4906e4931d", null ]
 ];

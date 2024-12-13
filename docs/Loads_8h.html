@@ -108,7 +108,8 @@ $(function(){initNavTree('Loads_8h.html',''); initResizable(true); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Loads.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -184,6 +185,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1LoadDistributedBox.html">Loads::LoadDistributedBox</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define a distributed load in particles inside the cuboid defined by point p1 and p2.  <a href="structLoads_1_1LoadDistributedBox.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1NodalPointLoad.html">Loads::NodalPointLoad</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a structure to store point loads.  <a href="structLoads_1_1NodalPointLoad.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1PressureBox.html">Loads::PressureBox</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to represent a box with a pressure. Pressure in applied to particles inside the cuboid defined by point p1 and p2.  <a href="structLoads_1_1PressureBox.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -238,6 +242,17 @@ Functions</h2></td></tr>
 <tr class="memitem:a9d91d188d9343c0d4b35705604b6b3d1" id="r_a9d91d188d9343c0d4b35705604b6b3d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a9d91d188d9343c0d4b35705604b6b3d1">Loads::setInitialVelocity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies)</td></tr>
 <tr class="memdesc:a9d91d188d9343c0d4b35705604b6b3d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial velocity in bodies.  <br /></td></tr>
 <tr class="separator:a9d91d188d9343c0d4b35705604b6b3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b671a26b22a970ebdb930b2c43a505" id="r_a70b671a26b22a970ebdb930b2c43a505"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a70b671a26b22a970ebdb930b2c43a505">Loads::configureNodalPointLoads</a> (<a class="el" href="classMesh.html">Mesh</a> *)</td></tr>
+<tr class="separator:a70b671a26b22a970ebdb930b2c43a505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ad8a3ae1d06dccc3acb90569960068461" id="r_ad8a3ae1d06dccc3acb90569960068461"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structLoads_1_1PrescribedPorePressure.html">PrescribedPorePressure</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#ad8a3ae1d06dccc3acb90569960068461">Loads::prescribedPorePressureParticlesList</a></td></tr>
+<tr class="separator:ad8a3ae1d06dccc3acb90569960068461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9be730a82af1e03b57cc4906e4931d" id="r_afe9be730a82af1e03b57cc4906e4931d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLoads_1_1SeismicData.html">SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#afe9be730a82af1e03b57cc4906e4931d">Loads::seismicRecord</a></td></tr>
+<tr class="separator:afe9be730a82af1e03b57cc4906e4931d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7863042b1bc1dad916b60d4f7aec821e" id="r_a7863042b1bc1dad916b60d4f7aec821e"><td class="memItemLeft" align="right" valign="top">std::vector&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a7863042b1bc1dad916b60d4f7aec821e">Loads::nodalPointLoad</a></td></tr>
+<tr class="separator:a7863042b1bc1dad916b60d4f7aec821e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
