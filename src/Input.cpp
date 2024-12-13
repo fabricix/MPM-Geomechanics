@@ -1083,6 +1083,35 @@ unsigned Input::getNumberPhases(){
 	}
 }
 
+std::vector<NodalPointLoad> Input::readNodalPointLoads( ) {
+
+    std::vector<NodalPointLoad> nodalPointLoads;
+
+    if (inputFile.contains("nodal_point_load")) {
+
+        for (const auto& item : inputFile["nodal_point_load"]) {
+
+            if (item.size() == 2 && item[0].is_array() && item[1].is_array() && 
+                item[0].size() == 3 && item[1].size() == 3) {
+
+                NodalPointLoad npLoad;
+                for (size_t i = 0; i < 3; ++i) {
+                    npLoad.point[i] = item[0][i];
+                    npLoad.load[i] = item[1][i];
+                }
+
+                nodalPointLoads.push_back(npLoad);
+            } else {
+                throw std::runtime_error("Invalid structure in nodal_point_load");
+            }
+        }
+    } else {
+        throw std::runtime_error("Key 'nodal_point_load' not found in the JSON file");
+    }
+	
+    return nodalPointLoads;
+}
+
 vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 
 	try{

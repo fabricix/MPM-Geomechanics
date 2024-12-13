@@ -599,6 +599,12 @@ namespace Input {
 	/// \return loads_distributed_box  Loads distributed in particles inside a box
 	vector<Loads::LoadDistributedBox> getLoadDistributedBox();
 	
+	/// \brief read nodal point loads
+	/// This function reads a points from input file in the following format:
+	/// "nodal_point_loads": [[p1x,p1y,p1z],[p1x,p1y,p1z]],...,[[pnx,pny,pnz],[pnx,pny,pnz]]
+	/// \return nodal_point_load
+	vector<Loads::NodalPointLoad> readNodalPointLoads();
+
 	/// \brief Return prescribed pressure in particles inside a box
 	/// \return pressure_prescribed_box  Pressures prescribed in particles
 	vector<Loads::PressureBox> getPrescribedPressureBox();

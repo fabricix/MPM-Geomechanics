@@ -30,6 +30,14 @@ namespace Loads {
         Vector3d load; //!< load to be distributed in particles inside the box
     };
 
+    /// \struct NodalPointLoad
+    /// \brief Define a structure to store point loads
+    struct NodalPointLoad
+    {
+        Vector3d point; //!< Coordinates [px, py, pz]
+        Vector3d load; //!< Load [lx, ly, lz]
+    };
+
     /// \struct PressureBox
     /// \brief Structure to represent a box with a pressure.
     /// Pressure in applied to particles inside the cuboid defined by point p1 and p2.
