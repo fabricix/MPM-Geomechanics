@@ -18,6 +18,7 @@ using std::cout;
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "Contact.h"
 
 SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
 
@@ -73,6 +74,10 @@ void SolverExplicitUSL::Solve()
 
 		// integrate the grid nodal momentum equation
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
+
+		// ContactCheck
+		Contact::checkContact(mesh, bodies);
+
 
 		// update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);

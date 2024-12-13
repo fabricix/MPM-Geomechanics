@@ -8,6 +8,9 @@
 #ifndef CONTACT_H_
 #define CONTACT_H_
 
+#include "Mesh/Mesh.h"
+#include "Body/Body.h"
+
 /// \class Contact
 /// \brief Represents a frictional contact between bodies
 class Contact {
@@ -21,6 +24,23 @@ public:
 	/// \brief Default destructor
 	///
 	virtual ~Contact();
+
+	/// \brief Check Contact
+	/// \param[in] mesh
+	/// \param[in] bodies
+	static void checkContact(Mesh* mesh, vector<Body*>* bodies);
+
+	/// \brief First contact check
+	/// \param[in] mesh
+	/// \param[in] bodies
+	static void firstContactCheck(Mesh* mesh, vector<Body*>* bodies);
+
+	/// \brief Contact force
+	/// \param[in] mesh
+	/// \param[in] bodies
+	/// \param[in] dt
+	static void firstContactCheck(Mesh* mesh, vector<Body*>* bodies, double dt);
+
 };
 
 #endif /* CONTACT_H_ */

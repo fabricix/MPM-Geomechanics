@@ -9,6 +9,7 @@
 #define INC_MESH_NODECONTACT_H_
 
 #include <Mesh/Node.h>
+#include <Particle/Particle.h>
 
 /// \class NodeMixture
 /// \brief Represents a mesh node for calculations using the mixture theory
@@ -103,6 +104,9 @@ private:
     Vector3d dampingForceSlaveBody; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
     Vector3d totalForceSlaveBody; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
     bool hasContact; //!< contact flag
+    int closestParticleId; //!< Closest particle from node contact
+    int closestParticleSlaveId; //!< Closest particle of slave body from node contact
+ 
 };
 
 inline NodeContact::NodeContact()
