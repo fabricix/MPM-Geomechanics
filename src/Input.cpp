@@ -1112,10 +1112,7 @@ NodalPointLoadData Input::readNodalPointLoads( ) {
                 throw std::runtime_error("Invalid structure in nodal_point_load");
             }
         }
-    } else {
-        throw std::runtime_error("Key 'nodal_point_load' not found in the JSON file");
     }
-	
     return nodalPointLoads;
 }
 

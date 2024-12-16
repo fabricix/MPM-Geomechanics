@@ -178,7 +178,7 @@ void Loads::configureNodalPointLoads(Mesh* mesh)
 	{	
 		double min_distance = 1e10;
 		int node_id = -1;
-		size_t icount = 0;
+		size_t ipoint_indx = 0;
 
 		// for each load point calculate the min distance inside the nodes
 		for (const auto& inode : mesh->getNodesInCell(ipoint))
@@ -198,7 +198,7 @@ void Loads::configureNodalPointLoads(Mesh* mesh)
 		if (node_id==-1)
 			Warning::printMessage("Bad point load node id configuration");
 		else
-			loadlist.nodal_ids.push_back(node_id);
+			loadlist.nodal_ids.at(ipoint_indx)=node_id;
 	}
 	// set nodal-id load vector
 	nodalPointLoadList = loadlist;

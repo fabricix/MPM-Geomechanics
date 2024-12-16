@@ -1,0 +1,49 @@
+{
+  "body":
+  {
+    "elastic-cuboid-body":
+    {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[0,0,0],
+      "point_p2":[2,2,1],
+      "material_id":1
+    }
+  },
+	"materials":
+  {
+    "material-1":
+    {
+      "type":"elastic",
+      "id":1,
+      "young":50e6,
+      "density":1500,
+      "poisson":0.25
+    }
+ },
+  "mesh":
+  { 
+    "cells_dimension":[0.1,0.1,0.1],
+    "cells_number":[20,20,20],
+    "origin":[0,0,0],
+    "boundary_conditions":
+    {
+      "plane_X0":"sliding",
+      "plane_Y0":"sliding",
+      "plane_Z0":"sliding",
+      "plane_Xn":"sliding",
+      "plane_Yn":"sliding",
+      "plane_Zn":"free"
+    }
+  },
+  "time":0.01,
+  "time_step":1e-4,
+  "results":
+  {
+    "print":50,
+    "fields":["all"]
+  },
+  "nodal_point_load": [
+    [[1.0, 1.0, 1.0], [0.0, 0.0, -1.0]]
+]
+}
