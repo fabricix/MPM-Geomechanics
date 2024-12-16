@@ -1083,9 +1083,9 @@ unsigned Input::getNumberPhases(){
 	}
 }
 
-std::vector<NodalPointLoad> Input::readNodalPointLoads( ) {
+NodalPointLoadData Input::readNodalPointLoads( ) {
 
-    std::vector<NodalPointLoad> nodalPointLoads;
+    Loads::NodalPointLoadData nodalPointLoads;
 
     if (inputFile.contains("nodal_point_load")) {
 
@@ -1094,13 +1094,20 @@ std::vector<NodalPointLoad> Input::readNodalPointLoads( ) {
             if (item.size() == 2 && item[0].is_array() && item[1].is_array() && 
                 item[0].size() == 3 && item[1].size() == 3) {
 
-                NodalPointLoad npLoad;
-                for (size_t i = 0; i < 3; ++i) {
-                    npLoad.point[i] = item[0][i];
-                    npLoad.load[i] = item[1][i];
+				Vector3d point, load;
+				int id;
+
+                for (size_t i = 0; i < 3; ++i)
+				{
+                    point[i] = item[0][i];
+                    load[i] = item[1][i];
+					id = -1; // this must be configured with the mesh
                 }
 
-                nodalPointLoads.push_back(npLoad);
+				nodalPointLoads.points.push_back(point);
+				nodalPointLoads.loads.push_back(load);
+				nodalPointLoads.nodal_ids.push_back(id);
+
             } else {
                 throw std::runtime_error("Invalid structure in nodal_point_load");
             }

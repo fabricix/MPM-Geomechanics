@@ -603,7 +603,7 @@ namespace Input {
 	/// This function reads a points from input file in the following format:
 	/// "nodal_point_loads": [[p1x,p1y,p1z],[p1x,p1y,p1z]],...,[[pnx,pny,pnz],[pnx,pny,pnz]]
 	/// \return nodal_point_load
-	vector<Loads::NodalPointLoad> readNodalPointLoads();
+	Loads::NodalPointLoadData readNodalPointLoads();
 
 	/// \brief Return prescribed pressure in particles inside a box
 	/// \return pressure_prescribed_box  Pressures prescribed in particles

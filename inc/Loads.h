@@ -19,7 +19,7 @@ using Eigen::Vector3d;
 /// \namespace Loads
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
-    
+
     /// \struct LoadDistributedBox
     /// \brief Structure to define a distributed load in 
     /// particles inside the cuboid defined by point p1 and p2
@@ -32,11 +32,11 @@ namespace Loads {
 
     /// \struct NodalPointLoad
     /// \brief Define a structure to store point loads
-    struct NodalPointLoad
+    struct NodalPointLoadData
     {
-        Vector3d point; //!< Coordinates [px, py, pz]
-        Vector3d load; //!< Load [lx, ly, lz]
-        string nodal_id; //!< nodal id
+        std::vector<Vector3d> points; //!< Coordinates [px, py, pz]
+        std::vector <Vector3d> loads; //!< Load [lx, ly, lz]
+        std::vector<int> nodal_ids; //!< nodal id
     };
 
     /// \struct PressureBox
@@ -152,7 +152,13 @@ namespace Loads {
     /// \param[in] bodies A list containing Body pointers
     void setInitialVelocity(vector<Body*>& bodies);
 
+    /// \brief configure nodeid-point-load data for nodal force application
+    /// \param [in] Mesh* mesh pointer
     void configureNodalPointLoads(Mesh*);
+
+    /// \brief Get (node-id load) vector for set nodal point load.
+    /// \param [out] NodalPointLoad vector 
+    NodalPointLoadData& getNodalPointList();
 };
 
 #endif /* LOADS_H_ */

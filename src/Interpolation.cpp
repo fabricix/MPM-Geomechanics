@@ -9,7 +9,7 @@
 #include "Contribution.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
-
+#include "Loads.h"
 ///
 /// From particle to node:
 ///		
@@ -327,11 +327,16 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
-	// get nodes
-	vector<Node*>* nodes = mesh->getNodes();
+	// The nodal external force is calculated from two sources,
+	// one from the stored force in the particles (1), like gravity,
+	// and two, from the external force imposed directly at the grid nodes (2)
+	
+	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
 
-	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get nodes
+		vector<Node*>* nodes = mesh->getNodes();
 
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
@@ -358,6 +363,16 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
 			}
 		}
+	}
+
+	// (2) - External force from nodes _ f_ext_I <- f_ext_I + f_ext_BC
+	// External boundary condition force 
+	Loads::NodalPointLoadData& nodal_force_list = Loads::getNodalPointList();
+	for (size_t i = 0; i < nodal_force_list.loads.size() ; i++)
+	{
+		int node_id = nodal_force_list.nodal_ids.at(i);
+		Vector3d extload = nodal_force_list.loads.at(i);
+		mesh->getNodes()->at(node_id)->addExternalForce(extload);
 	}
 }
 
