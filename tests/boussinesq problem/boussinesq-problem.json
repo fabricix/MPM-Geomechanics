@@ -16,7 +16,7 @@
     {
       "type":"elastic",
       "id":1,
-      "young":50e6,
+      "young":100e6,
       "density":1500,
       "poisson":0.25
     }
@@ -24,7 +24,7 @@
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[20,20,20],
+    "cells_number":[20,20,10],
     "origin":[0,0,0],
     "boundary_conditions":
     {
@@ -36,7 +36,7 @@
       "plane_Zn":"free"
     }
   },
-  "time":0.01,
+  "time":0.05,
   "time_step":1e-4,
   "results":
   {
@@ -44,6 +44,10 @@
     "fields":["all"]
   },
   "nodal_point_load": [
-    [[1.0, 1.0, 1.0], [0.0, 0.0, -1.0]]
-]
+    [[1.0, 1.0, 1.0], [0.0, 0.0, -1.0e-3]]
+  ],
+  "damping":
+  {
+    "type":"kinetic"
+  }
 }
