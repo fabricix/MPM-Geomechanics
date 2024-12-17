@@ -105,23 +105,23 @@ import matplotlib.pyplot as plt
 plt.close("all")
 fig,ax=plt.subplots(1,1)
 
-# load the MPM++ results 
+# load the MPM results 
 import pandas as pd
 sh1=pd.read_csv("shapeGimp.csv")
 
 # plot shape function and gradients in x
-ax.plot(sh1.x,sh1.sx,'--b',label='Sx-MPM++')
-ax.plot(sh1.x,sh1.gx,'--r',label='Gx-MPM++')
+ax.plot(sh1.x,sh1.sx,'--b',label='Sx-MPM')
+ax.plot(sh1.x,sh1.gx,'--r',label='Gx-MPM')
 ax.legend()
 
 # plot shape function and gradients in y
-ax.plot(sh1.y,sh1.sy,':b',label='Sy-MPM++')
-ax.plot(sh1.y,sh1.gy,':r',label='Gy-MPM++')
+ax.plot(sh1.y,sh1.sy,':b',label='Sy-MPM')
+ax.plot(sh1.y,sh1.gy,':r',label='Gy-MPM')
 ax.legend()
 
 # plot shape function and gradients in z
-ax.plot(sh1.z,sh1.sz,'-.b',label='Sz-MPM++')
-ax.plot(sh1.z,sh1.gz,'-.r',label='Gz-MPM++')
+ax.plot(sh1.z,sh1.sz,'-.b',label='Sz-MPM')
+ax.plot(sh1.z,sh1.gz,'-.r',label='Gz-MPM')
 ax.legend()
 
 #

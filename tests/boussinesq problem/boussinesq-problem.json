@@ -5,8 +5,8 @@
     {
       "type":"cuboid",
       "id":1,
-      "point_p1":[0,0,0],
-      "point_p2":[2,2,1],
+      "point_p1":[0.0,0.0,0],
+      "point_p2":[1,1,1],
       "material_id":1
     }
   },
@@ -23,9 +23,9 @@
  },
   "mesh":
   { 
-    "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[20,20,10],
-    "origin":[0,0,0],
+    "cells_dimension":[0.05,0.05,0.05],
+    "cells_number":[20,20,20],
+    "origin":[0.0,0.0,0.0],
     "boundary_conditions":
     {
       "plane_X0":"sliding",
@@ -36,7 +36,7 @@
       "plane_Zn":"free"
     }
   },
-  "time":0.05,
+  "time":0.025,
   "time_step":1e-4,
   "results":
   {
@@ -44,7 +44,7 @@
     "fields":["all"]
   },
   "nodal_point_load": [
-    [[1.0, 1.0, 1.0], [0.0, 0.0, -1.0e-3]]
+    [[0.5, 0.5, 1], [0.0, 0.0, -1.0]]
   ],
   "damping":
   {
