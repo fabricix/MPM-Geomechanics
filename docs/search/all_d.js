@@ -2,7 +2,7 @@ var searchData=
 [
   ['ncells_0',['nCells',['../classMesh.html#a64370d667c6ea5953e6282ea0eff29ad',1,'Mesh']]],
   ['nghosts_1',['nGhosts',['../classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27',1,'Mesh']]],
-  ['nodal_5fid_2',['nodal_id',['../structLoads_1_1NodalPointLoad.html#ada67ac2a3723a1de108c5211e383b274',1,'Loads::NodalPointLoad']]],
+  ['nodal_5fids_2',['nodal_ids',['../structLoads_1_1NodalPointLoadData.html#a14fd981401531322fd2572c17b3416f7',1,'Loads::NodalPointLoadData']]],
   ['nodaldragforcefluid_3',['nodalDragForceFluid',['../namespaceInterpolation.html#a3db0b8bfe941b0ec261a3aa7e19ac225',1,'Interpolation']]],
   ['nodalexternalforce_4',['nodalExternalForce',['../namespaceInterpolation.html#a965a7f2998678bdba6b6f25e9e379fbf',1,'Interpolation']]],
   ['nodalexternalforcefluid_5',['nodalExternalForceFluid',['../namespaceInterpolation.html#aa0e9ca194089680af902b611e4fd6766',1,'Interpolation']]],
@@ -12,8 +12,8 @@ var searchData=
   ['nodalmassfuid_9',['nodalMassFuid',['../namespaceInterpolation.html#ada191e99fa8bd78e8274a4316b8e24a4',1,'Interpolation']]],
   ['nodalmomentum_10',['nodalMomentum',['../namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9',1,'Integration::nodalMomentum()'],['../namespaceInterpolation.html#ad6b0c362a03102b2ffceb06039f46935',1,'Interpolation::nodalMomentum(Mesh *mesh, vector&lt; Body * &gt; *bodies)']]],
   ['nodalmomentumfluid_11',['nodalMomentumFluid',['../namespaceInterpolation.html#a135cfc683b9cffc0abb3e8542c0b17d6',1,'Interpolation']]],
-  ['nodalpointload_12',['NodalPointLoad',['../structLoads_1_1NodalPointLoad.html',1,'Loads']]],
-  ['nodalpointload_13',['nodalPointLoad',['../namespaceLoads.html#a7863042b1bc1dad916b60d4f7aec821e',1,'Loads']]],
+  ['nodalpointload_12',['NodalPointLoad',['../structNodalPointLoad.html',1,'']]],
+  ['nodalpointloaddata_13',['NodalPointLoadData',['../structLoads_1_1NodalPointLoadData.html',1,'Loads']]],
   ['nodaltotalforce_14',['nodalTotalForce',['../namespaceUpdate.html#ad27e963611658974a0b33f5a1e77fc3e',1,'Update']]],
   ['nodalvelocity_15',['nodalVelocity',['../namespaceUpdate.html#a6d65ee56959a561441007d13172b647d',1,'Update']]],
   ['node_16',['Node',['../classNode.html',1,'Node'],['../classNode.html#ad7a34779cad45d997bfd6d3d8043c75f',1,'Node::Node()']]],
@@ -24,5 +24,6 @@ var searchData=
   ['nodes_21',['nodes',['../structBoundary_1_1planeBoundary.html#a7927ae162c36d4744792b84fcce0a4b6',1,'Boundary::planeBoundary']]],
   ['none_22',['NONE',['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da',1,'Material::NONE'],['../classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50a73d78f925d0bdd33349cfe7ec42b7067',1,'MohrCoulomb::Softening::NONE']]],
   ['nrows_23',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]],
-  ['numerical_20implementation_24',['Numerical implementation',['../program_theory_manual.html#autotoc_md55',1,'']]]
+  ['numerical_20formulation_24',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
+  ['numerical_20implementation_25',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md54',1,'']]]
 ];

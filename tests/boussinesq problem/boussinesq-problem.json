@@ -16,15 +16,15 @@
     {
       "type":"elastic",
       "id":1,
-      "young":100e6,
+      "young":200e6,
       "density":1500,
       "poisson":0.25
     }
  },
   "mesh":
   { 
-    "cells_dimension":[0.05,0.05,0.05],
-    "cells_number":[20,20,20],
+    "cells_dimension":[0.1,0.1,0.1],
+    "cells_number":[10,10,10],
     "origin":[0.0,0.0,0.0],
     "boundary_conditions":
     {
@@ -37,14 +37,14 @@
     }
   },
   "time":0.025,
-  "time_step":1e-4,
+  "time_step_multiplier":0.3,
   "results":
   {
     "print":50,
     "fields":["all"]
   },
   "nodal_point_load": [
-    [[0.5, 0.5, 1], [0.0, 0.0, -1.0]]
+    [[0.5, 0.5, 1.0], [0.0, 0.0, -1.0]]
   ],
   "damping":
   {

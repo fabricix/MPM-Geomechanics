@@ -34,16 +34,34 @@ var NAVTREE =
     ] ],
     [ "Documentation", "index.html#program_documentation", null ],
     [ "Execution", "index.html#program_execution", null ],
-    [ "Theory manual", "program_theory_manual.html", [
-      [ "References", "program_theory_manual.html#autotoc_md58", null ]
+    [ "Theory and Numerical Formulation", "theory_and_numerical_formulation_.html", [
+      [ "Introduction to the Material Point Method (MPM)", "theory_and_numerical_formulation_.html#autotoc_md50", null ],
+      [ "MPM Formulation", "theory_and_numerical_formulation_.html#autotoc_md51", null ],
+      [ "Explicit MPM integration", "theory_and_numerical_formulation_.html#autotoc_md52", null ],
+      [ "Central difference Method", "theory_and_numerical_formulation_.html#autotoc_md53", null ],
+      [ "Numerical implementation", "theory_and_numerical_formulation_.html#autotoc_md54", null ],
+      [ "Stability Requirement", "theory_and_numerical_formulation_.html#autotoc_md55", null ],
+      [ "Explicit MPM Scheme", "theory_and_numerical_formulation_.html#autotoc_md56", null ],
+      [ "Update Stress First - USF - Scheme", "theory_and_numerical_formulation_.html#autotoc_md57", null ],
+      [ "Update Stress Last - USL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md58", null ],
+      [ "Modified Update Stress Last - MUSL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md59", null ],
+      [ "References", "theory_and_numerical_formulation_.html#autotoc_md60", null ]
     ] ],
-    [ "Tutorial manual", "program_tutorial_manual.html", null ],
+    [ "Verification problems", "verification_problems.html", [
+      [ "Bousssinesq's problem", "verification_problems.html#autotoc_md61", [
+        [ "Introduction", "verification_problems.html#autotoc_md62", null ],
+        [ "Analytical solution", "verification_problems.html#autotoc_md63", null ],
+        [ "MPM model and result comparison", "verification_problems.html#autotoc_md64", null ]
+      ] ],
+      [ "Base acceleration example", "verification_problems.html#autotoc_md65", [
+        [ "MPM-Model", "verification_problems.html#autotoc_md66", null ]
+      ] ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ],
         [ "Enumerator", "namespacemembers_eval.html", null ]
       ] ]
@@ -73,10 +91,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BodyCuboid_8h.html",
-"classBody.html#aa71e9b9b576b1ae73e2baebd86bf71ca",
-"classNode.html#a1b1d61e14d6c1a21f1b1f1bca435a861",
-"functions_func_~.html",
-"structLoads_1_1PrescribedPorePressure.html#af85a3a72657c866a5482271be93f4d76"
+"classBody.html#abbc57798cc4a6292f9dfb4a9b7310a35",
+"classNode.html#a1c9442fd5fde01803a0a13aa965785b1",
+"functions_h.html",
+"structLoads_1_1PressureBoundaryForceBox.html#af1d35221a761797bbf9cc542e73d4cb0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

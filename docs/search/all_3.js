@@ -16,7 +16,7 @@ var searchData=
   ['densityfluid_13',['densityFluid',['../classMaterial.html#a68c4ef8534dedd53c4999b2df3016049',1,'Material::densityFluid'],['../classParticleMixture.html#ae78ffa45e8742c36cc91730792fd708c',1,'ParticleMixture::densityFluid']]],
   ['derivate_14',['derivate',['../classShape.html#a7cba38625675fd8164bc53319386dd51',1,'Shape']]],
   ['diameter_15',['diameter',['../classBodySphere.html#ac81e013e0b40464c83535655727c5497',1,'BodySphere']]],
-  ['difference_20method_16',['Central difference Method',['../program_theory_manual.html#autotoc_md54',1,'']]],
+  ['difference_20method_16',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md53',1,'']]],
   ['dilation_17',['dilation',['../classMohrCoulomb.html#a9718a4d56fc38f21cf55f7666e8f0811',1,'MohrCoulomb']]],
   ['dilation_5fresidual_18',['dilation_residual',['../classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b',1,'MohrCoulomb::Softening']]],
   ['dilation_5fsoftening_5factive_19',['dilation_softening_active',['../classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5',1,'MohrCoulomb::Softening']]],

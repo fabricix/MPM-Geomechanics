@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['base_20acceleration_20example_0',['Base acceleration example',['../program_tutorial_manual.html#autotoc_md59',1,'']]],
+  ['base_20acceleration_20example_0',['Base acceleration example',['../verification_problems.html#autotoc_md65',1,'']]],
   ['binaries_1',['Program compiled binaries',['../index.html#program_binaries',1,'']]],
   ['bodies_2',['Bodies',['../namespaceInput.html#autotoc_md2',1,'']]],
   ['bodies_3',['bodies',['../classMPM.html#aa6a0e2948d663892851627f0cc52f2dd',1,'MPM::bodies'],['../classSolver.html#ae69d529fe554b2ca852ce3dfeb79315b',1,'Solver::bodies']]],
@@ -28,7 +28,8 @@ var searchData=
   ['boundaryconditionsmomentumfluid_25',['boundaryConditionsMomentumFluid',['../namespaceUpdate.html#ad2f347f7a664156c4c3ef8f51c1e0827',1,'Update']]],
   ['boundaryplane_26',['BoundaryPlane',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70',1,'Boundary']]],
   ['boundarytype_27',['BoundaryType',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5',1,'Boundary']]],
-  ['box_20example_28',['box example',['../namespaceInput.html#autotoc_md12',1,'Distributed load in box example'],['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
-  ['bulkmodulusfluid_29',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],
-  ['by_20particles_30',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]]
+  ['bousssinesq_20s_20problem_28',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md61',1,'']]],
+  ['box_20example_29',['box example',['../namespaceInput.html#autotoc_md12',1,'Distributed load in box example'],['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
+  ['bulkmodulusfluid_30',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],
+  ['by_20particles_31',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]]
 ];

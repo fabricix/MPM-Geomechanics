@@ -1,22 +1,18 @@
-\page program_theory_manual Theory manual
+\page theory_and_numerical_formulation_ Theory and Numerical Formulation
 
-## Material Point Method (MPM)
-
-### Introduction to MPM
+# Introduction to the Material Point Method (MPM)
 
 The Material Point Method, or MPM, is a hybrid Lagrangian-Eulerian method that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion.
 In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved.
 The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.
 
-![](/manual/images/mpm_discretization.png)
-Figure 1: MPM Discretization [2]
+!["MPM Discretization"](/manual/images/mpm_discretization.png) {width=600}
 
 In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.
 
-![](/manual/images/mpm_cycle.png)
-Figure 2: MPM Cycle [3]
+!["MPM computational cycle"](/manual/images/mpm_cycle.png)  {width=600}
 
-### MPM Formulation
+# MPM Formulation
 
 MPM enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
 
@@ -163,12 +159,12 @@ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta)
 
 where \f$ \xi=x_p-x_I, \eta=y_p-y_I \f$ and \f$ \zeta=z_p-z \f$.
 
-### Explicit MPM integration
+# Explicit MPM integration
 
 The discrete form of the motion equation \f$
 f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} \f$, is a second order ordinary differential equation in terms of displacement with respect to time, and can be solved by integration, using an explicit or implicit integration scheme.
 
-### Central difference Method  
+# Central difference Method  
 
 The displacement, the velocity and the acceleration at time \f$ t = 0, t^1, t^2, ... , t^n \f$ are knows, and the values at time \f$ t^{n+1} \f$ are required, namely the solution of the problem.
 
@@ -215,7 +211,7 @@ and
 \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
 \f]
 
-### Numerical implementation  
+# Numerical implementation  
 
 1. Calculate force \f$ f_n \f$
 2. Calculate acceleration \f$ \ddot u ^{n} = f ^{n} / m \f$
@@ -224,7 +220,7 @@ and
 5. Update position \f$ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t \f$
 6. Let \f$ n = n + 1 \f$
 
-### Stability Requirement
+# Stability Requirement
 The central difference method is conditionally stable, so the time step must be less that a certain value. For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
 
 \f[ \Delta t_{cr} = T_n \f]
@@ -243,23 +239,23 @@ In the MPM context the particles can has velocities in the begin ing of any time
 
 In a structured regular mesh, \f$ l^e \f$ is the grid cell dimension.
 
-## Explicit MPM Scheme
+# Explicit MPM Scheme
 
 In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation \f$ \dot{p} = m \frac{dv}{dt} = f \f$. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.
 
 The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. The nodal velocities are used to calculate the strain and the vorticity tensor to update the stress. So, in the numerical integration the stresses could be updated with the velocities at the beginning or at the end of each time step. Regarding the velocity field used we have the Update Stress First - USF scheme or the Update Stress Last - USL scheme.
 
-**USF Scheme**
+# Update Stress First - USF - Scheme
 In the USF scheme the velocities in \f$ n-1/2 \f$ are used to update the stress state:
 
 \f[ v_{iI}^{k-1/2} = p^{k-1/2}_{iI} / m_p = \sum_p S_{Ip} m_p v_{ip}^{i-1/2} / m_I^k \f]
 
-**USL Scheme**
+# Update Stress Last - USL - Scheme
 In the USL scheme the updated velocities in nodes \f$ n+1/2 \f$ are used to update the stress state:
 
 \f[ v_{iI}^{k+1/2} = p^{k+1/2}_{iI} / m_I^k \f]
 
-**MUSL Scheme**
+# Modified Update Stress Last - MUSL - Scheme
 In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
 
 \f[ v_{iI}^{k+1/2} = \sum_p S_{Ip} m_p v_{ip}^{i+1/2} / m_I^k  \f]

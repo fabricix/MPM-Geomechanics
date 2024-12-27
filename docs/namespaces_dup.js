@@ -39,7 +39,7 @@ var namespaces_dup =
       [ "getSolver", "namespaceInput.html#a0aaddb07cda3d6c988f2c5db52bb488e", null ],
       [ "getTimeStep", "namespaceInput.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
       [ "readInputFile", "namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
-      [ "readNodalPointLoads", "namespaceInput.html#a03717b6bc9fdd8cfc5eccb3e4fcebe73", null ],
+      [ "readNodalPointLoads", "namespaceInput.html#a4af9571f7842a96471572cd550d598a9", null ],
       [ "readSeismicData", "namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44", null ]
     ] ],
     [ "Integration", "namespaceIntegration.html", [
