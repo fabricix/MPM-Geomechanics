@@ -30,6 +30,15 @@ namespace Loads {
         Vector3d load; //!< load to be distributed in particles inside the box
     };
 
+    /// \struct NodalPointLoad
+    /// \brief Define a structure to store point loads
+    struct NodalPointLoadData
+    {
+        std::vector<Vector3d> points; //!< Coordinates [px, py, pz]
+        std::vector <Vector3d> loads; //!< Load [lx, ly, lz]
+        std::vector<int> nodal_ids; //!< nodal id
+    };
+
     /// \struct PressureBox
     /// \brief Structure to represent a box with a pressure.
     /// Pressure in applied to particles inside the cuboid defined by point p1 and p2.
@@ -142,6 +151,14 @@ namespace Loads {
     /// \brief Set initial velocity in bodies
     /// \param[in] bodies A list containing Body pointers
     void setInitialVelocity(vector<Body*>& bodies);
+
+    /// \brief configure nodeid-point-load data for nodal force application
+    /// \param [in] Mesh* mesh pointer
+    void configureNodalPointLoads(Mesh*);
+
+    /// \brief Get (node-id load) vector for set nodal point load.
+    /// \param [out] NodalPointLoad vector 
+    NodalPointLoadData& getNodalPointList();
 };
 
 #endif /* LOADS_H_ */

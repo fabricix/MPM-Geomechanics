@@ -113,12 +113,16 @@ Material Point Method (MPM)</h2>
 <h3><a class="anchor" id="autotoc_md51"></a>
 Introduction to MPM</h3>
 <p>The <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method, or <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, is a hybrid Lagrangian-Eulerian method that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.</p>
-<p><img src="mpm_discretization.png" alt="" class="inline"/>    </p>
-<p>Figure 1: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Discretization [2]</p>
-<p>In an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.</p>
-<p><img src="mpm_cycle.png" alt="" class="inline"/>    </p>
-<p>Figure 2: <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> Cycle [3]</p>
-<h3><a class="anchor" id="autotoc_md52"></a>
+<div class="image">
+<img src="mpm_discretization.png" alt="" width="600"/>
+<div class="caption">
+"MPM Discretization"</div></div>
+    <p>In an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.</p>
+<div class="image">
+<img src="mpm_cycle.png" alt="" width="600"/>
+<div class="caption">
+"MPM computational cycle"</div></div>
+    <h3><a class="anchor" id="autotoc_md52"></a>
 MPM Formulation</h3>
 <p><a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.</p>
 <p>The equation of motion in continuum mechanics</p>

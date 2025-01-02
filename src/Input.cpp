@@ -1083,6 +1083,39 @@ unsigned Input::getNumberPhases(){
 	}
 }
 
+NodalPointLoadData Input::readNodalPointLoads( ) {
+
+    Loads::NodalPointLoadData nodalPointLoads;
+
+    if (inputFile.contains("nodal_point_load")) {
+
+        for (const auto& item : inputFile["nodal_point_load"]) {
+
+            if (item.size() == 2 && item[0].is_array() && item[1].is_array() && 
+                item[0].size() == 3 && item[1].size() == 3) {
+
+				Vector3d point, load;
+				int id;
+
+                for (size_t i = 0; i < 3; ++i)
+				{
+                    point[i] = item[0][i];
+                    load[i] = item[1][i];
+					id = -1; // this must be configured with the mesh
+                }
+
+				nodalPointLoads.points.push_back(point);
+				nodalPointLoads.loads.push_back(load);
+				nodalPointLoads.nodal_ids.push_back(id);
+
+            } else {
+                throw std::runtime_error("Invalid structure in nodal_point_load");
+            }
+        }
+    }
+    return nodalPointLoads;
+}
+
 vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 
 	try{

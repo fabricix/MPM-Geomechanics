@@ -219,8 +219,11 @@ void MPM::setupLoads() {
 	ModelSetup::setGravity(Input::getGravity());
 	Loads::setGravity(bodies);
 
-	// set external forces
+	// set external forces in particles
 	Loads::setLoadDistributedBox(bodies, Input::getLoadDistributedBox());
+
+	// set nodal loads
+	Loads::configureNodalPointLoads(&mesh);
 
 	// set initial pore pressure
 	Loads::setInitialPorePressureBox(bodies, Input::getInitialPressureBox());

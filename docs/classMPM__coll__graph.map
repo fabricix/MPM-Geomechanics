@@ -1,27 +1,25 @@
 <map id="MPM" name="MPM">
-<area shape="rect" id="Node000001" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,..." alt="" coords="204,571,256,597"/>
-<area shape="rect" id="Node000002" href="$classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="168,389,221,416"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,429,214,439,228,513,233,570,227,570,223,514,209,441,205,431"/>
-<area shape="rect" id="Node000012" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="124,480,182,507"/>
-<area shape="poly" id="edge12_Node000012_Node000002" title=" " alt="" coords="183,431,178,441,160,481,156,478,173,439,178,429"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,267,74,293"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="56,305,77,335,105,363,132,376,168,390,166,395,130,381,102,367,73,339,52,308"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="98,267,170,293"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="148,306,176,364,189,388,184,390,171,367,143,308"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="195,267,316,293"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="251,309,242,338,228,367,209,391,205,387,224,364,237,336,246,308"/>
-<area shape="rect" id="Node000006" href="$classBoundary.html" title="Mesh boundary nodes." alt="" coords="340,267,416,293"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="367,308,346,339,316,367,292,381,267,390,222,401,220,396,266,385,290,376,313,363,341,336,363,305"/>
-<area shape="rect" id="Node000007" href="$structBoundary_1_1planeBoundary.html" title="Represents the nodes and the type of restrictions." alt="" coords="293,96,463,123"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="381,138,381,266,376,266,376,138"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="330,5,426,32"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="381,48,381,95,376,95,376,48"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="21,389,141,416"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="72,431,64,469,65,488,72,505,99,535,135,555,172,569,205,576,203,582,171,574,133,560,96,539,67,508,60,489,58,468,67,430"/>
-<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="102,427,124,454,144,478,140,481,119,458,97,430"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="290,480,424,507"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="328,518,250,572,247,568,325,514"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="449,480,585,507"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="468,515,364,549,258,579,256,573,363,544,467,510"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="162,520,175,545,189,558,205,569,202,573,186,563,170,548,157,523"/>
+<area shape="rect" id="Node000001" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,..." alt="" coords="189,571,241,597"/>
+<area shape="rect" id="Node000002" href="$classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="152,389,206,416"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,429,199,439,213,513,217,570,212,570,208,514,194,441,190,431"/>
+<area shape="rect" id="Node000011" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="108,480,167,507"/>
+<area shape="poly" id="edge11_Node000011_Node000002" title=" " alt="" coords="167,431,163,441,145,481,140,478,158,439,163,429"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="50,267,118,293"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,306,114,335,134,364,161,387,158,391,131,367,109,338,94,309"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="143,267,215,293"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="182,309,182,389,176,389,176,309"/>
+<area shape="rect" id="Node000005" href="$classBoundary.html" title="Mesh boundary nodes." alt="" coords="239,267,316,293"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="272,309,259,338,239,367,207,391,204,387,236,363,254,336,267,307"/>
+<area shape="rect" id="Node000006" href="$structBoundary_1_1planeBoundary.html" title="Represents the nodes and the type of restrictions." alt="" coords="192,96,363,123"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="280,138,280,266,275,266,275,138"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="230,5,325,32"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="280,48,280,95,275,95,275,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,389,126,416"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="56,431,48,469,50,488,56,505,84,535,120,555,157,569,189,576,188,582,155,574,117,560,81,539,52,508,44,489,43,468,51,430"/>
+<area shape="poly" id="edge12_Node000011_Node000008" title=" " alt="" coords="86,427,108,454,128,478,124,481,104,458,82,430"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="274,480,409,507"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="312,518,234,572,231,568,309,514"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="433,480,570,507"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="453,515,349,549,242,579,241,573,347,544,451,510"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="146,520,159,545,174,558,190,569,187,573,170,563,155,548,142,523"/>
 </map>

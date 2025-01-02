@@ -1,11 +1,14 @@
 var Loads_8h =
 [
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
+    [ "Loads::NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
     [ "Loads::SeismicData", "structLoads_1_1SeismicData.html", "structLoads_1_1SeismicData" ],
+    [ "configureNodalPointLoads", "Loads_8h.html#a70b671a26b22a970ebdb930b2c43a505", null ],
+    [ "getNodalPointList", "Loads_8h.html#a67971878871ece27ff54401ffcd9a5ff", null ],
     [ "getSeismicData", "Loads_8h.html#ac2794cc202d1527d21f610dd1bfc4310", null ],
     [ "setGravity", "Loads_8h.html#a1a2299651bd04336c8233e10785aca1b", null ],
     [ "setInitialPorePressureBox", "Loads_8h.html#ab69a7f18bdaf04c6fd6197f465ac9446", null ],

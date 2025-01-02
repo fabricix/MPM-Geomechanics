@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "Loads", "namespaceLoads.html", [
       [ "LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
+      [ "NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
       [ "PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
       [ "PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
       [ "PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
@@ -22,6 +23,7 @@ var annotated_dup =
     [ "Mesh", "classMesh.html", "classMesh" ],
     [ "MohrCoulomb", "classMohrCoulomb.html", "classMohrCoulomb" ],
     [ "MPM", "classMPM.html", "classMPM" ],
+    [ "NodalPointLoad", "structNodalPointLoad.html", null ],
     [ "Node", "classNode.html", "classNode" ],
     [ "NodeMixture", "classNodeMixture.html", "classNodeMixture" ],
     [ "Particle", "classParticle.html", "classParticle" ],
