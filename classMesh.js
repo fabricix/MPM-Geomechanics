@@ -33,7 +33,7 @@ var classMesh =
     [ "setOrigin", "classMesh.html#a0df5fcedf19720a1b4a3ce568d29215d", null ],
     [ "boundary", "classMesh.html#ae856f697db9b5c61445e64cff311c46a", null ],
     [ "cellDim", "classMesh.html#a548aaa6c3a282e7ae4d358c88286a1f0", null ],
-    [ "gridNodes", "classMesh.html#a039bc6f31faac277c78066cedae9fd11", null ],
+    [ "gridNodes", "classMesh.html#a3f082b1cc1f66769da1f59f69c990f65", null ],
     [ "maxLimit", "classMesh.html#a372edf56232cae8e5800a3d6bee6c71d", null ],
     [ "minLimit", "classMesh.html#a39fb26948af4a7ffdebb62e80b419052", null ],
     [ "nCells", "classMesh.html#a64370d667c6ea5953e6282ea0eff29ad", null ],

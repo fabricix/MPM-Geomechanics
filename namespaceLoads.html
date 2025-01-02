@@ -113,6 +113,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1LoadDistributedBox.html">LoadDistributedBox</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define a distributed load in particles inside the cuboid defined by point p1 and p2.  <a href="structLoads_1_1LoadDistributedBox.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1NodalPointLoadData.html">NodalPointLoadData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1PrescribedPorePressure.html">PrescribedPorePressure</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to represent a particle with a pressure. Pressure is applied to particles with the specified index.  <a href="structLoads_1_1PrescribedPorePressure.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,10 +163,68 @@ Functions</h2></td></tr>
 <tr class="memitem:a9d91d188d9343c0d4b35705604b6b3d1" id="r_a9d91d188d9343c0d4b35705604b6b3d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a9d91d188d9343c0d4b35705604b6b3d1">setInitialVelocity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies)</td></tr>
 <tr class="memdesc:a9d91d188d9343c0d4b35705604b6b3d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial velocity in bodies.  <br /></td></tr>
 <tr class="separator:a9d91d188d9343c0d4b35705604b6b3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b671a26b22a970ebdb930b2c43a505" id="r_a70b671a26b22a970ebdb930b2c43a505"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a70b671a26b22a970ebdb930b2c43a505">configureNodalPointLoads</a> (<a class="el" href="classMesh.html">Mesh</a> *)</td></tr>
+<tr class="memdesc:a70b671a26b22a970ebdb930b2c43a505"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure nodeid-point-load data for nodal force application  <br /></td></tr>
+<tr class="separator:a70b671a26b22a970ebdb930b2c43a505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67971878871ece27ff54401ffcd9a5ff" id="r_a67971878871ece27ff54401ffcd9a5ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLoads_1_1NodalPointLoadData.html">NodalPointLoadData</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceLoads.html#a67971878871ece27ff54401ffcd9a5ff">getNodalPointList</a> ()</td></tr>
+<tr class="memdesc:a67971878871ece27ff54401ffcd9a5ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get (node-id load) vector for set nodal point load.  <br /></td></tr>
+<tr class="separator:a67971878871ece27ff54401ffcd9a5ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Operations to manage loads in the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a70b671a26b22a970ebdb930b2c43a505" name="a70b671a26b22a970ebdb930b2c43a505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b671a26b22a970ebdb930b2c43a505">&#9670;&#160;</a></span>configureNodalPointLoads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Loads::configureNodalPointLoads </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>configure nodeid-point-load data for nodal force application </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Mesh*</td><td>mesh pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a67971878871ece27ff54401ffcd9a5ff" name="a67971878871ece27ff54401ffcd9a5ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67971878871ece27ff54401ffcd9a5ff">&#9670;&#160;</a></span>getNodalPointList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structLoads_1_1NodalPointLoadData.html">NodalPointLoadData</a> &amp; Loads::getNodalPointList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get (node-id load) vector for set nodal point load. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname"><a class="el" href="structNodalPointLoad.html" title="Define a structure to store point loads.">NodalPointLoad</a></td><td>vector <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac2794cc202d1527d21f610dd1bfc4310" name="ac2794cc202d1527d21f610dd1bfc4310"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac2794cc202d1527d21f610dd1bfc4310">&#9670;&#160;</a></span>getSeismicData()</h2>
 
