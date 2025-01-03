@@ -7,7 +7,7 @@ var Loads_8h =
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
     [ "Loads::SeismicData", "structLoads_1_1SeismicData.html", "structLoads_1_1SeismicData" ],
-    [ "configureNodalPointLoads", "Loads_8h.html#a70b671a26b22a970ebdb930b2c43a505", null ],
+    [ "configureNodalPointLoads", "Loads_8h.html#a17a7cd5461a3f485a589936ab71da9da", null ],
     [ "getNodalPointList", "Loads_8h.html#a67971878871ece27ff54401ffcd9a5ff", null ],
     [ "getSeismicData", "Loads_8h.html#ac2794cc202d1527d21f610dd1bfc4310", null ],
     [ "setGravity", "Loads_8h.html#a1a2299651bd04336c8233e10785aca1b", null ],

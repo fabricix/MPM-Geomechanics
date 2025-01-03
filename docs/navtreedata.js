@@ -25,36 +25,34 @@
 var NAVTREE =
 [
   [ "MPM-Geomechanics", "index.html", [
-    [ "Introduction", "index.html#program_intro", null ],
-    [ "Program Features", "index.html#program_features", null ],
-    [ "Program compiled binaries", "index.html#program_binaries", null ],
-    [ "Compilation", "index.html#program_compilation", [
-      [ "Compilation in windows", "index.html#autotoc_md40", null ],
-      [ "Compilation in Linux", "index.html#autotoc_md41", null ]
-    ] ],
-    [ "Documentation", "index.html#program_documentation", null ],
-    [ "Execution", "index.html#program_execution", null ],
+    [ "Introduction", "index.html#autotoc_md48", null ],
+    [ "Program features", "index.html#autotoc_md49", null ],
+    [ "Compiled binaries", "index.html#autotoc_md50", null ],
+    [ "Compilation in windows", "index.html#autotoc_md51", null ],
+    [ "Compilation in Linux", "index.html#autotoc_md52", null ],
+    [ "Documentation", "index.html#autotoc_md53", null ],
+    [ "Execution", "index.html#autotoc_md54", null ],
     [ "Theory and Numerical Formulation", "theory_and_numerical_formulation_.html", [
-      [ "Introduction to the Material Point Method (MPM)", "theory_and_numerical_formulation_.html#autotoc_md50", null ],
-      [ "MPM Formulation", "theory_and_numerical_formulation_.html#autotoc_md51", null ],
-      [ "Explicit MPM integration", "theory_and_numerical_formulation_.html#autotoc_md52", null ],
-      [ "Central difference Method", "theory_and_numerical_formulation_.html#autotoc_md53", null ],
-      [ "Numerical implementation", "theory_and_numerical_formulation_.html#autotoc_md54", null ],
-      [ "Stability Requirement", "theory_and_numerical_formulation_.html#autotoc_md55", null ],
-      [ "Explicit MPM Scheme", "theory_and_numerical_formulation_.html#autotoc_md56", null ],
-      [ "Update Stress First - USF - Scheme", "theory_and_numerical_formulation_.html#autotoc_md57", null ],
-      [ "Update Stress Last - USL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md58", null ],
-      [ "Modified Update Stress Last - MUSL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md59", null ],
-      [ "References", "theory_and_numerical_formulation_.html#autotoc_md60", null ]
+      [ "Introduction to the Material Point Method (MPM)", "theory_and_numerical_formulation_.html#autotoc_md55", null ],
+      [ "MPM Formulation", "theory_and_numerical_formulation_.html#autotoc_md56", null ],
+      [ "Explicit MPM integration", "theory_and_numerical_formulation_.html#autotoc_md57", null ],
+      [ "Central difference Method", "theory_and_numerical_formulation_.html#autotoc_md58", null ],
+      [ "Numerical implementation", "theory_and_numerical_formulation_.html#autotoc_md59", null ],
+      [ "Stability Requirement", "theory_and_numerical_formulation_.html#autotoc_md60", null ],
+      [ "Explicit MPM Scheme", "theory_and_numerical_formulation_.html#autotoc_md61", null ],
+      [ "Update Stress First - USF - Scheme", "theory_and_numerical_formulation_.html#autotoc_md62", null ],
+      [ "Update Stress Last - USL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md63", null ],
+      [ "Modified Update Stress Last - MUSL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md64", null ],
+      [ "References", "theory_and_numerical_formulation_.html#autotoc_md65", null ]
     ] ],
     [ "Verification problems", "verification_problems.html", [
-      [ "Bousssinesq's problem", "verification_problems.html#autotoc_md61", [
-        [ "Introduction", "verification_problems.html#autotoc_md62", null ],
-        [ "Analytical solution", "verification_problems.html#autotoc_md63", null ],
-        [ "MPM model and result comparison", "verification_problems.html#autotoc_md64", null ]
+      [ "Bousssinesq's problem", "verification_problems.html#autotoc_md66", [
+        [ "Introduction", "verification_problems.html#autotoc_md67", null ],
+        [ "Analytical solution", "verification_problems.html#autotoc_md68", null ],
+        [ "MPM model and result comparison", "verification_problems.html#autotoc_md69", null ]
       ] ],
-      [ "Base acceleration example", "verification_problems.html#autotoc_md65", [
-        [ "MPM-Model", "verification_problems.html#autotoc_md66", null ]
+      [ "Base acceleration example", "verification_problems.html#autotoc_md70", [
+        [ "MPM-Model", "verification_problems.html#autotoc_md71", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [

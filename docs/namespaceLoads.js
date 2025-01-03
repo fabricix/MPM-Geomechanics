@@ -7,7 +7,7 @@ var namespaceLoads =
     [ "PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
     [ "PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
     [ "SeismicData", "structLoads_1_1SeismicData.html", "structLoads_1_1SeismicData" ],
-    [ "configureNodalPointLoads", "namespaceLoads.html#a70b671a26b22a970ebdb930b2c43a505", null ],
+    [ "configureNodalPointLoads", "namespaceLoads.html#a17a7cd5461a3f485a589936ab71da9da", null ],
     [ "getNodalPointList", "namespaceLoads.html#a67971878871ece27ff54401ffcd9a5ff", null ],
     [ "getSeismicData", "namespaceLoads.html#ac2794cc202d1527d21f610dd1bfc4310", null ],
     [ "setGravity", "namespaceLoads.html#a1a2299651bd04336c8233e10785aca1b", null ],
