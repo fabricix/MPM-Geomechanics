@@ -25,5 +25,5 @@ var searchData=
   ['none_22',['NONE',['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da',1,'Material::NONE'],['../classMohrCoulomb_1_1Softening.html#ab0a9e1e505a3458ccccc6c0979f0eb50a73d78f925d0bdd33349cfe7ec42b7067',1,'MohrCoulomb::Softening::NONE']]],
   ['nrows_23',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]],
   ['numerical_20formulation_24',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
-  ['numerical_20implementation_25',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md54',1,'']]]
+  ['numerical_20implementation_25',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md59',1,'']]]
 ];

@@ -153,11 +153,10 @@ namespace Loads {
     void setInitialVelocity(vector<Body*>& bodies);
 
     /// \brief configure nodeid-point-load data for nodal force application
-    /// \param [in] Mesh* mesh pointer
-    void configureNodalPointLoads(Mesh*);
+    /// \param [in] mesh mesh pointer
+    void configureNodalPointLoads(Mesh* mesh);
 
-    /// \brief Get (node-id load) vector for set nodal point load.
-    /// \param [out] NodalPointLoad vector 
+    /// \brief Get (node-id load) vector for set nodal point load. 
     NodalPointLoadData& getNodalPointList();
 };
 
