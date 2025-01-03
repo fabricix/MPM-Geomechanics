@@ -101,22 +101,17 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">MPM-Geomechanics </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="program_intro"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md48"></a>
 Introduction</h1>
-<p>The MPM-Geomechanics is a implementation of the <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>) to simulate large strain geomechanical problems in 3D. The main objective of this program is to provide an open source platform suitable for the study and application of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> in various geomechanical problems were materials are subjected to extreme deformation conditions.</p>
-<p>MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.</p>
-<p>This program uses the <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>) to integrate the motion equation of continuum mechanics:</p>
-<p>\( \frac{\partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i \)</p>
-<p>that can be expressed discretely, using the nodes of an Eulerian mesh:</p>
+<p>The MPM-Geomechanics is a implementation of the <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>) to simulate large strain geomechanical problems in 3D. The main objective of this program is to provide an open source platform suitable for the study and application of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> in various geomechanical problems were materials are subjected to extreme deformation conditions. MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters. This program uses the <a class="el" href="classMaterial.html" title="Represents a material.">Material</a> Point Method (<a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a>) to integrate the motion equation of continuum mechanics:</p>
+<p>\( \frac{\partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i \) that can be expressed discretely, using the nodes of an Eulerian mesh:</p>
 <p>\( \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} \)</p>
-<p>where \( p_{i I}=\sum_p S_{I p} p_{i p}\) is the momentum, \( f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p\) is the internal force, and \( f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A\) is the external force at node \( I \).</p>
-<p>The function \( S_{I p} \) and its gradient \( S_{I p, j} \) are the weighting functions of node \( I \) evaluated at the position of particle \( p \), defined by \( S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV \) and \( S_{I p, j}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV \).</p>
+<p>where \( p_{i I}=\sum_p S_{I p} p_{i p}\) is the momentum, \( f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p\) is the internal force, and \( f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A\) is the external force at node \( I \). The function \( S_{I p} \) and its gradient \( S_{I p, j} \) are the weighting functions of node \( I \) evaluated at the position of particle \( p \), defined by \( S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV \) and \( S_{I p, j}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV \).</p>
 <p>The integration of the weight functions is performed analytically over the particle domain using linear functions for \( N_I\left(x_{ip}\right) \) and unit step functions for \( \chi_p\left(x_{ip}\right) \).</p>
-<p>For more details on the formulation and integration process, refer to: program_theory_manual</p>
-<h1><a class="anchor" id="program_features"></a>
-Program Features</h1>
-<p>The main features of the program are:</p>
-<ul>
+<p>For more details on the formulation and integration process, refer to: <a class="el" href="theory_and_numerical_formulation_.html">Theory and Numerical Formulation</a></p>
+<h1><a class="anchor" id="autotoc_md49"></a>
+Program features</h1>
+<p>The main features of the program are:</p><ul>
 <li>Three-dimensional 3D formulation</li>
 <li>Dynamic formulation</li>
 <li>Shared memory parallelization using OpenMP</li>
@@ -125,37 +120,30 @@ Program Features</h1>
 <li>Softening/hardening models to represent weakness during large deformations</li>
 <li>Coupled fluid-mechanical formulation (<em>under development</em>)</li>
 </ul>
-<h1><a class="anchor" id="program_binaries"></a>
-Program compiled binaries</h1>
+<h1><a class="anchor" id="autotoc_md50"></a>
+Compiled binaries</h1>
 <p>For downloading the compiled binaries</p><ol type="1">
 <li>Go to the <a href="https://github.com/fabricix/MPM-Geomechanics/actions">Actions page</a>.</li>
 <li>Select the latest run of the <b>MSBuild</b> workflow for Window, or <b>CI</b> for Linux.</li>
 <li>At the bottom, you will find the available artifacts under the <b>Artifacts</b> section.</li>
 <li>Download the <code>compiled-binaries</code> artifact to get the compiled code.</li>
 </ol>
-<h1><a class="anchor" id="program_compilation"></a>
-Compilation</h1>
-<p>The best way to use the program is to compile it into your system.</p>
-<h2><a class="anchor" id="autotoc_md40"></a>
-Compilation in windows</h2>
-<p>For compiling the code in windows you can use the Visual Studio solution file <code>/build/MPM-Geomechanics.sln</code>, and build it by pressing <code>Ctr+B</code>.</p>
-<p>Alternatively you can compile it by using command in a <em>Developer Command Prompt</em>:</p>
-<div class="fragment"><div class="line">msbuild <a class="code hl_class" href="classMPM.html">MPM</a>-Geomechanics.sln -p:Configuration=Release</div>
-<div class="ttc" id="aclassMPM_html"><div class="ttname"><a href="classMPM.html">MPM</a></div><div class="ttdoc">Components and algorithms of the MPM This class contain the basic objects of a MPM model,...</div><div class="ttdef"><b>Definition</b> MPM.h:101</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md41"></a>
-Compilation in Linux</h2>
+<h1><a class="anchor" id="autotoc_md51"></a>
+Compilation in windows</h1>
+<p>For compiling the code in windows you can use the Visual Studio solution file <code>/build/MPM-Geomechanics.sln</code>, and build it by pressing <code>Ctr+B</code>. Alternatively you can compile it by using command in a <em>Developer Command Prompt</em>:</p>
+<div class="fragment"><div class="line">msbuild MPM-Geomechanics.sln -p:Configuration=Release</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md52"></a>
+Compilation in Linux</h1>
 <p>For compile the code in a linux environment, execute the <a href="https://www.gnu.org/software/make/">make</a> command into the make folder, in with is located de makefile <code>MPM-Geomechanics\build\make\makefile</code>:</p>
-<div class="fragment"><div class="line">make</div>
-</div><!-- fragment --><h1><a class="anchor" id="program_documentation"></a>
+<h1><a class="anchor" id="autotoc_md53"></a>
 Documentation</h1>
 <p>The program documentation is generated using <a href="https://www.doxygen.nl/index.html">Doxygen</a>:</p>
 <div class="fragment"><div class="line">doxygen Doxyfile</div>
 </div><!-- fragment --><p>The HTML generated documentation is located in <code>/docs/index.html</code>.</p>
-<h1><a class="anchor" id="program_execution"></a>
+<h1><a class="anchor" id="autotoc_md54"></a>
 Execution</h1>
-<p>In order to run simulations in several terminal, you can add the compiled code in the system <code>PATH</code>. After that, the common use is to call the program with the input file as argument:</p>
-<div class="fragment"><div class="line"><a class="code hl_class" href="classMPM.html">MPM</a>-Geomechanics my_model.json</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+<p>In order to run simulations in several terminal, you can add the compiled code in the system <code>PATH</code>. After that, the common use is to call the program with the input file as argument: </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

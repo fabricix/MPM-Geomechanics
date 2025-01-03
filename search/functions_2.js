@@ -4,7 +4,7 @@ var searchData=
   ['computekineticenergy_1',['computeKineticEnergy',['../namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4',1,'DynamicRelaxation']]],
   ['computeshape_2',['computeshape',['../classShape.html#a821108891fd1b3d8a51895d04259b9f1',1,'Shape::computeShape()'],['../classShapeGimp.html#a6b9bf93afe40d0b02249cfffeb35b1f2',1,'ShapeGimp::computeShape()'],['../classShapeLinear.html#a8e6a7e7e501e2fdaab1825480cb561d2',1,'ShapeLinear::computeShape()']]],
   ['configureboundaries_3',['configureBoundaries',['../classMesh.html#a77996ce898ba1611f13edb1bb2cdd0f1',1,'Mesh']]],
-  ['configurenodalpointloads_4',['configureNodalPointLoads',['../namespaceLoads.html#a70b671a26b22a970ebdb930b2c43a505',1,'Loads']]],
+  ['configurenodalpointloads_4',['configureNodalPointLoads',['../namespaceLoads.html#a17a7cd5461a3f485a589936ab71da9da',1,'Loads']]],
   ['configureresultfiels_5',['configureResultFiels',['../namespaceOutput.html#a53978f5e750be3407e4386574952b099',1,'Output']]],
   ['contact_6',['Contact',['../classContact.html#ae39444f378e6de7fd6c3e60981949af5',1,'Contact']]],
   ['contribution_7',['Contribution',['../classContribution.html#a59775497d673b49ac00b19f525bc1b05',1,'Contribution']]],

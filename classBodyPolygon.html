@@ -231,23 +231,23 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Is a type of <a class="el" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number.">Body</a> created by the extrusion of a 2D polygon. </p>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Introduction</h2>
 <p>This class allows to create a 3D body in the space by extrusion of a 2D polygon.</p>
 <p>The extrusion is performed according to a direction and to a displacement. The direction of the extrusion is represented by the <code>extrudeDirection</code> attribute. The displacement of the extrusion is represented by the <code>extrudeDisplacement</code> attribute. This body is fill up with particles according to a discretization parameter <code>distretizationLength</code>.</p>
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md43"></a>
 Extrusion direction</h2>
 <p>The extrude direction is the axis by with the polygon will be extruded.</p>
 <p>Extrusion in x Extrusion in y Extrusion in z</p>
 <p>z x y ^ ^ ^ | | | o&mdash;&gt; y o&mdash;&gt; z o&mdash;&gt; x</p>
 <p>o : is the axis pointing out of the plane</p>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 Extrusion displacement</h2>
 <p>Is the total displacement of the polygon through the extrusion direction.</p>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 The Discretization Length</h2>
 <p>When the particles are put in the body an auxiliary grid is used. The <code>discretizationLength</code> attribute is the dimension of a grid cell.</p>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 How the material points are placed in the body</h2>
 <p>Once the body was created by extrusion, the material points need to be distributed inside the body. For do that the create method performs this operations:</p>
 <ol type="1">
