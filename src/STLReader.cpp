@@ -36,7 +36,7 @@ bool STLReader::readASCII(std::ifstream& file) {
             Triangle triangle;
             ss >> word >> triangle.normal.x() >> triangle.normal.y() >> triangle.normal.z();
 
-            // Leer los vértices
+			// read vertex coordinates
             std::getline(file, line);  // outer loop
             std::getline(file, line);
             std::sscanf(line.c_str(), " vertex %f %f %f", &triangle.v1.x(), &triangle.v1.y(), &triangle.v1.z());

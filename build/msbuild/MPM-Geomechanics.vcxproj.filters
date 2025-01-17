@@ -40,6 +40,7 @@
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\BodySphere.cpp" />
+    <ClCompile Include="..\..\src\STLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
+    <ClInclude Include="..\..\inc\Mesh\STLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">

@@ -12,7 +12,7 @@
 using Eigen::Vector3d;
 
 /// \class Node
-/// \brief Represents a mesh node.
+/// \brief Represents a mesh node
 class Node {
 
 public:
