@@ -41,6 +41,9 @@ void SolverExplicitUSL::Solve()
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
 
+		// ContactCheck
+		Contact::checkContact(mesh, bodies);
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			// nodal mass
@@ -75,8 +78,9 @@ void SolverExplicitUSL::Solve()
 		// integrate the grid nodal momentum equation
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// ContactCheck
-		Contact::checkContact(mesh, bodies);
+		if (ModelSetup::getContactActive()) {
+			Contact::contactForce(mesh, bodies, dt);
+		}
 
 
 		// update particle velocity

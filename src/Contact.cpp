@@ -48,18 +48,36 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	
 
 	for (int i = 0; i < nNodes; i++) {
-		int contributionCont = 0;
-
+		
+		int contactBodyId = -1;
+		int contactBodySlaveId = -1;
+		
 		for (int j = 0; j < nBodies; j++){
 			if (contactMatrix[i][j] == 1) {
-				contributionCont++;
+				if (contactBodyId >= 0) {
+					contactBodySlaveId = j;
+				}
+				else 
+				{
+					contactBodyId = j;
+				}
 			}
 			
 		}
-		if (contributionCont > 1) {
-			Node*  node = mesh->getNodes()->at(i);
-			NodeContact* nodeContact = dynamic_cast<NodeContact*>(node);
-			nodeContact->setContactFlag(true);
+		Node* node = mesh->getNodes()->at(i);
+		NodeContact* nodeContact = dynamic_cast<NodeContact*>(node);
+		
+		if (contactBodySlaveId >= 0) {
+
+			nodeContact->setContactStatus(true);
+			ModelSetup::setContactActive(true);
+			nodeContact->setContactBodies(contactBodyId, contactBodySlaveId);
+			
+		}
+		else
+		{
+			nodeContact->setContactStatus(false); 
+			//nodeContact->setContactBodies(-1, -1);
 
 		}
 	}
@@ -67,7 +85,31 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 
 void Contact::checkContact(Mesh* mesh, vector<Body*>* bodies) {
+	ModelSetup::setContactActive(false);
 	firstContactCheck(mesh, bodies);
+}
 
+void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
+	
+	int nNodes = mesh->getNumNodes();
+	int nBodies = bodies->size();
+	
+
+	//for each grid node
+	for (int iNode = 0; iNode < nNodes; iNode++) {
+
+		Node* node = mesh->getNodes()->at(iNode);
+		NodeContact* nodeContact = dynamic_cast<NodeContact*>(node);
+		
+		if (nodeContact->getContactStatus()) {
+			//for each body
+			int contactBodyId = nodeContact->getContactBodyId(0);
+			int contactBodySlaveId = nodeContact->getContactBodyId(1);
+		}
+
+		
+
+
+	}
 }
 

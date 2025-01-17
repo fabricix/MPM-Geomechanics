@@ -8,6 +8,7 @@
 #include "Update.h"
 #include "Loads.h"
 #include "Interpolation.h"
+#include "Mesh/NodeContact.h"
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -351,6 +352,10 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
+					if (ModelSetup::getContactActive()) {
+						NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
+						nodeContact->setMomentumSlave(momentum);
+					}
 					break;
 				}
 			}

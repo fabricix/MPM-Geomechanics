@@ -14,19 +14,19 @@ NodeContact::~NodeContact() {
 
 void NodeContact::updateTotalForce(){
 
-    // total force of fluid in mixture
-    this->totalForceSlaveBody = this->internalForceSlaveBody + this->externalForceSlaveBody + this->dampingForceSlaveBody;
+    // total force
+    Node::updateTotalForce();
 
-    // total force of solid in mixture
-    Node::totalForce = Node::internalForce + Node::externalForce + Node::dampingForce - this->totalForceSlaveBody;
+    // total force of slave body
+    this->totalForceSlaveBody = this->internalForceSlaveBody + this->externalForceSlaveBody + this->dampingForceSlaveBody;
 }
 
 void NodeContact::updateDampingForce() { 
 
-    // update damping force of solid phase
+    // update damping force 
     Node::updateDampingForce();
 
-    // update damping force of fluid phase
+    // update damping force of slave body
     switch(ModelSetup::getDampingType())
     {
     	// local damping force

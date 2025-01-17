@@ -87,11 +87,23 @@ public:
 
     /// \brief Configure the has contact flag
     /// Has contact flag
-    virtual inline void setContactFlag(bool flag) { this->hasContact = flag; }
+    virtual inline void setContactStatus(bool flag) { this->hasContact = flag; }
 
     /// \brief Return the contact status
     /// \return contact status
     virtual inline const bool getContactStatus() const { return (this->hasContact); }
+
+    /// \brief Set contact bodies Id
+    /// contactBodyId
+    /// contactBodySlaveId
+    virtual inline void setContactBodies(int _contactBodyId, int _contactBodySlaveId) { this->contactBodyId = _contactBodyId, this->contactBodySlaveId = _contactBodySlaveId; }
+
+    /// \brief Get contact bodies Id
+    /// contactBodyId
+    /// contactBodySlaveId
+    virtual inline const int getContactBodyId(int pos) const {return  (pos == 0) ? this->contactBodyId : this->contactBodySlaveId; }
+
+
 
 private:
 
@@ -104,8 +116,11 @@ private:
     Vector3d dampingForceSlaveBody; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
     Vector3d totalForceSlaveBody; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
     bool hasContact; //!< contact flag
+    int contactBodyId; //!< Body in contact at this node
+    int contactBodySlaveId; //!< Slave body in contact at this node
     int closestParticleId; //!< Closest particle from node contact
     int closestParticleSlaveId; //!< Closest particle of slave body from node contact
+    Vector3d ContactForce; //!< contact force
  
 };
 

@@ -39,7 +39,7 @@ public:
 	/// \param[in] mesh
 	/// \param[in] bodies
 	/// \param[in] dt
-	static void firstContactCheck(Mesh* mesh, vector<Body*>* bodies, double dt);
+	static void contactForce(Mesh* mesh, vector<Body*>* bodies, double dt);
 
 };
 

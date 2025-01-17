@@ -9,6 +9,7 @@
 #include "Contribution.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
+#include "Mesh/NodeContact.h"
 
 ///
 /// From particle to node:
@@ -62,8 +63,27 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 				// the node is inactivate if he doesn't have mass
 				nodeI->setActive(true);
 
-				// add mass at node
-				nodeI->addMass(nodalMass);
+				if (ModelSetup::getContactActive()) {
+					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
+					if (nodeContact->getContactStatus()) {
+						if (ibody == nodeContact->getContactBodyId(1)) {
+							// add mass at node
+							nodeContact->addMassSlave(nodalMass);
+						}
+						else {
+							// add mass at node
+							nodeI->addMass(nodalMass);
+						}
+					}
+					else {
+						// add mass at node
+						nodeI->addMass(nodalMass);
+					}
+				}
+				else {
+					// add mass at node
+					nodeI->addMass(nodalMass);
+				}
 			}
 		}
 	}
@@ -149,8 +169,27 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 				// get the contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-				// add the weighted momentum in node
-				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+				if (ModelSetup::getContactActive()) {
+					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
+					if (nodeContact->getContactStatus()) {
+						if (ibody == nodeContact->getContactBodyId(1)) {
+							// add the weighted momentum in node
+							nodeContact->addMomentumSlave(pMass * pVelocity * contribution->at(j).getWeight());
+						}
+						else {
+							// add the weighted momentum in node
+							nodeI->addMomentum(pMass * pVelocity * contribution->at(j).getWeight());
+						}
+					}
+					else {
+						// add the weighted momentum in node
+						nodeI->addMomentum(pMass * pVelocity * contribution->at(j).getWeight());
+					}
+				}
+				else {
+					// add the weighted momentum in node
+					nodeI->addMomentum(pMass * pVelocity * contribution->at(j).getWeight());
+				}
 			}
 		}
 	}
@@ -261,8 +300,27 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 					internalForce.z()+=pPressure*gradient(2)*pVolume;
 				}
 
-				// add the internal force contribution in node
-				nodeI->addInternalForce(internalForce);
+				if (ModelSetup::getContactActive()) {
+					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
+					if (nodeContact->getContactStatus()) {
+						if (ibody == nodeContact->getContactBodyId(1)) {
+							// add the internal force contribution in sllave node
+							nodeContact->addInternalForceSlave(internalForce);
+						}
+						else {
+							// add the internal force contribution in node
+							nodeI->addInternalForce(internalForce);
+						}
+					}
+					else {
+						// add the internal force contribution in node
+						nodeI->addInternalForce(internalForce);
+					}
+				}
+				else {
+					// add the internal force contribution in node
+					nodeI->addInternalForce(internalForce);
+				}
 			}
 		}
 	}
@@ -354,8 +412,27 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				// get contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-				// add weighted force in node
-				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
+				if (ModelSetup::getContactActive()) {
+					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
+					if (nodeContact->getContactStatus()) {
+						if (ibody == nodeContact->getContactBodyId(1)) {
+							// add the internal force contribution in sllave node
+							nodeContact->addExternalForceSlave(pExtForce * contribution->at(j).getWeight());
+						}
+						else {
+							// add weighted force in node
+							nodeI->addExternalForce(pExtForce * contribution->at(j).getWeight());
+						}
+					}
+					else {
+						// add weighted force in node
+						nodeI->addExternalForce(pExtForce * contribution->at(j).getWeight());
+					}
+				}
+				else {
+					// add weighted force in node
+					nodeI->addExternalForce(pExtForce * contribution->at(j).getWeight());
+				}
 			}
 		}
 	}
