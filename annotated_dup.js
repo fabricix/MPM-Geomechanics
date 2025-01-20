@@ -33,5 +33,7 @@ var annotated_dup =
     [ "ShapeLinear", "classShapeLinear.html", "classShapeLinear" ],
     [ "Solver", "classSolver.html", "classSolver" ],
     [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", "classSolverExplicitTwoPhaseUSL" ],
-    [ "SolverExplicitUSL", "classSolverExplicitUSL.html", "classSolverExplicitUSL" ]
+    [ "SolverExplicitUSL", "classSolverExplicitUSL.html", "classSolverExplicitUSL" ],
+    [ "STLReader", "classSTLReader.html", "classSTLReader" ],
+    [ "Triangle", "structTriangle.html", "structTriangle" ]
 ];

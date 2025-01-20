@@ -16,7 +16,9 @@ var searchData=
   ['totalforce_13',['totalForce',['../classNode.html#ab06a209d998e817f6f93590436aece9d',1,'Node']]],
   ['totalforcefluid_14',['totalForceFluid',['../classNodeMixture.html#afa2378b4573980b6e24cb205bf6c428a',1,'NodeMixture']]],
   ['totalparticles_15',['totalParticles',['../classParticle.html#afb7d35157679a6b5f50daebe4ac396da',1,'Particle']]],
-  ['two_20phase_20simulation_20definition_20example_16',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
-  ['two_20phase_20simulations_17',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
-  ['type_18',['type',['../classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592',1,'Material']]]
+  ['triangle_16',['Triangle',['../structTriangle.html',1,'']]],
+  ['triangles_17',['triangles',['../classSTLReader.html#ae4021a756f7ddecaf37e15ab246a653a',1,'STLReader']]],
+  ['two_20phase_20simulation_20definition_20example_18',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
+  ['two_20phase_20simulations_19',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
+  ['type_20',['type',['../classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592',1,'Material']]]
 ];
