@@ -582,6 +582,9 @@ namespace Input {
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
 	vector<Boundary::BoundaryType> getMeshBoundaryConditions();
 	
+	/// \brief Return the name of the SLT mesh for terrain contact 
+	std::string getSTLMeshFile();
+
 	/// \brief Return the mesh boundary conditions of fluid
 	/// \return boundary_restriction_vector A vector containing 
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.

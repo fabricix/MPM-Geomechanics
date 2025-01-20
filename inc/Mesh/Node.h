@@ -179,6 +179,9 @@ protected:
 	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{int}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{int,s}\f$
 	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
+	
+	double distanceLS; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
+	double volume; //!< nodal volume \f$ V_{I} \f$
 };
 
 inline Node::Node() {

@@ -1365,6 +1365,29 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 };
 
+std::string Input::getSTLMeshFile()
+{
+	try
+	{
+		if (inputFile["mesh"]["stl"].is_null())
+		{
+			throw(0);
+		}
+
+		if (inputFile["mesh"]["stl"].is_string())
+		{
+			return inputFile["mesh"]["stl"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the STL file name");
+		throw;
+	}
+}
+
 SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
 	
 	SeismicData data;

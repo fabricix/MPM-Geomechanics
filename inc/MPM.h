@@ -15,6 +15,7 @@
 #include "Input.h"
 #include "States.h"
 #include "Solver/Solver.h"
+#include "Mesh/STLReader.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -58,7 +59,9 @@ public:
 	void saveState();
 private:
 	
-	Mesh mesh; //!< grid mesh
+	Mesh mesh; //!< background grid mesh
+
+	STLReader* stlMesh; //!< triangular mesh for terrain contact
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 
@@ -80,6 +83,9 @@ private:
 	///
 	void setupMesh();
 	
+	/// \brief Configure the STL mesh for terrain contact
+	void setupSTLMesh();
+
 	/// \brief Configures the material list
 	///
 	void setupMaterialList();

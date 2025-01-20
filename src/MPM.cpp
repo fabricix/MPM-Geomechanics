@@ -148,6 +148,17 @@ void MPM::setupMesh() {
 	}
 }
 
+void MPM::setupSTLMesh() {
+
+	// set the STL mesh
+	string stlMeshFile = Input::getSTLMeshFile();
+	if (stlMeshFile!=""){
+
+		stlMesh = new STLReader;
+		stlMesh->read(stlMeshFile);
+	}
+}
+
 void MPM::setupMaterialList() {
 
 	materials=Input::getMaterialList();
@@ -310,8 +321,11 @@ void MPM::createModel() {
 		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
 
-		// setup the mesh
+		// setup the background mesh
 		setupMesh();
+
+		// setup the STL mesh for terrain contact
+		setupSTLMesh();
 
 		// setup the material list
 		setupMaterialList();

@@ -43,13 +43,13 @@ public:
     void createGrid( bool is_two_phase_simulation );
 
     /// \brief Set cells dimension in each direction
-    /// \param[in] cell_dimension_x Cell dimesion in x
-    /// \param[in] cell_dimension_y Cell dimesion in y
-    /// \param[in] cell_dimension_z Cell dimesion in z
+    /// \param[in] cell_dimension_x Cell dimension in x
+    /// \param[in] cell_dimension_y Cell dimension in y
+    /// \param[in] cell_dimension_z Cell dimension in z
     void setCellDimension(double cell_dimension_x, double cell_dimension_y, double cell_dimension_z);
     
     /// \brief Set cells dimension in each direction
-    /// \param[in] cell_dimension A vector containing the Cell dimesion in each direction
+    /// \param[in] cell_dimension A vector containing the Cell dimension in each direction
     void setCellDimension(const Vector3d& cell_dimension);
     
     /// \brief Set number of cell in each direction
