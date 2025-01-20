@@ -40,6 +40,10 @@
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\BodySphere.cpp" />
+    <ClCompile Include="..\..\src\STLReader.cpp" />
+    <ClCompile Include="..\..\tests\stl-mesh-reader\stl-mesh-reader-test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -77,6 +81,7 @@
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
+    <ClInclude Include="..\..\inc\Mesh\STLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">
