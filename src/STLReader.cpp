@@ -3,14 +3,16 @@
 #include <fstream>
 #include <sstream>
 
-bool STLReader::read(const std::string& filename) {
+bool STLReader::read(const std::string& filename)
+{
+    // open the file
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Error opening STL file: " << filename << std::endl;
         return false;
     }
-
-    // read format
+ 
+    // read header to determine the format
     char header[80];
     file.read(header, 80);
 
@@ -25,14 +27,20 @@ bool STLReader::read(const std::string& filename) {
     }
 }
 
-bool STLReader::readASCII(std::ifstream& file) {
+bool STLReader::readASCII(std::ifstream& file) 
+{
+    // clear triangles
+    triangles.clear();
+
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(file, line))
+    {
         std::istringstream ss(line);
         std::string word;
         ss >> word;
 
-        if (word == "facet") {
+        if (word == "facet") 
+        {
             Triangle triangle;
             ss >> word >> triangle.normal.x() >> triangle.normal.y() >> triangle.normal.z();
 
@@ -49,8 +57,8 @@ bool STLReader::readASCII(std::ifstream& file) {
 
             triangles.push_back(triangle);
 
-            std::getline(file, line);  // endloop
-            std::getline(file, line);  // endfacet
+            std::getline(file, line);  // end loop
+            std::getline(file, line);  // end facet
         }
     }
     return true;
@@ -58,6 +66,9 @@ bool STLReader::readASCII(std::ifstream& file) {
 
 bool STLReader::readBinary(std::ifstream& file) {
     
+    // clear triangles
+    triangles.clear();
+
     uint32_t numTriangles;
     
     file.read(reinterpret_cast<char*>(&numTriangles), sizeof(uint32_t));
