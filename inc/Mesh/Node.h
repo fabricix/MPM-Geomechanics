@@ -164,6 +164,9 @@ public:
 	///
 	virtual inline void integrateMomentum(double dt) { this->momentum +=  this->totalForce*dt; }
 
+	/// \brief Set the distance level set function value of the node
+	void setDistanceLevelSet(double distance) { this->distanceLS = distance; }
+
 protected:
 
 	bool active; //!< is active node
@@ -188,6 +191,7 @@ inline Node::Node() {
     active=false;
     id=0;
     mass=0.0;
+	distanceLS=0.0;
     coordinates.setZero();
     momentum.setZero();
     velocity.setZero();
@@ -201,6 +205,7 @@ inline void Node::resetValues()
 {
     active=false;
     mass=0.0;
+	distanceLS=0.0;
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();

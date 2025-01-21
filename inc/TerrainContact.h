@@ -2,6 +2,7 @@
 #define TERRAIN_CONTACT_H
 
 #include "Mesh/STLReader.h"
+#include "Mesh/Mesh.h"
 
 /// @brief Class to compute terrain contact
 class TerrainContact {
@@ -22,12 +23,13 @@ public:
     }
 
     /// @brief set the friction coefficient
-    /// @param friction Friction coefficient \f$\mu\f$
+    /// @param friction friction coefficient \f$\mu\f$
     void setFrictionCoefficient(double friction) {
         frictionCoefficient = friction;
     }
 
-    
+    /// @brief compute the distance level set function \f$ d_{I}=(X_I-X_i)e_n \f$
+    void computeDistanceLevelSetFunction(Mesh* mesh);
 };
 
 #endif
