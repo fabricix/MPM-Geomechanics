@@ -85,7 +85,7 @@ private:
 	
 	/// \brief Configure Terrain contact
 	void setupTerrainContact();
-
+	
 	/// \brief Configures the material list
 	///
 	void setupMaterialList();
@@ -126,12 +126,14 @@ private:
 	///
 	void setNumberPhasesInSimulation();
 
-
 	/// \brief Configure number of threads
 	///
 	void setThreads();
 
+	/// \brief Get seismic analysis active
 	bool getSeismicAnalysis();
+
+	/// \brief Set seismic analysis active
 	void setSeismicAnalysis(bool);
 };
 

@@ -1,0 +1,61 @@
+{
+	"time":1,
+
+	"gravity":[0.0,0.0,-9.81],
+
+	"results":
+	{
+		"print":10,
+		"fields":["id","displacement","material","active","plastic_strain"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[1,1,1],
+		"cells_number":[10,10,10],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"plastic":
+		{
+			"type":"mohr-coulomb",
+			"id":1,
+			"young":70e6,
+			"density":2100,
+			"poisson":0.3,
+			"friction":20.0,
+			"cohesion":1.0e3
+		}
+	},
+
+	"body":
+	{
+		"cuboid":
+		{
+			"type":"cuboid",
+			"id":1,
+			"point_p1":[6,6,6],
+			"point_p2":[7,7,7],
+			"material_id":1
+		}
+	},
+
+	"terrain_contact":
+	{
+		"active":true,
+		"stl_mesh":"terrain.stl",
+		"friction":0.65
+	}
+}

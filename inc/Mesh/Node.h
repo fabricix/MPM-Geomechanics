@@ -165,7 +165,10 @@ public:
 	virtual inline void integrateMomentum(double dt) { this->momentum +=  this->totalForce*dt; }
 
 	/// \brief Set the distance level set function value of the node
-	void setDistanceLevelSet(double distance) { this->distanceLS = distance; }
+	void setDistanceLevelSet(double distance) { this->distanceLevelSet = distance; }
+
+	/// \brief Get the distance level set function value of the node
+	double getDistanceLevelSet() { return this->distanceLevelSet; }
 
 protected:
 
@@ -183,7 +186,7 @@ protected:
 	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
 	
-	double distanceLS; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
+	double distanceLevelSet; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
 };
 
 inline Node::Node() {
@@ -191,7 +194,7 @@ inline Node::Node() {
     active=false;
     id=0;
     mass=0.0;
-	distanceLS=0.0;
+	distanceLevelSet=0.0;
     coordinates.setZero();
     momentum.setZero();
     velocity.setZero();
@@ -205,7 +208,7 @@ inline void Node::resetValues()
 {
     active=false;
     mass=0.0;
-	distanceLS=0.0;
+	distanceLevelSet=0.0;
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();

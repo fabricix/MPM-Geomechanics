@@ -428,6 +428,13 @@ namespace Output{
 		}
 		gridFile << "</DataArray>\n";
 
+		// nodal distance level set function value
+		gridFile<<"<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile<<scientific<<(inodes->at(i)->getDistanceLevelSet())<<"\n";
+		}
+		gridFile<<"</DataArray>\n";
+
 		// end point data
 		gridFile<<"</PointData>\n";
 		

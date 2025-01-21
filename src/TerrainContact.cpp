@@ -15,16 +15,17 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
     #pragma omp parallel for shared(gNodes, triangles)
     for (int i = 0; i < gNodes->size(); ++i)
     {
+        // get node
         Node* node = gNodes->at(i);
-
-        // check if the node is active
-        if (!node->getActive()) { continue;}
 
         // get node position
         Vector3d nodePosition = node->getCoordinates();
 
         // variable to store the minimum distance
-        double minDistance = std::numeric_limits<double>::max();
+        double minDistance = 1e6;
+
+        // variable to check if all distances are negative
+        bool allNegative = true;
 
         // iterate over all triangles in the stl mesh
         for (const Triangle& triangle : triangles)
@@ -40,8 +41,26 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
             double d2 = (nodePosition - v2).dot(normal);
             double d3 = (nodePosition - v3).dot(normal);
 
-            // update minimum distance
-            minDistance = std::min({minDistance, d1, d2, d3});
+            // Check if at least one distance is positive
+            if (d1 > 0.0 || d2 > 0.0 || d3 > 0.0) {
+                allNegative = false;
+            }
+
+            // Consider only positive distances for the minimum calculation
+            if (d1 > 0.0) {
+                minDistance = std::min(minDistance, d1);
+            }
+            if (d2 > 0.0) {
+                minDistance = std::min(minDistance, d2);
+            }
+            if (d3 > 0.0) {
+                minDistance = std::min(minDistance, d3);
+            }
+        }
+
+        // if all distances for all triangles are negative, set minDistance to -1
+        if (allNegative) {
+            minDistance = -1.0;
         }
 
         // store the minimum distance in the node

@@ -631,6 +631,9 @@ namespace Input {
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
 	double getFrictionCoefficient ();
+
+	/// \brief Return the terrain contact active
+	bool getTerrainContactActive();
 };
 
 #endif /* INPUT_H_ */

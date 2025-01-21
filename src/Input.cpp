@@ -1393,6 +1393,34 @@ double Input::getFrictionCoefficient() {
 	}
 }
 
+bool Input::getTerrainContactActive()
+{
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["active"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["active"].is_boolean())
+		{
+			return inputFile["terrain_contact"]["active"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the terrain contact active keyword");
+		throw;
+	}
+}
+
 std::string Input::getSTLMeshFile()
 {
 	try

@@ -151,6 +151,11 @@ void MPM::setupMesh() {
 
 void MPM::setupTerrainContact()
 {
+	// verity if terrain contact active
+	bool terrainContactActive = Input::getTerrainContactActive();
+	ModelSetup::setTerrainContactActive(terrainContactActive);
+	if (!terrainContactActive) { return;}
+
 	// configure STL mesh for terrain contact
 	string stlMeshFile = Input::getSTLMeshFile();
 	if (stlMeshFile!=""){
@@ -159,11 +164,11 @@ void MPM::setupTerrainContact()
 		stlMesh->read(stlMeshFile);
 
 		// set stl mesh in terrain contact
-		terrainContact->setSTLMesh(stlMesh);
-	}
+		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());
 
-	// set friction coefficient
-	terrainContact->setFrictionCoefficient(Input::getFrictionCoefficient());
+		// compute distance level set function
+		terrainContact->computeDistanceLevelSetFunction(&mesh);
+	}
 }
 
 void MPM::setupMaterialList() {

@@ -18,7 +18,7 @@ namespace ModelSetup {
 	/// Default values for the model
 	///
 	
-	// terrain contact active
+	// terrain contact
 	bool terrainContactActive=false; //!< is terrain contact active
 	bool getTerrainContactActive() { return terrainContactActive; }
 	void setTerrainContactActive(bool d) { terrainContactActive=d; }
