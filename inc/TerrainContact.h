@@ -26,6 +26,8 @@ public:
     void setFrictionCoefficient(double friction) {
         frictionCoefficient = friction;
     }
+
+    
 };
 
 #endif
