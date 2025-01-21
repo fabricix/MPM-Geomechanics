@@ -181,7 +181,6 @@ protected:
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
 	
 	double distanceLS; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
-	double volume; //!< nodal volume \f$ V_{I} \f$
 };
 
 inline Node::Node() {

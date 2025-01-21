@@ -15,7 +15,7 @@
 #include "Input.h"
 #include "States.h"
 #include "Solver/Solver.h"
-#include "Mesh/STLReader.h"
+#include "TerrainContact.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -61,7 +61,7 @@ private:
 	
 	Mesh mesh; //!< background grid mesh
 
-	STLReader* stlMesh; //!< triangular mesh for terrain contact
+	TerrainContact* terrainContact; //!< terrain contact object
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 
@@ -83,8 +83,8 @@ private:
 	///
 	void setupMesh();
 	
-	/// \brief Configure the STL mesh for terrain contact
-	void setupSTLMesh();
+	/// \brief Configure Terrain contact
+	void setupTerrainContact();
 
 	/// \brief Configures the material list
 	///

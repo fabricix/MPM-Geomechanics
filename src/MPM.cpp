@@ -14,6 +14,7 @@
 #include "Shape/ShapeGimp.h"
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
+#include "TerrainContact.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -148,15 +149,21 @@ void MPM::setupMesh() {
 	}
 }
 
-void MPM::setupSTLMesh() {
-
-	// set the STL mesh
+void MPM::setupTerrainContact()
+{
+	// configure STL mesh for terrain contact
 	string stlMeshFile = Input::getSTLMeshFile();
 	if (stlMeshFile!=""){
-
-		stlMesh = new STLReader;
+		// create mesh pointer
+		STLReader* stlMesh = new STLReader;
 		stlMesh->read(stlMeshFile);
+
+		// set stl mesh in terrain contact
+		terrainContact->setSTLMesh(stlMesh);
 	}
+
+	// set friction coefficient
+	terrainContact->setFrictionCoefficient(Input::getFrictionCoefficient());
 }
 
 void MPM::setupMaterialList() {
@@ -324,8 +331,8 @@ void MPM::createModel() {
 		// setup the background mesh
 		setupMesh();
 
-		// setup the STL mesh for terrain contact
-		setupSTLMesh();
+		// setup terrain contact
+		setupTerrainContact();
 
 		// setup the material list
 		setupMaterialList();

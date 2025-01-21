@@ -45,6 +45,8 @@ objects = BodyCuboid.o \
 	SolverExplicitUSL.o \
 	States.o \
 	Update.o \
+	STLReader.o \
+	TerrainContact.o \
 	Warning.o
 
 # make the program
@@ -53,6 +55,12 @@ MPM-Geomechanics: $(objects)
 
 # compile dependencies
 
+STLReader.o : ../../src/STLReader.cpp
+	$(CC) $(CFLAGS) $(INC) -c ../../src/STLReader.cpp
+
+TerrainContact.o : ../../src/TerrainContact.cpp
+	$(CC) $(CFLAGS) $(INC) -c ../../src/TerrainContact.cpp
+	
 BodyCuboid.o : ../../src/BodyCuboid.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../../src/BodyCuboid.cpp	
 

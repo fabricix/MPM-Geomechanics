@@ -12,14 +12,18 @@ using std::floor;
 
 #include <omp.h>
 
-
 namespace ModelSetup {
 
 	///
-	/// Data members
+	/// Default values for the model
 	///
 	
-	// coupled hydro-mechanical analisys 
+	// terrain contact active
+	bool terrainContactActive=false; //!< is terrain contact active
+	bool getTerrainContactActive() { return terrainContactActive; }
+	void setTerrainContactActive(bool d) { terrainContactActive=d; }
+
+	// coupled hydro-mechanical analysis 
 	bool twoPhaseCalculationActive=false; //!< is two-phase calculation active
 
 	// contact
@@ -32,7 +36,7 @@ namespace ModelSetup {
 	// gravity active
 	bool gravityActive=false; //!< is gravity active
 
-	// gravity dafault value
+	// gravity default value
 	Vector3d gravity(0,0,-10); //!< gravity vector
 	
 	// axisymmetric model

@@ -1365,25 +1365,53 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 };
 
-std::string Input::getSTLMeshFile()
-{
+double Input::getFrictionCoefficient() {
+
 	try
 	{
-		if (inputFile["mesh"]["stl"].is_null())
-		{
-			throw(0);
+		if (inputFile["terrain_contact"].is_null()){
+
+			return 0.0;
 		}
 
-		if (inputFile["mesh"]["stl"].is_string())
+		if (inputFile["terrain_contact"]["friction"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["friction"].is_number())
 		{
-			return inputFile["mesh"]["stl"];
+			return inputFile["terrain_contact"]["friction"];
 		}
 
 		throw(0);
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the STL file name");
+		Warning::printMessage("Error during reading the friction coefficient in terrain contact");
+		throw;
+	}
+}
+
+std::string Input::getSTLMeshFile()
+{
+	try
+	{
+		if (inputFile["terrain_contact"]["stl_mesh"].is_null())
+		{
+			throw(0);
+		}
+
+		if (inputFile["terrain_contact"]["stl_mesh"].is_string())
+		{
+			return inputFile["terrain_contact"]["stl_mesh"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the STL file name in terrain contact");
 		throw;
 	}
 }

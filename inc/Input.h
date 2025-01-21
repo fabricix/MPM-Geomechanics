@@ -624,7 +624,13 @@ namespace Input {
 	/// \return pressure_force  Pore pressure force
 	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
 
+	/// \brief Return the seismic data
+	/// \return seismic_data Seismic data
 	Loads::SeismicData readSeismicData(const std::string& filename, bool hasHeader);
+
+	/// \brief Return the friction coefficient
+	/// \return friction_coefficient Friction coefficient
+	double getFrictionCoefficient ();
 };
 
 #endif /* INPUT_H_ */
