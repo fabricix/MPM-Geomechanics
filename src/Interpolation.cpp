@@ -705,25 +705,67 @@ void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodie
 	}
 }
 
-// Funci�n para interpolar valores de tipo Eigen::Vector3d en el tiempo itime
+// function to interpolate vector values in time
 Eigen::Vector3d Interpolation::interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime) {
 	
+	// get the first and last values in the interval
 	if (itime <= times.front()) return values.front();
 	if (itime >= times.back()) return values.back();
 
-	// Encontrar el indice del tiempo inmediatamente superior a itime
+	// find the upper limit where the time is located
 	auto upper = std::upper_bound(times.begin(), times.end(), itime);
 	size_t idx = std::distance(times.begin(), upper) - 1;
 
-	// Valores adyacentes para la interpolaci�n
+	// get the limit values in the interval
 	double t0 = times[idx];
 	double t1 = times[idx + 1];
 	Eigen::Vector3d v0 = values[idx];
 	Eigen::Vector3d v1 = values[idx + 1];
 
-	// Interpolacion lineal para cada componente
+	// linear interpolation using limit values in the interval
 	double factor = (itime - t0) / (t1 - t0);
 	Eigen::Vector3d interpolatedValue = v0 + factor * (v1 - v0);
 
 	return interpolatedValue;
+}
+
+void Interpolation::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) {
+    
+	// get nodes
+    vector<Node*>* nodes = mesh->getNodes();
+
+    // iterate over all particles
+    for (size_t i = 0; i < particles->size(); ++i) 
+	{	
+		// get the particle
+        Particle* particle = particles->at(i);
+
+        // only active particles are considered
+        if (!particle->getActive()) { continue; }
+
+        // get nodes and weights contributing to the particle
+        const vector<Contribution>* contribution = particle->getContributionNodes();
+
+        // initialize the interpolated distance level set value
+        double interpolatedDistance = 0.0;
+
+        // iterate over the nodal contribution list
+        for (size_t j = 0; j < contribution->size(); ++j) {
+            
+			// get contributing node
+            Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+            // get the nodal distance level set value
+            double nodalDistance = nodeI->getDistanceLevelSet();
+
+            // get the contribution weight
+            double weight = contribution->at(j).getWeight();
+
+            // accumulate the contribution
+            interpolatedDistance += weight * nodalDistance;
+        }
+
+        // set interpolated value to particle
+        particle->setDistanceLevelSet(interpolatedDistance);
+    }
 }

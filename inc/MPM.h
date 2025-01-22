@@ -57,6 +57,7 @@ public:
 	/// \brief Save model state
 	///
 	void saveState();
+	
 private:
 	
 	Mesh mesh; //!< background grid mesh

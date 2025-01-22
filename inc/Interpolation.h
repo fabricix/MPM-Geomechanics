@@ -16,6 +16,7 @@ using std::vector;
 
 class Mesh;
 class Body;
+class Particle;
 
 /// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.
@@ -148,7 +149,19 @@ namespace Interpolation {
 	/// \param[in] time_step Time step
 	void particleDeformationGradient(Mesh* mesh, vector<Body*>* bodies, double time_step);
 
+	/// \brief Interpolate a vector3d in time using linear interpolation
+	///	\param[in] times A list of times
+	///	\param[in] values A list of vector3d values
+	/// \param[out] interpolated_vector Interpolated vector3d
 	Eigen::Vector3d interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime);
+
+	/// \brief Interpolate distance level set function value of particle
+	///
+	/// \f$ d_p = \sum_I d_I N_{Ip} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] particles A list of Particle pointers
+	void particleDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
 };
 
 #endif /* INTERPOLATION_H_ */
