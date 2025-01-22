@@ -8,7 +8,7 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
     // get background grid nodes
     vector<Node*>* gNodes = mesh->getNodes();
 
-    // get triangles from stl mesh
+    // get triangles
     const vector<Triangle>& triangles = stlMesh->getTriangles();
 
     // iterate over all nodes in the background mesh
@@ -21,13 +21,13 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
         // get node position
         Vector3d nodePosition = node->getCoordinates();
 
-        // variable to store the minimum distance
-        double minDistance = 1e6;
+        // variable to store the minimum positive distance
+        double minPositiveDistance = 1e6;
 
-        // variable to check if all distances are negative
-        bool allNegative = true;
+        // variable to store the maximum negative distance
+        double maxNegativeDistance = -1e6;
 
-        // iterate over all triangles in the stl mesh
+        // iterate over all triangles in the STL mesh
         for (const Triangle& triangle : triangles)
         {
             // get vertices of the triangle
@@ -35,35 +35,34 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
             Vector3d v2 = triangle.getVertex2();
             Vector3d v3 = triangle.getVertex3();
             Vector3d normal = triangle.getNormal();
-
+            
             // calculate the distance from the node to each vertex
             double d1 = (nodePosition - v1).dot(normal);
             double d2 = (nodePosition - v2).dot(normal);
             double d3 = (nodePosition - v3).dot(normal);
 
-            // check if at least one distance is positive
-            if (d1 > 0.0 || d2 > 0.0 || d3 > 0.0) {
-                allNegative = false;
-            }
-
-            // consider only positive distances for the minimum calculation
+            // update the minimum positive distance
             if (d1 > 0.0) {
-                minDistance = std::min(minDistance, d1);
+                minPositiveDistance = std::min(minPositiveDistance, d1);
+            } else {
+                maxNegativeDistance = std::max(maxNegativeDistance, d1);
             }
             if (d2 > 0.0) {
-                minDistance = std::min(minDistance, d2);
+                minPositiveDistance = std::min(minPositiveDistance, d2);
+            } else {
+                maxNegativeDistance = std::max(maxNegativeDistance, d2);
             }
             if (d3 > 0.0) {
-                minDistance = std::min(minDistance, d3);
+                minPositiveDistance = std::min(minPositiveDistance, d3);
+            } else {
+                maxNegativeDistance = std::max(maxNegativeDistance, d3);
             }
         }
 
-        // if all distances for all triangles are negative, set minDistance to -1
-        if (allNegative) {
-            minDistance = -1.0;
-        }
+        // decide which distance to store in the node
+        double finalDistance = (minPositiveDistance < 1e6) ? minPositiveDistance : maxNegativeDistance;
 
-        // store the minimum distance in the node
-        node->setDistanceLevelSet(minDistance);
+        // store the distance in the node
+        node->setDistanceLevelSet(finalDistance);
     }
 }
