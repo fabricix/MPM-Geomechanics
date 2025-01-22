@@ -243,10 +243,10 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
-		if (isFieldRequired("distance-level-set")){
+		if (isFieldRequired("distance_levelset")){
 
 			// particle distance level-set
-			partFile<<"<DataArray type=\"Float64\" Name=\"Distance-level-set\" Format=\"ascii\">\n";
+			partFile<<"<DataArray type=\"Float64\" Name=\"Distance-levelset\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
 				partFile<<scientific<<particles->at(i)->getDistanceLevelSet()<<"\n";
 			}

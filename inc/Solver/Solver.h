@@ -13,6 +13,7 @@ using std::vector;
 
 class Body;
 class Mesh;
+class Particle;
 
 /// \class Solver
 /// \brief Represents the operations to solve the equations in time.
@@ -40,10 +41,14 @@ public:
 	///
 	inline void registerBodies(vector<Body*>* bodies){ this->bodies=bodies; }
 
+	/// \brief Register the particles in the solver
+	inline void registerParticles(vector<Particle*>* p){ this->particles=p; }
+
 protected:
 
 	Mesh* mesh; //!< pointer to mesh
 	vector<Body*>* bodies; //!< pointer to bodies
+	vector<Particle*>* particles; //!< pointer to particles
 };
 
 inline Solver::Solver():mesh(0),bodies(0) {

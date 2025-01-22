@@ -33,7 +33,6 @@ void SolverExplicitUSL::Solve()
 	// solve in time
 	while (iTime < time)
 	{
-
 		// write results in the result step
 		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
@@ -99,6 +98,12 @@ void SolverExplicitUSL::Solve()
 
 		// update particle stress
 		Update::particleStress(bodies);
+
+		// contact treatment
+		if (ModelSetup::getTerrainContactActive())
+		{
+			Interpolation::particleDistanceLevelSet(mesh, particles);
+		}
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);

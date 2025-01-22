@@ -5,14 +5,14 @@
 
 	"results":
 	{
-		"print":10,
-		"fields":["id","displacement","material","active","plastic_strain"]
+		"print":20,
+		"fields":["id","displacement","material","active","plastic_strain","distance_levelset"]
 	},
 
 	"mesh":
 	{	
 		"cells_dimension":[1,1,1],
-		"cells_number":[10,10,10],
+		"cells_number":[10,5,10],
 		"origin":[0,0,0],
 		
 		"boundary_conditions":
@@ -46,8 +46,8 @@
 		{
 			"type":"cuboid",
 			"id":1,
-			"point_p1":[6,6,6],
-			"point_p2":[7,7,7],
+			"point_p1":[5,2,8],
+			"point_p2":[6,3,9],
 			"material_id":1
 		}
 	},

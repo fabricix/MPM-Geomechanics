@@ -208,7 +208,6 @@ inline void Node::resetValues()
 {
     active=false;
     mass=0.0;
-	distanceLevelSet=0.0;
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();
