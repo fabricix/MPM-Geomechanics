@@ -263,6 +263,12 @@ public:
     /// \return Particle deformation gradient
     inline const Matrix3d& getDeformationGradient() const { return this->deformationGradient; }
 
+	/// \brief Configures the distance level set function value
+	inline void setDistanceLevelSet(double distance) { this->distanceLevelSet=distance; }
+
+	/// \brief Returns the distance level set function value
+	inline double getDistanceLevelSet() { return this->distanceLevelSet; }
+
 protected:
 
 	bool active; //!< is particle active
@@ -272,6 +278,7 @@ protected:
 	double mass; //!< particle mass: \f$m_p\f$
 	double density;	//!< current particle density: \f$\rho_p\f$
 	double plasticStrain; //!< current effective plastic strain: \f$\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\f$
+	double distanceLevelSet; //!< distance level set function value: \f$d_p\f$
 
 	Vector3d position; //!< current particle position: \f$x_{ip}\f$
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
