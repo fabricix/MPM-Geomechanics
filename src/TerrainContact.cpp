@@ -41,12 +41,12 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
             double d2 = (nodePosition - v2).dot(normal);
             double d3 = (nodePosition - v3).dot(normal);
 
-            // Check if at least one distance is positive
+            // check if at least one distance is positive
             if (d1 > 0.0 || d2 > 0.0 || d3 > 0.0) {
                 allNegative = false;
             }
 
-            // Consider only positive distances for the minimum calculation
+            // consider only positive distances for the minimum calculation
             if (d1 > 0.0) {
                 minDistance = std::min(minDistance, d1);
             }
