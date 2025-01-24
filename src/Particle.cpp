@@ -74,7 +74,7 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		contributionNodes.at(i).setNodeId(nodesId.at(i));
 		
 		// update the shape functions and gradients
-		shape->update(position,gNodes->at(nodesId.at(i))->getCoordinates(),mesh->getCellDimension(),size);
+		shape->update(position,gNodes->at(nodesId.at(i))->getCoordinates(), mesh->getCellDimension(), size);
 
 		// get shape function and its derivates
 		Vector3d shapeFn = shape->getShape();

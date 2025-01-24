@@ -59,6 +59,31 @@ public:
 	/// nodal force in fluid phase
 	virtual inline void setTotalForceFluid(const Vector3d& total_nodal_force_fluid) { return; }
 
+	/// \brief Configure the has contact flag
+	/// Has contact flag
+	virtual inline void setContactStatus(bool flag) { return; }
+
+	/// \brief Set contact bodies Id
+	/// contactBodyId
+	/// contactBodySlaveId
+	virtual inline void setContactBodies(int _contactBodyId, int _contactBodySlaveId) { return; }
+
+	/// \brief Set the nodal unit normal total
+	/// \set nodal unit normal
+	virtual inline void setUnitNormalTotal(const Vector3d& _unitNormalTotal) { return; }
+
+	/// \brief Set the nodal contact force
+	/// \set nodal contact force
+	virtual inline void setContactForce(const Vector3d& _contactForce) { return; }
+
+	/// \brief Set the distance to the closest particle
+	/// \set distance to the closest particle
+	virtual inline void setClosestParticleDistance(double _closestParticleDistance) { return; }
+
+	/// \brief Set the distance to the closest particle slave
+	/// \set distance to the closest particle slave
+	virtual inline void setClosestParticleDistanceSlave(double _closestParticleDistanceSlave) { return; }
+
 	/// \brief Return the nodal identification
 	/// \return Nodal identification 
 	inline int getId() const { return this->id; }
@@ -75,10 +100,18 @@ public:
 	/// \return Nodal mass of fluid phase
 	virtual inline double getMassFluid() const { return 0.0; }
 
+	/// \brief Return the nodal mass of slave body
+	/// \return Nodal mass of slave body
+	virtual inline double getMassSlave() const { return 0.0; }
+
 	/// \brief Return the nodal coordinates
 	/// \return Vector containing the nodal
 	/// coordinates
 	inline const Vector3d& getCoordinates() const { return this->coordinates; }
+
+	/// \brief Return the contact status
+	/// \return contact status
+	virtual inline const bool getContactStatus() const { return (false); }
 	
 	/// \brief Return the nodal momentum
 	/// \return Vector containing the nodal momentum
@@ -87,6 +120,10 @@ public:
 	/// \brief Return the nodal momentum of fluid phase
 	/// \return Vector containing the nodal momentum of fluid phase
 	virtual inline const Vector3d* getMomentumFluid() const { return NULL; }
+
+	/// \brief Return the slave nodal momentum
+	/// \return Vector containing the slave nodal momentum
+	virtual inline const Vector3d* getMomentumSlave() const { return NULL; }
 
 	/// \brief Return the nodal internal force
 	/// \return Vector containing the nodal internal force
@@ -99,7 +136,11 @@ public:
 	/// \brief Return the nodal total force
 	/// \return Vector containing the nodal total force
 	inline const Vector3d& getTotalForce() const { return this->totalForce; }
-		
+	
+	/// \brief Return the nodal total force of Slave body
+	/// \return Vector containing the nodal total force of slave body
+	virtual inline const Vector3d* getTotalForceSlave() const { return NULL; }
+
 	/// \brief Return the nodal total force of fluid phase
 	/// \return Vector containing the nodal total force of fluid phase
 	virtual inline const Vector3d* getTotalForceFluid() const { return NULL; }
@@ -112,6 +153,34 @@ public:
 	/// \return Vector containing the nodal velocity of fluid phase
 	virtual inline const Vector3d* getVelocityFluid() const { return NULL; }
 
+	/// \brief Return the slave nodal velocity
+	/// \return Vector containing the slave nodal velocity
+	virtual inline const Vector3d* getVelocitySlave() const { return NULL; }
+
+	/// \brief Return the nodal unit normal
+	/// \return nodal unit normal
+	virtual inline const Vector3d* getNormal() const { return NULL; }
+
+	/// \brief Return the nodal unit normal slave
+	/// \return nodal unit normal
+	virtual inline const Vector3d* getNormalSlave() const { return NULL; }
+
+	/// \brief Return the nodal unit normal total
+	/// \return nodal unit normal
+	virtual inline const Vector3d* getUnitNormalTotal() const { return NULL; }
+
+	/// \brief Return the nodal contact force
+	/// \return nodal contact force
+	virtual inline const Vector3d* getContactForce() const { return NULL; }
+
+	/// \brief Return the distance to the closest particle
+	/// \return  distance to the closest particle
+	virtual inline double getClosestParticleDistance() const { return NULL;}
+
+	/// \brief Return the distance to the closest particle slave
+	/// \return  distance to the closest particle slave
+	virtual inline double getClosestParticleDistanceSlave() const { return NULL;}
+
 	/// \brief Add a mass increment to the nodal mass
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }
@@ -120,6 +189,19 @@ public:
 	/// \param[in] fluid_mass_increment Nodal mass increment 
 	virtual inline void addMassFluid(double fluid_mass_increment) { return; }
 
+	/// \brief Add mass increment to the slave nodal
+	/// \param[in] slave_mass_increment Nodal mass increment 
+	virtual inline void addMassSlave(double slave_mass_increment) { return; }
+
+
+	/// \brief Add nodal mass gradient increment
+	/// \param[in] mass_gradient_increment Nodal mass gradient increment 
+	virtual inline void addMassGradient(const Vector3d& mass_gradient_increment) { return; }
+
+	/// \brief Add slave nodal mass gradient increment
+	/// \param[in] slave_mass_gradient_increment Nodal mass gradient increment 
+	virtual inline void addMassGradientSlave(const Vector3d& slave_mass_gradient_increment) { return; }
+
 	/// \brief Add a momentum increment to the nodal momentum
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
 	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }
@@ -127,6 +209,10 @@ public:
 	/// \brief Add fluid momentum increment to the nodal momentum of fluid
 	/// \param[in] fluid_momentum_increment Vector containing the nodal momentum increment of fluid
 	virtual inline void addMomentumFluid(const Vector3d& fluid_momentum_increment) { return; }
+
+	/// \brief Add momentum increment to the slave nodal momentum
+	/// \param[in] slave_momentum_increment Vector containing the nodal momentum increment
+	virtual inline void addMomentumSlave(const Vector3d& slave_momentum_increment) { return; }
 		
 	/// \brief Add a internal force increment to the nodal internal force
 	/// \param[in] internal_force_increment Vector containing nodal internal force increment 
@@ -135,6 +221,10 @@ public:
 	/// \brief Add a internal force increment of fluid to the nodal internal force
 	/// \param[in] internal_force_fluid_increment Vector containing nodal internal force increment of fluid
 	virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) { return; }
+
+	/// \brief Add a internal force increment to the slave nodal internal force
+	/// \param[in] internal_force_slave_increment Vector containing nodal internal force increment
+	virtual inline void addInternalForceSlave(const Vector3d& internal_force_slave_increment) { return; }
 		
 	/// \brief Add a external force increment to the nodal external force
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
@@ -143,6 +233,13 @@ public:
 	/// \brief Add a external force of fluid increment to the nodal external force
 	/// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
 	virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) { return; }
+
+	/// \brief Add a external force increment to the slave nodal external force
+	/// \param[in] external_force_slave_increment Vector containing nodal external force increment 
+	virtual inline void addExternalForceSlave(const Vector3d& external_force_slave_increment) { return; }
+
+	/// \brief Add a contact force to nodal total force  
+	virtual inline void addContactForce() { return; }
 	
 	/// \brief Delete all values stored in node
 	///
@@ -158,11 +255,16 @@ public:
 
 	/// \brief Update nodal velocity
 	///
-	inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
+	virtual inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
 
 	/// brief Integrate momentum
 	///
 	virtual inline void integrateMomentum(double dt) { this->momentum +=  this->totalForce*dt; }
+
+	/// \brief Get contact bodies Id
+	/// contactBodyId
+	/// contactBodySlaveId
+	virtual inline const int getContactBodyId(int pos) const { return  NULL; }
 
 protected:
 

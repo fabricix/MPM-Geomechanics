@@ -16,6 +16,7 @@
 
 #include "Output.h"
 #include <DynamicRelaxation.h>
+#include "Mesh/NodeContact.h"
 
 #include <iostream>
 using std::cout;
@@ -201,6 +202,16 @@ namespace Output{
 				partFile<<scientific<<particles->at(i)->getActive()<<"\n";
 			}
 			partFile<<"</DataArray>\n";
+		}
+
+		if (isFieldRequired("contact")) {
+
+			// particle contact status
+			partFile << "<DataArray type=\"UInt8\" Name=\"Particle Contact\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile << scientific << particles->at(i)->getContact() << "\n";
+			}
+			partFile << "</DataArray>\n";
 		}
 
 		if (isFieldRequired("pressure")){
@@ -413,6 +424,13 @@ namespace Output{
 			gridFile<<scientific<<(inodes->at(i)->getActive())<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
+
+		// contact nodes
+		gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (dynamic_cast<NodeContact*>(inodes->at(i))->getContactStatus()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
 
 		// nodal mass
 		gridFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";

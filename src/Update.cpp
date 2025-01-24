@@ -171,6 +171,8 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 			// initialize the velocity rate vector
 			Vector3d velocityRate = Vector3d::Zero();
 			
+
+
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j)
 			{	
@@ -180,11 +182,40 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 				// get the contributing node handle
 				Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI->getMass()!=0.0) {
+				if (ModelSetup::getContactActive()) {
+					if (nodeI->getContactStatus()) {
+						if (ibody == nodeI->getContactBodyId(1)) {	
+							if (nodeI->getMassSlave() != 0.0) {
 
-					// compute the velocity rate contribution
-					velocityRate+=nodeI->getTotalForce()*contribI.getWeight()/nodeI->getMass();
+								// compute the velocity rate contribution
+								velocityRate += *nodeI->getTotalForceSlave() * contribI.getWeight() / nodeI->getMassSlave();
+							}
+						}
+						else {
+							if (nodeI->getMass() != 0.0) {
+
+								// compute the velocity rate contribution
+								velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
+							}
+						}
+					}
+					else {
+						if (nodeI->getMass() != 0.0) {
+
+							// compute the velocity rate contribution
+							velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
+						}
+					}
 				}
+				else {
+					if (nodeI->getMass() != 0.0) {
+
+						// compute the velocity rate contribution
+						velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
+					}
+				}
+
+				
 			}
 
 			// get particle handle
@@ -278,10 +309,39 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 				// get the contributing node
 				Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI->getMass()!=0.0){
+				if (ModelSetup::getContactActive()) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							if (nodeI->getMassSlave() != 0.0) {
 
-					// compute the position rate contribution
-					positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
+								// compute the position rate contribution
+								positionRate += *nodeI->getMomentumSlave() * contribI.getWeight() / nodeI->getMassSlave();
+							}
+
+						}
+						else {
+							if (nodeI->getMass() != 0.0) {
+
+								// compute the position rate contribution
+								positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+							}
+						}
+					}
+					else {
+						if (nodeI->getMass() != 0.0) {
+
+							// compute the position rate contribution
+							positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+						}
+					}
+				}
+				else {
+					if (nodeI->getMass() != 0.0) {
+
+						// compute the position rate contribution
+						positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+					}
 				}
 			}
 
@@ -302,6 +362,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 		// get node handle
 		Node* nodeI = nodes->at(plane->nodes.at(i));
+		NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
 
 		if (nodeI->getActive()) {
 
@@ -319,6 +380,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				{
 					// set all momentum components as zero
 					nodeI->setMomentum(Vector3d::Zero());
+					nodeContact->setMomentumSlave(Vector3d::Zero());
 					break;
 				}
 				// sliding restriction
@@ -326,6 +388,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				{
 					// get current boundary nodal momentum
 					Vector3d momentum = nodeI->getMomentum();
+					Vector3d momentumSlave = nodeContact->getMomentum();
 
 					// witch direction of the normal vector
 					switch (dir) 
@@ -334,28 +397,29 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 						case Update::Direction::X:
 						{
 							momentum.x() = 0.0;
+							momentumSlave.x() = 0.0;
 							break;
 						}
 						// normal pointed to y
 						case Update::Direction::Y:
 						{
 							momentum.y() = 0.0;
+							momentumSlave.y() = 0.0;
 							break;
 						}
 						// normal pointed to z
 						case Update::Direction::Z:
 						{
 							momentum.z() = 0.0;
+							momentumSlave.z() = 0.0;
 							break;
 						}
 					}
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
-					if (ModelSetup::getContactActive()) {
-						NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
-						nodeContact->setMomentumSlave(momentum);
-					}
+					nodeContact->setMomentumSlave(momentumSlave);
+
 					break;
 				}
 			}

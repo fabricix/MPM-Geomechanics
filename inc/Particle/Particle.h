@@ -63,6 +63,10 @@ public:
 	/// \return Particle active status
 	inline bool getActive() const { return this->active; }
 
+	/// \brief Returns the particle contact status
+	/// \return Particle contact status
+	inline bool getContact() const { return this->contact; }
+
 	/// \brief Returns the particle identification 
 	/// \return Particle identification
 	inline int getId() const { return this->id; }
@@ -150,6 +154,10 @@ public:
 	/// \brief Configures the particle active status
 	/// \param[in] particle_active Particle active status
 	inline void setActive(bool particle_active) { this->active=particle_active; }
+
+	/// \brief Configures the particle contact status
+	/// \param[in] particle_contact Particle contact status
+	inline void setContact(bool particle_contact) { this->contact = particle_contact; }
 
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
@@ -266,6 +274,7 @@ public:
 protected:
 
 	bool active; //!< is particle active
+	bool contact;
 	int id;	//!< particle id
 	int bodyId; //!< body id
 

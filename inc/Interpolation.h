@@ -56,6 +56,14 @@ namespace Interpolation {
 	/// \param[in] bodies A list o Body pointers
 	void nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies);
 
+	/// \brief Calculate the normal vector to the node
+	///
+	/// \f$ m_I = \sum_p m_p N_{Ip}\f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list of Bodies
+	void nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate internal force of solid from particles to nodes
 	/// 
 	/// In one phase calculation:

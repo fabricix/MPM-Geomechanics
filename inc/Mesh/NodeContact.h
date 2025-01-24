@@ -37,6 +37,14 @@ public:
     /// \param[in] slave_momentum_increment Vector containing the nodal momentum increment
     virtual inline void addMomentumSlave(const Vector3d& slave_momentum_increment) { this->momentumSlaveBody += slave_momentum_increment; }
 
+    /// \brief Add nodal mass gradient increment
+    /// \param[in] mass_gradient_increment Nodal mass gradient increment 
+    virtual inline void addMassGradient(const Vector3d& mass_gradient_increment) { this->Normal += mass_gradient_increment; }
+
+    /// \brief Add slave nodal mass gradient increment
+    /// \param[in] slave_mass_gradient_increment Nodal mass gradient increment 
+    virtual inline void addMassGradientSlave(const Vector3d& slave_mass_gradient_increment) { this->NormalSlave += slave_mass_gradient_increment; }
+
     /// \brief Add a internal force increment to the slave nodal internal force
     /// \param[in] internal_force_slave_increment Vector containing nodal internal force increment
     virtual inline void addInternalForceSlave(const Vector3d& internal_force_slave_increment) { this->internalForceSlaveBody += internal_force_slave_increment; }
@@ -44,6 +52,9 @@ public:
     /// \brief Add a external force increment to the slave nodal external force
     /// \param[in] external_force_slave_increment Vector containing nodal external force increment 
     virtual inline void addExternalForceSlave(const Vector3d& external_force_slave_increment) { this->externalForceSlaveBody += external_force_slave_increment; }
+
+    /// \brief Add a contact force to nodal total force  
+    virtual inline void addContactForce() { this->totalForce += this->contactForce, this->totalForceSlaveBody -= this->contactForce; }
 
     /// \brief Configure the slave nodal momentum
     /// \param[in] nodal_momentum_slave Vector containing the nodal momentum
@@ -68,7 +79,7 @@ public:
     /// \brief Return the slave nodal total force
     /// \return Vector containing the slave nodal total force
     virtual inline const Vector3d* getTotalForceSlave() const { return &(this->totalForceSlaveBody); }
-
+   
     /// brief Integrate momentum
     ///
     virtual void integrateMomentum(double dt);
@@ -76,6 +87,30 @@ public:
     /// \brief Return the slave nodal mass
     /// \return slave Nodal mass
     virtual inline double getMassSlave() const { return massSlaveBody; }
+
+    /// \brief Return the nodal unit normal
+    /// \return nodal unit normal
+    virtual inline const Vector3d* getNormal() const { return &(this->Normal); }
+
+    /// \brief Return the nodal unit normal slave
+    /// \return nodal unit normal
+    virtual inline const Vector3d* getNormalSlave() const { return &(this->NormalSlave); }
+
+    /// \brief Return the nodal unit normal total
+    /// \return nodal unit normal
+    virtual inline const Vector3d* getUnitNormalTotal() const { return &(this->unitNormalTotal); }
+
+    /// \brief Return the nodal contact force
+    /// \return nodal contact force
+    virtual inline const Vector3d* getContactForce() const { return &(this->contactForce); }
+
+    /// \brief Return the distance to the closest particle
+    /// \return  distance to the closest particle
+    virtual inline double getClosestParticleDistance() const { return this->closestParticleDistance; }
+
+    /// \brief Return the distance to the closest particle slave
+    /// \return  distance to the closest particle slave
+    virtual inline double getClosestParticleDistanceSlave() const { return this->closestParticleDistanceSlave; }
 
     /// \brief Update nodal velocity of mixture
     ///
@@ -97,6 +132,22 @@ public:
     /// contactBodyId
     /// contactBodySlaveId
     virtual inline void setContactBodies(int _contactBodyId, int _contactBodySlaveId) { this->contactBodyId = _contactBodyId, this->contactBodySlaveId = _contactBodySlaveId; }
+
+    /// \brief Set the nodal unit normal total
+    /// \set nodal unit normal
+    virtual inline void setUnitNormalTotal(const Vector3d& _unitNormalTotal) { this->unitNormalTotal = _unitNormalTotal; }
+
+    /// \brief Set the nodal contact force
+    /// \set nodal contact force
+    virtual inline void setContactForce(const Vector3d& _contactForce) { this->contactForce = _contactForce; }
+
+    /// \brief Set the distance to the closest particle
+    /// \set distance to the closest particle
+    virtual inline void setClosestParticleDistance(double _closestParticleDistance) { this->closestParticleDistance = _closestParticleDistance; }
+
+    /// \brief Set the distance to the closest particle slave
+    /// \set distance to the closest particle slave
+    virtual inline void setClosestParticleDistanceSlave(double _closestParticleDistanceSlave) { this->closestParticleDistanceSlave = _closestParticleDistanceSlave; }
 
     /// \brief Get contact bodies Id
     /// contactBodyId
@@ -120,19 +171,28 @@ private:
     int contactBodySlaveId; //!< Slave body in contact at this node
     int closestParticleId; //!< Closest particle from node contact
     int closestParticleSlaveId; //!< Closest particle of slave body from node contact
-    Vector3d ContactForce; //!< contact force
+    Vector3d Normal;
+    Vector3d NormalSlave;
+    Vector3d unitNormalTotal;
+    Vector3d contactForce;
+    double closestParticleDistance;
+    double closestParticleDistanceSlave;
  
 };
 
 inline NodeContact::NodeContact()
 {
     massSlaveBody = 0;
+    closestParticleDistance = 999.0;
+    closestParticleDistanceSlave = 999.0;
     momentumSlaveBody.setZero();
     velocitySlaveBody.setZero();
     externalForceSlaveBody.setZero();
-    internalForceSlaveBody.setZero();
+    internalForceSlaveBody.setZero();   
     dampingForceSlaveBody.setZero();
     totalForceSlaveBody.setZero();
+    Normal.setZero();
+    NormalSlave.setZero();
     hasContact = false;
 }
 
@@ -141,9 +201,13 @@ inline void NodeContact::resetValues()
     Node::resetValues();
 
     massSlaveBody = 0.0;
+    closestParticleDistance = 999.0;
+    closestParticleDistanceSlave = 999.0;
     momentumSlaveBody.setZero();
     externalForceSlaveBody.setZero();
     internalForceSlaveBody.setZero();
+    Normal.setZero();
+    NormalSlave.setZero();
 }
 
 #endif /* INC_MESH_NODECONTACT_H_ */

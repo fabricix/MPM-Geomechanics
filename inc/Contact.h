@@ -35,12 +35,26 @@ public:
 	/// \param[in] bodies
 	static void firstContactCheck(Mesh* mesh, vector<Body*>* bodies);
 
+	/// \brief Second contact check
+	/// \param[in] mesh
+	/// \param[in] bodies
+	static void secondContactCheck(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Contact force
 	/// \param[in] mesh
 	/// \param[in] bodies
 	/// \param[in] dt
 	static void contactForce(Mesh* mesh, vector<Body*>* bodies, double dt);
 
+	/// \brief Set Particles in Contact
+	/// \param[in] mesh
+	/// \param[in] bodies
+	static void setParticlesInContact(Mesh* mesh, vector<Body*>* bodies);
+
+	/// \brief Reset Particles in Contact
+	/// \param[in] mesh
+	/// \param[in] bodies
+	static void resetParticlesInContact(Mesh* mesh, vector<Body*>* bodies);
 };
 
 #endif /* CONTACT_H_ */

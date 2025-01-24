@@ -52,7 +52,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());				
 
 				// compute the weighted nodal mass
 				const double nodalMass = pMass*contribution->at(j).getWeight();
@@ -64,11 +64,11 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 				nodeI->setActive(true);
 
 				if (ModelSetup::getContactActive()) {
-					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
-					if (nodeContact->getContactStatus()) {
-						if (ibody == nodeContact->getContactBodyId(1)) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
 							// add mass at node
-							nodeContact->addMassSlave(nodalMass);
+							nodeI->addMassSlave(nodalMass);
 						}
 						else {
 							// add mass at node
@@ -170,11 +170,11 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				if (ModelSetup::getContactActive()) {
-					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
-					if (nodeContact->getContactStatus()) {
-						if (ibody == nodeContact->getContactBodyId(1)) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
 							// add the weighted momentum in node
-							nodeContact->addMomentumSlave(pMass * pVelocity * contribution->at(j).getWeight());
+							nodeI->addMomentumSlave(pMass * pVelocity * contribution->at(j).getWeight());
 						}
 						else {
 							// add the weighted momentum in node
@@ -240,6 +240,88 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
+void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
+	
+	int nNodes = mesh->getNumNodes();
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// get the particle mass
+			const double pMass = particles->at(i)->getMass();
+
+			// for each node in the contribution list 
+			for (size_t j = 0; j < contribution->size(); ++j) {
+
+				// get the contributing node
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+				// compute the nodal mass gradient
+				const Vector3d nodalMassGradient = pMass * contribution->at(j).getGradients();
+
+				// check any mass in node
+				if (nodalMassGradient.norm() == 0.0) { continue; }
+
+				if (ModelSetup::getContactActive()) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							// add mass at node
+							nodeI->addMassGradientSlave(nodalMassGradient);
+						}
+						else {
+							// add mass at node
+							nodeI->addMassGradient(nodalMassGradient);
+						}
+					}
+					else {
+						// add mass at node
+						nodeI->addMassGradient(nodalMassGradient);
+					}
+				}
+				else {
+					// add mass at node
+					nodeI->addMassGradient(nodalMassGradient);
+				}
+			}
+		}
+	}
+	
+	//for each grid node
+	for (int iNode = 0; iNode < nNodes; iNode++) {
+
+		Node* node = nodes->at(iNode);
+
+		if (node->getContactStatus()) {
+			// nodal normal vector master
+			Vector3d nA = node->getNormal()->normalized();
+			
+			// nodal normal vector slave
+			Vector3d nB = node->getNormalSlave()->normalized();
+
+			// nodal unit normal vector
+			Vector3d n = (nA - nB).normalized();
+			node->setUnitNormalTotal(n);
+		}
+	}
+
+}
+
 void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 	// is two-phase calculations
@@ -301,11 +383,11 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				}
 
 				if (ModelSetup::getContactActive()) {
-					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
-					if (nodeContact->getContactStatus()) {
-						if (ibody == nodeContact->getContactBodyId(1)) {
-							// add the internal force contribution in sllave node
-							nodeContact->addInternalForceSlave(internalForce);
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							// add the internal force contribution in slave node
+							nodeI->addInternalForceSlave(internalForce);
 						}
 						else {
 							// add the internal force contribution in node
@@ -413,11 +495,11 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 				if (ModelSetup::getContactActive()) {
-					NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
-					if (nodeContact->getContactStatus()) {
-						if (ibody == nodeContact->getContactBodyId(1)) {
-							// add the internal force contribution in sllave node
-							nodeContact->addExternalForceSlave(pExtForce * contribution->at(j).getWeight());
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							// add the internal force contribution in slave node
+							nodeI->addExternalForceSlave(pExtForce * contribution->at(j).getWeight());
 						}
 						else {
 							// add weighted force in node
@@ -568,9 +650,31 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
 
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
+				//initialize vector v
+				Vector3d v = Vector3d::Zero();
 
+				if (ModelSetup::getContactActive()) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							// get nodal velocity
+							v = *nodeI->getVelocitySlave();
+						}
+						else {
+							// get nodal velocity
+							v = nodeI->getVelocity();
+						}
+					}
+					else {
+						// get nodal velocity
+						v = nodeI->getVelocity();
+					}
+				}
+				else {
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
+				
 				// compute the nodal contribution to the particle strain increment
 
 				dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
@@ -683,9 +787,31 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 				// get nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
 
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
+				//initialize vector v
+				Vector3d v = Vector3d::Zero();
 
+				if (ModelSetup::getContactActive()) {
+					if (nodeI->getContactStatus()) {
+						//check if the body is set as slave
+						if (ibody == nodeI->getContactBodyId(1)) {
+							// get nodal velocity
+							v = *nodeI->getVelocitySlave();
+						}
+						else {
+							// get nodal velocity
+							v = nodeI->getVelocity();
+						}
+					}
+					else {
+						// get nodal velocity
+						v = nodeI->getVelocity();
+					}
+				}
+				else {
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
+				
 				// compute the nodal contribution to the particle spin increment
 
 				dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt; // x,x

@@ -24,7 +24,7 @@
 	"results":
 	{
 		"print":40,
-		"fields":["id","displacement","material","active","pressure","external_force"]
+		"fields":["id","displacement","material","active","pressure","external_force","contact"]
 	},
 
 	"mesh":
