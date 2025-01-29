@@ -18,7 +18,6 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 	vector<vector<int>> contactMatrix(nNodes, vector<int>(nBodies, 0));
 	
-	//Esse trecho pode ser adicionado a Update::contributionNodes(mesh, bodies)
 	// for each body
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {
 
@@ -38,7 +37,7 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			for (int j = 0; j < contributions->size(); j++) {
 				
 				int nodeId = contributions->at(j).getNodeId();
-				if (contributions->at(j).getWeight() > 0.01 and contactMatrix[nodeId][ibody] == 0) {
+				if (contributions->at(j).getWeight() > 0.0 and contactMatrix[nodeId][ibody] == 0) {
 					contactMatrix[nodeId][ibody] = 1;
 				}
 			}
@@ -102,8 +101,6 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			// get the contribution nodes
 			vector<Contribution>* contributions = particles->at(i)->getContributionNodes();
 
-			Particle particle = *particles->at(i);
-
 			for (int j = 0; j < contributions->size(); j++) {
 
 				int nodeId = contributions->at(j).getNodeId();
@@ -124,11 +121,15 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						double d = node->getClosestParticleDistanceSlave();
 						
 						//get normal vector
-						Vector3d n = node->getNormalSlave()->normalized();
+						Vector3d n = -*node->getUnitNormalTotal();
 						
 
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
+
+						if (dPN < 0) {
+							int a = 0;
+						}
 
 						if (dPN < d) {
 							//set closest distance to slave body
@@ -140,13 +141,17 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						double d = node->getClosestParticleDistance();
 
 						//get normal vector
-						Vector3d n = node->getNormal()->normalized();
+						Vector3d n = *node->getUnitNormalTotal();
 
 
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
 
-						if (dPN < d) {
+						if (dPN < 0) {
+							int a = 0;
+						}
+
+						if (dPN < d && dPN > 0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistance(dPN);
 						}
@@ -163,6 +168,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		Node* node = mesh->getNodes()->at(iNode);
 
 		if (node->getContactStatus()) {
+			node->setSecondContactStatus(true);
 			//for each body
 			int contactBodyIdA = node->getContactBodyId(0);
 			int contactBodySlaveIdB = node->getContactBodyId(1);
@@ -175,14 +181,17 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			Vector3d n = *node->getUnitNormalTotal();
 
 			if (n.dot(massB*momentumA - massA*momentumB) < 0) {
-				node->setContactStatus(false);
+				node->setSecondContactStatus(false);
 			}
 			else {
 				// contact correction
 				double cellDimension = mesh->getCellDimension()[0];
 				double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
 				if (contactDistance > 0.5 * cellDimension) {
-					node->setContactStatus(false);
+					node->setSecondContactStatus(false);
+				}
+				else {
+					int a = 1;
 				}
 			}
 			
@@ -213,18 +222,18 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 		Node* node = mesh->getNodes()->at(iNode);
 		
-		if (node->getContactStatus()) {
-			if (!ModelSetup::getContactActive())
+		if (node->getSecondContactStatus()) {
+			if (!ModelSetup::getSecondContactActive())
 			{
-				ModelSetup::setContactActive(true);
+				ModelSetup::setSecondContactActive(true);
 			}
-			double mA = node->getMass();
-			double mB = node->getMassSlave();
-			Vector3d vA = node->getVelocity();
-			Vector3d vB = *node->getVelocitySlave();
+			double massA = node->getMass();
+			double massB = node->getMassSlave();
+			Vector3d momentumA = node->getVelocity();
+			Vector3d momentumB = *node->getVelocitySlave();
 
 
-			Vector3d f = mA * mB * (vB - vA) / (mA + mB) / dt;
+			Vector3d f = (massA*momentumB - massB*momentumA) / (massA + massB) / dt;
 			
 			node->setContactForce(f);
 

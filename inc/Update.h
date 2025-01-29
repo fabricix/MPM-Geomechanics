@@ -40,6 +40,10 @@ namespace Update {
 	///
 	/// \param[in] mesh Mesh reference
 	void nodalTotalForce(Mesh* mesh); 
+
+	/// \brief Update the nodal momentum due contact
+	/// \param[in] mesh Mesh reference
+	void nodalMomentumContact(Mesh* mesh, double dt);
 	
 	/// \brief Delete all stored values in nodes 
 	/// \param[in] mesh Mesh reference

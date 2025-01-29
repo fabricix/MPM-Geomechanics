@@ -92,6 +92,10 @@ namespace ModelSetup {
 	/// \return Number of steps
 	unsigned getResultSteps();
 
+	/// \brief Return true if the nodal values need to be printed
+	/// \return true if nodal values need to be printed
+	bool getPrintGridResults();
+
 	/// \brief Return the critical sime step multiplier
 	/// \return Time step multiplier
 	double getCriticalTimeStepMultiplier();
@@ -115,6 +119,14 @@ namespace ModelSetup {
 	/// \brief Configure if contact method is activated
 	/// \param[in] is_contact_activated Contact active
 	void setContactActive(bool is_contact_activated);
+
+	/// \brief Return if contact method is activated
+	/// \return True if contact method is activated
+	bool getSecondContactActive();
+
+	/// \brief Configure if contact method is activated
+	/// \param[in] is_contact_activated Contact active
+	void setSecondContactActive(bool is_contact_activated);
 
 	/// \brief Return if gravity is active
 	/// \return True if gravity active

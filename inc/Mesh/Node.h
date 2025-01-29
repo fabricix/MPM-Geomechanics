@@ -49,6 +49,10 @@ public:
 	/// \param[in] nodal_momentum_fluid Vector containing the nodal momentum of fluid phase
 	virtual inline void setMomentumFluid(const Vector3d& nodal_momentum_fluid) { return; }
 
+	/// \brief Configure the slave nodal momentum
+	/// \param[in] nodal_momentum_slave Vector containing the nodal momentum
+	virtual inline void setMomentumSlave(const Vector3d& nodal_momentum_slave) { return; }
+
 	/// \brief Configure the total nodal force
 	/// \param[in] total_nodal_force Vector containing the total
 	/// nodal force
@@ -59,9 +63,17 @@ public:
 	/// nodal force in fluid phase
 	virtual inline void setTotalForceFluid(const Vector3d& total_nodal_force_fluid) { return; }
 
+	/// \brief Configure the total slave nodal force
+	/// \param[in] total_nodal_force_slave Vector containing the total nodal force 
+	virtual inline void setTotalForceSlave(const Vector3d& total_nodal_force_slave) { return; }
+
 	/// \brief Configure the has contact flag
 	/// Has contact flag
 	virtual inline void setContactStatus(bool flag) { return; }
+
+	/// \brief Configure the has contact flag
+	/// Has contact flag
+	virtual inline void setSecondContactStatus(bool flag) { return; }
 
 	/// \brief Set contact bodies Id
 	/// contactBodyId
@@ -112,6 +124,10 @@ public:
 	/// \brief Return the contact status
 	/// \return contact status
 	virtual inline const bool getContactStatus() const { return (false); }
+
+	/// \brief Return the contact status
+	/// \return contact status
+	virtual inline const bool getSecondContactStatus() const { return (false); }
 	
 	/// \brief Return the nodal momentum
 	/// \return Vector containing the nodal momentum

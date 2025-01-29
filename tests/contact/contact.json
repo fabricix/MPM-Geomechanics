@@ -13,7 +13,9 @@
 
 	"n_threads":2,
 
-	"n_phases":1,
+    "n_phases": 1,  
+
+	"print_nodal_values":true,
 
 	"damping":
 	{
@@ -62,8 +64,8 @@
 		{
 			"type":"cuboid",
 			"id":1,
-			"point_p1":[4.0, 0.0, 0.0],
-			"point_p2":[8.0, 1.0, 1.0],
+			"point_p1":[3.0, 0.0, 0.0],
+			"point_p2":[9.0, 1.0, 1.0],
 			"material_id":1,
 			"initial_velocity":[0,0,0]
 		},

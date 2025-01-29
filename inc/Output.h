@@ -31,6 +31,11 @@ namespace Output {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] cell_type_representation Cell type representation Output::CellType
 	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS);
+
+	/// \brief Write the grid mesh into a vtu file
+	/// \param[in] mesh Mesh reference
+	/// \param[in] cell_type_representation Cell type representation Output::CellType
+	void writeGrid(Mesh* mesh, double iTime,  CellType cell_type_representation = CellType::CELLS);
 	
 	/// \brief Write the particles of the model into a vtu file
 	/// \param[in] particles List containing pointers to particles
@@ -62,7 +67,7 @@ namespace Output {
 
 	/// \brief Write results if the step is the step result
 	/// 
-	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime);
+	//void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime);
 
 	/// \brief Print initial program screen
 	///
@@ -71,6 +76,8 @@ namespace Output {
 	/// \brief Print final program screen
 	///
 	void farewellScreen();
+
+	void writeResultInStep(Mesh* mesh, int loopCounter, vector<Body*>* bodies, double iTime, int resultSteps);
 
 	/// \brief Print elapsed time
 	///

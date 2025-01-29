@@ -37,7 +37,8 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 	while(iTime<time) {
 
 		// write results in the result step
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		//Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		Output::writeResultInStep(mesh, loopCounter++, bodies, iTime, resultSteps);
 
 		// update contribution nodes
 		Update::contributionNodes(mesh,bodies);

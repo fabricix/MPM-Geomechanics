@@ -17,7 +17,10 @@ void Integration::nodalMomentum(Mesh* mesh, double dt) {
 	for (int i = 0; i < nodes->size(); ++i) {
 
 		if (!nodes->at(i)->getActive()){ continue; }
-			
+		if (i == 477)
+		{
+			int a = 1;
+		}
 		// integrate nodal momentum
 		nodes->at(i)->integrateMomentum(dt);
 	}

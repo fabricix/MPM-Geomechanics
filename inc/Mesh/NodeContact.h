@@ -128,6 +128,14 @@ public:
     /// \return contact status
     virtual inline const bool getContactStatus() const { return (this->hasContact); }
 
+    /// \brief Configure the has contact flag
+    /// Has contact flag
+    virtual inline void setSecondContactStatus(bool flag) { this->hasSecondContact = flag; }
+
+    /// \brief Return the contact status
+    /// \return contact status
+    virtual inline const bool getSecondContactStatus() const { return (this->hasSecondContact); }
+
     /// \brief Set contact bodies Id
     /// contactBodyId
     /// contactBodySlaveId
@@ -167,10 +175,11 @@ private:
     Vector3d dampingForceSlaveBody; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
     Vector3d totalForceSlaveBody; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
     bool hasContact; //!< contact flag
+    bool hasSecondContact; //!< contact flag
     int contactBodyId; //!< Body in contact at this node
     int contactBodySlaveId; //!< Slave body in contact at this node
-    int closestParticleId; //!< Closest particle from node contact
-    int closestParticleSlaveId; //!< Closest particle of slave body from node contact
+    //int closestParticleId; //!< Closest particle from node contact
+    //int closestParticleSlaveId; //!< Closest particle of slave body from node contact
     Vector3d Normal;
     Vector3d NormalSlave;
     Vector3d unitNormalTotal;
@@ -182,7 +191,7 @@ private:
 
 inline NodeContact::NodeContact()
 {
-    massSlaveBody = 0;
+    massSlaveBody = 0.0;
     closestParticleDistance = 999.0;
     closestParticleDistanceSlave = 999.0;
     momentumSlaveBody.setZero();
@@ -194,6 +203,9 @@ inline NodeContact::NodeContact()
     Normal.setZero();
     NormalSlave.setZero();
     hasContact = false;
+    hasSecondContact = false;
+    contactBodyId = -1;
+    contactBodySlaveId = -1;
 }
 
 inline void NodeContact::resetValues()
@@ -208,6 +220,10 @@ inline void NodeContact::resetValues()
     internalForceSlaveBody.setZero();
     Normal.setZero();
     NormalSlave.setZero();
+    hasContact = false;
+    hasSecondContact = false;
+    contactBodyId = -1;
+    contactBodySlaveId = -1;
 }
 
 #endif /* INC_MESH_NODECONTACT_H_ */

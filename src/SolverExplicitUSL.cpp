@@ -36,7 +36,11 @@ void SolverExplicitUSL::Solve()
 	{
 
 		// write results in the result step
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		//Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		Output::writeResultInStep(mesh, loopCounter++, bodies, iTime, resultSteps);
+
+		// reset all nodal values
+		Update::resetNodalValues(mesh);
 
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
@@ -56,10 +60,6 @@ void SolverExplicitUSL::Solve()
 			// nodal momentum
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh, bodies);
-
-			// nodal unit normal
-			#pragma omp section
-			Interpolation::nodalUnitNormal(mesh, bodies);
 		}
 
 		// impose essential boundary condition on nodal momentum
@@ -85,6 +85,38 @@ void SolverExplicitUSL::Solve()
 		// integrate the grid nodal momentum equation
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
+		if (ModelSetup::getContactActive()) {
+
+			#pragma omp parallel sections num_threads(1)
+			{
+				// nodal unit normal
+				#pragma omp section
+				Interpolation::nodalUnitNormal(mesh, bodies);
+			}
+			
+
+			ModelSetup::setSecondContactActive(false);
+			Contact::setParticlesInContact(mesh, bodies);
+			Contact::contactForce(mesh, bodies, dt);
+
+			if (ModelSetup::getSecondContactActive()) {
+
+				// update nodal momentum after contact
+				Update::nodalMomentumContact(mesh, dt);
+
+				//// update particle velocity
+				//Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+
+				//// update particle position
+				//Update::particlePosition(mesh, bodies, dt);
+
+				//// nodal velocity
+				//Update::nodalVelocity(mesh);			
+			}
+
+			
+		}
+
 		// update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
@@ -93,29 +125,6 @@ void SolverExplicitUSL::Solve()
 
 		// nodal velocity
 		Update::nodalVelocity(mesh);
-
-		if (ModelSetup::getContactActive()) {
-			ModelSetup::setContactActive(false);
-			Contact::setParticlesInContact(mesh, bodies);
-			Contact::contactForce(mesh, bodies, dt);
-
-			if (ModelSetup::getContactActive()) {
-				// integrate the grid nodal momentum equation
-				Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
-
-
-				// update particle velocity
-				Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
-
-				// update particle position
-				Update::particlePosition(mesh, bodies, dt);
-
-				// nodal velocity
-				Update::nodalVelocity(mesh);			
-			}
-
-			
-		}
 
 		#pragma omp parallel sections num_threads(2)
 		{
@@ -133,9 +142,6 @@ void SolverExplicitUSL::Solve()
 
 		// update particle stress
 		Update::particleStress(bodies);
-
-		// reset all nodal values
-		Update::resetNodalValues(mesh);
 
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);

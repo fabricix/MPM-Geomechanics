@@ -21,6 +21,10 @@ void Update::nodalVelocity(Mesh* mesh) {
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
 		
+		if (gNodes->at(i)->getMass() < 0.00001) {
+			int a = 1;
+		}
+
 		// update the velocity
 		gNodes->at(i)->updateVelocity();
 	}
@@ -42,6 +46,32 @@ void Update::nodalTotalForce(Mesh* mesh) {
 			
 		// update total forces
 		gNodes->at(i)->updateTotalForce();
+	}
+}
+
+
+
+void Update::nodalMomentumContact(Mesh* mesh, double dt) {
+
+	// get nodes
+	vector<Node*>* Nodes = mesh->getNodes();
+
+	// for each node
+#pragma omp parallel for shared (gNodes)
+	for (int i = 0; i < Nodes->size(); ++i) {
+		
+		Node* node = mesh->getNodes()->at(i);
+		if (!node->getActive()) { continue; }
+
+		if (node->getContactStatus()) {
+			// master body
+			Vector3d momentun = node->getMomentum() + dt * *node->getContactForce();
+			node->setMomentum(momentun);
+
+			// master slave
+			Vector3d momentunSlave = *node->getMomentumSlave() - dt * *node->getContactForce();
+			node->setMomentumSlave(momentunSlave);
+		}
 	}
 }
 
@@ -120,6 +150,16 @@ void Update::particleStress(vector<Body*>* bodies) {
 
 			// update particle stress
 			particles->at(i)->updateStress();
+
+			if (ibody == 2)
+			{
+				if (i == 0) {
+					double a = particles->at(i)->getStress().trace();
+					if (a < -0.00001) {
+						int b = 0;
+					}
+				}
+			}
 		}
 	}
 }
@@ -170,8 +210,6 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 			// initialize the velocity rate vector
 			Vector3d velocityRate = Vector3d::Zero();
-			
-
 
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j)
@@ -214,8 +252,6 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 					}
 				}
-
-				
 			}
 
 			// get particle handle
@@ -362,7 +398,6 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 		// get node handle
 		Node* nodeI = nodes->at(plane->nodes.at(i));
-		NodeContact* nodeContact = dynamic_cast<NodeContact*>(nodeI);
 
 		if (nodeI->getActive()) {
 
@@ -380,7 +415,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				{
 					// set all momentum components as zero
 					nodeI->setMomentum(Vector3d::Zero());
-					nodeContact->setMomentumSlave(Vector3d::Zero());
+					nodeI->setMomentumSlave(Vector3d::Zero());
 					break;
 				}
 				// sliding restriction
@@ -388,7 +423,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				{
 					// get current boundary nodal momentum
 					Vector3d momentum = nodeI->getMomentum();
-					Vector3d momentumSlave = nodeContact->getMomentum();
+					Vector3d momentumSlave = *nodeI->getMomentumSlave();
 
 					// witch direction of the normal vector
 					switch (dir) 
@@ -418,7 +453,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
-					nodeContact->setMomentumSlave(momentumSlave);
+					nodeI->setMomentumSlave(momentumSlave);
 
 					break;
 				}
@@ -545,6 +580,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 				{
 					// set all force component as zero 
 					nodeI->setTotalForce(Vector3d::Zero());
+					nodeI->setTotalForceSlave(Vector3d::Zero());
 					break;
 				}
 				// perpendicular restriction
@@ -552,6 +588,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 				{
 					// get current boundary nodal force
 					Vector3d force = nodeI->getTotalForce();
+					Vector3d forceSlave = *nodeI->getTotalForceSlave();
 					
 					// witch direction of the normal vector
 					switch(dir)
@@ -560,24 +597,28 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 						case Update::Direction::X :
 						{
 							force.x()=0.0;
+							forceSlave.x() = 0.0;
 							break;
 						}
 						// normal pointed to y
 						case Update::Direction::Y :
 						{
 							force.y()=0.0;
+							forceSlave.y() = 0.0;
 							break;
 						}
 						// normal pointed to z
 						case Update::Direction::Z :
 						{
 							force.z()=0.0;
+							forceSlave.z() = 0.0;
 							break;
 						}
 					}
 
 					// set boundary nodal force
 					nodeI->setTotalForce(force);
+					nodeI->setTotalForceSlave(forceSlave);
 					break;
 				}
 				// earthquake boundary condition
@@ -698,6 +739,15 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 			
 			// update the contribution nodes
 			particles->at(i)->updateContributionNodes(mesh);
+			
+			if (ibody == 2){
+				if (i == 3) {
+					Vector3d g = particles->at(i)->getContributionNodes()->at(0).getGradients();
+					if (g[0] != g[1]) {
+						int a = 1;
+					}
+				}
+			}
 		}
 	}
 }

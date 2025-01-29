@@ -24,6 +24,7 @@ namespace ModelSetup {
 
 	// contact
 	bool contactActive=false; //!< is contact active
+	bool secondContactActive=false; //!< is contact active
 
 	// states
 	bool loadState = false; //!< if state need to be loaded
@@ -49,6 +50,8 @@ namespace ModelSetup {
 	
 	// results
 	unsigned resultNumber=10; //!< number of results to write
+
+	bool printGridResults = false; //! if true the nodal values are write in time
 
 	// time
 	double dt = 0.0; //!< time step
@@ -98,6 +101,8 @@ namespace ModelSetup {
 	unsigned getResultNum() { return resultNumber; }
 	void setResultNum(unsigned d) { resultNumber=d; }
 	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
+	bool getPrintGridResults() { return printGridResults; }
+	void setPrintGridResults(bool a) { printGridResults = a; }
 
 	// time step
 	double getTimeStep() { return dt; }
@@ -112,6 +117,10 @@ namespace ModelSetup {
 	// contact method
 	bool getContactActive() { return contactActive; }
 	void setContactActive(bool d) { contactActive=d; }
+
+	// contact method
+	bool getSecondContactActive() { return secondContactActive; }
+	void setSecondContactActive(bool d) { secondContactActive = d; }
 
 	// gravity
 	bool getGravityActive() { return gravityActive; }

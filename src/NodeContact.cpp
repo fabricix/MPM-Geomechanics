@@ -71,7 +71,7 @@ void NodeContact::updateVelocity(){
     Node::updateVelocity();
 
     // update node velocity of fluid
-    if (this->massSlaveBody >0.0)
+    if (this->massSlaveBody > 0.0)
     {
         this->velocitySlaveBody = this->momentumSlaveBody / this->massSlaveBody;
     }

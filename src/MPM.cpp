@@ -316,6 +316,9 @@ void MPM::createModel() {
 		// set contact method for the simulations
 		setContactMethodForSimulation();
 
+		// set nodal values in time
+		//setNodalValuesInTime();
+
 		// setup the mesh
 		setupMesh();
 

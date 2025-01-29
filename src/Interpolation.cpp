@@ -274,8 +274,8 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				// compute the nodal mass gradient
 				const Vector3d nodalMassGradient = pMass * contribution->at(j).getGradients();
 
-				// check any mass in node
-				if (nodalMassGradient.norm() == 0.0) { continue; }
+				//// check any mass in node
+				//if (nodalMassGradient.norm() == 0.0) { continue; }
 
 				if (ModelSetup::getContactActive()) {
 					if (nodeI->getContactStatus()) {
@@ -304,7 +304,6 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 	
 	//for each grid node
 	for (int iNode = 0; iNode < nNodes; iNode++) {
-
 		Node* node = nodes->at(iNode);
 
 		if (node->getContactStatus()) {
@@ -317,6 +316,12 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 			// nodal unit normal vector
 			Vector3d n = (nA - nB).normalized();
 			node->setUnitNormalTotal(n);
+
+
+			if (iNode == 368)
+			{
+				int a = 0;
+			}
 		}
 	}
 
@@ -640,10 +645,20 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 
 			// initialize a matrix for strain increment computation
 			Matrix3d dstrain = Matrix3d::Zero();
+
+			//weight
+			double w = 0.0;
+
+
+			if (ibody == 2)
+			{
+				if (i == 0) {
+					int b = 1;
+				}
+			}
 			
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
-
 				// get the contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
@@ -652,6 +667,9 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 
 				//initialize vector v
 				Vector3d v = Vector3d::Zero();
+
+				//weight
+				w += contribution->at(j).getWeight();
 
 				if (ModelSetup::getContactActive()) {
 					if (nodeI->getContactStatus()) {
@@ -676,7 +694,6 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				}
 				
 				// compute the nodal contribution to the particle strain increment
-
 				dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
 				dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
 				dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
@@ -689,7 +706,17 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
 				dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
 			}
-
+			
+			if (ibody == 2)
+			{
+				if (i == 0) {
+					
+					double a = dstrain.trace();
+					if (a < -0.000000001) {
+						int b = 1;
+					}
+				}
+			}
 			// set total particle strain increment
 			particles->at(i)->setStrainIncrement(dstrain);
 		}

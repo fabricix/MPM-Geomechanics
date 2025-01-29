@@ -17,6 +17,11 @@ void Elastic::updateStress(Particle* particle) const {
 	Matrix3d deDev = de-Matrix3d::Identity()*de.trace()/3.0;
 	double deVol = de.trace();
 
+	if (deVol < -0.000001)
+	{
+		int a = 1;
+	}
+
 	// current stress and deviate
 	Matrix3d stress = particle->getStress();
 	Matrix3d stressDev = stress-Matrix3d::Identity()*stress.trace()/3.0;
