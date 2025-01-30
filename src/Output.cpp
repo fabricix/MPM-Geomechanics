@@ -438,12 +438,12 @@ namespace Output{
 		}
 		gridFile << "</DataArray>\n";
 
-		//// contact force nodes
-		//gridFile << "<DataArray type=\"UInt8\" Name=\"ContactForce\" Format=\"ascii\">\n";
-		//for (int i = 0; i < nPoints; ++i) {
-		//	gridFile << scientific << inodes->at(i)->getSecondContactStatus() << "\n";
-		//}
-		//gridFile << "</DataArray>\n";
+		// contact force nodes
+		gridFile << "<DataArray type=\"UInt8\" Name=\"ContactForce\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << inodes->at(i)->getSecondContactStatus() << "\n";
+		}
+		gridFile << "</DataArray>\n";
 
 		// nodal mass
 		gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";

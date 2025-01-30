@@ -315,13 +315,9 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 			// nodal unit normal vector
 			Vector3d n = (nA - nB).normalized();
+
 			node->setUnitNormalTotal(n);
-
-
-			if (iNode == 368)
-			{
-				int a = 0;
-			}
+			//node->setUnitNormalTotal(Vector3d (0.0, 0.0, 1.0));
 		}
 	}
 

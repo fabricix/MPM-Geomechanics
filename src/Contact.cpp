@@ -37,7 +37,7 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			for (int j = 0; j < contributions->size(); j++) {
 				
 				int nodeId = contributions->at(j).getNodeId();
-				if (contributions->at(j).getWeight() > 0.0 and contactMatrix[nodeId][ibody] == 0) {
+				if (contributions->at(j).getWeight() > 0.00001 and contactMatrix[nodeId][ibody] == 0) {
 					contactMatrix[nodeId][ibody] = 1;
 				}
 			}
@@ -131,7 +131,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 							int a = 0;
 						}
 
-						if (dPN < d) {
+						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistanceSlave(dPN);
 						}
@@ -151,7 +151,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 							int a = 0;
 						}
 
-						if (dPN < d && dPN > 0) {
+						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistance(dPN);
 						}
@@ -179,6 +179,9 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			double massB = node->getMassSlave();
 
 			Vector3d n = *node->getUnitNormalTotal();
+
+			Vector3d vA = momentumA / massA;
+			Vector3d vB = momentumB / massB;
 
 			if (n.dot(massB*momentumA - massA*momentumB) < 0) {
 				node->setSecondContactStatus(false);
@@ -229,11 +232,15 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 			}
 			double massA = node->getMass();
 			double massB = node->getMassSlave();
-			Vector3d momentumA = node->getVelocity();
-			Vector3d momentumB = *node->getVelocitySlave();
-
+			Vector3d momentumA = node->getMomentum();
+			Vector3d momentumB = *node->getMomentumSlave();
 
 			Vector3d f = (massA*momentumB - massB*momentumA) / (massA + massB) / dt;
+
+			if (iNode != 369 && iNode != 370 && iNode != 387 && iNode != 388 & iNode != 366 && iNode != 367 && iNode != 384 && iNode != 385)
+			{
+				int a = 1;
+			}
 			
 			node->setContactForce(f);
 

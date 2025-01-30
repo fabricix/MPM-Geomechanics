@@ -102,19 +102,8 @@ void SolverExplicitUSL::Solve()
 			if (ModelSetup::getSecondContactActive()) {
 
 				// update nodal momentum after contact
-				Update::nodalMomentumContact(mesh, dt);
-
-				//// update particle velocity
-				//Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
-
-				//// update particle position
-				//Update::particlePosition(mesh, bodies, dt);
-
-				//// nodal velocity
-				//Update::nodalVelocity(mesh);			
-			}
-
-			
+				Update::nodalMomentumContact(mesh, dt);		
+			}			
 		}
 
 		// update particle velocity

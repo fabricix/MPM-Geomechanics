@@ -65,12 +65,12 @@ void Update::nodalMomentumContact(Mesh* mesh, double dt) {
 
 		if (node->getContactStatus()) {
 			// master body
-			Vector3d momentun = node->getMomentum() + dt * *node->getContactForce();
-			node->setMomentum(momentun);
+			Vector3d momentum = node->getMomentum() + dt * *node->getContactForce();
+			node->setMomentum(momentum);
 
 			// master slave
-			Vector3d momentunSlave = *node->getMomentumSlave() - dt * *node->getContactForce();
-			node->setMomentumSlave(momentunSlave);
+			Vector3d momentumSlave = *node->getMomentumSlave() - dt * *node->getContactForce();
+			node->setMomentumSlave(momentumSlave);
 		}
 	}
 }

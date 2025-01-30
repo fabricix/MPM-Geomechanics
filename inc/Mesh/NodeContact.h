@@ -206,6 +206,7 @@ inline NodeContact::NodeContact()
     hasSecondContact = false;
     contactBodyId = -1;
     contactBodySlaveId = -1;
+    contactForce.setZero();
 }
 
 inline void NodeContact::resetValues()
@@ -224,6 +225,7 @@ inline void NodeContact::resetValues()
     hasSecondContact = false;
     contactBodyId = -1;
     contactBodySlaveId = -1;
+    contactForce.setZero();
 }
 
 #endif /* INC_MESH_NODECONTACT_H_ */
