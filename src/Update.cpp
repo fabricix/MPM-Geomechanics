@@ -20,13 +20,17 @@ void Update::nodalVelocity(Mesh* mesh) {
 	for (int i = 0; i < gNodes->size(); ++i)
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
-		
-		if (gNodes->at(i)->getMass() < 0.00001) {
+		Node* node = gNodes->at(i);
+		if (gNodes->at(i)->getSecondContactStatus())
+		{
+			
 			int a = 1;
 		}
 
 		// update the velocity
 		gNodes->at(i)->updateVelocity();
+
+		int a = 1;
 	}
 }
 
@@ -63,7 +67,7 @@ void Update::nodalMomentumContact(Mesh* mesh, double dt) {
 		Node* node = mesh->getNodes()->at(i);
 		if (!node->getActive()) { continue; }
 
-		if (node->getContactStatus()) {
+		if (node->getSecondContactStatus()) {
 			// master body
 			Vector3d momentum = node->getMomentum() + dt * *node->getContactForce();
 			node->setMomentum(momentum);

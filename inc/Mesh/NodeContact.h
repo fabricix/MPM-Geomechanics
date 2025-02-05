@@ -104,6 +104,14 @@ public:
     /// \return nodal contact force
     virtual inline const Vector3d* getContactForce() const { return &(this->contactForce); }
 
+    /// \brief Return the nodal normal contact force
+    /// \return nodal contact force
+    virtual inline const Vector3d* getNormalContactForce() const { return &(this->normalContactForce); }
+
+    /// \brief Return the nodal tangential contact force
+    /// \return nodal contact force
+    virtual inline const Vector3d* getTangentialContactForce() const { return &(this->tangentialContactForce); }
+
     /// \brief Return the distance to the closest particle
     /// \return  distance to the closest particle
     virtual inline double getClosestParticleDistance() const { return this->closestParticleDistance; }
@@ -149,6 +157,14 @@ public:
     /// \set nodal contact force
     virtual inline void setContactForce(const Vector3d& _contactForce) { this->contactForce = _contactForce; }
 
+    /// \brief Set the nodal normal contact force
+    /// \set nodal contact force
+    virtual inline void setNormalContactForce(const Vector3d& _normalContactForce) { this->normalContactForce = _normalContactForce; }
+
+    /// \brief Set the tangential nodal contact force
+    /// \set nodal contact force
+    virtual inline void setTangentialContactForce(const Vector3d& _tangentialContactForce) { this->tangentialContactForce = _tangentialContactForce; }
+
     /// \brief Set the distance to the closest particle
     /// \set distance to the closest particle
     virtual inline void setClosestParticleDistance(double _closestParticleDistance) { this->closestParticleDistance = _closestParticleDistance; }
@@ -178,12 +194,12 @@ private:
     bool hasSecondContact; //!< contact flag
     int contactBodyId; //!< Body in contact at this node
     int contactBodySlaveId; //!< Slave body in contact at this node
-    //int closestParticleId; //!< Closest particle from node contact
-    //int closestParticleSlaveId; //!< Closest particle of slave body from node contact
     Vector3d Normal;
     Vector3d NormalSlave;
     Vector3d unitNormalTotal;
     Vector3d contactForce;
+    Vector3d normalContactForce;
+    Vector3d tangentialContactForce;
     double closestParticleDistance;
     double closestParticleDistanceSlave;
  

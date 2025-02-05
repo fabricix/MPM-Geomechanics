@@ -88,6 +88,14 @@ public:
 	/// \set nodal contact force
 	virtual inline void setContactForce(const Vector3d& _contactForce) { return; }
 
+	/// \brief Set the nodal normal contact force
+	/// \set nodal contact force
+	virtual inline void setNormalContactForce(const Vector3d& _normalContactForce) { return; }
+
+	/// \brief Set the tangential nodal contact force
+	/// \set nodal contact force
+	virtual inline void setTangentialContactForce(const Vector3d& _tangentialContactForce) { return; }
+
 	/// \brief Set the distance to the closest particle
 	/// \set distance to the closest particle
 	virtual inline void setClosestParticleDistance(double _closestParticleDistance) { return; }
@@ -188,6 +196,14 @@ public:
 	/// \brief Return the nodal contact force
 	/// \return nodal contact force
 	virtual inline const Vector3d* getContactForce() const { return NULL; }
+
+	/// \brief Return the nodal normal contact force
+	/// \return nodal contact force
+	virtual inline const Vector3d* getNormalContactForce() const { return NULL; }
+
+	/// \brief Return the nodal tangential contact force
+	/// \return nodal contact force
+	virtual inline const Vector3d* getTangentialContactForce() const { return NULL; }
 
 	/// \brief Return the distance to the closest particle
 	/// \return  distance to the closest particle

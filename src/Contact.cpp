@@ -137,7 +137,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						}
 					}
 					else {
-						//get closest distance to slave body
+						//get closest distance to body
 						double d = node->getClosestParticleDistance();
 
 						//get normal vector
@@ -152,7 +152,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						}
 
 						if (dPN < d and dPN >= 0.0) {
-							//set closest distance to slave body
+							//set closest distance to body
 							node->setClosestParticleDistance(dPN);
 						}
 					}
@@ -183,7 +183,7 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			Vector3d vA = momentumA / massA;
 			Vector3d vB = momentumB / massB;
 
-			if (n.dot(massB*momentumA - massA*momentumB) < 0) {
+			if (n.dot(massB*momentumA - massA*momentumB) <= 0) {
 				node->setSecondContactStatus(false);
 			}
 			else {
@@ -192,9 +192,6 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 				double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
 				if (contactDistance > 0.5 * cellDimension) {
 					node->setSecondContactStatus(false);
-				}
-				else {
-					int a = 1;
 				}
 			}
 			
@@ -213,7 +210,7 @@ void Contact::checkContact(Mesh* mesh, vector<Body*>* bodies) {
 
 
 void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
-	
+	double mi = 0.1;
 	secondContactCheck(mesh, bodies);
 
 	int nNodes = mesh->getNumNodes();
@@ -237,12 +234,22 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 			Vector3d f = (massA*momentumB - massB*momentumA) / (massA + massB) / dt;
 
-			if (iNode != 369 && iNode != 370 && iNode != 387 && iNode != 388 & iNode != 366 && iNode != 367 && iNode != 384 && iNode != 385)
-			{
-				int a = 1;
+			Vector3d n = *node->getUnitNormalTotal();
+
+			Vector3d fn = f.dot(n)*n;
+
+			Vector3d ft = f - fn;
+
+		
+			if (ft.norm() > 0) {
+				ft = std::min(ft.norm(), mi * fn.norm()) * ft / ft.norm();
 			}
-			
-			node->setContactForce(f);
+
+			node->setNormalContactForce(fn);
+
+			node->setTangentialContactForce(ft);
+
+			node->setContactForce(ft + fn);
 
 			//add the contact force to the total force
 			node->addContactForce();

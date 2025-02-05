@@ -315,7 +315,7 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 			// nodal unit normal vector
 			Vector3d n = (nA - nB).normalized();
-
+			//n.y() = 0.0;
 			node->setUnitNormalTotal(n);
 			//node->setUnitNormalTotal(Vector3d (0.0, 0.0, 1.0));
 		}
@@ -703,16 +703,6 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
 			}
 			
-			if (ibody == 2)
-			{
-				if (i == 0) {
-					
-					double a = dstrain.trace();
-					if (a < -0.000000001) {
-						int b = 1;
-					}
-				}
-			}
 			// set total particle strain increment
 			particles->at(i)->setStrainIncrement(dstrain);
 		}
