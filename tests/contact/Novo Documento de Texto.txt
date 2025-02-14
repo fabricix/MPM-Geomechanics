@@ -1,0 +1,18 @@
+"damping": {
+        "type": "kinetic",
+        "value": 0.00
+    },
+
+
+
+
+,
+
+        "body_2": {
+            "type": "cuboid",
+            "id": 2,
+            "point_p1": [ 0.5, 0.0, 0.5 ],
+            "point_p2": [ 2.5, 1.0, 1.5 ],
+            "material_id": 2,
+            "initial_velocity": [ 0, 0, 0 ]
+        }

@@ -39,11 +39,11 @@ public:
 
     /// \brief Add nodal mass gradient increment
     /// \param[in] mass_gradient_increment Nodal mass gradient increment 
-    virtual inline void addMassGradient(const Vector3d& mass_gradient_increment) { this->Normal += mass_gradient_increment; }
+    virtual inline void addMassGradient(const Vector3d& mass_gradient_increment) { this->normal += mass_gradient_increment; }
 
     /// \brief Add slave nodal mass gradient increment
     /// \param[in] slave_mass_gradient_increment Nodal mass gradient increment 
-    virtual inline void addMassGradientSlave(const Vector3d& slave_mass_gradient_increment) { this->NormalSlave += slave_mass_gradient_increment; }
+    virtual inline void addMassGradientSlave(const Vector3d& slave_mass_gradient_increment) { this->normalSlave += slave_mass_gradient_increment; }
 
     /// \brief Add a internal force increment to the slave nodal internal force
     /// \param[in] internal_force_slave_increment Vector containing nodal internal force increment
@@ -90,11 +90,11 @@ public:
 
     /// \brief Return the nodal unit normal
     /// \return nodal unit normal
-    virtual inline const Vector3d* getNormal() const { return &(this->Normal); }
+    virtual inline const Vector3d* getNormal() const { return &(this->normal); }
 
     /// \brief Return the nodal unit normal slave
     /// \return nodal unit normal
-    virtual inline const Vector3d* getNormalSlave() const { return &(this->NormalSlave); }
+    virtual inline const Vector3d* getNormalSlave() const { return &(this->normalSlave); }
 
     /// \brief Return the nodal unit normal total
     /// \return nodal unit normal
@@ -153,6 +153,14 @@ public:
     /// \set nodal unit normal
     virtual inline void setUnitNormalTotal(const Vector3d& _unitNormalTotal) { this->unitNormalTotal = _unitNormalTotal; }
 
+    /// \brief Set the nodal unit normal
+    /// \set nodal unit normal
+    virtual inline void setNormal(const Vector3d& _normal) { this->normal = _normal; }
+
+    /// \brief Set the nodal unit normal slave
+    /// \set nodal unit normal
+    virtual inline void setNormalSlave(const Vector3d& _normalSlave) { this->normalSlave = _normalSlave; }
+
     /// \brief Set the nodal contact force
     /// \set nodal contact force
     virtual inline void setContactForce(const Vector3d& _contactForce) { this->contactForce = _contactForce; }
@@ -178,7 +186,8 @@ public:
     /// contactBodySlaveId
     virtual inline const int getContactBodyId(int pos) const {return  (pos == 0) ? this->contactBodyId : this->contactBodySlaveId; }
 
-
+    int PA;
+    int PB;
 
 private:
 
@@ -194,8 +203,8 @@ private:
     bool hasSecondContact; //!< contact flag
     int contactBodyId; //!< Body in contact at this node
     int contactBodySlaveId; //!< Slave body in contact at this node
-    Vector3d Normal;
-    Vector3d NormalSlave;
+    Vector3d normal;
+    Vector3d normalSlave;
     Vector3d unitNormalTotal;
     Vector3d contactForce;
     Vector3d normalContactForce;
@@ -216,13 +225,14 @@ inline NodeContact::NodeContact()
     internalForceSlaveBody.setZero();   
     dampingForceSlaveBody.setZero();
     totalForceSlaveBody.setZero();
-    Normal.setZero();
-    NormalSlave.setZero();
+    normal.setZero();
+    normalSlave.setZero();
     hasContact = false;
     hasSecondContact = false;
     contactBodyId = -1;
     contactBodySlaveId = -1;
     contactForce.setZero();
+    unitNormalTotal.setZero();
 }
 
 inline void NodeContact::resetValues()
@@ -235,13 +245,14 @@ inline void NodeContact::resetValues()
     momentumSlaveBody.setZero();
     externalForceSlaveBody.setZero();
     internalForceSlaveBody.setZero();
-    Normal.setZero();
-    NormalSlave.setZero();
+    normal.setZero();
+    normalSlave.setZero();
     hasContact = false;
     hasSecondContact = false;
     contactBodyId = -1;
     contactBodySlaveId = -1;
     contactForce.setZero();
+    unitNormalTotal.setZero();
 }
 
 #endif /* INC_MESH_NODECONTACT_H_ */

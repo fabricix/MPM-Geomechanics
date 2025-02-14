@@ -37,7 +37,7 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			for (int j = 0; j < contributions->size(); j++) {
 				
 				int nodeId = contributions->at(j).getNodeId();
-				if (contributions->at(j).getWeight() > 0.00001 and contactMatrix[nodeId][ibody] == 0) {
+				if (contributions->at(j).getWeight() > 0.0 and contactMatrix[nodeId][ibody] == 0) {
 					contactMatrix[nodeId][ibody] = 1;
 				}
 			}
@@ -127,13 +127,10 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
 
-						if (dPN < 0) {
-							int a = 0;
-						}
-
 						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistanceSlave(dPN);
+							node->PB = particles->at(i)->getId();
 						}
 					}
 					else {
@@ -143,17 +140,13 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						//get normal vector
 						Vector3d n = *node->getUnitNormalTotal();
 
-
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
-
-						if (dPN < 0) {
-							int a = 0;
-						}
 
 						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to body
 							node->setClosestParticleDistance(dPN);
+							node->PA = particles->at(i)->getId();
 						}
 					}
 				}
@@ -164,7 +157,10 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 	//for each grid node
 	for (int iNode = 0; iNode < nNodes; iNode++) {
-
+		
+		if (iNode == 263) {
+			int a = 1;
+		}
 		Node* node = mesh->getNodes()->at(iNode);
 
 		if (node->getContactStatus()) {
@@ -182,19 +178,24 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 			Vector3d vA = momentumA / massA;
 			Vector3d vB = momentumB / massB;
+			Vector3d vCM = (momentumA + momentumB) / (massA + massB);
 
-			if (n.dot(massB*momentumA - massA*momentumB) <= 0) {
+
+			if (n.dot(massB*momentumA - massA*momentumB) <= 0.0) {
 				node->setSecondContactStatus(false);
+				node->setUnitNormalTotal(Vector3d(0, 0, 0));
+				node->setNormal(Vector3d(0, 0, 0));
+				node->setNormalSlave(Vector3d(0, 0, 0));
 			}
-			else {
-				// contact correction
-				double cellDimension = mesh->getCellDimension()[0];
-				double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
-				if (contactDistance > 0.5 * cellDimension) {
-					node->setSecondContactStatus(false);
-				}
-			}
-			
+			//else {
+			//	// contact correction
+			//	double cellDimension = mesh->getCellDimension()[0];
+			//	double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
+			//	if (contactDistance > 0.5 * cellDimension) {
+			//		node->setSecondContactStatus(false);
+			//		//node->setUnitNormalTotal(Vector3d(0, 0, 0));
+			//	}
+			//}
 		}
 	}
 
@@ -240,7 +241,6 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 
 			Vector3d ft = f - fn;
 
-		
 			if (ft.norm() > 0) {
 				ft = std::min(ft.norm(), mi * fn.norm()) * ft / ft.norm();
 			}
@@ -292,9 +292,8 @@ void Contact::setParticlesInContact(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 
-void Contact::resetParticlesInContact(Mesh* mesh, vector<Body*>* bodies) {
+void Contact::resetParticlesInContact(vector<Body*>* bodies) {
 
-	int nNodes = mesh->getNumNodes();
 	int nBodies = bodies->size();
 
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {

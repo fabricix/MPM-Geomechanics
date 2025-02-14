@@ -53,12 +53,21 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 
 				// get the contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());				
-
+				
 				// compute the weighted nodal mass
 				const double nodalMass = pMass*contribution->at(j).getWeight();
 				
 				// check any mass in node
 				if (nodalMass<=0.0) { continue; }
+
+				if (nodeI->getId() == 289)
+				{
+					int a = 1;
+				}
+				if (nodeI->getId() == 292)
+				{
+					int a = 1;
+				}
 		
 				// the node is inactivate if he doesn't have mass
 				nodeI->setActive(true);
@@ -274,9 +283,6 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				// compute the nodal mass gradient
 				const Vector3d nodalMassGradient = pMass * contribution->at(j).getGradients();
 
-				//// check any mass in node
-				//if (nodalMassGradient.norm() == 0.0) { continue; }
-
 				if (ModelSetup::getContactActive()) {
 					if (nodeI->getContactStatus()) {
 						//check if the body is set as slave
@@ -289,15 +295,15 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 							nodeI->addMassGradient(nodalMassGradient);
 						}
 					}
-					else {
-						// add mass at node
-						nodeI->addMassGradient(nodalMassGradient);
-					}
+					//else {
+					//	// add mass at node
+					//	nodeI->addMassGradient(nodalMassGradient);
+					//}
 				}
-				else {
-					// add mass at node
-					nodeI->addMassGradient(nodalMassGradient);
-				}
+				//else {
+				//	// add mass at node
+				//	nodeI->addMassGradient(nodalMassGradient);
+				//}
 			}
 		}
 	}
@@ -315,12 +321,20 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 			// nodal unit normal vector
 			Vector3d n = (nA - nB).normalized();
-			//n.y() = 0.0;
+
+			/*if (iNode == 353) {
+				if (n[0] < 0.57878) {
+
+					if (n[0] > 0.57876) {
+						int a = 1;
+					}
+				}
+			}*/
+			
 			node->setUnitNormalTotal(n);
 			//node->setUnitNormalTotal(Vector3d (0.0, 0.0, 1.0));
 		}
 	}
-
 }
 
 void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
@@ -641,18 +655,7 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 
 			// initialize a matrix for strain increment computation
 			Matrix3d dstrain = Matrix3d::Zero();
-
-			//weight
-			double w = 0.0;
-
-
-			if (ibody == 2)
-			{
-				if (i == 0) {
-					int b = 1;
-				}
-			}
-			
+		
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
 				// get the contributing node
@@ -663,9 +666,6 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 
 				//initialize vector v
 				Vector3d v = Vector3d::Zero();
-
-				//weight
-				w += contribution->at(j).getWeight();
 
 				if (ModelSetup::getContactActive()) {
 					if (nodeI->getContactStatus()) {

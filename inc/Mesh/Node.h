@@ -84,6 +84,14 @@ public:
 	/// \set nodal unit normal
 	virtual inline void setUnitNormalTotal(const Vector3d& _unitNormalTotal) { return; }
 
+	/// \brief Set the nodal unit normal
+	/// \set nodal unit normal
+	virtual inline void setNormal(const Vector3d& _normal) { return; }
+
+	/// \brief Set the nodal unit normal slave
+	/// \set nodal unit normal
+	virtual inline void setNormalSlave(const Vector3d& _normalSlave) { return; }
+
 	/// \brief Set the nodal contact force
 	/// \set nodal contact force
 	virtual inline void setContactForce(const Vector3d& _contactForce) { return; }
@@ -297,6 +305,9 @@ public:
 	/// contactBodyId
 	/// contactBodySlaveId
 	virtual inline const int getContactBodyId(int pos) const { return  NULL; }
+
+	int PA;
+	int PB;
 
 protected:
 

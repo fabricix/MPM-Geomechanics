@@ -21,16 +21,12 @@ void Update::nodalVelocity(Mesh* mesh) {
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
 		Node* node = gNodes->at(i);
-		if (gNodes->at(i)->getSecondContactStatus())
-		{
-			
-			int a = 1;
-		}
-
+		
 		// update the velocity
 		gNodes->at(i)->updateVelocity();
 
-		int a = 1;
+		//Vector3d a = gNodes->at(i)->getVelocity();
+		//Vector3d b = *gNodes->at(i)->getVelocitySlave();
 	}
 }
 
@@ -61,7 +57,7 @@ void Update::nodalMomentumContact(Mesh* mesh, double dt) {
 	vector<Node*>* Nodes = mesh->getNodes();
 
 	// for each node
-#pragma omp parallel for shared (gNodes)
+	#pragma omp parallel for shared (Nodes)
 	for (int i = 0; i < Nodes->size(); ++i) {
 		
 		Node* node = mesh->getNodes()->at(i);
@@ -206,6 +202,10 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 		#pragma omp parallel for shared (particles, nodes, dt)
 		for (int i = 0; i < particles->size(); ++i) {
 
+			if (i == 97) {
+				int a = 0;
+			}
+
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
 
@@ -228,30 +228,30 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 					if (nodeI->getContactStatus()) {
 						if (ibody == nodeI->getContactBodyId(1)) {	
 							if (nodeI->getMassSlave() != 0.0) {
-
 								// compute the velocity rate contribution
 								velocityRate += *nodeI->getTotalForceSlave() * contribI.getWeight() / nodeI->getMassSlave();
 							}
 						}
 						else {
 							if (nodeI->getMass() != 0.0) {
-
 								// compute the velocity rate contribution
+								Vector3d b = nodeI->getTotalForce();
+								Vector3d a = nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 								velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 							}
 						}
 					}
 					else {
 						if (nodeI->getMass() != 0.0) {
-
 							// compute the velocity rate contribution
+							Vector3d b = nodeI->getTotalForce();
+							Vector3d a = nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 							velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 						}
 					}
 				}
 				else {
 					if (nodeI->getMass() != 0.0) {
-
 						// compute the velocity rate contribution
 						velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 					}
@@ -354,7 +354,6 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						//check if the body is set as slave
 						if (ibody == nodeI->getContactBodyId(1)) {
 							if (nodeI->getMassSlave() != 0.0) {
-
 								// compute the position rate contribution
 								positionRate += *nodeI->getMomentumSlave() * contribI.getWeight() / nodeI->getMassSlave();
 							}
@@ -362,7 +361,6 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						}
 						else {
 							if (nodeI->getMass() != 0.0) {
-
 								// compute the position rate contribution
 								positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
 							}
@@ -370,7 +368,6 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 					}
 					else {
 						if (nodeI->getMass() != 0.0) {
-
 							// compute the position rate contribution
 							positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
 						}
@@ -378,7 +375,6 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 				}
 				else {
 					if (nodeI->getMass() != 0.0) {
-
 						// compute the position rate contribution
 						positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
 					}
@@ -636,6 +632,78 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 	}
 }
 
+void Update::setPlaneContactForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
+
+	// get boundary nodes
+    #pragma omp parallel for shared(plane, nodes, dir)
+	for (int i = 0; i < plane->nodes.size(); ++i) {
+
+		// get node handle 
+		Node* nodeI = nodes->at(plane->nodes.at(i));
+
+		if (nodeI->getActive()) {
+
+			// witch type of restriction
+			switch (plane->restriction)
+			{
+				// free condition
+			case Boundary::BoundaryType::FREE:
+			{
+				break;
+			}
+			// fixed condition
+			case Boundary::BoundaryType::FIXED:
+			{
+				// set all force component as zero 
+				nodeI->setContactForce(Vector3d::Zero());
+				break;
+			}
+			// perpendicular restriction
+			case Boundary::BoundaryType::SLIDING:
+			{
+				// get current boundary nodal force
+				Vector3d force = *nodeI->getContactForce();
+
+				// witch direction of the normal vector
+				switch (dir)
+				{
+					// normal pointed to x
+				case Update::Direction::X:
+				{
+					force.x() = 0.0;
+					break;
+				}
+				// normal pointed to y
+				case Update::Direction::Y:
+				{
+					force.y() = 0.0;
+					break;
+				}
+				// normal pointed to z
+				case Update::Direction::Z:
+				{
+					force.z() = 0.0;
+					break;
+				}
+				}
+
+				// set boundary nodal force
+				nodeI->setContactForce(force);
+				break;
+			}
+			// earthquake boundary condition
+			case Boundary::BoundaryType::EARTHQUAKE:
+			{
+				nodeI->setTotalForce(nodeI->getMass() * interpolatedAcceleration);
+				break;
+			}
+			}
+		}
+	}
+}
+
 void Update::boundaryConditionsForce(Mesh* mesh) {
 	
 	// get nodes
@@ -650,6 +718,25 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 	setPlaneForce(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
 	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
+
+}
+
+void Update::boundaryConditionsContactForce(Mesh* mesh) {
+
+	boundaryConditionsForce(mesh);
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// set f = 0 in fixed direction
+
+	setPlaneContactForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
+	setPlaneContactForce(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
+	setPlaneContactForce(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
+
+	setPlaneContactForce(mesh->getBoundary()->getPlaneXn(), nodes, Update::Direction::X);
+	setPlaneContactForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
+	setPlaneContactForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 
 }
 
@@ -744,14 +831,6 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 			// update the contribution nodes
 			particles->at(i)->updateContributionNodes(mesh);
 			
-			if (ibody == 2){
-				if (i == 3) {
-					Vector3d g = particles->at(i)->getContributionNodes()->at(0).getGradients();
-					if (g[0] != g[1]) {
-						int a = 1;
-					}
-				}
-			}
 		}
 	}
 }

@@ -458,6 +458,48 @@ namespace Output{
 			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
 		}
 		gridFile << "</DataArray>\n";
+		
+		// nodal normal
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Normal\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (*inodes->at(i)->getUnitNormalTotal()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// master nodal normal
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Master Normal\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getNormal()->normalized()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// slave nodal normal
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Slave Normal\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getNormalSlave()->normalized()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// internal force
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Internal force\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getInternalForce()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// external force
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"External force\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getExternalForce()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// momentum
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Momentum\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile << scientific << (inodes->at(i)->getMomentum()) << "\n";
+		}
+		gridFile << "</DataArray>\n";
 
 		// end point data
 		gridFile << "</PointData>\n";
@@ -581,12 +623,12 @@ namespace Output{
 		}
 		gridFile<<"</DataArray>\n";
 
-		// contact nodes
-		gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (dynamic_cast<NodeContact*>(inodes->at(i))->getContactStatus()) << "\n";
-		}
-		gridFile << "</DataArray>\n";
+		//// contact nodes
+		//gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
+		//for (int i = 0; i < nPoints; ++i) {
+		//	gridFile << scientific << (dynamic_cast<NodeContact*>(inodes->at(i))->getContactStatus()) << "\n";
+		//}
+		//gridFile << "</DataArray>\n";
 
 		// nodal mass
 		gridFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
@@ -823,21 +865,21 @@ namespace Output{
     csv_file.close();
 }
 
-	//void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
-	//{
-	//	if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
+	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	{
+		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
 
-	//	if (loopCounter%resultSteps==0)
-	//	{
-	//		// write model results
-	//		writeBodies(bodies,iTime);
+		if (loopCounter%resultSteps==0)
+		{
+			// write model results
+			writeBodies(bodies,iTime);
 
-	//		// update terminal
-	//		updateTerminal(bodies,iTime);
+			// update terminal
+			updateTerminal(bodies,iTime);
 
-	//		writeCSVEnergyFile(bodies,iTime);
-	//	}
-	//}
+			writeCSVEnergyFile(bodies,iTime);
+		}
+	}
 
 	void writeResultInStep(Mesh* mesh, int loopCounter, vector<Body*>* bodies, double iTime, int resultSteps)
 	{

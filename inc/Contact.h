@@ -54,7 +54,7 @@ public:
 	/// \brief Reset Particles in Contact
 	/// \param[in] mesh
 	/// \param[in] bodies
-	static void resetParticlesInContact(Mesh* mesh, vector<Body*>* bodies);
+	static void resetParticlesInContact(vector<Body*>* bodies);
 };
 
 #endif /* CONTACT_H_ */

@@ -45,8 +45,8 @@ void SolverExplicitUSL::Solve()
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
 
-		// reset particles in contact
-		Contact::resetParticlesInContact(mesh, bodies);
+		//// reset particles in contact
+		//Contact::resetParticlesInContact(bodies);
 
 		// ContactCheck
 		Contact::checkContact(mesh, bodies);
@@ -101,8 +101,12 @@ void SolverExplicitUSL::Solve()
 
 			if (ModelSetup::getSecondContactActive()) {
 
+				// impose force boundary conditions
+				Update::boundaryConditionsContactForce(mesh);
+
+
 				// update nodal momentum after contact
-				Update::nodalMomentumContact(mesh, dt);		
+ 				Update::nodalMomentumContact(mesh, dt);		
 			}			
 		}
 
