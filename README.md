@@ -1,7 +1,8 @@
 # MPM-Geomechanics
+
 ### A material point method code for geomechanics
 
-[![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml) 
+[![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
 
 ## Documentation
@@ -17,6 +18,7 @@ The objective of this repository is to provide a platform for developing the MPM
 ## Collaboration
 
 If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl. There are several topics for developing in this project, here there are a few of them:
+
 - contact method for large terrain models using STL meshes [(Zhang et al., 2023)](https://www.sciencedirect.com/science/article/abs/pii/S0266352X23001684)
 - axisymmetric formulation [(Nairn & Guilkey, 2015)](https://www.cof.orst.edu/cof/wse/faculty/Nairn/papers/AxisymGIMP.pdf)
 - implicit [(Nair & Roy, 2012)](https://doi.org/10.1080/15376494.2010.550082) and semi-implicit [(Kularathna et al., 2021)](https://doi.org/10.1002/nag.3207) time integration
@@ -31,7 +33,8 @@ If you are interested to collaborate with this project, please contact to fabric
 
 ## Program features
 
-The main features of the program in the actuality are: 
+The main features of the program in the actuality are:
+
 - Three-dimensional formulation (can simulated 2D plane strain problems too)
 - Dynamic formulation (suitable for earthquake and general dynamic problems)
 - Shared memory parallelization (for computational time reduction)
@@ -48,20 +51,31 @@ The main features of the program in the actuality are:
 
 For generating documentation and compilation of the code please see the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
 
+## Testing
+
+For testing, use GoogleTest. It is necessary to import this library by cloning the official repository into the /external folder. Each developer must clone this repository independently.
+
+```
+cd external
+git clone https://github.com/google/googletest.git
+```
+
 ## Examples
 
 ### Slope failure
+
 In this example an soil slope failure is simulated using an elastoplastic material:
 
 ![](/tests/slope-failure/slope-failure-test.gif)
 
-For more details of this simulation see the input file [slope-failure.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/slope-failure/slope-failure.json) 
+For more details of this simulation see the input file [slope-failure.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/slope-failure/slope-failure.json)
 
 ### Exponential softening model to simulate fracturing process in rock
 
 In this example an elastoplastic body impacts over an elastic body. The fracturing process in rock masses is captured using an exponential strain softening over tensile strength in the elastoplastic material: $\sigma^t(\epsilon_p^{pleff}) = \sigma^t_{final}-(\sigma^t_{initial}-\sigma^t_{final})e^{-\eta \epsilon_p^{pleff}}$, where $\eta$ is the shape factor and $\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}$ is the effective plastic strain.
 
-#### Example 1: 
+#### Example 1:
+
 Fracturing induced by exponential softening over the tensile strength. The yellow body is subjected to an initial velocity. The withe body is elastic.
 
 ![](/tests/exponential-softening/exponential-softening-test.gif)
@@ -70,6 +84,7 @@ An elasto-plastic body impacts over an elastic body. The exponential softening u
 See [exponential-softening.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/exponential-softening/exponential-softening.json) input file for simulation details.
 
 #### Example 2
+
 In this example is tested the refinement mesh behavior. The fixed (left-bottom) and free boundary (right-up) conditions are tested too.
 
 ![](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
