@@ -28,4 +28,5 @@ MPM-Geomechanics
 time-energy.csv
 simulation-data.csv
 particle_stress_data.json
-external/*
+/external/*
+/build/testing/build/*
