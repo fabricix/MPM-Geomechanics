@@ -98,7 +98,7 @@ cmake -G "MinGw MakeFiles" ..
 cmake --build .
 ```
 
-Then, a .exe file will be generated. You can test it with the command:
+Then, an .exe file will be generated. You can run the tests with the following command (Windows):
 
 ```
 ./MPM-Test.exe
