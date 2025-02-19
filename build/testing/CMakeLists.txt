@@ -15,10 +15,10 @@ include_directories(../../external/googletest/googletest/include)
 
 # Busca todos los archivos fuente que terminen en ".test.cpp" en el directorio "tests"
 file(GLOB_RECURSE TEST_SOURCES "../../tests/*.test.cpp")
-# Define un ejecutable llamado "MPM-test". Añade todos los arrchivos fuente de las pruebas
-add_executable(MPM-test ../../tests/main.test.cpp ${TEST_SOURCES})
+# Define un ejecutable llamado "MPM-Test". Añade todos los arrchivos fuente de las pruebas
+add_executable(MPM-Test ../../tests/main.test.cpp ${TEST_SOURCES})
 
 # Enlaza el ejecutable con las bibliotecas de GoogleTest (gtest y gtest_main)
 # gtest: Biblioteca principal de GoogleTest
 # gtest_main: Proporciona una función main() para ejecutar las pruebas
-target_link_libraries(MPM-test gtest gtest_main)
+target_link_libraries(MPM-Test gtest gtest_main)
