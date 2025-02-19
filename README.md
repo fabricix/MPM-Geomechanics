@@ -51,15 +51,6 @@ The main features of the program in the actuality are:
 
 For generating documentation and compilation of the code please see the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
 
-## Testing
-
-For testing, use GoogleTest. It is necessary to import this library by cloning the official repository into the /external folder. Each developer must clone this repository independently.
-
-```
-cd external
-git clone https://github.com/google/googletest.git
-```
-
 ## Examples
 
 ### Slope failure
@@ -90,3 +81,25 @@ In this example is tested the refinement mesh behavior. The fixed (left-bottom) 
 ![](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
 
 See [exponential-softening-refined.json](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.json) input file for simulation details.
+
+## Testing
+
+For testing, use GoogleTest. It is necessary to import this library by cloning the official repository into the /external folder. Each developer must clone this repository independently.
+
+```
+cd external
+git clone https://github.com/google/googletest.git
+```
+
+Then, it is necessary to compile the tests with the `CMakeLists.txt` located in the build/testing directory. In the directory build/testing, there must be a "build" folder, where we can execute the following commands:
+
+```
+cmake -G "MinGw MakeFiles" ..
+cmake --build .
+```
+
+Then, a .exe file will be generated. You can test it with the command:
+
+```
+./MPM-Test.exe
+```
