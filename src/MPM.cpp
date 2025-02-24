@@ -141,6 +141,9 @@ void MPM::setupMesh() {
 	// create the mesh
 	mesh.createGrid(ModelSetup::getTwoPhaseActive());
 
+	// compute the nodal volumes
+	mesh.computeNodeVolumes();
+
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 

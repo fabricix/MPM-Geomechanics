@@ -445,6 +445,13 @@ namespace Output{
 		}
 		gridFile<<"</DataArray>\n";
 
+		// nodal volume
+		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile<<scientific<<(inodes->at(i)->getVolume())<<"\n";
+		}
+		gridFile<<"</DataArray>\n";
+
 		// end point data
 		gridFile<<"</PointData>\n";
 		
@@ -494,6 +501,13 @@ namespace Output{
 		// end cells
 		gridFile<<"</Cells>\n";
 		
+/* 		// Cell data (IDs)
+		gridFile<<"<CellData>\n";
+		gridFile<<"<DataArray type=\"UInt64\" Name=\"CellId\" Format=\"ascii\">\n";
+		for (int i = 0; i < nCells; ++i) {
+			gridFile<<i<<"\n"; // ID of the cell
+		} */
+
 		// end piece
 		gridFile<<"</Piece>\n";
 		

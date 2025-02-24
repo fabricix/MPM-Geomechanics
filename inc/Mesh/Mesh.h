@@ -17,6 +17,7 @@ using Eigen::Vector3i;
 
 #include "Node.h"
 #include "Boundary.h"
+#include "Cell.h"
 
 class Particle;
 
@@ -162,6 +163,9 @@ public:
     /// \return True if the point is inside the mesh
     bool getIsInsideMesh(const Vector3d& point) const;
 
+    /// \brief Return compute the nodal volumes
+    void computeNodeVolumes();
+
 private:
     
     int nGhosts; //!< number of ghost cells
@@ -178,6 +182,8 @@ private:
     
     std::vector<Node*> gridNodes; //!< all nodes in mesh
     
+    std::vector<Cell*> gridCells; //!< all cells in mesh
+
     Boundary boundary; //!< mesh boundary
     
     /// \brief Return the cell id in a position coordinates

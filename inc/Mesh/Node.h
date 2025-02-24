@@ -170,6 +170,12 @@ public:
 	/// \brief Get the distance level set function value of the node
 	double getDistanceLevelSet() { return this->distanceLevelSet; }
 
+	/// \brief Set the nodal volume
+	void setVolume(double volume) { this->volume = volume; }
+
+	/// \brief Get the nodal volume
+	double getVolume() { return this->volume; }
+
 protected:
 
 	bool active; //!< is active node
@@ -177,6 +183,8 @@ protected:
 	int id; //!< nodal identification
 
 	double mass; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$
+	double volume; //!< nodal volume: \f$V_{I}\f$ 
+	double distanceLevelSet; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
 
 	Vector3d coordinates; //!< nodal coordinates: \f$x_{iI}\f$
 	Vector3d momentum; //!< nodal momentum: \f$p_{iI}\f$, or momentum in solid in two-phase calculations: \f$p_{iI}^{s}\f$
@@ -185,8 +193,6 @@ protected:
 	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{int}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{int,s}\f$
 	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
-	
-	double distanceLevelSet; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
 };
 
 inline Node::Node() {
@@ -194,6 +200,7 @@ inline Node::Node() {
     active=false;
     id=0;
     mass=0.0;
+	volume=0.0;
 	distanceLevelSet=0.0;
     coordinates.setZero();
     momentum.setZero();
