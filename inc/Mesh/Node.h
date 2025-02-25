@@ -116,6 +116,10 @@ public:
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }
 
+	/// \brief Add a density increment to the nodal density level set
+	/// \param[in] density_increment Nodal density increment
+	inline void addDensityLevelSet(double density_increment) { this->densityLevelSet+=density_increment; }
+
 	/// \brief Add fluid mass increment to the nodal mass
 	/// \param[in] fluid_mass_increment Nodal mass increment 
 	virtual inline void addMassFluid(double fluid_mass_increment) { return; }
@@ -185,6 +189,7 @@ protected:
 	double mass; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$
 	double volume; //!< nodal volume: \f$V_{I}\f$ 
 	double distanceLevelSet; //!< distance level set function value of the node: \f$ d_{I}=(X_I-X_i)e_n \f$
+	double densityLevelSet; //!< density level set function value of the node: \f$ \rho_{I} = \sum_p V_p N_{Ip} / V_I \f$
 
 	Vector3d coordinates; //!< nodal coordinates: \f$x_{iI}\f$
 	Vector3d momentum; //!< nodal momentum: \f$p_{iI}\f$, or momentum in solid in two-phase calculations: \f$p_{iI}^{s}\f$
@@ -202,6 +207,7 @@ inline Node::Node() {
     mass=0.0;
 	volume=0.0;
 	distanceLevelSet=0.0;
+	densityLevelSet=0.0;
     coordinates.setZero();
     momentum.setZero();
     velocity.setZero();
@@ -218,6 +224,7 @@ inline void Node::resetValues()
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();
+	densityLevelSet=0.0;
 }
 
 inline Node::~Node() { }

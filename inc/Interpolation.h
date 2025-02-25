@@ -162,6 +162,14 @@ namespace Interpolation {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list of Particle pointers
 	void particleDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
+
+	/// \brief Interpolate density level set function value of particle
+	///
+	/// \f$ \rho_I = \sum_p \frac{V_p N_{Ip}}{V_I} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] particles A list of Particle pointers
+	void nodalDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
 };
 
 #endif /* INTERPOLATION_H_ */

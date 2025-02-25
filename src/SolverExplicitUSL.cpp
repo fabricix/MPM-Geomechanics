@@ -102,7 +102,11 @@ void SolverExplicitUSL::Solve()
 		// contact treatment
 		if (ModelSetup::getTerrainContactActive())
 		{
+			// calculate the distance level set function to particles
 			Interpolation::particleDistanceLevelSet(mesh, particles);
+
+			// calculate the nodal density level-set
+			Interpolation::nodalDistanceLevelSet(mesh, particles);
 		}
 
 		// reset all nodal values

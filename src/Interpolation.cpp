@@ -461,6 +461,35 @@ void Interpolation::nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
+void Interpolation::nodalDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) 
+{
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
+
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+		// get the particle mass
+		const double pVolume = particles->at(i)->getInitialVolume();
+
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// compute and set the weighted density level set
+			nodeI->addDensityLevelSet(pVolume*contribution->at(j).getWeight()/nodeI->getVolume());
+		}
+	}
+}
+
 ///
 /// From node to particle:
 ///		
