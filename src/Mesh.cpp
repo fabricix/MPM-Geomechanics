@@ -274,9 +274,11 @@ void Mesh::createGrid(bool is_two_phase_simulation) {
                 Cell* cell = new Cell();
 
                 // set nodes in cell
+                std::vector<Node*> nodes;
                 for (int id : nodeIds) {
-                    cell->nodes.push_back(gridNodes[id]);
+                    nodes.push_back(gridNodes[id]);
                 }
+				cell->setNodes(nodes);
 
                 // compute cell volume
                 cell->computeVolume();
@@ -308,8 +310,8 @@ void Mesh::computeNodeVolumes() {
 
     // distribute the volume of each cell
     for (auto& cell : gridCells) {
-        double sharedVolume = cell->volume / 8.0;
-        for (auto& node : cell->nodes) {
+        double sharedVolume = cell->getVolume() / 8.0;
+        for (auto& node : cell->getNodes()) {
             nodeVolumes[node] += sharedVolume;
         }
     }

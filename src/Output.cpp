@@ -507,7 +507,7 @@ namespace Output{
 		gridFile << "<CellData>\n";
 		gridFile << "<DataArray type=\"UInt64\" Name=\"CellId\" Format=\"ascii\">\n";
 		for (size_t i = 0; i  < icells->size(); ++i) {
-			gridFile << icells->at(i)->id << "\n";
+			gridFile << icells->at(i)->getId() << "\n";
 		}
 		gridFile << "</DataArray>\n"; 
 		gridFile << "</CellData>\n";

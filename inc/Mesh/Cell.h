@@ -12,10 +12,7 @@ using namespace Eigen;
 class Cell {
 
     public:
-        std::vector<Node*> nodes;
-        double volume;
-        int id;
-    
+        
         Cell() : volume(0.0), id(0) {}
 
         void computeVolume() {
@@ -36,6 +33,16 @@ class Cell {
             // set id of the cell with the id of the first node
             this->id = nodes[0]->getId();
     }
+
+    inline double getVolume() const { return volume; };
+    inline int getId() const { return id; };
+    inline std::vector<Node*> getNodes() const { return nodes; };
+    inline void setNodes(const std::vector<Node*>& nodes) { this->nodes = nodes; };
+
+    private:
+        std::vector<Node*> nodes;
+        double volume;
+        int id;
 };
 
 #endif /* CELL_H_ */
