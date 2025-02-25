@@ -411,7 +411,7 @@ namespace Output{
 		gridFile<<"<PointData>\n";
 		
 		// local ID of nodes
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"Id\" Format=\"ascii\">\n";
+		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			gridFile<<scientific<<inodes->at(i)->getId()<<"\n";
 		}
@@ -501,12 +501,16 @@ namespace Output{
 		// end cells
 		gridFile<<"</Cells>\n";
 		
-/* 		// Cell data (IDs)
-		gridFile<<"<CellData>\n";
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"CellId\" Format=\"ascii\">\n";
-		for (int i = 0; i < nCells; ++i) {
-			gridFile<<i<<"\n"; // ID of the cell
-		} */
+		// Cell data (IDs)
+		vector<Cell*>* icells = mesh->getCells();
+
+		gridFile << "<CellData>\n";
+		gridFile << "<DataArray type=\"UInt64\" Name=\"CellId\" Format=\"ascii\">\n";
+		for (size_t i = 0; i  < icells->size(); ++i) {
+			gridFile << icells->at(i)->id << "\n";
+		}
+		gridFile << "</DataArray>\n"; 
+		gridFile << "</CellData>\n";
 
 		// end piece
 		gridFile<<"</Piece>\n";

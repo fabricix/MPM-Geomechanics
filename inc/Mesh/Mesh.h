@@ -99,6 +99,10 @@ public:
     /// \return A pointer to the mesh nodes
     inline vector<Node*>* getNodes() { return &(this->gridNodes); }
 
+    /// \brief Return cells in mesh
+    /// \return A pointer to the mesh cells
+    inline vector<Cell*>* getCells() { return &(this->gridCells); }
+
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension
     /// in each direction

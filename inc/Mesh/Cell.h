@@ -14,9 +14,10 @@ class Cell {
     public:
         std::vector<Node*> nodes;
         double volume;
+        int id;
     
-        Cell() : volume(0.0) {}
-    
+        Cell() : volume(0.0), id(0) {}
+
         void computeVolume() {
 
             if (nodes.size() != 8) {
@@ -31,6 +32,9 @@ class Cell {
         
             // cross product of two base vectors
             volume = std::abs(v1.cross(v2).dot(v3));
+
+            // set id of the cell with the id of the first node
+            this->id = nodes[0]->getId();
     }
 };
 
