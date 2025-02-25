@@ -256,15 +256,15 @@ void Mesh::createGrid(bool is_two_phase_simulation) {
 
     gridCells.clear();
 
-    for (int k = 0; k < nCells.z(); k++) {
-        for (int j = 0; j < nCells.y(); j++) {
-            for (int i = 0; i < nCells.x(); i++) {
+    for (int k = 0; k < nCells.z()+2*nGhosts; k++) {
+        for (int j = 0; j < nCells.y()+2*nGhosts; j++) {
+            for (int i = 0; i < nCells.x()+2*nGhosts; i++) {
                 
                 // central position of the cell
                 Vector3d cellPosition = Vector3d(
-                    (i + 0.5) * cellDim.x() + minLimit.x(),
-                    (j + 0.5) * cellDim.y() + minLimit.y(),
-                    (k + 0.5) * cellDim.z() + minLimit.z()
+                    (i - nGhosts + 0.5) * cellDim.x() + minLimit.x(),
+                    (j - nGhosts + 0.5) * cellDim.y() + minLimit.y(),
+                    (k - nGhosts + 0.5) * cellDim.z() + minLimit.z()
                 );
 
                 // get nodes in cell
