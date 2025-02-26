@@ -174,6 +174,10 @@ public:
 	/// \brief Get the distance level set function value of the node
 	double getDistanceLevelSet() { return this->distanceLevelSet; }
 
+	/// \brief Get the density level set function value of the node
+	///
+	double getDensityLevelSet() { return this->densityLevelSet; }
+
 	/// \brief Set the nodal volume
 	void setVolume(double volume) { this->volume = volume; }
 

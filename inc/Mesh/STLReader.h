@@ -65,7 +65,7 @@ private:
     
     /// @brief Vector containing the triangles
     std::vector<Triangle> triangles;
-    
+
     /// @brief Read the ASCII STL file
     bool readASCII(std::ifstream& file);
     
