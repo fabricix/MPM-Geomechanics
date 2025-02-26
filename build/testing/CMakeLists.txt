@@ -11,12 +11,18 @@ add_subdirectory(../../external/googletest ${CMAKE_BINARY_DIR}/googletest)
 # Add the GoogleTest include directory to be able to use #include <gtest/gtest.h>
 include_directories(../../external/googletest/googletest/include)
 include_directories(../../inc)
+include_directories(../../inc/Particle)
+include_directories(../../inc/Shape)
+include_directories(../../inc/Body)
+include_directories(../../inc/Materials)
+include_directories(../../inc/Mesh)
 
-# Search for all source files ending in ".test.cpp" in the "tests" directory
-file(GLOB_RECURSE TEST_SOURCES "../../tests/*.test.cpp")
-
-# Define an executable named "MPM-Test" and add all the test source files
-add_executable(MPM-Test main.test.cpp ${TEST_SOURCES})
+# Add executables for the tests
+# Remove main.cpp file from the list of sources to avoid multiple definitions of the main function
+file(GLOB_RECURSE TEST_SOURCES "../../tests/*.test.cpp" "main.test.cpp")
+file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
+list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
+add_executable(MPM-Test ${TEST_SOURCES} ${EXECUTABLES})
 
 # Link the executable with the GoogleTest libraries (gtest and gtest_main)
 # gtest: GoogleTest's main library
