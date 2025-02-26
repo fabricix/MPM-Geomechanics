@@ -109,6 +109,8 @@ void SolverExplicitUSL::Solve()
  				Update::nodalMomentumContact(mesh, dt);		
 			}			
 		}
+		else {
+		}
 
 		// update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);

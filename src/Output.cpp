@@ -369,6 +369,7 @@ namespace Output{
 	{
 		//if (!ModelSetup::getPrintGridResults()) return;
 
+
 		// define edian
 		if (Folders::edian == "") {
 			defineEdian();
@@ -431,20 +432,6 @@ namespace Output{
 		}
 		gridFile << "</DataArray>\n";
 
-		// contact nodes
-		gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << inodes->at(i)->getContactStatus() << "\n";
-		}
-		gridFile << "</DataArray>\n";
-
-		// contact force nodes
-		gridFile << "<DataArray type=\"UInt8\" Name=\"ContactForce\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << inodes->at(i)->getSecondContactStatus() << "\n";
-		}
-		gridFile << "</DataArray>\n";
-
 		// nodal mass
 		gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
@@ -456,27 +443,6 @@ namespace Output{
 		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
-		}
-		gridFile << "</DataArray>\n";
-		
-		// nodal normal
-		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Normal\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (*inodes->at(i)->getUnitNormalTotal()) << "\n";
-		}
-		gridFile << "</DataArray>\n";
-
-		// master nodal normal
-		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Master Normal\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (inodes->at(i)->getNormal()->normalized()) << "\n";
-		}
-		gridFile << "</DataArray>\n";
-
-		// slave nodal normal
-		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Slave Normal\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (inodes->at(i)->getNormalSlave()->normalized()) << "\n";
 		}
 		gridFile << "</DataArray>\n";
 
@@ -500,6 +466,68 @@ namespace Output{
 			gridFile << scientific << (inodes->at(i)->getMomentum()) << "\n";
 		}
 		gridFile << "</DataArray>\n";
+
+		
+
+
+		if (ModelSetup::getContactActive())
+		{
+			// momentum slave
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Momentum slave\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (*inodes->at(i)->getMomentumSlave()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// nodal velocity slave
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity slave\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (*inodes->at(i)->getVelocitySlave()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// nodal normal
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Normal\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (*inodes->at(i)->getUnitNormalTotal()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// master nodal normal
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Master Normal\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getNormal()->normalized()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// slave nodal normal
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Slave Normal\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getNormalSlave()->normalized()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// nodal mass slave
+			gridFile << "<DataArray type=\"Float64\" Name=\"Mass slave\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getMassSlave()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// contact nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << inodes->at(i)->getContactStatus() << "\n";
+			}
+			gridFile << "</DataArray>\n";
+
+			// contact force nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"ContactForce\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << inodes->at(i)->getSecondContactStatus() << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
 
 		// end point data
 		gridFile << "</PointData>\n";

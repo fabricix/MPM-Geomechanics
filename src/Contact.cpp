@@ -127,6 +127,10 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
 
+						if (dPN < 0.0) {
+							int a = 0;
+						}
+
 						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistanceSlave(dPN);
@@ -142,6 +146,10 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
+
+						if (dPN < 0.0) {
+							int a = 0;
+						}
 
 						if (dPN < d and dPN >= 0.0) {
 							//set closest distance to body
@@ -187,15 +195,17 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 				node->setNormal(Vector3d(0, 0, 0));
 				node->setNormalSlave(Vector3d(0, 0, 0));
 			}
-			//else {
-			//	// contact correction
-			//	double cellDimension = mesh->getCellDimension()[0];
-			//	double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
-			//	if (contactDistance > 0.5 * cellDimension) {
-			//		node->setSecondContactStatus(false);
-			//		//node->setUnitNormalTotal(Vector3d(0, 0, 0));
-			//	}
-			//}
+			else {
+				// contact correction
+				double cellDimension = mesh->getCellDimension()[0];
+				double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
+				if (contactDistance > 0.5 * cellDimension) {
+					node->setSecondContactStatus(false);
+					node->setUnitNormalTotal(Vector3d(0, 0, 0));
+					node->setNormal(Vector3d(0, 0, 0));
+					node->setNormalSlave(Vector3d(0, 0, 0));
+				}
+			}
 		}
 	}
 

@@ -331,8 +331,9 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				}
 			}*/
 			
-			node->setUnitNormalTotal(n);
+			//node->setUnitNormalTotal(n);
 			//node->setUnitNormalTotal(Vector3d (0.0, 0.0, 1.0));
+			node->setUnitNormalTotal(nA);
 		}
 	}
 }

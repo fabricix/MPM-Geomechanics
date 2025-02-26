@@ -243,8 +243,10 @@ inline void NodeContact::resetValues()
     closestParticleDistance = 999.0;
     closestParticleDistanceSlave = 999.0;
     momentumSlaveBody.setZero();
+    velocitySlaveBody.setZero();
     externalForceSlaveBody.setZero();
     internalForceSlaveBody.setZero();
+    dampingForceSlaveBody.setZero();
     normal.setZero();
     normalSlave.setZero();
     hasContact = false;

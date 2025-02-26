@@ -423,7 +423,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				{
 					// get current boundary nodal momentum
 					Vector3d momentum = nodeI->getMomentum();
-					Vector3d momentumSlave = *nodeI->getMomentumSlave();
+					Vector3d momentumSlave = Vector3d(0.0, 0.0, 0.0);
+
+					if (ModelSetup::getContactActive()) {
+						Vector3d momentumSlave = *nodeI->getMomentumSlave();
+					}
 
 					// witch direction of the normal vector
 					switch (dir) 
@@ -453,7 +457,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 					// set the boundary nodal momentum
 					nodeI->setMomentum(momentum);
-					nodeI->setMomentumSlave(momentumSlave);
+
+					if (ModelSetup::getContactActive()) {
+						nodeI->setMomentumSlave(momentumSlave);
+					}
+					
 
 					break;
 				}
@@ -588,7 +596,11 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 				{
 					// get current boundary nodal force
 					Vector3d force = nodeI->getTotalForce();
-					Vector3d forceSlave = *nodeI->getTotalForceSlave();
+					Vector3d forceSlave = Vector3d(0.0, 0.0, 0.0);
+
+					if (ModelSetup::getContactActive()) {
+						Vector3d forceSlave = *nodeI->getTotalForceSlave();
+					}
 					
 					// witch direction of the normal vector
 					switch(dir)
@@ -618,7 +630,11 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 
 					// set boundary nodal force
 					nodeI->setTotalForce(force);
-					nodeI->setTotalForceSlave(forceSlave);
+
+					if (ModelSetup::getContactActive()) {
+						nodeI->setTotalForceSlave(forceSlave);
+					}
+
 					break;
 				}
 				// earthquake boundary condition
