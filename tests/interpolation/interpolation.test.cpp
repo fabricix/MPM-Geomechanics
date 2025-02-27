@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <random>
+
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -23,17 +25,7 @@ using std::to_string;
 
 using namespace std;
 
-TEST(Interpolation, Interpolation_1) {
-  // create the mesh
-  Mesh mesh;
-  mesh.setNumCells(10, 10, 10);
-  mesh.setCellDimension(1, 1, 1);
-  mesh.createGrid(false);
-
-  // create particles
-  std::vector<Particle *> particles;
-  particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
-
+float interpolation(vector<Particle *> particles, Mesh mesh) {
   // configures particle
   for (size_t i = 0; i < particles.size(); i++) {
     // id
@@ -58,16 +50,64 @@ TEST(Interpolation, Interpolation_1) {
 
   float sum = 0;
 
-  // write the nodal mass
-  for (size_t i = 0; i < particles.size(); i++) {
-    // contribution vector
-    vector<Contribution> *contribution = particles.at(i)->getContributionNodes();
+  // nodal mass
+  for (size_t j = 0; j < gridNodes->size(); ++j) {
+    sum = sum + gridNodes->at(j)->getMass();
+  }
+  return sum;
+};
 
-    // nodal mass
-    for (size_t j = 0; j < contribution->size(); ++j) {
-      sum = sum + gridNodes->at(contribution->at(j).getNodeId())->getMass();
-    }
+TEST(Interpolation, Particles_1) {
+  // create the mesh
+  Mesh mesh;
+  mesh.setNumCells(10, 10, 10);
+  mesh.setCellDimension(1, 1, 1);
+  mesh.createGrid(false);
+
+  // create particles
+  std::vector<Particle *> particles;
+  particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
+
+  float mass = interpolation(particles, mesh);
+  EXPECT_EQ(mass, 1.0);
+};
+
+TEST(Interpolation, Particles_3) {
+  // create the mesh
+  Mesh mesh;
+  mesh.setNumCells(10, 10, 10);
+  mesh.setCellDimension(1, 1, 1);
+  mesh.createGrid(false);
+
+  // create particles
+  std::vector<Particle *> particles;
+  particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
+  particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
+  particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
+
+  float mass = interpolation(particles, mesh);
+  EXPECT_EQ(mass, 3.0);
+};
+
+
+TEST(Interpolation, Particles_10_position_rng) {
+  // create the mesh
+  Mesh mesh;
+  mesh.setNumCells(10, 10, 10);
+  mesh.setCellDimension(1, 1, 1);
+  mesh.createGrid(false);
+
+  // create particles
+  std::vector<Particle *> particles;
+
+  std::random_device rd;  // Fuente de entropía
+  std::mt19937 gen(rd()); // Generador Mersenne Twister
+  std::uniform_int_distribution<int> dist(0, 9); // Rango de números aleatorios
+
+  for (int i = 0; i < 10; i++) {
+    particles.push_back(new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, Vector3d(1.0, 1.0, 1.0)));
   }
 
-  EXPECT_EQ(sum, 1.0);
+  float mass = interpolation(particles, mesh);
+  EXPECT_EQ(mass, 10.0);
 };
