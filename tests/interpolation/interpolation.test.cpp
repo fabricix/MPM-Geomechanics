@@ -89,10 +89,12 @@ TEST(Interpolation, Particles_10_position_rng) {
   // create particles
   vector<Particle *> particles;
 
-  std::random_device rd;  // Fuente de entropía
-  std::mt19937 gen(rd()); // Generador Mersenne Twister
-  std::uniform_int_distribution<int> dist(0, 9); // Rango de números aleatorios
+  // random number generator
+  std::random_device rd;
+  std::mt19937 gen(rd()); 
+  std::uniform_int_distribution<int> dist(0, 9);
 
+  // create 10 particles with random positions
   for (int i = 0; i < 10; i++) {
     particles.push_back(new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, Vector3d(1.0, 1.0, 1.0)));
   }
