@@ -23,10 +23,7 @@ using std::to_string;
 
 using namespace std;
 
-TEST(Interpolation, InterpolationTest) {
-  cout << "Test de Interpolación" << endl;
-  EXPECT_TRUE(1);
-
+TEST(Interpolation, Interpolation_1) {
   // create the mesh
   Mesh mesh;
   mesh.setNumCells(10, 10, 10);
@@ -36,8 +33,6 @@ TEST(Interpolation, InterpolationTest) {
   // create particles
   std::vector<Particle *> particles;
   particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
-  particles.push_back(new Particle(Vector3d(2.1, 5.2, 7.4), NULL, Vector3d(1.0, 1.0, 1.0)));
-  particles.push_back(new Particle(Vector3d(1.4, 3.2, 8.4), NULL, Vector3d(1.0, 1.0, 1.0)));
 
   // configures particle
   for (size_t i = 0; i < particles.size(); i++) {
@@ -58,13 +53,10 @@ TEST(Interpolation, InterpolationTest) {
   // interpolate particle mass to nodes
   Interpolation::nodalMassWithParticles(&mesh, &particles);
 
-  // open a file
-  ofstream outputfile;
-  outputfile.open("interpolation.csv");
-  outputfile << "particleX,particleY,particleZ,nodeId,mass\n";
-
   // get grid nodes
   vector<Node *> *gridNodes = mesh.getNodes();
+
+  float sum = 0;
 
   // write the nodal mass
   for (size_t i = 0; i < particles.size(); i++) {
@@ -73,21 +65,9 @@ TEST(Interpolation, InterpolationTest) {
 
     // nodal mass
     for (size_t j = 0; j < contribution->size(); ++j) {
-      cout << particles.at(i)->getPosition().x() << "," << particles.at(i)->getPosition().y() << ","
-           << particles.at(i)->getPosition().z() << "," << contribution->at(j).getNodeId() << ","
-           << gridNodes->at(contribution->at(j).getNodeId())->getMass() << endl;
-
-      outputfile << particles.at(i)->getPosition().x() << "," << particles.at(i)->getPosition().y()
-                 << "," << particles.at(i)->getPosition().z() << ","
-                 << contribution->at(j).getNodeId() << ","
-                 << gridNodes->at(contribution->at(j).getNodeId())->getMass() << endl;
+      sum = sum + gridNodes->at(contribution->at(j).getNodeId())->getMass();
     }
   }
-  outputfile.close();
 
-  // write the mesh
-  Output::writeGrid(&mesh, Output::POINTS);
-
-  // write the particles
-  Output::writeParticles(&particles);
-}
+  EXPECT_EQ(sum, 1.0);
+};
