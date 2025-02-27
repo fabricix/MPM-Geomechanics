@@ -1,19 +1,8 @@
 #include <gtest/gtest.h>
 
 #include <random>
-
 #include <iostream>
-using std::cout;
-using std::endl;
-
 #include <vector>
-using std::vector;
-
-#include <fstream>
-using std::ofstream;
-
-#include <string>
-using std::to_string;
 
 #include "BodyCuboid.h"
 #include "Interpolation.h"
@@ -80,7 +69,7 @@ TEST(Interpolation, Particles_3) {
   mesh.createGrid(false);
 
   // create particles
-  std::vector<Particle *> particles;
+  vector<Particle *> particles;
   particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
   particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
   particles.push_back(new Particle(Vector3d(0.0, 0.0, 0.0), NULL, Vector3d(1.0, 1.0, 1.0)));
@@ -98,7 +87,7 @@ TEST(Interpolation, Particles_10_position_rng) {
   mesh.createGrid(false);
 
   // create particles
-  std::vector<Particle *> particles;
+  vector<Particle *> particles;
 
   std::random_device rd;  // Fuente de entropía
   std::mt19937 gen(rd()); // Generador Mersenne Twister
