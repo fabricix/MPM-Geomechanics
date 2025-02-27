@@ -84,22 +84,30 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 ## Testing
 
-For testing, use GoogleTest. It is necessary to import this library by cloning the official repository into the /external folder. Each developer must clone this repository independently.
+The testing requires installing CMake as a compiler. 
+
+For Windows, you can use the following command in PowerShell to install CMake:
+```
+winget install -e --id Kitware.CMake
+```
+
+For Linux (Debian), you can use the following command:
+```
+sudo apt install cmake
+```
+
+The tests use GoogleTest. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
 cd external
 git clone https://github.com/google/googletest.git
 ```
 
-Then, it is necessary to compile the tests with the `CMakeLists.txt` located in the build/testing directory. In the directory build/testing, there must be a "build" folder, where we can execute the following commands:
+Then, it is necessary to compile the tests with the `CMakeLists.txt` located in the directory `/build/testing`. In the directory `build/testing`, there must be a "build" folder, where you can execute the following commands:
 
 ```
-cmake -G "MinGw MakeFiles" ..
+cmake -G "MinGw Makefiles" ..
 cmake --build .
 ```
 
-Then, an .exe file will be generated. You can run the tests with the following command (Windows):
-
-```
-./MPM-Test.exe
-```
+This command will generate an .exe file named `MPM-Test.exe`.
