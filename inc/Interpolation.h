@@ -155,30 +155,7 @@ namespace Interpolation {
 	///	\param[in] values A list of vector3d values
 	/// \param[out] interpolated_vector Interpolated vector3d
 	Eigen::Vector3d interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime);
-
-	/// \brief Interpolate distance level set function value of particle
-	///
-	/// \f$ d_p = \sum_I d_I N_{Ip} \f$
-	///
-	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list of Particle pointers
-	void particleDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
-
-	/// \brief Calculate the nodal distance level set function
-	///
-	/// \f$ \rho_I = \sum_p \frac{V_p N_{Ip}}{V_I} \f$
-	///
-	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list of Particle pointers
-	void nodalDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
-
-	/// \brief Interpolate the density level set function in the centroids of triangles
-	///
-	/// \f$ \rho_m = \sum_I \rho_I N_{Im} \f$
-	///
-	/// \param[in] mesh Mesh reference
-	/// \param[in] terrainContact TerrainContact pointer
-	void trianglesDensityLevelSet(Mesh* mesh, TerrainContact* terrainContact);
+	
 };
 
 #endif /* INTERPOLATION_H_ */

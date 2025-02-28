@@ -18,6 +18,7 @@ using std::cout;
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "TerrainContact.h"
 
 SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
 
@@ -103,13 +104,22 @@ void SolverExplicitUSL::Solve()
 		if (ModelSetup::getTerrainContactActive())
 		{
 			// calculate the distance level set function to particles
-			Interpolation::particleDistanceLevelSet(mesh, particles);
+			terrainContact->particleDistanceLevelSet(mesh, particles);
 
 			// calculate the nodal density level-set
-			Interpolation::nodalDistanceLevelSet(mesh, particles);
+			terrainContact->nodalDistanceLevelSet(mesh, particles);
 
 			// interpolate the density at the center of triangles
-			Interpolation::trianglesDensityLevelSet(mesh, terrainContact);
+			terrainContact->trianglesDensityLevelSet(mesh);
+
+			// determine the contact potencial pairs
+			// terrainContact->determineContactPotentialPairs(particles);
+
+			// compute the contact forces
+			// terrainContact->computeContactForces(particles);
+
+			// update the material point velocity
+			// terrainContact->updateMaterialPointVelocity(particles, dt);
 		}
 
 		// reset all nodal values

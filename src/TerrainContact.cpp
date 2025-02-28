@@ -2,6 +2,8 @@
 #include "TerrainContact.h"
 #include "Mesh/Mesh.h"
 #include "limits"
+#include "Contribution.h"
+#include "Particle/Particle.h"
 
 void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
 {
@@ -65,4 +67,169 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
         // store the distance in the node
         node->setDistanceLevelSet(finalDistance);
     }
+}
+
+void TerrainContact::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) {
+    
+	// get nodes
+    vector<Node*>* nodes = mesh->getNodes();
+
+    // iterate over all particles
+    for (size_t i = 0; i < particles->size(); ++i) 
+	{	
+		// get the particle
+        Particle* particle = particles->at(i);
+
+        // only active particles are considered
+        if (!particle->getActive()) { continue; }
+
+        // get nodes and weights contributing to the particle
+        const vector<Contribution>* contribution = particle->getContributionNodes();
+
+        // initialize the interpolated distance level set value
+        double interpolatedDistance = 0.0;
+
+        // iterate over the nodal contribution list
+        for (size_t j = 0; j < contribution->size(); ++j) {
+            
+			// get contributing node
+            Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+            // get the nodal distance level set value
+            double nodalDistance = nodeI->getDistanceLevelSet();
+
+            // get the contribution weight
+            double weight = contribution->at(j).getWeight();
+
+            // accumulate the contribution
+            interpolatedDistance += weight * nodalDistance;
+        }
+
+        // set interpolated value to particle
+        particle->setDistanceLevelSet(interpolatedDistance);
+    }
+}
+
+void TerrainContact::nodalDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) 
+{
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
+
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+		// get the particle mass
+		const double pVolume = particles->at(i)->getInitialVolume();
+
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// compute and set the weighted density level set
+			nodeI->addDensityLevelSet(pVolume*contribution->at(j).getWeight()/nodeI->getVolume());
+		}
+	}
+}
+
+double interpolateDensityLevelSet(const Vector3d& position, const vector<int>& nodeIds, Mesh* mesh) {
+    
+    // get the nodes of the mesh
+    vector<Node*>* gridNodes = mesh->getNodes();
+
+	// get the nodes of the cell that contains the position
+    Vector3d p0 = gridNodes->at(nodeIds[0])->getCoordinates();
+    Vector3d p1 = gridNodes->at(nodeIds[1])->getCoordinates();
+    Vector3d p2 = gridNodes->at(nodeIds[2])->getCoordinates();
+    Vector3d p3 = gridNodes->at(nodeIds[3])->getCoordinates();
+    Vector3d p4 = gridNodes->at(nodeIds[4])->getCoordinates();
+    Vector3d p5 = gridNodes->at(nodeIds[5])->getCoordinates();
+    Vector3d p6 = gridNodes->at(nodeIds[6])->getCoordinates();
+    Vector3d p7 = gridNodes->at(nodeIds[7])->getCoordinates();
+
+    // density level values of the nodes
+    double d0 = gridNodes->at(nodeIds[0])->getDensityLevelSet();
+    double d1 = gridNodes->at(nodeIds[1])->getDensityLevelSet();
+    double d2 = gridNodes->at(nodeIds[2])->getDensityLevelSet();
+    double d3 = gridNodes->at(nodeIds[3])->getDensityLevelSet();
+    double d4 = gridNodes->at(nodeIds[4])->getDensityLevelSet();
+    double d5 = gridNodes->at(nodeIds[5])->getDensityLevelSet();
+    double d6 = gridNodes->at(nodeIds[6])->getDensityLevelSet();
+    double d7 = gridNodes->at(nodeIds[7])->getDensityLevelSet();
+
+/* 
+       (6)------(7)  <- maxCorner = p7 (x_max, y_max, z_max)
+       /|       /|
+      / |      / |
+    (4)------(5) |
+     | (2)----|-(3)
+     | /      | /
+    (0)------(1)     <- minCorner = p0 (x_min, y_min, z_min)
+*/
+
+    // get the natural coordinates of the position
+    
+    // limit corners
+    Vector3d minCorner = p0; // minimum corner (x_min,y_min,z_min)
+    Vector3d maxCorner = p7; // maximum corner (x_max,y_max,z_max)
+
+    // natural coordinates of the position
+    double u = (2.0 * (position.x() - minCorner.x()) / (maxCorner.x() - minCorner.x())) - 1.0;
+    double v = (2.0 * (position.y() - minCorner.y()) / (maxCorner.y() - minCorner.y())) - 1.0;
+    double w = (2.0 * (position.z() - minCorner.z()) / (maxCorner.z() - minCorner.z())) - 1.0;
+
+    // shape functions of the hexahedron
+    double N0 = (1 - u) * (1 - v) * (1 - w) * 0.125;
+    double N1 = (1 + u) * (1 - v) * (1 - w) * 0.125;
+    double N2 = (1 - u) * (1 + v) * (1 - w) * 0.125;
+    double N3 = (1 + u) * (1 + v) * (1 - w) * 0.125;
+    double N4 = (1 - u) * (1 - v) * (1 + w) * 0.125;
+    double N5 = (1 + u) * (1 - v) * (1 + w) * 0.125;
+    double N6 = (1 - u) * (1 + v) * (1 + w) * 0.125;
+    double N7 = (1 + u) * (1 + v) * (1 + w) * 0.125;
+
+    // trilinear interpolation of the density level set
+    double interpolatedDensity = N0 * d0 + N1 * d1 + N2 * d2 + N3 * d3 +
+                                 N4 * d4 + N5 * d5 + N6 * d6 + N7 * d7;
+
+    return interpolatedDensity;
+}
+
+void TerrainContact::trianglesDensityLevelSet(Mesh* mesh) {
+    
+    // get the triangles of the STL mesh
+    const vector<Triangle>& triangles = this->getSTLMesh()->getTriangles();
+
+    // create a vector to store the interpolated values
+    vector<double> interpolatedValues(triangles.size(), 0.0);
+
+    // iterate over all triangles
+    #pragma omp parallel for shared(triangles, mesh, interpolatedValues)
+    for (int i = 0; i < triangles.size(); ++i) {
+        
+        // get the current triangle
+        const Triangle& triangle = triangles[i];
+
+        // get the centroid of the triangle
+        Vector3d centroid = triangle.getCentroid();
+
+        // get the nodes of the cell that contains the centroid
+        vector<int> nodeIds = mesh->getNodesInCell(centroid);
+
+        // check if the cell is valid
+        if (nodeIds.size() == 8) {
+            // interpolate the density level set value to the centroid of the triangle
+            interpolatedValues[i] = interpolateDensityLevelSet(centroid, nodeIds, mesh);
+        } 
+    }
+
+    // store the interpolated values in the TerrainContact structure
+    this->setDensityLevelSet(interpolatedValues);
 }
