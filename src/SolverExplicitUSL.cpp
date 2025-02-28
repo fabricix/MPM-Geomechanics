@@ -107,6 +107,9 @@ void SolverExplicitUSL::Solve()
 
 			// calculate the nodal density level-set
 			Interpolation::nodalDistanceLevelSet(mesh, particles);
+
+			// interpolate the density at the center of triangles
+			Interpolation::trianglesDensityLevelSet(mesh, terrainContact);
 		}
 
 		// reset all nodal values

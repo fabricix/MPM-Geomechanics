@@ -17,6 +17,7 @@ using std::vector;
 class Mesh;
 class Body;
 class Particle;
+class TerrainContact;
 
 /// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.
@@ -170,6 +171,14 @@ namespace Interpolation {
 	/// \param[in] mesh Mesh reference
 	/// \param[in] particles A list of Particle pointers
 	void nodalDistanceLevelSet(Mesh* mesh, vector< Particle* >* particles);
+
+	/// \brief Interpolate the density level set function in the centroids of triangles
+	///
+	/// \f$ \rho_m = \sum_I \rho_I N_{Im} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] terrainContact TerrainContact pointer
+	void trianglesDensityLevelSet(Mesh* mesh, TerrainContact* terrainContact);
 };
 
 #endif /* INTERPOLATION_H_ */

@@ -75,6 +75,7 @@ void MPM::setSolver() {
 	solver->registerMesh(&mesh);
 	solver->registerBodies(&bodies);
 	solver->registerParticles(&particles);
+	solver->registerTerrainContact(terrainContact);
 }
 
 void MPM::setInterpolationFunctions() {

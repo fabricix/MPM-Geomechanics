@@ -22,15 +22,11 @@ public:
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i)e_n \f$
     void computeDistanceLevelSetFunction(Mesh* mesh);
 
-    /// @brief compute the density level set function in the centroid of triangles \f$ \rho_{m} \f$
-    void interpolateDensityLevelSetTriangles(Mesh* mesh, TerrainContact* terrainContact);
-
     /// @brief Set the interpolated density level set function in the centroids of triangles
     void setDensityLevelSet(const std::vector<double>& density) { densityLevelSet = density; }
     
     /// @brief Get the triangular mesh
     STLReader* getSTLMesh() { return stlMesh; }
-
 };
 
 #endif
