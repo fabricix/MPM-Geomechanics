@@ -14,6 +14,8 @@ private:
 
     std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 
+    std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
+
 public:
 
     TerrainContact( STLReader* mesh, double friction)
@@ -36,6 +38,9 @@ public:
     /// \f$ \rho_m = \sum_I \rho_I N_{Im} \f$
     /// It allows to know the boundary of the body in contact with the STL mesh
 	void trianglesDensityLevelSet(Mesh* mesh);
+
+    /// \brief Determine the contact potential pairs
+    void determineContactPotentialPairs(Mesh* mesh, std::vector< Particle* >* particles);
 
     /// @brief Get the triangular mesh
     STLReader* getSTLMesh() { return stlMesh; }

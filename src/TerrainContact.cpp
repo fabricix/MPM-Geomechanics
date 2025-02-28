@@ -5,6 +5,8 @@
 #include "Contribution.h"
 #include "Particle/Particle.h"
 
+#include <utility>  // std::pair
+
 void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
 {
     // get background grid nodes
@@ -229,7 +231,64 @@ void TerrainContact::trianglesDensityLevelSet(Mesh* mesh) {
             interpolatedValues[i] = interpolateDensityLevelSet(centroid, nodeIds, mesh);
         } 
     }
-    
+
     // store the interpolated values in the TerrainContact structure
     this->densityLevelSet = interpolatedValues;
+}
+
+void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Particle*>* particles) {
+
+    // distance threshold for contact detection
+    const double d_threshold = 2.0*(mesh->getCellDimension()).mean();
+
+    // get the triangles and the density values
+    const std::vector<Triangle>& triangles = stlMesh->getTriangles();
+    const std::vector<double>& densityValues = this->densityLevelSet;
+
+    // verify that the number of density values is equal to the number of triangles
+    if (densityValues.size() != triangles.size()) {
+        return;
+    }
+
+    // clear the contact pairs
+    contactPairs.clear();
+
+    // loop over the particles to determine the contact potential pairs
+    #pragma omp parallel for shared(particles, triangles, densityValues)
+    for (int i = 0; i < particles->size(); ++i) {
+    
+        // get the particle
+        Particle* particle = particles->at(i);
+
+        // get the distance level set value of the particle
+        double d_p = particle->getDistanceLevelSet();
+
+        // check if the particle is near the terrain contact (first condition for contact detection)
+        if ( d_p < d_threshold && d_p > 0.0)
+        {
+            // find the closest triangle to the particle
+            double minDistance = 1e+10;
+            int closestTriangleIndex = -1;
+
+            for (size_t j = 0; j < triangles.size(); ++j) {
+
+                Vector3d centroid = triangles[j].getCentroid();
+                double distance = (centroid - particle->getPosition()).norm();
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestTriangleIndex = static_cast<int>(j);
+                }
+            }
+
+            // if the closest triangle is not found, continue
+            if (closestTriangleIndex == -1) continue;
+
+            // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
+            if (densityValues[closestTriangleIndex] > 0.0) {
+                #pragma omp critical
+                contactPairs.push_back(std::make_pair(particle, const_cast<Triangle*>(&triangles[closestTriangleIndex])));
+            }
+        }
+    }
 }

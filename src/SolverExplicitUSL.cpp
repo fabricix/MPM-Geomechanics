@@ -113,7 +113,7 @@ void SolverExplicitUSL::Solve()
 			terrainContact->trianglesDensityLevelSet(mesh);
 
 			// determine the contact potencial pairs
-			// terrainContact->determineContactPotentialPairs(particles);
+			terrainContact->determineContactPotentialPairs(mesh, particles);
 
 			// compute the contact forces
 			// terrainContact->computeContactForces(particles);
