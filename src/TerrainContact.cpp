@@ -110,7 +110,7 @@ void TerrainContact::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* par
     }
 }
 
-void TerrainContact::nodalDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) 
+void TerrainContact::nodalDensityLevelSet(Mesh* mesh, vector<Particle*>* particles) 
 {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
@@ -229,7 +229,7 @@ void TerrainContact::trianglesDensityLevelSet(Mesh* mesh) {
             interpolatedValues[i] = interpolateDensityLevelSet(centroid, nodeIds, mesh);
         } 
     }
-
+    
     // store the interpolated values in the TerrainContact structure
-    this->setDensityLevelSet(interpolatedValues);
+    this->densityLevelSet = interpolatedValues;
 }
