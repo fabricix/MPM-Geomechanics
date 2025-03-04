@@ -115,11 +115,8 @@ void SolverExplicitUSL::Solve()
 			// determine the contact potencial pairs
 			terrainContact->determineContactPotentialPairs(mesh, particles);
 
-			// compute the contact forces
-			// terrainContact->computeContactForces(particles);
-
-			// update the material point velocity
-			// terrainContact->updateMaterialPointVelocity(particles, dt);
+			// compute the contact forces and correct velocities
+			terrainContact->computeContactForces(particles, dt);
 		}
 
 		// reset all nodal values

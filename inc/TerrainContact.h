@@ -44,6 +44,11 @@ public:
 
     /// @brief Get the triangular mesh
     STLReader* getSTLMesh() { return stlMesh; }
+
+    // \brief Compute the contact forces
+    // \f$ f_n = -m_p \frac{v_p^n}{dt} e_n \f$
+    // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
+    void computeContactForces(std::vector< Particle* >* particles, double dt);
 };
 
 #endif

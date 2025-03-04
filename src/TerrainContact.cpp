@@ -292,3 +292,48 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
         }
     }
 }
+
+void TerrainContact::computeContactForces(std::vector< Particle* >* particles, double dt) {
+    
+    // for all contact pairs
+    #pragma omp parallel for shared(particles)
+    for (int i = 0; i < contactPairs.size(); ++i) 
+    {
+        // get the particle and the triangle in contact
+        Particle* particle = contactPairs[i].first;
+        Triangle* triangle = contactPairs[i].second;
+
+        // get the normal of the triangle
+        Vector3d normal = triangle->getNormal().normalized();
+
+        // get the mass and velocity of the particle
+        double mass = particle->getMass();
+        Vector3d velocityPredictor = particle->getVelocity();
+
+        // calculate the normal velocity v_n = (v_p . e_n) e_n
+        double vn_magnitude = velocityPredictor.dot(normal);
+        Vector3d vn = vn_magnitude * normal;
+
+        // calculate the normal force f_n = -m_p * vn_p / dt * e_n
+        Vector3d fn = - (mass * vn_magnitude / dt) * normal;
+
+        // calculate tangential force f_t = -m_p (v_p - vn) / dt
+        Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
+
+        // apply Coulomb friction ||f_t|| <= mu ||f_n||
+        double fn_mag = fn.norm();
+        double ft_mag = ft.norm();
+        double mu =this->frictionCoefficient;
+
+        if (ft_mag > mu * fn_mag) {
+            // scale the tangential force to satisfy the Coulomb friction condition
+            ft = (mu * fn_mag / ft_mag) * ft;
+        }
+
+        // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
+        Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
+
+        // update the velocity of the particle
+        particle->setVelocity(velocityCorrected);
+    }
+}
