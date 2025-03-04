@@ -1,11 +1,11 @@
 {
-	"time":1,
+	"time":3,
 
 	"gravity":[0.0,0.0,-9.81],
 
 	"results":
 	{
-		"print":20,
+		"print":100,
 		"fields":["id","displacement","material","active","plastic_strain","distance_levelset"]
 	},
 
