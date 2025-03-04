@@ -5,7 +5,7 @@
 
 	"results":
 	{
-		"print":100,
+		"print":50,
 		"fields":["id","displacement","material","active","plastic_strain","distance_levelset"]
 	},
 
