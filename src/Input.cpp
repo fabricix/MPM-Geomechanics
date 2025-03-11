@@ -345,10 +345,9 @@ vector<Material*> Input::getMaterialList(){
 						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
 						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						double mu = 0.0; if ((*it)["mu"].is_number()) { mu = ((*it)["mu"]); }
 						
 						// create a new elastic material
-						material = new Elastic(id, density, mu, young, poisson);
+						material = new Elastic(id, density, young, poisson);
 					}
 
 					// mohr-coulomb material
@@ -359,7 +358,6 @@ vector<Material*> Input::getMaterialList(){
 						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
 						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						double mu = 0.0; if ((*it)["mu"].is_number()) { mu = ((*it)["mu"]); }
 						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
 						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
@@ -381,7 +379,7 @@ vector<Material*> Input::getMaterialList(){
 						}
 						
 						// create a new material
-						material = new MohrCoulomb(id, density, mu, young, poisson, friction, cohesion, dilation, tensile, softening);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
 					}
 
 					// set up the two phases parameters
@@ -1102,44 +1100,6 @@ unsigned Input::getContactMethod() {
 			unsigned contactMethodFlag = inputFile[keyword];
 
 			return contactMethodFlag;
-		}
-
-		throw(keyword);
-	}
-
-	catch (std::string& keyword)
-	{
-		Warning::printMessage("The keyword: \"" + string(keyword) + "\" must be a true/false value");
-		throw;
-	}
-}
-
-unsigned Input::getContactNormal() {
-
-	try
-	{
-		string keyword = "contact_normal";
-
-		// default simulations is no contact
-		if (inputFile[keyword].is_null()) { return 0; }
-
-		// define the normal reference
-		if (inputFile[keyword].is_string()) {
-
-			unsigned normalReference;
-
-			if (inputFile[keyword] == "master") {
-				normalReference = 1;
-			}
-			else if (inputFile[keyword] == "slave"){
-				normalReference = 2;
-			}
-			else {
-				normalReference = 0;
-			}
-
-
-			return normalReference;
 		}
 
 		throw(keyword);

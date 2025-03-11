@@ -74,7 +74,6 @@ protected:
 	int id; //!< body identification
 	Vector3d initial_velocity; //!< initial velocity of the body
 	vector<Particle*> particles; //!< material points forming the body  
-	double mu; //!< friction coefficient  
 };
 
 inline Body::Body():id(-1),initial_velocity(0,0,0) { }

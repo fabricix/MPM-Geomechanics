@@ -275,13 +275,7 @@ void MPM::setNumberPhasesInSimulation() {
 void MPM::setContactMethodForSimulation() {
 
 	// configures the number of phases in the simulation
-	bool contact= Input::getContactMethod();
 	ModelSetup::setContactActive(Input::getContactMethod() == 1 ? true : false);
-	if (contact) {
-		int normalType = Input::getContactNormal();
-		ModelSetup::setContactNormal(normalType);
-	}
-	//ModelSetup::setContactNormal(Input::getContactNo() == 1 ? true : false);
 }
 
 void MPM::loadState()
@@ -321,6 +315,9 @@ void MPM::createModel() {
 
 		// set contact method for the simulations
 		setContactMethodForSimulation();
+
+		// set nodal values in time
+		//setNodalValuesInTime();
 
 		// setup the mesh
 		setupMesh();

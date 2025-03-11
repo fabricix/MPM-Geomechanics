@@ -222,6 +222,7 @@ void Contact::checkContact(Mesh* mesh, vector<Body*>* bodies) {
 
 
 void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
+	double mi = 0.1;
 	secondContactCheck(mesh, bodies);
 
 	int nNodes = mesh->getNumNodes();
@@ -238,13 +239,6 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 			{
 				ModelSetup::setSecondContactActive(true);
 			}
-
-			int bodyA = node->getContactBodyId(0);
-
-			int bodyB = node->getContactBodyId(1);
-
-			double mu = std::max(bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient(), bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient());
-
 			double massA = node->getMass();
 			double massB = node->getMassSlave();
 			Vector3d momentumA = node->getMomentum();
@@ -259,12 +253,14 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 			Vector3d ft = f - fn;
 
 			if (ft.norm() > 0) {
-				ft = std::min(ft.norm(), mu * fn.norm()) * ft / ft.norm();
+				ft = std::min(ft.norm(), mi * fn.norm()) * ft / ft.norm();
 			}
 
-			f = ft + fn;
+			node->setNormalContactForce(fn);
 
-			node->setContactForce(f);
+			node->setTangentialContactForce(ft);
+
+			node->setContactForce(ft + fn);
 
 			//add the contact force to the total force
 			node->addContactForce();
@@ -317,7 +313,7 @@ void Contact::resetParticlesInContact(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-        #pragma omp parallel for shared(particles)
+        #pragma omp parallel for shared(particles, mesh)
 		for (int i = 0; i < particles->size(); ++i) {
 			particles->at(i)->setContact(false);
 		}

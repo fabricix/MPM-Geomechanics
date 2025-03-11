@@ -602,10 +602,6 @@ namespace Input {
 	/// \brief Return the contact method flag for the simulation
 	/// \return contact_method Flag for the simulation
 	unsigned getContactMethod();
-
-	/// \brief Return the contact normal flag for the simulation
-	/// \return contact_normal Flag for the simulation
-	unsigned getContactNormal();
 	
 	/// \brief Return loads distributed in particles inside a box
 	/// \return loads_distributed_box  Loads distributed in particles inside a box

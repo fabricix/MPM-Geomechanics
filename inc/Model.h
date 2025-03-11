@@ -120,14 +120,6 @@ namespace ModelSetup {
 	/// \param[in] is_contact_activated Contact active
 	void setContactActive(bool is_contact_activated);
 
-	/// \brief Return contact normal preference
-	/// \return contact normal type
-	bool getContactNormal();
-
-	/// \brief Configure contact normal preference
-	/// \param[in] normal_type
-	void setContactNormal(int normal_type);
-
 	/// \brief Return if contact method is activated
 	/// \return True if contact method is activated
 	bool getSecondContactActive();

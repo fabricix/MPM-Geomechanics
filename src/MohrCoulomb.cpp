@@ -18,8 +18,8 @@ using namespace Eigen;
 #define PI 3.141592653589793
 #endif
 
-MohrCoulomb::MohrCoulomb(int id, double density, double mu, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening)
-:ElasticJaumann(id, density, mu, young, poisson) {
+MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening)
+:ElasticJaumann(id, density, young, poisson) {
 
     // model parameters
     this->friction=friction;

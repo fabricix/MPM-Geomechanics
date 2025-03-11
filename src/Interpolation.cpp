@@ -295,7 +295,15 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 							nodeI->addMassGradient(nodalMassGradient);
 						}
 					}
+					//else {
+					//	// add mass at node
+					//	nodeI->addMassGradient(nodalMassGradient);
+					//}
 				}
+				//else {
+				//	// add mass at node
+				//	nodeI->addMassGradient(nodalMassGradient);
+				//}
 			}
 		}
 	}
@@ -305,9 +313,6 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		Node* node = nodes->at(iNode);
 
 		if (node->getContactStatus()) {
-
-			int normalType = ModelSetup::getContactNormal();
-
 			// nodal normal vector master
 			Vector3d nA = node->getNormal()->normalized();
 			
@@ -317,17 +322,18 @@ void Interpolation::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 			// nodal unit normal vector
 			Vector3d n = (nA - nB).normalized();
 
-			if (normalType == 0) {
-				node->setUnitNormalTotal(n);
-			}
-			else if (normalType == 1) {
-				node->setUnitNormalTotal(nA);
-			}
-			else if (normalType == 2) {
-				node->setUnitNormalTotal(nB);
-			}
+			/*if (iNode == 353) {
+				if (n[0] < 0.57878) {
 
-			//node->setUnitNormalTotal(nA);
+					if (n[0] > 0.57876) {
+						int a = 1;
+					}
+				}
+			}*/
+			
+			//node->setUnitNormalTotal(n);
+			//node->setUnitNormalTotal(Vector3d (0.0, 0.0, 1.0));
+			node->setUnitNormalTotal(nA);
 		}
 	}
 }
