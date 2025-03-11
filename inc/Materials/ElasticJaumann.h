@@ -21,7 +21,7 @@ public:
 	/// \param[in] density Material density \f$\rho\f$
 	/// \param[in] young Young's modulus \f$E\f$
 	/// \param[in] poisson Poisson's ratio \f$\nu\f$
-	ElasticJaumann(int id, double density, double young, double poisson);
+	ElasticJaumann(int id, double density, double mu, double young, double poisson);
 
 	/// \brief Default destructor
 	///
@@ -33,8 +33,8 @@ public:
 
 };
 
-inline ElasticJaumann::ElasticJaumann(int id, double density, double young, double poisson)
-: Elastic(id, density, young, poisson){
+inline ElasticJaumann::ElasticJaumann(int id, double density, double mu, double young, double poisson)
+: Elastic(id, density, mu, young, poisson){
 
 }
 
