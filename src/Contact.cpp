@@ -51,8 +51,9 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		int contactBodySlaveId = -1;
 		
 		for (int j = 0; j < nBodies; j++){
-			if (contactMatrix[i][j] == 1) {
-				if (contactBodyId >= 0) { //verifies if any bodies contributed to node i
+			if (contactMatrix[i][j] == 1) { 
+				//verifies if any bodies contributed to node i
+				if (contactBodyId >= 0) {
 					contactBodySlaveId = j;
 				}
 				else 
