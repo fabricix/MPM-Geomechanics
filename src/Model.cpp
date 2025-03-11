@@ -25,6 +25,7 @@ namespace ModelSetup {
 	// contact
 	bool contactActive=false; //!< is contact active
 	bool secondContactActive=false; //!< is contact active
+	int contactNormalType = 0;
 
 	// states
 	bool loadState = false; //!< if state need to be loaded
@@ -117,6 +118,8 @@ namespace ModelSetup {
 	// contact method
 	bool getContactActive() { return contactActive; }
 	void setContactActive(bool d) { contactActive=d; }
+	bool getContactNormal() { return contactNormalType; }
+	void setContactNormal(int d) { contactNormalType = d; }
 
 	// contact method
 	bool getSecondContactActive() { return secondContactActive; }

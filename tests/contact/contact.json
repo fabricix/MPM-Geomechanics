@@ -1,13 +1,15 @@
 {
-    "contact_method":false,
+    "contact_method": true,
+
+    "contact_normal": "master",
 
     "stress_scheme_update":"USL",
 
     "shape_function": "GIMP",
 
-    "time": 0.1,
+    "time": 2.0,
 
-    "time_step": 0.001,
+    "critical_time_step_multiplier": 0.1,
 
     "gravity": [ 2.59, 0.0, -9.66 ],
 
@@ -41,16 +43,18 @@
         "elastic1": {
             "type": "elastic",
             "id": 1,
-            "young": 10e6,
-            "density": 270,
-            "poisson": 0.25
+            "young": 100e6,
+            "density": 2700,
+            "poisson": 0.25,
+            "mu": 0.3
         },
         "elastic2": {
             "type": "elastic",
             "id": 2,
-            "young": 1e3,
+            "young": 100e6,
             "density": 2700,
-            "poisson": 0.25
+            "poisson": 0.25,
+            "mu": 0.1
         }
     },
 
@@ -61,6 +65,14 @@
             "point_p1": [ 0.0, 0.0, 0.0 ],
             "point_p2": [ 6.0, 1.0, 0.5 ],
             "material_id": 1,
+            "initial_velocity": [ 0, 0, 0 ]
+        },        
+        "body_2": {
+            "type": "cuboid",
+            "id": 2,
+            "point_p1": [ 0.5, 0.0, 0.5 ],
+            "point_p2": [ 2.5, 1.0, 1.5 ],
+            "material_id": 2,
             "initial_velocity": [ 0, 0, 0 ]
         }
     }

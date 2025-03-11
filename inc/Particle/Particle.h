@@ -73,7 +73,11 @@ public:
 
 	/// \brief Returns the particle's material
 	/// \return Material identification
-	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; } 
+	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; }
+
+	/// \brief Returns material
+	/// \return material
+	inline Material *getMaterial() const { return this->material; }
 
 	/// \brief Returns the particle's body Id
 	/// \return Body identification
