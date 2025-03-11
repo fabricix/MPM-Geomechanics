@@ -25,7 +25,7 @@ public:
 
 	/// \brief Default constructor
 	///
-	Material(int id=-1, double density=0, MaterialType type = MaterialType::NONE);
+	Material(int id=-1, double density=0, double mu = 0, MaterialType type = MaterialType::NONE);
 	
 	/// \brief Default destructor
 	///
@@ -55,6 +55,10 @@ public:
 	/// \return Bulk modulus of fluid
 	inline double getBulkModulusFluid() const { return this->bulkModulusFluid; }
 
+	/// \brief Returns Friction coefficient 
+	/// \return Friction coefficient
+	inline double getFrictionCoefficient() const { return this->mu; }
+
 	/// \brief Configure the material identification
 	/// \param[in] material_id Material identification
 	inline void setId(int material_id) { this->id=material_id; }
@@ -74,6 +78,10 @@ public:
 	/// \brief Configures the volumetric modulus of fluid
 	/// \param[in] bulk_fluid Bulk modulus of fluid
 	inline void setBulkModulusFluid(double bulk_fluid) { this->bulkModulusFluid=bulk_fluid; }
+
+	/// \brief Configures the friction coefficient
+	/// \param[in] _mu - friction coefficient
+	inline void setFrictionCoefficient(double _mu) { this->mu = _mu; }
 
 	/// \brief Configures the material hydraulic conductivity
 	/// \param[in] hydraulic_conductivity Material hydraulic conductivity
@@ -107,18 +115,21 @@ protected:
 
 	double bulkModulusFluid; //!< elastic volumetric modulus of fluid in mixture \f$K^f\f$
 
+	double mu;  //!< friction coefficient\f$K^f\f$
+
 	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
 	
 	MaterialType type; //!< material type
 };
 
-inline Material::Material(int id, double density, MaterialType type) {
+inline Material::Material(int id, double density, double mu, MaterialType type) {
 	
 	this->id=id;
 	this->density=density;
 	this->densityFluid=0.0;
 	this->porosity=0.0;
 	this->bulkModulusFluid=0.0;
+	this->mu = mu;
 	this->hydraulicConductivity.setZero();
 	this->type=type;
 }

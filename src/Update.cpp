@@ -24,9 +24,6 @@ void Update::nodalVelocity(Mesh* mesh) {
 		
 		// update the velocity
 		gNodes->at(i)->updateVelocity();
-
-		//Vector3d a = gNodes->at(i)->getVelocity();
-		//Vector3d b = *gNodes->at(i)->getVelocitySlave();
 	}
 }
 
@@ -68,7 +65,7 @@ void Update::nodalMomentumContact(Mesh* mesh, double dt) {
 			Vector3d momentum = node->getMomentum() + dt * *node->getContactForce();
 			node->setMomentum(momentum);
 
-			// master slave
+			// slave body
 			Vector3d momentumSlave = *node->getMomentumSlave() - dt * *node->getContactForce();
 			node->setMomentumSlave(momentumSlave);
 		}
@@ -150,16 +147,6 @@ void Update::particleStress(vector<Body*>* bodies) {
 
 			// update particle stress
 			particles->at(i)->updateStress();
-
-			if (ibody == 2)
-			{
-				if (i == 0) {
-					double a = particles->at(i)->getStress().trace();
-					if (a < -0.00001) {
-						int b = 0;
-					}
-				}
-			}
 		}
 	}
 }
@@ -235,8 +222,6 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						else {
 							if (nodeI->getMass() != 0.0) {
 								// compute the velocity rate contribution
-								Vector3d b = nodeI->getTotalForce();
-								Vector3d a = nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 								velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 							}
 						}
@@ -244,8 +229,6 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 					else {
 						if (nodeI->getMass() != 0.0) {
 							// compute the velocity rate contribution
-							Vector3d b = nodeI->getTotalForce();
-							Vector3d a = nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 							velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 						}
 					}
@@ -426,7 +409,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					Vector3d momentumSlave = Vector3d(0.0, 0.0, 0.0);
 
 					if (ModelSetup::getContactActive()) {
-						Vector3d momentumSlave = *nodeI->getMomentumSlave();
+						momentumSlave = *nodeI->getMomentumSlave();
 					}
 
 					// witch direction of the normal vector
@@ -599,7 +582,7 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					Vector3d forceSlave = Vector3d(0.0, 0.0, 0.0);
 
 					if (ModelSetup::getContactActive()) {
-						Vector3d forceSlave = *nodeI->getTotalForceSlave();
+						forceSlave = *nodeI->getTotalForceSlave();
 					}
 					
 					// witch direction of the normal vector
