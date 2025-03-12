@@ -16,7 +16,7 @@ private:
 
     std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
 
-    double scalingFactor = 0.5; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
+    double scalingFactor = 2.0; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
 public:
 

@@ -112,7 +112,7 @@ void SolverExplicitUSL::Solve()
 			// interpolate the density at the center of triangles
 			terrainContact->trianglesDensityLevelSet(mesh);
 
-			// determine the contact potencial pairs
+			// determine the contact potential pairs
 			terrainContact->determineContactPotentialPairs(mesh, particles);
 
 			// compute the contact forces and correct velocities
