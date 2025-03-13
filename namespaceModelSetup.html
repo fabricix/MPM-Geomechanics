@@ -274,6 +274,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a33c1ffa724e176734a1cb73726e9e993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get initial simulation time.  <br /></td></tr>
 <tr class="separator:a33c1ffa724e176734a1cb73726e9e993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cd47bd6b391f22d9d4616f7cd7c399a" id="r_a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a3cd47bd6b391f22d9d4616f7cd7c399a">getSeismicFileName</a> ()</td></tr>
+<tr class="memdesc:a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic file name.  <br /></td></tr>
 <tr class="separator:a3cd47bd6b391f22d9d4616f7cd7c399a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb60c7fe9462be3df5f21ba658c7b207" id="r_abb60c7fe9462be3df5f21ba658c7b207"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#abb60c7fe9462be3df5f21ba658c7b207">getCurrentTime</a> ()</td></tr>
 <tr class="memdesc:abb60c7fe9462be3df5f21ba658c7b207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current simulation time.  <br /></td></tr>
@@ -281,6 +282,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a7d6b80dd52b72f335482f5a6bd46372f" id="r_a7d6b80dd52b72f335482f5a6bd46372f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a7d6b80dd52b72f335482f5a6bd46372f">setCurrentTime</a> (double currentTime)</td></tr>
 <tr class="memdesc:a7d6b80dd52b72f335482f5a6bd46372f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current simulation time.  <br /></td></tr>
 <tr class="separator:a7d6b80dd52b72f335482f5a6bd46372f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0238847842b436a7aa9349832a8ec1" id="r_ada0238847842b436a7aa9349832a8ec1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#ada0238847842b436a7aa9349832a8ec1">getTerrainContactActive</a> ()</td></tr>
+<tr class="memdesc:ada0238847842b436a7aa9349832a8ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if terrain contact is active.  <br /></td></tr>
+<tr class="separator:ada0238847842b436a7aa9349832a8ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07f343c6b35e8c341c126bd4b342e213" id="r_a07f343c6b35e8c341c126bd4b342e213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a07f343c6b35e8c341c126bd4b342e213">setTerrainContactActive</a> (bool)</td></tr>
+<tr class="memdesc:a07f343c6b35e8c341c126bd4b342e213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set terrain contact active.  <br /></td></tr>
+<tr class="separator:a07f343c6b35e8c341c126bd4b342e213"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contain the configuration variables that defines an specific simulation. </p>
@@ -782,6 +789,27 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Return the seismic file name. </p>
+
+</div>
+</div>
+<a id="ada0238847842b436a7aa9349832a8ec1" name="ada0238847842b436a7aa9349832a8ec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada0238847842b436a7aa9349832a8ec1">&#9670;&#160;</a></span>getTerrainContactActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ModelSetup::getTerrainContactActive </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return if terrain contact is active. </p>
 
 </div>
 </div>
@@ -1347,6 +1375,26 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a07f343c6b35e8c341c126bd4b342e213" name="a07f343c6b35e8c341c126bd4b342e213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07f343c6b35e8c341c126bd4b342e213">&#9670;&#160;</a></span>setTerrainContactActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelSetup::setTerrainContactActive </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set terrain contact active. </p>
 
 </div>
 </div>

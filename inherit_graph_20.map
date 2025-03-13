@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="5,31,64,57"/>
-<area shape="rect" id="Node000001" href="$classSolverExplicitTwoPhaseUSL.html" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="112,5,300,32"/>
-<area shape="poly" id="edge12_Node000000_Node000001" title=" " alt="" coords="78,35,111,30,112,35,79,40"/>
-<area shape="rect" id="Node000002" href="$classSolverExplicitUSL.html" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="142,56,270,83"/>
-<area shape="poly" id="edge13_Node000000_Node000002" title=" " alt="" coords="79,48,142,57,141,63,79,53"/>
+<area shape="rect" id="Node000000" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="5,31,68,56"/>
+<area shape="rect" id="Node000001" href="$classShapeGimp.html" title="Represents the GIMP shape functions used in the interpolation process." alt="" coords="119,5,216,31"/>
+<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="81,32,118,25,119,30,82,37"/>
+<area shape="rect" id="Node000002" href="$classShapeLinear.html" title="Represents the Linear shape functions used in the interpolation process." alt="" coords="116,55,219,80"/>
+<area shape="poly" id="edge11_Node000000_Node000002" title=" " alt="" coords="82,49,116,55,115,61,81,54"/>
 </map>

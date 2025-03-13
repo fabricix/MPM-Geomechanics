@@ -23,10 +23,12 @@ var classMPM =
     [ "setupMesh", "classMPM.html#a920928e5f3160517b54b8e2fdebd0420", null ],
     [ "setupParticles", "classMPM.html#a1c701b2e7f2922a69b7f1dfb59b8ae9a", null ],
     [ "setupResults", "classMPM.html#aae2db2da502564082261eb67a2858f2c", null ],
+    [ "setupTerrainContact", "classMPM.html#a17e2f3a3ac28289801ba1f26fc9546d2", null ],
     [ "solve", "classMPM.html#af59d5b58413e7f9c5a6dc5d8c2f1df3d", null ],
     [ "bodies", "classMPM.html#aa6a0e2948d663892851627f0cc52f2dd", null ],
     [ "materials", "classMPM.html#a85be5f9823bccdb2b9a3616ce46b57cf", null ],
     [ "mesh", "classMPM.html#a3eccc5a6205228f1487de39592553fb3", null ],
     [ "particles", "classMPM.html#ae95e181ff212a5f2c27e66dfa951009d", null ],
-    [ "solver", "classMPM.html#a1cc099fec2f55ef6182fa80ff72c4138", null ]
+    [ "solver", "classMPM.html#a1cc099fec2f55ef6182fa80ff72c4138", null ],
+    [ "terrainContact", "classMPM.html#afca4dd542ad25137b58650b69737b361", null ]
 ];

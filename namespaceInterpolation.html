@@ -149,6 +149,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab40d47b2e6ec38905a4eca4eaec2b91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate deformation gradient of solid at particle.  <br /></td></tr>
 <tr class="separator:ab40d47b2e6ec38905a4eca4eaec2b91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf4f657fde41c48336f1d5030cd63958" id="r_acf4f657fde41c48336f1d5030cd63958"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInterpolation.html#acf4f657fde41c48336f1d5030cd63958">interpolateVector</a> (const std::vector&lt; double &gt; &amp;times, const std::vector&lt; Eigen::Vector3d &gt; &amp;values, double itime)</td></tr>
+<tr class="memdesc:acf4f657fde41c48336f1d5030cd63958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate a vector3d in time using linear interpolation.  <br /></td></tr>
 <tr class="separator:acf4f657fde41c48336f1d5030cd63958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -186,6 +187,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Interpolate a vector3d in time using linear interpolation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">times</td><td>A list of times </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">values</td><td>A list of vector3d values </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">interpolated_vector</td><td>Interpolated vector3d </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -174,6 +174,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8f53490d8ec1d0bf146681dda1068f9f" id="r_a8f53490d8ec1d0bf146681dda1068f9f"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classNode.html">Node</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a8f53490d8ec1d0bf146681dda1068f9f">getNodes</a> ()</td></tr>
 <tr class="memdesc:a8f53490d8ec1d0bf146681dda1068f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return nodes in mesh.  <br /></td></tr>
 <tr class="separator:a8f53490d8ec1d0bf146681dda1068f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac179aeba9cc243a1ce8292d64c2bcb7" id="r_aac179aeba9cc243a1ce8292d64c2bcb7"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classCell.html">Cell</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#aac179aeba9cc243a1ce8292d64c2bcb7">getCells</a> ()</td></tr>
+<tr class="memdesc:aac179aeba9cc243a1ce8292d64c2bcb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return cells in mesh.  <br /></td></tr>
+<tr class="separator:aac179aeba9cc243a1ce8292d64c2bcb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9542e2857eb5fd06642e2b3435867be3" id="r_a9542e2857eb5fd06642e2b3435867be3"><td class="memItemLeft" align="right" valign="top">const Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a9542e2857eb5fd06642e2b3435867be3">getCellDimension</a> () const</td></tr>
 <tr class="memdesc:a9542e2857eb5fd06642e2b3435867be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the cells dimension in each direction.  <br /></td></tr>
 <tr class="separator:a9542e2857eb5fd06642e2b3435867be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,6 +213,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a605f9e6e9198e4a5ab6a254057269309" id="r_a605f9e6e9198e4a5ab6a254057269309"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a605f9e6e9198e4a5ab6a254057269309">getIsInsideMesh</a> (const Vector3d &amp;point) const</td></tr>
 <tr class="memdesc:a605f9e6e9198e4a5ab6a254057269309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify if the position is inside the limits.  <br /></td></tr>
 <tr class="separator:a605f9e6e9198e4a5ab6a254057269309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab215e9dfa14b5e1b15e11c461b857990" id="r_ab215e9dfa14b5e1b15e11c461b857990"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ab215e9dfa14b5e1b15e11c461b857990">computeNodeVolumes</a> ()</td></tr>
+<tr class="memdesc:ab215e9dfa14b5e1b15e11c461b857990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return compute the nodal volumes.  <br /></td></tr>
+<tr class="separator:ab215e9dfa14b5e1b15e11c461b857990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -252,6 +258,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a3f082b1cc1f66769da1f59f69c990f65" id="r_a3f082b1cc1f66769da1f59f69c990f65"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a3f082b1cc1f66769da1f59f69c990f65">gridNodes</a></td></tr>
 <tr class="memdesc:a3f082b1cc1f66769da1f59f69c990f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">all nodes in mesh  <br /></td></tr>
 <tr class="separator:a3f082b1cc1f66769da1f59f69c990f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa987a7cfe1bba28dffaf7939bbfb9aa4" id="r_aa987a7cfe1bba28dffaf7939bbfb9aa4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classCell.html">Cell</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#aa987a7cfe1bba28dffaf7939bbfb9aa4">gridCells</a></td></tr>
+<tr class="memdesc:aa987a7cfe1bba28dffaf7939bbfb9aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">all cells in mesh  <br /></td></tr>
+<tr class="separator:aa987a7cfe1bba28dffaf7939bbfb9aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae856f697db9b5c61445e64cff311c46a" id="r_ae856f697db9b5c61445e64cff311c46a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBoundary.html">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ae856f697db9b5c61445e64cff311c46a">boundary</a></td></tr>
 <tr class="memdesc:ae856f697db9b5c61445e64cff311c46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">mesh boundary  <br /></td></tr>
 <tr class="separator:ae856f697db9b5c61445e64cff311c46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -386,6 +395,25 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ab215e9dfa14b5e1b15e11c461b857990" name="ab215e9dfa14b5e1b15e11c461b857990"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab215e9dfa14b5e1b15e11c461b857990">&#9670;&#160;</a></span>computeNodeVolumes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mesh::computeNodeVolumes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return compute the nodal volumes. </p>
 
 </div>
 </div>
@@ -530,6 +558,34 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The identification of the cell containing the point </dd></dl>
+
+</div>
+</div>
+<a id="aac179aeba9cc243a1ce8292d64c2bcb7" name="aac179aeba9cc243a1ce8292d64c2bcb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac179aeba9cc243a1ce8292d64c2bcb7">&#9670;&#160;</a></span>getCells()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="classCell.html">Cell</a> * &gt; * Mesh::getCells </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return cells in mesh. </p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the mesh cells </dd></dl>
 
 </div>
 </div>
@@ -988,7 +1044,7 @@ Private Attributes</h2></td></tr>
 <p>Set cells dimension in each direction. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension</td><td>A vector containing the Cell dimesion in each direction </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension</td><td>A vector containing the <a class="el" href="classCell.html">Cell</a> dimension in each direction </td></tr>
   </table>
   </dd>
 </dl>
@@ -1030,9 +1086,9 @@ Private Attributes</h2></td></tr>
 <p>Set cells dimension in each direction. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_x</td><td>Cell dimesion in x </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_y</td><td>Cell dimesion in y </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_z</td><td>Cell dimesion in z </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_x</td><td><a class="el" href="classCell.html">Cell</a> dimension in x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_y</td><td><a class="el" href="classCell.html">Cell</a> dimension in y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cell_dimension_z</td><td><a class="el" href="classCell.html">Cell</a> dimension in z </td></tr>
   </table>
   </dd>
 </dl>
@@ -1267,6 +1323,30 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>cell dimension in each direction </p>
+
+</div>
+</div>
+<a id="aa987a7cfe1bba28dffaf7939bbfb9aa4" name="aa987a7cfe1bba28dffaf7939bbfb9aa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa987a7cfe1bba28dffaf7939bbfb9aa4">&#9670;&#160;</a></span>gridCells</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classCell.html">Cell</a>*&gt; Mesh::gridCells</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>all cells in mesh </p>
 
 </div>
 </div>

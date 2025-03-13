@@ -7,6 +7,7 @@ var hierarchy =
       [ "BodySphere", "classBodySphere.html", null ]
     ] ],
     [ "Boundary", "classBoundary.html", null ],
+    [ "Cell", "classCell.html", null ],
     [ "Contact", "classContact.html", null ],
     [ "Contribution", "classContribution.html", null ],
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", null ],
@@ -43,5 +44,6 @@ var hierarchy =
       [ "SolverExplicitUSL", "classSolverExplicitUSL.html", null ]
     ] ],
     [ "STLReader", "classSTLReader.html", null ],
+    [ "TerrainContact", "classTerrainContact.html", null ],
     [ "Triangle", "structTriangle.html", null ]
 ];

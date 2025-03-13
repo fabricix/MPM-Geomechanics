@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['triangle_0',['Triangle',['../structTriangle.html',1,'']]]
+  ['terraincontact_0',['TerrainContact',['../classTerrainContact.html',1,'']]],
+  ['triangle_1',['Triangle',['../structTriangle.html',1,'']]]
 ];

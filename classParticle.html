@@ -317,6 +317,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a801ec7c7a54dbf073dabc71f6cc5d7e8" id="r_a801ec7c7a54dbf073dabc71f6cc5d7e8"><td class="memItemLeft" align="right" valign="top">const Matrix3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a801ec7c7a54dbf073dabc71f6cc5d7e8">getDeformationGradient</a> () const</td></tr>
 <tr class="memdesc:a801ec7c7a54dbf073dabc71f6cc5d7e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns deformation gradient.  <br /></td></tr>
 <tr class="separator:a801ec7c7a54dbf073dabc71f6cc5d7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd15e9528129cba5244e5a676537f4a5" id="r_acd15e9528129cba5244e5a676537f4a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#acd15e9528129cba5244e5a676537f4a5">setDistanceLevelSet</a> (double distance)</td></tr>
+<tr class="memdesc:acd15e9528129cba5244e5a676537f4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the distance level set function value.  <br /></td></tr>
+<tr class="separator:acd15e9528129cba5244e5a676537f4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4db89c2f430c0ed093e7bd2eb3a9d5" id="r_aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#aae4db89c2f430c0ed093e7bd2eb3a9d5">getDistanceLevelSet</a> ()</td></tr>
+<tr class="memdesc:aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the distance level set function value.  <br /></td></tr>
+<tr class="separator:aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -344,6 +350,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a0501e3f8bb3cf37f332ee49d427bb220" id="r_a0501e3f8bb3cf37f332ee49d427bb220"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a0501e3f8bb3cf37f332ee49d427bb220">plasticStrain</a></td></tr>
 <tr class="memdesc:a0501e3f8bb3cf37f332ee49d427bb220"><td class="mdescLeft">&#160;</td><td class="mdescRight">current effective plastic strain: \(\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\)  <br /></td></tr>
 <tr class="separator:a0501e3f8bb3cf37f332ee49d427bb220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac154826414667897c157989be6c64a34" id="r_ac154826414667897c157989be6c64a34"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#ac154826414667897c157989be6c64a34">distanceLevelSet</a></td></tr>
+<tr class="memdesc:ac154826414667897c157989be6c64a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">distance level set function value: \(d_p\)  <br /></td></tr>
+<tr class="separator:ac154826414667897c157989be6c64a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58bb6267f20ebb153a1f0f0770ff6919" id="r_a58bb6267f20ebb153a1f0f0770ff6919"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a58bb6267f20ebb153a1f0f0770ff6919">position</a></td></tr>
 <tr class="memdesc:a58bb6267f20ebb153a1f0f0770ff6919"><td class="mdescLeft">&#160;</td><td class="mdescRight">current particle position: \(x_{ip}\)  <br /></td></tr>
 <tr class="separator:a58bb6267f20ebb153a1f0f0770ff6919"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -767,6 +776,33 @@ Static Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Density of the fluid </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classParticleMixture.html#a74a05cf95f6be86befba9736659cf145">ParticleMixture</a>.</p>
+
+</div>
+</div>
+<a id="aae4db89c2f430c0ed093e7bd2eb3a9d5" name="aae4db89c2f430c0ed093e7bd2eb3a9d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4db89c2f430c0ed093e7bd2eb3a9d5">&#9670;&#160;</a></span>getDistanceLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Particle::getDistanceLevelSet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the distance level set function value. </p>
 
 </div>
 </div>
@@ -1568,6 +1604,34 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="acd15e9528129cba5244e5a676537f4a5" name="acd15e9528129cba5244e5a676537f4a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd15e9528129cba5244e5a676537f4a5">&#9670;&#160;</a></span>setDistanceLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Particle::setDistanceLevelSet </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>distance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures the distance level set function value. </p>
+
+</div>
+</div>
 <a id="aab98fcabb948efaeaffb28fd780fae47" name="aab98fcabb948efaeaffb28fd780fae47"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab98fcabb948efaeaffb28fd780fae47">&#9670;&#160;</a></span>setId()</h2>
 
@@ -2302,6 +2366,30 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>current particle density: \(\rho_p\) </p>
+
+</div>
+</div>
+<a id="ac154826414667897c157989be6c64a34" name="ac154826414667897c157989be6c64a34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac154826414667897c157989be6c64a34">&#9670;&#160;</a></span>distanceLevelSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Particle::distanceLevelSet</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>distance level set function value: \(d_p\) </p>
 
 </div>
 </div>

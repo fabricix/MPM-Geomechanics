@@ -15,6 +15,7 @@ var annotated_dup =
     [ "BodyPolygon", "classBodyPolygon.html", "classBodyPolygon" ],
     [ "BodySphere", "classBodySphere.html", "classBodySphere" ],
     [ "Boundary", "classBoundary.html", "classBoundary" ],
+    [ "Cell", "classCell.html", "classCell" ],
     [ "Contact", "classContact.html", "classContact" ],
     [ "Contribution", "classContribution.html", "classContribution" ],
     [ "Elastic", "classElastic.html", "classElastic" ],
@@ -35,5 +36,6 @@ var annotated_dup =
     [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", "classSolverExplicitTwoPhaseUSL" ],
     [ "SolverExplicitUSL", "classSolverExplicitUSL.html", "classSolverExplicitUSL" ],
     [ "STLReader", "classSTLReader.html", "classSTLReader" ],
+    [ "TerrainContact", "classTerrainContact.html", "classTerrainContact" ],
     [ "Triangle", "structTriangle.html", "structTriangle" ]
 ];

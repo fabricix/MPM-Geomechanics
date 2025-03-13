@@ -172,6 +172,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4eeba9dd74dc17cee6267ba774ca8a78" id="r_a4eeba9dd74dc17cee6267ba774ca8a78"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">Boundary::BoundaryType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a4eeba9dd74dc17cee6267ba774ca8a78">getMeshBoundaryConditions</a> ()</td></tr>
 <tr class="memdesc:a4eeba9dd74dc17cee6267ba774ca8a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the mesh boundary conditions.  <br /></td></tr>
 <tr class="separator:a4eeba9dd74dc17cee6267ba774ca8a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8207d83ed286e00540c9618987e89d7d" id="r_a8207d83ed286e00540c9618987e89d7d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a8207d83ed286e00540c9618987e89d7d">getSTLMeshFile</a> ()</td></tr>
+<tr class="memdesc:a8207d83ed286e00540c9618987e89d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of the SLT mesh for terrain contact.  <br /></td></tr>
+<tr class="separator:a8207d83ed286e00540c9618987e89d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dc625a2ff564000e4e61b47263ae01f" id="r_a2dc625a2ff564000e4e61b47263ae01f"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">Boundary::BoundaryType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a2dc625a2ff564000e4e61b47263ae01f">getMeshBoundaryConditionsFluid</a> ()</td></tr>
 <tr class="memdesc:a2dc625a2ff564000e4e61b47263ae01f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the mesh boundary conditions of fluid.  <br /></td></tr>
 <tr class="separator:a2dc625a2ff564000e4e61b47263ae01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,7 +203,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:a938199e6c47c007f37b518b559e2ee43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pore pressure force in particles inside a box.  <br /></td></tr>
 <tr class="separator:a938199e6c47c007f37b518b559e2ee43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7aeff2285506645ef6c121dec4a0d44" id="r_ab7aeff2285506645ef6c121dec4a0d44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLoads_1_1SeismicData.html">Loads::SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44">readSeismicData</a> (const std::string &amp;filename, bool hasHeader)</td></tr>
+<tr class="memdesc:ab7aeff2285506645ef6c121dec4a0d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic data.  <br /></td></tr>
 <tr class="separator:ab7aeff2285506645ef6c121dec4a0d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e6d39c7c857d3fc55088e2956e8def6" id="r_a5e6d39c7c857d3fc55088e2956e8def6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a5e6d39c7c857d3fc55088e2956e8def6">getFrictionCoefficient</a> ()</td></tr>
+<tr class="memdesc:a5e6d39c7c857d3fc55088e2956e8def6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the friction coefficient.  <br /></td></tr>
+<tr class="separator:a5e6d39c7c857d3fc55088e2956e8def6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bca44ba8d9b5497b0403694dd7ea6a6" id="r_a3bca44ba8d9b5497b0403694dd7ea6a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a3bca44ba8d9b5497b0403694dd7ea6a6">getTerrainContactActive</a> ()</td></tr>
+<tr class="memdesc:a3bca44ba8d9b5497b0403694dd7ea6a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the terrain contact active.  <br /></td></tr>
+<tr class="separator:a3bca44ba8d9b5497b0403694dd7ea6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Operations to read the input file. </p>
@@ -735,7 +745,7 @@ Save/Load States</h2>
 </div><div class="memdoc">
 
 <p>Return the cell dimension. </p>
-<dl class="section return"><dt>Returns</dt><dd>Cell dimension in each direction <br  />
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classCell.html">Cell</a> dimension in each direction <br  />
  </dd></dl>
 
 </div>
@@ -837,6 +847,26 @@ Save/Load States</h2>
 
 <p>Return the file name. </p>
 <dl class="section return"><dt>Returns</dt><dd>File name </dd></dl>
+
+</div>
+</div>
+<a id="a5e6d39c7c857d3fc55088e2956e8def6" name="a5e6d39c7c857d3fc55088e2956e8def6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e6d39c7c857d3fc55088e2956e8def6">&#9670;&#160;</a></span>getFrictionCoefficient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Input::getFrictionCoefficient </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the friction coefficient. </p>
+<dl class="section return"><dt>Returns</dt><dd>friction_coefficient Friction coefficient </dd></dl>
 
 </div>
 </div>
@@ -1240,6 +1270,44 @@ Save/Load States</h2>
 
 </div>
 </div>
+<a id="a8207d83ed286e00540c9618987e89d7d" name="a8207d83ed286e00540c9618987e89d7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8207d83ed286e00540c9618987e89d7d">&#9670;&#160;</a></span>getSTLMeshFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Input::getSTLMeshFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the name of the SLT mesh for terrain contact. </p>
+
+</div>
+</div>
+<a id="a3bca44ba8d9b5497b0403694dd7ea6a6" name="a3bca44ba8d9b5497b0403694dd7ea6a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bca44ba8d9b5497b0403694dd7ea6a6">&#9670;&#160;</a></span>getTerrainContactActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Input::getTerrainContactActive </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the terrain contact active. </p>
+
+</div>
+</div>
 <a id="a62b6f277358d9dd6b95f39001e12bae4" name="a62b6f277358d9dd6b95f39001e12bae4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62b6f277358d9dd6b95f39001e12bae4">&#9670;&#160;</a></span>getTimeStep()</h2>
 
@@ -1331,6 +1399,9 @@ Save/Load States</h2>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Return the seismic data. </p>
+<dl class="section return"><dt>Returns</dt><dd>seismic_data Seismic data </dd></dl>
 
 </div>
 </div>

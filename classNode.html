@@ -205,6 +205,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a350397d630da4bfeb1fe902cb313e032" id="r_a350397d630da4bfeb1fe902cb313e032"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a350397d630da4bfeb1fe902cb313e032">addMass</a> (double mass_increment)</td></tr>
 <tr class="memdesc:a350397d630da4bfeb1fe902cb313e032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a mass increment to the nodal mass.  <br /></td></tr>
 <tr class="separator:a350397d630da4bfeb1fe902cb313e032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039b84e612b6f32a44363c0b1fd1eaea" id="r_a039b84e612b6f32a44363c0b1fd1eaea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a039b84e612b6f32a44363c0b1fd1eaea">addDensityLevelSet</a> (double density_increment)</td></tr>
+<tr class="memdesc:a039b84e612b6f32a44363c0b1fd1eaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a density increment to the nodal density level set.  <br /></td></tr>
+<tr class="separator:a039b84e612b6f32a44363c0b1fd1eaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91d7308aad82438b38a6873f510b5414" id="r_a91d7308aad82438b38a6873f510b5414"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a91d7308aad82438b38a6873f510b5414">addMassFluid</a> (double fluid_mass_increment)</td></tr>
 <tr class="memdesc:a91d7308aad82438b38a6873f510b5414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add fluid mass increment to the nodal mass.  <br /></td></tr>
 <tr class="separator:a91d7308aad82438b38a6873f510b5414"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,6 +243,21 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ec4cc9f72890708bb0c0f7383723a7" id="r_a53ec4cc9f72890708bb0c0f7383723a7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a53ec4cc9f72890708bb0c0f7383723a7">integrateMomentum</a> (double dt)</td></tr>
 <tr class="separator:a53ec4cc9f72890708bb0c0f7383723a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6fbd73a1bd0635f522cf52acc98b338" id="r_ad6fbd73a1bd0635f522cf52acc98b338"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad6fbd73a1bd0635f522cf52acc98b338">setDistanceLevelSet</a> (double distance)</td></tr>
+<tr class="memdesc:ad6fbd73a1bd0635f522cf52acc98b338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the distance level set function value of the node.  <br /></td></tr>
+<tr class="separator:ad6fbd73a1bd0635f522cf52acc98b338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7832abc350053f5ac01bec6fe3289e15" id="r_a7832abc350053f5ac01bec6fe3289e15"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a7832abc350053f5ac01bec6fe3289e15">getDistanceLevelSet</a> ()</td></tr>
+<tr class="memdesc:a7832abc350053f5ac01bec6fe3289e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the distance level set function value of the node.  <br /></td></tr>
+<tr class="separator:a7832abc350053f5ac01bec6fe3289e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a271891a82c7db2e29151a9f06b731f5a" id="r_a271891a82c7db2e29151a9f06b731f5a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a271891a82c7db2e29151a9f06b731f5a">getDensityLevelSet</a> ()</td></tr>
+<tr class="memdesc:a271891a82c7db2e29151a9f06b731f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the density level set function value of the node.  <br /></td></tr>
+<tr class="separator:a271891a82c7db2e29151a9f06b731f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb4d9670e7f7810a344e03ff9b5ccb58" id="r_afb4d9670e7f7810a344e03ff9b5ccb58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#afb4d9670e7f7810a344e03ff9b5ccb58">setVolume</a> (double <a class="el" href="classNode.html#ac1dd81b5a10e0d6b6eb4857a221a7382">volume</a>)</td></tr>
+<tr class="memdesc:afb4d9670e7f7810a344e03ff9b5ccb58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the nodal volume.  <br /></td></tr>
+<tr class="separator:afb4d9670e7f7810a344e03ff9b5ccb58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba101a70f30fcb598381bf121aa98e20" id="r_aba101a70f30fcb598381bf121aa98e20"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aba101a70f30fcb598381bf121aa98e20">getVolume</a> ()</td></tr>
+<tr class="memdesc:aba101a70f30fcb598381bf121aa98e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the nodal volume.  <br /></td></tr>
+<tr class="separator:aba101a70f30fcb598381bf121aa98e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -252,6 +270,15 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a63e510fc9158eb15e751861bc14eae38" id="r_a63e510fc9158eb15e751861bc14eae38"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a63e510fc9158eb15e751861bc14eae38">mass</a></td></tr>
 <tr class="memdesc:a63e510fc9158eb15e751861bc14eae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal mass: \(m_{I}\), or solid mass in two-phase calculations: \(m_{I}^{s}\)  <br /></td></tr>
 <tr class="separator:a63e510fc9158eb15e751861bc14eae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1dd81b5a10e0d6b6eb4857a221a7382" id="r_ac1dd81b5a10e0d6b6eb4857a221a7382"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ac1dd81b5a10e0d6b6eb4857a221a7382">volume</a></td></tr>
+<tr class="memdesc:ac1dd81b5a10e0d6b6eb4857a221a7382"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal volume: \(V_{I}\)  <br /></td></tr>
+<tr class="separator:ac1dd81b5a10e0d6b6eb4857a221a7382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cb95712bded1fcb53e046c23d1e0e6d" id="r_a2cb95712bded1fcb53e046c23d1e0e6d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a2cb95712bded1fcb53e046c23d1e0e6d">distanceLevelSet</a></td></tr>
+<tr class="memdesc:a2cb95712bded1fcb53e046c23d1e0e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">distance level set function value of the node: \( d_{I}=(X_I-X_i)e_n \)  <br /></td></tr>
+<tr class="separator:a2cb95712bded1fcb53e046c23d1e0e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7f3f85e10f0fa1703dbaf6a27fd297" id="r_a6f7f3f85e10f0fa1703dbaf6a27fd297"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a6f7f3f85e10f0fa1703dbaf6a27fd297">densityLevelSet</a></td></tr>
+<tr class="memdesc:a6f7f3f85e10f0fa1703dbaf6a27fd297"><td class="mdescLeft">&#160;</td><td class="mdescRight">density level set function value of the node: \( \rho_{I} = \sum_p V_p N_{Ip} / V_I \)  <br /></td></tr>
+<tr class="separator:a6f7f3f85e10f0fa1703dbaf6a27fd297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a924e2f81d6f9788fd5a3e35dfe8c6ae6" id="r_a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6">coordinates</a></td></tr>
 <tr class="memdesc:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal coordinates: \(x_{iI}\)  <br /></td></tr>
 <tr class="separator:a924e2f81d6f9788fd5a3e35dfe8c6ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -332,6 +359,40 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a039b84e612b6f32a44363c0b1fd1eaea" name="a039b84e612b6f32a44363c0b1fd1eaea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a039b84e612b6f32a44363c0b1fd1eaea">&#9670;&#160;</a></span>addDensityLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::addDensityLevelSet </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>density_increment</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add a density increment to the nodal density level set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">density_increment</td><td>Nodal density increment </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad9191309b6f3de3656ddf2406994655c" name="ad9191309b6f3de3656ddf2406994655c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9191309b6f3de3656ddf2406994655c">&#9670;&#160;</a></span>addExternalForce()</h2>
 
@@ -674,6 +735,60 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a271891a82c7db2e29151a9f06b731f5a" name="a271891a82c7db2e29151a9f06b731f5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a271891a82c7db2e29151a9f06b731f5a">&#9670;&#160;</a></span>getDensityLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::getDensityLevelSet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the density level set function value of the node. </p>
+
+</div>
+</div>
+<a id="a7832abc350053f5ac01bec6fe3289e15" name="a7832abc350053f5ac01bec6fe3289e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7832abc350053f5ac01bec6fe3289e15">&#9670;&#160;</a></span>getDistanceLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::getDistanceLevelSet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the distance level set function value of the node. </p>
+
+</div>
+</div>
 <a id="a60b404929eedeb80a5dc08acbc6581bc" name="a60b404929eedeb80a5dc08acbc6581bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a60b404929eedeb80a5dc08acbc6581bc">&#9670;&#160;</a></span>getExternalForce()</h2>
 
@@ -991,6 +1106,33 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aba101a70f30fcb598381bf121aa98e20" name="aba101a70f30fcb598381bf121aa98e20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba101a70f30fcb598381bf121aa98e20">&#9670;&#160;</a></span>getVolume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::getVolume </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the nodal volume. </p>
+
+</div>
+</div>
 <a id="a53ec4cc9f72890708bb0c0f7383723a7" name="a53ec4cc9f72890708bb0c0f7383723a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a53ec4cc9f72890708bb0c0f7383723a7">&#9670;&#160;</a></span>integrateMomentum()</h2>
 
@@ -1114,6 +1256,34 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad6fbd73a1bd0635f522cf52acc98b338" name="ad6fbd73a1bd0635f522cf52acc98b338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6fbd73a1bd0635f522cf52acc98b338">&#9670;&#160;</a></span>setDistanceLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::setDistanceLevelSet </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>distance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the distance level set function value of the node. </p>
 
 </div>
 </div>
@@ -1325,6 +1495,34 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="afb4d9670e7f7810a344e03ff9b5ccb58" name="afb4d9670e7f7810a344e03ff9b5ccb58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb4d9670e7f7810a344e03ff9b5ccb58">&#9670;&#160;</a></span>setVolume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::setVolume </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>volume</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the nodal volume. </p>
+
+</div>
+</div>
 <a id="a6aad417d1f5ec1d2fde9bb1f4fcac0d8" name="a6aad417d1f5ec1d2fde9bb1f4fcac0d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">&#9670;&#160;</a></span>updateDampingForce()</h2>
 
@@ -1480,6 +1678,54 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>nodal damping force: \(f_{iI}^{dmp}\), or damping force in solid in two-phase calculations: \(f_{iI}^{dmp,s}\) </p>
+
+</div>
+</div>
+<a id="a6f7f3f85e10f0fa1703dbaf6a27fd297" name="a6f7f3f85e10f0fa1703dbaf6a27fd297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f7f3f85e10f0fa1703dbaf6a27fd297">&#9670;&#160;</a></span>densityLevelSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::densityLevelSet</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>density level set function value of the node: \( \rho_{I} = \sum_p V_p N_{Ip} / V_I \) </p>
+
+</div>
+</div>
+<a id="a2cb95712bded1fcb53e046c23d1e0e6d" name="a2cb95712bded1fcb53e046c23d1e0e6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cb95712bded1fcb53e046c23d1e0e6d">&#9670;&#160;</a></span>distanceLevelSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::distanceLevelSet</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>distance level set function value of the node: \( d_{I}=(X_I-X_i)e_n \) </p>
 
 </div>
 </div>
@@ -1648,6 +1894,30 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>nodal velocity: \(v_{iI}\), or velocity in solid in two-phase calculations: \(v_{iI}^{s}\) </p>
+
+</div>
+</div>
+<a id="ac1dd81b5a10e0d6b6eb4857a221a7382" name="ac1dd81b5a10e0d6b6eb4857a221a7382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1dd81b5a10e0d6b6eb4857a221a7382">&#9670;&#160;</a></span>volume</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::volume</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodal volume: \(V_{I}\) </p>
 
 </div>
 </div>
