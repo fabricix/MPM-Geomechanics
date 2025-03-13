@@ -10,5 +10,6 @@ var searchData=
   ['dilation_7',['dilation',['../classMohrCoulomb.html#a9718a4d56fc38f21cf55f7666e8f0811',1,'MohrCoulomb']]],
   ['dilation_5fresidual_8',['dilation_residual',['../classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b',1,'MohrCoulomb::Softening']]],
   ['dilation_5fsoftening_5factive_9',['dilation_softening_active',['../classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5',1,'MohrCoulomb::Softening']]],
-  ['distretizationlength_10',['distretizationLength',['../classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098',1,'BodyPolygon']]]
+  ['distancels_10',['distanceLS',['../classNode.html#ad9f594feea75dc28abbc636d5742698a',1,'Node']]],
+  ['distretizationlength_11',['distretizationLength',['../classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098',1,'BodyPolygon']]]
 ];

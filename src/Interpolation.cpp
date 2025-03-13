@@ -10,6 +10,8 @@
 #include "Particle/Particle.h"
 #include "Body/Body.h"
 #include "Loads.h"
+#include "TerrainContact.h"
+
 ///
 /// From particle to node:
 ///		
@@ -704,23 +706,24 @@ void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodie
 	}
 }
 
-// Funci�n para interpolar valores de tipo Eigen::Vector3d en el tiempo itime
+// function to interpolate vector values in time
 Eigen::Vector3d Interpolation::interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime) {
 	
+	// get the first and last values in the interval
 	if (itime <= times.front()) return values.front();
 	if (itime >= times.back()) return values.back();
 
-	// Encontrar el indice del tiempo inmediatamente superior a itime
+	// find the upper limit where the time is located
 	auto upper = std::upper_bound(times.begin(), times.end(), itime);
 	size_t idx = std::distance(times.begin(), upper) - 1;
 
-	// Valores adyacentes para la interpolaci�n
+	// get the limit values in the interval
 	double t0 = times[idx];
 	double t1 = times[idx + 1];
 	Eigen::Vector3d v0 = values[idx];
 	Eigen::Vector3d v1 = values[idx + 1];
 
-	// Interpolacion lineal para cada componente
+	// linear interpolation using limit values in the interval
 	double factor = (itime - t0) / (t1 - t0);
 	Eigen::Vector3d interpolatedValue = v0 + factor * (v1 - v0);
 

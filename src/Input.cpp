@@ -1365,6 +1365,85 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 };
 
+double Input::getFrictionCoefficient() {
+
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["friction"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["friction"].is_number())
+		{
+			return inputFile["terrain_contact"]["friction"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the friction coefficient in terrain contact");
+		throw;
+	}
+}
+
+bool Input::getTerrainContactActive()
+{
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["active"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["active"].is_boolean())
+		{
+			return inputFile["terrain_contact"]["active"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the terrain contact active keyword");
+		throw;
+	}
+}
+
+std::string Input::getSTLMeshFile()
+{
+	try
+	{
+		if (inputFile["terrain_contact"]["stl_mesh"].is_null())
+		{
+			throw(0);
+		}
+
+		if (inputFile["terrain_contact"]["stl_mesh"].is_string())
+		{
+			return inputFile["terrain_contact"]["stl_mesh"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the STL file name in terrain contact");
+		throw;
+	}
+}
+
 SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
 	
 	SeismicData data;

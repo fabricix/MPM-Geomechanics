@@ -41,5 +41,8 @@ var hierarchy =
     [ "Solver", "classSolver.html", [
       [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", null ],
       [ "SolverExplicitUSL", "classSolverExplicitUSL.html", null ]
-    ] ]
+    ] ],
+    [ "STLReader", "classSTLReader.html", null ],
+    [ "TerrainContact", "classTerrainContact.html", null ],
+    [ "Triangle", "structTriangle.html", null ]
 ];
