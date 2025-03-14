@@ -226,6 +226,7 @@ namespace ModelSetup {
 	/// \return initialTime
 	std::chrono::system_clock::time_point getInitialSimulationTime( );
 
+	/// \brief Return the seismic file name
 	std::string getSeismicFileName();
 
 	/// \brief Get current simulation time
@@ -235,6 +236,12 @@ namespace ModelSetup {
     /// \brief Set current simulation time
 	/// \param[in] currentTime 
 	void setCurrentTime(double currentTime);
+
+    /// \brief Return if terrain contact is active
+	bool getTerrainContactActive();
+	
+	/// \brief Set terrain contact active
+	void setTerrainContactActive(bool);
 };
 
 #endif /* MODEL_H_ */

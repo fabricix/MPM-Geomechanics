@@ -15,6 +15,7 @@
 #include "Input.h"
 #include "States.h"
 #include "Solver/Solver.h"
+#include "TerrainContact.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -56,9 +57,12 @@ public:
 	/// \brief Save model state
 	///
 	void saveState();
+	
 private:
 	
-	Mesh mesh; //!< grid mesh
+	Mesh mesh; //!< background grid mesh
+
+	TerrainContact* terrainContact; //!< terrain contact object
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 
@@ -79,6 +83,9 @@ private:
 	/// \brief Configure the mesh
 	///
 	void setupMesh();
+	
+	/// \brief Configure Terrain contact
+	void setupTerrainContact();
 	
 	/// \brief Configures the material list
 	///
@@ -120,12 +127,14 @@ private:
 	///
 	void setNumberPhasesInSimulation();
 
-
 	/// \brief Configure number of threads
 	///
 	void setThreads();
 
+	/// \brief Get seismic analysis active
 	bool getSeismicAnalysis();
+
+	/// \brief Set seismic analysis active
 	void setSeismicAnalysis(bool);
 };
 

@@ -47,13 +47,13 @@ bool STLReader::readASCII(std::ifstream& file)
 			// read vertex coordinates
             std::getline(file, line);  // outer loop
             std::getline(file, line);
-            std::sscanf(line.c_str(), " vertex %f %f %f", &triangle.v1.x(), &triangle.v1.y(), &triangle.v1.z());
+            std::sscanf(line.c_str(), " vertex %lf %lf %lf", &triangle.v1.x(), &triangle.v1.y(), &triangle.v1.z());
 
             std::getline(file, line);
-            std::sscanf(line.c_str(), " vertex %f %f %f", &triangle.v2.x(), &triangle.v2.y(), &triangle.v2.z());
+            std::sscanf(line.c_str(), " vertex %lf %lf %lf", &triangle.v2.x(), &triangle.v2.y(), &triangle.v2.z());
 
             std::getline(file, line);
-            std::sscanf(line.c_str(), " vertex %f %f %f", &triangle.v3.x(), &triangle.v3.y(), &triangle.v3.z());
+            std::sscanf(line.c_str(), " vertex %lf %lf %lf", &triangle.v3.x(), &triangle.v3.y(), &triangle.v3.z());
 
             triangles.push_back(triangle);
 

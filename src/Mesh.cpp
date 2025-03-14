@@ -8,6 +8,9 @@
 #include <vector>
 using std::vector;
 
+#include <unordered_map>
+using std::unordered_map;
+
 #include <cmath>
 using std::floor;
 
@@ -251,6 +254,41 @@ void Mesh::createGrid(bool is_two_phase_simulation) {
         }
     }
 
+    gridCells.clear();
+
+    for (int k = 0; k < nCells.z()+2*nGhosts; k++) {
+        for (int j = 0; j < nCells.y()+2*nGhosts; j++) {
+            for (int i = 0; i < nCells.x()+2*nGhosts; i++) {
+                
+                // central position of the cell
+                Vector3d cellPosition = Vector3d(
+                    (i - nGhosts + 0.5) * cellDim.x() + minLimit.x(),
+                    (j - nGhosts + 0.5) * cellDim.y() + minLimit.y(),
+                    (k - nGhosts + 0.5) * cellDim.z() + minLimit.z()
+                );
+
+                // get nodes in cell
+                vector<int> nodeIds = getNodesInCell(cellPosition);
+
+                // create cell
+                Cell* cell = new Cell();
+
+                // set nodes in cell
+                std::vector<Node*> nodes;
+                for (int id : nodeIds) {
+                    nodes.push_back(gridNodes[id]);
+                }
+				cell->setNodes(nodes);
+
+                // compute cell volume
+                cell->computeVolume();
+
+                // store the cell
+                gridCells.push_back(cell);
+            }
+        }
+    }
+
     // update boundaries
     configureBoundaries();
 
@@ -258,6 +296,30 @@ void Mesh::createGrid(bool is_two_phase_simulation) {
     maxLimit.x()=nCells.x()*cellDim.x()+minLimit.x();
     maxLimit.y()=nCells.y()*cellDim.y()+minLimit.y();
     maxLimit.z()=nCells.z()*cellDim.z()+minLimit.z();
+}
+
+void Mesh::computeNodeVolumes() {
+
+    // map of node volumes
+    std::unordered_map<Node*, double> nodeVolumes;
+
+    // initialize node volumes
+    for (auto& node : gridNodes) {
+        nodeVolumes[node] = 0.0;
+    }
+
+    // distribute the volume of each cell
+    for (auto& cell : gridCells) {
+        double sharedVolume = cell->getVolume() / 8.0;
+        for (auto& node : cell->getNodes()) {
+            nodeVolumes[node] += sharedVolume;
+        }
+    }
+
+    // assign the volume to each node
+    for (auto& node : gridNodes) {
+        node->setVolume(nodeVolumes[node]);
+    }
 }
 
 void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {

@@ -582,6 +582,9 @@ namespace Input {
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
 	vector<Boundary::BoundaryType> getMeshBoundaryConditions();
 	
+	/// \brief Return the name of the SLT mesh for terrain contact 
+	std::string getSTLMeshFile();
+
 	/// \brief Return the mesh boundary conditions of fluid
 	/// \return boundary_restriction_vector A vector containing 
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
@@ -621,7 +624,16 @@ namespace Input {
 	/// \return pressure_force  Pore pressure force
 	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
 
+	/// \brief Return the seismic data
+	/// \return seismic_data Seismic data
 	Loads::SeismicData readSeismicData(const std::string& filename, bool hasHeader);
+
+	/// \brief Return the friction coefficient
+	/// \return friction_coefficient Friction coefficient
+	double getFrictionCoefficient ();
+
+	/// \brief Return the terrain contact active
+	bool getTerrainContactActive();
 };
 
 #endif /* INPUT_H_ */

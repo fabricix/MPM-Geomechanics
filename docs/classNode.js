@@ -39,6 +39,7 @@ var classNode =
     [ "active", "classNode.html#a9f86329e8fb9d0bb3541929ba067088a", null ],
     [ "coordinates", "classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6", null ],
     [ "dampingForce", "classNode.html#a1beeb10273f0b88112508a2e31a72f77", null ],
+    [ "distanceLS", "classNode.html#ad9f594feea75dc28abbc636d5742698a", null ],
     [ "externalForce", "classNode.html#aa85c7563e9ab15e7623e8d691141436e", null ],
     [ "id", "classNode.html#a59a543130a10c95f1e8642cf8c5645e8", null ],
     [ "internalForce", "classNode.html#ab1f099daeae52f3d36a9fe0f873ae760", null ],
