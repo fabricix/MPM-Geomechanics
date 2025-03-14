@@ -14,7 +14,7 @@ using Eigen::Vector3d;
 #include <vector>
 using std::vector;
 
-#include <Particle.h>
+#include <Particle/Particle.h>
 
 class Mesh;
 class Body;
