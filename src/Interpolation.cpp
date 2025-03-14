@@ -24,7 +24,7 @@
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-// !For test only
+// Nodal Mass function using particles instead bodies
 void Interpolation::nodalMassWithParticles(Mesh *mesh, vector<Particle *> *particles) {
   vector<Node *> *nodes = mesh->getNodes();
 
