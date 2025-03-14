@@ -243,6 +243,16 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("distance_levelset")){
+
+			// particle distance level-set
+			partFile<<"<DataArray type=\"Float64\" Name=\"Distance-levelset\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getDistanceLevelSet()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+
 		if (isFieldRequired("velocity")) {
 
 			// particle velocity
@@ -401,7 +411,7 @@ namespace Output{
 		gridFile<<"<PointData>\n";
 		
 		// local ID of nodes
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"Id\" Format=\"ascii\">\n";
+		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			gridFile<<scientific<<inodes->at(i)->getId()<<"\n";
 		}
@@ -427,6 +437,20 @@ namespace Output{
 			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
 		}
 		gridFile << "</DataArray>\n";
+
+		// nodal distance level set function value
+		gridFile<<"<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile<<scientific<<(inodes->at(i)->getDistanceLevelSet())<<"\n";
+		}
+		gridFile<<"</DataArray>\n";
+
+		// nodal volume
+		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile<<scientific<<(inodes->at(i)->getVolume())<<"\n";
+		}
+		gridFile<<"</DataArray>\n";
 
 		// end point data
 		gridFile<<"</PointData>\n";
@@ -477,6 +501,17 @@ namespace Output{
 		// end cells
 		gridFile<<"</Cells>\n";
 		
+		// Cell data (IDs)
+		vector<Cell*>* icells = mesh->getCells();
+
+		gridFile << "<CellData>\n";
+		gridFile << "<DataArray type=\"UInt64\" Name=\"CellId\" Format=\"ascii\">\n";
+		for (size_t i = 0; i  < icells->size(); ++i) {
+			gridFile << icells->at(i)->getId() << "\n";
+		}
+		gridFile << "</DataArray>\n"; 
+		gridFile << "</CellData>\n";
+
 		// end piece
 		gridFile<<"</Piece>\n";
 		

@@ -165,6 +165,7 @@
     <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />
     <ClCompile Include="..\..\src\STLReader.cpp" />
+    <ClCompile Include="..\..\src\TerrainContact.cpp" />
     <ClCompile Include="..\..\src\Update.cpp" />
     <ClCompile Include="..\..\src\Warning.cpp" />
     <ClCompile Include="..\..\tests\deformation-gradient\testDeformationGradient.cpp">
@@ -203,6 +204,7 @@
     <ClInclude Include="..\..\inc\Materials\ElasticJaumann.h" />
     <ClInclude Include="..\..\inc\Materials\Material.h" />
     <ClInclude Include="..\..\inc\Materials\MohrCoulomb.h" />
+    <ClInclude Include="..\..\inc\Mesh\Cell.h" />
     <ClInclude Include="..\..\inc\Mesh\Mesh.h" />
     <ClInclude Include="..\..\inc\Mesh\Node.h" />
     <ClInclude Include="..\..\inc\Mesh\NodeMixture.h" />
@@ -219,6 +221,7 @@
     <ClInclude Include="..\..\inc\Solver\SolverExplicitTwoPhaseUSL.h" />
     <ClInclude Include="..\..\inc\Solver\SolverExplicitUSL.h" />
     <ClInclude Include="..\..\inc\States.h" />
+    <ClInclude Include="..\..\inc\TerrainContact.h" />
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
   </ItemGroup>

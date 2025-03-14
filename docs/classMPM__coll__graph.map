@@ -1,9 +1,9 @@
 <map id="MPM" name="MPM">
-<area shape="rect" id="Node000001" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,..." alt="" coords="189,571,241,597"/>
+<area shape="rect" id="Node000001" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,..." alt="" coords="245,571,297,597"/>
 <area shape="rect" id="Node000002" href="$classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="152,389,206,416"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,429,199,439,213,513,217,570,212,570,208,514,194,441,190,431"/>
-<area shape="rect" id="Node000011" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="108,480,167,507"/>
-<area shape="poly" id="edge11_Node000011_Node000002" title=" " alt="" coords="167,431,163,441,145,481,140,478,158,439,163,429"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,429,199,439,229,505,266,569,261,572,224,508,194,441,189,431"/>
+<area shape="rect" id="Node000013" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="108,480,167,507"/>
+<area shape="poly" id="edge13_Node000013_Node000002" title=" " alt="" coords="167,431,163,441,145,481,140,478,158,439,163,429"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="50,267,118,293"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,306,114,335,134,364,161,387,158,391,131,367,109,338,94,309"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="143,267,215,293"/>
@@ -14,12 +14,16 @@
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="280,138,280,266,275,266,275,138"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="230,5,325,32"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="280,48,280,95,275,95,275,48"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="5,389,126,416"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="56,431,48,469,50,488,56,505,84,535,120,555,157,569,189,576,188,582,155,574,117,560,81,539,52,508,44,489,43,468,51,430"/>
-<area shape="poly" id="edge12_Node000011_Node000008" title=" " alt="" coords="86,427,108,454,128,478,124,481,104,458,82,430"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="274,480,409,507"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="312,518,234,572,231,568,309,514"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="433,480,570,507"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="453,515,349,549,242,579,241,573,347,544,451,510"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="146,520,159,545,174,558,190,569,187,573,170,563,155,548,142,523"/>
+<area shape="rect" id="Node000008" href="$classTerrainContact.html" title="Class to compute terrain contact." alt="" coords="275,480,381,507"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="314,521,281,572,277,569,310,518"/>
+<area shape="rect" id="Node000009" href="$classSTLReader.html" title="Class to read STL files." alt="" coords="284,389,372,416"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="331,432,331,479,326,479,326,432"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="5,389,126,416"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="56,431,48,469,49,488,56,505,74,526,96,543,121,556,147,566,200,577,245,580,244,586,200,582,146,571,119,561,93,548,70,530,52,508,44,489,43,468,51,430"/>
+<area shape="poly" id="edge14_Node000013_Node000010" title=" " alt="" coords="86,427,108,454,128,478,124,481,104,458,82,430"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="405,480,539,507"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="447,519,397,549,345,568,298,580,297,575,344,563,395,544,444,514"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="564,480,700,507"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="588,515,482,549,380,570,297,582,297,577,379,565,481,544,586,510"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="145,520,151,534,159,545,179,559,201,568,245,578,243,583,199,573,176,563,155,549,146,536,140,522"/>
 </map>

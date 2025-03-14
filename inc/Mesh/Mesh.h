@@ -17,6 +17,7 @@ using Eigen::Vector3i;
 
 #include "Node.h"
 #include "Boundary.h"
+#include "Cell.h"
 
 class Particle;
 
@@ -43,13 +44,13 @@ public:
     void createGrid( bool is_two_phase_simulation );
 
     /// \brief Set cells dimension in each direction
-    /// \param[in] cell_dimension_x Cell dimesion in x
-    /// \param[in] cell_dimension_y Cell dimesion in y
-    /// \param[in] cell_dimension_z Cell dimesion in z
+    /// \param[in] cell_dimension_x Cell dimension in x
+    /// \param[in] cell_dimension_y Cell dimension in y
+    /// \param[in] cell_dimension_z Cell dimension in z
     void setCellDimension(double cell_dimension_x, double cell_dimension_y, double cell_dimension_z);
     
     /// \brief Set cells dimension in each direction
-    /// \param[in] cell_dimension A vector containing the Cell dimesion in each direction
+    /// \param[in] cell_dimension A vector containing the Cell dimension in each direction
     void setCellDimension(const Vector3d& cell_dimension);
     
     /// \brief Set number of cell in each direction
@@ -97,6 +98,10 @@ public:
     /// \brief Return nodes in mesh
     /// \return A pointer to the mesh nodes
     inline vector<Node*>* getNodes() { return &(this->gridNodes); }
+
+    /// \brief Return cells in mesh
+    /// \return A pointer to the mesh cells
+    inline vector<Cell*>* getCells() { return &(this->gridCells); }
 
     /// \brief Return the cells dimension in each direction
     /// \return A vector containing the cell dimension
@@ -162,6 +167,9 @@ public:
     /// \return True if the point is inside the mesh
     bool getIsInsideMesh(const Vector3d& point) const;
 
+    /// \brief Return compute the nodal volumes
+    void computeNodeVolumes();
+
 private:
     
     int nGhosts; //!< number of ghost cells
@@ -178,6 +186,8 @@ private:
     
     std::vector<Node*> gridNodes; //!< all nodes in mesh
     
+    std::vector<Cell*> gridCells; //!< all cells in mesh
+
     Boundary boundary; //!< mesh boundary
     
     /// \brief Return the cell id in a position coordinates

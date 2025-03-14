@@ -280,6 +280,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ab06a209d998e817f6f93590436aece9d" id="r_ab06a209d998e817f6f93590436aece9d"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab06a209d998e817f6f93590436aece9d">totalForce</a></td></tr>
 <tr class="memdesc:ab06a209d998e817f6f93590436aece9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodal total force: \(f_{iI}\), or total force in solid in two-phase calculations: \(f_{iI}^{s}\)  <br /></td></tr>
 <tr class="separator:ab06a209d998e817f6f93590436aece9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f594feea75dc28abbc636d5742698a" id="r_ad9f594feea75dc28abbc636d5742698a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9f594feea75dc28abbc636d5742698a">distanceLS</a></td></tr>
+<tr class="memdesc:ad9f594feea75dc28abbc636d5742698a"><td class="mdescLeft">&#160;</td><td class="mdescRight">distance level set function value of the node: \( d_{I}=(X_I-X_i)e_n \)  <br /></td></tr>
+<tr class="separator:ad9f594feea75dc28abbc636d5742698a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a mesh node. </p>
@@ -1470,6 +1473,30 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>nodal damping force: \(f_{iI}^{dmp}\), or damping force in solid in two-phase calculations: \(f_{iI}^{dmp,s}\) </p>
+
+</div>
+</div>
+<a id="ad9f594feea75dc28abbc636d5742698a" name="ad9f594feea75dc28abbc636d5742698a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f594feea75dc28abbc636d5742698a">&#9670;&#160;</a></span>distanceLS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Node::distanceLS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>distance level set function value of the node: \( d_{I}=(X_I-X_i)e_n \) </p>
 
 </div>
 </div>

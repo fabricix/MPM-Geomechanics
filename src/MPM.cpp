@@ -14,6 +14,7 @@
 #include "Shape/ShapeGimp.h"
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
+#include "TerrainContact.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -73,6 +74,8 @@ void MPM::setSolver() {
 	solver = Input::getSolver();
 	solver->registerMesh(&mesh);
 	solver->registerBodies(&bodies);
+	solver->registerParticles(&particles);
+	solver->registerTerrainContact(terrainContact);
 }
 
 void MPM::setInterpolationFunctions() {
@@ -139,12 +142,37 @@ void MPM::setupMesh() {
 	// create the mesh
 	mesh.createGrid(ModelSetup::getTwoPhaseActive());
 
+	// compute the nodal volumes
+	mesh.computeNodeVolumes();
+
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
 	if (ModelSetup::getTwoPhaseActive()){
 		// configure the mesh boundary conditions of fluid
 		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
+	}
+}
+
+void MPM::setupTerrainContact()
+{
+	// verity if terrain contact active
+	bool terrainContactActive = Input::getTerrainContactActive();
+	ModelSetup::setTerrainContactActive(terrainContactActive);
+	if (!terrainContactActive) { return;}
+
+	// configure STL mesh for terrain contact
+	string stlMeshFile = Input::getSTLMeshFile();
+	if (stlMeshFile!=""){
+		// create mesh pointer
+		STLReader* stlMesh = new STLReader;
+		stlMesh->read(stlMeshFile);
+
+		// set stl mesh in terrain contact
+		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());
+
+		// compute distance level set function
+		terrainContact->computeDistanceLevelSetFunction(&mesh);
 	}
 }
 
@@ -310,8 +338,11 @@ void MPM::createModel() {
 		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
 
-		// setup the mesh
+		// setup the background mesh
 		setupMesh();
+
+		// setup terrain contact
+		setupTerrainContact();
 
 		// setup the material list
 		setupMaterialList();

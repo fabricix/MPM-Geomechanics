@@ -18,6 +18,7 @@ using std::cout;
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "TerrainContact.h"
 
 SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
 
@@ -33,7 +34,6 @@ void SolverExplicitUSL::Solve()
 	// solve in time
 	while (iTime < time)
 	{
-
 		// write results in the result step
 		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
@@ -99,6 +99,25 @@ void SolverExplicitUSL::Solve()
 
 		// update particle stress
 		Update::particleStress(bodies);
+
+		// contact treatment
+		if (ModelSetup::getTerrainContactActive())
+		{
+			// calculate the distance level set function to particles
+			terrainContact->particleDistanceLevelSet(mesh, particles);
+
+			// calculate the nodal density level-set
+			terrainContact->nodalDensityLevelSet(mesh, particles);
+
+			// interpolate the density at the center of triangles
+			terrainContact->trianglesDensityLevelSet(mesh);
+
+			// determine the contact potential pairs
+			terrainContact->determineContactPotentialPairs(mesh, particles);
+
+			// compute the contact forces and correct velocities
+			terrainContact->computeContactForces(particles, dt);
+		}
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
