@@ -113,11 +113,10 @@ mpm-geomechanics/
 │  ├─ make/
 │  ├─ msbuild/
 │  ├─ testing/
-│  │  ├─ build/ ---> "The commands must be executed here"
-│  │  │  ├─ CMakeLists.txt
-
+│  │  ├─ CMakeLists.txt
+│  │  ├─ build/
 ```
-The commands must be executed in the `/build/testing/build` directory, otherwise, the process will produce an error.
+The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
 
 ```
 cmake -G "MinGw Makefiles" ..
