@@ -11,11 +11,14 @@ Contact::Contact() { }
 
 Contact::~Contact() { }
 
+// First contact check
 void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	
-	int nNodes = mesh->getNumNodes();
-	int nBodies = bodies->size();
+	// get number of nodes and bodies
+	int nNodes = (int) mesh->getNumNodes();
+	int nBodies = (int) bodies->size();
 
+	// create contact matrix
 	vector<vector<int>> contactMatrix(nNodes, vector<int>(nBodies, 0));
 	
 	// for each body
@@ -37,7 +40,9 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			for (int j = 0; j < contributions->size(); j++) {
 				
 				int nodeId = contributions->at(j).getNodeId();
-				if (contributions->at(j).getWeight() > 0.0 and contactMatrix[nodeId][ibody] == 0) {
+				
+				// check any weight for node
+				if (contributions->at(j).getWeight() > 0.0 && contactMatrix[nodeId][ibody] == 0) {
 					contactMatrix[nodeId][ibody] = 1;
 				}
 			}
@@ -47,11 +52,13 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	// for each node
 	for (int i = 0; i < nNodes; i++) {
 		
+		// check if any body contributed to node i
 		int contactBodyId = -1;
 		int contactBodySlaveId = -1;
 		
 		for (int j = 0; j < nBodies; j++){
-			if (contactMatrix[i][j] == 1) { 
+			if (contactMatrix[i][j] == 1) 
+			{ 
 				//verifies if any bodies contributed to node i
 				if (contactBodyId >= 0) {
 					contactBodySlaveId = j;
@@ -61,16 +68,16 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 					contactBodyId = j;
 				}
 			}
-			
 		}
+
+		// set contact status
 		Node* node = mesh->getNodes()->at(i);
 		
-		if (contactBodySlaveId >= 0) {
-
+		if (contactBodySlaveId >= 0) 
+		{
 			node->setContactStatus(true);
 			ModelSetup::setContactActive(true);
 			node->setContactBodies(contactBodyId, contactBodySlaveId);
-			
 		}
 		else
 		{
@@ -79,10 +86,12 @@ void Contact::firstContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
-	int nNodes = mesh->getNumNodes();
-	int nBodies = bodies->size();
-
+// Second contact check
+void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) 
+{
+	// get number of nodes and bodies 
+	int nNodes = (int) mesh->getNumNodes();
+	int nBodies = (int) bodies->size();
 
 	//for each body
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {
@@ -116,26 +125,29 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 				Vector3d PNVector = pPosition - nCoordinates;
 			
 				if (node->getContactStatus()) {
+
 					//check if the body is set as slave
 					if (ibody == node->getContactBodyId(1)) {
-						//get closest distance to slave body
+					
+						// get closest distance to slave body
 						double d = node->getClosestParticleDistanceSlave();
 						
-						//get normal vector
+						// get normal vector
 						Vector3d n = -*node->getUnitNormalTotal();
 						
 
-						//particle-node distance
+						// particle-node distance
 						double dPN = -n.dot(PNVector);
 
+						// check if the distance is the closest
 						if (dPN < 0.0) {
-							int a = 0;
+							int a = 0; // TODO: remove this line? what is the purpose of this line?
 						}
-
-						if (dPN < d and dPN >= 0.0) {
+						// check if the distance is the closest
+						if (dPN < d && dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistanceSlave(dPN);
-							node->PB = particles->at(i)->getId();
+							node->PB = particles->at(i)->getId(); // TODO: what is PB?
 						}
 					}
 					else {
@@ -149,10 +161,10 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 						double dPN = -n.dot(PNVector);
 
 						if (dPN < 0.0) {
-							int a = 0;
+							int a = 0; // TODO: remove this line? what is the purpose of this line?
 						}
 
-						if (dPN < d and dPN >= 0.0) {
+						if (dPN < d && dPN >= 0.0) {
 							//set closest distance to body
 							node->setClosestParticleDistance(dPN);
 							node->PA = particles->at(i)->getId();
@@ -163,34 +175,43 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 
-
 	//for each grid node
 	for (int iNode = 0; iNode < nNodes; iNode++) {
 		
-		if (iNode == 263) {
+		if (iNode == 263) { // TODO: node 263 is not being used, remove this line?
 			int a = 1;
 		}
 		Node* node = mesh->getNodes()->at(iNode);
 
 		if (node->getContactStatus()) {
 			node->setSecondContactStatus(true);
+			
 			//for each body
 			int contactBodyIdA = node->getContactBodyId(0);
 			int contactBodySlaveIdB = node->getContactBodyId(1);
 
+			// get nodal momentum
 			Vector3d momentumA = node->getMomentum();
 			Vector3d momentumB = *node->getMomentumSlave();
+
+			// get nodal mass
 			double massA = node->getMass();
 			double massB = node->getMassSlave();
 
+			// get normal vector
 			Vector3d n = *node->getUnitNormalTotal();
 
+			// calculate velocity vectors
 			Vector3d vA = momentumA / massA;
 			Vector3d vB = momentumB / massB;
+
+			// calculate center of mass velocity
 			Vector3d vCM = (momentumA + momentumB) / (massA + massB);
 
-
+			// TODO: what is the purpose of this block of code?
 			if (n.dot(massB*momentumA - massA*momentumB) <= 0.0) {
+
+				// TODO thee lines are repeated in the next block of code, can we remove this block?
 				node->setSecondContactStatus(false);
 				node->setUnitNormalTotal(Vector3d(0, 0, 0));
 				node->setNormal(Vector3d(0, 0, 0));
@@ -209,74 +230,75 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			}
 		}
 	}
-
 }
-
 
 void Contact::checkContact(Mesh* mesh, vector<Body*>* bodies) {
 	ModelSetup::setContactActive(false);
 	firstContactCheck(mesh, bodies);
 }
 
-
-
-
 void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	secondContactCheck(mesh, bodies);
 
-	int nNodes = mesh->getNumNodes();
-	int nBodies = bodies->size();
+	// get number of nodes and bodies
+	int nNodes = (int) mesh->getNumNodes();
+	int nBodies = (int) bodies->size();
 	
-
 	//for each grid node
 	for (int iNode = 0; iNode < nNodes; iNode++) {
 
 		Node* node = mesh->getNodes()->at(iNode);
 		
-		if (node->getSecondContactStatus()) {
+		if (node->getSecondContactStatus()) 
+		{
 			if (!ModelSetup::getSecondContactActive())
 			{
 				ModelSetup::setSecondContactActive(true);
 			}
 
+			// get contact bodies
 			int bodyA = node->getContactBodyId(0);
-
 			int bodyB = node->getContactBodyId(1);
 
+			// TODO: the friction coefficient must be obtained from the material of the particles, not the bodies
 			double mu = std::max(bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient(), bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient());
 
+			// get nodal mass and momentum
 			double massA = node->getMass();
 			double massB = node->getMassSlave();
 			Vector3d momentumA = node->getMomentum();
 			Vector3d momentumB = *node->getMomentumSlave();
 
+			// calculate contact force
 			Vector3d f = (massA*momentumB - massB*momentumA) / (massA + massB) / dt;
-
+			// normal vector
 			Vector3d n = *node->getUnitNormalTotal();
-
+			
+			// calculate normal force
 			Vector3d fn = f.dot(n)*n;
-
+			// calculate tangential force
 			Vector3d ft = f - fn;
-
+			
+			// apply friction
 			if (ft.norm() > 0) {
 				ft = std::min(ft.norm(), mu * fn.norm()) * ft / ft.norm();
 			}
 
+			// set the contact force
 			f = ft + fn;
-
 			node->setContactForce(f);
 
 			//add the contact force to the total force
 			node->addContactForce();
 		}
-
 	}
 }
 
 void Contact::setParticlesInContact(Mesh* mesh, vector<Body*>* bodies) {
 
-	int nNodes = mesh->getNumNodes();
-	int nBodies = bodies->size();
+	// get number of nodes and bodies
+	int nNodes = (int) mesh->getNumNodes();
+	int nBodies = (int) bodies->size();
 
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {
 
@@ -306,10 +328,9 @@ void Contact::setParticlesInContact(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-
 void Contact::resetParticlesInContact(vector<Body*>* bodies) {
 
-	int nBodies = bodies->size();
+	int nBodies = (int) bodies->size();
 
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {
 
@@ -322,5 +343,4 @@ void Contact::resetParticlesInContact(vector<Body*>* bodies) {
 			particles->at(i)->setContact(false);
 		}
 	}
-
 }
