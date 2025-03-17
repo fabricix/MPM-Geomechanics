@@ -103,7 +103,7 @@ The tests use **GoogleTest**. It is necessary to import this library by cloning 
 cd external
 git clone https://github.com/google/googletest.git
 ```
-### How to Compile the tests
+### How to Compile the Tests
 Then, it is necessary to **compile** the tests with the `CMakeLists.txt` located in the directory `/build/testing`. Your directory must have the following structure:
 
 ```
@@ -124,4 +124,4 @@ cmake -G "MinGw Makefiles" ..
 cmake --build .
 ```
 
-This command will generate an .exe file named `MPM-Test.exe`.
+These commands will generate a .exe file named `MPM-Test.exe`.
