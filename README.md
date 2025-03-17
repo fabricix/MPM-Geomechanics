@@ -87,24 +87,37 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 The testing requires installing CMake as a compiler. 
 
-For Windows, you can use the following command in PowerShell to install CMake:
+For **Windows**, you can use the following command in PowerShell to install CMake:
 ```
 winget install -e --id Kitware.CMake
 ```
 
-For Linux (Debian), you can use the following command:
+For **Linux** (Debian), you can use the following command:
 ```
 sudo apt install cmake
 ```
 
-The tests use GoogleTest. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
 cd external
 git clone https://github.com/google/googletest.git
 ```
+### How to Compile the tests
+Then, it is necessary to **compile** the tests with the `CMakeLists.txt` located in the directory `/build/testing`. Your directory must have the following structure:
 
-Then, it is necessary to compile the tests with the `CMakeLists.txt` located in the directory `/build/testing`. In the directory `build/testing`, there must be a "build" folder, where you can execute the following commands:
+```
+mpm-geomechanics/
+├─ build/
+│  ├─ CMakeFiles/
+│  ├─ make/
+│  ├─ msbuild/
+│  ├─ testing/
+│  │  ├─ build/ ---> "The commands must be executed here"
+│  │  │  ├─ CMakeLists.txt
+
+```
+The commands must be executed in the `/build/testing/build` directory, otherwise, the process will produce an error.
 
 ```
 cmake -G "MinGw Makefiles" ..
