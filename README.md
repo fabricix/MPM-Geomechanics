@@ -85,18 +85,27 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 ## Testing
 
-The testing requires installing CMake as a compiler. 
+The testing requires installing CMake and MinGW as a compiler (GCC). 
 
-For **Windows**, you can use the following command in PowerShell to install CMake:
+### WINDOWS
+1. For Windows, you can use the following command in PowerShell to install **CMake**:
 ```
 winget install -e --id Kitware.CMake
 ```
+2. In the following [link](https://sourceforge.net/projects/mingw/), you can find an **installer for MinGW**, which contains an implementation of GCC.
 
-For **Linux** (Debian), you can use the following command:
+### Linux (Ubuntu/Debian)
+1. For Linux (Debian), you can use the following command to install **CMake**:
 ```
 sudo apt install cmake
 ```
+2. You can use the following command to install **MinGW**: 
 
+```
+sudo apt install mingw-w64
+```
+
+### GoogleTest Usage
 The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
@@ -104,7 +113,7 @@ cd external
 git clone https://github.com/google/googletest.git
 ```
 ### How to Compile the Tests
-Then, it is necessary to **compile** the tests with the `CMakeLists.txt` located in the directory `/build/testing`. Your directory must have the following structure:
+Your directory must have the following structure:
 
 ```
 mpm-geomechanics/
