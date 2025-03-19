@@ -45,16 +45,14 @@
             "id": 1,
             "young": 100e6,
             "density": 2700,
-            "poisson": 0.25,
-            "mu": 0.3
+            "poisson": 0.25
         },
         "elastic2": {
             "type": "elastic",
             "id": 2,
             "young": 100e6,
             "density": 2700,
-            "poisson": 0.25,
-            "mu": 0.1
+            "poisson": 0.25
         }
     },
 
@@ -65,7 +63,8 @@
             "point_p1": [ 0.0, 0.0, 0.0 ],
             "point_p2": [ 6.0, 1.0, 0.5 ],
             "material_id": 1,
-            "initial_velocity": [ 0, 0, 0 ]
+            "initial_velocity": [ 0, 0, 0 ],
+            "mu": 0.1
         },        
         "body_2": {
             "type": "cuboid",
@@ -73,7 +72,8 @@
             "point_p1": [ 0.5, 0.0, 0.5 ],
             "point_p2": [ 2.5, 1.0, 1.5 ],
             "material_id": 2,
-            "initial_velocity": [ 0, 0, 0 ]
+            "initial_velocity": [ 0, 0, 0 ],
+            "mu": 0.1
         }
     }
 }

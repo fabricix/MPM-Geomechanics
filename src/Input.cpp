@@ -348,7 +348,7 @@ vector<Material*> Input::getMaterialList(){
 						double mu = 0.0; if ((*it)["mu"].is_number()) { mu = ((*it)["mu"]); }
 						
 						// create a new elastic material
-						material = new Elastic(id, density, mu, young, poisson);
+						material = new Elastic(id, density, young, poisson);
 					}
 
 					// mohr-coulomb material
@@ -381,7 +381,7 @@ vector<Material*> Input::getMaterialList(){
 						}
 						
 						// create a new material
-						material = new MohrCoulomb(id, density, mu, young, poisson, friction, cohesion, dilation, tensile, softening);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
 					}
 
 					// set up the two phases parameters
@@ -484,6 +484,15 @@ vector<Body*> Input::getBodyList(){
 					initial_velocity(2) = (*it)["initial_velocity"][2];
 				}
 
+				//friction coefficient
+				int mu = 0;
+				if ((*it)["mu"].is_number())
+				{
+					mu = ((*it)["mu"]);
+				}
+				else
+					throw(0);
+
 				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
 				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
 				if ((*it)["particles_per_direction"].is_array()) {
@@ -503,14 +512,15 @@ vector<Body*> Input::getBodyList(){
 					iBody->setMaterialId(material_id);
 					iBody->setInitialVelocity(initial_velocity);
 					iBody->setParticlesPerDirection(particles_in_direction);
+					iBody->setFrictionCoefficient(mu);
 				}
 
 				bodies.push_back(iBody);
 }
 
 
-				// cuboid body
-				if ((*it)["type"] == "cuboid") {
+			// cuboid body
+			if ((*it)["type"] == "cuboid") {
 
 					// body id
 					int id=0; 
@@ -560,6 +570,15 @@ vector<Body*> Input::getBodyList(){
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
 
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
+					}
+					else
+						throw(0);
+
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
@@ -573,13 +592,14 @@ vector<Body*> Input::getBodyList(){
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
 						iBody->setInitialVelocity(initial_velocity);
+						iBody->setFrictionCoefficient(mu);
 					}
 
 					bodies.push_back(iBody);
 				}
 
-				// 2d polygon type
-				if ((*it)["type"] == "polygon_2d") {
+			// 2d polygon type
+			if ((*it)["type"] == "polygon_2d") {
 
 					// body id
 					int id=0; 
@@ -594,6 +614,15 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) 
 					{
 					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
 					}
 					else
 						throw(0);
@@ -656,6 +685,7 @@ vector<Body*> Input::getBodyList(){
 								iBody->setExtrudeDirection(extrude_direction);
 								iBody->setExtrudeDisplacement(extrude_displacement);
 								iBody->setDiscretizationLength(discretization_length);
+								iBody->setFrictionCoefficient(mu);
 							}
 						
 							bodies.push_back(iBody);
@@ -667,8 +697,8 @@ vector<Body*> Input::getBodyList(){
 						throw(0);
 				}
 
-				// particle list body type
-				if ((*it)["type"]=="particles")
+			// particle list body type
+			if ((*it)["type"]=="particles")
 				{
 					// body id
 					int id=0; 
@@ -683,6 +713,15 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) 
 					{
 					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
 					}
 					else
 						throw(0);
@@ -766,6 +805,7 @@ vector<Body*> Input::getBodyList(){
 							particle_list.push_back(is_two_phase ? (new ParticleMixture(pt1,NULL,particleSize)) : (new Particle(pt1,NULL,particleSize)));
 						}
 						iBody->insertParticles(particle_list);
+						iBody->setFrictionCoefficient(mu);
 					}
 					bodies.push_back(iBody);
 				}

@@ -186,9 +186,6 @@ public:
     /// contactBodySlaveId
     virtual inline const int getContactBodyId(int pos) const {return  (pos == 0) ? this->contactBodyId : this->contactBodySlaveId; }
 
-    int PA;
-    int PB;
-
 private:
 
     double massSlaveBody; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$

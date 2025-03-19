@@ -140,14 +140,9 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies)
 						double dPN = -n.dot(PNVector);
 
 						// check if the distance is the closest
-						if (dPN < 0.0) {
-							int a = 0; // TODO: remove this line? what is the purpose of this line?
-						}
-						// check if the distance is the closest
 						if (dPN < d && dPN >= 0.0) {
 							//set closest distance to slave body
 							node->setClosestParticleDistanceSlave(dPN);
-							node->PB = particles->at(i)->getId(); // TODO: what is PB?
 						}
 					}
 					else {
@@ -160,14 +155,9 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies)
 						//particle-node distance
 						double dPN = -n.dot(PNVector);
 
-						if (dPN < 0.0) {
-							int a = 0; // TODO: remove this line? what is the purpose of this line?
-						}
-
 						if (dPN < d && dPN >= 0.0) {
 							//set closest distance to body
 							node->setClosestParticleDistance(dPN);
-							node->PA = particles->at(i)->getId();
 						}
 					}
 				}
@@ -178,9 +168,6 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies)
 	//for each grid node
 	for (int iNode = 0; iNode < nNodes; iNode++) {
 		
-		if (iNode == 263) { // TODO: node 263 is not being used, remove this line?
-			int a = 1;
-		}
 		Node* node = mesh->getNodes()->at(iNode);
 
 		if (node->getContactStatus()) {
@@ -208,14 +195,8 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies)
 			// calculate center of mass velocity
 			Vector3d vCM = (momentumA + momentumB) / (massA + massB);
 
-			// TODO: what is the purpose of this block of code?
 			if (n.dot(massB*momentumA - massA*momentumB) <= 0.0) {
-
-				// TODO thee lines are repeated in the next block of code, can we remove this block?
 				node->setSecondContactStatus(false);
-				node->setUnitNormalTotal(Vector3d(0, 0, 0));
-				node->setNormal(Vector3d(0, 0, 0));
-				node->setNormalSlave(Vector3d(0, 0, 0));
 			}
 			else {
 				// contact correction
@@ -223,9 +204,6 @@ void Contact::secondContactCheck(Mesh* mesh, vector<Body*>* bodies)
 				double contactDistance = node->getClosestParticleDistance() + node->getClosestParticleDistanceSlave();
 				if (contactDistance > 0.5 * cellDimension) {
 					node->setSecondContactStatus(false);
-					node->setUnitNormalTotal(Vector3d(0, 0, 0));
-					node->setNormal(Vector3d(0, 0, 0));
-					node->setNormalSlave(Vector3d(0, 0, 0));
 				}
 			}
 		}
@@ -260,8 +238,8 @@ void Contact::contactForce(Mesh* mesh, vector<Body*>* bodies, double dt) {
 			int bodyA = node->getContactBodyId(0);
 			int bodyB = node->getContactBodyId(1);
 
-			// TODO: the friction coefficient must be obtained from the material of the particles, not the bodies
-			double mu = std::max(bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient(), bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient());
+			// get friction coefficient
+			double mu = std::min(bodies->at(bodyB)->getFrictionCoefficient(), bodies->at(bodyA)->getFrictionCoefficient());
 
 			// get nodal mass and momentum
 			double massA = node->getMass();
