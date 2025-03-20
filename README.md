@@ -128,7 +128,7 @@ mpm-geomechanics/
 The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
 
 ```
-cmake -G "MinGw Makefiles" ..
+cmake -G "MinGW Makefiles" ..
 cmake --build .
 ```
 
