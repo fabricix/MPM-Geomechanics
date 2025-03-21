@@ -99,10 +99,11 @@ winget install -e --id Kitware.CMake
 ```
 sudo apt install cmake
 ```
-2. You can use the following command to install **MinGW**: 
+2. Verify that you have **Unix Makefiles** and **make**:
 
 ```
-sudo apt install mingw-w64
+cmake -G        # Must show a list of generators, where you must find **Unix Makefiles**
+make --version  # Must show make's version. If it isn't exists, installed with: sudo apt install make
 ```
 
 ### GoogleTest Usage
@@ -127,9 +128,18 @@ mpm-geomechanics/
 ```
 The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
 
+### Windows
 ```
 cmake -G "MinGW Makefiles" ..
 cmake --build .
 ```
 
 These commands will generate a .exe file named `MPM-Test.exe`.
+
+### Linux (Ubuntu/Debian)
+```
+cmake ..
+cmake --build .
+```
+
+These commands will generate a executable file named `MPM-Test`.
