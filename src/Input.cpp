@@ -730,19 +730,6 @@ vector<Body*> Input::getBodyList(){
 					else
 						throw(0);
 
-					// particle length
-					std::vector<double> particles_length;
-					if ((*it)["particles"]["length"].is_array()) 
-					{
-					 	for (size_t i = 0; i < (*it)["particles"]["length"].size(); ++i)
-					 	{
-					 		// particle length
-					 		particles_length.push_back((*it)["particles"]["length"].at(i));
-					 	}
-					}
-					else
-						throw(0);
-
 					// create the body
 					BodyParticle* iBody = new BodyParticle();
 
@@ -760,8 +747,8 @@ vector<Body*> Input::getBodyList(){
 						for (size_t i = 0; i < n_particles; ++i)
 						{
 							Vector3d pt1 = particles_position.at(i);
-							Vector3d particleSize(particles_length.at(i),particles_length.at(i),particles_length.at(i));
-							particle_list.push_back(is_two_phase ? (new ParticleMixture(pt1,NULL,particleSize)) : (new Particle(pt1,NULL,particleSize)));
+							double particleSize = std::pow(particles_volume.at(i), 1.0/3.0);
+							particle_list.push_back( is_two_phase ? (new ParticleMixture(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))) : (new Particle(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))));
 						}
 						iBody->insertParticles(particle_list);
 					}
