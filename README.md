@@ -102,8 +102,8 @@ sudo apt install cmake
 2. Verify that you have **Unix Makefiles** and **make**:
 
 ```
-cmake -G        # Must show a list of generators, where you must find **Unix Makefiles**
-make --version  # Must show make's version. If it isn't exists, installed with: sudo apt install make
+cmake -G        # Should show a list of generators, where you must find **Unix Makefiles**
+make --version  # Should show the version of make. If it isn't installed, use: sudo apt install make
 ```
 
 ### GoogleTest Usage
@@ -138,7 +138,7 @@ These commands will generate a .exe file named `MPM-Test.exe`.
 
 ### Linux (Ubuntu/Debian)
 ```
-cmake ..
+cmake -G "Unix Makefiles" ..
 cmake --build .
 ```
 
