@@ -1,0 +1,61 @@
+{
+  "stress_scheme_update":"USL",
+
+  "shape_function":"GIMP",
+
+  "time":0.15,
+
+  "time_step":0.01,
+
+  "gravity":[0.0,0.0,-9.81],
+
+  "n_threads":1,
+
+  "results":
+  {
+    "print":10,
+    "fields":["id","displacement","material","active","body"]
+  },
+
+  "n_phases":1,
+
+  "mesh":
+  { 
+    "cells_dimension":[1,1,1],
+    "cells_number":[10,10,10],
+    "origin":[0,0,0],
+    
+    "boundary_conditions":
+    {
+      "plane_X0":"sliding",
+      "plane_Y0":"sliding",
+      "plane_Z0":"sliding",
+      "plane_Xn":"sliding",
+      "plane_Yn":"sliding",
+      "plane_Zn":"sliding"
+    }
+  },
+
+  "material":
+  {
+    "elastic":
+    {
+      "type":"elastic",
+      "id":1,
+      "young":10e1,
+      "density":2600,
+      "poisson":0.3
+    }
+  },
+
+  "body":
+  {
+    "body_particles_from_file":
+    {
+      "type": "particles_from_file",
+      "id": 1,
+      "material_id": 1,
+      "file": "particle_list.json"
+    }
+  }
+}
