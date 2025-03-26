@@ -106,26 +106,22 @@ $(document).ready(function(){initNavTree('Integration_8h_source.html',''); initR
   <div class="headertitle"><div class="title">Integration.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="Integration_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Integration.h</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *  Created on: 13 de abr de 2021</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> *      Author: Fabricio Fernandez &lt;fabricio.hmf@gmail.com&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef INTEGRATION_H_</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define INTEGRATION_H_</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="Mesh_8h.html">Mesh/Mesh.h</a>&quot;</span></div>
+<a href="Integration_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// SPDX-License-Identifier: MIT</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">// Copyright (c) 2021-2025 MPM-Geomechanics Development Team</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifndef INTEGRATION_H_</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#define INTEGRATION_H_</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="Mesh_8h.html">Mesh/Mesh.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceIntegration.html">Integration</a> {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceIntegration.html">Integration</a> {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9">   20</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9">nodalMomentum</a>(<a class="code hl_class" href="classMesh.html">Mesh</a>* mesh, <span class="keywordtype">double</span> dt);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif </span><span class="comment">/* INTEGRATION_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9">   16</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9">nodalMomentum</a>(<a class="code hl_class" href="classMesh.html">Mesh</a>* mesh, <span class="keywordtype">double</span> dt);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#endif </span><span class="comment">/* INTEGRATION_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aMesh_8h_html"><div class="ttname"><a href="Mesh_8h.html">Mesh.h</a></div></div>
-<div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdoc">Class representing a rectangular grid mesh.</div><div class="ttdef"><b>Definition</b> Mesh.h:30</div></div>
+<div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdoc">Class representing a rectangular grid mesh.</div><div class="ttdef"><b>Definition</b> Mesh.h:26</div></div>
 <div class="ttc" id="anamespaceIntegration_html"><div class="ttname"><a href="namespaceIntegration.html">Integration</a></div><div class="ttdoc">Represents the integration operations in the MPM.</div></div>
 <div class="ttc" id="anamespaceIntegration_html_aafb00ee10cc8471da1bbbc1b05e481e9"><div class="ttname"><a href="namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9">Integration::nodalMomentum</a></div><div class="ttdeci">void nodalMomentum(Mesh *mesh, double dt)</div><div class="ttdoc">Integrate the nodal momentum.</div></div>
 </div><!-- fragment --></div><!-- contents -->
