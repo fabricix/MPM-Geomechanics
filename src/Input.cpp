@@ -501,8 +501,6 @@ vector<Body*> Input::getBodyList(){
 
 				bodies.push_back(iBody);
 }
-
-
 				// cuboid body
 				if ((*it)["type"] == "cuboid") {
 
@@ -659,6 +657,78 @@ vector<Body*> Input::getBodyList(){
 					}
 					else
 						throw(0);
+				}
+
+				// particle list from external file
+				if ((*it)["type"] == "particles_from_file") {
+					// body id
+					int id = 0;
+					if ((*it)["id"].is_number()) {
+						id = ((*it)["id"]);
+					} else {
+						throw(0);
+					}
+
+					// material id
+					int material_id = 0;
+					if ((*it)["material_id"].is_number()) {
+						material_id = ((*it)["material_id"]);
+					} else {
+						throw(0);
+					}
+
+					// external file name
+					std::string filename;
+					if ((*it)["file"].is_string()) {
+						filename = (*it)["file"];
+					} else {
+						throw(0);
+					}
+
+					// open the file
+					std::ifstream file_stream(filename);
+					if (!file_stream.is_open()) {
+						Warning::printMessage("Cannot open particle JSON file: " + filename);
+						throw(0);
+					}
+
+					json json_particles;
+					file_stream >> json_particles;
+
+					// particle list
+					std::vector<Vector3d> particles_position;
+					std::vector<double> particles_volume;
+
+					for (const auto& p : json_particles) {
+						if (!p.contains("position") || !p.contains("volume")) {
+							Warning::printMessage("Invalid particle format in: " + filename);
+							throw(0);
+						}
+						Vector3d pos(p["position"][0], p["position"][1], p["position"][2]);
+						double vol = p["volume"];
+						particles_position.push_back(pos);
+						particles_volume.push_back(vol);
+					}
+
+					// create the body
+					BodyParticle* iBody = new BodyParticle();
+					if (iBody == NULL) {
+						throw(0);
+					} else {
+						iBody->setId(id);
+						iBody->setMaterialId(material_id);
+						bool is_two_phase = ModelSetup::getTwoPhaseActive();
+						std::vector<Particle*> particle_list;
+						for (size_t i = 0; i < particles_position.size(); ++i) {
+							Vector3d pt1 = particles_position[i];
+							double particleSize = std::pow(particles_volume[i], 1.0 / 3.0);
+							particle_list.push_back(is_two_phase ?
+								new ParticleMixture(pt1, NULL, Vector3d(particleSize, particleSize, particleSize)) :
+								new Particle(pt1, NULL, Vector3d(particleSize, particleSize, particleSize)));
+						}
+						iBody->insertParticles(particle_list);
+					}
+					bodies.push_back(iBody);
 				}
 
 				// particle list body type

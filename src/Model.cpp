@@ -97,8 +97,14 @@ namespace ModelSetup {
 	// results
 	unsigned getResultNum() { return resultNumber; }
 	void setResultNum(unsigned d) { resultNumber=d; }
-	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
-
+	
+	unsigned getResultSteps() {
+		unsigned totalSteps = static_cast<unsigned>(floor(time / dt));
+		if (resultNumber == 0) return 1;
+		unsigned resultSteps = totalSteps / resultNumber;
+		return std::max(1u, resultSteps);
+	}
+	
 	// time step
 	double getTimeStep() { return dt; }
 	void setTimeStep(double d) { dt=d; }
