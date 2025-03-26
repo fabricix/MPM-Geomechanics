@@ -92,7 +92,7 @@ The testing requires installing CMake and MinGW as a compiler (GCC).
 ```
 winget install -e --id Kitware.CMake
 ```
-2. In the following [link](https://sourceforge.net/projects/mingw/), you can find an **installer for MinGW**, which contains an implementation of GCC.
+2. In the following [link](https://www.msys2.org/), you can find an **installer for MinGW** via MSYS2, which contains an implementation of GCC. **You must follow the instructions up to step 6**. When you finish the instructions, the command `g++ --version` should show the GCC version.
 
 ### Linux (Ubuntu/Debian)
 1. For Linux (Debian), you can use the following command to install **CMake**:
