@@ -1,9 +1,5 @@
-/*
- * ParticleMixture.cpp
- *
- *  Created on: 22 de jul de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include <Particle/ParticleMixture.h>
 #include <Eigen/Dense>

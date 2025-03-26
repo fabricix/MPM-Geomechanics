@@ -1,9 +1,5 @@
-/*
- * BodySphere.h
- *
- *  Created on: 30 de ago de 2024
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef BODYSPHERE_H_
 #define BODYSPHERE_H_

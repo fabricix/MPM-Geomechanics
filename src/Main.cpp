@@ -1,9 +1,5 @@
-/*
- * Main.cpp
- *
- *  Created on: Sun Jun  6 10:03:58 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include <iostream>
 using std::cout;

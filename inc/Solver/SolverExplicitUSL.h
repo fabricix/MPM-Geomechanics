@@ -1,9 +1,5 @@
-/*
- * SolverExplicitUSL.h
- *
- *  Created on: 13 de mai de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef SOLVEREXPLICITUSL_H_
 #define SOLVEREXPLICITUSL_H_

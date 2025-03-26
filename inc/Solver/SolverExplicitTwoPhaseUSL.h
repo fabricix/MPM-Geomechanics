@@ -1,9 +1,5 @@
-/*
- * SolverExplicitTwoPhaseUSL.h
- *
- *  Created on: 2 de ago de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef SOLVEREXPLICITTWOPHASEUSL_H_
 #define SOLVEREXPLICITTWOPHASEUSL_H_

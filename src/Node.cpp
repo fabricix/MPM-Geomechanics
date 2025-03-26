@@ -1,9 +1,5 @@
-/*
- * Node.cpp
- *
- *  Created on: 3 de jun de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Model.h"
 #include "Mesh/Node.h"

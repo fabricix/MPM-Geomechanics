@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 #ifndef TERRAIN_CONTACT_H
 #define TERRAIN_CONTACT_H
 
