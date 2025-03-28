@@ -13,7 +13,7 @@ private:
     
     double frictionCoefficient; ///< Friction coefficient \f$\mu\f$
 
-    STLReader* stlMesh; //!< triangular mesh for terrain contact
+    STLReader* stlMesh; //!< triangular mesh for terrain contact 
 
     std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 

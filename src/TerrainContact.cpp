@@ -9,67 +9,99 @@
 
 #include <utility>  // std::pair
 
+/**
+ * @brief Compute the minimum distance from a point to a triangle in 3D.
+ *
+ * This function determines the shortest distance between a point `p` and a triangle
+ * defined by the vertices `a`, `b`, and `c`. It handles all spatial regions around the triangle,
+ * including:
+ *  - Vertices: returns distance to the closest vertex if the projection falls outside.
+ *  - Edges: computes projection onto triangle edges and returns minimum distance if within bounds.
+ *  - Inside: if the orthogonal projection of the point falls inside the triangle, 
+ *    returns perpendicular distance to the triangle's plane.
+ *
+ * @param p The point from which the distance is calculated.
+ * @param a First vertex of the triangle.
+ * @param b Second vertex of the triangle.
+ * @param c Third vertex of the triangle.
+ * @return The shortest (unsigned) distance from point `p` to the triangle `abc`.
+ */
+double pointTriangleDistance(const Vector3d& p, const Vector3d& a, const Vector3d& b, const Vector3d& c) {
+    // edges
+    Vector3d ab = b - a;
+    Vector3d ac = c - a;
+    Vector3d ap = p - a;
+
+    double d1 = ab.dot(ap);
+    double d2 = ac.dot(ap);
+    if (d1 <= 0.0 && d2 <= 0.0) return (p - a).norm(); // closest to a
+
+    Vector3d bp = p - b;
+    double d3 = ab.dot(bp);
+    double d4 = ac.dot(bp);
+    if (d3 >= 0.0 && d4 <= d3) return (p - b).norm(); // closest to b
+
+    double vc = d1 * d4 - d3 * d2;
+    if (vc <= 0.0 && d1 >= 0.0 && d3 <= 0.0) {
+        double v = d1 / (d1 - d3);
+        return (p - (a + v * ab)).norm(); // closest to edge AB
+    }
+
+    Vector3d cp = p - c;
+    double d5 = ab.dot(cp);
+    double d6 = ac.dot(cp);
+    if (d6 >= 0.0 && d5 <= d6) return (p - c).norm(); // closest to c
+
+    double vb = d5 * d2 - d1 * d6;
+    if (vb <= 0.0 && d2 >= 0.0 && d6 <= 0.0) {
+        double w = d2 / (d2 - d6);
+        return (p - (a + w * ac)).norm(); // closest to edge AC
+    }
+
+    double va = d3 * d6 - d5 * d4;
+    if (va <= 0.0 && (d4 - d3) >= 0.0 && (d5 - d6) >= 0.0) {
+        double w = (d4 - d3) / ((d4 - d3) + (d5 - d6));
+        return (p - (b + w * (c - b))).norm(); // closest to edge BC
+    }
+
+    // inside triangle
+    Vector3d n = (b - a).cross(c - a).normalized();
+    return std::abs((p - a).dot(n));
+}
+
 void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
 {
-    // get background grid nodes
-    vector<Node*>* gNodes = mesh->getNodes();
+    std::vector<Node*>* gNodes = mesh->getNodes();
+    const std::vector<Triangle>& triangles = stlMesh->getTriangles();
 
-    // get triangles
-    const vector<Triangle>& triangles = stlMesh->getTriangles();
-
-    // iterate over all nodes in the background mesh
-    #pragma omp parallel for shared(gNodes, triangles)
+    #pragma omp parallel for
     for (int i = 0; i < gNodes->size(); ++i)
     {
-        // get node
         Node* node = gNodes->at(i);
+        Eigen::Vector3d nodePos = node->getCoordinates();
 
-        // get node position
-        Vector3d nodePosition = node->getCoordinates();
+        double minAbsDist = std::numeric_limits<double>::max();
+        double signedDist = 0.0;
 
-        // variable to store the minimum positive distance
-        double minPositiveDistance = 1e6;
-
-        // variable to store the maximum negative distance
-        double maxNegativeDistance = -1e6;
-
-        // iterate over all triangles in the STL mesh
         for (const Triangle& triangle : triangles)
         {
-            // get vertices of the triangle
-            Vector3d v1 = triangle.getVertex1();
-            Vector3d v2 = triangle.getVertex2();
-            Vector3d v3 = triangle.getVertex3();
-            Vector3d normal = triangle.getNormal();
-            
-            // calculate the distance from the node to each vertex
-            double d1 = (nodePosition - v1).dot(normal);
-            double d2 = (nodePosition - v2).dot(normal);
-            double d3 = (nodePosition - v3).dot(normal);
+            const auto& v1 = triangle.getVertex1();
+            const auto& v2 = triangle.getVertex2();
+            const auto& v3 = triangle.getVertex3();
+            const auto& n  = triangle.getNormal().normalized();
 
-            // update the minimum positive distance
-            if (d1 > 0.0) {
-                minPositiveDistance = std::min(minPositiveDistance, d1);
-            } else {
-                maxNegativeDistance = std::max(maxNegativeDistance, d1);
-            }
-            if (d2 > 0.0) {
-                minPositiveDistance = std::min(minPositiveDistance, d2);
-            } else {
-                maxNegativeDistance = std::max(maxNegativeDistance, d2);
-            }
-            if (d3 > 0.0) {
-                minPositiveDistance = std::min(minPositiveDistance, d3);
-            } else {
-                maxNegativeDistance = std::max(maxNegativeDistance, d3);
+            double d = pointTriangleDistance(nodePos, v1, v2, v3);
+            double sign = (nodePos - v1).dot(n) < 0.0 ? -1.0 : 1.0;
+            double sd = sign * d;
+
+            if (std::abs(d) < minAbsDist)
+            {
+                minAbsDist = std::abs(d);
+                signedDist = sd;
             }
         }
 
-        // decide which distance to store in the node
-        double finalDistance = (minPositiveDistance < 1e6) ? minPositiveDistance : maxNegativeDistance;
-
-        // store the distance in the node
-        node->setDistanceLevelSet(finalDistance);
+        node->setDistanceLevelSet(signedDist);
     }
 }
 

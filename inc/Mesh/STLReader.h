@@ -64,6 +64,11 @@ public:
     /// @return Vector containing the triangles
     const std::vector<Triangle>& getTriangles() const;
 
+    /// @brief Remove triangles that have all vertices outside the specified bounding box
+    /// @param min Bounding box minimum (x_min, y_min, z_min)
+    /// @param max Bounding box maximum (x_max, y_max, z_max)
+    void removeTrianglesOutsideLimits(const Vector3d& min, const Vector3d& max);
+
 private:
     
     /// @brief Vector containing the triangles

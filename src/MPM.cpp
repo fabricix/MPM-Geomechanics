@@ -164,6 +164,9 @@ void MPM::setupTerrainContact()
 		STLReader* stlMesh = new STLReader;
 		stlMesh->read(stlMeshFile);
 
+		// filtrate outside triangles
+		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
+
 		// set stl mesh in terrain contact
 		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());
 
