@@ -92,14 +92,14 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 | ------------| --------------- | ------------|
 | **Winget**  | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
 | **Git**     | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**   | via Winget  | Build system generator                                                  | 
+| **CMake**   | via Winget  | Build system generator                                                          | 
 | **MSYS2**   | via Winget  | Package manager that includes MinGW                                             | 
-| **MinGW**   | via MSYS2   | Environment for the GCC compiler     
-| **Make**   | via MSYS2   | Compiler Tool compiler                                                |
+| **MinGW**   | via MSYS2   | Environment for the GCC compiler                                                |
+| **Make**    | via MSYS2   | Compiler Tool compiler                                                          |
 
 **Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
 
-1. Install **Git**, **CMake** and **MSYS2** using `winget` by running the following commands: 
+1. Install **Git**, **CMake** and **MSYS2** using `winget` by running the following commands:
 
 ```
 # Git
@@ -112,7 +112,7 @@ winget install -e --id MSYS2.MSYS2 --source winget
 winget install -e --id Kitware.CMake --source winget
 ```
 
-2. Open the `MSYS` console and execute the following commands: 
+2. Open the `MSYS` console and execute the following commands:
 
 ```
 # GCC
@@ -121,7 +121,8 @@ pacman -S mingw-w64-x86_64-gcc
 # Make
 pacman -S mingw-w64-x86_64-make
 ```
-Verify the **environment variables** for the directory ``C:/msys64/mingw64/bin``. If it does not exist, add it. 
+
+Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. If it does not exist, add it.
 Then, in the **console line of windows** (or powershell), you must verify the versiones of each instalation via:
 
 ```
@@ -131,10 +132,13 @@ mingw32-make --version  # Must show the version of GNU make
 ```
 
 ### 2. Linux (Ubuntu/Debian)
+
 1. For Linux (Debian), you can use the following command to install **CMake**:
+
 ```
 sudo apt install cmake
 ```
+
 2. Verify that you have **Unix Makefiles** and **make**:
 
 ```
@@ -143,13 +147,16 @@ make --version  # Should show the version of make. If it isn't installed, use: s
 ```
 
 ### GoogleTest Usage
+
 The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
 cd external
 git clone https://github.com/google/googletest.git
 ```
+
 ## How to Compile the Tests
+
 Your directory must have the following structure:
 
 ```
@@ -162,9 +169,11 @@ mpm-geomechanics/
 │  │  ├─ CMakeLists.txt
 │  │  ├─ build/
 ```
+
 The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
 
 ### Windows
+
 ```
 cmake -G "MinGW Makefiles" ..
 cmake --build .
@@ -173,6 +182,7 @@ cmake --build .
 These commands will generate a .exe file named `MPM-Test.exe`.
 
 ### Linux (Ubuntu/Debian)
+
 ```
 cmake -G "Unix Makefiles" ..
 cmake --build .
