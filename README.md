@@ -138,13 +138,13 @@ g++ --version
 ### 2. Linux (Ubuntu/Debian)
 
 #### 2.1. Programs Required
-| Program     | Installation    | Description | 
-| ------------| --------------- | ------------|
-| **Git**     | via apt  | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**   | via apt  | Build system generator                                                          | 
-| **Make**    | via apt  | Package manager that includes MinGW                                             | 
-| **GCC**     | via apt  |          GNU Compiler Collection                                                |
-| **G++**     | via apt  | C++ Compiler                                                                    |
+| Program     | Installation    | Description                                                                     | 
+| ------------| --------------- | ------------------------------------------------------------------------------- |
+| **Git**     | via apt         | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**   | via apt         | Build system generator                                                          | 
+| **Make**    | via apt         | Package manager that includes MinGW                                             | 
+| **GCC**     | via apt         | GNU Compiler Collection                                                         |
+| **G++**     | via apt         | C++ Compiler                                                                    |
 
 1. Install all the necessary progrmas using `apt` by running the following commands:
 
