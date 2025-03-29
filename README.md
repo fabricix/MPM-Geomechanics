@@ -126,24 +126,45 @@ Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. 
 Then, in the **console line of windows** (or powershell), you must verify the versiones of each instalation via:
 
 ```
-gcc --version   # Must show the version of GCC
-g++ --version   # Must show the version of G++
-mingw32-make --version  # Must show the version of GNU make
+git --version
+cmake --version
+mingw32-make --version 
+gcc --version   
+g++ --version   
 ```
 
 ### 2. Linux (Ubuntu/Debian)
 
-1. For Linux (Debian), you can use the following command to install **CMake**:
+#### 2.1. Programs Required
+| Program     | Installation    | Description | 
+| ------------| --------------- | ------------|
+| **Git**     | via apt  | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**   | via apt  | Build system generator                                                          | 
+| **Make**    | via apt  | Package manager that includes MinGW                                             | 
+| **GCC**     | via apt  |          GNU Compiler Collection                                                |
+| **G++**     | via apt  | C++ Compiler                                                                    |
+
+1. Install all the necessary progrmas using `apt` by running the following commands:
 
 ```
+# Git
+sudo apt install git
+
+# CMake
 sudo apt install cmake
+
+# Make, GCC, G++
+sudo apt install build-essential
 ```
 
-2. Verify that you have **Unix Makefiles** and **make**:
+2. You must verify the versiones of each instalation via:
 
 ```
-cmake -G        # Should show a list of generators, where you must find **Unix Makefiles**
-make --version  # Should show the version of make. If it isn't installed, use: sudo apt install make
+git --version
+cmake --version
+make --version 
+gcc --version   
+g++ --version   
 ```
 
 ### GoogleTest Usage
