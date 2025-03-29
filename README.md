@@ -92,10 +92,10 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 | ------------| --------------- | ------------|
 | **Winget**  | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
 | **Git**     | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**   | via Winget  | Build system generator for C++                                                  | 
+| **CMake**   | via Winget  | Build system generator                                                  | 
 | **MSYS2**   | via Winget  | Package manager that includes MinGW                                             | 
 | **MinGW**   | via MSYS2   | Environment for the GCC compiler     
-| **Make**   | via MSYS2   | Environment for the GCC compiler                                                |
+| **Make**   | via MSYS2   | Compiler Tool compiler                                                |
 
 **Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
 
@@ -130,7 +130,7 @@ g++ --version   # Must show the version of G++
 mingw32-make --version  # Must show the version of GNU make
 ```
 
-### Linux (Ubuntu/Debian)
+### 2. Linux (Ubuntu/Debian)
 1. For Linux (Debian), you can use the following command to install **CMake**:
 ```
 sudo apt install cmake
