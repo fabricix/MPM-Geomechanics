@@ -85,14 +85,50 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 ## Testing
 
-The testing requires installing CMake and MinGW as a compiler (GCC). 
+### 1. WINDOWS
 
-### WINDOWS
-1. For Windows, you can use the following command in PowerShell to install **CMake**:
+#### 1.1. Programs Required
+| Program     | Installation    | Description | 
+| ------------| --------------- | ------------|
+| **Winget**  | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
+| **Git**     | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**   | via Winget  | Build system generator for C++                                                  | 
+| **MSYS2**   | via Winget  | Package manager that includes MinGW                                             | 
+| **MinGW**   | via MSYS2   | Environment for the GCC compiler     
+| **Make**   | via MSYS2   | Environment for the GCC compiler                                                |
+
+**Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
+
+1. Install **Git**, **CMake** and **MSYS2** using `winget` by running the following commands: 
+
 ```
-winget install -e --id Kitware.CMake
+# Git
+winget install -e --id Git.Git -e --source winget
+
+# MSYS2
+winget install -e --id MSYS2.MSYS2 --source winget
+
+# CMake
+winget install -e --id Kitware.CMake --source winget
 ```
-2. In the following [link](https://www.msys2.org/), you can find an **installer for MinGW** via MSYS2, which contains an implementation of GCC. **You must follow the instructions up to step 6**. When you finish the instructions, the command `g++ --version` should show the GCC version.
+
+2. Open the `MSYS` console and execute the following commands: 
+
+```
+# GCC
+pacman -S mingw-w64-x86_64-gcc
+
+# Make
+pacman -S mingw-w64-x86_64-make
+```
+Verify the **environment variables** for the directory ``C:/msys64/mingw64/bin``. If it does not exist, add it. 
+Then, in the **console line of windows** (or powershell), you must verify the versiones of each instalation via:
+
+```
+gcc --version   # Must show the version of GCC
+g++ --version   # Must show the version of G++
+mingw32-make --version  # Must show the version of GNU make
+```
 
 ### Linux (Ubuntu/Debian)
 1. For Linux (Debian), you can use the following command to install **CMake**:
@@ -113,7 +149,7 @@ The tests use **GoogleTest**. It is necessary to import this library by cloning 
 cd external
 git clone https://github.com/google/googletest.git
 ```
-### How to Compile the Tests
+## How to Compile the Tests
 Your directory must have the following structure:
 
 ```
