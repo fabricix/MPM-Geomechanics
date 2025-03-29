@@ -87,17 +87,16 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 ### 1. WINDOWS
 
-#### 1.1. Programs Required
-| Program     | Installation    | Description | 
-| ------------| --------------- | ------------|
-| **Winget**  | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
-| **Git**     | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**   | via Winget  | Build system generator                                                          | 
-| **MSYS2**   | via Winget  | Package manager that includes MinGW                                             | 
-| **MinGW**   | via MSYS2   | Environment for the GCC compiler                                                |
-| **Make**    | via MSYS2   | Compiler Tool compiler                                                          |
-| **GCC**     | via MSYS2   |          GNU Compiler Collection                                                |
-| **G++**     | via MSYS2   | C++ Compiler                                                                    |
+#### 1.1. Required Programs
+| Program             | Installation    | Description | 
+| ------------------- | --------------- | ------------|
+| **Winget**          | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
+| **Git**             | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**           | via Winget  | Build system generator                                                          | 
+| **MSYS2**           | via Winget  | Package manager that includes MinGW                                             | 
+| **MinGW32-make**    | via MSYS2   | Environment for the GCC compiler                                                |
+| **GCC**             | via MSYS2   | GNU Compiler Collection                                                         |
+| **G++**             | via MSYS2   | C++ Compiler                                                                    |
 
 **Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
 
@@ -120,7 +119,7 @@ winget install -e --id Kitware.CMake --source winget
 # GCC and G++
 pacman -S mingw-w64-x86_64-gcc
 
-# Make
+# mingw32-make
 pacman -S mingw-w64-x86_64-make
 ```
 
@@ -137,7 +136,7 @@ g++ --version
 
 ### 2. Linux (Ubuntu/Debian)
 
-#### 2.1. Programs Required
+#### 2.1. Required Programs
 | Program     | Installation    | Description                                                                     | 
 | ------------| --------------- | ------------------------------------------------------------------------------- |
 | **Git**     | via apt         | Version control system. Used in this project to clone the GoogleTest repository | 
