@@ -96,6 +96,8 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 | **MSYS2**   | via Winget  | Package manager that includes MinGW                                             | 
 | **MinGW**   | via MSYS2   | Environment for the GCC compiler                                                |
 | **Make**    | via MSYS2   | Compiler Tool compiler                                                          |
+| **GCC**     | via MSYS2   |          GNU Compiler Collection                                                |
+| **G++**     | via MSYS2   | C++ Compiler                                                                    |
 
 **Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
 
@@ -115,7 +117,7 @@ winget install -e --id Kitware.CMake --source winget
 2. Open the `MSYS` console and execute the following commands:
 
 ```
-# GCC
+# GCC and G++
 pacman -S mingw-w64-x86_64-gcc
 
 # Make
@@ -123,7 +125,7 @@ pacman -S mingw-w64-x86_64-make
 ```
 
 Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. If it does not exist, add it.
-Then, in the **console line of windows** (or powershell), you must verify the versiones of each instalation via:
+Then, in the **console line of windows** (or powershell), you must verify the versions of each installation via:
 
 ```
 git --version
@@ -157,7 +159,7 @@ sudo apt install cmake
 sudo apt install build-essential
 ```
 
-2. You must verify the versiones of each instalation via:
+2. You must verify the versions of each installation via:
 
 ```
 git --version
