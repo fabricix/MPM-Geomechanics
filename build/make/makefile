@@ -1,155 +1,55 @@
-# compiler
-CC = g++
+# Compiler
+CXX = g++
 
-# compiler flags
-#  -g : adds debugging information to the executable file
-#  -Wall : turn on compiler warnings
-# -fopenmp: openmp for share parallel computing
+# Directories
+SRC_DIR := ../../src
+INC_DIR := ../../inc
+OBJ_DIR := obj
+BIN_DIR := bin
+TARGET := $(BIN_DIR)/MPM-Geomechanics
 
-# Debug flags
-# CFLAGS = -Wall -g
+# Include paths (header files)
+INC = -I$(SRC_DIR) -I$(INC_DIR)
 
-# Release flags
-CFLAGS = -fopenmp
+# Source and object files
+SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
-# include directory
-INC=-I ../../inc
+# Build configurations
+# These are overridden depending on the build mode (debug or release)
+CXXFLAGS_DEBUG   = -std=c++17 -Wall -g -O0 -fopenmp
+CXXFLAGS_RELEASE = -std=c++17 -Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp
 
-# dependencies
-objects = BodyCuboid.o \
-	BodyParticle.o \
-	BodyPolygon.o \
-	BodySphere.o \
-	Contact.o \
-	DynamicRelaxation.o \
-	Elastic.o \
-	ElasticJaumann.o \
-	Geometry.o \
-	Input.o \
-	Integration.o \
-	Interpolation.o \
-	Loads.o \
-	Main.o \
-	Mesh.o \
-	Model.o \
-	MohrCoulomb.o \
-	MPM.o \
-	Node.o \
-	NodeMixture.o \
-	Output.o \
-	Particle.o \
-	ParticleMixture.o \
-	ShapeGimp.o \
-	ShapeLinear.o \
-	SolverExplicitTwoPhaseUSL.o \
-	SolverExplicitUSL.o \
-	States.o \
-	Update.o \
-	STLReader.o \
-	TerrainContact.o \
-	Warning.o
+LDFLAGS_DEBUG   = -fopenmp
+LDFLAGS_RELEASE = -flto -fopenmp
 
-# make the program
-MPM-Geomechanics: $(objects)
-	$(CC) $(CFLAGS) $(INC) -o MPM-Geomechanics $(objects)
+# Default flags (can be overridden by targets)
+CXXFLAGS ?= $(CXXFLAGS_RELEASE)
+LDFLAGS  ?= $(LDFLAGS_RELEASE)
 
-# compile dependencies
+# Default target: release mode
+all: release
 
-STLReader.o : ../../src/STLReader.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/STLReader.cpp
+# Release mode build
+release: CXXFLAGS := $(CXXFLAGS_RELEASE)
+release: LDFLAGS  := $(LDFLAGS_RELEASE)
+release: $(TARGET)
 
-TerrainContact.o : ../../src/TerrainContact.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/TerrainContact.cpp
-	
-BodyCuboid.o : ../../src/BodyCuboid.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/BodyCuboid.cpp	
+# Debug mode build
+debug: CXXFLAGS := $(CXXFLAGS_DEBUG)
+debug: LDFLAGS  := $(LDFLAGS_DEBUG)
+debug: $(TARGET)
 
-BodyParticle.o : ../../src/BodyParticle.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/BodyParticle.cpp	
+# Linking|
+$(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(LDFLAGS) -o $@ $^
 
-BodyPolygon.o : ../../src/BodyPolygon.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/BodyPolygon.cpp	
+# Compilation of individual .cpp files to .o files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
-BodySphere.o : ../../src/BodySphere.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/BodySphere.cpp	
-
-Contact.o : ../../src/Contact.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Contact.cpp
-
-DynamicRelaxation.o : ../../src/DynamicRelaxation.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/DynamicRelaxation.cpp
-
-Elastic.o : ../../src/Elastic.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Elastic.cpp
-
-ElasticJaumann.o : ../../src/ElasticJaumann.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/ElasticJaumann.cpp	
-
-Geometry.o : ../../src/Geometry.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Geometry.cpp
-
-Input.o : ../../src/Input.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Input.cpp
-
-Integration.o : ../../src/Integration.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Integration.cpp
-
-Interpolation.o : ../../src/Interpolation.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Interpolation.cpp	
-
-Loads.o : ../../src/Loads.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Loads.cpp
-
-Main.o : ../../src/Main.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Main.cpp
-
-Mesh.o : ../../src/Mesh.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Mesh.cpp
-
-Model.o : ../../src/Model.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Model.cpp
-
-MohrCoulomb.o : ../../src/MohrCoulomb.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/MohrCoulomb.cpp
-		
-MPM.o : ../../src/MPM.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/MPM.cpp
-
-Node.o : ../../src/Node.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Node.cpp
-
-NodeMixture.o : ../../src/NodeMixture.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/NodeMixture.cpp	
-
-Output.o : ../../src/Output.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Output.cpp	
-
-Particle.o : ../../src/Particle.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Particle.cpp	
-
-ParticleMixture.o : ../../src/ParticleMixture.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/ParticleMixture.cpp	
-
-ShapeGimp.o : ../../src/ShapeGimp.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/ShapeGimp.cpp	
-	
-ShapeLinear.o : ../../src/ShapeLinear.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/ShapeLinear.cpp	
-
-SolverExplicitTwoPhaseUSL.o : ../../src/SolverExplicitTwoPhaseUSL.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/SolverExplicitTwoPhaseUSL.cpp	
-
-SolverExplicitUSL.o : ../../src/SolverExplicitUSL.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/SolverExplicitUSL.cpp	
-
-States.o : ../../src/States.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/States.cpp	
-
-Update.o : ../../src/Update.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Update.cpp	
-
-Warning.o : ../../src/Warning.cpp
-	$(CC) $(CFLAGS) $(INC) -c ../../src/Warning.cpp	
-
-clean :
-	rm MPM-Geomechanics $(objects)
+# Clean generated files
+clean:
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
