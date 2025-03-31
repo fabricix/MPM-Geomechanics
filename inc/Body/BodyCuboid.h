@@ -6,28 +6,30 @@
 
 #include <Body/Body.h>
 
-/// \class BodyCuboid
-/// \brief Is a type of Body representing a cuboid in 3D
-/// 
-/// ### Cuboid definition
-/// 
-/// The cuboid in geometrically defined by the coordinates of the lower left point (Point 1) 
-/// and the higher right point (Point 2). See Figure bellow.
-///
-/// ```
-///	                            Cuboid
-///                           ----------
-///                          |\         |\ 
-///                          | \        | \ 
-///    z                     |  \       |  \ 
-///    |                     |    ----------+ <-- Point 2
-///    |                     |   |      |   |
-///    +---- y   Point 1 --> + --|------    |
-///     \                     \  |       \  |
-///      \                     \ |        \ |
-///       x                     \|         \|
-///                               ---------- 
-/// ```
+/**
+ * \class BodyCuboid
+ * \brief A type of Body representing a cuboid in 3D
+ *
+ * ### Cuboid definition
+ *
+ * The cuboid is geometrically defined by the coordinates of the lower-left
+ * point (Point 1) and the upper-right point (Point 2). See figure below.
+ *
+ * @verbatim
+ *                              Cuboid
+ *                           ----------
+ *                          |\         |\
+ *                          | \        | \
+ *    z                     |  \       |  \
+ *    |                     |     -------- +  <-- Point 2
+ *    |                     |   |      |   |
+ *    +---- y   Point 1 --> + --|------    |
+ *     \                     \  |       \  |
+ *      \                     \ |        \ |
+ *       x                     \|         \|
+ *                               ----------
+ * @endverbatim
+ */
 class BodyCuboid: public Body {
 
 public:
