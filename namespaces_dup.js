@@ -57,6 +57,7 @@ var namespaces_dup =
       [ "nodalInternalForceFluid", "namespaceInterpolation.html#a1364590284e7b40e5e7482a91078fa18", null ],
       [ "nodalMass", "namespaceInterpolation.html#a177609e6f2c2017f965736020a3106cb", null ],
       [ "nodalMassFuid", "namespaceInterpolation.html#ada191e99fa8bd78e8274a4316b8e24a4", null ],
+      [ "nodalMassWithParticles", "namespaceInterpolation.html#a096b4d5b1dc8125a39cd0a29a761c50b", null ],
       [ "nodalMomentum", "namespaceInterpolation.html#ad6b0c362a03102b2ffceb06039f46935", null ],
       [ "nodalMomentumFluid", "namespaceInterpolation.html#a135cfc683b9cffc0abb3e8542c0b17d6", null ],
       [ "particleDeformationGradient", "namespaceInterpolation.html#ab40d47b2e6ec38905a4eca4eaec2b91c", null ],
