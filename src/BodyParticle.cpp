@@ -15,6 +15,9 @@ BodyParticle::~BodyParticle() { }
 /// \param[in] *material Material pointer
 void BodyParticle::create(Mesh& mesh, Material* material)
 {
+	// unused for now
+	(void)mesh;
+
 	// get particles
 	vector<Particle*>* particles = Body::getParticles();
 

@@ -622,6 +622,10 @@ namespace Output{
 
 	void printModelInfo(vector<Body*>* bodies, double itime)
 	{
+		// unused for now
+		(void)bodies;
+		(void)itime;
+
 		std::cout << "     Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
 		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
 		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;

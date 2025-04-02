@@ -10,7 +10,7 @@ void Integration::nodalMomentum(Mesh* mesh, double dt) {
 
 	// for each node
 	#pragma omp parallel for shared(nodes, dt)
-	for (int i = 0; i < nodes->size(); ++i) {
+	for (size_t i = 0; i < nodes->size(); ++i) {
 
 		if (!nodes->at(i)->getActive()){ continue; }
 			

@@ -44,8 +44,8 @@ public:
 	inline void updateStress() { material->updateStress(this); }
 
 	/// \brief Update the particle pressure
-	///  
-	virtual inline void updatePressure(double dt) { return; }
+	/// \param[in] dt time step
+	virtual inline void updatePressure(double) { return; }
 
 	/// \brief Update the particle density
 	///  
@@ -185,7 +185,7 @@ public:
 
 	/// \brief Configures particle velocity of fluid phase
 	/// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
-	virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) { return; }
+	virtual inline void setVelocityFluid(const Vector3d&) { return; }
 
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
@@ -193,7 +193,7 @@ public:
 
 	/// \brief Configures the strain increment of fluid phase
 	/// \param[in] strain_increment Particle strain increment of fluid phase
-	virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment) { return; }
+	virtual inline void setStrainIncrementFluid(const Matrix3d&) { return; }
 
 	/// \brief Configures the vorticity increment
 	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
@@ -217,7 +217,7 @@ public:
 
 	/// \brief Adds a external fluid force increment
 	/// \param[in] delta_external_fluid_force External fluid force increment
-	virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) { return; }
+	virtual inline void addExternalForceFluid(const Vector3d&) { return; }
 
 	/// \brief Returns o number of particles created
 	/// \return Total created particles
@@ -237,7 +237,7 @@ public:
 
 	/// \brief Configure the pressure of fluid
     /// \param[in] pressure Pressure of the fluid
-    virtual inline void setPressureFluid(double pressure) { return; }
+    virtual inline void setPressureFluid(double) { return; }
 
     /// \brief Returns current porosity
     /// \return Current porosity of mixture

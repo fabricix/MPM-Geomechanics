@@ -20,8 +20,8 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 CXXFLAGS_DEBUG   = -std=c++17 -Wall -g -O0 -fopenmp
 CXXFLAGS_RELEASE = -std=c++17 -Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp
 
-LDFLAGS_DEBUG   = -fopenmp
-LDFLAGS_RELEASE = -flto -fopenmp
+LDFLAGS_DEBUG   = -flto=auto -fopenmp
+LDFLAGS_RELEASE = -flto=auto -fopenmp
 
 # Default flags (can be overridden by targets)
 CXXFLAGS ?= $(CXXFLAGS_RELEASE)

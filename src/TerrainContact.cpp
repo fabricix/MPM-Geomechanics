@@ -75,7 +75,7 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
 
     #pragma omp parallel for
-    for (int i = 0; i < gNodes->size(); ++i)
+    for (size_t i = 0; i < gNodes->size(); ++i)
     {
         Node* node = gNodes->at(i);
         Eigen::Vector3d nodePos = node->getCoordinates();
@@ -182,12 +182,6 @@ double interpolateDensityLevelSet(const Vector3d& position, const vector<int>& n
 
 	// get the nodes of the cell that contains the position
     Vector3d p0 = gridNodes->at(nodeIds[0])->getCoordinates();
-    Vector3d p1 = gridNodes->at(nodeIds[1])->getCoordinates();
-    Vector3d p2 = gridNodes->at(nodeIds[2])->getCoordinates();
-    Vector3d p3 = gridNodes->at(nodeIds[3])->getCoordinates();
-    Vector3d p4 = gridNodes->at(nodeIds[4])->getCoordinates();
-    Vector3d p5 = gridNodes->at(nodeIds[5])->getCoordinates();
-    Vector3d p6 = gridNodes->at(nodeIds[6])->getCoordinates();
     Vector3d p7 = gridNodes->at(nodeIds[7])->getCoordinates();
 
     // density level values of the nodes
@@ -248,7 +242,7 @@ void TerrainContact::trianglesDensityLevelSet(Mesh* mesh) {
 
     // iterate over all triangles
     #pragma omp parallel for shared(triangles, mesh, interpolatedValues)
-    for (int i = 0; i < triangles.size(); ++i) {
+    for (size_t i = 0; i < triangles.size(); ++i) {
         
         // get the current triangle
         const Triangle& triangle = triangles[i];
@@ -289,7 +283,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
     // loop over the particles to determine the contact potential pairs
     #pragma omp parallel for shared(particles, triangles, densityValues)
-    for (int i = 0; i < particles->size(); ++i) {
+    for (size_t i = 0; i < particles->size(); ++i) {
     
         // get the particle
         Particle* particle = particles->at(i);
@@ -329,9 +323,12 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
 void TerrainContact::computeContactForces(std::vector< Particle* >* particles, double dt) {
     
+    // unused for now
+    (void)particles;
+    
     // for all contact pairs
     #pragma omp parallel for shared(particles)
-    for (int i = 0; i < contactPairs.size(); ++i) 
+    for (size_t i = 0; i < contactPairs.size(); ++i) 
     {
         // get the particle and the triangle in contact
         Particle* particle = contactPairs[i].first;

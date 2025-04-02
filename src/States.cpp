@@ -15,6 +15,9 @@ using json = nlohmann::json;
 
 void States::saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles) {
 
+    // unused for now
+    (void)filename;
+    
     // initialize json structure    
     json jsonData;
     

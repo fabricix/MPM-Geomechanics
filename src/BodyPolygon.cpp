@@ -15,6 +15,9 @@ BodyPolygon::~BodyPolygon() { }
 
 void BodyPolygon::create(Mesh& mesh, Material* material) {
 
+	// unused for now
+	(void)mesh;
+	
 	// cell dimension
 	double cellDimension = this->distretizationLength;
 
