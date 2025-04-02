@@ -3,7 +3,7 @@ var searchData=
   ['manual_0',['Development manual',['../development_manual.html',1,'']]],
   ['mass_1',['mass',['../classNode.html#a63e510fc9158eb15e751861bc14eae38',1,'Node::mass'],['../classParticle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle::mass']]],
   ['massfluid_2',['massfluid',['../classNodeMixture.html#abc6558b0f778ec0c697cf950dd87aef7',1,'NodeMixture::massFluid'],['../classParticleMixture.html#a74ccc525e1b7d70492fe754902b5830b',1,'ParticleMixture::massFluid']]],
-  ['material_3',['material',['../classMaterial.html',1,'Material'],['../classMaterial.html#a4fca8e76ddfb7e310071a258174de41d',1,'Material::Material()'],['../classParticle.html#a2d2c909473d35b93e501969d474ade82',1,'Particle::material']]],
+  ['material_3',['material',['../classMaterial.html',1,'Material'],['../classParticle.html#a2d2c909473d35b93e501969d474ade82',1,'Particle::material'],['../classMaterial.html#a4fca8e76ddfb7e310071a258174de41d',1,'Material::Material()']]],
   ['material_20definition_20example_4',['Material definition example',['../namespaceInput.html#autotoc_md35',1,'']]],
   ['material_20point_20method_20mpm_5',['Introduction to the Material Point Method (MPM)',['../theory_and_numerical_formulation_.html#autotoc_md70',1,'']]],
   ['material_20points_20are_20placed_20in_20the_20body_6',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],

@@ -10,6 +10,7 @@ var searchData=
   ['registermesh_7',['registerMesh',['../classSolver.html#a5ea32c377f50d8f7b3f8725ebb4bf71a',1,'Solver']]],
   ['registerparticles_8',['registerParticles',['../classSolver.html#a2e4b04b3923da5b71b629934f8cf3e0c',1,'Solver']]],
   ['registerterraincontact_9',['registerTerrainContact',['../classSolver.html#ab1d7c459a28e2359a562d4ba72754f4e',1,'Solver']]],
-  ['resetnodalvalues_10',['resetNodalValues',['../namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878',1,'Update']]],
-  ['resetvalues_11',['resetvalues',['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()'],['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()']]]
+  ['removetrianglesoutsidelimits_10',['removeTrianglesOutsideLimits',['../classSTLReader.html#a23e60d1032713fe95386452c8138af0e',1,'STLReader']]],
+  ['resetnodalvalues_11',['resetNodalValues',['../namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878',1,'Update']]],
+  ['resetvalues_12',['resetvalues',['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()'],['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()']]]
 ];
