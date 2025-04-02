@@ -5,10 +5,7 @@
 #include "Particle/ParticleMixture.h"
 #include "Model.h"
 
-BodySphere::BodySphere(): diameter(1.0), center(0,0,0), particlesPerDirection(2,2,2) {
-	
-    materialId=-1;
-}
+BodySphere::BodySphere(): center(0,0,0), particlesPerDirection(2,2,2), diameter(1.0), materialId(-1) { }
 
 BodySphere::~BodySphere() { }
 

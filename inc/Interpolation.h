@@ -10,12 +10,12 @@ using Eigen::Vector3d;
 #include <vector>
 using std::vector;
 
-#include <Particle/Particle.h>
+#include "TerrainContact.h"
+#include "Particle/Particle.h"
 
 class Mesh;
 class Body;
 class Particle;
-class TerrainContact;
 
 /// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.

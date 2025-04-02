@@ -180,8 +180,7 @@ void Loads::configureNodalPointLoads(Mesh* mesh)
 		for (const auto& inode : mesh->getNodesInCell(ipoint))
 		{	
 			Vector3d xI = mesh->getNodes()->at(inode)->getCoordinates();
-			Vector3d xP = ipoint;
-
+			
 			double new_distance = (xI - ipoint).norm();
 
 			if (new_distance <= min_distance)

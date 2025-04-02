@@ -7,39 +7,54 @@
 #include <vector>
 using std::vector;
 
-/// \class Boundary
-/// \brief Mesh boundary nodes
-///
-/// This class represents the mesh boundaries for setting up the boundary conditions of the numerical problem in terms of displacement, velocity and acceleration. In a mechanical numerical model the Lagrangian boundary conditions, like external loads, are setting up into the particles representing the physical domain boundary, and during the nodal integration the mesh boundaries conditions should be setting up on the mesh boundaries, in particular this class is created to apply this nodal BCs.
-///
-/// For a regular mesh are defined two planes in each direction: X0-Xn, Y0-Yn, Z0-Zn. In which the subscript 0 represents the minor coordinate in the direction and n the mayor coordinate of the plane in that direction.
-///
-/// There are several types of BCs. In fixed boundary condition the node is fixed in all direction during the simulation. In sliding boundary condition the node only is permited to move only in perpendicular direction of the corresponding plane. In free boundary condition the node is free to move in all directions. In earthquake boundary condition allow setting nodal acceleration and velocities in time for introduce a seismic record in the model.      
-///
-/// ### Definition of the planes for setting boundary conditions
-///
-/// ```
-///                     Boundaries of the Mesh
-///                             
-///                          +----------+
-///                          |\          \ 
-///                          | \ Plane Zn \ 
-///    z                     |  \          \ 
-///    |       Plane Y0 ------>  +----------+  <------ Plane Yn
-///    |                     |   |          |
-///    +---- y   		     +   |          |       
-///     \                     \  | Plane Xn |
-///      \                     \ |          |
-///       x                     \|          |
-///                              +----------+ 
-///
-///
-/// Plane X0 : Plane which normal points to the negative direction of axis X
-/// Plane Xn : Plane which normal points to the positive direction of axis X
-///
-/// ```
-/// **Note**: If any boundary condition is defined in the input file, sliding boundary condition is chosen, by default, for all planes.
-///
+/**
+ * \class Boundary
+ * \brief Mesh boundary nodes
+ *
+ * This class represents the mesh boundaries for setting up the boundary
+ * conditions of the numerical problem in terms of displacement, velocity and
+ * acceleration. In a mechanical numerical model the Lagrangian boundary
+ * conditions, like external loads, are set up into the particles representing
+ * the physical domain boundary, and during the nodal integration the mesh
+ * boundary conditions should be applied on the mesh boundaries. In particular,
+ * this class is created to apply these nodal BCs.
+ *
+ * For a regular mesh, two planes are defined in each direction: X0–Xn, Y0–Yn,
+ * Z0–Zn, where the subscript 0 represents the minimum coordinate in that
+ * direction and n the maximum.
+ *
+ * There are several types of BCs:
+ * - In fixed boundary condition, the node is fixed in all directions.
+ * - In sliding boundary condition, the node is only permitted to move in the
+ *   direction perpendicular to the corresponding plane.
+ * - In free boundary condition, the node can move in all directions.
+ * - In earthquake boundary condition, nodal accelerations and velocities can
+ *   be applied over time to introduce a seismic record in the model.
+ *
+ * ### Definition of the planes for setting boundary conditions
+ *
+ * @verbatim
+ *                      Boundaries of the Mesh
+ *                             
+ *                          +----------+
+ *                          |\          \ 
+ *                          | \ Plane Zn \ 
+ *    z                     |  \          \ 
+ *    |       Plane Y0 ------>  +----------+  <------ Plane Yn
+ *    |                     |   |          |
+ *    +---- y               +   |          |       
+ *     \                     \  | Plane Xn |
+ *      \                     \ |          |
+ *       x                     \|          |
+ *                              +----------+ 
+ *
+ * Plane X0 : Plane whose normal points in the negative X direction  
+ * Plane Xn : Plane whose normal points in the positive X direction
+ * @endverbatim
+ *
+ * **Note**: If any boundary condition is defined in the input file,
+ * sliding boundary condition is chosen, by default, for all planes.
+ */
 class Boundary {
 
 public:

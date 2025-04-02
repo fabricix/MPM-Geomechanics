@@ -7,10 +7,11 @@
 #include <vector>
 using std::vector;
 
+#include "TerrainContact.h"
+
 class Body;
 class Mesh;
 class Particle;
-class TerrainContact;
 
 /// \class Solver
 /// \brief Represents the operations to solve the equations in time.
