@@ -131,11 +131,11 @@ Collaboration diagram for SolverExplicitTwoPhaseUSL:</div>
 <div class="dyncontent">
 <div class="center"><img src="classSolverExplicitTwoPhaseUSL__coll__graph.png" border="0" usemap="#aSolverExplicitTwoPhaseUSL_coll__map" alt="Collaboration graph"/></div>
 <map name="aSolverExplicitTwoPhaseUSL_coll__map" id="aSolverExplicitTwoPhaseUSL_coll__map">
-<area shape="rect" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="96,556,284,583"/>
-<area shape="rect" href="classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="161,480,219,507"/>
-<area shape="poly" title=" " alt="" coords="193,522,193,556,188,556,188,522"/>
+<area shape="rect" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="227,556,415,583"/>
+<area shape="rect" href="classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="292,480,350,507"/>
+<area shape="poly" title=" " alt="" coords="324,522,324,556,318,556,318,522"/>
 <area shape="rect" href="classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="108,389,161,416"/>
-<area shape="poly" title=" " alt="" coords="152,428,184,478,180,481,148,431"/>
+<area shape="poly" title=" " alt="" coords="172,421,235,454,292,478,290,483,233,458,169,426"/>
 <area shape="rect" title=" " alt="" coords="5,267,74,293"/>
 <area shape="poly" title=" " alt="" coords="54,306,69,335,90,364,116,387,113,391,86,367,65,338,49,309"/>
 <area shape="rect" title=" " alt="" coords="98,267,170,293"/>
@@ -147,7 +147,13 @@ Collaboration diagram for SolverExplicitTwoPhaseUSL:</div>
 <area shape="rect" title=" " alt="" coords="185,5,280,32"/>
 <area shape="poly" title=" " alt="" coords="236,48,236,95,230,95,230,48"/>
 <area shape="rect" title=" " alt="" coords="185,389,305,416"/>
-<area shape="poly" title=" " alt="" coords="231,431,200,481,196,478,227,428"/>
+<area shape="poly" title=" " alt="" coords="268,426,312,478,308,481,264,430"/>
+<area shape="rect" title=" " alt="" coords="330,389,464,416"/>
+<area shape="poly" title=" " alt="" coords="378,430,334,481,330,478,374,426"/>
+<area shape="rect" href="classTerrainContact.html" title="Class to compute terrain contact." alt="" coords="488,389,594,416"/>
+<area shape="poly" title=" " alt="" coords="501,425,424,458,351,485,349,480,423,454,499,420"/>
+<area shape="rect" href="classSTLReader.html" title="Class to read STL files." alt="" coords="497,267,584,293"/>
+<area shape="poly" title=" " alt="" coords="544,309,544,389,538,389,538,309"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -172,6 +178,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a119ea70a054a7ad5cb7b2130fd6917a4 inherit pub_methods_classSolver" id="r_a119ea70a054a7ad5cb7b2130fd6917a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#a119ea70a054a7ad5cb7b2130fd6917a4">registerBodies</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *<a class="el" href="classSolver.html#ae69d529fe554b2ca852ce3dfeb79315b">bodies</a>)</td></tr>
 <tr class="memdesc:a119ea70a054a7ad5cb7b2130fd6917a4 inherit pub_methods_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register the bodies in the solver.  <br /></td></tr>
 <tr class="separator:a119ea70a054a7ad5cb7b2130fd6917a4 inherit pub_methods_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e4b04b3923da5b71b629934f8cf3e0c inherit pub_methods_classSolver" id="r_a2e4b04b3923da5b71b629934f8cf3e0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#a2e4b04b3923da5b71b629934f8cf3e0c">registerParticles</a> (vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *p)</td></tr>
+<tr class="memdesc:a2e4b04b3923da5b71b629934f8cf3e0c inherit pub_methods_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register the particles in the solver.  <br /></td></tr>
+<tr class="separator:a2e4b04b3923da5b71b629934f8cf3e0c inherit pub_methods_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d7c459a28e2359a562d4ba72754f4e inherit pub_methods_classSolver" id="r_ab1d7c459a28e2359a562d4ba72754f4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#ab1d7c459a28e2359a562d4ba72754f4e">registerTerrainContact</a> (<a class="el" href="classTerrainContact.html">TerrainContact</a> *<a class="el" href="classSolver.html#a51152fba5474b722658edac57d10cc7c">terrainContact</a>)</td></tr>
+<tr class="memdesc:ab1d7c459a28e2359a562d4ba72754f4e inherit pub_methods_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register the terrain contact in the solver.  <br /></td></tr>
+<tr class="separator:ab1d7c459a28e2359a562d4ba72754f4e inherit pub_methods_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -182,6 +194,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ae69d529fe554b2ca852ce3dfeb79315b inherit pro_attribs_classSolver" id="r_ae69d529fe554b2ca852ce3dfeb79315b"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#ae69d529fe554b2ca852ce3dfeb79315b">bodies</a></td></tr>
 <tr class="memdesc:ae69d529fe554b2ca852ce3dfeb79315b inherit pro_attribs_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to bodies  <br /></td></tr>
 <tr class="separator:ae69d529fe554b2ca852ce3dfeb79315b inherit pro_attribs_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9e0e0bfb7ccbd2877a536dcbcb45654 inherit pro_attribs_classSolver" id="r_ad9e0e0bfb7ccbd2877a536dcbcb45654"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#ad9e0e0bfb7ccbd2877a536dcbcb45654">particles</a></td></tr>
+<tr class="memdesc:ad9e0e0bfb7ccbd2877a536dcbcb45654 inherit pro_attribs_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to particles  <br /></td></tr>
+<tr class="separator:ad9e0e0bfb7ccbd2877a536dcbcb45654 inherit pro_attribs_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51152fba5474b722658edac57d10cc7c inherit pro_attribs_classSolver" id="r_a51152fba5474b722658edac57d10cc7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTerrainContact.html">TerrainContact</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html#a51152fba5474b722658edac57d10cc7c">terrainContact</a></td></tr>
+<tr class="memdesc:a51152fba5474b722658edac57d10cc7c inherit pro_attribs_classSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to terrain contact  <br /></td></tr>
+<tr class="separator:a51152fba5474b722658edac57d10cc7c inherit pro_attribs_classSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Solves explicitly the two phase motion equation in time using the scheme <a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> Stress Last. </p>

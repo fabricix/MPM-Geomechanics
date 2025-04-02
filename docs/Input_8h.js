@@ -30,6 +30,7 @@ var Input_8h =
     [ "getSimulationTime", "Input_8h.html#a669cf08e9ea601a6700da09305192771", null ],
     [ "getSolver", "Input_8h.html#a0aaddb07cda3d6c988f2c5db52bb488e", null ],
     [ "getSTLMeshFile", "Input_8h.html#a8207d83ed286e00540c9618987e89d7d", null ],
+    [ "getTerrainContactActive", "Input_8h.html#a3bca44ba8d9b5497b0403694dd7ea6a6", null ],
     [ "getTimeStep", "Input_8h.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
     [ "readInputFile", "Input_8h.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
     [ "readNodalPointLoads", "Input_8h.html#a4af9571f7842a96471572cd550d598a9", null ],

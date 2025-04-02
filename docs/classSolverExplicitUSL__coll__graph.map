@@ -1,9 +1,9 @@
 <map id="SolverExplicitUSL" name="SolverExplicitUSL">
-<area shape="rect" id="Node000001" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="126,556,254,583"/>
-<area shape="rect" id="Node000002" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="161,480,219,507"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,522,193,556,188,556,188,522"/>
+<area shape="rect" id="Node000001" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="257,556,384,583"/>
+<area shape="rect" id="Node000002" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="292,480,350,507"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="324,522,324,556,318,556,318,522"/>
 <area shape="rect" id="Node000003" href="$classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="108,389,161,416"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="152,428,184,478,180,481,148,431"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="172,421,235,454,292,478,290,483,233,458,169,426"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="5,267,74,293"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="54,306,69,335,90,364,116,387,113,391,86,367,65,338,49,309"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="98,267,170,293"/>
@@ -15,5 +15,11 @@
 <area shape="rect" id="Node000008" title=" " alt="" coords="185,5,280,32"/>
 <area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="236,48,236,95,230,95,230,48"/>
 <area shape="rect" id="Node000009" title=" " alt="" coords="185,389,305,416"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="231,431,200,481,196,478,227,428"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="268,426,312,478,308,481,264,430"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="330,389,464,416"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="378,430,334,481,330,478,374,426"/>
+<area shape="rect" id="Node000011" href="$classTerrainContact.html" title="Class to compute terrain contact." alt="" coords="488,389,594,416"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="501,425,424,458,351,485,349,480,423,454,499,420"/>
+<area shape="rect" id="Node000012" href="$classSTLReader.html" title="Class to read STL files." alt="" coords="497,267,584,293"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="544,309,544,389,538,389,538,309"/>
 </map>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['particleindex_0',['particleIndex',['../structLoads_1_1PrescribedPorePressure.html#a44996aedc022be846930199f8f39b94d',1,'Loads::PrescribedPorePressure']]],
-  ['particles_1',['particles',['../classMPM.html#ae95e181ff212a5f2c27e66dfa951009d',1,'MPM::particles'],['../classBody.html#af8aaa282121a6e26fdd9826514cc1098',1,'Body::particles']]],
+  ['particles_1',['particles',['../classMPM.html#ae95e181ff212a5f2c27e66dfa951009d',1,'MPM::particles'],['../classBody.html#af8aaa282121a6e26fdd9826514cc1098',1,'Body::particles'],['../classSolver.html#ad9e0e0bfb7ccbd2877a536dcbcb45654',1,'Solver::particles']]],
   ['particlesperdirection_2',['particlesPerDirection',['../classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d',1,'BodySphere']]],
   ['planex0_3',['planeX0',['../classBoundary.html#a36e6414d93464323581e8b4303554325',1,'Boundary']]],
   ['planexn_4',['planeXn',['../classBoundary.html#a42d17bd71d03dafe3b232f40b9a94d6a',1,'Boundary']]],

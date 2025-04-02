@@ -335,6 +335,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a801ec7c7a54dbf073dabc71f6cc5d7e8 inherit pub_methods_classParticle" id="r_a801ec7c7a54dbf073dabc71f6cc5d7e8"><td class="memItemLeft" align="right" valign="top">const Matrix3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a801ec7c7a54dbf073dabc71f6cc5d7e8">getDeformationGradient</a> () const</td></tr>
 <tr class="memdesc:a801ec7c7a54dbf073dabc71f6cc5d7e8 inherit pub_methods_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns deformation gradient.  <br /></td></tr>
 <tr class="separator:a801ec7c7a54dbf073dabc71f6cc5d7e8 inherit pub_methods_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd15e9528129cba5244e5a676537f4a5 inherit pub_methods_classParticle" id="r_acd15e9528129cba5244e5a676537f4a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#acd15e9528129cba5244e5a676537f4a5">setDistanceLevelSet</a> (double distance)</td></tr>
+<tr class="memdesc:acd15e9528129cba5244e5a676537f4a5 inherit pub_methods_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the distance level set function value.  <br /></td></tr>
+<tr class="separator:acd15e9528129cba5244e5a676537f4a5 inherit pub_methods_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4db89c2f430c0ed093e7bd2eb3a9d5 inherit pub_methods_classParticle" id="r_aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#aae4db89c2f430c0ed093e7bd2eb3a9d5">getDistanceLevelSet</a> ()</td></tr>
+<tr class="memdesc:aae4db89c2f430c0ed093e7bd2eb3a9d5 inherit pub_methods_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the distance level set function value.  <br /></td></tr>
+<tr class="separator:aae4db89c2f430c0ed093e7bd2eb3a9d5 inherit pub_methods_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -391,6 +397,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a0501e3f8bb3cf37f332ee49d427bb220 inherit pro_attribs_classParticle" id="r_a0501e3f8bb3cf37f332ee49d427bb220"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a0501e3f8bb3cf37f332ee49d427bb220">plasticStrain</a></td></tr>
 <tr class="memdesc:a0501e3f8bb3cf37f332ee49d427bb220 inherit pro_attribs_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">current effective plastic strain: \(\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\)  <br /></td></tr>
 <tr class="separator:a0501e3f8bb3cf37f332ee49d427bb220 inherit pro_attribs_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac154826414667897c157989be6c64a34 inherit pro_attribs_classParticle" id="r_ac154826414667897c157989be6c64a34"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#ac154826414667897c157989be6c64a34">distanceLevelSet</a></td></tr>
+<tr class="memdesc:ac154826414667897c157989be6c64a34 inherit pro_attribs_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">distance level set function value: \(d_p\)  <br /></td></tr>
+<tr class="separator:ac154826414667897c157989be6c64a34 inherit pro_attribs_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58bb6267f20ebb153a1f0f0770ff6919 inherit pro_attribs_classParticle" id="r_a58bb6267f20ebb153a1f0f0770ff6919"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticle.html#a58bb6267f20ebb153a1f0f0770ff6919">position</a></td></tr>
 <tr class="memdesc:a58bb6267f20ebb153a1f0f0770ff6919 inherit pro_attribs_classParticle"><td class="mdescLeft">&#160;</td><td class="mdescRight">current particle position: \(x_{ip}\)  <br /></td></tr>
 <tr class="separator:a58bb6267f20ebb153a1f0f0770ff6919 inherit pro_attribs_classParticle"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -533,7 +542,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classParticle.html#ab7ac91774de19cbdc0e63ffc4ab94f41">Particle</a>.</p>
+<p>Reimplemented from <a class="el" href="classParticle.html#a47ca5b09f4ca8d9b712c9e387cecbdde">Particle</a>.</p>
 
 </div>
 </div>
@@ -931,7 +940,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classParticle.html#a19181317c922b138ed97256a5303db70">Particle</a>.</p>
+<p>Reimplemented from <a class="el" href="classParticle.html#a62b7f16abb6287a003cccb27b2fd6e42">Particle</a>.</p>
 
 </div>
 </div>
@@ -966,7 +975,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classParticle.html#a4b48b561d53f13cb0fae00532231602a">Particle</a>.</p>
+<p>Reimplemented from <a class="el" href="classParticle.html#adb70aaadc4988ce172b11b96685cb96c">Particle</a>.</p>
 
 </div>
 </div>
@@ -1001,7 +1010,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classParticle.html#ab21cccee8497c94ff2b368cd773c6921">Particle</a>.</p>
+<p>Reimplemented from <a class="el" href="classParticle.html#a2aa4d0192ee173621fa7c6e6e72a6b02">Particle</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1068,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> the particle pressure. </p>
 
-<p>Reimplemented from <a class="el" href="classParticle.html#abbe1236f82de2d4bf0a2f566fb844303">Particle</a>.</p>
+<p>Reimplemented from <a class="el" href="classParticle.html#ab4c58b9d97814eff263a5f8bb41bd193">Particle</a>.</p>
 
 </div>
 </div>

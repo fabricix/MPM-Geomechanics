@@ -127,6 +127,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a18bf5e91764e212d789e23317fc65d2d" id="r_a18bf5e91764e212d789e23317fc65d2d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structTriangle.html">Triangle</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18bf5e91764e212d789e23317fc65d2d">getTriangles</a> () const</td></tr>
 <tr class="memdesc:a18bf5e91764e212d789e23317fc65d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the triangles of the STL mesh.  <br /></td></tr>
 <tr class="separator:a18bf5e91764e212d789e23317fc65d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23e60d1032713fe95386452c8138af0e" id="r_a23e60d1032713fe95386452c8138af0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23e60d1032713fe95386452c8138af0e">removeTrianglesOutsideLimits</a> (const Vector3d &amp;min, const Vector3d &amp;max)</td></tr>
+<tr class="memdesc:a23e60d1032713fe95386452c8138af0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove triangles that have all vertices outside the specified bounding box.  <br /></td></tr>
+<tr class="separator:a23e60d1032713fe95386452c8138af0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -236,6 +239,36 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read the binary STL file. </p>
+
+</div>
+</div>
+<a id="a23e60d1032713fe95386452c8138af0e" name="a23e60d1032713fe95386452c8138af0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23e60d1032713fe95386452c8138af0e">&#9670;&#160;</a></span>removeTrianglesOutsideLimits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void STLReader::removeTrianglesOutsideLimits </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3d &amp;</td>          <td class="paramname"><span class="paramname"><em>min</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vector3d &amp;</td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove triangles that have all vertices outside the specified bounding box. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>Bounding box minimum (x_min, y_min, z_min) </td></tr>
+    <tr><td class="paramname">max</td><td>Bounding box maximum (x_max, y_max, z_max) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

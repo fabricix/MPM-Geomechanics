@@ -8,6 +8,7 @@ var Interpolation_8h =
     [ "nodalInternalForceFluid", "Interpolation_8h.html#a1364590284e7b40e5e7482a91078fa18", null ],
     [ "nodalMass", "Interpolation_8h.html#a177609e6f2c2017f965736020a3106cb", null ],
     [ "nodalMassFuid", "Interpolation_8h.html#ada191e99fa8bd78e8274a4316b8e24a4", null ],
+    [ "nodalMassWithParticles", "Interpolation_8h.html#a096b4d5b1dc8125a39cd0a29a761c50b", null ],
     [ "nodalMomentum", "Interpolation_8h.html#ad6b0c362a03102b2ffceb06039f46935", null ],
     [ "nodalMomentumFluid", "Interpolation_8h.html#a135cfc683b9cffc0abb3e8542c0b17d6", null ],
     [ "particleDeformationGradient", "Interpolation_8h.html#ab40d47b2e6ec38905a4eca4eaec2b91c", null ],
