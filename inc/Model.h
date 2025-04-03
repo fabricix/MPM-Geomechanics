@@ -80,6 +80,8 @@ namespace ModelSetup {
 	/// \param[in] simulation_time Simulation time
 	void setTime(double simulation_time);
 
+	void setPartitionFactor(unsigned partitionFactor);
+
 	/// \brief Return the total results to be written
 	/// \return Number of results
 	unsigned getResultNum();
@@ -103,6 +105,8 @@ namespace ModelSetup {
 	/// \brief Return the number of threads in the simulation
 	/// \return Number of threads
 	unsigned getThreads();
+
+	unsigned getFactor();
 	
 	/// \brief Configures the number of threads
 	/// \param[in] n_threads Number of threads

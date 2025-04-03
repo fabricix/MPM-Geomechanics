@@ -392,6 +392,12 @@ void MPM::setThreads() {
 	ModelSetup::setNumThreads(Input::getNumThreads());
 }
 
+void MPM::setPartitions() {
+
+	// configures the number of threads
+	ModelSetup::setPartitionFactor(Input::getPartitionFactor());
+}
+
 void MPM::setNumberPhasesInSimulation() {
 
 	// configures the number of phases in the simulation
@@ -423,6 +429,8 @@ void MPM::createModel() {
 	try{
 		// set number of threads
 		setThreads();
+
+		setPartitions();
 
 		// set the simulation time 
 		setSimulationTime();

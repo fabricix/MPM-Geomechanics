@@ -28,9 +28,11 @@ void SolverExplicitUSL::Solve()
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
+	unsigned partitionFactor = ModelSetup::getFactor();
 	double iTime = 0.0;
 	int loopCounter = 0;
 
+	cout << "Factor Particion: " << partitionFactor; 
 	// solve in time
 	while (iTime < time)
 	{

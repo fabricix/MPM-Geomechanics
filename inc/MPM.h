@@ -119,6 +119,8 @@ private:
 	void setupParticles();
 
 	void setupSubdomains();
+
+	void setPartitions();
 	
 	/// \brief Configure loads in the model
 	///

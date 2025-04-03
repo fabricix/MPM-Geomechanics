@@ -54,6 +54,8 @@ namespace ModelSetup {
 	// results
 	unsigned resultNumber=10; //!< number of results to write
 
+	unsigned partitionFactor = 2;
+
 	// time
 	double dt = 0.0; //!< time step
 	double time = 0.0; //!< simulation time
@@ -111,6 +113,7 @@ namespace ModelSetup {
 
 	// threads
 	unsigned getThreads() { return nThreads; }
+	unsigned getFactor() { return partitionFactor; }
 	void setThreads(unsigned d) { nThreads=d; }
 
 	// contact method
@@ -169,6 +172,11 @@ namespace ModelSetup {
 		#ifdef _OPENMP
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
 		#endif
+	}
+
+		// openMP threads
+	void setPartitionFactor(unsigned factor){
+		partitionFactor = factor;
 	}
 
 	// Seismic analysis

@@ -594,6 +594,8 @@ namespace Input {
 	/// \return n_threads Number of threads
 	unsigned getNumThreads();
 
+	unsigned getPartitionFactor();
+
 	/// \brief Return the number of phases in the simulation
 	/// \return n_phases Number of phases in the simulation
 	unsigned getNumberPhases();

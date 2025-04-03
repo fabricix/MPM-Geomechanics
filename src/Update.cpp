@@ -34,7 +34,8 @@ void Update::boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox,
 void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox){
 
     float width = boundingBox->getWidth();
-	double frontier = width/2;
+	unsigned factorParticion  = 2;
+	double frontier = width/factorParticion;
 	//float particleMeanPerDomain = particles.size()/box.getSubdomainsNumber();
     //float frontier = width/this->boundingBox.getSubdomainsNumber();
 	//Tolerancia de cuantas particulas pueden sobrepasar 0 a 1 (%)

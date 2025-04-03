@@ -1043,6 +1043,26 @@ unsigned Input::getNumThreads() {
 	}
 }
 
+
+unsigned Input::getPartitionFactor() {
+
+	try
+	{
+		if(inputFile["partition_factor"].is_null() || !inputFile["n_threads"].is_number()) {
+			return 	1;
+		}
+		else
+		{
+			return inputFile["partition_factor"];
+		}
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the partition factor");
+		throw;
+	}
+}
+
 unsigned Input::getNumberPhases(){
 
 	try
