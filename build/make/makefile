@@ -20,6 +20,7 @@ objects = BodyCuboid.o \
 	BodyParticle.o \
 	BodyPolygon.o \
 	BodySphere.o \
+	BoundingBox.o \
 	Contact.o \
 	DynamicRelaxation.o \
 	Elastic.o \
@@ -61,6 +62,9 @@ STLReader.o : ../../src/STLReader.cpp
 TerrainContact.o : ../../src/TerrainContact.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../../src/TerrainContact.cpp
 	
+BoundingBox.o : ../../src/BoundingBox.cpp
+	$(CC) $(CFLAGS) $(INC) -c ../../src/BoundingBox.cpp
+
 BodyCuboid.o : ../../src/BodyCuboid.cpp
 	$(CC) $(CFLAGS) $(INC) -c ../../src/BodyCuboid.cpp	
 

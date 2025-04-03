@@ -40,6 +40,9 @@ void SolverExplicitUSL::Solve()
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
 
+		Update::boundingBox(particles,boundingBox,2);
+		Update::particlesSubdomains(particles,boundingBox);
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			// nodal mass

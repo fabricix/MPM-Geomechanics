@@ -11,6 +11,7 @@
 #include "Mesh/Mesh.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
+#include "BoundingBox.h"
 
 /// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.
@@ -26,6 +27,11 @@ namespace Output {
 	/// \brief Initialize the keywords of the fields
 	///
 	void initFieldsKeyWords();
+
+	/// \brief Write the grid mesh into a vtu file
+	/// \param[in] mesh Mesh reference
+	/// \param[in] cell_type_representation Cell type representation Output::CellType
+	void writeBoundingBoxes(BoundingBox* boundingBox);
 
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference

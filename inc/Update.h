@@ -11,6 +11,7 @@
 #include "Mesh/Mesh.h"
 #include "Body/Body.h"
 #include <Loads.h>
+#include "BoundingBox.h"
 
 /// \namespace Update
 /// \brief Represents operations to update values in nodes and particles.
@@ -20,6 +21,20 @@ namespace Update {
 	/// \brief Principal direction in the model.
 	/// This enumeration is used to update the boundary conditions in each direction
 	enum Direction {X, Y, Z};
+
+	/// \brief Update the nodal velocity
+	///
+	/// \f$ v_{i I}= p_{i I} / m_{I} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	void boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox, int numThreads);
+
+	/// \brief Update the nodal velocity
+	///
+	/// \f$ v_{i I}= p_{i I} / m_{I} \f$
+	///
+	/// \param[in] mesh Mesh reference
+	void particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox);
 
 	/// \brief Update the nodal velocity
 	///

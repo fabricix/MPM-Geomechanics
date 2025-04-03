@@ -78,6 +78,7 @@ namespace Output{
 		string particleFileName="particles";
 		string particleFileTimeSerie="particleTimeSerie";
 		vector<double> particleFilesTime;
+
 	}
 
 	void defineEdian(){
@@ -124,7 +125,10 @@ namespace Output{
 		if (status==-1)
 			Folders::particleFolderExist=true;
 	}
-	
+
+
+
+
 	void writeParticles(vector<Particle*>* particles, double time){
 
 		// define edian
@@ -173,6 +177,25 @@ namespace Output{
 		// point data
 		partFile<<"<PointData>\n";
 		
+		// particle Id
+		partFile<<"<DataArray type=\"UInt64\" Name=\"Thread Id\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			partFile<<particles->at(i)->getThreadId()<<"\n";
+		}
+		partFile<<"</DataArray>\n";
+
+		/*
+		if (isFieldRequired("thread_id")) {
+
+			// particle Id
+			partFile<<"<DataArray type=\"UInt64\" Name=\"Particle Id\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getThreadId()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+		*/
+
 		if (isFieldRequired("id")) {
 
 			// particle Id
