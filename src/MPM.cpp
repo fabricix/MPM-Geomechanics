@@ -159,11 +159,23 @@ void MPM::setupTerrainContact()
 
 	// configure STL mesh for terrain contact
 	string stlMeshFile = Input::getSTLMeshFile();
+	
 	if (stlMeshFile!=""){
+	
 		// create mesh pointer
 		STLReader* stlMesh = new STLReader;
-		stlMesh->read(stlMeshFile);
-
+		// read STL mesh file
+		bool success = stlMesh->read(stlMeshFile);
+		// calculate normals
+		if (success) stlMesh->recalculateNormals();
+		else {
+			Warning::printMessage("Error reading STL mesh file: "+stlMeshFile);
+			throw (0);
+		}
+		// write STL mesh file
+		if (Input::getWriteSTLMeshFile()){
+			stlMesh->writeSTL(stlMeshFile+"_with_normals.stl");
+		}
 		// filtrate outside triangles
 		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
 

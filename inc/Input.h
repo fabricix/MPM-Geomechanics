@@ -630,6 +630,9 @@ namespace Input {
 
 	/// \brief Return the terrain contact active
 	bool getTerrainContactActive();
+
+	/// \brief Return if the STL mesh file should be written
+	bool getWriteSTLMeshFile();
 };
 
 #endif /* INPUT_H_ */
