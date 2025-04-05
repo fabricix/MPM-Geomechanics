@@ -1,4 +1,4 @@
-## Compilation with Cmake
+## Compilation with CMake
 
 ### 1. Windows
 
@@ -15,12 +15,12 @@
 
 ```
 cd build
-cd cmake
+cd CMake
 cmake -G "MinGW Makefiles" .
 cmake --build .
 ```
 
-### 2. linux
+### 2. Linux
 
 #### 2.1. Required Programs
 
@@ -35,7 +35,7 @@ cmake --build .
 
 ```
 cd build
-cd cmake
+cd CMake
 cmake -G "Unix Makefiles" .
 cmake --build .
 ```
