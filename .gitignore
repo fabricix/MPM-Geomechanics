@@ -31,3 +31,6 @@ particle_stress_data.json
 /external/*
 /build/testing/build/*
 !.gitkeep
+/build/CMake/*
+!CMakeLists.txt
+!README.md
