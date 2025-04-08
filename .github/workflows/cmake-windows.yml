@@ -17,14 +17,15 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
-        install: >-
-          mingw-w64-x86_64-toolchain
-          cmake
         update: true
+        install: >-
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
 
-    - name: Configure with CMake using MinGW Makefiles
+    - name: Configure with CMake using Ninja
       shell: msys2 {0}
-      run: cmake -G "MinGW Makefiles" -S build/CMake -B build/CMake
+      run: cmake -G "Ninja" -S build/CMake -B build/CMake
 
     - name: Build with CMake
       shell: msys2 {0}
@@ -35,3 +36,4 @@ jobs:
       with:
         name: MPM-Geomechanics-windows
         path: build/CMake/MPM-Geomechanics.exe
+
