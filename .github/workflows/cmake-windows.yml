@@ -13,17 +13,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install MSYS2 and MinGW
+    - name: Setup MSYS2 with MinGW64
       uses: msys2/setup-msys2@v2
       with:
+        msystem: MINGW64
         install: >-
-          base-devel
           mingw-w64-x86_64-toolchain
           cmake
-        msystem: MINGW64
         update: true
 
-    - name: Configure with CMake (MinGW Makefiles)
+    - name: Configure with CMake using MinGW Makefiles
       shell: msys2 {0}
       run: cmake -G "MinGW Makefiles" -S build/CMake -B build/CMake
 
