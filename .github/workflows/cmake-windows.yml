@@ -1,0 +1,38 @@
+name: Build MPM-Geomechanics (Windows)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install MSYS2 and MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        install: >-
+          base-devel
+          mingw-w64-x86_64-toolchain
+          cmake
+        msystem: MINGW64
+        update: true
+
+    - name: Configure with CMake (MinGW Makefiles)
+      shell: msys2 {0}
+      run: cmake -G "MinGW Makefiles" -S build/CMake -B build/CMake
+
+    - name: Build with CMake
+      shell: msys2 {0}
+      run: cmake --build build/CMake
+
+    - name: Upload Windows binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: MPM-Geomechanics-windows
+        path: build/CMake/MPM-Geomechanics.exe
