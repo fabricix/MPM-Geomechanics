@@ -1,4 +1,4 @@
-name: Build MPM-Geomechanics (Linux)
+name: CMake-Linux
 
 on:
   push:
