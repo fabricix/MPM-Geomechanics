@@ -44,6 +44,7 @@ void SolverExplicitUSL::Solve()
 
 		Update::boundingBox(particles,boundingBox,2);
 		Update::particlesSubdomains(particles,boundingBox,partitionFactor);
+		Update::checkInterface(particles);
 
 		#pragma omp parallel sections num_threads(2)
 		{

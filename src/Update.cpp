@@ -61,6 +61,22 @@ void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boun
 	//marcar nodo como interfaz
 }
 
+void Update::checkInterface(vector<Particle*>* particles){
+	#pragma omp parallel for
+	for (size_t i = 0; i < particles->size(); ++i){
+
+		//marcamos nodos interfaz (le ponemos un flag)
+		vector<Contribution>* nodosContribucion = particles->at(i)->getContributionNodes();
+		
+		for (Contribution& nodo : *nodosContribucion){
+			if(nodo.getInterface())
+				particles->at(i)->checkInterface();
+				break;
+		}
+
+	}
+}
+
 void Update::nodalVelocity(Mesh* mesh) {
 
 	// get nodes

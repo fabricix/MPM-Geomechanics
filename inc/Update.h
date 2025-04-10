@@ -29,6 +29,8 @@ namespace Update {
 	/// \param[in] mesh Mesh reference
 	void boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox, int numThreads);
 
+	void checkInterface(vector<Particle*>* particles);
+
 	/// \brief Update the nodal velocity
 	///
 	/// \f$ v_{i I}= p_{i I} / m_{I} \f$

@@ -39,6 +39,12 @@ public:
 	/// \brief Default destructor
 	virtual ~Particle();
 
+	/// \brief Return the node identification
+	/// \return Node identification
+	inline void checkInterface() { this->is_interface = true; }
+
+
+
 	/// \brief Update the list of nodes that the particle contributes
 	/// \param[in] mesh Mesh reference
 	void updateContributionNodes(Mesh* mesh);
@@ -286,6 +292,8 @@ protected:
 	bool active; //!< is particle active
 	int id;	//!< particle id
 	int bodyId; //!< body id
+
+	bool is_interface;
 
 	unsigned threadId = 0; //default threadId
 

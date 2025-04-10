@@ -49,6 +49,9 @@ public:
 	/// \return Node identification
 	inline void checkInterface() { this->is_interface = this->domains.size() > 1; }
 
+	/// \brief Return the node identification
+	/// \return Node identification
+	inline bool getInterface() { return this->is_interface; }
 
 	/// \brief Return the weight value
 	/// \return Nodal weight. Value of the nodal weight evaluated at the particle position
