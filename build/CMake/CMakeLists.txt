@@ -11,6 +11,9 @@ find_package(OpenMP REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set the output directories for the compiled binaries
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
 # Flags
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -O0 -fopenmp")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp")
