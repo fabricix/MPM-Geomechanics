@@ -16,8 +16,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 # Flags
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -O0 -fopenmp")
-set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp")
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3 -march=native -flto=auto -ffast-math -funroll-loops -DNDEBUG -fopenmp -std=c++17")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -ffast-math -funroll-loops -DNDEBUG -fopenmp -std=c++17")
 
 # Set parallel level
 set(CMAKE_BUILD_PARALLEL_LEVEL 4)
