@@ -1,19 +1,23 @@
 # Specify the minimum required CMake version for this project
 cmake_minimum_required(VERSION 3.10)
 
-# Set the C++ standard to C++11
-set(CMAKE_CXX_STANDARD 11)
-
 # Project name
-project(MPM-GEOMECHANICS)
+project(MPM-GEOMECHANICS-PROJECT)
 
-# C++ standard settings
+# OpenMP Package
+find_package(OpenMP REQUIRED)
+
+# Set the C++ standard to C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Flags configurations
+# Flags
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -O0 -fopenmp")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -flto -ffast-math -funroll-loops -DNDEBUG -fopenmp")
+
+# Set parallel level
+set(CMAKE_BUILD_PARALLEL_LEVEL 4)
 
 # Add include directory
 include_directories(../../inc)
