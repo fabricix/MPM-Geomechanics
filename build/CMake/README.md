@@ -17,7 +17,7 @@ The simplest way to compile on windows is by using the `.bat` file at `/build/CM
 
 ```
 cd build/CMake
-./cmake-build-win
+./cmake-build-win.bat
 ```
 
 Alternatively, you can use the following commands:
@@ -45,7 +45,7 @@ The simplest way to compile on Linux is by using the `.bash` file at `/build/CMa
 
 ```
 cd build/CMake
-./cmake-build-linux
+./cmake-build-linux.bash
 ```
 
 Alternatively, you can use the following commands:
