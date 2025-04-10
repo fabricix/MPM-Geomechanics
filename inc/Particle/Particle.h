@@ -43,7 +43,9 @@ public:
 	/// \return Node identification
 	inline void checkInterface() { this->is_interface = true; }
 
-
+	/// \brief Return the node identification
+	/// \return Node identification
+	inline bool getInterface() { return this->is_interface; }
 
 	/// \brief Update the list of nodes that the particle contributes
 	/// \param[in] mesh Mesh reference

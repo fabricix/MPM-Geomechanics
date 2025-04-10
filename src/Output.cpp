@@ -184,6 +184,13 @@ namespace Output{
 		}
 		partFile<<"</DataArray>\n";
 
+		// particle Interface asertion
+		partFile<<"<DataArray type=\"UInt64\" Name=\"Thread Id\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			partFile<<particles->at(i)->getInterface()<<"\n";
+		}
+		partFile<<"</DataArray>\n";
+
 		/*
 		if (isFieldRequired("thread_id")) {
 
