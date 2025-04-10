@@ -47,7 +47,7 @@ public:
 
 	/// \brief Return the node identification
 	/// \return Node identification
-	inline void checkInterface(unsigned domainId) { this->is_interface = this->domains[domainId].size() > 1; }
+	inline void checkInterface() { this->is_interface = this->domains.size() > 1; }
 
 
 	/// \brief Return the weight value

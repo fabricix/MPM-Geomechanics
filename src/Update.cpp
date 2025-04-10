@@ -48,11 +48,11 @@ void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boun
 
 		//marcamos nodos interfaz (le ponemos un flag)
 		vector<Contribution>* nodosContribucion = particles->at(i)->getContributionNodes();
-
+		
 		for (Contribution& nodo : *nodosContribucion){
 			//marco el nodo con el hilo
 			nodo.setDomainId(omp_get_thread_num(), particles->at(i));
-			nodo.checkInterface(omp_get_thread_num());
+			nodo.checkInterface();
 		}
 
 	}
