@@ -34,7 +34,7 @@ namespace Update {
 	/// \f$ v_{i I}= p_{i I} / m_{I} \f$
 	///
 	/// \param[in] mesh Mesh reference
-	void particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox);
+	void particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox, unsigned partitionFactor);
 
 	/// \brief Update the nodal velocity
 	///

@@ -43,7 +43,7 @@ void SolverExplicitUSL::Solve()
 		Update::contributionNodes(mesh, bodies);
 
 		Update::boundingBox(particles,boundingBox,2);
-		Update::particlesSubdomains(particles,boundingBox);
+		Update::particlesSubdomains(particles,boundingBox,partitionFactor);
 
 		#pragma omp parallel sections num_threads(2)
 		{

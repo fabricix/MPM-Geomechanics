@@ -13,6 +13,8 @@
 #include <iostream>
 using std::cout;
 
+#include <omp.h>
+
 void Update::boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox, int numThreads){
 
 	Vector3d minPoint;	
@@ -31,36 +33,32 @@ void Update::boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox,
 
 }
 
-void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox){
+void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox, unsigned partitionFactor){
 
     float width = boundingBox->getWidth();
-	unsigned factorParticion  = 2;
-	double frontier = width/factorParticion;
-	//float particleMeanPerDomain = particles.size()/box.getSubdomainsNumber();
-    //float frontier = width/this->boundingBox.getSubdomainsNumber();
-	//Tolerancia de cuantas particulas pueden sobrepasar 0 a 1 (%)
-	//float tolerance = 0.1; //10%
+	double frontier = width/partitionFactor;
+	unsigned factor = pow(2,partitionFactor);
 
-	//vector<Particle*> subdomain1 = std::vector<Particle*>(particles.size());
-	//vector<Particle*> subdomain2 = std::vector<Particle*>(particles.size());
-
-    //recorremos las particulas
-	//for (size_t i = 0; i < this->particles.size(); ++i){
+	#pragma omp parallel for
 	for (size_t i = 0; i < particles->size(); ++i){
+		double frontier = (width * (omp_get_thread_num() + 1))/factor;
 		Vector3d position = particles->at(i)->getPosition();
 		//cambiar por los arrays de los subdomains
-		if(position.x() < frontier){
-			//almacenamos las particulas en el subdominio izquierdo
-			//box.setSubdomainParticle(0,particles.at(i));
-			//subdomain1.push_back(particles.at(i));
-			particles->at(i)->setThreadId(0);
-			continue;
-		}	
+		particles->at(i)->setThreadId(omp_get_thread_num());
 
-		particles->at(i)->setThreadId(1);
-		//box.setSubdomainParticle(1,particles.at(i));
-		//subdomain2.push_back(particles.at(i));
+		//marcamos nodos interfaz (le ponemos un flag)
+		vector<Contribution>* nodosContribucion = particles->at(i)->getContributionNodes();
+
+		for (Contribution& nodo : *nodosContribucion){
+			//marco el nodo con el hilo
+			nodo.setDomainId(omp_get_thread_num(), particles->at(i));
+			nodo.checkInterface(omp_get_thread_num());
+		}
+
 	}
+
+	//comparar entradas de los mapas contiguos y ver las coincidencias de los nodos y particulas
+	//marcar nodo como interfaz
 }
 
 void Update::nodalVelocity(Mesh* mesh) {

@@ -11,6 +11,12 @@
 #include "Eigen/Core"
 using Eigen::Vector3d;
 
+
+#include <unordered_map>
+using namespace std;
+
+class Particle;
+
 /// \class Contribution
 /// \brief Represents the node that the particle contributes
 ///
@@ -35,6 +41,15 @@ public:
 	/// \return Node identification
 	inline int getNodeId() const { return this->nodeId; }
 
+	/// \brief Return the node identification
+	/// \return Node identification
+	inline void setDomainId(unsigned domainId, Particle* particle) { this->domains[domainId].push_back(particle); }
+
+	/// \brief Return the node identification
+	/// \return Node identification
+	inline void checkInterface(unsigned domainId) { this->is_interface = this->domains[domainId].size() > 1; }
+
+
 	/// \brief Return the weight value
 	/// \return Nodal weight. Value of the nodal weight evaluated at the particle position
 	inline double getWeight() const { return this->weight; }
@@ -58,6 +73,9 @@ public:
 private:
 	
 	int nodeId; //!< identification of node \f$ I \f$
+
+    unordered_map<unsigned, vector<Particle*>> domains;
+	bool is_interface;
 
 	double weight; //!< weight value of a node at a particle position \f$ N_I(x_p) \f$
 
