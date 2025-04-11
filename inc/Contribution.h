@@ -51,6 +51,10 @@ public:
 
 	/// \brief Return the node identification
 	/// \return Node identification
+	inline void clearSubdomain(int index) { this->domains.clear(); this->is_interface = false;}
+
+	/// \brief Return the node identification
+	/// \return Node identification
 	inline bool getInterface() { return this->is_interface; }
 
 	/// \brief Return the weight value

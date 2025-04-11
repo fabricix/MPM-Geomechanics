@@ -41,7 +41,7 @@ public:
 
 	/// \brief Return the node identification
 	/// \return Node identification
-	inline void checkInterface() { this->is_interface = true; }
+	inline void setInterface(bool isInterface) { this->is_interface = isInterface; }
 
 	/// \brief Return the node identification
 	/// \return Node identification

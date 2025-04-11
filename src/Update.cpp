@@ -51,6 +51,7 @@ void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boun
 		
 		for (Contribution& nodo : *nodosContribucion){
 			//marco el nodo con el hilo
+			#pragma omp critical
 			nodo.setDomainId(omp_get_thread_num(), particles->at(i));
 			nodo.checkInterface();
 		}
@@ -70,7 +71,7 @@ void Update::checkInterface(vector<Particle*>* particles){
 		
 		for (Contribution& nodo : *nodosContribucion){
 			if(nodo.getInterface())
-				particles->at(i)->checkInterface();
+				particles->at(i)->setInterface(true);
 				break;
 		}
 
@@ -691,6 +692,7 @@ void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
 		// for each particle
 		#pragma omp parallel for shared(particles, mesh)
 		for (int i = 0; i < particles->size(); ++i) {
+			particles->at(i)->setInterface(false);
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }

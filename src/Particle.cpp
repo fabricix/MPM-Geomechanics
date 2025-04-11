@@ -72,7 +72,9 @@ void Particle::updateContributionNodes(Mesh* mesh)
 	{	
 		// set the node id
 		contributionNodes.at(i).setNodeId(nodesId.at(i));
-		
+		//clear subdomain data
+		contributionNodes.at(i).clearSubdomain(i);
+
 		// update the shape functions and gradients
 		shape->update(position,gNodes->at(nodesId.at(i))->getCoordinates(),mesh->getCellDimension(),size);
 
