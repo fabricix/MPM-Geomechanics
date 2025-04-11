@@ -1,9 +1,5 @@
-/*
- * ShapeLinear.h
- *
- *  Created on: 8 de mai de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef SHAPELINEAR_H_
 #define SHAPELINEAR_H_

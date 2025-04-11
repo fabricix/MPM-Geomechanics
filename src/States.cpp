@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "States.h"
 
@@ -13,6 +15,9 @@ using json = nlohmann::json;
 
 void States::saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles) {
 
+    // unused for now
+    (void)filename;
+    
     // initialize json structure    
     json jsonData;
     

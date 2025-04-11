@@ -1,9 +1,5 @@
-/*
- * Warning.cpp
- *
- *  Created on: 21 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #if defined (_WIN64) || defined(_WIN32)
 #include <windows.h>

@@ -85,30 +85,129 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 
 ## Testing
 
-The testing requires installing CMake as a compiler. 
+### 1. WINDOWS
 
-For Windows, you can use the following command in PowerShell to install CMake:
+#### 1.1. Required Programs
+| Program             | Installation    | Description | 
+| ------------------- | --------------- | ------------|
+| **Winget**          | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
+| **Git**             | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**           | via Winget  | Build system generator                                                          | 
+| **MSYS2**           | via Winget  | Package manager that includes MinGW                                             | 
+| **MinGW32-make**    | via MSYS2   | Environment for the GCC compiler                                                |
+| **GCC**             | via MSYS2   | GNU Compiler Collection                                                         |
+| **G++**             | via MSYS2   | C++ Compiler                                                                    |
+
+**Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
+
+1. Install **Git**, **CMake** and **MSYS2** using `winget` by running the following commands:
+
 ```
-winget install -e --id Kitware.CMake
+# Git
+winget install -e --id Git.Git -e --source winget
+
+# MSYS2
+winget install -e --id MSYS2.MSYS2 --source winget
+
+# CMake
+winget install -e --id Kitware.CMake --source winget
 ```
 
-For Linux (Debian), you can use the following command:
+2. Open the `MSYS` console and execute the following commands:
+
 ```
+# GCC and G++
+pacman -S mingw-w64-x86_64-gcc
+
+# mingw32-make
+pacman -S mingw-w64-x86_64-make
+```
+
+Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. If it does not exist, add it.
+Then, in the **console line of windows** (or powershell), you must verify the versions of each installation via:
+
+```
+git --version
+cmake --version
+mingw32-make --version 
+gcc --version   
+g++ --version   
+```
+
+### 2. Linux (Ubuntu/Debian)
+
+#### 2.1. Required Programs
+| Program     | Installation    | Description                                                                     | 
+| ------------| --------------- | ------------------------------------------------------------------------------- |
+| **Git**     | via apt         | Version control system. Used in this project to clone the GoogleTest repository | 
+| **CMake**   | via apt         | Build system generator                                                          | 
+| **Make**    | via apt         | Package manager that includes MinGW                                             | 
+| **GCC**     | via apt         | GNU Compiler Collection                                                         |
+| **G++**     | via apt         | C++ Compiler                                                                    |
+
+1. Install all the necessary progrmas using `apt` by running the following commands:
+
+```
+# Git
+sudo apt install git
+
+# CMake
 sudo apt install cmake
+
+# Make, GCC, G++
+sudo apt install build-essential
 ```
 
-The tests use GoogleTest. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+2. You must verify the versions of each installation via:
+
+```
+git --version
+cmake --version
+make --version 
+gcc --version   
+g++ --version   
+```
+
+### GoogleTest Usage
+
+The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
 cd external
 git clone https://github.com/google/googletest.git
 ```
 
-Then, it is necessary to compile the tests with the `CMakeLists.txt` located in the directory `/build/testing`. In the directory `build/testing`, there must be a "build" folder, where you can execute the following commands:
+## How to Compile the Tests
+
+Your directory must have the following structure:
 
 ```
-cmake -G "MinGw Makefiles" ..
+mpm-geomechanics/
+├─ build/
+│  ├─ CMakeFiles/
+│  ├─ make/
+│  ├─ msbuild/
+│  ├─ testing/
+│  │  ├─ CMakeLists.txt
+│  │  ├─ build/
+```
+
+The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
+
+### Windows
+
+```
+cmake -G "MinGW Makefiles" ..
 cmake --build .
 ```
 
-This command will generate an .exe file named `MPM-Test.exe`.
+These commands will generate a .exe file named `MPM-Test.exe`.
+
+### Linux (Ubuntu/Debian)
+
+```
+cmake -G "Unix Makefiles" ..
+cmake --build .
+```
+
+These commands will generate a executable file named `MPM-Test`.

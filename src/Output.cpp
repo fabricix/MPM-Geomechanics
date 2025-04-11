@@ -1,9 +1,5 @@
-/*
- * Output.cpp
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #if defined (linux) || defined(__linux__)
 #include <sys/stat.h>
@@ -656,6 +652,10 @@ namespace Output{
 
 	void printModelInfo(vector<Body*>* bodies, double itime)
 	{
+		// unused for now
+		(void)bodies;
+		(void)itime;
+
 		std::cout << "     Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
 		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
 		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;

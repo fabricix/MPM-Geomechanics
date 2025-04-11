@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 #include "Mesh/STLReader.h"
 #include <iostream>
 #include <fstream>
@@ -87,4 +90,26 @@ bool STLReader::readBinary(std::ifstream& file) {
 
 const std::vector<Triangle>& STLReader::getTriangles() const {
     return triangles;
+}
+
+bool is_inside(const Vector3d& v, const Vector3d& min, const Vector3d& max) {
+    return (v.x() >= min.x() && v.x() <= max.x() &&
+            v.y() >= min.y() && v.y() <= max.y() &&
+            v.z() >= min.z() && v.z() <= max.z());
+}
+
+void STLReader::removeTrianglesOutsideLimits(const Vector3d& min, const Vector3d& max) {
+    
+    std::vector<Triangle> filtered;
+
+    for (const auto& triangle : triangles) {
+        if (is_inside(triangle.v1, min, max) ||
+            is_inside(triangle.v2, min, max) ||
+            is_inside(triangle.v3, min, max)) 
+        {
+            filtered.push_back(triangle);
+        }
+    }
+
+    triangles = std::move(filtered);
 }

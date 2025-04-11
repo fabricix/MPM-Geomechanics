@@ -1,9 +1,5 @@
-/*
- * Solver.h
- *
- *  Created on: 13 de mai de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef SOLVER_H_
 #define SOLVER_H_
@@ -11,13 +7,14 @@
 #include <vector>
 using std::vector;
 
+#include "TerrainContact.h"
+
 #include "BoundingBox.h"
 
 class Body;
 class Mesh;
 class Particle;
 class TerrainContact;
-
 /// \class Solver
 /// \brief Represents the operations to solve the equations in time.
 class Solver {

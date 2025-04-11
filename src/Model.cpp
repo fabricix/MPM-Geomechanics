@@ -1,9 +1,5 @@
-/*
- * Model.cpp
- *
- *  Created on: 22 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Model.h"
 
@@ -11,6 +7,7 @@
 using std::floor;
 
 #include <omp.h>
+#include <iostream>
 
 namespace ModelSetup {
 
@@ -103,8 +100,14 @@ namespace ModelSetup {
 	// results
 	unsigned getResultNum() { return resultNumber; }
 	void setResultNum(unsigned d) { resultNumber=d; }
-	unsigned getResultSteps() { return static_cast<unsigned int>(floor(time/dt)/resultNumber); }
-
+	
+	unsigned getResultSteps() {
+		unsigned totalSteps = static_cast<unsigned>(floor(time / dt));
+		if (resultNumber == 0) return 1;
+		unsigned resultSteps = totalSteps / resultNumber;
+		return std::max(1u, resultSteps);
+	}
+	
 	// time step
 	double getTimeStep() { return dt; }
 	void setTimeStep(double d) { dt=d; }
@@ -165,13 +168,34 @@ namespace ModelSetup {
 	// interpolation functions
 	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
-    
+
+	// print the number of active threads
+	void printActiveThreads() {
+		#ifdef _OPENMP
+			#pragma omp parallel
+			{
+				#pragma omp master
+				{
+					std::cout << "   OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+				}
+			}
+		#else
+			std::cout <<"   OpenMP : Compilation without supporting OpenMP" << std::endl;
+		#endif
+	}
+
 	// openMP threads
 	void setNumThreads(unsigned nThreads){
 
 		#ifdef _OPENMP
+		// fix the number of threads
+		omp_set_dynamic(0);
+		// set the number of threads of the simulation
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
 		#endif
+
+		// print the number of active threads
+		printActiveThreads();
 	}
 
 		// openMP threads

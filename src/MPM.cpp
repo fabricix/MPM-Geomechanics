@@ -1,9 +1,5 @@
-/*
- * MPM.cpp
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "MPM.h"
 #include "Warning.h"
@@ -170,6 +166,9 @@ void MPM::setupTerrainContact()
 		// create mesh pointer
 		STLReader* stlMesh = new STLReader;
 		stlMesh->read(stlMeshFile);
+
+		// filtrate outside triangles
+		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
 
 		// set stl mesh in terrain contact
 		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());

@@ -1,9 +1,5 @@
-/*
- * DynamicRelaxation.cpp
- *
- *  Created on: 4 de set de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "DynamicRelaxation.h"
 #include "Model.h"
@@ -26,7 +22,7 @@ double DynamicRelaxation::computeKineticEnergy(vector<Body*>* bodies)
         
         // for each particle
         #pragma omp parallel for reduction(+:currentKineticEnergy) shared(particles)
-        for (int i = 0; i < particles->size(); ++i) {
+        for (int i = 0; i < static_cast<int> (particles->size()); ++i) {
 
             // verify active particle
             if (!particles->at(i)->getActive()) { continue; }
@@ -75,7 +71,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
             
             // for each particle
             #pragma omp parallel for shared(particles)
-            for (int i = 0; i < particles->size(); ++i) {
+            for (int i = 0; i < static_cast<int> (particles->size()); ++i) {
 
                 // verify active particle
                 if (!particles->at(i)->getActive()) { continue; }

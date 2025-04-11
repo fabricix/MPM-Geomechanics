@@ -1,9 +1,5 @@
-/*
- * BodyParticle.h
- *
- *  Created on: 10 de set. de 2022
- *      Author: Fabricio Fernández <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef INC_BODY_BODYPARTICLE_H_
 #define INC_BODY_BODYPARTICLE_H_

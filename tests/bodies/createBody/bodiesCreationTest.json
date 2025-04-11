@@ -102,9 +102,17 @@
       {
           "id":[1,2,3],
           "position":[[7.5,7.5,7.5],[8.0,7.5,7.5],[8.5,7.5,7.5]],
-          "volume":[1,1,1],
-          "length":[1,1,1]
+          "volume":[1,1,1]
       }
     }
+  ,
+  "body_particles_from_file":
+  {
+    "type": "particles_from_file",
+    "id": 5,
+    "material_id": 2,
+    "file": "particle_list.json"
+  }
+
   }
 }

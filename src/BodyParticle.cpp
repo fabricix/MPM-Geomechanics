@@ -1,9 +1,5 @@
-/*
- * BodyParticle.cpp
- *
- *  Created on: 15 de set. de 2022
- *      Author: fabricio
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Body/BodyParticle.h"
 
@@ -19,6 +15,9 @@ BodyParticle::~BodyParticle() { }
 /// \param[in] *material Material pointer
 void BodyParticle::create(Mesh& mesh, Material* material)
 {
+	// unused for now
+	(void)mesh;
+
 	// get particles
 	vector<Particle*>* particles = Body::getParticles();
 

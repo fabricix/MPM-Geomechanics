@@ -1,5 +1,5 @@
 <map id="BodyCuboid" name="BodyCuboid">
-<area shape="rect" id="Node000001" title="Is a type of Body representing a cuboid in 3D." alt="" coords="10,177,102,204"/>
+<area shape="rect" id="Node000001" title="A type of Body representing a cuboid in 3D." alt="" coords="10,177,102,204"/>
 <area shape="rect" id="Node000002" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="96,99,147,125"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,139,69,179,65,175,99,136"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,5,78,32"/>

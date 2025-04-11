@@ -1,9 +1,5 @@
-/*
- * Geometry.cpp
- *
- *  Created on: 19 de jul de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Geometry.h"
 

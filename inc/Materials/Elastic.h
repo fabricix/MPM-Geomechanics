@@ -1,9 +1,5 @@
-/*
- * Elastic.h
- *
- *  Created on: 4 de mai de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef ELASTIC_H_
 #define ELASTIC_H_

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 #ifndef STL_READER_H
 #define STL_READER_H
 
@@ -60,6 +63,11 @@ public:
     /// @brief Get the triangles of the STL mesh 
     /// @return Vector containing the triangles
     const std::vector<Triangle>& getTriangles() const;
+
+    /// @brief Remove triangles that have all vertices outside the specified bounding box
+    /// @param min Bounding box minimum (x_min, y_min, z_min)
+    /// @param max Bounding box maximum (x_max, y_max, z_max)
+    void removeTrianglesOutsideLimits(const Vector3d& min, const Vector3d& max);
 
 private:
     

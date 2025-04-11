@@ -1,9 +1,5 @@
-/*
- * SolverExplicitTwoPhaseUSL.cpp
- *
- *  Created on: 2 de ago de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Model.h"

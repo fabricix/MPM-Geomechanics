@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 #ifndef TERRAIN_CONTACT_H
 #define TERRAIN_CONTACT_H
 
@@ -8,9 +11,9 @@
 class TerrainContact {
 private:
     
+    STLReader* stlMesh; //!< triangular mesh for terrain contact 
+    
     double frictionCoefficient; ///< Friction coefficient \f$\mu\f$
-
-    STLReader* stlMesh; //!< triangular mesh for terrain contact
 
     std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 
@@ -53,4 +56,4 @@ public:
     void computeContactForces(std::vector< Particle* >* particles, double dt);
 };
 
-#endif
+#endif // TERRAINCONTACT_H

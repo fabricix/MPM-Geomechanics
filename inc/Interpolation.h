@@ -1,9 +1,5 @@
-/*
- * Interpolation.h
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #ifndef INTERPOLATION_H_
 #define INTERPOLATION_H_
@@ -14,12 +10,12 @@ using Eigen::Vector3d;
 #include <vector>
 using std::vector;
 
-#include <Particle/Particle.h>
+#include "TerrainContact.h"
+#include "Particle/Particle.h"
 
 class Mesh;
 class Body;
 class Particle;
-class TerrainContact;
 
 /// \namespace Interpolation
 /// \brief Represents the interpolation operations in the MPM.

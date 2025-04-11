@@ -1,18 +1,11 @@
-/*
- * BodyShere.cpp
- *
- *  Created on: 30 de ago 2024
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Body/BodySphere.h"
 #include "Particle/ParticleMixture.h"
 #include "Model.h"
 
-BodySphere::BodySphere(): diameter(1.0), center(0,0,0), particlesPerDirection(2,2,2) {
-	
-    materialId=-1;
-}
+BodySphere::BodySphere(): center(0,0,0), particlesPerDirection(2,2,2), diameter(1.0), materialId(-1) { }
 
 BodySphere::~BodySphere() { }
 

@@ -1,9 +1,5 @@
-/*
- * Loads.cpp
- *
- *  Created on: 13 de abr de 2021
- *      Author: Fabricio Fernandez <fabricio.hmf@gmail.com>
- */
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Loads.h"
 #include "Model.h"
@@ -184,8 +180,7 @@ void Loads::configureNodalPointLoads(Mesh* mesh)
 		for (const auto& inode : mesh->getNodesInCell(ipoint))
 		{	
 			Vector3d xI = mesh->getNodes()->at(inode)->getCoordinates();
-			Vector3d xP = ipoint;
-
+			
 			double new_distance = (xI - ipoint).norm();
 
 			if (new_distance <= min_distance)
