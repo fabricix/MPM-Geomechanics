@@ -13,11 +13,19 @@
 
 #### 1.2. Compilation with Windows
 
+The simplest way to compile on windows is by using the `.bat` file at `/build/CMake`, just execute:
+
 ```
-cd build
-cd CMake
-cmake -G "MinGW Makefiles" .
-cmake --build .
+cd build/CMake
+./cmake-build-win.bat
+```
+
+Alternatively, you can use the following commands:
+
+```
+cd build/CMake
+cmake -G "MinGW Makefiles" -B build
+cmake --build build
 ```
 
 ### 2. Linux
@@ -33,9 +41,17 @@ cmake --build .
 
 #### 1.2. Compilation with Linux
 
+The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
+
 ```
-cd build
-cd CMake
-cmake -G "Unix Makefiles" .
-cmake --build .
+cd build/CMake
+./cmake-build-linux.bash
+```
+
+Alternatively, you can use the following commands:
+
+```
+cd build/CMake
+cmake -G "Unix Makefiles" -B build
+cmake --build build
 ```
