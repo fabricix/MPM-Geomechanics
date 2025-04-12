@@ -57,7 +57,7 @@ public:
 
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 
-    void setDistanceThreshold(double threshold) { scalingFactor = threshold > 0.0 ? threshold : 1.0; };
+    void setDistanceThreshold(double threshold) { scalingFactor = threshold > 0.0 ? threshold : 2.0; };
 };
 
 #endif // TERRAINCONTACT_H
