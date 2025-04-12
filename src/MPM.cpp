@@ -182,6 +182,9 @@ void MPM::setupTerrainContact()
 		// set stl mesh in terrain contact
 		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());
 
+		// configure the threshold for contact detection
+		terrainContact->setDistanceThreshold(Input::getDistanceThreshold());
+		
 		// compute distance level set function
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
 	}

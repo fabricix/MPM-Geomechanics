@@ -1446,6 +1446,34 @@ bool Input::getWriteSTLMeshFile(){
 	}
 }
 
+double Input::getDistanceThreshold(){
+
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["distance_threshold"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["distance_threshold"].is_number())
+		{
+			return inputFile["terrain_contact"]["distance_threshold"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the distance threshold in terrain contact");
+		throw;
+	}
+}
+
 double Input::getFrictionCoefficient() {
 
 	try

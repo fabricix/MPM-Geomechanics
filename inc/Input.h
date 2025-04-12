@@ -633,6 +633,9 @@ namespace Input {
 
 	/// \brief Return if the STL mesh file should be written
 	bool getWriteSTLMeshFile();
+
+	/// \brief Return the distance threshold for contact detection
+	double getDistanceThreshold();
 };
 
 #endif /* INPUT_H_ */
