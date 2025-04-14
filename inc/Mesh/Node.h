@@ -21,6 +21,9 @@ public:
 	///
 	Node();
 
+	int threadId = -1;
+	bool isInterface = false;
+
 	/// \brief Configure node identification
 	/// \param[in] node_id Node identification
 	inline void setId(int node_id) { this->id=node_id; }

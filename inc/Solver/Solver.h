@@ -19,6 +19,9 @@ class Solver {
 
 public:
 
+	/// Particles per thread
+	vector<vector<Particle*>*>* particlesPerThread;
+
 	/// \brief Default constructor
 	///
 	Solver();
@@ -30,6 +33,10 @@ public:
 	/// \brief Solve the problem in time
 	///
 	virtual void Solve()=0;
+
+	/// \brief Returns the mesh pointer
+	///
+	Mesh* getMesh() { return this->mesh; };
 
 	/// \brief Register the mesh in the solver
 	///

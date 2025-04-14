@@ -11,6 +11,7 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "Parallelization.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -72,6 +73,15 @@ void MPM::setSolver() {
 	solver->registerBodies(&bodies);
 	solver->registerParticles(&particles);
 	solver->registerTerrainContact(terrainContact);
+}
+
+void MPM::setupParticlesPerThread()
+{
+	solver->particlesPerThread = new vector<vector<Particle*>*>();
+	solver->particlesPerThread->push_back(new vector<Particle*>()); // CPU 1
+	solver->particlesPerThread->push_back(new vector<Particle*>()); // CPU 2
+	solver->particlesPerThread->push_back(new vector<Particle*>()); // Interface
+	Parallelization::calculateParticlesPerThread(*solver->particlesPerThread, particles, 2, solver->getMesh());
 }
 
 void MPM::setInterpolationFunctions() {
@@ -372,6 +382,9 @@ void MPM::createModel() {
 
 		// configures the results
 		setupResults();
+
+		// load particles per thread in the solver
+		setupParticlesPerThread();
 
 	}
 	catch(...)

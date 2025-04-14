@@ -15,6 +15,7 @@ using std::cout;
 #include "Output.h"
 #include "DynamicRelaxation.h"
 #include "TerrainContact.h"
+#include "Parallelization.h"
 
 SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
 
@@ -36,9 +37,11 @@ void SolverExplicitUSL::Solve()
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
 
+		// calculate the interfaces particles
+		Parallelization::calculateInterfaceParticles(*particlesPerThread, *particles, mesh);
+
 		#pragma omp parallel sections num_threads(2)
 		{
-			// nodal mass
 			#pragma omp section
 			Interpolation::nodalMass(mesh, bodies);
 

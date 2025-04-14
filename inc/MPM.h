@@ -132,6 +132,8 @@ private:
 
 	/// \brief Set seismic analysis active
 	void setSeismicAnalysis(bool);
+
+	void setupParticlesPerThread();
 };
 
 #endif /* MPM_H_ */

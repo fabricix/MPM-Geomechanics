@@ -39,6 +39,9 @@ public:
 	/// \param[in] mesh Mesh reference
 	void updateContributionNodes(Mesh* mesh);
 
+	int threadId = -1;
+	bool isInterface = false;
+
 	/// \brief Update the particle stress
 	///  
 	inline void updateStress() { material->updateStress(this); }
