@@ -25,19 +25,13 @@ class Particle;
 namespace Interpolation
 {
 
-	/// \brief For test only
-	///
-	/// \param[in] mesh Mesh reference
-	/// \param[in] particles A list of particles
-	void nodalMassWithParticles(Mesh *mesh, vector<Particle *> *particles);
-
 	/// \brief Interpolate solid mass from particles to nodes
 	///
 	/// \f$ m_I = \sum_p m_p N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list of Bodies
-	void nodalMass(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list of particles
+	void nodalMass(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate fluid mass from particles to nodes
 	///
@@ -52,8 +46,8 @@ namespace Interpolation
 	/// \f$ p_{iI} = \sum_p p_{ip} N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalMomentum(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list of particles
+	void nodalMomentum(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate fluid momentum from particles to nodes
 	///

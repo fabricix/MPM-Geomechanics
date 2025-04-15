@@ -43,11 +43,11 @@ void SolverExplicitUSL::Solve()
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
-			Interpolation::nodalMass(mesh, bodies);
+			Interpolation::nodalMass(mesh, particles);
 
 			// nodal momentum
 			#pragma omp section
-			Interpolation::nodalMomentum(mesh, bodies);
+			Interpolation::nodalMomentum(mesh, particles);
 		}
 
 		// impose essential boundary condition on nodal momentum

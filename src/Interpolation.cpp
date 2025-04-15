@@ -22,86 +22,40 @@
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-// Nodal Mass function using particles instead bodies
-void Interpolation::nodalMassWithParticles(Mesh *mesh, vector<Particle *> *particles) {
-  vector<Node *> *nodes = mesh->getNodes();
-
-  // for each particle
-  for (size_t i = 0; i < particles->size(); ++i) {
-    // only active particle can contribute
-    if (!particles->at(i)->getActive()) {
-      continue;
-    }
-
-    // get nodes and weights that the particle contributes
-    const vector<Contribution> *contribution = particles->at(i)->getContributionNodes();
-
-    // get the particle mass
-    const double pMass = particles->at(i)->getMass();
-
-    // for each node in the contribution list
-    for (size_t j = 0; j < contribution->size(); ++j) {
-      // get the contributing node
-      Node *nodeI = nodes->at(contribution->at(j).getNodeId());
-
-      // compute the weighted nodal mass
-      const double nodalMass = pMass * contribution->at(j).getWeight();
-
-      // check any mass in node
-      if (nodalMass <= 0.0) {
-        continue;
-      }
-
-      // the node is inactivate if he doesn't have mass
-      nodeI->setActive(true);
-
-      // add mass at node
-      nodeI->addMass(nodalMass);
-    }
-  }
-}
-
-void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get the particle mass
+		const double pMass = particles->at(i)->getMass();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get the particle mass
-			const double pMass = particles->at(i)->getMass();
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// for each node in the contribution list 
-			for (size_t j = 0; j < contribution->size(); ++j) {
+			// compute the weighted nodal mass
+			const double nodalMass = pMass*contribution->at(j).getWeight();
+			
+			// check any mass in node
+			if (nodalMass<=0.0) { continue; }
+	
+			// the node is inactivate if he doesn't have mass
+			nodeI->setActive(true);
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// compute the weighted nodal mass
-				const double nodalMass = pMass*contribution->at(j).getWeight();
-				
-				// check any mass in node
-				if (nodalMass<=0.0) { continue; }
-		
-				// the node is inactivate if he doesn't have mass
-				nodeI->setActive(true);
-
-				// add mass at node
-				nodeI->addMass(nodalMass);
-			}
+			// add mass at node
+			nodeI->addMass(nodalMass);
 		}
 	}
 }
@@ -154,41 +108,34 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles)  {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get particle velocity
+		const Vector3d pVelocity = particles->at(i)->getVelocity();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// get particle mass
+		const double pMass = particles->at(i)->getMass();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get particle velocity
-			const Vector3d pVelocity = particles->at(i)->getVelocity();
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// get particle mass
-			const double pMass = particles->at(i)->getMass();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// add the weighted momentum in node
-				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
-			}
+			// add the weighted momentum in node
+			nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
 		}
 	}
 }
