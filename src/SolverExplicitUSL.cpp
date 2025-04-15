@@ -35,7 +35,7 @@ void SolverExplicitUSL::Solve()
 		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
 		// update contribution nodes
-		Update::contributionNodes(mesh, bodies);
+		Update::contributionNodes(mesh, particles);
 
 		// calculate the interfaces particles
 		Parallelization::calculateInterfaceParticles(*particlesPerThread, *particles, mesh);
