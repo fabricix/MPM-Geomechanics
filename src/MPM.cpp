@@ -77,11 +77,11 @@ void MPM::setSolver() {
 
 void MPM::setupParticlesPerThread()
 {
+	// Initialize the particles per thread vector
 	solver->particlesPerThread = new vector<vector<Particle*>*>();
-	solver->particlesPerThread->push_back(new vector<Particle*>()); // CPU 1
-	solver->particlesPerThread->push_back(new vector<Particle*>()); // CPU 2
-	solver->particlesPerThread->push_back(new vector<Particle*>()); // Interface
-	Parallelization::calculateParticlesPerThread(*solver->particlesPerThread, particles, 2, solver->getMesh());
+
+	// Calculate the number of particles per thread
+	Parallelization::calculateParticlesPerThread(solver->getMesh(), *solver->particlesPerThread, particles, 2);
 }
 
 void MPM::setInterpolationFunctions() {

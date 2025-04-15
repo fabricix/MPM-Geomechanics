@@ -4,15 +4,40 @@
 #include "Node.h"
 #include "Update.h"
 
-vector<Particle*> particlesPerThreadAux;
+// Copy of the particles per thread
+vector<vector<Particle>>* particlesPerThreadAux;
 
-void Parallelization::calculateParticlesPerThread(vector<vector<Particle*>*>& particlesPerThread, vector<Particle*>& particles, int factor, Mesh* mesh)
+// Numbers of threads
+int NumberOfThreads = 0;
+
+void Parallelization::calculateParticlesPerThread(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, vector<Particle*>& particles, int factor)
 {
-  vector<Node*>* nodes = mesh->getNodes();
-  Update::contributionNodesWithParticles(mesh, &particles);
+  // numbers of thread is 2^factor
+  NumberOfThreads = 1 << factor;
 
+  // Initialize the particles per thread vector
+  particlesPerThreadAux = new vector<vector<Particle>>(NumberOfThreads);
+
+  // the real particles per thread vector is initialized. One more is added to store the interface particles
+  particlesPerThread.resize(NumberOfThreads + 1);
+
+  // Initialize the particles per thread vector
+  for (int i = 0; i < NumberOfThreads; i++)
+  {
+    particlesPerThreadAux->at(i) = *(new vector<Particle>());
+    particlesPerThread.at(i) = new vector<Particle*>();
+  }
+
+  // the last vector is used to store the interface particles
+  particlesPerThread.at(NumberOfThreads) = new vector<Particle*>();
+
+  // minX represents the minimum x position of the particles
   float minX = -1.0;
+
+  // maxX represents the maximum x position of the particles
   float maxX = 0.0;
+
+  // obtain the minimum and maximum x position of the particles
   for (size_t i = 0; i < particles.size(); i++) {
     if (particles.at(i)->getPosition().x() < minX || minX == -1) {
       minX = particles.at(i)->getPosition().x();
@@ -21,123 +46,101 @@ void Parallelization::calculateParticlesPerThread(vector<vector<Particle*>*>& pa
       maxX = particles.at(i)->getPosition().x();
     }
   }
-  double fontier = (maxX - minX) / factor;
-  std::cout << fontier << std::endl;
 
-  vector<Contribution>* contribution;
-  Node* nodeI;
+  // the fontier is the distance between the minimum and maximum x position of the particles divided by the number of threads
+  double fontier = (maxX - minX) / (NumberOfThreads);
 
-  int count = 0;
-  int count2 = 0;
+  // the thread id
+  int threadId = 0;
 
   for (size_t i = 0; i < particles.size(); i++)
   {
-    contribution = particles.at(i)->getContributionNodes();
-    if (particles.at(i)->getPosition().x() > fontier) {
-      count++;
-      particlesPerThread.at(0)->push_back(particles.at(i));
-      particles.at(i)->threadId = 0;
-      for (size_t j = 0; j < contribution->size(); ++j) {
-        nodeI = nodes->at(contribution->at(j).getNodeId());
-        nodeI->threadId = 0;
-      }
-    }
-    else {
-      count2++;
-      particlesPerThreadAux.push_back(particles.at(i));
-      for (size_t j = 0; j < contribution->size(); ++j) {
-        nodeI = nodes->at(contribution->at(j).getNodeId());
-        nodeI->threadId = 1;
-      }
-    }
-    particles.at(i)->isInterface = false;
+    // the thread id is determined by the position of the particle in the x axis 
+    threadId = (int)particles.at(i)->getPosition().x() / fontier;
+
+    // set the thread id of the particle
+    particles.at(i)->threadId = threadId;
+
+    // set the original thread id of the particle
+    particles.at(i)->originalThreadId = threadId;
+
+    // add the particles to the particles per thread vector
+    particlesPerThreadAux->at(threadId).push_back(*particles.at(i));
+
+    // the particles per thread aux vector is a copy, then the real particle is added to the particles per thread vector
+    particlesPerThreadAux->at(threadId).at(particlesPerThreadAux->at(threadId).size() - 1).real = particles.at(i);
   }
 
-  std::cout << count << std::endl;
-  std::cout << count2 << std::endl;
-
-  for (size_t i = 0; i < particlesPerThreadAux.size(); i++)
+  // show the number of particles per thread
+  for (size_t i = 0; i < particlesPerThreadAux->size(); i++)
   {
-    bool isInterface = false;
-    contribution = particlesPerThreadAux.at(i)->getContributionNodes();
-    for (size_t j = 0; j < contribution->size(); ++j) {
-
-      nodeI = nodes->at(contribution->at(j).getNodeId());
-      if (nodeI->threadId == 0 || nodeI->threadId == 2)
-      {
-        isInterface = true;
-        nodeI->threadId = 2;
-        break;
-      }
-      else
-      {
-        nodeI->threadId = 1;
-      }
-    }
-    if (isInterface)
-    {
-      particlesPerThread.at(2)->push_back(particlesPerThreadAux.at(i));
-      particlesPerThread.at(2)->at(particlesPerThread.at(2)->size() - 1)->isInterface = true;
-      particlesPerThread.at(2)->at(particlesPerThread.at(2)->size() - 1)->threadId = 2;
-    }
-    else {
-      particlesPerThread.at(1)->push_back(particlesPerThreadAux.at(i));
-      particlesPerThread.at(1)->at(particlesPerThread.at(1)->size() - 1)->isInterface = false;
-      particlesPerThread.at(1)->at(particlesPerThread.at(1)->size() - 1)->threadId = 1;
-    }
-  }
-
-  if (particlesPerThread.size() > 1) {
-    size_t sizeThread1 = particlesPerThread.at(0)->size();
-    size_t sizeThread2 = particlesPerThread.at(1)->size();
-    size_t sizeThread3 = particlesPerThread.at(2)->size();
-
-    std::cout << "CPU 1 size: " << sizeThread1 << std::endl;
-    std::cout << "CPU 2 size: " << sizeThread2 << std::endl;
-    std::cout << "Interface size: " << sizeThread3 << std::endl;
-  }
-  else {
-    std::cerr << "Error: particlesPerThread no tiene suficientes sub-vectores." << std::endl;
+    std::cout << "Thread " << i << " size: " << particlesPerThreadAux->at(i).size() << std::endl;
   }
 }
 
-void Parallelization::calculateInterfaceParticles(vector<vector<Particle*>*>& particlesPerThread, vector<Particle*>& particles, Mesh* mesh)
+void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread)
 {
-  vector<Node*>* nodes = mesh->getNodes();
-  vector<Contribution>* contribution;
-  Node* nodeI;
 
-  particlesPerThread.at(1)->clear();
-  particlesPerThread.at(2)->clear();
-
-  for (size_t i = 0; i < particlesPerThreadAux.size(); i++)
+  // Clear the particles per thread vector
+  for (size_t i = 0; i < particlesPerThread.size(); i++)
   {
-    bool isInterface = false;
-    contribution = particlesPerThreadAux.at(i)->getContributionNodes();
-    for (size_t j = 0; j < contribution->size(); ++j) {
+    particlesPerThread.at(i)->clear();
+  }
 
-      nodeI = nodes->at(contribution->at(j).getNodeId());
-      if (nodeI->threadId == 0 || nodeI->threadId == 2)
-      {
-        isInterface = true;
-        nodeI->threadId = 2;
-        break;
-      }
-      else
-      {
-        nodeI->threadId = 1;
-      }
-    }
-    if (isInterface)
+  // Initialization of necessary variables
+  vector<Contribution>* contribution;
+  vector<Node*>* nodes = mesh->getNodes();
+  Node* nodeI;
+  bool isInterface = false;
+
+  // Iterate through the set of particle sets (vectors of particles per thread)
+  for (int t = 0; t < particlesPerThreadAux->size(); t++)
+  {
+
+    // Iterate through the particles of a thread
+    for (int p = 0; p < particlesPerThreadAux->at(t).size(); p++)
     {
-      particlesPerThread.at(2)->push_back(particlesPerThreadAux.at(i));
-      particlesPerThread.at(2)->at(particlesPerThread.at(2)->size() - 1)->isInterface = true;
-      particlesPerThread.at(2)->at(particlesPerThread.at(2)->size() - 1)->threadId = 2;
-    }
-    else {
-      particlesPerThread.at(1)->push_back(particlesPerThreadAux.at(i));
-      particlesPerThread.at(1)->at(particlesPerThread.at(1)->size() - 1)->isInterface = false;
-      particlesPerThread.at(1)->at(particlesPerThread.at(1)->size() - 1)->threadId = 1;
+
+      // Contribution nodes of the particle
+      contribution = particlesPerThreadAux->at(t).at(p).real->getContributionNodes();
+
+      // Iterate through the contribution nodes of the particle
+      for (size_t j = 0; j < contribution->size(); ++j) {
+
+        // Node corresponding to the particle
+        nodeI = nodes->at(contribution->at(j).getNodeId());
+
+        // Determine if the node's thread corresponds to the same thread as the particle. If it is equal to -1, then it is a node without a thread.
+        if (nodeI->threadId == -1 || nodeI->threadId == particlesPerThreadAux->at(t).at(p).real->originalThreadId)
+        {
+          // Assign the particle's thread to the node
+          nodeI->threadId = t;
+        }
+        else
+        {
+          // The node has a thread different from the particle's thread, so it is considered an interface
+          nodeI->threadId = -2;
+
+          // The particle is an interface particle
+          isInterface = true;
+        }
+      }
+      if (isInterface)
+      {
+        // Interface particles are stored in thread -2
+        particlesPerThreadAux->at(t).at(p).real->threadId = -2;
+
+        // Add to the list of **original** interface particles
+        particlesPerThread.at(NumberOfThreads)->push_back(particlesPerThreadAux->at(t).at(p).real);
+      }
+      else {
+        // Identify the thread of the particle
+        particlesPerThreadAux->at(t).at(p).real->threadId = t;
+
+        // Add to the list of **original** particles corresponding to the thread
+        particlesPerThread.at(t)->push_back(particlesPerThreadAux->at(t).at(p).real);
+      }
+      isInterface = false;
     }
   }
 }

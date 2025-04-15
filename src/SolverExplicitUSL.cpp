@@ -38,7 +38,7 @@ void SolverExplicitUSL::Solve()
 		Update::contributionNodes(mesh, particles);
 
 		// calculate the interfaces particles
-		Parallelization::calculateInterfaceParticles(*particlesPerThread, *particles, mesh);
+		Parallelization::calculateInterfaceParticles(mesh, *particlesPerThread);
 
 		#pragma omp parallel sections num_threads(2)
 		{

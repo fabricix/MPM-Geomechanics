@@ -133,6 +133,7 @@ private:
 	/// \brief Set seismic analysis active
 	void setSeismicAnalysis(bool);
 
+	/// \brief Setup particles per thread in the solver
 	void setupParticlesPerThread();
 };
 

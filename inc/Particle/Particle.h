@@ -40,7 +40,8 @@ public:
 	void updateContributionNodes(Mesh* mesh);
 
 	int threadId = -1;
-	bool isInterface = false;
+	int originalThreadId = -1;
+	Particle* real;
 
 	/// \brief Update the particle stress
 	///  
