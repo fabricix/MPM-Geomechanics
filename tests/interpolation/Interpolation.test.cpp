@@ -14,7 +14,8 @@
 
 using namespace std;
 
-float interpolation(vector<Particle *> particles, Mesh mesh) {
+float interpolation(vector<Particle*> particles, Mesh mesh)
+{
   // configures particle
   for (size_t i = 0; i < particles.size(); i++) {
     // id
@@ -32,7 +33,7 @@ float interpolation(vector<Particle *> particles, Mesh mesh) {
   }
 
   // interpolate particle mass to nodes
-  Interpolation::nodalMassWithParticles(&mesh, &particles);
+  Interpolation::nodalMass(&mesh, &particles);
 
   // get grid nodes
   vector<Node *> *gridNodes = mesh.getNodes();
