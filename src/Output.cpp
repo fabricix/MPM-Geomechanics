@@ -249,10 +249,17 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
-		// nodal distance level set function value
+		// thread Id
 		partFile<<"<DataArray type=\"Float64\" Name=\"ThreadId\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			partFile<<scientific<<(particles->at(i)->threadId)<<"\n";
+		}
+		partFile << "</DataArray>\n";
+
+		// original thread Id
+		partFile<<"<DataArray type=\"Float64\" Name=\"Original ThreadId\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			partFile<<scientific<<(particles->at(i)->originalThreadId)<<"\n";
 		}
 		partFile<<"</DataArray>\n";
 
@@ -452,6 +459,13 @@ namespace Output{
 		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			gridFile<<scientific<<(inodes->at(i)->getVolume())<<"\n";
+		}
+		gridFile << "</DataArray>\n";
+
+		// nodal thread ID
+		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodalThreadId\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			gridFile<<scientific<<(inodes->at(i)->threadId)<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
 
