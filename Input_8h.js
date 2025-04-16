@@ -7,6 +7,7 @@ var Input_8h =
     [ "getCriticalTimeStepMultiplier", "Input_8h.html#a2a0fb410bea4619ff93d984cba00d316", null ],
     [ "getDampingType", "Input_8h.html#adfc500416ce6c0043ff1b564f3e3c1f3", null ],
     [ "getDampingValue", "Input_8h.html#a6fe05d27dbf88da32ff89f8e8f786c5f", null ],
+    [ "getDistanceThreshold", "Input_8h.html#adb493f4d784c0a0d1a735b6b067272af", null ],
     [ "getFileName", "Input_8h.html#af336494f96212aa307fcd9c00a9b29a1", null ],
     [ "getFrictionCoefficient", "Input_8h.html#a5e6d39c7c857d3fc55088e2956e8def6", null ],
     [ "getGravity", "Input_8h.html#a4855a7486e30198da32c4b2c5cc31379", null ],
@@ -32,6 +33,7 @@ var Input_8h =
     [ "getSTLMeshFile", "Input_8h.html#a8207d83ed286e00540c9618987e89d7d", null ],
     [ "getTerrainContactActive", "Input_8h.html#a3bca44ba8d9b5497b0403694dd7ea6a6", null ],
     [ "getTimeStep", "Input_8h.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
+    [ "getWriteSTLMeshFile", "Input_8h.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
     [ "readInputFile", "Input_8h.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
     [ "readNodalPointLoads", "Input_8h.html#a4af9571f7842a96471572cd550d598a9", null ],
     [ "readSeismicData", "Input_8h.html#ab7aeff2285506645ef6c121dec4a0d44", null ]

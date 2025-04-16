@@ -16,6 +16,7 @@ var namespaces_dup =
       [ "getCriticalTimeStepMultiplier", "namespaceInput.html#a2a0fb410bea4619ff93d984cba00d316", null ],
       [ "getDampingType", "namespaceInput.html#adfc500416ce6c0043ff1b564f3e3c1f3", null ],
       [ "getDampingValue", "namespaceInput.html#a6fe05d27dbf88da32ff89f8e8f786c5f", null ],
+      [ "getDistanceThreshold", "namespaceInput.html#adb493f4d784c0a0d1a735b6b067272af", null ],
       [ "getFileName", "namespaceInput.html#af336494f96212aa307fcd9c00a9b29a1", null ],
       [ "getFrictionCoefficient", "namespaceInput.html#a5e6d39c7c857d3fc55088e2956e8def6", null ],
       [ "getGravity", "namespaceInput.html#a4855a7486e30198da32c4b2c5cc31379", null ],
@@ -41,6 +42,7 @@ var namespaces_dup =
       [ "getSTLMeshFile", "namespaceInput.html#a8207d83ed286e00540c9618987e89d7d", null ],
       [ "getTerrainContactActive", "namespaceInput.html#a3bca44ba8d9b5497b0403694dd7ea6a6", null ],
       [ "getTimeStep", "namespaceInput.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
+      [ "getWriteSTLMeshFile", "namespaceInput.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
       [ "readInputFile", "namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
       [ "readNodalPointLoads", "namespaceInput.html#a4af9571f7842a96471572cd550d598a9", null ],
       [ "readSeismicData", "namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44", null ]

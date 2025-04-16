@@ -7,6 +7,7 @@ var classTerrainContact =
     [ "getSTLMesh", "classTerrainContact.html#a5e2023696040cddd054d4c52f6000cee", null ],
     [ "nodalDensityLevelSet", "classTerrainContact.html#a1446c9bda2d73e9ecd4208358bbd9a35", null ],
     [ "particleDistanceLevelSet", "classTerrainContact.html#ae13949fd5ca7cba086dc2c35272e555e", null ],
+    [ "setDistanceThreshold", "classTerrainContact.html#a1c1d6e460075c91a21e08806da17b8a5", null ],
     [ "trianglesDensityLevelSet", "classTerrainContact.html#af1821703c3e9fcc2c9e93e628232f382", null ],
     [ "contactPairs", "classTerrainContact.html#ab9810c6c61d1e1238f4576d10f87caf9", null ],
     [ "densityLevelSet", "classTerrainContact.html#a91fa4142400b48dd19b7a4b7c122fcff", null ],

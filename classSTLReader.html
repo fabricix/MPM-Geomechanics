@@ -123,6 +123,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a23e60d1032713fe95386452c8138af0e" id="r_a23e60d1032713fe95386452c8138af0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a23e60d1032713fe95386452c8138af0e">removeTrianglesOutsideLimits</a> (const Vector3d &amp;min, const Vector3d &amp;max)</td></tr>
 <tr class="memdesc:a23e60d1032713fe95386452c8138af0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove triangles that have all vertices outside the specified bounding box.  <br /></td></tr>
 <tr class="separator:a23e60d1032713fe95386452c8138af0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28951abd498b4d1bdec439f21f2958b8" id="r_a28951abd498b4d1bdec439f21f2958b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a28951abd498b4d1bdec439f21f2958b8">recalculateNormals</a> ()</td></tr>
+<tr class="memdesc:a28951abd498b4d1bdec439f21f2958b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recalculate the normals of the triangles.  <br /></td></tr>
+<tr class="separator:a28951abd498b4d1bdec439f21f2958b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a191deaeb194a838a3401816a688dc21f" id="r_a191deaeb194a838a3401816a688dc21f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a191deaeb194a838a3401816a688dc21f">writeSTL</a> (const std::string &amp;output_filename) const</td></tr>
+<tr class="memdesc:a191deaeb194a838a3401816a688dc21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the STL file.  <br /></td></tr>
+<tr class="separator:a191deaeb194a838a3401816a688dc21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -238,6 +244,26 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a28951abd498b4d1bdec439f21f2958b8" name="a28951abd498b4d1bdec439f21f2958b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28951abd498b4d1bdec439f21f2958b8">&#9670;&#160;</a></span>recalculateNormals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void STLReader::recalculateNormals </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Recalculate the normals of the triangles. </p>
+<p>This function recalculates the normals of the triangles based on their vertices. </p>
+
+</div>
+</div>
 <a id="a23e60d1032713fe95386452c8138af0e" name="a23e60d1032713fe95386452c8138af0e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a23e60d1032713fe95386452c8138af0e">&#9670;&#160;</a></span>removeTrianglesOutsideLimits()</h2>
 
@@ -269,6 +295,32 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">min</td><td>Bounding box minimum (x_min, y_min, z_min) </td></tr>
     <tr><td class="paramname">max</td><td>Bounding box maximum (x_max, y_max, z_max) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a191deaeb194a838a3401816a688dc21f" name="a191deaeb194a838a3401816a688dc21f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a191deaeb194a838a3401816a688dc21f">&#9670;&#160;</a></span>writeSTL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool STLReader::writeSTL </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>output_filename</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the STL file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">output_filename</td><td>The name of the output STL file </td></tr>
   </table>
   </dd>
 </dl>
