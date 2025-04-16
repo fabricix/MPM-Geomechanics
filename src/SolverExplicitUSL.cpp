@@ -73,6 +73,25 @@ void SolverExplicitUSL::Solve()
 		// update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
+		// contact treatment
+		if (ModelSetup::getTerrainContactActive())
+		{
+			// calculate the distance level set function to particles
+			terrainContact->particleDistanceLevelSet(mesh, particles);
+
+			// calculate the nodal density level-set
+			terrainContact->nodalDensityLevelSet(mesh, particles);
+
+			// interpolate the density at the center of triangles
+			terrainContact->trianglesDensityLevelSet(mesh);
+
+			// determine the contact potential pairs
+			terrainContact->determineContactPotentialPairs(mesh, particles);
+
+			// compute the contact forces and correct velocities
+			terrainContact->computeContactForces(particles, dt);
+		}
+		
 		// update particle position
 		Update::particlePosition(mesh, bodies, dt);
 
@@ -95,25 +114,6 @@ void SolverExplicitUSL::Solve()
 
 		// update particle stress
 		Update::particleStress(bodies);
-
-		// contact treatment
-		if (ModelSetup::getTerrainContactActive())
-		{
-			// calculate the distance level set function to particles
-			terrainContact->particleDistanceLevelSet(mesh, particles);
-
-			// calculate the nodal density level-set
-			terrainContact->nodalDensityLevelSet(mesh, particles);
-
-			// interpolate the density at the center of triangles
-			terrainContact->trianglesDensityLevelSet(mesh);
-
-			// determine the contact potential pairs
-			terrainContact->determineContactPotentialPairs(mesh, particles);
-
-			// compute the contact forces and correct velocities
-			terrainContact->computeContactForces(particles, dt);
-		}
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
