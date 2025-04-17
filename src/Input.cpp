@@ -2,7 +2,7 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Input.h"
-#include "Solver/SolverExplicitUSL.h"
+#include "Solver/SolverExplicit.h"
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
@@ -130,7 +130,7 @@ Solver* Input::getSolver() {
 				return new SolverExplicitTwoPhaseUSL(); 
 			}
 
-			return new SolverExplicitUSL();
+			return new SolverExplicit();
 		}
 
 		if (inputFile[key].is_string()) {
@@ -143,7 +143,7 @@ Solver* Input::getSolver() {
 					return new SolverExplicitTwoPhaseUSL(); 
 				}
 
-				return new SolverExplicitUSL();
+				return new SolverExplicit();
 			}
 			throw (key);
 		}

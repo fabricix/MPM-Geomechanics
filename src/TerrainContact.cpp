@@ -368,3 +368,21 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
         particle->setVelocity(velocityCorrected);
     }
 }
+
+void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double dt)
+{
+    // calculate the distance level set function to particles
+    particleDistanceLevelSet(mesh, particles);
+
+    // calculate the nodal density level-set
+    nodalDensityLevelSet(mesh, particles);
+
+    // interpolate the density at the center of triangles
+    trianglesDensityLevelSet(mesh);
+
+    // determine the contact potential pairs
+    determineContactPotentialPairs(mesh, particles);
+
+    // compute the contact forces and correct velocities
+    computeContactForces(particles, dt);
+}

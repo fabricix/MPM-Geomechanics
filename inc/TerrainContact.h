@@ -58,6 +58,9 @@ public:
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 
     void setDistanceThreshold(double threshold) { scalingFactor = threshold > 0.0 ? threshold : 2.0; };
+
+    /// @brief Apply the terrain contact algorithm
+    void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
 };
 
 #endif // TERRAINCONTACT_H
