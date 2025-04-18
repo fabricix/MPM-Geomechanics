@@ -24,11 +24,11 @@
 /// 3.2 Compute total nodal force
 /// 3.3 Apply boundary conditions on total nodal force (f=0 for fixed nodes)
 /// 4. Solve motion equation: update nodal momentum
-/// 6.1 If MUSL: Recalculate nodal momentum with the updated particle velocity
-/// 6.2 If MUSL: Apply boundary conditions on nodal momentum (p=0 for fixed nodes)
 /// 5.1 Update particle velocity using nodal acceleration
 /// 5.2 Apply contact correction on particle velocity (if active)
 /// 5.3 Update particle position using updated nodal momentum
+/// 6.1 If MUSL: Recalculate nodal momentum with the updated particle velocity
+/// 6.2 If MUSL: Apply boundary conditions on nodal momentum (p=0 for fixed nodes)
 /// 7. Update nodal velocity with the updated nodal momentum
 /// 8. Update particle strain increment and vorticity increment using updated nodal velocity
 /// 9. Update particle density and stress strain and vorticity increment

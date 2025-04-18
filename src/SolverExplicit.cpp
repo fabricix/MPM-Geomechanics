@@ -80,7 +80,7 @@ void SolverExplicit::Solve()
 			Update::resetNodalValues(mesh);
 			Update::contributionNodes(mesh, bodies);
 			Interpolation::nodalMomentum(mesh, bodies);
-			// Step 6.3 (MUSL only): Reapply BCs on nodal momentum
+			// Step 6.2 (MUSL only): Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
 		}
 
