@@ -58,6 +58,7 @@ protected:
 	vector<Body*>* bodies; //!< pointer to bodies
 	vector<Particle*>* particles; //!< pointer to particles
 	TerrainContact* terrainContact; //!< pointer to terrain contact
+	BoundingBox* boundingBox = new BoundingBox(); //particles bounding box
 };
 
 inline Solver::Solver():mesh(0),bodies(0),particles(0),terrainContact(0) { }

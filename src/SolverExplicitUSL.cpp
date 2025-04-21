@@ -40,6 +40,9 @@ void SolverExplicitUSL::Solve()
 		// calculate the interfaces particles
 		Parallelization::calculateInterfaceParticles(mesh, *particlesPerThread);
 
+		Update::boundingBox(particles,boundingBox,2);
+		Update::particlesSubdomains(particles,boundingBox);
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section

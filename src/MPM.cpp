@@ -27,6 +27,8 @@ using std::to_string;
 #include <cstdlib>
 using std::exit;
 
+#include <cmath>
+
 MPM::MPM() {
 	
 	solver=0;
@@ -218,6 +220,9 @@ void MPM::setupParticles() {
 	// clear particle list
 	particles.clear();
 
+	Vector3d minPoint;	
+	Vector3d maxPoint;
+
 	// set body id and shape function
 	for (size_t i = 0; i < bodies.size(); ++i){
 
@@ -246,8 +251,97 @@ void MPM::setupParticles() {
 
 			// register particle is material point list
 			this->particles.push_back(particles->at(j));
+
+			minPoint = minPoint.cwiseMin(particles->at(j)->getPosition());
+			maxPoint = maxPoint.cwiseMax(particles->at(j)->getPosition());
 		}
 	}
+	//cout << "punto minimo: " << minPoint << "punto maximo: " << maxPoint;
+	BoundingBox box = BoundingBox(minPoint,maxPoint,Input::getNumThreads());
+	this->setBoundingBox(box);
+}
+
+void MPM::setupSubdomains(){
+	BoundingBox box = this->boundingBox;
+    float width = box.getWidth();
+	double frontier = width/2;
+
+	float particleMeanPerDomain = particles.size()/boundingBox.getSubdomainsNumber();
+    //float frontier = width/this->boundingBox.getSubdomainsNumber();
+	//Tolerancia de cuantas particulas pueden sobrepasar 0 a 1 (%)
+	float tolerance = 0.1; //10%
+
+	vector<Particle*> subdomain1 = std::vector<Particle*>(particles.size());
+	vector<Particle*> subdomain2 = std::vector<Particle*>(particles.size());
+
+    //recorremos las particulas
+	//for (size_t i = 0; i < this->particles.size(); ++i){
+	for (size_t i = 0; i < particles.size(); ++i){
+		Vector3d position = particles.at(i)->getPosition();
+		if(position.x() < frontier){
+			//almacenamos las particulas en el subdominio izquierdo
+			//box.setSubdomainParticle(0,particles.at(i));
+			subdomain1.push_back(particles.at(i));
+			continue;
+		}
+
+		//box.setSubdomainParticle(1,particles.at(i));
+		subdomain2.push_back(particles.at(i));
+	}
+
+    // Llamamos a la función recursiva para rebalancear los subdominios
+    //rebalanceSubdomains(frontier, particleMeanPerDomain, tolerance, box, subdomain1, subdomain2);
+}
+
+void MPM::rebalanceSubdomains(float frontier, float particleMeanPerDomain, float tolerance, BoundingBox& box, vector<Particle*> subdomain1,vector<Particle*> subdomain2) {
+    // Verificamos el número de partículas en cada subdominio
+    int subdomain0Size = box.getSubdomainSize(0);
+    int subdomain1Size = box.getSubdomainSize(1);
+
+    //cout << "Tamaño subdominio 1: " << subdomain0Size << " | Tamaño subdominio 2: " << subdomain1Size;
+
+    // Si los subdominios están equilibrados, terminamos
+    if (fabs(subdomain1.size() - particleMeanPerDomain) <= tolerance * particleMeanPerDomain &&
+        fabs(subdomain2.size() - particleMeanPerDomain) <= tolerance * particleMeanPerDomain) {
+        return;  // Base case: el rebalanceo ya está hecho
+    }
+
+	//Limpiamos subdominios
+	//subdomain1 = std::vector<Particle*>(particles.size());
+	//subdomain2 = std::vector<Particle*>(particles.size());
+
+    // Si el subdominio 0 tiene más partículas, movemos la frontera hacia la derecha
+    if (subdomain1.size() > particleMeanPerDomain * (1 + tolerance)) {
+        frontier += 0.1 * box.getWidth();  // Mover la frontera hacia la derecha
+
+        // Reasignamos las partículas basándonos en la nueva frontera
+        for (size_t i = 0; i < particles.size(); ++i) {
+            Vector3d position = particles.at(i)->getPosition();
+            if (position.x() < frontier) {
+                subdomain1.push_back(particles.at(i));  // Subdominio izquierdo
+            } else {
+                subdomain2.push_back(particles.at(i));  // Subdominio derecho
+            }
+        }
+    }
+
+    // Si el subdominio 1 tiene más partículas, movemos la frontera hacia la izquierda
+    if (subdomain2.size() > particleMeanPerDomain * (1 + tolerance)) {
+        frontier -= 0.1 * box.getWidth();  // Mover la frontera hacia la izquierda
+
+        // Reasignamos las partículas basándonos en la nueva frontera
+        for (size_t i = 0; i < particles.size(); ++i) {
+            Vector3d position = particles.at(i)->getPosition();
+            if (position.x() < frontier) {
+                subdomain1.push_back(particles.at(i));  // Subdominio izquierdo
+            } else {
+                subdomain2.push_back(particles.at(i));  // Subdominio derecho
+            }
+        }
+    }
+	//cout << "Tamaño subdominio 1: " << subdomain1.size() << " | Tamaño subdominio 2: " << subdomain2.size();
+    // Llamamos recursivamente para intentar equilibrar nuevamente
+    rebalanceSubdomains(frontier, particleMeanPerDomain, tolerance, box, subdomain1, subdomain2);
 }
 
 void MPM::setupLoads() {
@@ -370,6 +464,9 @@ void MPM::createModel() {
 
 		// configures the particles in the model
 		setupParticles();
+
+		//configure subdomains
+		setupSubdomains();
 
 		// load previous state
 		loadState();
