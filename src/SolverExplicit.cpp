@@ -74,12 +74,16 @@ void SolverExplicit::Solve()
 		// Step 5.3: Update particle position
 		Update::particlePosition(mesh, bodies, dt);
 
-		// Step 6.1 (MUSL only): Recalculate nodal momentum with updated particle velocity
+		// Step 6 (MUSL only): Recalculate nodal momentum and apply BCs on nodal momentum 
 		if (useMUSL)
 		{
-			Update::resetNodalValues(mesh);
+			// Step 6.0: Update contribution nodes
 			Update::contributionNodes(mesh, bodies);
+			
+			// Step 6.1 (MUSL only): Recalculate nodal momentum with updated particle velocity
+			Update::resetNodalMomentum(mesh);
 			Interpolation::nodalMomentum(mesh, bodies);
+			
 			// Step 6.2 (MUSL only): Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
 		}

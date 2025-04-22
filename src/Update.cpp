@@ -56,6 +56,23 @@ void Update::resetNodalValues(Mesh* mesh) {
 	}
 }
 
+void Update::resetNodalMomentum(Mesh* mesh) {
+
+	// get nodes
+	vector<Node*>* gNodes = mesh->getNodes();
+
+	// for each node
+	#pragma omp parallel for shared (gNodes)
+	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
+
+		if(!gNodes->at(i)->getActive()){ continue; }
+
+		// explicitly nullify momentum
+		gNodes->at(i)->setMomentum(Vector3d::Zero());
+	}
+}
+
+
 void Update::particleDensity(vector<Body*>* bodies) {
 
 	// for each body
