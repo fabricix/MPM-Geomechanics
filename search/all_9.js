@@ -19,5 +19,6 @@ var searchData=
   ['analytical_20solution_16',['Analytical solution',['../verification_problems.html#autotoc_md83',1,'']]],
   ['and_20numerical_20formulation_17',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
   ['and_20result_20comparison_18',['MPM model and result comparison',['../verification_problems.html#autotoc_md84',1,'']]],
-  ['are_20placed_20in_20the_20body_19',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
+  ['apply_19',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
+  ['are_20placed_20in_20the_20body_20',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
 ];

@@ -15,11 +15,12 @@ var searchData=
   ['registerterraincontact_12',['registerTerrainContact',['../classSolver.html#ab1d7c459a28e2359a562d4ba72754f4e',1,'Solver']]],
   ['removetrianglesoutsidelimits_13',['removeTrianglesOutsideLimits',['../classSTLReader.html#a23e60d1032713fe95386452c8138af0e',1,'STLReader']]],
   ['requirement_14',['Stability Requirement',['../theory_and_numerical_formulation_.html#autotoc_md75',1,'']]],
-  ['resetnodalvalues_15',['resetNodalValues',['../namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878',1,'Update']]],
-  ['resetvalues_16',['resetvalues',['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()'],['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()']]],
-  ['restriction_17',['restriction',['../structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed',1,'Boundary::planeBoundary']]],
-  ['restrictionfluid_18',['restrictionFluid',['../structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673',1,'Boundary::planeBoundary']]],
-  ['result_20comparison_19',['MPM model and result comparison',['../verification_problems.html#autotoc_md84',1,'']]],
-  ['results_20',['Results',['../namespaceInput.html#autotoc_md36',1,'']]],
-  ['results_20definition_20example_21',['Results definition example',['../namespaceInput.html#autotoc_md37',1,'']]]
+  ['resetnodalmomentum_15',['resetNodalMomentum',['../namespaceUpdate.html#ac360699f47d697b0aeb6fbc78a2ab456',1,'Update']]],
+  ['resetnodalvalues_16',['resetNodalValues',['../namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878',1,'Update']]],
+  ['resetvalues_17',['resetvalues',['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()'],['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()']]],
+  ['restriction_18',['restriction',['../structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed',1,'Boundary::planeBoundary']]],
+  ['restrictionfluid_19',['restrictionFluid',['../structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673',1,'Boundary::planeBoundary']]],
+  ['result_20comparison_20',['MPM model and result comparison',['../verification_problems.html#autotoc_md84',1,'']]],
+  ['results_21',['Results',['../namespaceInput.html#autotoc_md36',1,'']]],
+  ['results_20definition_20example_22',['Results definition example',['../namespaceInput.html#autotoc_md37',1,'']]]
 ];

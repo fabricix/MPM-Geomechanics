@@ -181,6 +181,7 @@ var namespaces_dup =
       [ "particleStress", "namespaceUpdate.html#af604df8353a8a0e15d966e984ed43d6c", null ],
       [ "particleVelocity", "namespaceUpdate.html#a2cc3c3a7f88f56f3ee69e95489485af8", null ],
       [ "particleVelocityFluid", "namespaceUpdate.html#a1c8a39c6a5360d3b298bc939395c9889", null ],
+      [ "resetNodalMomentum", "namespaceUpdate.html#ac360699f47d697b0aeb6fbc78a2ab456", null ],
       [ "resetNodalValues", "namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878", null ],
       [ "setPlaneForce", "namespaceUpdate.html#a928ad605b25b17f71dda34c6c6b1fb6c", null ],
       [ "setPlaneForceFluid", "namespaceUpdate.html#acb08a0bcaffd8a231edf932cdaa45014", null ],

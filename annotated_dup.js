@@ -33,6 +33,7 @@ var annotated_dup =
     [ "ShapeGimp", "classShapeGimp.html", "classShapeGimp" ],
     [ "ShapeLinear", "classShapeLinear.html", "classShapeLinear" ],
     [ "Solver", "classSolver.html", "classSolver" ],
+    [ "SolverExplicit", "classSolverExplicit.html", "classSolverExplicit" ],
     [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", "classSolverExplicitTwoPhaseUSL" ],
     [ "SolverExplicitUSL", "classSolverExplicitUSL.html", "classSolverExplicitUSL" ],
     [ "STLReader", "classSTLReader.html", "classSTLReader" ],

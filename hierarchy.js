@@ -40,6 +40,7 @@ var hierarchy =
     ] ],
     [ "MohrCoulomb::Softening", "classMohrCoulomb_1_1Softening.html", null ],
     [ "Solver", "classSolver.html", [
+      [ "SolverExplicit", "classSolverExplicit.html", null ],
       [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", null ],
       [ "SolverExplicitUSL", "classSolverExplicitUSL.html", null ]
     ] ],

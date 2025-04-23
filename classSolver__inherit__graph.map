@@ -1,7 +1,9 @@
 <map id="Solver" name="Solver">
-<area shape="rect" id="Node000001" title="Represents the operations to solve the equations in time." alt="" coords="161,5,219,32"/>
-<area shape="rect" id="Node000002" href="$classSolverExplicitTwoPhaseUSL.html" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="5,80,194,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,44,117,82,113,78,161,40"/>
-<area shape="rect" id="Node000003" href="$classSolverExplicitUSL.html" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="217,80,344,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="219,40,267,78,264,82,216,44"/>
+<area shape="rect" id="Node000001" title="Represents the operations to solve the equations in time." alt="" coords="209,5,272,31"/>
+<area shape="rect" id="Node000002" href="$classSolverExplicit.html" title="Represents the operations to solve explicitly the equations in time using the Update Stress Last (USL..." alt="" coords="5,79,116,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,38,91,81,89,76,198,33"/>
+<area shape="rect" id="Node000003" href="$classSolverExplicitTwoPhaseUSL.html" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="141,79,341,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="243,44,243,79,238,79,238,44"/>
+<area shape="rect" id="Node000004" href="$classSolverExplicitUSL.html" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="365,79,501,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,33,402,76,400,81,284,38"/>
 </map>
