@@ -76,10 +76,7 @@ void SolverExplicit::Solve()
 
 		// Step 6 (MUSL only): Recalculate nodal momentum and apply BCs on nodal momentum 
 		if (useMUSL)
-		{
-			// Step 6.0: Update contribution nodes
-			Update::contributionNodes(mesh, bodies);
-			
+		{	
 			// Step 6.1 (MUSL only): Recalculate nodal momentum with updated particle velocity
 			Update::resetNodalMomentum(mesh);
 			Interpolation::nodalMomentum(mesh, bodies);
