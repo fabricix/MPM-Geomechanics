@@ -630,6 +630,7 @@ namespace Output{
 		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
 		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;
 		std::cout << "  Results : " << ModelSetup::getResultNum() << std::endl;
+		std::cout << "  Solver  : " << (ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::USL ? "USL" : "MUSL") << std::endl;
 	}
 
 	void initializeCSVFile(const std::string& filename) {

@@ -343,6 +343,10 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // calculate the normal velocity v_n = (v_p . e_n) e_n
         double vn_magnitude = velocityPredictor.dot(normal);
+
+        // prevent non-penetrating contact correction
+        if (vn_magnitude >= 0.0) continue;
+        
         Vector3d vn = vn_magnitude * normal;
 
         // calculate the normal force f_n = -m_p * vn_p / dt * e_n
@@ -367,4 +371,22 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
         // update the velocity of the particle
         particle->setVelocity(velocityCorrected);
     }
+}
+
+void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double dt)
+{
+    // calculate the distance level set function to particles
+    particleDistanceLevelSet(mesh, particles);
+
+    // calculate the nodal density level-set
+    nodalDensityLevelSet(mesh, particles);
+
+    // interpolate the density at the center of triangles
+    trianglesDensityLevelSet(mesh);
+
+    // determine the contact potential pairs
+    determineContactPotentialPairs(mesh, particles);
+
+    // compute the contact forces and correct velocities
+    computeContactForces(particles, dt);
 }

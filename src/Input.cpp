@@ -2,7 +2,7 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Input.h"
-#include "Solver/SolverExplicitUSL.h"
+#include "Solver/SolverExplicit.h"
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
@@ -117,45 +117,46 @@ double Input::getSimulationTime(){
 }
 
 Solver* Input::getSolver() {
-	
 	try
-	{	
-		string key = "stress_scheme_update";
-		
+	{
+		std::string key = "stress_scheme_update";
+
 		// default value
 		if (inputFile[key].is_null()) {
-
-			if (ModelSetup::getTwoPhaseActive()) { 
-
-				return new SolverExplicitTwoPhaseUSL(); 
+			ModelSetup::setUpdateStressScheme(ModelSetup::USL);
+			if (ModelSetup::getTwoPhaseActive()) {
+				return new SolverExplicitTwoPhaseUSL();
 			}
-
-			return new SolverExplicitUSL();
+			return new SolverExplicit();
 		}
 
 		if (inputFile[key].is_string()) {
+			std::string scheme = inputFile[key];
 
-			// USL scheme
-			if(inputFile[key]=="USL") {
-
-				if (ModelSetup::getTwoPhaseActive()) { 
-
-					return new SolverExplicitTwoPhaseUSL(); 
+			if (scheme == "USL") {
+				ModelSetup::setUpdateStressScheme(ModelSetup::USL);
+				if (ModelSetup::getTwoPhaseActive()) {
+					return new SolverExplicitTwoPhaseUSL();
 				}
-
-				return new SolverExplicitUSL();
+				return new SolverExplicit();
 			}
-			throw (key);
+			else if (scheme == "MUSL") {
+				ModelSetup::setUpdateStressScheme(ModelSetup::MUSL);
+				return new SolverExplicit();
+			}
+			else {
+				throw key;
+			}
 		}
-		throw(0);
+		throw 0;
 	}
 
-	catch(string& key)
+	catch(std::string& key)
 	{
-		Warning::printMessage("Error in keyword: "+key);
+		Warning::printMessage("Error in keyword: " + key);
 		throw;
 	}
-	
+
 	catch(...)
 	{
 		Warning::printMessage("Error in solver definition in input file");

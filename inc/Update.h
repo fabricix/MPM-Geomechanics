@@ -40,8 +40,12 @@ namespace Update {
 	/// \brief Delete all stored values in nodes 
 	/// \param[in] mesh Mesh reference
 	void resetNodalValues(Mesh* mesh);
-	
-	/// \brief Updates the particles' density
+
+    /// \brief Delete momentum stored in nodes
+    /// @param mesh 
+    void resetNodalMomentum(Mesh *mesh);
+
+    /// \brief Updates the particles' density
 	///
 	/// In one phase calculations:
 	///
