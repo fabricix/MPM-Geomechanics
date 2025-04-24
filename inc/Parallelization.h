@@ -3,7 +3,7 @@
 
 using namespace std;
 #include <vector>
-#include "Mesh.h"
+#include "Mesh/Mesh.h"
 
 class Particle;
 
@@ -19,7 +19,14 @@ namespace Parallelization
   /// \brief Calculate the interface particles
   /// \param[in] mesh Mesh object containing the nodes and particles
 	/// \param[in] particlesPerThread Actual particles per thread
-  void calculateInterfaceParticles(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread);
+  void calculateInterfaceParticles(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread); //vector<vector<Particle*>*>& interfaceParticlesPerThread
+
+  /// \brief Calculate the interface particles
+  /// \param[in] mesh Mesh object containing the nodes and particles
+	/// \param[in] particlesPerThread Actual particles per thread
+  void interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor);
+
+  void nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor); 
 }
 
 #endif // PARALLELIZATION_H_

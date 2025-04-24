@@ -24,6 +24,7 @@ void SolverExplicitUSL::Solve()
 	// initialize simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
+	int numThreads = ModelSetup::getThreads();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
 	int loopCounter = 0;
@@ -40,23 +41,25 @@ void SolverExplicitUSL::Solve()
 		// calculate the interfaces particles
 		Parallelization::calculateInterfaceParticles(mesh, *particlesPerThread);
 
-		Update::boundingBox(particles,boundingBox,2);
-		Update::particlesSubdomains(particles,boundingBox);
+		//Update::boundingBox(particles,boundingBox,2);
+		//Update::particlesSubdomains(particles,boundingBox);
 
-		#pragma omp parallel sections num_threads(2)
+		#pragma omp parallel sections num_threads(numThreads)
 		{
 			#pragma omp section
+			//Parallelization::interpolateMass(mesh,*particlesPerThread,1);
 			Interpolation::nodalMass(mesh, particles);
 
 			// nodal momentum
 			#pragma omp section
-			Interpolation::nodalMomentum(mesh, particles);
+			//Interpolation::nodalMomentum(mesh, particles);
+			Parallelization::nodalMomentum(mesh,*particlesPerThread,1);
 		}
 
 		// impose essential boundary condition on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
-		#pragma omp parallel sections num_threads(2)
+		#pragma omp parallel sections num_threads(numThreads)
 		{
 			// nodal internal force
 			#pragma omp section
@@ -85,7 +88,7 @@ void SolverExplicitUSL::Solve()
 		// nodal velocity
 		Update::nodalVelocity(mesh);
 
-		#pragma omp parallel sections num_threads(2)
+		#pragma omp parallel sections num_threads(numThreads)
 		{
 			// calculate particle strain increment
 			#pragma omp section
