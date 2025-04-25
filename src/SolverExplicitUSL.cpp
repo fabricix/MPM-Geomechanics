@@ -25,6 +25,7 @@ void SolverExplicitUSL::Solve()
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int numThreads = ModelSetup::getThreads();
+	int factor = ModelSetup::getPartitionFactor();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
 	int loopCounter = 0;
@@ -47,13 +48,13 @@ void SolverExplicitUSL::Solve()
 		#pragma omp parallel sections num_threads(numThreads)
 		{
 			#pragma omp section
-			//Parallelization::interpolateMass(mesh,*particlesPerThread,1);
-			Interpolation::nodalMass(mesh, particles);
+			Parallelization::interpolateMass(mesh,*particlesPerThread,factor);
+			//Interpolation::nodalMass(mesh, particles);
 
 			// nodal momentum
 			#pragma omp section
 			//Interpolation::nodalMomentum(mesh, particles);
-			Parallelization::nodalMomentum(mesh,*particlesPerThread,1);
+			Parallelization::nodalMomentum(mesh,*particlesPerThread,factor);
 		}
 
 		// impose essential boundary condition on nodal momentum

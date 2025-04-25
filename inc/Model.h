@@ -104,6 +104,10 @@ namespace ModelSetup {
 	/// \param[in] n_threads Number of threads
 	void setThreads(unsigned n_threads);
 
+	int getPartitionFactor();
+	
+	void setPartitionFactor(int factor);
+
 	/// \brief Return if contact method is activated
 	/// \return True if contact method is activated
 	bool getContactActive();

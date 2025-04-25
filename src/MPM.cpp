@@ -83,7 +83,7 @@ void MPM::setupParticlesPerThread()
 	solver->particlesPerThread = new vector<vector<Particle*>*>();
 
 	// Calculate the number of particles per thread
-	Parallelization::calculateParticlesPerThread(solver->getMesh(), *solver->particlesPerThread, particles, 2);
+	Parallelization::calculateParticlesPerThread(solver->getMesh(), *solver->particlesPerThread, particles, ModelSetup::getPartitionFactor());
 }
 
 void MPM::setInterpolationFunctions() {
@@ -398,6 +398,12 @@ void MPM::setThreads() {
 
 	// configures the number of threads
 	ModelSetup::setNumThreads(Input::getNumThreads());
+}
+
+void MPM::setPartitionFactor() {
+
+	// configures the number of threads
+	ModelSetup::setPartitionFactor(Input::getPartitionFactor());
 }
 
 void MPM::setNumberPhasesInSimulation() {

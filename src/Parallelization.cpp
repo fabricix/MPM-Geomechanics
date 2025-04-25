@@ -165,7 +165,7 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
 
   int totalSums[nodes->size()] = {0}; //all the elements are zero
   
-  #pragma omp parallel for num_threads(pow(2,factor)) reduction(+totalSums)
+  #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSums)
   for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
     Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
 
@@ -193,10 +193,11 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
 			// the node is inactivate if he doesn't have mass
 			nodeI->setActive(true);
 
-      if(nodeI->threadId != -2)
+      //It is a normal node
+      if(nodeI->threadId != -2){
       	nodeI->addMass(nodalMass);
         continue;
-
+      }
       //an interface node go to totalSum array
       totalSums[nodeI->getId()] += nodalMass;
 
@@ -220,7 +221,7 @@ void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& part
   int totalSumsY[nodes->size()] = {0}; //all the elements are zero
   int totalSumsZ[nodes->size()] = {0}; //all the elements are zero
   
-  #pragma omp parallel for num_threads(pow(2,factor)) reduction(+totalSumsX, totalSumsY, totalSumsZ)
+  #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSumsX, totalSumsY, totalSumsZ)
   for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
     Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
 
@@ -242,10 +243,11 @@ void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& part
 			// get the contributing node
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-      if(nodeI->threadId != -2)
+      if(nodeI->threadId != -2){
       	nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
         continue;
-
+      }
+      
       //an interface node go to totalSum array
       totalSumsX[nodeI->getId()] += pMass*pVelocity.x()*contribution->at(j).getWeight();
       totalSumsY[nodeI->getId()] += pMass*pVelocity.y()*contribution->at(j).getWeight();

@@ -44,6 +44,7 @@ namespace ModelSetup {
 	
 	// threads
 	unsigned nThreads=1; //!< number of threads in current job
+	unsigned partitionFactor = 1;
 	
 	// contribution nodes
 	unsigned contributionNodes=27; //!< nodes that the particles contributed
@@ -115,6 +116,9 @@ namespace ModelSetup {
 	// threads
 	unsigned getThreads() { return nThreads; }
 	void setThreads(unsigned d) { nThreads=d; }
+
+	int getPartitionFactor() { return partitionFactor; }
+	void setPartitionFactor(int factor) { partitionFactor = factor; }
 
 	// contact method
 	bool getContactActive() { return contactActive; }

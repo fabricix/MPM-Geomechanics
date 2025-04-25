@@ -136,6 +136,8 @@ private:
 	///
 	void setThreads();
 
+	void setPartitionFactor();
+
 	/// \brief Get seismic analysis active
 	bool getSeismicAnalysis();
 
