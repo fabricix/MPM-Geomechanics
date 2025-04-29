@@ -5,6 +5,7 @@
 #define SOLVER_H_
 
 #include <vector>
+#include "BoundingBox.h"
 using std::vector;
 
 #include "TerrainContact.h"
@@ -21,6 +22,9 @@ public:
 
 	/// Particles per thread
 	vector<vector<Particle*>*>* particlesPerThread;
+
+	/// Interface Particles per thread
+	vector<vector<Particle*>*>* interfaceParticlesPerThread;
 
 	/// \brief Default constructor
 	///

@@ -287,7 +287,7 @@ protected:
 	int id;	//!< particle id
 	int bodyId; //!< body id
 
-	unsigned threadId = 0; //default threadId
+	//unsigned threadId = 0; //default threadId
 
 	double mass; //!< particle mass: \f$m_p\f$
 	double density;	//!< current particle density: \f$\rho_p\f$
