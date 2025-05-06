@@ -53,8 +53,8 @@ void SolverExplicitUSL::Solve()
 
 			// nodal momentum
 			#pragma omp section
-			//Interpolation::nodalMomentum(mesh, particles);
-			Parallelization::nodalMomentum(mesh,*particlesPerThread,factor);
+			Interpolation::nodalMomentum(mesh, particles);
+			//Parallelization::nodalMomentum(mesh,*particlesPerThread,factor);
 		}
 
 		// impose essential boundary condition on nodal momentum

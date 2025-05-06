@@ -163,11 +163,52 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
   // get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-  int totalSums[nodes->size()] = {0}; //all the elements are zero
+  double totalSums[nodes->size()] = {0.0}; //all the elements are zero
   
+  #pragma omp parallel num_threads(1 << factor)
+  {
+    int tid = omp_get_thread_num();
+    for (int i = 0; i < particlesPerThread[tid]->size(); ++i) {
+      Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
+  
+      // only active particle can contribute
+      if (!particle->getActive()) { continue; }
+  
+      // get nodes and weights that the particle contributes
+      const vector<Contribution>* contribution = particle->getContributionNodes();
+  
+      // get the particle mass
+      const double pMass = particle->getMass();
+  
+      // for each node in the contribution list 
+      for (size_t j = 0; j < contribution->size(); ++j) {
+  
+        // get the contributing node
+        Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+  
+        // compute the weighted nodal mass
+        const double nodalMass = pMass*contribution->at(j).getWeight();
+        
+        // check any mass in node
+        if (nodalMass<=0.0) { continue; }
+    
+        // the node is inactivate if he doesn't have mass
+        nodeI->setActive(true);
+  
+        nodeI->addMass(nodalMass);
+        //It is a normal node
+  
+      }
+    }
+  }
+
+  
+  //interpolate interface particles values
   #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSums)
-  for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
-    Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
+  for (size_t i = 0; i < particlesPerThread[particlesPerThread.size()]->size(); i++)
+  {
+
+    Particle* particle = particlesPerThread[particlesPerThread.size()]->at(i);
 
     // only active particle can contribute
 		if (!particle->getActive()) { continue; }
@@ -178,30 +219,24 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
 		// get the particle mass
 		const double pMass = particle->getMass();
 
-		// for each node in the contribution list 
+    // for each node in the contribution list 
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get the contributing node
+      // get the contributing node
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 			// compute the weighted nodal mass
 			const double nodalMass = pMass*contribution->at(j).getWeight();
-			
-			// check any mass in node
-			if (nodalMass<=0.0) { continue; }
-	
-			// the node is inactivate if he doesn't have mass
-			nodeI->setActive(true);
 
-      //It is a normal node
+      //normal nodes are modified inmediatly
       if(nodeI->threadId != -2){
-      	nodeI->addMass(nodalMass);
+        nodeI->addMass(nodalMass);
         continue;
       }
       //an interface node go to totalSum array
       totalSums[nodeI->getId()] += nodalMass;
+    }
 
-		}
   }
 
   //unification of sums
@@ -217,9 +252,9 @@ void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& part
   // get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-  int totalSumsX[nodes->size()] = {0}; //all the elements are zero
-  int totalSumsY[nodes->size()] = {0}; //all the elements are zero
-  int totalSumsZ[nodes->size()] = {0}; //all the elements are zero
+  double totalSumsX[nodes->size()] = {0.0}; //all the elements are zero
+  double totalSumsY[nodes->size()] = {0.0}; //all the elements are zero
+  double totalSumsZ[nodes->size()] = {0.0}; //all the elements are zero
   
   #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSumsX, totalSumsY, totalSumsZ)
   for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
