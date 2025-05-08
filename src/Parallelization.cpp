@@ -10,6 +10,20 @@
 #include <iostream>
 using namespace std;
 
+
+// create reduction function
+void reduce_umaps(std::unordered_map<int, double>& omp_out, 
+  const std::unordered_map<int, double>& omp_in) {
+for (const auto& kv : omp_in) {
+omp_out[kv.first] += kv.second;  // Sumar el valor correspondiente de la clave
+}
+}
+
+// Declare dcustom reduction for unordered_map<int, double>
+#pragma omp declare reduction(umap_reduction : std::unordered_map<int, double> : \
+reduce_umaps(omp_out, omp_in)) \
+initializer(omp_priv = std::unordered_map<int, double>())
+
 // Copy of the particles per thread
 vector<vector<Particle>>* particlesPerThreadAux;
 
@@ -163,7 +177,7 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
   // get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-  double totalSums[nodes->size()] = {0.0}; //all the elements are zero
+  unordered_map<int, double> totalSums;
   
   #pragma omp parallel num_threads(1 << factor)
   {
@@ -204,7 +218,7 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
 
   
   //interpolate interface particles values
-  #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSums)
+  #pragma omp parallel for num_threads(1 << factor) reduction(umap_reduction:totalSums)
   for (size_t i = 0; i < particlesPerThread[particlesPerThread.size()]->size(); i++)
   {
 
@@ -239,10 +253,11 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
 
   }
 
-  //unification of sums
-  for (int i = 0; i < sizeof(totalSums); i++)
-  {
-    nodes->at(i)->addMass(totalSums[i]);
+  for (const auto& pair : totalSums) {
+    int key = pair.first;
+    double value = pair.second;
+
+    nodes->at(key)->addMass(value);
   }
   
 }
