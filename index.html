@@ -130,17 +130,27 @@ Compiled binaries</h1>
 </ol>
 <h1><a class="anchor" id="autotoc_md66"></a>
 Compilation in windows</h1>
+<h2><a class="anchor" id="autotoc_md67"></a>
+CMake Compilation</h2>
+<p>See the <a href="../build/CMake/cmake-compilation-manual.md#windows-instructions">Cmake Compilation Manual</a> for more information on compiling with CMake.</p>
+<h2><a class="anchor" id="autotoc_md68"></a>
+Visual Studio Solution</h2>
 <p>For compiling the code in windows you can use the Visual Studio solution file <code>/build/MPM-Geomechanics.sln</code>, and build it by pressing <code>Ctr+B</code>. Alternatively you can compile it by using command in a <em>Developer Command Prompt</em>:</p>
 <div class="fragment"><div class="line">msbuild MPM-Geomechanics.sln -p:Configuration=Release</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md67"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md69"></a>
 Compilation in Linux</h1>
+<h2><a class="anchor" id="autotoc_md70"></a>
+CMake Compilation</h2>
+<p>See the <a href="../build/CMake/cmake-compilation-manual.md#linux-instructions">Cmake Compilation Manual</a> for more information on compiling with CMake.</p>
+<h2><a class="anchor" id="autotoc_md71"></a>
+Make Compilation</h2>
 <p>For compile the code in a linux environment, execute the <a href="https://www.gnu.org/software/make/">make</a> command into the make folder, in with is located de makefile <code>MPM-Geomechanics\build\make\makefile</code>:</p>
-<h1><a class="anchor" id="autotoc_md68"></a>
+<h1><a class="anchor" id="autotoc_md72"></a>
 Documentation</h1>
 <p>The program documentation is generated using <a href="https://www.doxygen.nl/index.html">Doxygen</a>:</p>
 <div class="fragment"><div class="line">doxygen Doxyfile</div>
 </div><!-- fragment --><p>The HTML generated documentation is located in <code>/docs/index.html</code>.</p>
-<h1><a class="anchor" id="autotoc_md69"></a>
+<h1><a class="anchor" id="autotoc_md73"></a>
 Execution</h1>
 <p>In order to run simulations in several terminal, you can add the compiled code in the system <code>PATH</code>. After that, the common use is to call the program with the input file as argument: </p>
 </div></div><!-- PageDoc -->

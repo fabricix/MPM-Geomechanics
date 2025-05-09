@@ -28,5 +28,5 @@ var searchData=
   ['normal_25',['normal',['../structTriangle.html#a825a6dde1927e288afe4652a9cfcbaed',1,'Triangle']]],
   ['nrows_26',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]],
   ['numerical_20formulation_27',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
-  ['numerical_20implementation_28',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md74',1,'']]]
+  ['numerical_20implementation_28',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md78',1,'']]]
 ];

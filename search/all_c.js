@@ -21,7 +21,7 @@ var searchData=
   ['development_20manual_18',['Development manual',['../development_manual.html',1,'']]],
   ['development_2dmanual_2emd_19',['development-manual.md',['../development-manual_8md.html',1,'']]],
   ['diameter_20',['diameter',['../classBodySphere.html#ac81e013e0b40464c83535655727c5497',1,'BodySphere']]],
-  ['difference_20method_21',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md73',1,'']]],
+  ['difference_20method_21',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md77',1,'']]],
   ['dilation_22',['dilation',['../classMohrCoulomb.html#a9718a4d56fc38f21cf55f7666e8f0811',1,'MohrCoulomb']]],
   ['dilation_5fresidual_23',['dilation_residual',['../classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b',1,'MohrCoulomb::Softening']]],
   ['dilation_5fsoftening_5factive_24',['dilation_softening_active',['../classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5',1,'MohrCoulomb::Softening']]],
@@ -32,7 +32,7 @@ var searchData=
   ['distretizationlength_29',['distretizationLength',['../classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098',1,'BodyPolygon']]],
   ['distributed_20load_20in_20box_20example_30',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],
   ['doc_3a_20tt_20strong_31',['&lt;strong&gt;1. &lt;tt&gt;doc:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md50',1,'']]],
-  ['documentation_32',['Documentation',['../index.html#autotoc_md68',1,'']]],
+  ['documentation_32',['Documentation',['../index.html#autotoc_md72',1,'']]],
   ['dynamicrelaxation_33',['DynamicRelaxation',['../namespaceDynamicRelaxation.html',1,'']]],
   ['dynamicrelaxation_2eh_34',['DynamicRelaxation.h',['../DynamicRelaxation_8h.html',1,'']]]
 ];
