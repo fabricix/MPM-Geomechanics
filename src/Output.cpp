@@ -174,7 +174,7 @@ namespace Output{
 		partFile<<"<PointData>\n";
 		
 		// particle Id
-		partFile<<"<DataArray type=\"UInt64\" Name=\"Thread Id\" Format=\"ascii\">\n";
+		partFile<<"<DataArray type=\"Int32\" Name=\"Thread Id\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			partFile<<particles->at(i)->getThreadId()<<"\n";
 		}
@@ -486,7 +486,7 @@ namespace Output{
 		gridFile << "</DataArray>\n";
 
 		// nodal thread ID
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodalThreadId\" Format=\"ascii\">\n";
+		gridFile<<"<DataArray type=\"Int32\" Name=\"NodalThreadId\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			gridFile<<scientific<<(inodes->at(i)->threadId)<<"\n";
 		}
