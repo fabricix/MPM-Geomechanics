@@ -219,10 +219,10 @@ void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& pa
   
   //interpolate interface particles values
   #pragma omp parallel for num_threads(1 << factor) reduction(umap_reduction:totalSums)
-  for (size_t i = 0; i < particlesPerThread[particlesPerThread.size()]->size(); i++)
+  for (size_t i = 0; i < particlesPerThread[particlesPerThread.size() - 1]->size(); i++)
   {
 
-    Particle* particle = particlesPerThread[particlesPerThread.size()]->at(i);
+    Particle* particle = particlesPerThread[particlesPerThread.size() - 1]->at(i);
 
     // only active particle can contribute
 		if (!particle->getActive()) { continue; }

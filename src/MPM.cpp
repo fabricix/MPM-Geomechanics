@@ -486,6 +486,9 @@ void MPM::createModel() {
 		// configures the results
 		setupResults();
 
+		// set partition factor
+		setPartitionFactor();
+
 		// load particles per thread in the solver
 		setupParticlesPerThread();
 
