@@ -1,8 +1,28 @@
 #include "Parallelization.h"
 #include <iostream>
-#include "Particle.h"
-#include "Node.h"
+#include "Particle/Particle.h"
+#include "Mesh/Node.h"
 #include "Update.h"
+
+#include "omp.h"
+
+#include <unordered_map>
+#include <iostream>
+using namespace std;
+
+
+// create reduction function
+void reduce_umaps(std::unordered_map<int, double>& omp_out, 
+  const std::unordered_map<int, double>& omp_in) {
+for (const auto& kv : omp_in) {
+omp_out[kv.first] += kv.second;  // Sumar el valor correspondiente de la clave
+}
+}
+
+// Declare dcustom reduction for unordered_map<int, double>
+#pragma omp declare reduction(umap_reduction : std::unordered_map<int, double> : \
+reduce_umaps(omp_out, omp_in)) \
+initializer(omp_priv = std::unordered_map<int, double>())
 
 // Copy of the particles per thread
 vector<vector<Particle>>* particlesPerThreadAux;
@@ -78,7 +98,7 @@ void Parallelization::calculateParticlesPerThread(Mesh* mesh, vector<vector<Part
   }
 }
 
-void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread)
+void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread) //vector<vector<Particle*>*>& interfaceParticlesPerThread
 {
 
   // Clear the particles per thread vector
@@ -127,11 +147,17 @@ void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Part
       }
       if (isInterface)
       {
+        //voy a modificar esta funcion ojo
+
+        //la idea es separar la particula del array original y ponerlo en un array solo de nodos interfaz
+
         // Interface particles are stored in thread -2
         particlesPerThreadAux->at(t).at(p).real->threadId = -2;
 
         // Add to the list of **original** interface particles
         particlesPerThread.at(NumberOfThreads)->push_back(particlesPerThreadAux->at(t).at(p).real);
+
+        
       }
       else {
         // Identify the thread of the particle
@@ -139,8 +165,152 @@ void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Part
 
         // Add to the list of **original** particles corresponding to the thread
         particlesPerThread.at(t)->push_back(particlesPerThreadAux->at(t).at(p).real);
+
       }
       isInterface = false;
     }
   }
+}
+
+void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor){
+
+  // get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+  unordered_map<int, double> totalSums;
+  
+  #pragma omp parallel num_threads(1 << factor)
+  {
+    int tid = omp_get_thread_num();
+    for (int i = 0; i < particlesPerThread[tid]->size(); ++i) {
+      Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
+  
+      // only active particle can contribute
+      if (!particle->getActive()) { continue; }
+  
+      // get nodes and weights that the particle contributes
+      const vector<Contribution>* contribution = particle->getContributionNodes();
+  
+      // get the particle mass
+      const double pMass = particle->getMass();
+  
+      // for each node in the contribution list 
+      for (size_t j = 0; j < contribution->size(); ++j) {
+  
+        // get the contributing node
+        Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+  
+        // compute the weighted nodal mass
+        const double nodalMass = pMass*contribution->at(j).getWeight();
+        
+        // check any mass in node
+        if (nodalMass<=0.0) { continue; }
+    
+        // the node is inactivate if he doesn't have mass
+        nodeI->setActive(true);
+  
+        nodeI->addMass(nodalMass);
+        //It is a normal node
+  
+      }
+    }
+  }
+
+  
+  //interpolate interface particles values
+  #pragma omp parallel for num_threads(1 << factor) reduction(umap_reduction:totalSums)
+  for (size_t i = 0; i < particlesPerThread[particlesPerThread.size() - 1]->size(); i++)
+  {
+
+    Particle* particle = particlesPerThread[particlesPerThread.size() - 1]->at(i);
+
+    // only active particle can contribute
+		if (!particle->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particle->getContributionNodes();
+
+		// get the particle mass
+		const double pMass = particle->getMass();
+
+    // for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+      // get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// compute the weighted nodal mass
+			const double nodalMass = pMass*contribution->at(j).getWeight();
+
+      //normal nodes are modified inmediatly
+      if(nodeI->threadId != -2){
+        nodeI->addMass(nodalMass);
+        continue;
+      }
+      //an interface node go to totalSum array
+      totalSums[nodeI->getId()] += nodalMass;
+    }
+
+  }
+
+  for (const auto& pair : totalSums) {
+    int key = pair.first;
+    double value = pair.second;
+
+    nodes->at(key)->addMass(value);
+  }
+  
+}
+
+void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor)  {
+
+  // get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+  double totalSumsX[nodes->size()] = {0.0}; //all the elements are zero
+  double totalSumsY[nodes->size()] = {0.0}; //all the elements are zero
+  double totalSumsZ[nodes->size()] = {0.0}; //all the elements are zero
+  
+  #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSumsX, totalSumsY, totalSumsZ)
+  for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
+    Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
+
+    // only active particle can contribute
+		if (!particle->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particle->getContributionNodes();
+
+		// get the particle mass
+		const double pMass = particle->getMass();
+
+    // get particle velocity
+    const Vector3d pVelocity = particle->getVelocity();
+
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+      if(nodeI->threadId != -2){
+      	nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+        continue;
+      }
+      
+      //an interface node go to totalSum array
+      totalSumsX[nodeI->getId()] += pMass*pVelocity.x()*contribution->at(j).getWeight();
+      totalSumsY[nodeI->getId()] += pMass*pVelocity.y()*contribution->at(j).getWeight();
+      totalSumsZ[nodeI->getId()] += pMass*pVelocity.z()*contribution->at(j).getWeight();
+
+		}
+  }
+
+  //unification of sums
+  for (int i = 0; i < sizeof(totalSumsX); i++)
+  {
+    Vector3d result = Vector3d(totalSumsX[i],totalSumsY[i],totalSumsZ[i]);
+    nodes->at(i)->addMomentum(result);
+  }
+
 }

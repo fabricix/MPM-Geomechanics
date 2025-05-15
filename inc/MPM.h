@@ -12,6 +12,7 @@
 #include "States.h"
 #include "Solver/Solver.h"
 #include "TerrainContact.h"
+#include "BoundingBox.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -58,6 +59,8 @@ private:
 	
 	Mesh mesh; //!< background grid mesh
 
+	BoundingBox boundingBox;
+
 	TerrainContact* terrainContact; //!< terrain contact object
 
 	vector<Body*> bodies; //!< bodies discretized by material points
@@ -68,6 +71,10 @@ private:
 	
 	Solver* solver; //!< operation for solve the equations in time
 
+	void setBoundingBox(BoundingBox box){ this->boundingBox = box; };
+
+	void rebalanceSubdomains(float frontier, float particleMeanPerDomain, float tolerance, BoundingBox& box, vector<Particle*> subdomain1,vector<Particle*> subdomain2);
+	//void setupSubdomains();
 	/// \brief Configure the simulation time
 	///
 	void setSimulationTime();
@@ -106,6 +113,8 @@ private:
 	/// \brief Configure particles
 	///
 	void setupParticles();
+
+	void setupSubdomains();
 	
 	/// \brief Configure loads in the model
 	///
@@ -126,6 +135,8 @@ private:
 	/// \brief Configure number of threads
 	///
 	void setThreads();
+
+	void setPartitionFactor();
 
 	/// \brief Get seismic analysis active
 	bool getSeismicAnalysis();

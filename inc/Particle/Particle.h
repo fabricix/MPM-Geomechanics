@@ -67,6 +67,10 @@ public:
 	/// \return Particle identification
 	inline int getId() const { return this->id; }
 
+	/// \brief Configures the thread id
+	/// \param[in] thread_id thread identification
+	inline int getThreadId() { return this->threadId; }
+
 	/// \brief Returns the particle's material
 	/// \return Material identification
 	inline int getMaterialId() const { return this->material!=0?this->material->getId():-1; } 
@@ -74,6 +78,10 @@ public:
 	/// \brief Returns the particle's body Id
 	/// \return Body identification
 	inline int getBodyId() const { return this->bodyId; }
+
+	/// \brief Returns the particle's thread Id
+	/// \return Thread identification
+	inline int getThreadId() const { return this->threadId; }
 
 	/// \brief Returns solid mass
 	/// \return Solid mass
@@ -154,6 +162,10 @@ public:
 	/// \brief Configures the particle id
 	/// \param[in] particle_id Particle identification
 	inline void setId(int particle_id) { this->id=particle_id; }
+
+	/// \brief Configures the thread id
+	/// \param[in] thread_id thread identification
+	inline void setThreadId(int thread_id) { this->threadId=thread_id; }
 
 	/// \brief Configures the set particle's body Id
 	/// \param[in] body_id identification
@@ -274,6 +286,8 @@ protected:
 	bool active; //!< is particle active
 	int id;	//!< particle id
 	int bodyId; //!< body id
+
+	//unsigned threadId = 0; //default threadId
 
 	double mass; //!< particle mass: \f$m_p\f$
 	double density;	//!< current particle density: \f$\rho_p\f$

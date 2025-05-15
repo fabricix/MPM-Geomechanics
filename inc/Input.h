@@ -586,6 +586,9 @@ namespace Input {
 	/// the restrictions of each plane: X0, Y0, Z0, Xn, Yn, and Zn.
 	vector<Boundary::BoundaryType> getMeshBoundaryConditionsFluid();
 
+
+	int getPartitionFactor();
+
 	/// \brief Return number of threads defined in the input file
 	/// \return n_threads Number of threads
 	unsigned getNumThreads();

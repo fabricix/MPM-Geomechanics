@@ -422,6 +422,26 @@ vector<Material*> Input::getMaterialList(){
 	}
 }
 
+
+int Input::getPartitionFactor() {
+
+	try
+	{
+		if(inputFile["partition_factor"].is_null() || !inputFile["partition_factor"].is_number()) {
+			return 	1;
+		}
+		else
+		{
+			return inputFile["partition_factor"];
+		}
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the partition factor");
+		throw;
+	}
+}
+
 vector<Body*> Input::getBodyList(){
 
 	vector<Body*> bodies;
