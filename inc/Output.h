@@ -58,7 +58,7 @@ namespace Output {
 
 	/// \brief Write results if the step is the step result
 	/// 
-	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime);
+	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
 
 	/// \brief Print initial program screen
 	///

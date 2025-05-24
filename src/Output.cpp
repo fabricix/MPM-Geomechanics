@@ -66,13 +66,14 @@ namespace Output{
 		// grid
 		bool gridFolderExist=false;
 		string gridFolderName="grid";
-		string gridFileName="eulerianGrid.vtu";
+		string gridFileName="eulerianGrid";
+		string gridFileTimeSerie = "gridTimeSerie";
 		
 		// particles
 		bool particleFolderExist=false;
 		string particleFolderName="particles";
 		string particleFileName="particles";
-		string particleFileTimeSerie="particleTimeSerie";
+		string particleFileTimeSerie = "particleTimeSerie";
 		vector<double> particleFilesTime;
 	}
 
@@ -372,7 +373,7 @@ namespace Output{
 		
 		// open grid file
 		ofstream gridFile;
-		gridFile.open(Folders::gridFolderName+"/"+Folders::gridFileName);
+		gridFile.open(Folders::gridFolderName + "/" + Folders::gridFileName + "_" + to_string(Folders::particleFilesTime.size()) + ".vtu");
 		gridFile.precision(4);
 
 		// mesh data
@@ -537,6 +538,7 @@ namespace Output{
 
 	void writeResultsSeries() {
 
+		// Particle serie file
 		// define edian
 		if(Folders::edian=="") {
 			defineEdian();
@@ -560,7 +562,33 @@ namespace Output{
 			serieFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
 		}
 		serieFile <<"\t</Collection>\n";
-		serieFile <<"</VTKFile>\n";
+		serieFile << "</VTKFile>\n";
+
+		// Grid serie file
+		// define edian
+		if (Folders::edian == "") {
+			defineEdian();
+		}
+
+		// create particle folder
+		if (!Folders::particleFolderExist) {
+			createParticleFolder();
+		}
+
+		// open particle serie file
+		ofstream gridSerieFile;
+		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::particleFileTimeSerie + ".pvd");
+
+		// write the file
+		gridSerieFile << "<?xml version=\"1.0\"?>\n";
+		gridSerieFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+		gridSerieFile << "\t<Collection>\n";
+		for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
+		{
+			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::particleFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}
+		gridSerieFile << "\t</Collection>\n";
+		gridSerieFile << "</VTKFile>\n";
 	}
 
 	void clearScreen() {
@@ -661,19 +689,24 @@ namespace Output{
     csv_file.close();
 }
 
-	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
 		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
 
 		if (loopCounter%resultSteps==0)
 		{
+
 			// write model results
 			writeBodies(bodies,iTime);
 
 			// update terminal
 			updateTerminal(bodies,iTime);
 
-			writeCSVEnergyFile(bodies,iTime);
+			writeCSVEnergyFile(bodies, iTime);
+
+			// write the Eulerian mesh
+			writeGrid(mesh, Output::CELLS);
+
 		}
 	}
 
