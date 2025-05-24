@@ -36,10 +36,16 @@ using std::vector;
 namespace Output{
 
 	vector<string> printFields;
+	vector<string> printGridFields;
 
 	void configureResultFiels(vector<string> fields)
 	{
 		printFields=fields;
+	}
+
+	void configureGridResultFiels(vector<string> fields)
+	{
+		printGridFields=fields;
 	}
 
 	bool isFieldRequired(string ifield) {
@@ -48,6 +54,17 @@ namespace Output{
 
 			if (printFields.at(i)==ifield || printFields.at(i)=="all" ) {
 
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool isGridFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printGridFields.size(); ++i) {
+
+			if (printGridFields.at(i) == ifield || printGridFields.at(i) == "all") {
 				return true;
 			}
 		}
@@ -406,48 +423,60 @@ namespace Output{
 		
 		// point data
 		gridFile<<"<PointData>\n";
-		
-		// local ID of nodes
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<inodes->at(i)->getId()<<"\n";
-		}
-		gridFile<<"</DataArray>\n";
 
-		// active nodes
-		gridFile<<"<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getActive())<<"\n";
+		if (isGridFieldRequired("id")) {
+			// local ID of nodes
+			gridFile << "<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << inodes->at(i)->getId() << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
-		// nodal mass
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getMass())<<"\n";
+		if (isGridFieldRequired("active")) {
+			// active nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getActive()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
-		// nodal velocity
-		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+		if (isGridFieldRequired("mass")) {
+			// nodal mass
+			gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getMass() + 0.0001) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile << "</DataArray>\n";
 
-		// nodal distance level set function value
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getDistanceLevelSet())<<"\n";
+		if (isGridFieldRequired("mass")) {
+			// nodal velocity
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
-		// nodal volume
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getVolume())<<"\n";
+		if (isGridFieldRequired("distance_stl")) {
+			// nodal distance level set function value
+			gridFile << "<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getDistanceLevelSet()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
+
+		if (isGridFieldRequired("volume")) {
+			// nodal volume
+			gridFile << "<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getVolume()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
 
 		// end point data
 		gridFile<<"</PointData>\n";
@@ -577,7 +606,7 @@ namespace Output{
 
 		// open particle serie file
 		ofstream gridSerieFile;
-		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::particleFileTimeSerie + ".pvd");
+		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
 
 		// write the file
 		gridSerieFile << "<?xml version=\"1.0\"?>\n";

@@ -565,6 +565,8 @@ namespace Input {
 	///
 	vector<string> getResultFields();
 
+	vector<string> getGridResultFields();
+
 	/// \brief Read the damping definition in the input file
 	/// \return ModelSetup::DampingType The damping type
 	ModelSetup::DampingType getDampingType();

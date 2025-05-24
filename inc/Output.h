@@ -50,11 +50,20 @@ namespace Output {
 	/// \brief Configures the fields to be written
 	/// \param[in] fields List of fields
 	void configureResultFiels(vector<string> fields);
-	
+
+	/// \brief Configures the grid fields to be written
+	/// \param[in] fields List of fields
+	void configureGridResultFiels(vector<string> fields);
+
+	/// \brief Verify is the grid field must be written
+	/// \param[in] field Grid field to verify
+	/// \return True if the grid field must be written
+	bool isFieldRequired(string field);
+
 	/// \brief Verify is the field must be written
-	/// \param[in] field Field to verify
-	/// \return True if the field must be written
-	bool isFieldRequired (string field);
+/// \param[in] field Field to verify
+/// \return True if the field must be written
+	bool isGridFieldRequired(string field);
 
 	/// \brief Write results if the step is the step result
 	/// 
