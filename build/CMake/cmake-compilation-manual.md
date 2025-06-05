@@ -1,8 +1,8 @@
 ## Compilation with CMake
 
-### 1. Windows
+### Windows Instructions
 
-#### 1.1. Required Programs
+#### Required Programs
 
 | Program          | Installation |
 | ---------------- | ------------ |
@@ -11,7 +11,7 @@
 | **GCC**          | via MSYS2    |
 | **G++**          | via MSYS2    |
 
-#### 1.2. Compilation with Windows
+#### Compilation with Windows
 
 The simplest way to compile on windows is by using the `.bat` file at `/build/CMake`, just execute:
 
@@ -28,9 +28,9 @@ cmake -G "MinGW Makefiles" -B build
 cmake --build build
 ```
 
-### 2. Linux
+### Linux Instructions
 
-#### 2.1. Required Programs
+#### Required Programs
 
 | Program   | Installation |
 | --------- | ------------ |
@@ -39,7 +39,7 @@ cmake --build build
 | **GCC**   | via apt      |
 | **G++**   | via apt      |
 
-#### 1.2. Compilation with Linux
+#### Compilation with Linux
 
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 

@@ -39,6 +39,12 @@ For downloading the compiled binaries
 
 # Compilation in windows
 
+## CMake Compilation
+
+See the [Cmake Compilation Manual](../build/CMake/cmake-compilation-manual.md#windows-instructions) for more information on compiling with CMake. 
+
+## Visual Studio Solution
+
 For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
 Alternatively you can compile it by using command in a *Developer Command Prompt*: 
 
@@ -48,6 +54,12 @@ msbuild MPM-Geomechanics.sln -p:Configuration=Release
 
 # Compilation in Linux
 
+
+## CMake Compilation
+
+See the [Cmake Compilation Manual](../build/CMake/cmake-compilation-manual.md#linux-instructions) for more information on compiling with CMake. 
+
+## Make Compilation
 For compile the code in a linux environment, execute the [make](https://www.gnu.org/software/make/) command into the make folder, in with is located de makefile `MPM-Geomechanics\build\make\makefile`:
  
 

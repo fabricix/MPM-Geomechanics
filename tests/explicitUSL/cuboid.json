@@ -1,5 +1,5 @@
 {
-	"stress_scheme_update":"USL",
+	"stress_scheme_update":"MUSL",
 
 	"shape_function":"GIMP",
 

@@ -113,3 +113,35 @@ void STLReader::removeTrianglesOutsideLimits(const Vector3d& min, const Vector3d
 
     triangles = std::move(filtered);
 }
+
+void STLReader::recalculateNormals() {
+    for (auto& triangle : triangles) {
+        Vector3d edge1 = triangle.v2 - triangle.v1;
+        Vector3d edge2 = triangle.v3 - triangle.v1;
+        triangle.normal = edge1.cross(edge2).normalized();
+    }
+}
+
+bool STLReader::writeSTL(const std::string& output_filename) const {
+    std::ofstream file(output_filename);
+    if (!file.is_open()) {
+        std::cerr << "Error writing STL file: " << output_filename << std::endl;
+        return false;
+    }
+
+    file << "solid exported_from_mpm_geomechanics\n";
+    for (const auto& triangle : triangles) {
+        Vector3d n = triangle.normal.normalized();
+        file << "  facet normal " << n.x() << " " << n.y() << " " << n.z() << "\n";
+        file << "    outer loop\n";
+        file << "      vertex " << triangle.v1.x() << " " << triangle.v1.y() << " " << triangle.v1.z() << "\n";
+        file << "      vertex " << triangle.v2.x() << " " << triangle.v2.y() << " " << triangle.v2.z() << "\n";
+        file << "      vertex " << triangle.v3.x() << " " << triangle.v3.y() << " " << triangle.v3.z() << "\n";
+        file << "    endloop\n";
+        file << "  endfacet\n";
+    }
+    file << "endsolid exported_from_mpm_geomechanics\n";
+
+    file.close();
+    return true;
+}

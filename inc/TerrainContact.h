@@ -19,7 +19,7 @@ private:
 
     std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
 
-    double scalingFactor = 2.0; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
+    double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
 public:
 
@@ -54,6 +54,13 @@ public:
     // \f$ f_n = -m_p \frac{v_p^n}{dt} e_n \f$
     // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
     void computeContactForces(std::vector< Particle* >* particles, double dt);
+
+    /// @brief  Set  the distance threshold for contact detection
+    /// @param threshold 
+    void setDistanceThreshold(double threshold) { scalingFactor = threshold > 0.0 ? threshold : 2.0; };
+
+    /// @brief Apply the terrain contact algorithm
+    void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
 };
 
 #endif // TERRAINCONTACT_H
