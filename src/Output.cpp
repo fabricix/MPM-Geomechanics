@@ -446,7 +446,7 @@ namespace Output{
 			// nodal mass
 			gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
-				gridFile << scientific << (inodes->at(i)->getMass() + 0.0001) << "\n";
+				gridFile << scientific << (inodes->at(i)->getMass()) << "\n";
 			}
 			gridFile << "</DataArray>\n";
 		}
