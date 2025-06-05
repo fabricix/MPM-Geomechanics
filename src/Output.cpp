@@ -720,7 +720,7 @@ namespace Output{
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
-		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
+		if (loopCounter == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv"); }
 
 		if (loopCounter%resultSteps==0)
 		{
