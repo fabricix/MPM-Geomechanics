@@ -45,6 +45,7 @@
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\TerrainContact.cpp" />
+    <ClCompile Include="..\..\src\SolverExplicit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />

@@ -33,6 +33,6 @@ particle_stress_data.json
 !.gitkeep
 /build/CMake/*
 !CMakeLists.txt
-!README.md
+!cmake-compilation-manual.md
 !cmake-build-linux.bash
 !cmake-build-win.bat

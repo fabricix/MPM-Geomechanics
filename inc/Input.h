@@ -565,6 +565,8 @@ namespace Input {
 	///
 	vector<string> getResultFields();
 
+	vector<string> getGridResultFields();
+
 	/// \brief Read the damping definition in the input file
 	/// \return ModelSetup::DampingType The damping type
 	ModelSetup::DampingType getDampingType();
@@ -633,6 +635,12 @@ namespace Input {
 
 	/// \brief Return the terrain contact active
 	bool getTerrainContactActive();
+
+	/// \brief Return if the STL mesh file should be written
+	bool getWriteSTLMeshFile();
+
+	/// \brief Return the distance threshold for contact detection
+	double getDistanceThreshold();
 };
 
 #endif /* INPUT_H_ */

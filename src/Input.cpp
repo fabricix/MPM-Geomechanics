@@ -2,6 +2,7 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Input.h"
+#include "Solver/SolverExplicit.h"
 #include "Solver/SolverExplicitUSL.h"
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
@@ -117,45 +118,46 @@ double Input::getSimulationTime(){
 }
 
 Solver* Input::getSolver() {
-	
 	try
-	{	
-		string key = "stress_scheme_update";
-		
+	{
+		std::string key = "stress_scheme_update";
+
 		// default value
 		if (inputFile[key].is_null()) {
-
-			if (ModelSetup::getTwoPhaseActive()) { 
-
-				return new SolverExplicitTwoPhaseUSL(); 
+			ModelSetup::setUpdateStressScheme(ModelSetup::USL);
+			if (ModelSetup::getTwoPhaseActive()) {
+				return new SolverExplicitTwoPhaseUSL();
 			}
-
-			return new SolverExplicitUSL();
+			return new SolverExplicit();
 		}
 
 		if (inputFile[key].is_string()) {
+			std::string scheme = inputFile[key];
 
-			// USL scheme
-			if(inputFile[key]=="USL") {
-
-				if (ModelSetup::getTwoPhaseActive()) { 
-
-					return new SolverExplicitTwoPhaseUSL(); 
+			if (scheme == "USL") {
+				ModelSetup::setUpdateStressScheme(ModelSetup::USL);
+				if (ModelSetup::getTwoPhaseActive()) {
+					return new SolverExplicitTwoPhaseUSL();
 				}
-
 				return new SolverExplicitUSL();
 			}
-			throw (key);
+			else if (scheme == "MUSL") {
+				ModelSetup::setUpdateStressScheme(ModelSetup::MUSL);
+				return new SolverExplicit();
+			}
+			else {
+				throw key;
+			}
 		}
-		throw(0);
+		throw 0;
 	}
 
-	catch(string& key)
+	catch(std::string& key)
 	{
-		Warning::printMessage("Error in keyword: "+key);
+		Warning::printMessage("Error in keyword: " + key);
 		throw;
 	}
-	
+
 	catch(...)
 	{
 		Warning::printMessage("Error in solver definition in input file");
@@ -911,7 +913,49 @@ int Input::getResultNum(){
 	}
 }
 
-vector<string> Input::getResultFields() {
+vector<string> Input::getGridResultFields()
+{
+	try
+	{
+		vector<string> fields;
+
+		if (inputFile["results"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		if (inputFile["results"]["grid_fields"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		// get all results fields
+		json::iterator it;
+		for (it = inputFile["results"]["grid_fields"].begin();it != inputFile["results"]["grid_fields"].end();it++) {
+
+			if ((*it).is_string()) {
+				fields.push_back(*it);
+			}
+		}
+
+		if (fields.empty()) {
+
+			throw (0);
+		}
+
+		return fields;
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during the grid field results creation");
+		throw;
+	}
+}
+
+vector<string> Input::getResultFields()
+{
 
 	try
 	{
@@ -1437,6 +1481,62 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 		throw;
 	}
 };
+
+bool Input::getWriteSTLMeshFile(){
+
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["write_stl"].is_null()){
+
+			return false;
+		}
+
+		if (inputFile["terrain_contact"]["write_stl"].is_boolean())
+		{
+			return inputFile["terrain_contact"]["write_stl"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the write STL file keyword in terrain contact");
+		throw;
+	}
+}
+
+double Input::getDistanceThreshold(){
+
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["distance_threshold"].is_null()){
+
+			return 0.0;
+		}
+
+		if (inputFile["terrain_contact"]["distance_threshold"].is_number())
+		{
+			return inputFile["terrain_contact"]["distance_threshold"];
+		}
+
+		throw(0);
+	}
+	catch(...)
+	{
+		Warning::printMessage("Error during reading the distance threshold in terrain contact");
+		throw;
+	}
+}
 
 double Input::getFrictionCoefficient() {
 

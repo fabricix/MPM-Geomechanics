@@ -69,6 +69,14 @@ public:
     /// @param max Bounding box maximum (x_max, y_max, z_max)
     void removeTrianglesOutsideLimits(const Vector3d& min, const Vector3d& max);
 
+    /// @brief Recalculate the normals of the triangles
+    /// @details This function recalculates the normals of the triangles based on their vertices.
+    void recalculateNormals();
+
+    /// @brief Write the STL file
+    /// @param output_filename The name of the output STL file
+    bool writeSTL(const std::string& output_filename) const;
+
 private:
     
     /// @brief Vector containing the triangles

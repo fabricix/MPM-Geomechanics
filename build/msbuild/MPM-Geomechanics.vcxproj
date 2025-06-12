@@ -161,6 +161,7 @@
     <ClCompile Include="..\..\src\ParticleMixture.cpp" />
     <ClCompile Include="..\..\src\ShapeGimp.cpp" />
     <ClCompile Include="..\..\src\ShapeLinear.cpp" />
+    <ClCompile Include="..\..\src\SolverExplicit.cpp" />
     <ClCompile Include="..\..\src\SolverExplicitTwoPhaseUSL.cpp" />
     <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />

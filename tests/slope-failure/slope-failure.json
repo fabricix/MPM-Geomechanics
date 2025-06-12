@@ -3,13 +3,15 @@
 
 	"shape_function":"GIMP",
 
-	"time":3,
+	"time":1,
 
 	"time_step":0.001,
 
 	"gravity":[0.0,0.0,-9.81],
 
 	"n_threads":10,
+
+	"partition_factor": 3,
 
 	"damping":
 	{
@@ -20,7 +22,8 @@
 	"results":
 	{
 		"print":50,
-		"fields":["all","displacement","material","active","plastic_strain"]
+		"fields":["all","displacement","material","active","plastic_strain"],
+		"grid_fields": ["all"]
 	},
 
 	"mesh":

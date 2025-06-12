@@ -16,15 +16,19 @@ include_directories(../../inc/Shape)
 include_directories(../../inc/Body)
 include_directories(../../inc/Materials)
 include_directories(../../inc/Mesh)
+include_directories(../../inc/Mesh)
 
 # Add executables for the tests
 # Remove main.cpp file from the list of sources to avoid multiple definitions of the main function
 file(GLOB_RECURSE TEST_SOURCES "../../tests/*.test.cpp" "main.test.cpp")
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
+
+find_package(OpenMP REQUIRED)
+
 add_executable(MPM-Test ${TEST_SOURCES} ${EXECUTABLES})
 
 # Link the executable with the GoogleTest libraries (gtest and gtest_main)
 # gtest: GoogleTest's main library
 # gtest_main: Provides a main() function to run the tests
-target_link_libraries(MPM-Test gtest gtest_main)
+target_link_libraries(MPM-Test gtest gtest_main OpenMP::OpenMP_CXX)
