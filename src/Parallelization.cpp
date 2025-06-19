@@ -12,11 +12,12 @@ using namespace std;
 
 
 // create reduction function
-void reduce_umaps(std::unordered_map<int, double>& omp_out, 
-  const std::unordered_map<int, double>& omp_in) {
-for (const auto& kv : omp_in) {
-omp_out[kv.first] += kv.second;  // Sumar el valor correspondiente de la clave
-}
+void reduce_umaps(std::unordered_map<int, double>& omp_out,
+  const std::unordered_map<int, double>& omp_in)
+{
+  for (const auto& kv : omp_in) {
+    omp_out[kv.first] += kv.second;  // Sumar el valor correspondiente de la clave
+  }
 }
 
 // Declare dcustom reduction for unordered_map<int, double>
@@ -157,7 +158,7 @@ void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Part
         // Add to the list of **original** interface particles
         particlesPerThread.at(NumberOfThreads)->push_back(particlesPerThreadAux->at(t).at(p).real);
 
-        
+
       }
       else {
         // Identify the thread of the particle
@@ -172,144 +173,136 @@ void Parallelization::calculateInterfaceParticles(Mesh* mesh, vector<vector<Part
   }
 }
 
-void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor){
+void Parallelization::interpolateMass(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor)
+{
 
   // get nodes
-	vector<Node*>* nodes = mesh->getNodes();
+  vector<Node*>* nodes = mesh->getNodes();
 
   unordered_map<int, double> totalSums;
-  
-  #pragma omp parallel num_threads(1 << factor)
+#pragma omp parallel num_threads(1 << factor)
   {
     int tid = omp_get_thread_num();
+    int count = 0;
+
     for (int i = 0; i < particlesPerThread[tid]->size(); ++i) {
       Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
-  
+
       // only active particle can contribute
       if (!particle->getActive()) { continue; }
-  
+
       // get nodes and weights that the particle contributes
       const vector<Contribution>* contribution = particle->getContributionNodes();
-  
+
       // get the particle mass
       const double pMass = particle->getMass();
-  
+
       // for each node in the contribution list 
       for (size_t j = 0; j < contribution->size(); ++j) {
-  
+
         // get the contributing node
         Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-  
+
         // compute the weighted nodal mass
-        const double nodalMass = pMass*contribution->at(j).getWeight();
-        
+        const double nodalMass = pMass * contribution->at(j).getWeight();
+
         // check any mass in node
-        if (nodalMass<=0.0) { continue; }
-    
+        if (nodalMass <= 0.0) { continue; }
+
         // the node is inactivate if he doesn't have mass
         nodeI->setActive(true);
-  
+
         nodeI->addMass(nodalMass);
         //It is a normal node
-  
       }
+      count++;
     }
   }
 
-  
+
   //interpolate interface particles values
-  #pragma omp parallel for num_threads(1 << factor) reduction(umap_reduction:totalSums)
   for (size_t i = 0; i < particlesPerThread[particlesPerThread.size() - 1]->size(); i++)
   {
 
     Particle* particle = particlesPerThread[particlesPerThread.size() - 1]->at(i);
 
     // only active particle can contribute
-		if (!particle->getActive()) { continue; }
+    if (!particle->getActive()) { continue; }
 
-		// get nodes and weights that the particle contributes
-		const vector<Contribution>* contribution = particle->getContributionNodes();
+    // get nodes and weights that the particle contributes
+    const vector<Contribution>* contribution = particle->getContributionNodes();
 
-		// get the particle mass
-		const double pMass = particle->getMass();
+    // get the particle mass
+    const double pMass = particle->getMass();
 
     // for each node in the contribution list 
-		for (size_t j = 0; j < contribution->size(); ++j) {
+    for (size_t j = 0; j < contribution->size(); ++j) {
 
       // get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+      Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// compute the weighted nodal mass
-			const double nodalMass = pMass*contribution->at(j).getWeight();
+      // compute the weighted nodal mass
+      const double nodalMass = pMass * contribution->at(j).getWeight();
 
-      //normal nodes are modified inmediatly
-      if(nodeI->threadId != -2){
-        nodeI->addMass(nodalMass);
-        continue;
-      }
-      //an interface node go to totalSum array
-      totalSums[nodeI->getId()] += nodalMass;
+      if (nodalMass <= 0.0) { continue; }
+
+      nodeI->setActive(true);
+
+      nodeI->addMass(nodalMass);
+      nodeI->threadId = -1;
     }
-
   }
-
-  for (const auto& pair : totalSums) {
-    int key = pair.first;
-    double value = pair.second;
-
-    nodes->at(key)->addMass(value);
-  }
-  
 }
 
-void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor)  {
+void Parallelization::nodalMomentum(Mesh* mesh, vector<vector<Particle*>*>& particlesPerThread, int factor)
+{
 
   // get nodes
-	vector<Node*>* nodes = mesh->getNodes();
+  vector<Node*>* nodes = mesh->getNodes();
 
-  double totalSumsX[nodes->size()] = {0.0}; //all the elements are zero
-  double totalSumsY[nodes->size()] = {0.0}; //all the elements are zero
-  double totalSumsZ[nodes->size()] = {0.0}; //all the elements are zero
-  
-  #pragma omp parallel for num_threads(1 << factor) reduction(+:totalSumsX, totalSumsY, totalSumsZ)
+  double totalSumsX[nodes->size()] = { 0.0 }; //all the elements are zero
+  double totalSumsY[nodes->size()] = { 0.0 }; //all the elements are zero
+  double totalSumsZ[nodes->size()] = { 0.0 }; //all the elements are zero
+
+#pragma omp parallel for num_threads(1 << factor) reduction(+:totalSumsX, totalSumsY, totalSumsZ)
   for (int i = 0; i < particlesPerThread[omp_get_thread_num()]->size(); ++i) {
     Particle* particle = particlesPerThread[omp_get_thread_num()]->at(i);
 
     // only active particle can contribute
-		if (!particle->getActive()) { continue; }
+    if (!particle->getActive()) { continue; }
 
-		// get nodes and weights that the particle contributes
-		const vector<Contribution>* contribution = particle->getContributionNodes();
+    // get nodes and weights that the particle contributes
+    const vector<Contribution>* contribution = particle->getContributionNodes();
 
-		// get the particle mass
-		const double pMass = particle->getMass();
+    // get the particle mass
+    const double pMass = particle->getMass();
 
     // get particle velocity
     const Vector3d pVelocity = particle->getVelocity();
 
-		// for each node in the contribution list 
-		for (size_t j = 0; j < contribution->size(); ++j) {
+    // for each node in the contribution list 
+    for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+      // get the contributing node
+      Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-      if(nodeI->threadId != -2){
-      	nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+      if (nodeI->threadId != -2) {
+        nodeI->addMomentum(pMass * pVelocity * contribution->at(j).getWeight());
         continue;
       }
-      
-      //an interface node go to totalSum array
-      totalSumsX[nodeI->getId()] += pMass*pVelocity.x()*contribution->at(j).getWeight();
-      totalSumsY[nodeI->getId()] += pMass*pVelocity.y()*contribution->at(j).getWeight();
-      totalSumsZ[nodeI->getId()] += pMass*pVelocity.z()*contribution->at(j).getWeight();
 
-		}
+      //an interface node go to totalSum array
+      totalSumsX[nodeI->getId()] += pMass * pVelocity.x() * contribution->at(j).getWeight();
+      totalSumsY[nodeI->getId()] += pMass * pVelocity.y() * contribution->at(j).getWeight();
+      totalSumsZ[nodeI->getId()] += pMass * pVelocity.z() * contribution->at(j).getWeight();
+
+    }
   }
 
   //unification of sums
   for (int i = 0; i < sizeof(totalSumsX); i++)
   {
-    Vector3d result = Vector3d(totalSumsX[i],totalSumsY[i],totalSumsZ[i]);
+    Vector3d result = Vector3d(totalSumsX[i], totalSumsY[i], totalSumsZ[i]);
     nodes->at(i)->addMomentum(result);
   }
 
