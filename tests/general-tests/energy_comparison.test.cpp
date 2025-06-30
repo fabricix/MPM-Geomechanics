@@ -41,8 +41,8 @@ double sum_energy(const std::string& filename)
 
 TEST(ENERGY_COMPARISON, ENERGY_SUM)
 {
-  double main_energy = sum_energy("test-files/time-eneasdrgy-main.csv");
-  double test_energy = sum_energy("test-files/time-energasdasdy-test03.csv");
+  double main_energy = sum_energy("test-files/time-energy-main.csv");
+  double test_energy = sum_energy("test-files/time-energy-test.csv");
 
   if (main_energy == -1.0 || test_energy == -1.0) {
     FAIL() << "Could not calculate energy from one or both files.";
