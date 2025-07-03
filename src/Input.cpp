@@ -14,6 +14,7 @@
 #include "Particle/ParticleMixture.h"
 #include "Warning.h"
 #include "Loads.h"
+#include "Seismic.h"
 
 #include <omp.h>
 
@@ -1550,6 +1551,46 @@ std::string Input::getSTLMeshFile()
 	catch(...)
 	{
 		Warning::printMessage("Error during reading the STL file name in terrain contact");
+		throw;
+	}
+}
+
+SeismicAnalysis Input::getSeismicAnalysisInfo()
+{
+	SeismicAnalysis info;
+
+	try {
+		// Check if "earthquake" block exists
+		if (!inputFile.contains("earthquake") || inputFile["earthquake"].is_null())
+			return info;
+
+		const auto& eq = inputFile["earthquake"];
+
+		// Check activation field
+		if (eq.contains("active") && eq["active"].is_boolean()) {
+			info.isActive = eq["active"];
+		} else {
+			// If no explicit flag, assume false (disabled)
+			info.isActive = false;
+			return info;
+		}
+
+		// If active, ensure file name exists
+		if (!eq.contains("file") || !eq["file"].is_string()) {
+			Warning::printMessage("Earthquake entry is active, but missing 'file' field.");
+			throw(0);
+		}
+		info.filename = eq["file"];
+
+		// Optional header field
+		if (eq.contains("header") && eq["header"].is_boolean()) {
+			info.hasHeader = eq["header"];
+		}
+
+		return info;
+	}
+	catch (...) {
+		Warning::printMessage("Error reading 'earthquake' section in input file.");
 		throw;
 	}
 }

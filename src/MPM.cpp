@@ -279,9 +279,18 @@ void MPM::setupLoads() {
 
 	// set initial velocity
 	Loads::setInitialVelocity(bodies);
+}
 
-	// set seismic acceleration
-	Loads::setSeismicData();
+void MPM::setupSeismicAnalysis() {
+
+	// set seismic analysis info
+	Seismic::setSeismicAnalysis(Input::getSeismicAnalysisInfo());
+
+	// configure seismic analysis in mpm model
+	ModelSetup::setSeismicAnalysis(Seismic::getSeismicAnalysis().isActive);
+
+	// setup seismic data
+	Seismic::setSeismicData();
 }
 
 void MPM::setupDamping() {
@@ -381,6 +390,9 @@ void MPM::createModel() {
 
 		// configures the loads
 		setupLoads();
+
+		// configures the seismic analysis
+		setupSeismicAnalysis();
 
 		// configures the damping
 		setupDamping();
