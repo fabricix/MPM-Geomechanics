@@ -15,7 +15,6 @@ using std::floor;
 #include "Mesh/NodeMixture.h"
 #include "Warning.h"
 #include "Particle/Particle.h"
-#include "Mesh.h"
 
 Mesh::Mesh() {
 

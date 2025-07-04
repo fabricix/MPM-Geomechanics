@@ -13,7 +13,7 @@ namespace Seismic
     SeismicData seismicRecord;
 
     // Get seismic analysis information
-    SeismicAnalysis& getSeismicAnalisys() { return seismic_analysis; }
+    SeismicAnalysis& getSeismicAnalysis() { return seismic_analysis; }
 
     // Set seismic analysis information
     void setSeismicAnalysis(const SeismicAnalysis& info) 

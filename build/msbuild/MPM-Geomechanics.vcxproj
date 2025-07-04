@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\src\Output.cpp" />
     <ClCompile Include="..\..\src\Particle.cpp" />
     <ClCompile Include="..\..\src\ParticleMixture.cpp" />
+    <ClCompile Include="..\..\src\Seismic.cpp" />
     <ClCompile Include="..\..\src\ShapeGimp.cpp" />
     <ClCompile Include="..\..\src\ShapeLinear.cpp" />
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="..\..\inc\Output.h" />
     <ClInclude Include="..\..\inc\Particle\Particle.h" />
     <ClInclude Include="..\..\inc\Particle\ParticleMixture.h" />
+    <ClInclude Include="..\..\inc\Seismic.h" />
     <ClInclude Include="..\..\inc\Shape\Shape.h" />
     <ClInclude Include="..\..\inc\Shape\ShapeGimp.h" />
     <ClInclude Include="..\..\inc\Shape\ShapeLinear.h" />
