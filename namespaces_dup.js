@@ -37,6 +37,7 @@ var namespaces_dup =
       [ "getResultFields", "namespaceInput.html#a5de246ace76db47015f0af32c9e7eea6", null ],
       [ "getResultNum", "namespaceInput.html#ac817a10baf4c98d3f406dae86d0fcc60", null ],
       [ "getSaveState", "namespaceInput.html#afba47624d2c22b55c4d2a38f4790de7e", null ],
+      [ "getSeismicAnalysisInfo", "namespaceInput.html#a562ec03ef4e0d6561a9de59f31ac20db", null ],
       [ "getSimulationTime", "namespaceInput.html#a669cf08e9ea601a6700da09305192771", null ],
       [ "getSolver", "namespaceInput.html#a0aaddb07cda3d6c988f2c5db52bb488e", null ],
       [ "getSTLMeshFile", "namespaceInput.html#a8207d83ed286e00540c9618987e89d7d", null ],
@@ -45,7 +46,7 @@ var namespaces_dup =
       [ "getWriteSTLMeshFile", "namespaceInput.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
       [ "readInputFile", "namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
       [ "readNodalPointLoads", "namespaceInput.html#a4af9571f7842a96471572cd550d598a9", null ],
-      [ "readSeismicData", "namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44", null ]
+      [ "readSeismicData", "namespaceInput.html#aec95c042d839e3ae12de0b73ee08279d", null ]
     ] ],
     [ "Integration", "namespaceIntegration.html", [
       [ "nodalMomentum", "namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9", null ]
@@ -156,6 +157,12 @@ var namespaces_dup =
       [ "writeParticles", "namespaceOutput.html#ac55623efce54f379b6357f973ec20736", null ],
       [ "writeResultInStep", "namespaceOutput.html#aacbbf228c1ffbf67601bf820d0c54035", null ],
       [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ]
+    ] ],
+    [ "Seismic", "namespaceSeismic.html", [
+      [ "getSeismicAnalysis", "namespaceSeismic.html#a8d343ec1884b7314fdfa2ea541ad4348", null ],
+      [ "getSeismicData", "namespaceSeismic.html#ac0b55a98c66a0ad7335de252c84351cb", null ],
+      [ "setSeismicAnalysis", "namespaceSeismic.html#a846fa8b8f13c513f02e2c01f554d8524", null ],
+      [ "setSeismicData", "namespaceSeismic.html#a243b05a52c5ce884652b7e8b6afb7f78", null ]
     ] ],
     [ "States", "namespaceStates.html", [
       [ "loadParticleStress", "namespaceStates.html#a4642af2e182f79a07339ec84ac2750df", null ],

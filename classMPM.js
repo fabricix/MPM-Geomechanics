@@ -23,6 +23,7 @@ var classMPM =
     [ "setupMesh", "classMPM.html#a920928e5f3160517b54b8e2fdebd0420", null ],
     [ "setupParticles", "classMPM.html#a1c701b2e7f2922a69b7f1dfb59b8ae9a", null ],
     [ "setupResults", "classMPM.html#aae2db2da502564082261eb67a2858f2c", null ],
+    [ "setupSeismicAnalysis", "classMPM.html#ae36354157b494af7f14274f8d9bd053c", null ],
     [ "setupTerrainContact", "classMPM.html#a17e2f3a3ac28289801ba1f26fc9546d2", null ],
     [ "solve", "classMPM.html#af59d5b58413e7f9c5a6dc5d8c2f1df3d", null ],
     [ "bodies", "classMPM.html#aa6a0e2948d663892851627f0cc52f2dd", null ],

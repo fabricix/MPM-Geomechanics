@@ -1,0 +1,9 @@
+<map id="Seismic.h" name="Seismic.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="121,5,206,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,108,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,33,87,73,84,69,145,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="132,79,195,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,31,166,65,161,65,161,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="219,79,278,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="179,29,226,68,223,72,175,33"/>
+</map>

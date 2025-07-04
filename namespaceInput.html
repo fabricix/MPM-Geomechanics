@@ -202,9 +202,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a938199e6c47c007f37b518b559e2ee43" id="r_a938199e6c47c007f37b518b559e2ee43"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structLoads_1_1PressureBoundaryForceBox.html">Loads::PressureBoundaryForceBox</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a938199e6c47c007f37b518b559e2ee43">getPressureBoundaryForceBox</a> ()</td></tr>
 <tr class="memdesc:a938199e6c47c007f37b518b559e2ee43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pore pressure force in particles inside a box.  <br /></td></tr>
 <tr class="separator:a938199e6c47c007f37b518b559e2ee43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7aeff2285506645ef6c121dec4a0d44" id="r_ab7aeff2285506645ef6c121dec4a0d44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLoads_1_1SeismicData.html">Loads::SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#ab7aeff2285506645ef6c121dec4a0d44">readSeismicData</a> (const std::string &amp;filename, bool hasHeader)</td></tr>
-<tr class="memdesc:ab7aeff2285506645ef6c121dec4a0d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic data.  <br /></td></tr>
-<tr class="separator:ab7aeff2285506645ef6c121dec4a0d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec95c042d839e3ae12de0b73ee08279d" id="r_aec95c042d839e3ae12de0b73ee08279d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSeismicData.html">SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#aec95c042d839e3ae12de0b73ee08279d">readSeismicData</a> (const std::string &amp;filename, bool hasHeader)</td></tr>
+<tr class="memdesc:aec95c042d839e3ae12de0b73ee08279d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic data.  <br /></td></tr>
+<tr class="separator:aec95c042d839e3ae12de0b73ee08279d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562ec03ef4e0d6561a9de59f31ac20db" id="r_a562ec03ef4e0d6561a9de59f31ac20db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSeismicAnalysis.html">SeismicAnalysis</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a562ec03ef4e0d6561a9de59f31ac20db">getSeismicAnalysisInfo</a> ()</td></tr>
+<tr class="memdesc:a562ec03ef4e0d6561a9de59f31ac20db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic analysis information.  <br /></td></tr>
+<tr class="separator:a562ec03ef4e0d6561a9de59f31ac20db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e6d39c7c857d3fc55088e2956e8def6" id="r_a5e6d39c7c857d3fc55088e2956e8def6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a5e6d39c7c857d3fc55088e2956e8def6">getFrictionCoefficient</a> ()</td></tr>
 <tr class="memdesc:a5e6d39c7c857d3fc55088e2956e8def6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the friction coefficient.  <br /></td></tr>
 <tr class="separator:a5e6d39c7c857d3fc55088e2956e8def6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1255,6 +1258,26 @@ Save/Load States</h2>
 
 </div>
 </div>
+<a id="a562ec03ef4e0d6561a9de59f31ac20db" name="a562ec03ef4e0d6561a9de59f31ac20db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a562ec03ef4e0d6561a9de59f31ac20db">&#9670;&#160;</a></span>getSeismicAnalysisInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structSeismicAnalysis.html">SeismicAnalysis</a> Input::getSeismicAnalysisInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the seismic analysis information. </p>
+<dl class="section return"><dt>Returns</dt><dd>seismic_analisys_info <a class="el" href="namespaceSeismic.html">Seismic</a> analysis information </dd></dl>
+
+</div>
+</div>
 <a id="a669cf08e9ea601a6700da09305192771" name="a669cf08e9ea601a6700da09305192771"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a669cf08e9ea601a6700da09305192771">&#9670;&#160;</a></span>getSimulationTime()</h2>
 
@@ -1418,14 +1441,14 @@ Save/Load States</h2>
 
 </div>
 </div>
-<a id="ab7aeff2285506645ef6c121dec4a0d44" name="ab7aeff2285506645ef6c121dec4a0d44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7aeff2285506645ef6c121dec4a0d44">&#9670;&#160;</a></span>readSeismicData()</h2>
+<a id="aec95c042d839e3ae12de0b73ee08279d" name="aec95c042d839e3ae12de0b73ee08279d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec95c042d839e3ae12de0b73ee08279d">&#9670;&#160;</a></span>readSeismicData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structLoads_1_1SeismicData.html">Loads::SeismicData</a> Input::readSeismicData </td>
+          <td class="memname"><a class="el" href="structSeismicData.html">SeismicData</a> Input::readSeismicData </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filename</em>, </td>
@@ -1445,7 +1468,7 @@ Save/Load States</h2>
 </div><div class="memdoc">
 
 <p>Return the seismic data. </p>
-<dl class="section return"><dt>Returns</dt><dd>seismic_data Seismic data </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>seismic_data <a class="el" href="namespaceSeismic.html">Seismic</a> data </dd></dl>
 
 </div>
 </div>

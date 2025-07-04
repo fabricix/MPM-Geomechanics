@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['y_0',['Y',['../namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a',1,'Update']]],
-  ['y0_1',['Y0',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a362aef5e1dd916dbe1cf4b7b640bc83a',1,'Boundary']]],
-  ['yn_2',['Yn',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70aea393263acceb14f7b3b2ff5f1a5ec92',1,'Boundary']]]
+  ['x_0',['X',['../namespaceUpdate.html#a2cd2a66c096a164b7e316cb94eedf1aea0fa9391e3ee101fb57dcc864cfa4f87f',1,'Update']]],
+  ['x0_1',['X0',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a038d17d9e5dbead38560ff2cd1fd863a',1,'Boundary']]],
+  ['xn_2',['Xn',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70a2f473b0116c885ef1cacb1198fe906a5',1,'Boundary']]]
 ];

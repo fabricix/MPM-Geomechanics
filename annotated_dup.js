@@ -6,8 +6,7 @@ var annotated_dup =
       [ "PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
       [ "PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
       [ "PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
-      [ "PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
-      [ "SeismicData", "structLoads_1_1SeismicData.html", "structLoads_1_1SeismicData" ]
+      [ "PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ]
     ] ],
     [ "Body", "classBody.html", "classBody" ],
     [ "BodyCuboid", "classBodyCuboid.html", "classBodyCuboid" ],
@@ -29,6 +28,8 @@ var annotated_dup =
     [ "NodeMixture", "classNodeMixture.html", "classNodeMixture" ],
     [ "Particle", "classParticle.html", "classParticle" ],
     [ "ParticleMixture", "classParticleMixture.html", "classParticleMixture" ],
+    [ "SeismicAnalysis", "structSeismicAnalysis.html", "structSeismicAnalysis" ],
+    [ "SeismicData", "structSeismicData.html", "structSeismicData" ],
     [ "Shape", "classShape.html", "classShape" ],
     [ "ShapeGimp", "classShapeGimp.html", "classShapeGimp" ],
     [ "ShapeLinear", "classShapeLinear.html", "classShapeLinear" ],

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['gimp_0',['GIMP',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6',1,'ModelSetup']]]
+  ['fixed_0',['FIXED',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2',1,'Boundary']]],
+  ['free_1',['FREE',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a2db868e31ca79040aafb4151a8837274',1,'Boundary']]]
 ];

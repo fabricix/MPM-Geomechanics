@@ -33,7 +33,8 @@ var hierarchy =
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", null ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", null ],
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", null ],
-    [ "Loads::SeismicData", "structLoads_1_1SeismicData.html", null ],
+    [ "SeismicAnalysis", "structSeismicAnalysis.html", null ],
+    [ "SeismicData", "structSeismicData.html", null ],
     [ "Shape", "classShape.html", [
       [ "ShapeGimp", "classShapeGimp.html", null ],
       [ "ShapeLinear", "classShapeLinear.html", null ]

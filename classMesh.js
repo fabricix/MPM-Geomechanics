@@ -26,6 +26,7 @@ var classMesh =
     [ "getTotalCells", "classMesh.html#a0634ae57b73e29f2a1251db4f78a4991", null ],
     [ "setBoundaryRestrictions", "classMesh.html#a9a519a3b16bcc0c6ef3b3791b3ed7423", null ],
     [ "setBoundaryRestrictionsFluid", "classMesh.html#ae1693152ddac3ed54effa8cd040b1ef5", null ],
+    [ "setBoundaryRestrictionsSeismic", "classMesh.html#a868ff5373a029770293bf38390d71384", null ],
     [ "setCellDimension", "classMesh.html#a13cec8b008f267f589e9679b3bb46e69", null ],
     [ "setCellDimension", "classMesh.html#a809583712e78b555574fa8fc86237751", null ],
     [ "setNumCells", "classMesh.html#a30f7659ac8b18ed425e81c175388d3e8", null ],

@@ -28,6 +28,7 @@ var Input_8h =
     [ "getResultFields", "Input_8h.html#a5de246ace76db47015f0af32c9e7eea6", null ],
     [ "getResultNum", "Input_8h.html#ac817a10baf4c98d3f406dae86d0fcc60", null ],
     [ "getSaveState", "Input_8h.html#afba47624d2c22b55c4d2a38f4790de7e", null ],
+    [ "getSeismicAnalysisInfo", "Input_8h.html#a562ec03ef4e0d6561a9de59f31ac20db", null ],
     [ "getSimulationTime", "Input_8h.html#a669cf08e9ea601a6700da09305192771", null ],
     [ "getSolver", "Input_8h.html#a0aaddb07cda3d6c988f2c5db52bb488e", null ],
     [ "getSTLMeshFile", "Input_8h.html#a8207d83ed286e00540c9618987e89d7d", null ],
@@ -36,5 +37,5 @@ var Input_8h =
     [ "getWriteSTLMeshFile", "Input_8h.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
     [ "readInputFile", "Input_8h.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
     [ "readNodalPointLoads", "Input_8h.html#a4af9571f7842a96471572cd550d598a9", null ],
-    [ "readSeismicData", "Input_8h.html#ab7aeff2285506645ef6c121dec4a0d44", null ]
+    [ "readSeismicData", "Input_8h.html#aec95c042d839e3ae12de0b73ee08279d", null ]
 ];
