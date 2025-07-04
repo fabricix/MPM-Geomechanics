@@ -1005,11 +1005,6 @@ static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrict
 	{
 		restrictions.at(index)=Boundary::BoundaryType::SLIDING;
 	}
-	else if (resPlane=="earthquake")
-	{
-		restrictions.at(index)=Boundary::BoundaryType::EARTHQUAKE;
-		ModelSetup::setSeismicAnalysis(true);
-	}
 	else
 	{
 		throw(0);

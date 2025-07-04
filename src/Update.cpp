@@ -333,6 +333,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					nodeI->setMomentum(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// sliding restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -400,6 +405,10 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 					nodeI->setMomentumFluid(Vector3d::Zero());
 					break;
 				
+				// Absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{	
@@ -495,6 +504,11 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					nodeI->setTotalForce(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -589,6 +603,10 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 					nodeI->setTotalForceFluid(nodeI->getMassFluid() * interpolatedAcceleration);
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
 
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:

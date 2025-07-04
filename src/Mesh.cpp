@@ -15,6 +15,7 @@ using std::floor;
 #include "Mesh/NodeMixture.h"
 #include "Warning.h"
 #include "Particle/Particle.h"
+#include "Mesh.h"
 
 Mesh::Mesh() {
 
@@ -324,6 +325,13 @@ void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {
     {
         activateNode(nodesId.at(i),activeValue);
     }
+}
+
+void Mesh::setBoundaryRestrictionsSeismic() {
+
+    // setup boundaries
+	this->boundary.setRestrictions(Boundary::ABSORBING);
+	this->boundary.setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::EARTHQUAKE);
 }
 
 void Mesh::setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions) {

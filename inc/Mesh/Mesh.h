@@ -80,7 +80,9 @@ public:
     /// \param[in] active_value Active value can be true for activate
     /// the node or false for inactivate the node
     void activateNodes(const vector<int>& id_list, bool active_value=true);
-    
+
+    void setBoundaryRestrictionsSeismic();
+
     /// \brief Activate node by its id
     /// \param[in] id The id of the node to modify its active attribute
     /// \param[in] active_value Active value can be true for activate
