@@ -144,6 +144,10 @@ void MPM::setupMesh() {
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
+	if(ModelSetup::getSeismicAnalysis()){
+		// set the boundary conditions for seismic analysis
+		mesh.setBoundaryRestrictionsSeismic();
+	}
 	if (ModelSetup::getTwoPhaseActive()){
 		// configure the mesh boundary conditions of fluid
 		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
@@ -279,9 +283,20 @@ void MPM::setupLoads() {
 
 	// set initial velocity
 	Loads::setInitialVelocity(bodies);
+}
 
-	// set seismic acceleration
-	Loads::setSeismicData();
+void MPM::setupSeismicAnalysis() {
+
+	// set seismic analysis info
+	Seismic::setSeismicAnalysis(Input::getSeismicAnalysisInfo());
+
+	// configure seismic analysis in mpm model
+	if(!Seismic::getSeismicAnalysis().isActive) return;
+	
+	ModelSetup::setSeismicAnalysis(true);
+
+	// setup seismic data
+	Seismic::setSeismicData();
 }
 
 void MPM::setupDamping() {
@@ -351,6 +366,9 @@ void MPM::createModel() {
 
 		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
+
+		// configures the seismic analysis
+		setupSeismicAnalysis();
 
 		// setup the background mesh
 		setupMesh();

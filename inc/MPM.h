@@ -111,6 +111,10 @@ private:
 	///
 	void setupLoads();
 	
+	/// \brief Configure seismic analysis
+	///
+	void setupSeismicAnalysis();
+	
 	/// \brief Configure results to be written
 	///
 	void setupResults();

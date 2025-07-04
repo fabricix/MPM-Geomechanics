@@ -4,6 +4,7 @@
 #include "Update.h"
 #include "Loads.h"
 #include "Interpolation.h"
+#include "Seismic.h"
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -333,6 +334,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					nodeI->setMomentum(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// sliding restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -400,6 +406,10 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 					nodeI->setMomentumFluid(Vector3d::Zero());
 					break;
 				
+				// Absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{	
@@ -469,7 +479,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -495,6 +505,11 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					nodeI->setTotalForce(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -558,7 +573,7 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -589,6 +604,10 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 					nodeI->setTotalForceFluid(nodeI->getMassFluid() * interpolatedAcceleration);
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
 
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:

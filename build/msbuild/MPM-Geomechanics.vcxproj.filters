@@ -46,6 +46,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\TerrainContact.cpp" />
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
+    <ClCompile Include="..\..\src\Seismic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="..\..\inc\Mesh\STLReader.h" />
     <ClInclude Include="..\..\inc\TerrainContact.h" />
     <ClInclude Include="..\..\inc\Mesh\Cell.h" />
+    <ClInclude Include="..\..\inc\Seismic.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">

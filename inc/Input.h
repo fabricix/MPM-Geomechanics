@@ -19,6 +19,7 @@ using Eigen::Vector3d;
 #include "Model.h"
 #include "Boundary.h"
 #include "Loads.h"
+#include "Seismic.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -622,7 +623,11 @@ namespace Input {
 
 	/// \brief Return the seismic data
 	/// \return seismic_data Seismic data
-	Loads::SeismicData readSeismicData(const std::string& filename, bool hasHeader);
+	SeismicData readSeismicData(const std::string& filename, bool hasHeader);
+
+	/// \brief Return the seismic analysis information
+	/// \return seismic_analisys_info Seismic analysis information
+	SeismicAnalysis getSeismicAnalysisInfo();
 
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
