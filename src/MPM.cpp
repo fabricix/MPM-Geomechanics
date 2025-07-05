@@ -11,6 +11,7 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "Mesh/STLSeismicLoading.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -159,7 +160,7 @@ void MPM::setupTerrainContact()
 	// verity if terrain contact active
 	bool terrainContactActive = Input::getTerrainContactActive();
 	ModelSetup::setTerrainContactActive(terrainContactActive);
-	if (!terrainContactActive) { return;}
+	if (!terrainContactActive) { return; }
 
 	// configure STL mesh for terrain contact
 	string stlMeshFile = Input::getSTLMeshFile();
@@ -184,13 +185,23 @@ void MPM::setupTerrainContact()
 		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
 
 		// set stl mesh in terrain contact
-		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient());
+		terrainContact = new TerrainContact(stlMesh,Input::getFrictionCoefficient(), &mesh);
 
 		// configure the threshold for contact detection
 		terrainContact->setDistanceThreshold(Input::getDistanceThreshold());
 		
 		// compute distance level set function
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
+
+		// mark seismic nodes for STL seismic loading
+		if (ModelSetup::getSeismicAnalysis() && terrainContact->getSTLSeismicLoading())
+		{
+	    	double epsilon = 0.25 * mesh.getCellDimension().mean();
+    		terrainContact->getSTLSeismicLoading()->markSeismicNodes(epsilon);
+
+			// disable Zo earthquake treatment for seismic nodes
+			mesh.setBoundaryRestrictionsSLTSeismicLoading();
+		}
 	}
 }
 

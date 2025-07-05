@@ -21,7 +21,8 @@ void SolverExplicit::Solve()
 	double iTime = 0.0;
 	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
-	bool useContact = ModelSetup::getTerrainContactActive();
+	bool useSTLContact = ModelSetup::getTerrainContactActive();
+	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysis();
 
 	// Solve in time
 	while (iTime < time)
@@ -56,6 +57,11 @@ void SolverExplicit::Solve()
 		// Step 3.2: Compute total nodal force
 		Update::nodalTotalForce(mesh);
 
+		// Step 3.2.1: Apply seismic loading (if active)
+    	if (useSTLContact && isSeismicAnalysis) {
+        	terrainContact->applySeismicForce(iTime);
+    	}
+		
 		// Step 3.3: Apply boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
 
@@ -66,8 +72,7 @@ void SolverExplicit::Solve()
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
-		if (useContact)
-		{
+		if (useSTLContact){
 			terrainContact->apply(mesh, particles, dt);
 		}
 

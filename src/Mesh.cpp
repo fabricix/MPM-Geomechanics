@@ -333,6 +333,12 @@ void Mesh::setBoundaryRestrictionsSeismic() {
 	this->boundary.setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::EARTHQUAKE);
 }
 
+void Mesh::setBoundaryRestrictionsSLTSeismicLoading() {
+
+    // setup boundaries;
+	this->boundary.setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+}
+
 void Mesh::setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions) {
 
     // verify if there are restrictions to the six planes

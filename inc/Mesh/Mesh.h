@@ -81,7 +81,11 @@ public:
     /// the node or false for inactivate the node
     void activateNodes(const vector<int>& id_list, bool active_value=true);
 
+    /// \brief Set boundary restrictions for the Eulerian mesh when earthquake action is active
     void setBoundaryRestrictionsSeismic();
+
+    /// \brief Set boundary restrictions for Eulerian mesh when earthquake is active and there are a STL mesh for terrain contact
+    void setBoundaryRestrictionsSLTSeismicLoading();
 
     /// \brief Activate node by its id
     /// \param[in] id The id of the node to modify its active attribute

@@ -6,6 +6,7 @@
 #include "limits"
 #include "Contribution.h"
 #include "Particle/Particle.h"
+#include "Mesh/STLSeismicLoading.h"
 
 #include <utility>  // std::pair
 
@@ -389,4 +390,22 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
 
     // compute the contact forces and correct velocities
     computeContactForces(particles, dt);
+}
+
+TerrainContact::TerrainContact(STLReader* stlmesh_, double friction, Mesh* mesh)
+        : stlMesh(stlmesh_), frictionCoefficient(friction) 
+{   
+            // seismic loading initialization for terrain contact
+            if (ModelSetup::getSeismicAnalysis()) {
+                seismicLoading = new STLSeismicLoading(mesh);
+            } else {
+                seismicLoading = nullptr;
+            }            
+}
+
+void TerrainContact::applySeismicForce(double currentTime)
+{
+    if (seismicLoading) {
+        seismicLoading->applySeismicForce(currentTime);
+    }
 }

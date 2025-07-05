@@ -6,6 +6,9 @@
 
 #include "Mesh/STLReader.h"
 #include "Mesh/Mesh.h"
+#include "Model.h"
+
+class STLSeismicLoading; // forward declaration
 
 /// @brief Class to compute terrain contact
 class TerrainContact {
@@ -21,10 +24,9 @@ private:
 
     double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
-public:
+    STLSeismicLoading* seismicLoading; //!< seismic loading object for terrain contact
 
-    TerrainContact( STLReader* mesh, double friction)
-        : stlMesh(mesh), frictionCoefficient(friction) {}
+public:
 
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i) e_n \f$
     /// It is the distance from the node to the STL mesh
@@ -61,6 +63,15 @@ public:
 
     /// @brief Apply the terrain contact algorithm
     void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
+
+    /// @brief Default constructor
+    TerrainContact(STLReader *stlmesh_, double friction, Mesh *mesh);
+
+    /// @brief apply seismic force to nodes
+    void applySeismicForce(double currentTime);
+
+    /// @brief Accessor for the STL seismic loading object
+    STLSeismicLoading* getSTLSeismicLoading() const { return seismicLoading; }
 };
 
 #endif // TERRAINCONTACT_H

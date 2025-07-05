@@ -167,6 +167,7 @@
     <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />
     <ClCompile Include="..\..\src\STLReader.cpp" />
+    <ClCompile Include="..\..\src\STLSeismicLoading.cpp" />
     <ClCompile Include="..\..\src\TerrainContact.cpp" />
     <ClCompile Include="..\..\src\Update.cpp" />
     <ClCompile Include="..\..\src\Warning.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\..\inc\Mesh\Node.h" />
     <ClInclude Include="..\..\inc\Mesh\NodeMixture.h" />
     <ClInclude Include="..\..\inc\Mesh\STLReader.h" />
+    <ClInclude Include="..\..\inc\Mesh\STLSeismicLoading.h" />
     <ClInclude Include="..\..\inc\Model.h" />
     <ClInclude Include="..\..\inc\MPM.h" />
     <ClInclude Include="..\..\inc\Output.h" />
