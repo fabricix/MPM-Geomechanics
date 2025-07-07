@@ -718,7 +718,7 @@ namespace Output{
     csv_file.close();
 }
 
-	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
 		if (loopCounter == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv"); }
 
@@ -732,10 +732,14 @@ namespace Output{
 			updateTerminal(bodies,iTime);
 
 			writeCSVEnergyFile(bodies, iTime);
+		}
+	}
 
-			// write the Eulerian mesh
+	void writeGridInStep(int loopCounter, int resultSteps, Mesh* mesh)
+	{
+		if ((loopCounter - 1) % resultSteps == 0)
+		{
 			writeGrid(mesh, Output::CELLS);
-
 		}
 	}
 
