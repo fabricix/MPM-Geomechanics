@@ -737,7 +737,7 @@ namespace Output{
 
 	void writeGridInStep(int loopCounter, int resultSteps, Mesh* mesh)
 	{
-		if ((loopCounter - 1) % resultSteps == 0)
+		if (loopCounter%resultSteps == 0)
 		{
 			writeGrid(mesh, Output::CELLS);
 		}

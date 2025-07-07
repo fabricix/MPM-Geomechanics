@@ -26,11 +26,15 @@ void SolverExplicit::Solve()
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
 
+	// write initial particles and grid states
+	Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime);
+	Output::writeGridInStep(loopCounter, resultSteps, mesh);
+
 	// Solve in time
 	while (iTime < time)
 	{
-		// Write initial state
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		// increment loop counter
+		loopCounter++;
 
 		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		Update::contributionNodes(mesh, bodies);
@@ -104,14 +108,15 @@ void SolverExplicit::Solve()
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
-
-		// write grid in step
+		
+		// write particles and grid in step
+		Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime);
 		Output::writeGridInStep(loopCounter, resultSteps, mesh);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Check for static solution
+		// Check for quase-static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 
 		// Advance time
