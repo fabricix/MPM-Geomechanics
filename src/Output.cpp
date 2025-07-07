@@ -451,7 +451,7 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
-		if (isGridFieldRequired("mass")) {
+		if (isGridFieldRequired("velocity")) {
 			// nodal velocity
 			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
