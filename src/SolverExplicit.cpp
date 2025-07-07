@@ -26,12 +26,12 @@ void SolverExplicit::Solve()
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
 
-	// Write initial state
-	Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime, mesh);
-
 	// Solve in time
 	while (iTime < time)
 	{
+		// Write initial state
+		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+
 		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		Update::contributionNodes(mesh, bodies);
 		#pragma omp parallel sections num_threads(2)
@@ -105,21 +105,18 @@ void SolverExplicit::Solve()
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
 
-		// Write results in step
-		Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime, mesh);
+		// write grid in step
+		Output::writeGridInStep(loopCounter, resultSteps, mesh);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
 		// Check for static solution
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter++);
+		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 
 		// Advance time
 		ModelSetup::setCurrentTime(iTime += dt);
 	}
-
-	// // Write results
-	// Output::writeGrid(mesh, Output::CELLS);
 
 	Output::writeResultsSeries();
 }

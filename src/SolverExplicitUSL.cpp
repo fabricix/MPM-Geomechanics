@@ -113,7 +113,7 @@ void SolverExplicitUSL::Solve()
 		Update::particleStress(bodies);
 
 		// write results in the result step
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime, mesh);
+		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);

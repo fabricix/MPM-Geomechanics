@@ -67,7 +67,11 @@ namespace Output {
 
 	/// \brief Write results if the step is the step result
 	/// 
-	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
+	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime);
+
+	/// \brief Write grid results if the step is the step result
+	/// 
+	void writeGridInStep(int loopCounter, int resultSteps, Mesh* mesh);
 
 	/// \brief Print initial program screen
 	///
