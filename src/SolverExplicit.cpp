@@ -26,10 +26,12 @@ void SolverExplicit::Solve()
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
 
+	// Write initial state
+	Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime, mesh);
+
 	// Solve in time
 	while (iTime < time)
 	{
-
 		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		Update::contributionNodes(mesh, bodies);
 		#pragma omp parallel sections num_threads(2)
@@ -61,10 +63,10 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
-		Integration::nodalMomentum(mesh, loopCounter == 0 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 0 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)
@@ -103,14 +105,14 @@ void SolverExplicit::Solve()
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
 
-		// Output results
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime, mesh);
+		// Write results in step
+		Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime, mesh);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
 		// Check for static solution
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
+		DynamicRelaxation::setStaticSolution(bodies, loopCounter++);
 
 		// Advance time
 		ModelSetup::setCurrentTime(iTime += dt);
