@@ -29,7 +29,8 @@ using std::exit;
 
 MPM::MPM() {
 	
-	solver=0;
+	terrainContact = nullptr;
+	solver = nullptr;
 }
 
 MPM::~MPM() { }
