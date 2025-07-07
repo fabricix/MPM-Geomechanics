@@ -892,7 +892,49 @@ int Input::getResultNum(){
 	}
 }
 
-vector<string> Input::getResultFields() {
+vector<string> Input::getGridResultFields()
+{
+	try
+	{
+		vector<string> fields;
+
+		if (inputFile["results"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		if (inputFile["results"]["grid_fields"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		// get all results fields
+		json::iterator it;
+		for (it = inputFile["results"]["grid_fields"].begin();it != inputFile["results"]["grid_fields"].end();it++) {
+
+			if ((*it).is_string()) {
+				fields.push_back(*it);
+			}
+		}
+
+		if (fields.empty()) {
+
+			throw (0);
+		}
+
+		return fields;
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during the grid field results creation");
+		throw;
+	}
+}
+
+vector<string> Input::getResultFields()
+{
 
 	try
 	{
