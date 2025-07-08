@@ -3,11 +3,11 @@
 
   "shape_function":"GIMP",
 
-  "time":1,
+  "time":10,
 
   "time_step":0.0005,
 
-  "gravity":[0.0,0.0,0.0],
+  "gravity":[0.0,0.0,-9.81],
 
   "n_threads":1,
 
@@ -21,15 +21,15 @@
 
   "mesh":
   { 
-    "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[10,10,15],
+    "cells_dimension":[1,1,1],
+    "cells_number":[20,10,15],
     "origin":[0,0,0]
 
   },
 
   "earthquake": {
   "active": true,
-  "file": "base_acceleration.csv",
+  "file": "base_acceleration_scaled.csv",
   "header": true
 },
 
@@ -37,7 +37,7 @@
 {
   "active":true,
   "stl_mesh":"terrain_mesh.stl",
-  "friction":0.5,
+  "friction":0.25,
   "distance_threshold":2.0
 },
 

@@ -54,13 +54,13 @@ void SolverExplicit::Solve()
 			Interpolation::nodalExternalForce(mesh, bodies);
 		}
 
-		// Step 3.2: Compute total nodal force
-		Update::nodalTotalForce(mesh);
-
 		// Step 3.2.1: Apply seismic loading (if active)
     	if (useSTLContact && isSeismicAnalysis) {
         	terrainContact->applySeismicForce(iTime);
     	}
+
+		// Step 3.2: Compute total nodal force
+		Update::nodalTotalForce(mesh);
 		
 		// Step 3.3: Apply boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
@@ -118,6 +118,6 @@ void SolverExplicit::Solve()
 	}
 
 	// Write results
-	Output::writeGrid(mesh, Output::CELLS);
+	Output::writeGrid(mesh, Output::CELLS, terrainContact);
 	Output::writeResultsSeries();
 }

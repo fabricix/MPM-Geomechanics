@@ -11,7 +11,8 @@
 #endif
 
 #include "Output.h"
-#include <DynamicRelaxation.h>
+#include "DynamicRelaxation.h"
+#include "Mesh/STLSeismicLoading.h"
 
 #include <iostream>
 using std::cout;
@@ -31,6 +32,7 @@ using std::scientific;
 using std::setw;
 
 #include <vector>
+#include <unordered_set>
 using std::vector;
 
 namespace Output{
@@ -358,7 +360,7 @@ namespace Output{
 		partFile.close();
 	}
 
-	void writeGrid(Mesh* mesh, CellType gridType){
+	void writeGrid(Mesh* mesh, CellType gridType, TerrainContact* terrainContact){
 
 		// define edian
 		if(Folders::edian==""){
@@ -440,6 +442,27 @@ namespace Output{
 			gridFile<<scientific<<(inodes->at(i)->getDistanceLevelSet())<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
+
+		// check if terrain contact is active and seismic analysis is enabled
+		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysis()) {
+
+			// get the STL terrain seismic load
+			STLSeismicLoading* seismicLoading = terrainContact->getSTLSeismicLoading();
+
+			if (seismicLoading) {
+				// buid a set of seismic node indices for fast lookup
+				const std::vector<int>& seismicIndices = seismicLoading->getSeismicNodeIndices();
+				std::unordered_set<int> seismicSet(seismicIndices.begin(), seismicIndices.end());
+
+				// export seismic nodes
+				gridFile << "<DataArray type=\"UInt8\" Name=\"Seismic Node\" Format=\"ascii\">\n";
+				for (int i = 0; i < nPoints; ++i) {
+					gridFile << (seismicSet.count(i) ? 1 : 0) << "\n";
+				}
+				gridFile << "</DataArray>\n";
+			}
+		}
+
 
 		// nodal volume
 		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";

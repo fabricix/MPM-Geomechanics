@@ -479,8 +479,14 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
-
+	// check if seismic analysis is active and if terrain contact is not active
+	Eigen::Vector3d interpolatedAcceleration = Vector3d::Zero();
+	// if seismic analysis is active, interpolate the acceleration
+	if (ModelSetup::getSeismicAnalysis() && !ModelSetup::getTerrainContactActive())
+	{
+		interpolatedAcceleration = Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime());
+	}
+	
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {

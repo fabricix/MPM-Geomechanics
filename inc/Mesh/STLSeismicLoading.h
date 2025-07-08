@@ -9,6 +9,7 @@
 
 class STLSeismicLoading {
 public:
+
     STLSeismicLoading(Mesh* mesh);
 
     // Mark nodes whose distanceLevelSet is within epsilon
@@ -17,6 +18,11 @@ public:
     // Apply seismic acceleration to the marked nodes
     void applySeismicForce(double currentTime);
 
+    // get seismic node indices
+    const std::vector<int>& getSeismicNodeIndices() const {
+        return seismicNodeIndices_;
+    }   
+    
 private:
     Mesh* mesh_;
     std::vector<int> seismicNodeIndices_;
