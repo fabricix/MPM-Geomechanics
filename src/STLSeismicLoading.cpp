@@ -13,6 +13,7 @@ void STLSeismicLoading::markSeismicNodes(double epsilon)
 {
     std::vector<Node*>* nodes = mesh_->getNodes();
     seismicNodeIndices_.clear();
+    seismicNodeSet_.clear();
 
     for (int i = 0; i < static_cast<int>(nodes->size()); ++i) {
         Node* node = nodes->at(i);
@@ -20,6 +21,7 @@ void STLSeismicLoading::markSeismicNodes(double epsilon)
 
         if (d < epsilon) {
             seismicNodeIndices_.push_back(i);
+            seismicNodeSet_.insert(i);  // store in set for quick access
         }
     }
 }

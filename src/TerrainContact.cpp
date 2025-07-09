@@ -409,3 +409,42 @@ void TerrainContact::applySeismicForce(double currentTime)
         seismicLoading->applySeismicForce(currentTime);
     }
 }
+
+// This function applies seismic velocity to particles based on the seismic loading data.
+void TerrainContact::applySeismicVelocityToParticles(std::vector<Particle*>* particles, double currentTime)
+{
+	if (!ModelSetup::getSeismicAnalysis()) return;
+	if (!seismicLoading) return;
+
+	// get the seismic acceleration at the current time
+	const Eigen::Vector3d a = Interpolation::interpolateVector(
+		Seismic::getSeismicData().time,	
+        Seismic::getSeismicData().acceleration,
+        currentTime
+	);
+
+    // get the time step from the model setup
+	const double dt = ModelSetup::getTimeStep();
+
+	// apply seismic velocity to particles
+	#pragma omp parallel for
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i)
+	{
+		Particle* particle = particles->at(i);
+		if (!particle->getActive()) continue;
+
+		const std::vector<Contribution>* contribs = particle->getContributionNodes();
+		Eigen::Vector3d seismicVelocity = Eigen::Vector3d::Zero();
+
+		for (const Contribution& contrib : *contribs)
+		{
+			int nodeId = contrib.getNodeId();
+
+			if (seismicLoading->isSeismicNode(nodeId)) {
+				seismicVelocity += a * contrib.getWeight();
+			}
+		}
+
+		particle->setVelocity(particle->getVelocity() + seismicVelocity * dt);
+	}
+}

@@ -7,6 +7,8 @@
 #include "Seismic.h"
 #include "Interpolation.h"
 
+#include <unordered_set>
+
 class STLSeismicLoading {
 public:
 
@@ -21,9 +23,15 @@ public:
     // get seismic node indices
     const std::vector<int>& getSeismicNodeIndices() const {
         return seismicNodeIndices_;
-    }   
+    }
+
+    // check if a node is a seismic node
+    inline bool isSeismicNode(int nodeId) const {
+        return seismicNodeSet_.count(nodeId) > 0;
+    }
     
 private:
     Mesh* mesh_;
     std::vector<int> seismicNodeIndices_;
+    std::unordered_set<int> seismicNodeSet_;
 };

@@ -54,11 +54,6 @@ void SolverExplicit::Solve()
 			Interpolation::nodalExternalForce(mesh, bodies);
 		}
 
-		// Step 3.2.1: Apply seismic loading (if active)
-    	if (useSTLContact && isSeismicAnalysis) {
-        	terrainContact->applySeismicForce(iTime);
-    	}
-
 		// Step 3.2: Compute total nodal force
 		Update::nodalTotalForce(mesh);
 		
@@ -71,6 +66,11 @@ void SolverExplicit::Solve()
 		// Step 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
+		// Step 5.1.1: Apply seismic velocity to particles (if active)
+		if (useSTLContact && terrainContact){
+			terrainContact->applySeismicVelocityToParticles(particles, iTime);
+		}
+    		
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useSTLContact){
 			terrainContact->apply(mesh, particles, dt);

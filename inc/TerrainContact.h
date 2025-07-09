@@ -72,6 +72,9 @@ public:
 
     /// @brief Accessor for the STL seismic loading object
     STLSeismicLoading* getSTLSeismicLoading() const { return seismicLoading; }
+
+    /// @brief Apply seismic velocity to particles
+    void applySeismicVelocityToParticles(std::vector<Particle*>* particles,  double currentTime);
 };
 
 #endif // TERRAINCONTACT_H
