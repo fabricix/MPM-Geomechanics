@@ -92,10 +92,6 @@ const std::vector<Triangle>& STLReader::getTriangles() const {
     return triangles;
 }
 
-std::vector<Triangle>& STLReader::getTriangles() {
-    return triangles;
-}
-
 bool is_inside(const Vector3d& v, const Vector3d& min, const Vector3d& max) {
     return (v.x() >= min.x() && v.x() <= max.x() &&
             v.y() >= min.y() && v.y() <= max.y() &&
