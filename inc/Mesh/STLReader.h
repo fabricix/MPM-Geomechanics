@@ -64,6 +64,11 @@ public:
     /// @return Vector containing the triangles
     const std::vector<Triangle>& getTriangles() const;
 
+    /// @brief Get the triangles of the STL mesh
+    /// @return Vector containing the triangles
+    /// @note This function is non-const to allow modification of the triangles
+    std::vector<Triangle>& STLReader::getTriangles();
+
     /// @brief Remove triangles that have all vertices outside the specified bounding box
     /// @param min Bounding box minimum (x_min, y_min, z_min)
     /// @param max Bounding box maximum (x_max, y_max, z_max)
@@ -77,10 +82,20 @@ public:
     /// @param output_filename The name of the output STL file
     bool writeSTL(const std::string& output_filename) const;
 
+    /// @brief Update the STL mesh by applying a displacement to all vertices
+    void updateSTLMesh(const Eigen::Vector3d& displacement);
+
+    /// @brief Get the original vertices of the STL mesh
+    void storeOriginalVertices();
+
 private:
     
     /// @brief Vector containing the triangles
     std::vector<Triangle> triangles;
+
+    /// @brief Vector containing the original vertices of the STL mesh
+    /// @details This vector is used to store the original vertices of the STL mesh before any
+    std::vector<Eigen::Vector3d> originalVertices;
 
     /// @brief Read the ASCII STL file
     bool readASCII(std::ifstream& file);

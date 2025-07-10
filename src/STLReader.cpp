@@ -92,6 +92,10 @@ const std::vector<Triangle>& STLReader::getTriangles() const {
     return triangles;
 }
 
+std::vector<Triangle>& STLReader::getTriangles() {
+    return triangles;
+}
+
 bool is_inside(const Vector3d& v, const Vector3d& min, const Vector3d& max) {
     return (v.x() >= min.x() && v.x() <= max.x() &&
             v.y() >= min.y() && v.y() <= max.y() &&
@@ -144,4 +148,33 @@ bool STLReader::writeSTL(const std::string& output_filename) const {
 
     file.close();
     return true;
+}
+
+// Store the original vertices of the STL mesh
+// This function initializes the originalVertices vector with the current vertices of the triangles.
+void STLReader::storeOriginalVertices() {
+    
+    if (!originalVertices.empty()) return;
+
+    originalVertices.reserve(triangles.size() * 3);
+    for (const auto& tri : triangles) {
+        originalVertices.push_back(tri.v1);
+        originalVertices.push_back(tri.v2);
+        originalVertices.push_back(tri.v3);
+    }
+}
+
+// Update the STL mesh by applying a displacement to all vertices
+// This function updates the vertices of the STL mesh by applying a displacement vector to each vertex.
+void STLReader::updateSTLMesh(const Eigen::Vector3d& displacement)
+{
+    if (originalVertices.empty()) { storeOriginalVertices(); }
+
+    for (size_t i = 0; i < triangles.size(); ++i) {
+        triangles[i].v1 = originalVertices[i * 3 + 0] + displacement;
+        triangles[i].v2 = originalVertices[i * 3 + 1] + displacement;
+        triangles[i].v3 = originalVertices[i * 3 + 2] + displacement;
+    }
+
+    recalculateNormals();
 }

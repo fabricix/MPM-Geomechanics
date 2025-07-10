@@ -6,6 +6,8 @@
 #include "limits"
 #include "Contribution.h"
 #include "Particle/Particle.h"
+#include "Interpolation.h"
+#include "Seismic.h"
 
 #include <utility>  // std::pair
 
@@ -69,7 +71,9 @@ double pointTriangleDistance(const Vector3d& p, const Vector3d& a, const Vector3
     return std::abs((p - a).dot(n));
 }
 
-void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
+// @brief Compute the distance level set function for each node in the mesh
+// This function calculates the signed distance from each node to the nearest triangle in the STL mesh.
+void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh, bool onlyActiveNodes)
 {
     std::vector<Node*>* gNodes = mesh->getNodes();
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
@@ -78,6 +82,8 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
     for (int i = 0; i < static_cast<int> (gNodes->size()); ++i)
     {
         Node* node = gNodes->at(i);
+        if (onlyActiveNodes && !node->getActive()) continue;
+        
         Eigen::Vector3d nodePos = node->getCoordinates();
 
         double minAbsDist = std::numeric_limits<double>::max();
@@ -146,6 +152,9 @@ void TerrainContact::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* par
     }
 }
 
+// @brief Calculate the nodal density level set function
+// This function computes the density level set for each node based on the contributions from active particles.
+// The density level set is used to approximate the surface of the body in contact with the STL mesh.
 void TerrainContact::nodalDensityLevelSet(Mesh* mesh, vector<Particle*>* particles) 
 {
 	// get nodes
@@ -372,7 +381,16 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
         particle->setVelocity(velocityCorrected);
     }
 }
-
+/**
+ * @brief Apply the terrain contact algorithm to the mesh and particles.
+ *
+ * This function computes the distance level set function for particles, calculates the nodal density level set,
+ * interpolates the density at triangle centroids, determines contact potential pairs, and computes contact forces.
+ *
+ * @param mesh Pointer to the mesh containing the STL terrain.
+ * @param particles Pointer to a vector of particles interacting with the terrain.
+ * @param dt Time step for the simulation.
+ */
 void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double dt)
 {
     // calculate the distance level set function to particles
@@ -389,4 +407,30 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
 
     // compute the contact forces and correct velocities
     computeContactForces(particles, dt);
+}
+
+/**
+ * @brief Compute the seismic displacement based on the current time and time step.
+ *
+ * This function calculates the seismic displacement by interpolating the seismic acceleration data
+ * at the current time, integrating it to obtain velocity, and then integrating again to obtain displacement.
+ *
+ * @param currentTime The current simulation time.
+ * @param dt The time step for the simulation.
+ */
+void TerrainContact::computeSeismicDisplacement(double currentTime, double dt)
+{
+    // interpolate the seismic acceleration at the current time
+    Eigen::Vector3d acceleration = Interpolation::interpolateVector(
+        Seismic::getSeismicData().time,
+        Seismic::getSeismicData().acceleration,
+        currentTime
+    );
+
+    // explicitly integrate the acceleration to get velocity and then displacement
+    Eigen::Vector3d deltaVelocity = acceleration * dt;
+    Eigen::Vector3d deltaDisplacement = deltaVelocity * dt;
+
+    // accumulate the displacement vector
+    accumulatedDisplacement += deltaDisplacement;
 }

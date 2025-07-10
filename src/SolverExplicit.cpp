@@ -22,6 +22,7 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
+	bool useSeismic = ModelSetup::getSeismicAnalysis();
 
 	// Solve in time
 	while (iTime < time)
@@ -64,6 +65,19 @@ void SolverExplicit::Solve()
 
 		// Step 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+
+		// Step 5.1.0: Compute and apply seismic displacement to STL mesh (if active)
+		if (useContact && useSeismic)
+		{
+			// Calculate seismic displacement based on the current time
+			terrainContact->computeSeismicDisplacement(iTime, dt);
+
+			// update the STL mesh with the accumulated displacement
+			terrainContact->getSTLMesh()->updateSTLMesh(terrainContact->getAccumulatedDisplacement());
+
+			// compute the distance level set function for the STL mesh
+			terrainContact->computeDistanceLevelSetFunction(mesh, true);
+		}
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)

@@ -21,6 +21,8 @@ private:
 
     double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
+    Eigen::Vector3d accumulatedDisplacement = Eigen::Vector3d::Zero(); //!< accumulated displacement of the STL mesh
+
 public:
 
     TerrainContact( STLReader* mesh, double friction)
@@ -28,7 +30,7 @@ public:
 
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i) e_n \f$
     /// It is the distance from the node to the STL mesh
-    void computeDistanceLevelSetFunction(Mesh* mesh);
+    void computeDistanceLevelSetFunction(Mesh* mesh, bool onlyActiveNodes = false);
 
     /// \brief Interpolate distance level set function value of particle
 	/// \f$ d_p = \sum_I d_I N_{Ip} \f$
@@ -61,6 +63,12 @@ public:
 
     /// @brief Apply the terrain contact algorithm
     void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
+
+    /// @brief Compute the accumulated displacement of the STL mesh
+    void computeSeismicDisplacement(double currentTime, double dt);
+
+    /// @brief Get the accumulated displacement of the STL mesh
+    const Eigen::Vector3d& getAccumulatedDisplacement() const { return accumulatedDisplacement; }
 };
 
 #endif // TERRAINCONTACT_H
