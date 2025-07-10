@@ -448,3 +448,32 @@ void TerrainContact::applySeismicVelocityToParticles(std::vector<Particle*>* par
 		particle->setVelocity(particle->getVelocity() + seismicVelocity * dt);
 	}
 }
+
+void TerrainContact::applySeismicVelocityToContactParticles(std::vector<Particle*>* particles, double currentTime)
+{
+    // Only if seismic is active and loading is set
+	if (!ModelSetup::getSeismicAnalysis()) return;
+	if (!seismicLoading) return;
+
+    // Interpolate the seismic velocity vector from the record
+    const Eigen::Vector3d a = Interpolation::interpolateVector(
+        Seismic::getSeismicData().time,
+        Seismic::getSeismicData().acceleration,
+        currentTime
+    );
+
+    // get the time step from the model setup
+	const double dt = ModelSetup::getTimeStep();
+
+    // Loop over particles currently in contact with the terrain
+    #pragma omp parallel for
+    for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i)
+    {   
+        // Get the particle from the contact pair
+        Particle* p = contactPairs[i].first;
+        if (!p->getActive()) continue;
+        
+        // Apply seismic velocity directly to particle
+        p->setVelocity(a * dt + p->getVelocity());
+    }
+}

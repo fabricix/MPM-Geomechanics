@@ -66,15 +66,13 @@ void SolverExplicit::Solve()
 		// Step 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 5.1.1: Apply seismic velocity to particles (if active)
-		if (useSTLContact && terrainContact){
-			terrainContact->applySeismicVelocityToParticles(particles, iTime);
-		}
-    		
 		// Step 5.2: Apply contact correction in particle velocity (if active)
-		if (useSTLContact){
+		if (useSTLContact)
 			terrainContact->apply(mesh, particles, dt);
-		}
+
+		// Step 5.1.1: Apply seismic velocity to particles (if active)
+		if (useSTLContact && terrainContact)
+    		terrainContact->applySeismicVelocityToContactParticles(particles, iTime);
 
 		// Step 5.3: Update particle position
 		Update::particlePosition(mesh, bodies, dt);

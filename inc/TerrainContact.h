@@ -75,6 +75,9 @@ public:
 
     /// @brief Apply seismic velocity to particles
     void applySeismicVelocityToParticles(std::vector<Particle*>* particles,  double currentTime);
+
+    void applySeismicVelocityToContactParticles(std::vector<Particle*>* particles, double currentTime);
+    
 };
 
 #endif // TERRAINCONTACT_H
