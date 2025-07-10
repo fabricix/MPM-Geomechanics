@@ -67,7 +67,7 @@ void SolverExplicit::Solve()
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1.0: Compute and apply seismic displacement to STL mesh (if active)
-		if (useContact && useSeismic)
+		if (useContact && useSeismic && loopCounter!=1 )
 		{
 			// Calculate seismic displacement based on the current time
 			terrainContact->computeSeismicDisplacement(iTime, dt);
