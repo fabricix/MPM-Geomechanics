@@ -9,6 +9,7 @@
 #include "Output.h"
 #include "DynamicRelaxation.h"
 #include "TerrainContact.h"
+#include <iostream>
 
 SolverExplicit::SolverExplicit() : Solver() {}
 

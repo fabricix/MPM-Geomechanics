@@ -431,6 +431,9 @@ void TerrainContact::computeSeismicDisplacement(double currentTime, double dt)
     Eigen::Vector3d deltaVelocity = acceleration * dt;
     Eigen::Vector3d deltaDisplacement = deltaVelocity * dt;
 
-    // accumulate the displacement vector
-    accumulatedDisplacement += deltaDisplacement;
+        // integrate acceleration to velocity
+    accumulatedVelocity += acceleration * dt;
+
+    // integrate velocity to displacement
+    accumulatedDisplacement += accumulatedVelocity * dt;
 }

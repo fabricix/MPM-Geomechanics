@@ -23,6 +23,8 @@ private:
 
     Eigen::Vector3d accumulatedDisplacement = Eigen::Vector3d::Zero(); //!< accumulated displacement of the STL mesh
 
+    Eigen::Vector3d accumulatedVelocity = Eigen::Vector3d::Zero(); //!< accumulated velocity of the STL mesh
+
 public:
 
     TerrainContact( STLReader* mesh, double friction)

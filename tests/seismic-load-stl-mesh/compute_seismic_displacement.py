@@ -7,20 +7,20 @@ def compute_seismic_displacement(filename, output_file="seismic_displacement.csv
     df = pd.read_csv(filename)
 
     t = df["t"].values
-    ax = df["ax"].values
+    a = df["az"].values
 
     dt = np.mean(np.diff(t))
 
-    vx = np.cumsum(ax) * dt
-    ux = np.cumsum(vx) * dt
+    v = np.cumsum(a) * dt
+    u = np.cumsum(v) * dt
 
     # Guardar desplazamiento
-    np.savetxt(output_file, np.column_stack((t, ux)), delimiter=",", header="t,ux", comments='')
+    np.savetxt(output_file, np.column_stack((t, u)), delimiter=",", header="t,u", comments='')
 
     # Graficar
-    plt.plot(t, ax, label="ax (input)", color="gray", alpha=0.5)
-    plt.plot(t, vx, label="vx (integrated)", color="purple")
-    plt.plot(t, ux, label="ux (displacement)", color="blue")
+    plt.plot(t, a, label="a (input)", color="black")
+    plt.plot(t, v, label="v (integrated)", color="purple")
+    plt.plot(t, u, label="u (displacement)", color="blue")
     plt.xlabel("Time (s)")
     plt.ylabel("Response")
     plt.legend()

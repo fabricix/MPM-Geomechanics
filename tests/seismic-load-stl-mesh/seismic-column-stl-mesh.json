@@ -37,7 +37,7 @@
 {
   "active":true,
   "stl_mesh":"terrain_mesh.stl",
-  "friction":0.025,
+  "friction":0.25,
   "distance_threshold":2.0
 },
 
