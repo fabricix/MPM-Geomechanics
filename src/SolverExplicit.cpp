@@ -69,10 +69,10 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
-		Integration::nodalMomentum(mesh, loopCounter == 0 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 0 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)
