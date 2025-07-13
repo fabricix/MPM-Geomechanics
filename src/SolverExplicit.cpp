@@ -35,6 +35,9 @@ void SolverExplicit::Solve()
 		// increment loop counter
 		loopCounter++;
 
+		// Advance time
+		ModelSetup::setCurrentTime(iTime += dt);
+
 		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		Update::contributionNodes(mesh, bodies);
 		#pragma omp parallel sections num_threads(2)
@@ -117,9 +120,6 @@ void SolverExplicit::Solve()
 
 		// Check for quase-static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
-
-		// Advance time
-		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
 	Output::writeResultsSeries();
