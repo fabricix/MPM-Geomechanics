@@ -73,6 +73,10 @@ namespace Output {
 	/// 
 	void writeGridInStep(int loopCounter, int resultSteps, Mesh* mesh);
 
+	/// \brief Write the initial state of the simulation
+	/// 
+	void writeInitialState(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
+
 	/// \brief Print initial program screen
 	///
 	void welcomeScreen();
