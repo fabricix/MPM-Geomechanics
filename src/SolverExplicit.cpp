@@ -10,24 +10,32 @@
 #include "DynamicRelaxation.h"
 #include "TerrainContact.h"
 
+#include <iostream>
+
 SolverExplicit::SolverExplicit() : Solver() {}
 
 void SolverExplicit::Solve()
 {
+	std::cout << "Starting explicit solver..." << std::endl;
 	// Initialize simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
-	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
+
+	// write initial particles and grid states
+	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
 
 	// Solve in time
 	while (iTime < time)
 	{
-		// Output results
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		// increment loop counter
+		ModelSetup::incrementLoopCounter();
+
+		// Advance time
+		ModelSetup::setCurrentTime(iTime += dt);
 
 		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		Update::contributionNodes(mesh, bodies);
@@ -60,10 +68,10 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
-		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)
@@ -101,18 +109,17 @@ void SolverExplicit::Solve()
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
+		
+		// write particles and grid in step
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Check for static solution
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
-
-		// Advance time
-		ModelSetup::setCurrentTime(iTime += dt);
+		// Check for quase-static solution
+		DynamicRelaxation::setStaticSolution(bodies);
 	}
 
-	// Write results
-	Output::writeGrid(mesh, Output::CELLS);
 	Output::writeResultsSeries();
 }

@@ -15,48 +15,54 @@ using std::vector;
 #include <iostream>
 using std::cout;
 
-SolverExplicitTwoPhaseUSL::SolverExplicitTwoPhaseUSL() : Solver() { }
+SolverExplicitTwoPhaseUSL::SolverExplicitTwoPhaseUSL() : Solver() {}
 
-void SolverExplicitTwoPhaseUSL::Solve( ){
+void SolverExplicitTwoPhaseUSL::Solve()
+{
 
 	// check if is two-phase calculations
-	if(!ModelSetup::getTwoPhaseActive()) return;
+	if (!ModelSetup::getTwoPhaseActive()) return;
 
 	// simulation variables
-	double time=ModelSetup::getTime();
-	double dt=ModelSetup::getTimeStep();
-	int resultSteps=ModelSetup::getResultSteps();
-	double iTime=0.0;
-	int loopCounter=0;
+	double time = ModelSetup::getTime();
+	double dt = ModelSetup::getTimeStep();
+	int resultSteps = ModelSetup::getResultSteps();
+	double iTime = 0.0;
+
+	// write initial particles and grid states
+	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
 
 	// solve in time
-	while(iTime<time) {
+	while (iTime < time)
+	{
+		// increment loop counter
+		ModelSetup::incrementLoopCounter();
 
-		// write results in the result step
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		// advance in time
+		ModelSetup::setCurrentTime(iTime += dt);
 
 		// update contribution nodes
-		Update::contributionNodes(mesh,bodies);
-		
+		Update::contributionNodes(mesh, bodies);
+
 		#pragma omp parallel sections num_threads(4)
 		{
 			// nodal mass of solid
 			#pragma omp section
-			Interpolation::nodalMass(mesh,bodies);
+			Interpolation::nodalMass(mesh, bodies);
 
 			// nodal mass of fluid
 			#pragma omp section
-			Interpolation::nodalMassFuid(mesh,bodies);
+			Interpolation::nodalMassFuid(mesh, bodies);
 
 			// nodal momentum of solid
 			#pragma omp section
-			Interpolation::nodalMomentum(mesh,bodies);
+			Interpolation::nodalMomentum(mesh, bodies);
 
 			// nodal momentum of fluid
 			#pragma omp section
-			Interpolation::nodalMomentumFluid(mesh,bodies);
+			Interpolation::nodalMomentumFluid(mesh, bodies);
 		}
-		
+
 		// impose essential boundary condition on nodal momentum in mixture
 		#pragma omp parallel sections num_threads(2)
 		{
@@ -73,23 +79,23 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		{
 			// nodal internal force of mixture
 			#pragma omp section
-			Interpolation::nodalInternalForce(mesh,bodies);
+			Interpolation::nodalInternalForce(mesh, bodies);
 
 			// nodal internal force of fluid phase
 			#pragma omp section
-			Interpolation::nodalInternalForceFluid(mesh,bodies);
-		
+			Interpolation::nodalInternalForceFluid(mesh, bodies);
+
 			// nodal external force of mixture
 			#pragma omp section
-			Interpolation::nodalExternalForce(mesh,bodies);
+			Interpolation::nodalExternalForce(mesh, bodies);
 
 			// nodal external force of fluid phase
 			#pragma omp section
-			Interpolation::nodalExternalForceFluid(mesh,bodies);
+			Interpolation::nodalExternalForceFluid(mesh, bodies);
 
 			// nodal drag force of fluid
 			#pragma omp section
-			Interpolation::nodalDragForceFluid(mesh,bodies);
+			Interpolation::nodalDragForceFluid(mesh, bodies);
 		}
 
 		// nodal total force in mixture
@@ -107,16 +113,16 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		}
 
 		// integrate the grid nodal momentum equation in mixture
-		Integration::nodalMomentum(mesh,loopCounter==1?dt/2.0:dt);
+		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of solid phase
-		Update::particleVelocity(mesh,bodies,loopCounter==1?dt/2.0:dt);
-		
+		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
+
 		// update particle velocity of fluid phase
-		Update::particleVelocityFluid(mesh,bodies,loopCounter==1?dt/2.0:dt);
+		Update::particleVelocityFluid(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// update particle position of solid phase
-		Update::particlePosition(mesh,bodies,dt);
+		Update::particlePosition(mesh, bodies, dt);
 
 		// nodal velocity
 		Update::nodalVelocity(mesh);
@@ -125,45 +131,39 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		{
 			// calculate particle strain increment
 			#pragma omp section
-			Interpolation::particleStrainIncrement(mesh,bodies,dt);
-			
+			Interpolation::particleStrainIncrement(mesh, bodies, dt);
+
 			// calculate particle strain increment of fluid phase
 			#pragma omp section
-			Interpolation::particleStrainIncrementFluid(mesh,bodies,dt);
-		
+			Interpolation::particleStrainIncrementFluid(mesh, bodies, dt);
+
 			// calculate particle vorticity increment
 			#pragma omp section
-			Interpolation::particleVorticityIncrement(mesh,bodies,dt);
+			Interpolation::particleVorticityIncrement(mesh, bodies, dt);
 
 			// calculate particle deformation gradient
 			#pragma omp section
-			Interpolation::particleDeformationGradient(mesh,bodies,dt);
+			Interpolation::particleDeformationGradient(mesh, bodies, dt);
 		}
 
 		// update particle density
 		Update::particleDensity(bodies);
-		
+
 		// update particle porosity
 		Update::particlePorosity(bodies);
 
 		// update particle pressure
-		Update::particlePressure(bodies,dt);
+		Update::particlePressure(bodies, dt);
 
 		// update particle stress
 		Update::particleStress(bodies);
-		
+
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
 
 		// verify the static solution requirements
-		DynamicRelaxation::setStaticSolution(bodies,loopCounter);
-
-		// advance in time
-		ModelSetup::setCurrentTime(iTime += dt);
+		DynamicRelaxation::setStaticSolution(bodies);
 	}
-
-	// write the Eulerian mesh
-	Output::writeGrid(mesh,Output::CELLS);
 
 	// write results series
 	Output::writeResultsSeries();
