@@ -13,7 +13,7 @@ namespace HydroMechanicalCoupling {
 	bool isOneWayEnabled();
 
 	/// Assign pore pressure to particles based on position
-	void configure(std::vector<Particle*>& particles);
+	void configureOneDirectionCoupling(std::vector<Particle*>& particles);
 
 	/// Compute total stress tensor: sigma_total = sigma_effective + p * I
 	Eigen::Matrix3d computeTotalStress(const Eigen::Matrix3d& sigma_effective, double pore_pressure);

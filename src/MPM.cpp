@@ -11,6 +11,7 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "HydromechanicalCoupling.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -352,6 +353,11 @@ void MPM::saveState()
 	}
 }
 
+void MPM::setOneDirectionHydromechanicalCoupling()
+{
+	HydroMechanicalCoupling::configureOneDirectionCoupling(particles);
+}
+
 void MPM::createModel() {
 
 	try{
@@ -399,6 +405,9 @@ void MPM::createModel() {
 
 		// configures the loads
 		setupLoads();
+
+		// configures the hydro-mechanical coupling type
+		setOneDirectionHydromechanicalCoupling();
 
 		// configures the damping
 		setupDamping();

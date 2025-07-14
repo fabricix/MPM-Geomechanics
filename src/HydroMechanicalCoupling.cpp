@@ -18,7 +18,7 @@ namespace HydroMechanicalCoupling {
         return ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY;
     }
 
-    void configure(std::vector<Particle*>& particles) {
+    void configureOneDirectionCoupling(std::vector<Particle*>& particles) {
         
         // Check if hydro-mechanical coupling is enabled and set the type
         if (Input::getHydroMechCouplingEnabled() && Input::getHydroMechCouplingOneWay())
