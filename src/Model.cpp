@@ -78,6 +78,9 @@ namespace ModelSetup {
     // seismic analysis
 	bool seismicAnalysisActive = false; //!< is seismic analysis
 
+	// hydro-mechanical coupling type
+	HydroMechanicalCouplingType hydroCouplingType = HydroMechanicalCouplingType::NONE;
+
 	///
 	/// Function members
 	///
@@ -198,4 +201,15 @@ namespace ModelSetup {
 	// Seismic analysis
 	bool getSeismicAnalysis() {return seismicAnalysisActive;}
 	void setSeismicAnalysis(bool a) {seismicAnalysisActive = a;}
+
+	// hydro-mechanical coupling
+
+	/// get hydro-mechanical coupling type
+	HydroMechanicalCouplingType getHydroMechanicalCouplingType() { return hydroCouplingType; }
+
+	/// set hydro-mechanical coupling type
+	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type) { hydroCouplingType = type; }
+
 }
+
+

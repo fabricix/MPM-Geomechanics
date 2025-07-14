@@ -32,6 +32,10 @@ namespace ModelSetup {
 	/// \brief Defines the type of interpolation function
 	enum InterpolationFunctionType{ LINEAR, GIMP };
 
+	/// \enum HydroMechanicalCouplingType
+	/// \brief Defines the type of hydro-mechanical coupling
+	enum class HydroMechanicalCouplingType { NONE, ONE_WAY };
+
 	/// \brief Return true is the system is Windows
 	/// \return True if is Windows system
 	bool getWindowsSystem();
@@ -238,6 +242,15 @@ namespace ModelSetup {
 	
 	/// \brief Set terrain contact active
 	void setTerrainContactActive(bool);
+
+	/// \brief return the hydro-mechanical coupling type
+	/// \return HydroMechanicalCouplingType
+	HydroMechanicalCouplingType getHydroMechanicalCouplingType();
+	
+	/// \brief Set hydro-mechanical coupling type
+	/// \param[in] type HydroMechanicalCouplingType
+	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type);
+	
 };
 
 #endif /* MODEL_H_ */
