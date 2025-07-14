@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # Define the project name
 project(Testing)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
 # Add the subdirectory where GoogleTest is located (embedded in "external/googletest")
 # This will allow CMake to compile it along with the project
 add_subdirectory(../../external/googletest ${CMAKE_BINARY_DIR}/googletest)

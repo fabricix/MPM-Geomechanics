@@ -1,0 +1,65 @@
+{
+  "stress_scheme_update":"USL",
+
+  "shape_function":"GIMP",
+
+  "time":2,
+
+  "time_step":0.001,
+
+  "gravity":[0.0,0.0,-9.81],
+
+  "n_threads":1,
+
+  "results":
+  {
+    "print":20,
+    "fields":["id","displacement","material","active","body"]
+  },
+
+  "n_phases":1,
+
+  "mesh":
+  { 
+    "cells_dimension":[1,1,1],
+    "cells_number":[20, 20, 50],
+    "origin":[0,0,0],
+    
+		"boundary_conditions":
+		{
+			"plane_X0":"fixed",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"fixed",
+			"plane_Yn":"sliding",
+			"plane_Zn":"fixed"
+		}
+  },
+
+  "material":
+  {
+    "mohr-coulomb":
+    {
+      "type": "mohr-coulomb",
+      "density": 1000,
+      "young": 100e4,
+      "poisson": 0.25,
+      "cohesion": 6e6,
+      "friction": 30,
+      "tensile": 3e6,
+      "id": 1
+    }
+  },
+
+  "body":
+  {
+    "body_cuboid_1":
+    {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[8,8,40],
+      "point_p2":[12,12,44],
+      "material_id":1
+    }
+  }
+}
