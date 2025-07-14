@@ -204,10 +204,28 @@ namespace Output{
 			// fluid pressure
 			partFile<<"<DataArray type=\"Float64\" Name=\"Pressure\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
-				partFile<<scientific<<particles->at(i)->getPressureFluid()<<"\n";
+
+				double pressure = 0.0;
+
+				if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
+		           pressure = particles->at(i)->getPorePressure();
+				else
+		           pressure = particles->at(i)->getPressureFluid();
+				
+				partFile << scientific << pressure <<"\n";
 			}
 			partFile<<"</DataArray>\n";
 		}
+
+		if (isFieldRequired("pore_pressure")) {
+			// particle pore pressure
+			partFile << "<DataArray type=\"Float64\" Name=\"Pore Pressure\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile << scientific << particles->at(i)->getPorePressure() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		
 		if (isFieldRequired("plastic_strain")){
 			
