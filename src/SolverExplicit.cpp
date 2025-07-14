@@ -22,18 +22,17 @@ void SolverExplicit::Solve()
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
-	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
 
 	// write initial particles and grid states
-	Output::writeInitialState(loopCounter, resultSteps, bodies, iTime, mesh);
+	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
 
 	// Solve in time
 	while (iTime < time)
 	{
 		// increment loop counter
-		loopCounter++;
+		ModelSetup::incrementLoopCounter();
 
 		// Advance time
 		ModelSetup::setCurrentTime(iTime += dt);
@@ -69,10 +68,10 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
-		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)
@@ -112,14 +111,14 @@ void SolverExplicit::Solve()
 		Update::particleStress(bodies);
 		
 		// write particles and grid in step
-		Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime);
-		Output::writeGridInStep(loopCounter, resultSteps, mesh);
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
 		// Check for quase-static solution
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
+		DynamicRelaxation::setStaticSolution(bodies);
 	}
 
 	Output::writeResultsSeries();

@@ -25,11 +25,19 @@ void SolverExplicitUSL::Solve()
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
-	int loopCounter = 0;
+
+	// write initial particles and grid states
+	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
 
 	// solve in time
 	while (iTime < time)
 	{
+		// increment loop counter
+		ModelSetup::incrementLoopCounter();
+
+		// advance in time
+		ModelSetup::setCurrentTime(iTime += dt);
+
 		// update contribution nodes
 		Update::contributionNodes(mesh, bodies);
 
@@ -65,10 +73,10 @@ void SolverExplicitUSL::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// integrate the grid nodal momentum equation
-		Integration::nodalMomentum(mesh, loopCounter == 0 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 0 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// contact treatment
 		if (ModelSetup::getTerrainContactActive())
@@ -112,21 +120,16 @@ void SolverExplicitUSL::Solve()
 		// update particle stress
 		Update::particleStress(bodies);
 
-		// write results in the result step
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		// write particles and grid in step
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh);
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
 
 		// verify the static solution requirements
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
-
-		// advance in time
-		ModelSetup::setCurrentTime(iTime += dt);
+		DynamicRelaxation::setStaticSolution(bodies);
 	}
-
-	// // write the Eulerian mesh
-	// Output::writeGrid(mesh, Output::CELLS);
 
 	// write results series
 	Output::writeResultsSeries();

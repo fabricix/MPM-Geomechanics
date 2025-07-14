@@ -718,9 +718,9 @@ namespace Output{
     csv_file.close();
 }
 
-	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(int resultSteps,vector<Body*>* bodies, double iTime)
 	{
-		if (loopCounter%resultSteps==0)
+		if (ModelSetup::getLoopCounter() % resultSteps == 0)
 		{
 			// write model results
 			writeBodies(bodies,iTime);
@@ -733,15 +733,15 @@ namespace Output{
 		}
 	}
 
-	void writeGridInStep(int loopCounter, int resultSteps, Mesh* mesh)
+	void writeGridInStep(int resultSteps, Mesh* mesh)
 	{
-		if (loopCounter%resultSteps == 0)
+		if (ModelSetup::getLoopCounter()%resultSteps == 0)
 		{
 			writeGrid(mesh, Output::CELLS);
 		}
 	}
 
-	void writeInitialState(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeInitialState(int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
 		// write initial state 
 		printModelInfo(bodies, iTime);
