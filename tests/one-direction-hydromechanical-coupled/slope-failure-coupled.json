@@ -80,7 +80,6 @@
 	{
   		"enabled": true,
   		"type": "one_way",
-  		"pore_pressure_field": "pore-pressure.json"
+  		"pore_pressure_field": "pore-pressure-3d.json"
 	}
-
 }

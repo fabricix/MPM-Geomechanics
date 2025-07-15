@@ -176,11 +176,11 @@ namespace ModelSetup {
 			{
 				#pragma omp master
 				{
-					std::cout << "   OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+					std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
 				}
 			}
 		#else
-			std::cout <<"   OpenMP : Compilation without supporting OpenMP" << std::endl;
+			std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
 		#endif
 	}
 
