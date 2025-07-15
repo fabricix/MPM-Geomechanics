@@ -47,7 +47,6 @@
 		}
 	},
 
-	"save_state":false,
 	"load_state":true,
 
 	"body":

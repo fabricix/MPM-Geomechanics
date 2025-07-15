@@ -1,48 +1,89 @@
-# One-Way Hydro-Mechanical Coupling Example – Slope Failure Simulation
+# Detailed Example – One-Way Hydro-Mechanical Coupling in Slope Stability Simulation
 
-This example demonstrates a slope stability analysis using one-way hydro-mechanical coupling in the MPM-Geomechanics simulator. The model considers pore pressure as a known field that influences the mechanical behavior but is not updated during the simulation.
+This document provides an explanation of a slope failure simulation incorporating one-way hydro-mechanical coupling using the MPM-Geomechanics code. The simulation is designed to evaluate the influence of a predefined pore pressure field on the mechanical behavior of a soil slope.
 
-## Files
+## Overview
 
-- `slope-failure-coupled.json`: main configuration file for the simulation.
-- `pore-pressure-3d.json`: input file defining pore pressure at 3D spatial locations.
-- `generate_pore_pressure_3d_from_json.py`: script used to generate `pore-pressure-3d.json`.
-- `config.json`: defines geometry, water level, and discretization for the pressure field.
-- `time-energy.csv`: optional output to monitor energy evolution.
+In this setup, pore pressure is introduced as a fixed field (not updated during the simulation) to affect the internal force equilibrium. The material response is computed based on the effective stress, while the equilibrium equations consider total stress. This reflects a typical one-way coupling strategy.
 
-## Model Setup
+## Files Description
 
-- Geometry: 2D polygonal slope extruded in the Y direction (1 m thick).
-- Discretization: 1 m in all directions.
-- Material: Mohr–Coulomb (cohesion = 15 kPa, friction angle = 35°, E = 100 MPa).
-- Gravity: Applied in the Z direction.
-- Time: 5 seconds total, using critical time step × 0.25.
+- `slope-failure-coupled.json`: Input file defining geometry, materials, boundary conditions, solver settings, and coupling configuration.
+- `pore-pressure-3d.json`: JSON file assigning hydrostatic pore pressures to each spatial position inside the slope.
+- `generate_pore_pressure_3d_from_json.py`: Python script to build the pore pressure field based on the polygonal shape and water level.
+- `config.json`: Contains the domain configuration (geometry, resolution, water level) used by the Python script in pressure generation.
+- `particleTimeSerie.pvd`: Output file for ParaView to load the time series of particle data.
+- `time-energy.csv`: CSV file storing time history of total kinetic energy of the system.
 
-## Hydro-Mechanical Coupling
+## Geometry and Discretization
 
-- Type: One-way
-- Field: `pore-pressure-3d.json`, generated based on a water level at z = 18 m.
-- Usage: Pressure is applied as a body force in the total stress used for equilibrium.
-- The constitutive model continues to use effective stress.
+- A 2D polygonal slope is defined in the x–z plane and extruded in the y-direction over 1 m to create a 3D body.
+- Discretization length: 1.0 m in all directions.
+- Domain bounds: x = [0, 110], z = [0, 35], y = [0, 1].
 
-## How to Run
+## Material Properties
 
-1. (Optional) Generate the pore pressure field:
-   ```
+- Model: Mohr–Coulomb plasticity with strain-softening disabled.
+- Young's modulus: 100 MPa
+- Poisson's ratio: 0.3
+- Cohesion: 15 kPa
+- Friction angle: 35 degrees
+- Density: 2000 kg/m3
+
+## Hydro-Mechanical Coupling Configuration
+
+- Enabled via:
+  ```json
+  "hydro_mechanical_coupling": {
+    "enabled": true,
+    "type": "one_way",
+    "pore_pressure_field": "pore-pressure-3d.json"
+  }
+  ```
+- The pore pressure field is interpreted as acting in compression (positive values), and incorporated as:
+  ```
+  σ_total = σ_effective - p · I
+  ```
+
+## Initial Conditions and Stability
+
+- To ensure realistic deformation behavior, the simulation must begin from a stress-equilibrated state. This is achieved by running a preliminary gravity loading phase with:
+  ```json
+  	"damping":
+	{
+		"type":"kinetic"
+	},
+  "save_state": true
+  ```
+- Then, in the current simulation:
+  ```json
+  "load_state": true
+  ```
+
+## Simulation Execution
+
+1. Generate the pore pressure field:
+   ```bash
    python generate_pore_pressure_3d_from_json.py
    ```
 
 2. Run the simulation:
-   ```
+   ```bash
    ./MPM-Geomechanics slope-failure-coupled.json
    ```
 
-## Results and Visualization
+## Output Visualization
 
-- Results are stored in VTU files per time step.
-- Open `particleTimeSerie.pvd` in ParaView to visualize displacements, pressure, stress, and plastic zones.
+- Open `particleTimeSerie.pvd` in ParaView to visualize displacement, plastic strain, pressure, and stress.
+- Use time navigation to observe the evolution of slope deformation over time.
+
+## Interpretation
+
+- The pressure field reduces the effective stress, potentially leading to earlier or deeper failure surfaces.
+- A comparative run without hydro-mechanical coupling should exhibit smaller deformation, validating the coupling implementation.
 
 ## Notes
 
-- Initial stress conditions must be loaded (`"load_state": true`) to avoid numerical instability.
-- The one-way coupling uses `σ_total = σ_eff - p · I` in force calculations.
+- Damping settings can be adjusted (local or kinetic) for static solution in stress field initiation.
+- Ensure mesh resolution aligns with the pressure field spacing (defined in `config.json`).
+- Energy conservation and convergence can be tracked via `time-energy.csv`.
