@@ -1,7 +1,7 @@
 {
 	"stress_scheme_update":"USL",
 
-	"time":1,
+	"time":5,
 
 	"critical_time_step_multiplier":0.25,
 
