@@ -269,7 +269,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 			// use total stress if hydro-mechanical coupling is enabled
 			if (isOneDirectionHydromechanicalCoupling) {
-				pStress += particles->at(i)->getPorePressure() * Matrix3d::Identity();
+				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
 			}
 
 			// get the particle volume

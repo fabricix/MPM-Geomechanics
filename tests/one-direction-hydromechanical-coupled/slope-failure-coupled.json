@@ -46,11 +46,11 @@
 		{
 			"type":"mohr-coulomb",
 			"id":1,
-			"young":70e6,
+			"young":80e6,
 			"density":2100,
 			"poisson":0.3,
-			"friction":20.0,
-			"cohesion":1.0e3
+			"friction":26.0,
+			"cohesion":1.5e3
 		}
 	},
 
@@ -78,7 +78,7 @@
 
 	"hydro_mechanical_coupling": 
 	{
-  		"enabled": true,
+  		"enabled": false,
   		"type": "one_way",
   		"pore_pressure_field": "pore-pressure-3d.json"
 	}
