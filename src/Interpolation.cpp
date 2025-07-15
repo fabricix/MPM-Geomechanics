@@ -243,6 +243,9 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 	// is two-phase calculations
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
 
+	// check if is one direction hydro-mechanical coupling
+	bool isOneDirectionHydromechanicalCoupling = ModelSetup::getHydroMechOneWayEnabled();
+
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
@@ -262,8 +265,13 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 			// get effective stress of solid
-			const Matrix3d pStress = particles->at(i)->getStress();
-			
+			Matrix3d pStress = particles->at(i)->getStress();
+
+			// use total stress if hydro-mechanical coupling is enabled
+			if (isOneDirectionHydromechanicalCoupling) {
+				pStress += particles->at(i)->getPorePressure() * Matrix3d::Identity();
+			}
+
 			// get the particle volume
 			double pVolume = particles->at(i)->getCurrentVolume();
 

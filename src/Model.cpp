@@ -210,6 +210,11 @@ namespace ModelSetup {
 	/// set hydro-mechanical coupling type
 	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type) { hydroCouplingType = type; }
 
+	/// get hydro-mechanical coupling enabled
+	bool getHydroMechOneWayEnabled() {
+		return hydroCouplingType == HydroMechanicalCouplingType::ONE_WAY;
+	}
+
 }
 
 

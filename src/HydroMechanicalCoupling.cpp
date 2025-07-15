@@ -55,7 +55,6 @@ namespace HydroMechanicalCoupling {
                 if ((particle->getPosition() - pos).norm() < tolerance) {
                     particle->setPorePressure(pressure);
                     assigned = true;
-                    break;
                 }
             }
 

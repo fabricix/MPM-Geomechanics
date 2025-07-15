@@ -250,7 +250,10 @@ namespace ModelSetup {
 	/// \brief Set hydro-mechanical coupling type
 	/// \param[in] type HydroMechanicalCouplingType
 	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type);
-	
+
+	/// \brief Return if one way hydro-mechanical coupling is enabled
+	/// \return True if one-way hydro-mechanical coupling is enabled
+	bool getHydroMechOneWayEnabled();
 };
 
 #endif /* MODEL_H_ */
