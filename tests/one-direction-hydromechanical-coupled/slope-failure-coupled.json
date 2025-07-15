@@ -1,26 +1,19 @@
 {
 	"stress_scheme_update":"USL",
 
-	"shape_function":"GIMP",
-
 	"time":1,
 
-	"time_step":0.001,
+	"critical_time_step_multiplier":0.25,
 
 	"gravity":[0.0,0.0,-9.81],
 
 	"n_threads":10,
 
-	"damping":
-	{
-		"type":"local",
-		"value":0.0
-	},
 
 	"results":
 	{
 		"print":50,
-		"fields":["displacement","material","active","plastic_strain","pressure"]
+		"fields":["displacement","material","active","plastic_strain","pressure","stress"]
 	},
 
 	"mesh":
@@ -46,13 +39,16 @@
 		{
 			"type":"mohr-coulomb",
 			"id":1,
-			"young":80e6,
+			"young":100e6,
 			"density":2100,
 			"poisson":0.3,
-			"friction":26.0,
-			"cohesion":1.5e3
+			"friction":35.0,
+			"cohesion":15e3
 		}
 	},
+
+	"save_state":false,
+	"load_state":true,
 
 	"body":
 	{
@@ -78,7 +74,7 @@
 
 	"hydro_mechanical_coupling": 
 	{
-  		"enabled": false,
+  		"enabled": true,
   		"type": "one_way",
   		"pore_pressure_field": "pore-pressure-3d.json"
 	}

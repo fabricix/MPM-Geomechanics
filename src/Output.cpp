@@ -652,6 +652,18 @@ namespace Output{
 		
 		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
 			std::cout << "  Coupling : One-way" << std::endl;
+
+		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL)
+			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;
+		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION)
+			std::cout << "   Damping : Kinetic" << std::endl;
+
+		if (ModelSetup::getSaveState()) {
+			std::cout << "Save state : Enabled" << std::endl;
+		}
+		if (ModelSetup::getLoadState()) {
+			std::cout << "Load state : Enabled" << std::endl;
+		}
 	}
 
 	void initializeCSVFile(const std::string& filename) {
