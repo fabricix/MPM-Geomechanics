@@ -23,12 +23,12 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -ffast-math -funroll-loops 
 set(CMAKE_BUILD_PARALLEL_LEVEL 4)
 
 # Add include directory
-include_directories(../../inc)
-include_directories(../../inc/Particle)
-include_directories(../../inc/Shape)
-include_directories(../../inc/Body)
-include_directories(../../inc/Materials)
-include_directories(../../inc/Mesh)
+include_directories(${CMAKE_SOURCE_DIR}/inc)
+include_directories(${CMAKE_SOURCE_DIR}/inc/Particle)
+include_directories(${CMAKE_SOURCE_DIR}/inc/Shape)
+include_directories(${CMAKE_SOURCE_DIR}/inc/Body)
+include_directories(${CMAKE_SOURCE_DIR}/inc/Materials)
+include_directories(${CMAKE_SOURCE_DIR}/inc/Mesh)
 
 # Add executables for the MPM-GEOMECHANICS project
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
