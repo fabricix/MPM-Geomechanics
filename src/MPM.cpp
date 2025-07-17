@@ -11,7 +11,7 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
-#include "HydromechanicalCoupling.h"
+#include "HydroMechanicalCoupling.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
