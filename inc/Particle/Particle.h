@@ -265,6 +265,12 @@ public:
 	/// \brief Returns the distance level set function value
 	inline double getDistanceLevelSet() { return this->distanceLevelSet; }
 
+	/// \brief Set pore pressure of the particle
+	void setPorePressure(double p) { porePressure = p; }
+
+	/// \brief Get pore pressure of the particle
+	double getPorePressure() const { return porePressure; }
+
 protected:
 
 	bool active; //!< is particle active
@@ -284,6 +290,8 @@ protected:
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$
+	double porePressure = 0.0; //!< current pore pressure of fluid in particle: \f$p_{p}\f$
+
 	Matrix3d strainIncrement; //!< current particle strain increment: \f$\Delta \epsilon_{ijp}\f$
 	Matrix3d vorticityIncrement; //!< particle vorticity increment: \f$\Delta \Omega _{ijp}\f$
 	Matrix3d deformationGradient; //!< particle deformation gradient: \f$ F_{ijp}=\partial x_i / \partial X_j \f$

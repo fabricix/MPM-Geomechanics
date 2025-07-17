@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\src\Elastic.cpp" />
     <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
     <ClCompile Include="..\..\src\Geometry.cpp" />
+    <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\Integration.cpp" />
     <ClCompile Include="..\..\src\Interpolation.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\..\inc\Contribution.h" />
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
     <ClInclude Include="..\..\inc\Geometry.h" />
+    <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
     <ClInclude Include="..\..\inc\Input.h" />
     <ClInclude Include="..\..\inc\Integration.h" />
     <ClInclude Include="..\..\inc\Interpolation.h" />

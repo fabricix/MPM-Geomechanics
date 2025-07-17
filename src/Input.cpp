@@ -1639,3 +1639,27 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 	
 	return data;
 }
+
+bool Input::getHydroMechCouplingEnabled() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("enabled") &&
+		inputFile["hydro_mechanical_coupling"]["enabled"].is_boolean())
+		return inputFile["hydro_mechanical_coupling"]["enabled"];
+	return false;
+}
+
+bool Input::getHydroMechCouplingOneWay() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("type") &&
+		inputFile["hydro_mechanical_coupling"]["type"].is_string())
+		return inputFile["hydro_mechanical_coupling"]["type"] == "one_way";
+	return false;
+}
+
+std::string Input::getPorePressureFilename() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("pore_pressure_field") &&
+		inputFile["hydro_mechanical_coupling"]["pore_pressure_field"].is_string())
+		return inputFile["hydro_mechanical_coupling"]["pore_pressure_field"];
+	return "";
+}
