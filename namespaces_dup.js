@@ -9,6 +9,11 @@ var namespaces_dup =
       [ "getInsideBox", "namespaceGeometry.html#a1c4b24da05cd6397cdf413095aaa8e09", null ],
       [ "getInsidePolygon", "namespaceGeometry.html#aee3f21b56e681e26dc13ff298064dafc", null ]
     ] ],
+    [ "HydroMechanicalCoupling", "namespaceHydroMechanicalCoupling.html", [
+      [ "computeTotalStress", "namespaceHydroMechanicalCoupling.html#ab95eae22c8e5fb0a2344e840edd3a933", null ],
+      [ "configureOneDirectionCoupling", "namespaceHydroMechanicalCoupling.html#a850651789b771f4a34bf40f69c038847", null ],
+      [ "isOneWayEnabled", "namespaceHydroMechanicalCoupling.html#a0fbbb06aaab24e4a6d26d6efb7ec2c28", null ]
+    ] ],
     [ "Input", "namespaceInput.html", [
       [ "getBodyList", "namespaceInput.html#af0c5c491c357f7774348b7069539cc48", null ],
       [ "getCellDimension", "namespaceInput.html#a9cf34cf90c282614af3b0b9657a73229", null ],
@@ -20,6 +25,8 @@ var namespaces_dup =
       [ "getFileName", "namespaceInput.html#af336494f96212aa307fcd9c00a9b29a1", null ],
       [ "getFrictionCoefficient", "namespaceInput.html#a5e6d39c7c857d3fc55088e2956e8def6", null ],
       [ "getGravity", "namespaceInput.html#a4855a7486e30198da32c4b2c5cc31379", null ],
+      [ "getHydroMechCouplingEnabled", "namespaceInput.html#a5b2048602b6a82bfd8c510d4d48c0256", null ],
+      [ "getHydroMechCouplingOneWay", "namespaceInput.html#a9b349adc98df2b56c394260e211f6efa", null ],
       [ "getInitialPressureBox", "namespaceInput.html#a97422e69d79524393797b06479882bb6", null ],
       [ "getInitialPressureMaterial", "namespaceInput.html#ae05caa1f4428920ef08d379cdc897d2e", null ],
       [ "getInterpolationFunction", "namespaceInput.html#a98455dce0439d9fc5e6b5b44784d9b36", null ],
@@ -32,6 +39,7 @@ var namespaces_dup =
       [ "getNumberPhases", "namespaceInput.html#a07964090a615a8b6ded303e5142dcad0", null ],
       [ "getNumThreads", "namespaceInput.html#a68ff2de4fd7b8ed532c8e6c2d95c29d9", null ],
       [ "getOrigin", "namespaceInput.html#a6552e832fbea32d95b180b34437c53db", null ],
+      [ "getPorePressureFilename", "namespaceInput.html#a594d5fa72e39f5200f37a29e48406c83", null ],
       [ "getPrescribedPressureBox", "namespaceInput.html#a22ce7cc2c2261b0784b944184c7efcb2", null ],
       [ "getPressureBoundaryForceBox", "namespaceInput.html#a938199e6c47c007f37b518b559e2ee43", null ],
       [ "getResultFields", "namespaceInput.html#a5de246ace76db47015f0af32c9e7eea6", null ],
@@ -75,6 +83,10 @@ var namespaces_dup =
         [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092", null ],
         [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5", null ]
       ] ],
+      [ "HydroMechanicalCouplingType", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2", [
+        [ "NONE", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693", null ],
+        [ "ONE_WAY", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ]
+      ] ],
       [ "InterpolationFunctionType", "namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab", [
         [ "LINEAR", "namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd", null ],
         [ "GIMP", "namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6", null ]
@@ -98,6 +110,8 @@ var namespaces_dup =
       [ "getDampingType", "namespaceModelSetup.html#a1ad71c0f7e778689c48d5e5d20e7df8e", null ],
       [ "getGravity", "namespaceModelSetup.html#aeabd837a4e0a3a11ea582bd0d8c115cc", null ],
       [ "getGravityActive", "namespaceModelSetup.html#ab3410f41984790799be0b620566eb230", null ],
+      [ "getHydroMechanicalCouplingType", "namespaceModelSetup.html#a6fc238b7690e1baac965b1e293f56e7f", null ],
+      [ "getHydroMechOneWayEnabled", "namespaceModelSetup.html#a0bfce42397ffc5da1c79e6c951862cb5", null ],
       [ "getInitialSimulationTime", "namespaceModelSetup.html#a33c1ffa724e176734a1cb73726e9e993", null ],
       [ "getInputFile", "namespaceModelSetup.html#af4a92d671d765f250659dfa3b46b6149", null ],
       [ "getInterpolationFunction", "namespaceModelSetup.html#ac4431b2ed54aa538e65f76778f6f0f9f", null ],
@@ -124,6 +138,7 @@ var namespaces_dup =
       [ "setDampingType", "namespaceModelSetup.html#a890814d89d0dee6a3cc19d3bc5fdd061", null ],
       [ "setGravity", "namespaceModelSetup.html#aa79a01e5965244e333c4b0addbfd5c41", null ],
       [ "setGravityActive", "namespaceModelSetup.html#ac24fb8405e6a955ffdca4bdf21a5e928", null ],
+      [ "setHydroMechanicalCouplingType", "namespaceModelSetup.html#a33bc09348a4dd18652f62ee157cf55df", null ],
       [ "setInitialSimulationTime", "namespaceModelSetup.html#aa061b13d6f2ddae675ad8f93c16a016e", null ],
       [ "setInputFile", "namespaceModelSetup.html#a7d38963a1144a022e19623c1060d1a10", null ],
       [ "setInterpolationFunction", "namespaceModelSetup.html#aa15eac02ca5874746008c6a6ea3db0fd", null ],

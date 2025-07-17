@@ -5,6 +5,10 @@ var Model_8h =
       [ "LOCAL", "Model_8h.html#a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092", null ],
       [ "KINETIC_DYNAMIC_RELAXATION", "Model_8h.html#a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5", null ]
     ] ],
+    [ "HydroMechanicalCouplingType", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2", [
+      [ "NONE", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693", null ],
+      [ "ONE_WAY", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ]
+    ] ],
     [ "InterpolationFunctionType", "Model_8h.html#a73c7cfb411f9b3b1062e5fbe694051ab", [
       [ "LINEAR", "Model_8h.html#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd", null ],
       [ "GIMP", "Model_8h.html#a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6", null ]
@@ -28,6 +32,8 @@ var Model_8h =
     [ "getDampingType", "Model_8h.html#a1ad71c0f7e778689c48d5e5d20e7df8e", null ],
     [ "getGravity", "Model_8h.html#aeabd837a4e0a3a11ea582bd0d8c115cc", null ],
     [ "getGravityActive", "Model_8h.html#ab3410f41984790799be0b620566eb230", null ],
+    [ "getHydroMechanicalCouplingType", "Model_8h.html#a6fc238b7690e1baac965b1e293f56e7f", null ],
+    [ "getHydroMechOneWayEnabled", "Model_8h.html#a0bfce42397ffc5da1c79e6c951862cb5", null ],
     [ "getInitialSimulationTime", "Model_8h.html#a33c1ffa724e176734a1cb73726e9e993", null ],
     [ "getInputFile", "Model_8h.html#af4a92d671d765f250659dfa3b46b6149", null ],
     [ "getInterpolationFunction", "Model_8h.html#ac4431b2ed54aa538e65f76778f6f0f9f", null ],
@@ -54,6 +60,7 @@ var Model_8h =
     [ "setDampingType", "Model_8h.html#a890814d89d0dee6a3cc19d3bc5fdd061", null ],
     [ "setGravity", "Model_8h.html#aa79a01e5965244e333c4b0addbfd5c41", null ],
     [ "setGravityActive", "Model_8h.html#ac24fb8405e6a955ffdca4bdf21a5e928", null ],
+    [ "setHydroMechanicalCouplingType", "Model_8h.html#a33bc09348a4dd18652f62ee157cf55df", null ],
     [ "setInitialSimulationTime", "Model_8h.html#aa061b13d6f2ddae675ad8f93c16a016e", null ],
     [ "setInputFile", "Model_8h.html#a7d38963a1144a022e19623c1060d1a10", null ],
     [ "setInterpolationFunction", "Model_8h.html#aa15eac02ca5874746008c6a6ea3db0fd", null ],

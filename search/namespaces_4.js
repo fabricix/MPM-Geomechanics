@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['modelsetup_0',['ModelSetup',['../namespaceModelSetup.html',1,'']]]
+  ['loads_0',['Loads',['../namespaceLoads.html',1,'']]]
 ];

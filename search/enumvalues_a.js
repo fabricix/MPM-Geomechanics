@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sliding_0',['SLIDING',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7',1,'Boundary']]]
+  ['points_0',['POINTS',['../namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dace7a9247762e2a3fcd206c2cf670f53a',1,'Output']]]
 ];

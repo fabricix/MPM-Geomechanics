@@ -132,6 +132,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of interpolation function.  <a href="namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab">More...</a><br /></td></tr>
 <tr class="separator:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674a0b34f56c6cdda86026c8b6ba5ab2" id="r_a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> { <a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693">NONE</a>
+, <a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1">ONE_WAY</a>
+ }</td></tr>
+<tr class="memdesc:a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of hydro-mechanical coupling.  <a href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">More...</a><br /></td></tr>
+<tr class="separator:a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -288,6 +293,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a07f343c6b35e8c341c126bd4b342e213" id="r_a07f343c6b35e8c341c126bd4b342e213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a07f343c6b35e8c341c126bd4b342e213">setTerrainContactActive</a> (bool)</td></tr>
 <tr class="memdesc:a07f343c6b35e8c341c126bd4b342e213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set terrain contact active.  <br /></td></tr>
 <tr class="separator:a07f343c6b35e8c341c126bd4b342e213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc238b7690e1baac965b1e293f56e7f" id="r_a6fc238b7690e1baac965b1e293f56e7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a6fc238b7690e1baac965b1e293f56e7f">getHydroMechanicalCouplingType</a> ()</td></tr>
+<tr class="memdesc:a6fc238b7690e1baac965b1e293f56e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the hydro-mechanical coupling type  <br /></td></tr>
+<tr class="separator:a6fc238b7690e1baac965b1e293f56e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33bc09348a4dd18652f62ee157cf55df" id="r_a33bc09348a4dd18652f62ee157cf55df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a33bc09348a4dd18652f62ee157cf55df">setHydroMechanicalCouplingType</a> (<a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> type)</td></tr>
+<tr class="memdesc:a33bc09348a4dd18652f62ee157cf55df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set hydro-mechanical coupling type.  <br /></td></tr>
+<tr class="separator:a33bc09348a4dd18652f62ee157cf55df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bfce42397ffc5da1c79e6c951862cb5" id="r_a0bfce42397ffc5da1c79e6c951862cb5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a0bfce42397ffc5da1c79e6c951862cb5">getHydroMechOneWayEnabled</a> ()</td></tr>
+<tr class="memdesc:a0bfce42397ffc5da1c79e6c951862cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if one way hydro-mechanical coupling is enabled.  <br /></td></tr>
+<tr class="separator:a0bfce42397ffc5da1c79e6c951862cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contain the configuration variables that defines an specific simulation. </p>
@@ -309,6 +323,34 @@ Functions</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8" name="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8"></a>UNDAMPED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092" name="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092"></a>LOCAL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5" name="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5"></a>KINETIC_DYNAMIC_RELAXATION&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a674a0b34f56c6cdda86026c8b6ba5ab2" name="a674a0b34f56c6cdda86026c8b6ba5ab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a674a0b34f56c6cdda86026c8b6ba5ab2">&#9670;&#160;</a></span>HydroMechanicalCouplingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">ModelSetup::HydroMechanicalCouplingType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines the type of hydro-mechanical coupling. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693" name="a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1" name="a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1"></a>ONE_WAY&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -572,6 +614,46 @@ Functions</h2></td></tr>
 
 <p>Return if gravity is active. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if gravity active </dd></dl>
+
+</div>
+</div>
+<a id="a6fc238b7690e1baac965b1e293f56e7f" name="a6fc238b7690e1baac965b1e293f56e7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc238b7690e1baac965b1e293f56e7f">&#9670;&#160;</a></span>getHydroMechanicalCouplingType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> ModelSetup::getHydroMechanicalCouplingType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the hydro-mechanical coupling type </p>
+<dl class="section return"><dt>Returns</dt><dd>HydroMechanicalCouplingType </dd></dl>
+
+</div>
+</div>
+<a id="a0bfce42397ffc5da1c79e6c951862cb5" name="a0bfce42397ffc5da1c79e6c951862cb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bfce42397ffc5da1c79e6c951862cb5">&#9670;&#160;</a></span>getHydroMechOneWayEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ModelSetup::getHydroMechOneWayEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return if one way hydro-mechanical coupling is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if one-way hydro-mechanical coupling is enabled </dd></dl>
 
 </div>
 </div>
@@ -1136,6 +1218,32 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">is_gravity_activated</td><td>Gravity active </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a33bc09348a4dd18652f62ee157cf55df" name="a33bc09348a4dd18652f62ee157cf55df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33bc09348a4dd18652f62ee157cf55df">&#9670;&#160;</a></span>setHydroMechanicalCouplingType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelSetup::setHydroMechanicalCouplingType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a>&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set hydro-mechanical coupling type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>HydroMechanicalCouplingType </td></tr>
   </table>
   </dd>
 </dl>

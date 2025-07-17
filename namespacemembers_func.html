@@ -110,7 +110,9 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>computeKineticEnergy()&#160;:&#160;<a class="el" href="namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4">DynamicRelaxation</a></li>
+<li>computeTotalStress()&#160;:&#160;<a class="el" href="namespaceHydroMechanicalCoupling.html#ab95eae22c8e5fb0a2344e840edd3a933">HydroMechanicalCoupling</a></li>
 <li>configureNodalPointLoads()&#160;:&#160;<a class="el" href="namespaceLoads.html#a17a7cd5461a3f485a589936ab71da9da">Loads</a></li>
+<li>configureOneDirectionCoupling()&#160;:&#160;<a class="el" href="namespaceHydroMechanicalCoupling.html#a850651789b771f4a34bf40f69c038847">HydroMechanicalCoupling</a></li>
 <li>configureResultFiels()&#160;:&#160;<a class="el" href="namespaceOutput.html#a53978f5e750be3407e4386574952b099">Output</a></li>
 <li>contributionNodes()&#160;:&#160;<a class="el" href="namespaceUpdate.html#ac4eb098fb4c61f394ab338f8aa43d546">Update</a></li>
 </ul>
@@ -140,6 +142,10 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>getFrictionCoefficient()&#160;:&#160;<a class="el" href="namespaceInput.html#a5e6d39c7c857d3fc55088e2956e8def6">Input</a></li>
 <li>getGravity()&#160;:&#160;<a class="el" href="namespaceInput.html#a4855a7486e30198da32c4b2c5cc31379">Input</a>, <a class="el" href="namespaceModelSetup.html#aeabd837a4e0a3a11ea582bd0d8c115cc">ModelSetup</a></li>
 <li>getGravityActive()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#ab3410f41984790799be0b620566eb230">ModelSetup</a></li>
+<li>getHydroMechanicalCouplingType()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#a6fc238b7690e1baac965b1e293f56e7f">ModelSetup</a></li>
+<li>getHydroMechCouplingEnabled()&#160;:&#160;<a class="el" href="namespaceInput.html#a5b2048602b6a82bfd8c510d4d48c0256">Input</a></li>
+<li>getHydroMechCouplingOneWay()&#160;:&#160;<a class="el" href="namespaceInput.html#a9b349adc98df2b56c394260e211f6efa">Input</a></li>
+<li>getHydroMechOneWayEnabled()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#a0bfce42397ffc5da1c79e6c951862cb5">ModelSetup</a></li>
 <li>getInitialPressureBox()&#160;:&#160;<a class="el" href="namespaceInput.html#a97422e69d79524393797b06479882bb6">Input</a></li>
 <li>getInitialPressureMaterial()&#160;:&#160;<a class="el" href="namespaceInput.html#ae05caa1f4428920ef08d379cdc897d2e">Input</a></li>
 <li>getInitialSimulationTime()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#a33c1ffa724e176734a1cb73726e9e993">ModelSetup</a></li>
@@ -159,6 +165,7 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>getNumberPhases()&#160;:&#160;<a class="el" href="namespaceInput.html#a07964090a615a8b6ded303e5142dcad0">Input</a></li>
 <li>getNumThreads()&#160;:&#160;<a class="el" href="namespaceInput.html#a68ff2de4fd7b8ed532c8e6c2d95c29d9">Input</a></li>
 <li>getOrigin()&#160;:&#160;<a class="el" href="namespaceInput.html#a6552e832fbea32d95b180b34437c53db">Input</a></li>
+<li>getPorePressureFilename()&#160;:&#160;<a class="el" href="namespaceInput.html#a594d5fa72e39f5200f37a29e48406c83">Input</a></li>
 <li>getPrescribedPressureBox()&#160;:&#160;<a class="el" href="namespaceInput.html#a22ce7cc2c2261b0784b944184c7efcb2">Input</a></li>
 <li>getPressureBoundaryForceBox()&#160;:&#160;<a class="el" href="namespaceInput.html#a938199e6c47c007f37b518b559e2ee43">Input</a></li>
 <li>getResultFields()&#160;:&#160;<a class="el" href="namespaceInput.html#a5de246ace76db47015f0af32c9e7eea6">Input</a></li>
@@ -187,6 +194,7 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>initFieldsKeyWords()&#160;:&#160;<a class="el" href="namespaceOutput.html#a18bf51a63ec8982f003850dc841f6798">Output</a></li>
 <li>interpolateVector()&#160;:&#160;<a class="el" href="namespaceInterpolation.html#acf4f657fde41c48336f1d5030cd63958">Interpolation</a></li>
 <li>isFieldRequired()&#160;:&#160;<a class="el" href="namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a">Output</a></li>
+<li>isOneWayEnabled()&#160;:&#160;<a class="el" href="namespaceHydroMechanicalCoupling.html#a0fbbb06aaab24e4a6d26d6efb7ec2c28">HydroMechanicalCoupling</a></li>
 </ul>
 
 
@@ -247,6 +255,7 @@ $(document).ready(function(){initNavTree('namespacemembers_func.html',''); initR
 <li>setDampingType()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#a890814d89d0dee6a3cc19d3bc5fdd061">ModelSetup</a></li>
 <li>setGravity()&#160;:&#160;<a class="el" href="namespaceLoads.html#a1a2299651bd04336c8233e10785aca1b">Loads</a>, <a class="el" href="namespaceModelSetup.html#aa79a01e5965244e333c4b0addbfd5c41">ModelSetup</a></li>
 <li>setGravityActive()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#ac24fb8405e6a955ffdca4bdf21a5e928">ModelSetup</a></li>
+<li>setHydroMechanicalCouplingType()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#a33bc09348a4dd18652f62ee157cf55df">ModelSetup</a></li>
 <li>setInitialPorePressureBox()&#160;:&#160;<a class="el" href="namespaceLoads.html#ab69a7f18bdaf04c6fd6197f465ac9446">Loads</a></li>
 <li>setInitialPorePressureMaterial()&#160;:&#160;<a class="el" href="namespaceLoads.html#ab43ba822ff0a2657155f8819db1a36b8">Loads</a></li>
 <li>setInitialSimulationTime()&#160;:&#160;<a class="el" href="namespaceModelSetup.html#aa061b13d6f2ddae675ad8f93c16a016e">ModelSetup</a></li>

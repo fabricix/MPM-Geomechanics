@@ -220,6 +220,15 @@ Functions</h2></td></tr>
 <tr class="memitem:adb493f4d784c0a0d1a735b6b067272af" id="r_adb493f4d784c0a0d1a735b6b067272af"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#adb493f4d784c0a0d1a735b6b067272af">getDistanceThreshold</a> ()</td></tr>
 <tr class="memdesc:adb493f4d784c0a0d1a735b6b067272af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the distance threshold for contact detection.  <br /></td></tr>
 <tr class="separator:adb493f4d784c0a0d1a735b6b067272af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b2048602b6a82bfd8c510d4d48c0256" id="r_a5b2048602b6a82bfd8c510d4d48c0256"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a5b2048602b6a82bfd8c510d4d48c0256">getHydroMechCouplingEnabled</a> ()</td></tr>
+<tr class="memdesc:a5b2048602b6a82bfd8c510d4d48c0256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the hydro-mechanical coupling enabled.  <br /></td></tr>
+<tr class="separator:a5b2048602b6a82bfd8c510d4d48c0256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b349adc98df2b56c394260e211f6efa" id="r_a9b349adc98df2b56c394260e211f6efa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a9b349adc98df2b56c394260e211f6efa">getHydroMechCouplingOneWay</a> ()</td></tr>
+<tr class="memdesc:a9b349adc98df2b56c394260e211f6efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the hydro-mechanical coupling type.  <br /></td></tr>
+<tr class="separator:a9b349adc98df2b56c394260e211f6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a594d5fa72e39f5200f37a29e48406c83" id="r_a594d5fa72e39f5200f37a29e48406c83"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceInput.html#a594d5fa72e39f5200f37a29e48406c83">getPorePressureFilename</a> ()</td></tr>
+<tr class="memdesc:a594d5fa72e39f5200f37a29e48406c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the pore pressure filename.  <br /></td></tr>
+<tr class="separator:a594d5fa72e39f5200f37a29e48406c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Operations to read the input file. </p>
@@ -918,6 +927,46 @@ Save/Load States</h2>
 
 </div>
 </div>
+<a id="a5b2048602b6a82bfd8c510d4d48c0256" name="a5b2048602b6a82bfd8c510d4d48c0256"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b2048602b6a82bfd8c510d4d48c0256">&#9670;&#160;</a></span>getHydroMechCouplingEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Input::getHydroMechCouplingEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the hydro-mechanical coupling enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>hydro_mech_coupling_enabled Hydro-mechanical coupling enabled </dd></dl>
+
+</div>
+</div>
+<a id="a9b349adc98df2b56c394260e211f6efa" name="a9b349adc98df2b56c394260e211f6efa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b349adc98df2b56c394260e211f6efa">&#9670;&#160;</a></span>getHydroMechCouplingOneWay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Input::getHydroMechCouplingOneWay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the hydro-mechanical coupling type. </p>
+<dl class="section return"><dt>Returns</dt><dd>hydro_mech_coupling_type Hydro-mechanical coupling type </dd></dl>
+
+</div>
+</div>
 <a id="a97422e69d79524393797b06479882bb6" name="a97422e69d79524393797b06479882bb6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97422e69d79524393797b06479882bb6">&#9670;&#160;</a></span>getInitialPressureBox()</h2>
 
@@ -1156,6 +1205,26 @@ Save/Load States</h2>
 
 <p>Return the origin of coordinates. </p>
 <dl class="section return"><dt>Returns</dt><dd>Coordinates of the origin of the mesh </dd></dl>
+
+</div>
+</div>
+<a id="a594d5fa72e39f5200f37a29e48406c83" name="a594d5fa72e39f5200f37a29e48406c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a594d5fa72e39f5200f37a29e48406c83">&#9670;&#160;</a></span>getPorePressureFilename()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Input::getPorePressureFilename </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the pore pressure filename. </p>
+<dl class="section return"><dt>Returns</dt><dd>pore_pressure_filename Pore pressure filename </dd></dl>
 
 </div>
 </div>

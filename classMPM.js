@@ -11,6 +11,7 @@ var classMPM =
     [ "saveState", "classMPM.html#a98bc1e242283425dc98917b2b6b9e293", null ],
     [ "setInterpolationFunctions", "classMPM.html#a7e5459529a0fe2176c5fd4aa3a0aae00", null ],
     [ "setNumberPhasesInSimulation", "classMPM.html#abbd615b24e521dc26541952980268878", null ],
+    [ "setOneDirectionHydromechanicalCoupling", "classMPM.html#a8ba4971522801b49708aabf5c2517498", null ],
     [ "setSeismicAnalysis", "classMPM.html#a6474fef27ebaa5a512aad25198287f4d", null ],
     [ "setSimulationTime", "classMPM.html#a51fb0182cdc88b8228a71cfa74660b7b", null ],
     [ "setSolver", "classMPM.html#a6aa324b691b474ab77d897ff9b9b5145", null ],

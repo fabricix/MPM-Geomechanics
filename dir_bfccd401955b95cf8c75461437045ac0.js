@@ -11,6 +11,7 @@ var dir_bfccd401955b95cf8c75461437045ac0 =
     [ "Contribution.h", "Contribution_8h.html", "Contribution_8h" ],
     [ "DynamicRelaxation.h", "DynamicRelaxation_8h.html", "DynamicRelaxation_8h" ],
     [ "Geometry.h", "Geometry_8h.html", "Geometry_8h" ],
+    [ "HydroMechanicalCoupling.h", "HydroMechanicalCoupling_8h.html", "HydroMechanicalCoupling_8h" ],
     [ "Input.h", "Input_8h.html", "Input_8h" ],
     [ "Integration.h", "Integration_8h.html", "Integration_8h" ],
     [ "Interpolation.h", "Interpolation_8h.html", "Interpolation_8h" ],
