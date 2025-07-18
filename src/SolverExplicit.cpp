@@ -130,4 +130,12 @@ void SolverExplicit::Solve()
 	// Write results
 	Output::writeGrid(mesh, Output::CELLS);
 	Output::writeResultsSeries();
+	
+	if (useContact && useSeismic)
+	{
+		Output::writeSTLMesh(terrainContact->getSTLMesh(), "stl_mesh_after_sismo.vtu");
+		
+		std::cout << "Seismic displacement applied to STL mesh: " 
+		          << terrainContact->getAccumulatedDisplacement().transpose() << std::endl;
+	}
 }

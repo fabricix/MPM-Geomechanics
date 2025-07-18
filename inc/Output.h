@@ -5,6 +5,7 @@
 #define OUTPUT_H_
 
 #include "Mesh/Mesh.h"
+#include "Mesh/STLReader.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
 
@@ -71,6 +72,10 @@ namespace Output {
 	/// \brief Print elapsed time
 	///
 	void printElapsedTime();
+
+	/// \brief Write the mesh of the STL file
+	/// \param[in] stlMesh STL mesh reference
+	void writeSTLMesh(const STLReader* stlMesh, const std::string& filename = "stl_mesh.vtu");
 }
 
 #endif /* OUTPUT_H_ */

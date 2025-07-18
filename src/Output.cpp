@@ -11,7 +11,7 @@
 #endif
 
 #include "Output.h"
-#include <DynamicRelaxation.h>
+#include "DynamicRelaxation.h"
 
 #include <iostream>
 using std::cout;
@@ -686,4 +686,75 @@ namespace Output{
 		std::cout << "\nElapsed time: " << hours.count() << " h, " << minutes.count() << " m, " << std::fixed << std::setprecision(2) << seconds << " s" << std::endl;
 		farewellScreen();
 	}
+
+	void writeSTLMesh(const STLReader* stlMesh, const std::string& filename) {
+		
+        // Definir endian
+        if (Folders::edian == "") {
+            defineEdian();
+        }
+
+        // Crear carpeta grid si es necesario
+        if (!Folders::gridFolderExist) {
+            createGridFolder();
+        }
+
+        // Abrir archivo
+        std::ofstream stlFile;
+        stlFile.open(Folders::gridFolderName + "/" + filename);
+        stlFile.precision(6);
+
+        const auto& triangles = stlMesh->getTriangles();
+        int nPoints = static_cast<int>(triangles.size() * 3);
+        int nCells = static_cast<int>(triangles.size());
+
+        // Cabecera
+        stlFile << "<?xml version=\"1.0\"?>\n";
+        stlFile << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""
+                << Folders::edian.c_str() << "\">\n";
+        stlFile << "<UnstructuredGrid>\n";
+        stlFile << "<Piece NumberOfPoints=\"" << nPoints << "\" NumberOfCells=\"" << nCells << "\">\n";
+
+        // Puntos
+        stlFile << "<Points>\n";
+        stlFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+        for (const auto& tri : triangles) {
+            auto v1 = tri.getVertex1();
+            auto v2 = tri.getVertex2();
+            auto v3 = tri.getVertex3();
+            stlFile << std::scientific << v1.x() << " " << v1.y() << " " << v1.z() << "\n";
+            stlFile << std::scientific << v2.x() << " " << v2.y() << " " << v2.z() << "\n";
+            stlFile << std::scientific << v3.x() << " " << v3.y() << " " << v3.z() << "\n";
+        }
+        stlFile << "</DataArray>\n";
+        stlFile << "</Points>\n";
+
+        // Celdas
+        stlFile << "<Cells>\n";
+        stlFile << "<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
+        for (int i = 0; i < nCells; ++i) {
+            stlFile << i * 3 << " " << i * 3 + 1 << " " << i * 3 + 2 << "\n";
+        }
+        stlFile << "</DataArray>\n";
+
+        stlFile << "<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
+        for (int i = 0; i < nCells; ++i) {
+            stlFile << (i + 1) * 3 << "\n";
+        }
+        stlFile << "</DataArray>\n";
+
+        stlFile << "<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+        for (int i = 0; i < nCells; ++i) {
+            stlFile << 5 << "\n"; // 5 = VTK_TRIANGLE
+        }
+        stlFile << "</DataArray>\n";
+        stlFile << "</Cells>\n";
+
+        // Finalizar
+        stlFile << "</Piece>\n";
+        stlFile << "</UnstructuredGrid>\n";
+        stlFile << "</VTKFile>\n";
+
+        stlFile.close();
+    }
 }

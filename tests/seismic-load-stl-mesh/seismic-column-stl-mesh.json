@@ -1,11 +1,9 @@
 {
-  "stress_scheme_update":"USL",
+  "stress_scheme_update":"MUSL",
 
-  "shape_function":"GIMP",
+  "time":7,
 
-  "time":10,
-
-  "time_step":0.0005,
+  "critical_time_step_multiplier":0.15,
 
   "gravity":[0.0,0.0,-9.81],
 
@@ -38,7 +36,7 @@
   "active":true,
   "stl_mesh":"terrain_mesh.stl",
   "friction":0.25,
-  "distance_threshold":2.0
+  "distance_threshold":1.0
 },
 
   "material":
@@ -47,7 +45,7 @@
     {
       "type":"elastic",
       "id":1,
-      "young":10e6,
+      "young":50e6,
       "density":2500,
       "poisson":0.25
     }
