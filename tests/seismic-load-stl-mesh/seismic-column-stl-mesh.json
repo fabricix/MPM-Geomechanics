@@ -1,0 +1,68 @@
+{
+  "stress_scheme_update":"USL",
+
+  "shape_function":"GIMP",
+
+  "time":10,
+
+  "time_step":0.0005,
+
+  "gravity":[0.0,0.0,-9.81],
+
+  "n_threads":1,
+
+  "results":
+  {
+    "print":100,
+    "fields":["id","displacement","velocity","material","active","body"]
+  },
+
+  "n_phases":1,
+
+  "mesh":
+  { 
+    "cells_dimension":[1,1,1],
+    "cells_number":[20,10,15],
+    "origin":[0,0,0]
+
+  },
+
+  "earthquake": {
+  "active": true,
+  "file": "base_acceleration_scaled.csv",
+  "header": true
+},
+
+"terrain_contact":
+{
+  "active":true,
+  "stl_mesh":"terrain_mesh.stl",
+  "friction":0.25,
+  "distance_threshold":2.0
+},
+
+  "material":
+  {
+    "elastic_1":
+    {
+      "type":"elastic",
+      "id":1,
+      "young":10e6,
+      "density":2500,
+      "poisson":0.25
+    }
+ },
+
+  "body":
+  {
+    "columns_1":
+    {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[8,4,5],
+      "point_p2":[10,6,8],
+      "material_id":1
+    }
+
+    }
+  }

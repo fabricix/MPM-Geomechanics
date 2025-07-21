@@ -9,6 +9,7 @@
 #include "Output.h"
 #include "DynamicRelaxation.h"
 #include "TerrainContact.h"
+#include "Seismic.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
 
@@ -21,7 +22,9 @@ void SolverExplicit::Solve()
 	double iTime = 0.0;
 	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
-	bool useContact = ModelSetup::getTerrainContactActive();
+	bool useSTLContact = ModelSetup::getTerrainContactActive();
+	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysis();
+
 
 	// Solve in time
 	while (iTime < time)
@@ -42,6 +45,11 @@ void SolverExplicit::Solve()
 
 		// Step 2: Apply boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
+
+		// Step 2.1: Apply seismic velocity to marked nodes
+		if (useSTLContact && terrainContact){
+			Seismic::applySeismicVelocity(iTime, dt, mesh);
+		}
 
 		// Step 3.1: Interpolate internal and external force from particles to nodes
 		#pragma omp parallel sections num_threads(2)
@@ -66,8 +74,7 @@ void SolverExplicit::Solve()
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
-		if (useContact)
-		{
+		if (useSTLContact){
 			terrainContact->apply(mesh, particles, dt);
 		}
 

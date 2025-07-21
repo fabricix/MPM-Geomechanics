@@ -12,6 +12,7 @@
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "HydroMechanicalCoupling.h"
+#include "Seismic.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -192,6 +193,21 @@ void MPM::setupTerrainContact()
 		
 		// compute distance level set function
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
+
+		// mark seismic nodes for STL seismic loading
+		if (ModelSetup::getSeismicAnalysis() && terrainContact != nullptr)
+		{
+	    	double epsilon = 0.25 * mesh.getCellDimension().mean();
+    		
+			// mark seismic nodes based on distance from level set
+			// this will mark nodes that are close to the terrain contact surface
+			// and will be used to apply seismic loading in the seismic analysis
+			Seismic::markSeismicNodes(epsilon, &mesh);
+
+			// disable Zo earthquake treatment for seismic nodes
+			mesh.setRestriction(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+		}
+
 	}
 }
 

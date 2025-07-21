@@ -34,4 +34,6 @@ namespace Seismic
     void setSeismicAnalysis(const SeismicAnalysis& info); // set seismic analysis information
     void applySeismicVelocity(double currentTime, double dt, Mesh* mesh); // apply seismic velocity to nodes
     void markSeismicNodes(double epsilon, Mesh* mesh); // mark seismic nodes based on distance from level set
+    const std::vector<int>& getSeismicNodeIndices(); // get indices of seismic nodes
+    bool isSeismicNode(int nodeId); // check if a node is a seismic node
 }

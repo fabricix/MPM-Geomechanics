@@ -69,7 +69,7 @@ namespace Seismic
     }
 
     // check if a node is a seismic node
-    inline bool isSeismicNode(int nodeId) {
+    bool isSeismicNode(int nodeId) {
         return seismicNodeSet.count(nodeId) > 0;
     }
 
