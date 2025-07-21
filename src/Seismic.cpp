@@ -22,6 +22,9 @@ namespace Seismic
     // Get seismic analysis information
     SeismicAnalysis& getSeismicAnalysis() { return seismic_analysis; }
 
+    // Get accumulated velocity
+    Eigen::Vector3d& getAccumulatedVelocity() { return accumulatedVelocity; }
+
     // Set seismic analysis information
     void setSeismicAnalysis(const SeismicAnalysis& info) 
     { 

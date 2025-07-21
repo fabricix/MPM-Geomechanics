@@ -36,4 +36,5 @@ namespace Seismic
     void markSeismicNodes(double epsilon, Mesh* mesh); // mark seismic nodes based on distance from level set
     const std::vector<int>& getSeismicNodeIndices(); // get indices of seismic nodes
     bool isSeismicNode(int nodeId); // check if a node is a seismic node
+    Eigen::Vector3d& getAccumulatedVelocity(); // get accumulated velocity
 }
