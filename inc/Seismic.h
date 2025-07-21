@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "Mesh/Mesh.h"
+
 #include <Eigen/Dense>
 #include <vector>
 #include <string>
@@ -17,17 +19,19 @@ struct SeismicData
     std::vector<Eigen::Vector3d> acceleration;
 };
 
-struct SeismicAnalysis {
+struct SeismicAnalysis 
+{
 	bool isActive = false;
-	std::string filename = "";
 	bool hasHeader = true;
+	std::string filename = "";
 };
 
 namespace Seismic
 {
     void setSeismicData(); // set acceleration data from file
     SeismicData& getSeismicData(); // get seismic acceleration data
-
-    SeismicAnalysis& getSeismicAnalysis();
-    void setSeismicAnalysis(const SeismicAnalysis& info);
+    SeismicAnalysis& getSeismicAnalysis(); // get seismic analysis information
+    void setSeismicAnalysis(const SeismicAnalysis& info); // set seismic analysis information
+    void applySeismicVelocity(double currentTime, double dt, Mesh* mesh); // apply seismic velocity to nodes
+    void markSeismicNodes(double epsilon, Mesh* mesh); // mark seismic nodes based on distance from level set
 }
