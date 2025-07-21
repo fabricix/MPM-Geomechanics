@@ -1,11 +1,9 @@
 {
-  "stress_scheme_update":"USL",
-
-  "shape_function":"GIMP",
+  "stress_scheme_update":"MUSL",
 
   "time":10,
 
-  "time_step":0.0005,
+  "time_step_multiplier":0.2,
 
   "gravity":[0.0,0.0,-9.81],
 
@@ -37,7 +35,7 @@
 {
   "active":true,
   "stl_mesh":"terrain_mesh.stl",
-  "friction":0.25,
+  "friction":0.1,
   "distance_threshold":2.0
 },
 
