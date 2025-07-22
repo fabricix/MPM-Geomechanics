@@ -10,8 +10,18 @@
 #include <string>
 
 /**
- * @brief Seismic data structure to manage acceleration and velocity of an earthquake record.
- * 
+ * @struct SeismicData
+ * @brief Stores seismic time series data.
+ *
+ * This structure contains the time steps and 3D acceleration values
+ * for a seismic record.
+ *
+ * @var SeismicData::time
+ *   Vector of time values (s).
+ *
+ * @var SeismicData::acceleration
+ *   Vector of 3D acceleration values (m/s2) for each time step.
+ *
  */
 struct SeismicData
 {
@@ -19,6 +29,18 @@ struct SeismicData
     std::vector<Eigen::Vector3d> acceleration;
 };
 
+/**
+ * @struct SeismicAnalysis
+ * @brief Structure to hold seismic analysis information.
+ * 
+ * This structure contains information about whether seismic analysis is active,
+ * whether the seismic data file has a header, and the filename of the seismic data.
+ * 
+ * @var SeismicAnalysis::isActive
+ *   Boolean indicating if seismic analysis is active.
+ * @var SeismicAnalysis::hasHeader
+ *   Boolean indicating if the seismic data file has a header.
+ */
 struct SeismicAnalysis 
 {
 	bool isActive = false;
@@ -28,7 +50,7 @@ struct SeismicAnalysis
 
 namespace Seismic
 {
-    void setSeismicData(); // set acceleration data from file
+    void setSeismicData();
     SeismicData& getSeismicData(); // get seismic acceleration data
     SeismicAnalysis& getSeismicAnalysis(); // get seismic analysis information
     void setSeismicAnalysis(const SeismicAnalysis& info); // set seismic analysis information

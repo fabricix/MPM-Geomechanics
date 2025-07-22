@@ -1602,42 +1602,32 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 	}
 
 	std::string line;
-
 	// ignore headers if we have ones
 	if (hasHeader && std::getline(file, line)) {
-		// headers manipulations if needed 
+		// headers manipulations if needed
 	}
 
-	while (std::getline(file, line)) {
-	
-		std::stringstream ss(line);
-		std::string item;
-		double t;
-		Eigen::Vector3d acc(0.0, 0.0, 0.0);
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
 
-		// time
-		if (!std::getline(ss, item, ',')) continue;
-		t = std::stod(item);
+        // replace commas and tabs with spaces
+        std::replace(line.begin(), line.end(), ',', ' ');
+        std::replace(line.begin(), line.end(), '\t', ' ');
+		std::replace(line.begin(), line.end(), ';', ' ');
 
-		// ax
-		if (!std::getline(ss, item, ',')) continue;
-		acc.x() = std::stod(item);
+        // use istringstream to parse the line with spaces
+        std::istringstream ss(line);
+        double t, ax, ay, az;
 
-		// ay
-		if (!std::getline(ss, item, ',')) continue;
-		acc.y() = std::stod(item);
+		// if the line does not have almost 4 values, skip it
+        if (!(ss >> t >> ax >> ay >> az)) continue;
 
-		// az
-		if (!std::getline(ss, item, ',')) continue;
-		acc.z() = std::stod(item);
+        data.time.push_back(t);
+        data.acceleration.push_back(Eigen::Vector3d(ax, ay, az));
+    }
 
-		data.time.push_back(t);
-		data.acceleration.push_back(acc);
-	}
-
-	file.close();
-	
-	return data;
+    file.close();
+    return data;
 }
 
 bool Input::getHydroMechCouplingEnabled() {
