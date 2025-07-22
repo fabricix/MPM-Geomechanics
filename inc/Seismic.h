@@ -50,13 +50,64 @@ struct SeismicAnalysis
 
 namespace Seismic
 {
+    /**
+     * @brief Loads seismic data from the file specified in the model configuration.
+     *
+     * This function reads the seismic input file defined in the JSON configuration
+     * and stores the time and acceleration data into the global `SeismicData` structure.
+     */
     void setSeismicData();
-    SeismicData& getSeismicData(); // get seismic acceleration data
-    SeismicAnalysis& getSeismicAnalysis(); // get seismic analysis information
-    void setSeismicAnalysis(const SeismicAnalysis& info); // set seismic analysis information
-    void applySeismicVelocity(double currentTime, double dt, Mesh* mesh); // apply seismic velocity to nodes
-    void markSeismicNodes(double epsilon, Mesh* mesh); // mark seismic nodes based on distance from level set
-    const std::vector<int>& getSeismicNodeIndices(); // get indices of seismic nodes
-    bool isSeismicNode(int nodeId); // check if a node is a seismic node
-    Eigen::Vector3d& getAccumulatedVelocity(); // get accumulated velocity
+
+    /**
+     * @brief Provides access to the loaded seismic data.
+     * @return SeismicData& Reference to the seismic data structure.
+     */
+    SeismicData& getSeismicData();
+    
+    /**
+     * @brief Provides access to the current seismic analysis parameters.
+     * @return SeismicAnalysis& Reference to seismic analysis information.
+     */
+    SeismicAnalysis& getSeismicAnalysis();
+    
+    /**
+     * @brief Sets the seismic analysis configuration.
+     * @param info Seismic analysis information to set.
+     */
+    void setSeismicAnalysis(const SeismicAnalysis& info);
+    
+    /**
+     * @brief Applies seismic velocity to the marked seismic nodes.
+     *
+     * @param currentTime Current simulation time (s).
+     * @param dt Simulation time step (s).
+     * @param mesh Pointer to the Eulerian background mesh.
+     */
+    void applySeismicVelocity(double currentTime, double dt, Mesh* mesh);
+    
+    /**
+     * @brief Marks the nodes that will receive seismic loading.
+     * @param epsilon Grid dimension factor threshold to mark nodes as seismic nodes.
+     * @param mesh Pointer to the mesh where nodes are defined.
+     */
+    void markSeismicNodes(double epsilon, Mesh* mesh);
+
+    /**
+     * @brief Returns the list of seismic node indices.
+     * @return const std::vector<int>& Reference to the indices of seismic nodes.
+     */
+    const std::vector<int>& getSeismicNodeIndices();
+    
+    /**
+     * @brief Checks if a node is marked as seismic.
+     * @param nodeId Node index to check.
+     * @return true if the node is a seismic node, false otherwise.
+     */
+    bool isSeismicNode(int nodeId);
+
+    /**
+     * @brief Returns the accumulated seismic velocity.
+     * @return Eigen::Vector3d& Reference to the accumulated velocity vector.
+     */
+    Eigen::Vector3d& getAccumulatedVelocity();
 }
