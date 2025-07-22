@@ -43,9 +43,20 @@ double sum_energy(const std::string& filename)
 
 void executeSimulation()
 {
-  system("..\\CMake\\MPM-Geomechanics.exe test-files\\energy-comparison\\cuboid.json");
+  int response;
+  response = system("..\\CMake\\MPM-Geomechanics.exe test-files\\energy-comparison\\cuboid.json");
 
-  std::cout << "Simulation executed successfully." << std::endl;
+  if (response == 0)
+  {
+    std::cout << "Simulation executed successfully." << std::endl;
+  }
+  else
+  {
+    std::cerr << "Simulation failed with response code: " << response << std::endl;
+    std::cout << "Please check if simulation program exists and try again." << std::endl;
+    FAIL() << "Simulation execution failed.";
+    return;
+  }
 
   string filename = "time-energy.csv";
 
