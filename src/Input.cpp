@@ -904,15 +904,27 @@ vector<string> Input::getGridResultFields()
 			return fields;
 		}
 
-		if (inputFile["results"]["grid_fields"].is_null())
+		if (inputFile["results"]["grid-nodal-results"].is_null())
 		{
 			fields.push_back("all");
 			return fields;
 		}
 
+		if (inputFile["results"]["grid-nodal-results"]["fields"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		if (inputFile["results"]["grid-nodal-results"]["fields"][0] == "none")
+		{
+			fields.push_back("none");
+			return fields;
+		}
+
 		// get all results fields
 		json::iterator it;
-		for (it = inputFile["results"]["grid_fields"].begin();it != inputFile["results"]["grid_fields"].end();it++) {
+		for (it = inputFile["results"]["grid-nodal-results"]["fields"].begin();it != inputFile["results"]["grid-nodal-results"]["fields"].end();it++) {
 
 			if ((*it).is_string()) {
 				fields.push_back(*it);
@@ -946,17 +958,29 @@ vector<string> Input::getResultFields()
 			return fields;
 		}
 
-		if (inputFile["results"]["fields"].is_null())
+		if (inputFile["results"]["material-point-results"].is_null())
 		{
 			fields.push_back("all");
 			return fields;
 		}
 
+		if (inputFile["results"]["material-point-results"]["fields"].is_null())
+		{
+			fields.push_back("all");
+			return fields;
+		}
+
+		if (inputFile["results"]["material-point-results"]["fields"][0] == "none")
+		{
+			fields.push_back("none");
+			return fields;
+		}
+
 		// get all results fields
 		json::iterator it;
-		for( it=inputFile["results"]["fields"].begin();it!=inputFile["results"]["fields"].end();it++){
+		for (it = inputFile["results"]["material-point-results"]["fields"].begin(); it != inputFile["results"]["material-point-results"]["fields"].end(); it++) {
 
-			if ((*it).is_string()){
+			if ((*it).is_string()) {
 				fields.push_back(*it);
 			}
 		}

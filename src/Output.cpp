@@ -52,7 +52,7 @@ namespace Output{
 
 		for (size_t i = 0; i < printFields.size(); ++i) {
 
-			if (printFields.at(i)==ifield || printFields.at(i)=="all" ) {
+			if (printFields.at(i)==ifield || (printFields.at(i)=="all"  && ifield != "none")) {
 
 				return true;
 			}
@@ -64,7 +64,7 @@ namespace Output{
 	{
 		for (size_t i = 0; i < printGridFields.size(); ++i) {
 
-			if (printGridFields.at(i) == ifield || printGridFields.at(i) == "all") {
+			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
 				return true;
 			}
 		}
@@ -91,7 +91,7 @@ namespace Output{
 		string particleFolderName="particles";
 		string particleFileName="particles";
 		string particleFileTimeSerie = "particleTimeSerie";
-		vector<double> particleFilesTime;
+		vector<double> filesTime;
 	}
 
 	void defineEdian(){
@@ -141,6 +141,10 @@ namespace Output{
 	
 	void writeParticles(vector<Particle*>* particles, double time){
 
+		if (isFieldRequired("none")) {
+			return;
+		}
+
 		// define edian
 		if(Folders::edian==""){
 			defineEdian();
@@ -152,11 +156,11 @@ namespace Output{
 		}
 		
 		// add time in loop time vector
-		Folders::particleFilesTime.push_back(time);
+		Folders::filesTime.push_back(time);
 
 		// open particle file
 		ofstream partFile;
-		partFile.open(Folders::particleFolderName+"/"+Folders::particleFileName+"_"+to_string(Folders::particleFilesTime.size())+".vtu");
+		partFile.open(Folders::particleFolderName + "/" + Folders::particleFileName + "_" + to_string(Folders::filesTime.size()) + ".vtu");
 		partFile.precision(4);
 
 		// particle data
@@ -173,13 +177,16 @@ namespace Output{
 		// points
 		partFile<<"<Points>\n";
 		
-		// particle position
-		partFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			Vector3d pos=particles->at(i)->getPosition();
-			partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+		if (isFieldRequired("position")) {
+
+			// particle position
+			partFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				Vector3d pos=particles->at(i)->getPosition();
+				partFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+			}
+			partFile<<"</DataArray>\n";
 		}
-		partFile<<"</DataArray>\n";
 
 		// end points
 		partFile<<"</Points>\n";
@@ -378,6 +385,12 @@ namespace Output{
 
 	void writeGrid(Mesh* mesh, CellType gridType){
 
+		if (isGridFieldRequired("none")) {
+			return;
+		}
+
+		vector<Node*>* inodes = mesh->getNodes();
+
 		// define edian
 		if(Folders::edian==""){
 			defineEdian();
@@ -390,7 +403,7 @@ namespace Output{
 		
 		// open grid file
 		ofstream gridFile;
-		gridFile.open(Folders::gridFolderName + "/" + Folders::gridFileName + "_" + to_string(Folders::particleFilesTime.size()) + ".vtu");
+		gridFile.open(Folders::gridFolderName + "/" + Folders::gridFileName + "_" + to_string(Folders::filesTime.size()) + ".vtu");
 		gridFile.precision(4);
 
 		// mesh data
@@ -409,14 +422,16 @@ namespace Output{
 		// points
 		gridFile<<"<Points>\n";
 		
-		// node position
-		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-		vector<Node*>* inodes = mesh->getNodes();
-		for (int i = 0; i < nPoints; ++i) {
-			Vector3d pos=inodes->at(i)->getCoordinates();
-			gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+		if (isGridFieldRequired("position")) {
+
+			// node position
+			gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				Vector3d pos=inodes->at(i)->getCoordinates();
+				gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
+			}
+			gridFile<<"</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
 		// end points
 		gridFile<<"</Points>\n";
@@ -586,9 +601,9 @@ namespace Output{
 		serieFile <<"<?xml version=\"1.0\"?>\n";
 		serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
 		serieFile <<"\t<Collection>\n";
-		for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
+		for (size_t i = 0; i < Folders::filesTime.size(); ++i)
 		{
-			serieFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
+			serieFile << "\t\t<DataSet timestep=\"" << Folders::filesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
 		}
 		serieFile <<"\t</Collection>\n";
 		serieFile << "</VTKFile>\n";
@@ -599,12 +614,12 @@ namespace Output{
 			defineEdian();
 		}
 
-		// create particle folder
-		if (!Folders::particleFolderExist) {
-			createParticleFolder();
+		// create grid folder
+		if (!Folders::gridFolderExist) {
+			createGridFolder();
 		}
 
-		// open particle serie file
+		// open grid serie file
 		ofstream gridSerieFile;
 		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
 
@@ -612,9 +627,9 @@ namespace Output{
 		gridSerieFile << "<?xml version=\"1.0\"?>\n";
 		gridSerieFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
 		gridSerieFile << "\t<Collection>\n";
-		for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
+		for (size_t i = 0; i < Folders::filesTime.size(); ++i)
 		{
-			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::particleFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
+			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::filesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
 		}
 		gridSerieFile << "\t</Collection>\n";
 		gridSerieFile << "</VTKFile>\n";
