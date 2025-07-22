@@ -118,6 +118,9 @@ void SolverExplicitUSL::Solve()
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
 
+		// Compute current kinetic energy
+		DynamicRelaxation::computeKineticEnergy(bodies);
+
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 

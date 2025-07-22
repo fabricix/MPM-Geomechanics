@@ -105,6 +105,9 @@ void SolverExplicit::Solve()
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
+		// Compute current kinetic energy
+		DynamicRelaxation::computeKineticEnergy(bodies);
+
 		// Check for static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 

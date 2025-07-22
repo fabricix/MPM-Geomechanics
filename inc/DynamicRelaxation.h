@@ -6,11 +6,15 @@
 
 #include "Body/Body.h"
 
-namespace DynamicRelaxation {
+namespace DynamicRelaxation
+{
+    double getCurrentKineticEnergy();
 
-    double computeKineticEnergy(vector<Body *> *bodies);
+    void setCurrentKineticEnergy(double energy);
 
-    void setStaticSolution(vector<Body *> *bodies, int loopCounter);
+    void computeKineticEnergy(vector<Body*>* bodies);
+
+    void setStaticSolution(vector<Body*>* bodies, int loopCounter);
 }
 
 #endif /* INC_DYNAMICRELAXATION_H_ */
