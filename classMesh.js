@@ -34,6 +34,7 @@ var classMesh =
     [ "setNumGhosts", "classMesh.html#ac5f36e7a451e8c23f70ab73a8956229f", null ],
     [ "setOrigin", "classMesh.html#a4df57eef87547708b62ebfee04851de3", null ],
     [ "setOrigin", "classMesh.html#a0df5fcedf19720a1b4a3ce568d29215d", null ],
+    [ "setRestriction", "classMesh.html#ac8dadf6b941ca04e26f9e6d4c73a5a2e", null ],
     [ "boundary", "classMesh.html#ae856f697db9b5c61445e64cff311c46a", null ],
     [ "cellDim", "classMesh.html#a548aaa6c3a282e7ae4d358c88286a1f0", null ],
     [ "gridCells", "classMesh.html#aa987a7cfe1bba28dffaf7939bbfb9aa4", null ],

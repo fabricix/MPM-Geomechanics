@@ -21,5 +21,6 @@ var searchData=
   ['and_20numerical_20formulation_18',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
   ['and_20result_20comparison_19',['MPM model and result comparison',['../verification_problems.html#autotoc_md88',1,'']]],
   ['apply_20',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
-  ['are_20placed_20in_20the_20body_21',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
+  ['applyseismicvelocity_21',['applySeismicVelocity',['../namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096',1,'Seismic']]],
+  ['are_20placed_20in_20the_20body_22',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
 ];

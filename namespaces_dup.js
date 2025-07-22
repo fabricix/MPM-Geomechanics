@@ -174,8 +174,13 @@ var namespaces_dup =
       [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ]
     ] ],
     [ "Seismic", "namespaceSeismic.html", [
+      [ "applySeismicVelocity", "namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096", null ],
+      [ "getAccumulatedVelocity", "namespaceSeismic.html#a98f0f3c17a3a660d9728862d00cf902d", null ],
       [ "getSeismicAnalysis", "namespaceSeismic.html#a8d343ec1884b7314fdfa2ea541ad4348", null ],
       [ "getSeismicData", "namespaceSeismic.html#ac0b55a98c66a0ad7335de252c84351cb", null ],
+      [ "getSeismicNodeIndices", "namespaceSeismic.html#a3905e93546db74c37ce46a65af234b24", null ],
+      [ "isSeismicNode", "namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862", null ],
+      [ "markSeismicNodes", "namespaceSeismic.html#a805c3b1846fa1a0597aea59aa4ec3cc4", null ],
       [ "setSeismicAnalysis", "namespaceSeismic.html#a846fa8b8f13c513f02e2c01f554d8524", null ],
       [ "setSeismicData", "namespaceSeismic.html#a243b05a52c5ce884652b7e8b6afb7f78", null ]
     ] ],

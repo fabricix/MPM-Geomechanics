@@ -105,7 +105,8 @@ $(document).ready(function(){initNavTree('Seismic_8h.html',''); initResizable();
   <div class="headertitle"><div class="title">Seismic.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Dense&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="Mesh_8h_source.html">Mesh/Mesh.h</a>&quot;</code><br />
+<code>#include &lt;Eigen/Dense&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -113,13 +114,31 @@ Include dependency graph for Seismic.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="Seismic_8h__incl.png" border="0" usemap="#aSeismic_8h" alt=""/></div>
 <map name="aSeismic_8h" id="aSeismic_8h">
-<area shape="rect" title=" " alt="" coords="121,5,206,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,108,104"/>
-<area shape="poly" title=" " alt="" coords="148,33,87,73,84,69,145,28"/>
-<area shape="rect" title=" " alt="" coords="132,79,195,104"/>
-<area shape="poly" title=" " alt="" coords="166,31,166,65,161,65,161,31"/>
-<area shape="rect" title=" " alt="" coords="219,79,278,104"/>
-<area shape="poly" title=" " alt="" coords="179,29,226,68,223,72,175,33"/>
+<area shape="rect" title=" " alt="" coords="475,5,561,31"/>
+<area shape="rect" href="Mesh_8h.html" title=" " alt="" coords="233,79,341,104"/>
+<area shape="poly" title=" " alt="" coords="482,33,338,77,337,72,480,28"/>
+<area shape="rect" title=" " alt="" coords="392,225,455,251"/>
+<area shape="poly" title=" " alt="" coords="515,32,436,213,432,211,510,30"/>
+<area shape="rect" title=" " alt="" coords="512,79,615,104"/>
+<area shape="poly" title=" " alt="" coords="528,30,551,66,546,69,523,32"/>
+<area shape="rect" title=" " alt="" coords="639,79,698,104"/>
+<area shape="poly" title=" " alt="" coords="543,28,633,70,630,75,541,33"/>
+<area shape="poly" title=" " alt="" coords="325,102,364,120,384,134,400,150,416,180,424,211,418,212,411,182,396,154,380,138,362,125,323,106"/>
+<area shape="rect" title=" " alt="" coords="5,152,132,177"/>
+<area shape="poly" title=" " alt="" coords="253,107,118,150,116,145,251,101"/>
+<area shape="rect" href="Node_8h.html" title=" " alt="" coords="133,225,201,251"/>
+<area shape="poly" title=" " alt="" coords="261,106,228,126,197,154,182,183,174,212,168,211,177,181,193,150,225,121,259,102"/>
+<area shape="rect" href="Boundary_8h.html" title=" " alt="" coords="291,152,385,177"/>
+<area shape="poly" title=" " alt="" coords="298,103,324,139,320,142,294,106"/>
+<area shape="rect" href="Cell_8h.html" title=" " alt="" coords="207,152,266,177"/>
+<area shape="poly" title=" " alt="" coords="281,106,255,142,251,139,277,103"/>
+<area shape="rect" title=" " alt="" coords="121,299,213,324"/>
+<area shape="poly" title=" " alt="" coords="170,251,170,285,165,285,165,251"/>
+<area shape="poly" title=" " alt="" coords="353,175,401,214,397,219,350,179"/>
+<area shape="poly" title=" " alt="" coords="267,175,382,218,380,223,265,180"/>
+<area shape="poly" title=" " alt="" coords="227,180,190,217,186,214,223,176"/>
+<area shape="rect" title=" " alt="" coords="226,225,367,251"/>
+<area shape="poly" title=" " alt="" coords="249,176,280,213,276,217,245,179"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -160,6 +179,16 @@ Functions</h2></td></tr>
 <tr class="separator:a8d343ec1884b7314fdfa2ea541ad4348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846fa8b8f13c513f02e2c01f554d8524" id="r_a846fa8b8f13c513f02e2c01f554d8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a846fa8b8f13c513f02e2c01f554d8524">Seismic::setSeismicAnalysis</a> (const <a class="el" href="structSeismicAnalysis.html">SeismicAnalysis</a> &amp;info)</td></tr>
 <tr class="separator:a846fa8b8f13c513f02e2c01f554d8524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc0527ea27fbfd1f32cfd4efe4a2096" id="r_a8dc0527ea27fbfd1f32cfd4efe4a2096"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096">Seismic::applySeismicVelocity</a> (double currentTime, double dt, <a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="separator:a8dc0527ea27fbfd1f32cfd4efe4a2096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a805c3b1846fa1a0597aea59aa4ec3cc4" id="r_a805c3b1846fa1a0597aea59aa4ec3cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a805c3b1846fa1a0597aea59aa4ec3cc4">Seismic::markSeismicNodes</a> (double epsilon, <a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="separator:a805c3b1846fa1a0597aea59aa4ec3cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3905e93546db74c37ce46a65af234b24" id="r_a3905e93546db74c37ce46a65af234b24"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a3905e93546db74c37ce46a65af234b24">Seismic::getSeismicNodeIndices</a> ()</td></tr>
+<tr class="separator:a3905e93546db74c37ce46a65af234b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8497529ebd0b9c8488dc8afa8574b862" id="r_a8497529ebd0b9c8488dc8afa8574b862"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862">Seismic::isSeismicNode</a> (int nodeId)</td></tr>
+<tr class="separator:a8497529ebd0b9c8488dc8afa8574b862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f0f3c17a3a660d9728862d00cf902d" id="r_a98f0f3c17a3a660d9728862d00cf902d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a98f0f3c17a3a660d9728862d00cf902d">Seismic::getAccumulatedVelocity</a> ()</td></tr>
+<tr class="separator:a98f0f3c17a3a660d9728862d00cf902d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
