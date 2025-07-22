@@ -655,7 +655,7 @@ namespace Output{
     if(iTime==0)
 		csv_file << "time,energy" << "\n";
     
-	csv_file << iTime << "," << ienergy << "\n";
+		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
     
     // Close the file
     csv_file.close();
