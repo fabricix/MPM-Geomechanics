@@ -1,5 +1,5 @@
 var structSeismicData =
 [
-    [ "acceleration", "structSeismicData.html#ad212066f4a4daef83abf2ee2e4f7eb3f", null ],
-    [ "time", "structSeismicData.html#a454f67fe5c48d8d1b1057ce8b951d62c", null ]
+    [ "acceleration", "structSeismicData.html#a7f9f31da739e72449c940225d95b2691", null ],
+    [ "time", "structSeismicData.html#a1e8178d8099e43f31d06f56b7b29adc1", null ]
 ];
