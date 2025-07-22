@@ -154,6 +154,11 @@ public:
     /// X0, Y0, Z0, Xn, Yn and Zn
     void setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions);
 
+    /// \brief Configures the restriction of the boundary nodes
+    /// \param[in] plane The plane to set the restriction
+    /// \param[in] restriction The type of restriction to be applied
+    void setRestriction(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction);
+
     /// \brief Configures the restriction of fluid phase at the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes
     /// X0, Y0, Z0, Xn, Yn and Zn

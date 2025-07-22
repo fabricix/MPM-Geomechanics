@@ -350,6 +350,11 @@ void Mesh::setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions) 
     }
 }
 
+void Mesh::setRestriction(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction) {
+    // setup boundaries;
+	this->boundary.setRestrictions(plane, restriction);
+}
+
 void Mesh::setBoundaryRestrictionsFluid(vector<Boundary::BoundaryType> restrictions) {
 
     // verify if there are restrictions to the six planes

@@ -6,6 +6,7 @@
 #include "limits"
 #include "Contribution.h"
 #include "Particle/Particle.h"
+#include "Seismic.h"
 
 #include <utility>  // std::pair
 
@@ -325,7 +326,14 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
     
     // unused for now
     (void)particles;
-    
+
+    // check if seismic analysis is enabled
+    bool isSeismic = ModelSetup::getSeismicAnalysis();
+
+
+    // get the accumulated velocity from seismic analysis
+    Vector3d v_surface = isSeismic ? Seismic::getAccumulatedVelocity() : Vector3d::Zero(); 
+
     // for all contact pairs
     #pragma omp parallel for shared(particles)
     for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
@@ -339,7 +347,8 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // get the mass and velocity of the particle
         double mass = particle->getMass();
-        Vector3d velocityPredictor = particle->getVelocity();
+
+        Vector3d velocityPredictor = isSeismic ? (particle->getVelocity() - v_surface) : particle->getVelocity();
 
         // calculate the normal velocity v_n = (v_p . e_n) e_n
         double vn_magnitude = velocityPredictor.dot(normal);
@@ -367,6 +376,11 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
         Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
+
+        if (isSeismic) {
+            // if seismic analysis is enabled, add the surface velocity
+            velocityCorrected += v_surface;
+        }
 
         // update the velocity of the particle
         particle->setVelocity(velocityCorrected);
