@@ -29,7 +29,7 @@
 
   "earthquake": {
   "active": true,
-  "file": "base_acceleration.csv",
+  "file": "base_acceleration_space.csv",
   "header": true
 }
 ,
