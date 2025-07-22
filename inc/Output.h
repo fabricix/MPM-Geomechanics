@@ -26,7 +26,7 @@ namespace Output {
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
 	/// \param[in] cell_type_representation Cell type representation Output::CellType
-	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS);
+	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS, double time=0.0);
 	
 	/// \brief Write the particles of the model into a vtu file
 	/// \param[in] particles List containing pointers to particles
@@ -71,7 +71,7 @@ namespace Output {
 
 	/// \brief Write grid results if the step is the step result
 	/// 
-	void writeGridInStep(int resultSteps, Mesh* mesh);
+	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime);
 
 	/// \brief Write the initial state of the simulation
 	/// 

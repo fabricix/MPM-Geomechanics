@@ -122,7 +122,7 @@ void SolverExplicitUSL::Solve()
 
 		// write particles and grid in step
 		Output::writeResultInStep(resultSteps, bodies, iTime);
-		Output::writeGridInStep(resultSteps, mesh);
+		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);
