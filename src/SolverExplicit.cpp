@@ -25,7 +25,6 @@ void SolverExplicit::Solve()
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
 	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysis();
 
-
 	// Solve in time
 	while (iTime < time)
 	{
@@ -47,7 +46,7 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsMomentum(mesh);
 
 		// Step 2.1: Apply seismic velocity to marked nodes
-		if (useSTLContact && terrainContact){
+		if (isSeismicAnalysis && useSTLContact){
 			Seismic::applySeismicVelocity(iTime, dt, mesh);
 		}
 
