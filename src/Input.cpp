@@ -1527,6 +1527,42 @@ bool Input::getTerrainContactActive()
 	}
 }
 
+bool Input::getPenaltyContactActive()
+{
+    try
+    {
+        if (inputFile["terrain_contact"].is_null()) { return false; }
+        if (inputFile["terrain_contact"]["penalty_contact_active"].is_null()) { return false; }
+        if (inputFile["terrain_contact"]["penalty_contact_active"].is_boolean()) {
+            return inputFile["terrain_contact"]["penalty_contact_active"];
+        }
+        throw(0);
+    }
+    catch (...)
+    {
+        Warning::printMessage("Error during reading the penalty_contact keyword in terrain_contact");
+        throw;
+    }
+}
+
+double Input::getPenaltyStiffness()
+{
+    try
+    {
+        if (inputFile["terrain_contact"].is_null()) { return 0.0; }
+        if (inputFile["terrain_contact"]["penalty_stiffness"].is_null()) { return 0.0; }
+        if (inputFile["terrain_contact"]["penalty_stiffness"].is_number()) {
+            return inputFile["terrain_contact"]["penalty_stiffness"];
+        }
+        throw(0);
+    }
+    catch (...)
+    {
+        Warning::printMessage("Error during reading the penalty_stiffness keyword in terrain_contact");
+        throw;
+    }
+}
+
 std::string Input::getSTLMeshFile()
 {
 	try

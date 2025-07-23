@@ -1,9 +1,9 @@
 {
-  "stress_scheme_update":"MUSL",
+  "stress_scheme_update":"USL",
 
   "time":10,
 
-  "critical_time_step_multiplier":0.15,
+  "critical_time_step_multiplier":0.25,
 
   "gravity":[0.0,0.0,-9.81],
 
@@ -23,7 +23,7 @@
 
   },
   "earthquake": {
-    "active": true,
+    "active": false,
     "file": "base_acceleration_scaled.csv",
     "header": true
   },
@@ -33,7 +33,9 @@
     "active":true,
     "stl_mesh":"terrain_mesh.stl",
     "friction":0.1,
-    "distance_threshold":2.5
+    "distance_threshold":2.0,
+    "penalty_stiffness":100e6,
+    "penalty_contact_active": true
   },
 
   "material":

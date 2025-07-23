@@ -208,6 +208,15 @@ void MPM::setupTerrainContact()
 			mesh.setRestriction(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
 		}
 
+		// configure penalty contact method
+		if (Input::getPenaltyContactActive()) {
+			terrainContact->enablePenaltyContact(true);
+			terrainContact->setPenaltyStiffness(Input::getPenaltyStiffness());
+		}
+		else {
+			terrainContact->enablePenaltyContact(false);
+		}	
+
 	}
 }
 
