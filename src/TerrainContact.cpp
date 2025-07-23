@@ -362,15 +362,13 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
         Vector3d fn = - (mass * vn_magnitude / dt) * normal;
         
         // if penalty contact is enabled, apply the penalty force
+        Vector3d f_penalty = Vector3d::Zero();
         if (usePenaltyContact) {
             double penetration = -particle->getDistanceLevelSet();
             if (penetration > 0.0)
             {
                 // calculate the penalty force f_penalty = k * penetration * e_n
-                Vector3d f_penalty = penaltyStiffness * penetration * normal;
-
-                // add the penalty force to the normal force
-                fn += f_penalty;
+                f_penalty = penaltyStiffness * penetration * normal;
             }
         }
 
@@ -388,7 +386,7 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
         }
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
-        Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
+        Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + f_penalty + ft);
 
         if (isSeismic) {
             // if seismic analysis is enabled, add the surface velocity

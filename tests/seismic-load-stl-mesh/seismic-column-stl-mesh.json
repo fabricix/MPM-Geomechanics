@@ -23,7 +23,7 @@
 
   },
   "earthquake": {
-    "active": false,
+    "active": true,
     "file": "base_acceleration_scaled.csv",
     "header": true
   },
