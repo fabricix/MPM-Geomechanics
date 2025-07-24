@@ -3,7 +3,7 @@
 
   "time":10,
 
-  "time_step_multiplier":0.2,
+  "critical_time_step_multiplier":0.2,
 
   "gravity":[0.0,0.0,-9.81],
 
@@ -15,8 +15,6 @@
     "fields":["id","displacement","velocity","material","active","body"]
   },
 
-  "n_phases":1,
-
   "mesh":
   { 
     "cells_dimension":[1,1,1],
@@ -24,20 +22,21 @@
     "origin":[0,0,0]
 
   },
-
   "earthquake": {
-  "active": true,
-  "file": "base_acceleration_scaled.csv",
-  "header": true
-},
+    "active": true,
+    "file": "base_acceleration_scaled.csv",
+    "header": true
+  },
 
-"terrain_contact":
-{
-  "active":true,
-  "stl_mesh":"terrain_mesh.stl",
-  "friction":0.1,
-  "distance_threshold":2.0
-},
+  "terrain_contact":
+  {
+    "active":true,
+    "stl_mesh":"terrain_mesh.stl",
+    "friction":0.1,
+    "distance_threshold":2.5,
+    "penalty_stiffness":100e6,
+    "penalty_contact_active": true
+  },
 
   "material":
   {
@@ -45,7 +44,7 @@
     {
       "type":"elastic",
       "id":1,
-      "young":10e6,
+      "young":50e6,
       "density":2500,
       "poisson":0.25
     }

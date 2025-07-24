@@ -360,7 +360,19 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // calculate the normal force f_n = -m_p * vn_p / dt * e_n
         Vector3d fn = - (mass * vn_magnitude / dt) * normal;
-
+        
+        // if penalty contact is enabled, apply the penalty force
+        if (usePenaltyContact) {
+            double penetration = -particle->getDistanceLevelSet();
+            if (penetration > 0.0)
+            {
+                // calculate the penalty force f_penalty = k * penetration * e_n
+                Vector3d f_penalty = penaltyStiffness * penetration * normal;
+                // apply the penalty force to the normal force
+                fn += f_penalty;
+            }
+        }
+        
         // calculate tangential force f_t = -m_p (v_p - vn) / dt
         Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
 
@@ -403,4 +415,12 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
 
     // compute the contact forces and correct velocities
     computeContactForces(particles, dt);
+}
+
+void TerrainContact::enablePenaltyContact(bool enable) {
+    usePenaltyContact = enable;
+}
+
+void TerrainContact::setPenaltyStiffness(double k) {
+    penaltyStiffness = k;
 }

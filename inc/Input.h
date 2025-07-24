@@ -636,7 +636,15 @@ namespace Input {
 	/// \brief Return the terrain contact active
 	bool getTerrainContactActive();
 
-	/// \brief Return if the STL mesh file should be written
+	/// \brief Return if the penalty contact is active
+	/// \return penalty_contact_active Penalty contact active
+    bool getPenaltyContactActive();
+
+	/// \brief Return the penalty stiffness
+	/// \return penalty_stiffness Penalty stiffness
+    double getPenaltyStiffness();	
+
+    /// \brief Return if the STL mesh file should be written
 	bool getWriteSTLMeshFile();
 
 	/// \brief Return the distance threshold for contact detection
