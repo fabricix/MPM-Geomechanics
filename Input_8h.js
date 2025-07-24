@@ -25,6 +25,8 @@ var Input_8h =
     [ "getNumberPhases", "Input_8h.html#a07964090a615a8b6ded303e5142dcad0", null ],
     [ "getNumThreads", "Input_8h.html#a68ff2de4fd7b8ed532c8e6c2d95c29d9", null ],
     [ "getOrigin", "Input_8h.html#a6552e832fbea32d95b180b34437c53db", null ],
+    [ "getPenaltyContactActive", "Input_8h.html#a9394b9c8be44c0fef8a9a7dfd727a70c", null ],
+    [ "getPenaltyStiffness", "Input_8h.html#aa9b4ba500aecc81fd80cac4ce3dc09b7", null ],
     [ "getPorePressureFilename", "Input_8h.html#a594d5fa72e39f5200f37a29e48406c83", null ],
     [ "getPrescribedPressureBox", "Input_8h.html#a22ce7cc2c2261b0784b944184c7efcb2", null ],
     [ "getPressureBoundaryForceBox", "Input_8h.html#a938199e6c47c007f37b518b559e2ee43", null ],

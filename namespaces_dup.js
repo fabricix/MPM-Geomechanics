@@ -39,6 +39,8 @@ var namespaces_dup =
       [ "getNumberPhases", "namespaceInput.html#a07964090a615a8b6ded303e5142dcad0", null ],
       [ "getNumThreads", "namespaceInput.html#a68ff2de4fd7b8ed532c8e6c2d95c29d9", null ],
       [ "getOrigin", "namespaceInput.html#a6552e832fbea32d95b180b34437c53db", null ],
+      [ "getPenaltyContactActive", "namespaceInput.html#a9394b9c8be44c0fef8a9a7dfd727a70c", null ],
+      [ "getPenaltyStiffness", "namespaceInput.html#aa9b4ba500aecc81fd80cac4ce3dc09b7", null ],
       [ "getPorePressureFilename", "namespaceInput.html#a594d5fa72e39f5200f37a29e48406c83", null ],
       [ "getPrescribedPressureBox", "namespaceInput.html#a22ce7cc2c2261b0784b944184c7efcb2", null ],
       [ "getPressureBoundaryForceBox", "namespaceInput.html#a938199e6c47c007f37b518b559e2ee43", null ],
