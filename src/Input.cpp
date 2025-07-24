@@ -6,6 +6,7 @@
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
+#include "Materials/Newtonian.h"
 #include "Body/BodyCuboid.h"
 #include "Body/BodyPolygon.h"
 #include "Body/BodyParticle.h"
@@ -346,6 +347,26 @@ vector<Material*> Input::getMaterialList(){
 						
 						// create a new elastic material
 						material = new Elastic(id, density, young, poisson);
+					}
+
+					// newtonian fluid material
+					if ((*it)["type"] == "newtonian")
+					{
+						// material properties
+						int id = 0; 
+						if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+
+						double viscosity = 0.0; 
+						if ((*it)["viscosity"].is_number()) { viscosity = ((*it)["viscosity"]); }
+
+						double bulk = 0.0; 
+						if ((*it)["bulk"].is_number()) { bulk = ((*it)["bulk"]); }
+
+						double density = 0.0; 
+						if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+						
+						// create a new newtonian material
+						material = new Newtonian(id, density, viscosity, bulk);
 					}
 
 					// mohr-coulomb material
