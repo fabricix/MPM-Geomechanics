@@ -4,53 +4,47 @@
 #include <cmath>
 #include "Materials/Newtonian.h"
 #include "Particle/Particle.h"
-#include "Model.h"
-
-// ------------------------------------------------------------------------
-// Newtonian fluid stress update
-// ------------------------------------------------------------------------
-// For a Newtonian fluid:
-//   σ = -p I + 2 μ D
-//
-// where D is the symmetric strain rate tensor:
-//   D_ij = 0.5 * (∂v_i/∂x_j + ∂v_j/∂x_i)
-//
-// In this implementation:
-// - The diagonal terms dE(xx), dE(yy), dE(zz) are ∂v_x/∂x, etc., 
-//   so we multiply them by 2μ.
-//
-// - The off-diagonal terms dE(xy), dE(xz), dE(yz) already include the 0.5
-//   factor from the symmetric definition of D. Thus, we use 2μ * dE_ij 
-//   to correctly apply 2 μ D.
-// -------------------------------------------------------------------------
 
 void Newtonian::updateStress(Particle* particle) const {
 
-    // Get strain increment from the particle
-    // dE represents the increment of strain over the time step dt
+    // strain rate increment
     Matrix3d dE = particle->getStrainIncrement();
-    
     double dt = ModelSetup::getTimeStep();
 
     // Compute strain rate tensor: D = dE / dt
     Matrix3d D = dE / dt;
-
-    // Volumetric strain rate: trace(D)
+   
+    // Volumetric strain rate (trace of D)
     double volumetric_strain_rate = D.trace();
 
-    // Update pressure: p = p_prev + K * (trace(D) * dt)
+    // pressure increment
     double pressure_increment = Bulk * volumetric_strain_rate * dt;
-    double pressure = particle->getStress().trace() / 3.0 + pressure_increment;
 
-    // Total stress tensor (Cauchy stress)
-    // σ = -p I + 2 μ D
-    Matrix3d stress = -pressure * Matrix3d::Identity() + 2.0 * Viscosity * D;
+    // update pressure
+    double pressure = particle->getStress().trace()/3.0 + pressure_increment;
 
-    // Set the updated stress in the particle
+    // volumetric part
+    double stress_vol = pressure - 2.0 * Viscosity * volumetric_strain_rate/3.0;
+
+    // update stress components
+    
+    Matrix3d stress = Matrix3d::Zero();
+
+    // Diagonal components
+    stress(0,0) = stress_vol + 2.0 * Viscosity * dE(0,0);
+    stress(1,1) = stress_vol + 2.0 * Viscosity * dE(1,1);
+    stress(2,2) = stress_vol + 2.0 * Viscosity * dE(2,2);
+
+    // Off-diagonal components
+    stress(0,1) = stress(1,0) = Viscosity * dE(0,1);
+    stress(0,2) = stress(2,0) = Viscosity * dE(0,2);
+    stress(1,2) = stress(2,1) = Viscosity * dE(1,2);
+
+    // Set updated stress in the particle
     particle->setStress(stress);
 }
 
 double Newtonian::getSoundSpeed() const {
-    // For fluids, sound speed = sqrt(K / density)
+    // Sound speed for fluids: c = sqrt(K / ρ)
     return std::sqrt(Bulk / density);
 }
