@@ -23,9 +23,9 @@
 
   },
   "earthquake": {
-    "active": true,
-    "file": "base_acceleration_scaled.csv",
-    "header": true
+    "active":true,
+    "file":"base_acceleration_scaled.csv",
+    "header":true
   },
 
   "terrain_contact":
@@ -35,12 +35,11 @@
     "friction":0.1,
     "distance_threshold":2.5,
     "penalty_stiffness":100e6,
-    "penalty_contact_active": true
+    "penalty_contact_active":true
   },
 
   "material":
-  {
-    "elastic_1":
+  [
     {
       "type":"elastic",
       "id":1,
@@ -48,11 +47,9 @@
       "density":2500,
       "poisson":0.25
     }
- },
-
+  ],
   "body":
-  {
-    "columns_1":
+  [
     {
       "type":"cuboid",
       "id":1,
@@ -60,6 +57,5 @@
       "point_p2":[10,6,8],
       "material_id":1
     }
-
-    }
+  ]
   }

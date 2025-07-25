@@ -307,7 +307,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	}
 }
 
-void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+void Update::setPlaneMomentum( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -462,6 +462,12 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 
 void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
+	// verify if seismic was disabled
+	if (!ModelSetup::getSeismicAnalysis() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
+		// change EARTHQUAKE to SLIDING
+		mesh->getBoundary()->setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+	}
+
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
@@ -477,10 +483,10 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 } 
 
-void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
-
+	
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
@@ -556,10 +562,16 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 
 void Update::boundaryConditionsForce(Mesh* mesh) {
 	
+	// verify if seismic was disabled
+	if (!ModelSetup::getSeismicAnalysis() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
+		// change EARTHQUAKE to SLIDING
+		mesh->getBoundary()->setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+	}
+
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	 // set f = 0 in fixed direction
+	// set f = 0 in fixed direction
 
 	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
 	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);

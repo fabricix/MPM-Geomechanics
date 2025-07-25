@@ -110,4 +110,11 @@ namespace Seismic
      * @return Eigen::Vector3d& Reference to the accumulated velocity vector.
      */
     Eigen::Vector3d& getAccumulatedVelocity();
+
+    /**
+     * @brief Disables seismic analysis.
+     *
+     * This function sets the seismic analysis to inactive and clears the seismic data.
+     */
+    void disableSeismicAnalysis();
 }

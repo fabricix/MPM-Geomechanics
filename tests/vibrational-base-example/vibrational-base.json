@@ -1,4 +1,12 @@
 {
+  "time":2,
+  "critical_time_step_multiplier":0.3,
+  "stress_scheme_update":"USL",
+  "results":
+  {
+    "print":40,
+    "fields":["displacement","velocity"]
+  },
   "body":
   {
     "elastic-cuboid-body":
@@ -11,36 +19,24 @@
     }
   },
 	"materials":
-  {
-    "material-1":
-    {
+  [{
       "type":"elastic",
       "id":1,
       "young":100e6,
       "density":2500,
       "poisson":0.25
     }
- },
+  ],
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
     "cells_number":[12,12,15],
-    "origin":[0,0,0],
-    "boundary_conditions":
-    {
-      "plane_X0":"sliding",
-      "plane_Y0":"sliding",
-      "plane_Z0":"earthquake",
-      "plane_Xn":"sliding",
-      "plane_Yn":"sliding",
-      "plane_Zn":"sliding"
-    }
+    "origin":[0,0,0]
   },
-  "time":2,
-  "time_step":1e-4,
-  "results":
+  "earthquake": 
   {
-    "print":40,
-    "fields":["displacement","velocity"]
+    "active":true,
+    "file": "base_acceleration.csv",
+    "header":true
   }
 }

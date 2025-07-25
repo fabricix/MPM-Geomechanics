@@ -330,7 +330,6 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
     // check if seismic analysis is enabled
     bool isSeismic = ModelSetup::getSeismicAnalysis();
 
-
     // get the accumulated velocity from seismic analysis
     Vector3d v_surface = isSeismic ? Seismic::getAccumulatedVelocity() : Vector3d::Zero(); 
 
