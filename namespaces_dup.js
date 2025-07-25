@@ -177,6 +177,7 @@ var namespaces_dup =
     ] ],
     [ "Seismic", "namespaceSeismic.html", [
       [ "applySeismicVelocity", "namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096", null ],
+      [ "disableSeismicAnalysis", "namespaceSeismic.html#a816d8ff526fe0bf0750fd4cb886cf429", null ],
       [ "getAccumulatedVelocity", "namespaceSeismic.html#a98f0f3c17a3a660d9728862d00cf902d", null ],
       [ "getSeismicAnalysis", "namespaceSeismic.html#a8d343ec1884b7314fdfa2ea541ad4348", null ],
       [ "getSeismicData", "namespaceSeismic.html#ac0b55a98c66a0ad7335de252c84351cb", null ],

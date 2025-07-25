@@ -3,6 +3,7 @@ var Seismic_8h =
     [ "SeismicData", "structSeismicData.html", "structSeismicData" ],
     [ "SeismicAnalysis", "structSeismicAnalysis.html", "structSeismicAnalysis" ],
     [ "applySeismicVelocity", "Seismic_8h.html#a8dc0527ea27fbfd1f32cfd4efe4a2096", null ],
+    [ "disableSeismicAnalysis", "Seismic_8h.html#a816d8ff526fe0bf0750fd4cb886cf429", null ],
     [ "getAccumulatedVelocity", "Seismic_8h.html#a98f0f3c17a3a660d9728862d00cf902d", null ],
     [ "getSeismicAnalysis", "Seismic_8h.html#a8d343ec1884b7314fdfa2ea541ad4348", null ],
     [ "getSeismicData", "Seismic_8h.html#ac0b55a98c66a0ad7335de252c84351cb", null ],
