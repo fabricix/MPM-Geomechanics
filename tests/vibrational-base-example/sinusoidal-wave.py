@@ -14,7 +14,7 @@ fase_x = np.pi / 1  # Fase en X (radianes)
 fase_y = np.pi / 1  # Fase en Y (radianes)
 fase_z = np.pi / 1  # Fase en Z (radianes)
 
-duracion = 1.5  # Duración de la vibración (segundos)
+duracion = 2.0  # Duración de la vibración (segundos)
 paso_tiempo = 1e-4/2.0  # Paso de tiempo (segundos)
 
 # Generación de tiempo
