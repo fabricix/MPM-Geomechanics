@@ -6,15 +6,15 @@ amplitud_x = 0.3  # Amplitud de la vibración en X (m/s^2)
 amplitud_y = 0.3  # Amplitud de la vibración en Y (m/s^2)
 amplitud_z = 0.0  # Amplitud de la vibración en Z (m/s^2)
 
-frecuencia_x = 1.0  # Frecuencia en X (Hz)
-frecuencia_y = 0.5  # Frecuencia en Y (Hz)
-frecuencia_z = 0.0  # Frecuencia en Z (Hz)
+frecuencia_x = 1.0   # Frecuencia en X (Hz)
+frecuencia_y = 0.5   # Frecuencia en Y (Hz)
+frecuencia_z = 0.25  # Frecuencia en Z (Hz)
 
 fase_x = np.pi / 1  # Fase en X (radianes)
 fase_y = np.pi / 1  # Fase en Y (radianes)
 fase_z = np.pi / 1  # Fase en Z (radianes)
 
-duracion = 2.0  # Duración de la vibración (segundos)
+duracion = 1.5  # Duración de la vibración (segundos)
 paso_tiempo = 1e-4/2.0  # Paso de tiempo (segundos)
 
 # Generación de tiempo

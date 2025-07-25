@@ -31,6 +31,18 @@ namespace Seismic
         seismic_analysis = info; 
     }
 
+    // disable seismic analysis
+    void disableSeismicAnalysis() 
+    {
+        ModelSetup::setSeismicAnalysis(false);
+        seismic_analysis.isActive = false;
+        seismicRecord.time.clear();
+        seismicRecord.acceleration.clear();
+        accumulatedVelocity = Eigen::Vector3d::Zero();
+        seismicNodeIndices.clear();
+        seismicNodeSet.clear();
+    }
+
     // Get seismic data
     SeismicData& getSeismicData() { return seismicRecord; }
 
