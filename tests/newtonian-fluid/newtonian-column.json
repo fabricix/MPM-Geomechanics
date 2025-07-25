@@ -1,13 +1,13 @@
 {
   "stress_scheme_update":"USL",
-  "time":1,
+  "time":2.5,
   "critical_time_step_multiplier":0.1,
   "gravity":[0.0,0.0,-10.0],
-  "n_threads":1,
+  "n_threads":10,
 
   "results":
   {
-    "print":10,
+    "print":25,
     "fields":["id","displacement","velocity","material"]
   },
 
@@ -16,7 +16,7 @@
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[10,10,15],
+    "cells_number":[10,10,20],
     "origin":[0,0,0]
 
   },
@@ -39,8 +39,8 @@
     {
       "type":"cuboid",
       "id":1,
-      "point_p1":[0.2,0.2,0],
-      "point_p2":[0.5,0.5,1.0],
+      "point_p1":[0.2,0.2,0.5],
+      "point_p2":[0.5,0.5,1.5],
       "material_id":1
     }
     }
