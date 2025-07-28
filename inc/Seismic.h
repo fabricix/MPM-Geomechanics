@@ -86,13 +86,13 @@ namespace Seismic
     void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh);
     
     /**
-     * @brief Updates the accumulated seismic velocity based on the current time and time step.
+     * @brief Updates the accumulated seismic velocity and acceleration based on the current time and time step.
      * 
      * @param currentTime Current simulation time (s).
      * @param dt Simulation time step (s).
      * @note This function updates the global `accumulatedVelocity` variable with the seismic velocity
      */
-    void updateAccumulatedSeismicVelocity(const double currentTime, const double dt);
+    void updateSeismicVectors(const double currentTime, const double dt);
 
     /**
      * @brief Marks the nodes that will receive seismic loading.
@@ -118,7 +118,13 @@ namespace Seismic
      * @brief Returns the accumulated seismic velocity.
      * @return Eigen::Vector3d& Reference to the accumulated velocity vector.
      */
-    Eigen::Vector3d& getAccumulatedVelocity();
+    const Eigen::Vector3d& getAccumulatedVelocity();
+
+    /**
+     * @brief Returns the seismic acceleration.
+     * @return Eigen::Vector3d& Reference to the seismic acceleration vector.
+     */
+    const Eigen::Vector3d& getAcceleration();
 
     /**
      * @brief Disables seismic analysis.

@@ -43,7 +43,7 @@ void SolverExplicit::Solve()
 		}
 
 		if(isSeismicAnalysis){
-			Seismic::updateAccumulatedSeismicVelocity(iTime, loopCounter == 1 ? dt / 2.0 : dt);
+			Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
 		}
 
 		// Step 2: Apply boundary conditions on nodal momentum

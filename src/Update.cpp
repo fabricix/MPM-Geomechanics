@@ -328,8 +328,10 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 				case Boundary::BoundaryType::EARTHQUAKE:
 				{ 	
 					// set the seismic momentum
-                	nodeI->setMomentum(nodeI->getMass()*Seismic::getAccumulatedVelocity());
-					break; 
+					if(ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::MUSL) {
+                		nodeI->setMomentum(nodeI->getMass()*Seismic::getAccumulatedVelocity());
+					}
+					break;
 				}
 
 				// fixed condition
@@ -553,14 +555,10 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 					nodeI->setTotalForce(force);
 					break;
 				}
-				// Earthquake boundary condition
-				// The force is set to zero in order to do not modify the nodal momentum
-				// during the seismic analysis. The seismic force is applied in the nodal momentum BCs.
-				// p_iI^{k+1/2} = p_iI^{k-1/2} + f_iI^{k}*dt
-				// if f_iI^{k} = 0, then p_iI^{k+1/2} = p_iI^{k-1/2} = p_iI^{Seismic}
+				// Earthquake boundary condition in term of force
 				case Boundary::BoundaryType::EARTHQUAKE:
 				{ 
-					nodeI->setTotalForce(Eigen::Vector3d::Zero());
+					nodeI->setTotalForce(Seismic::getAcceleration()*nodeI->getMass());
 					break;
 				}
 			}

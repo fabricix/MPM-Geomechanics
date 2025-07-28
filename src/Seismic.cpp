@@ -12,6 +12,7 @@ namespace Seismic
     std::vector<int> seismicNodeIndices;
     std::unordered_set<int> seismicNodeSet;
     Eigen::Vector3d accumulatedVelocity = Eigen::Vector3d::Zero();
+    Eigen::Vector3d seismicAcceleration = Eigen::Vector3d::Zero();
 
     // Seismic file information
     SeismicAnalysis seismic_analysis;
@@ -23,7 +24,10 @@ namespace Seismic
     SeismicAnalysis& getSeismicAnalysis() { return seismic_analysis; }
 
     // Get accumulated velocity
-    Eigen::Vector3d& getAccumulatedVelocity() { return accumulatedVelocity; }
+    const Eigen::Vector3d& getAccumulatedVelocity() { return accumulatedVelocity; }
+
+    // Get seismic acceleration
+    const Eigen::Vector3d& getAcceleration() { return seismicAcceleration; }
 
     // Set seismic analysis information
     void setSeismicAnalysis(const SeismicAnalysis& info) { seismic_analysis = info; }
@@ -81,7 +85,9 @@ namespace Seismic
     // check if a node is a seismic node
     bool isSeismicNode(int nodeId) { return seismicNodeSet.count(nodeId) > 0; }
 
-    void updateAccumulatedSeismicVelocity(const double currentTime, const double dt) {
+    // Update seismic vectors based on current time and time step
+    // This function integrates the seismic acceleration to update the accumulated velocity
+    void updateSeismicVectors(const double currentTime, const double dt) {
 
         // Interpolate seismic acceleration at the current time
         Eigen::Vector3d a_sismo = Interpolation::interpolateVector(
@@ -90,8 +96,9 @@ namespace Seismic
             currentTime
         );
 
-        // Integrate to get the accumulated velocity
-        accumulatedVelocity += a_sismo * dt;
+        // Update seismic acceleration and accumulated velocity
+        accumulatedVelocity += a_sismo * dt; // integrate acceleration to get velocity
+        seismicAcceleration = a_sismo; // Update the seismic acceleration
     }
 
     void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh)
