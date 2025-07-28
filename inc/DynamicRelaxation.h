@@ -8,12 +8,6 @@
 
 namespace DynamicRelaxation
 {
-    double getCurrentKineticEnergy();
-
-    void setCurrentKineticEnergy(double energy);
-
-    void computeKineticEnergy(vector<Body*>* bodies);
-
     void setStaticSolution(vector<Body*>* bodies, int loopCounter);
 }
 

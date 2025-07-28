@@ -8,6 +8,7 @@
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "Energy.h"
 
 #include <vector>
 using std::vector;
@@ -156,7 +157,7 @@ void SolverExplicitTwoPhaseUSL::Solve( ){
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		DynamicRelaxation::computeKineticEnergy(bodies);
+		Energy::inst().computeKineticEnergy(bodies);
 
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies,loopCounter);

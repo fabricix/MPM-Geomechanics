@@ -8,6 +8,7 @@
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "Energy.h"
 #include "TerrainContact.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
@@ -106,7 +107,7 @@ void SolverExplicit::Solve()
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		DynamicRelaxation::computeKineticEnergy(bodies);
+		Energy::inst().computeKineticEnergy(bodies);
 
 		// Check for static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);

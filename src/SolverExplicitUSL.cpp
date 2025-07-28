@@ -14,6 +14,7 @@ using std::cout;
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "Energy.h"
 #include "TerrainContact.h"
 
 SolverExplicitUSL::SolverExplicitUSL() : Solver() {}
@@ -119,7 +120,7 @@ void SolverExplicitUSL::Solve()
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		DynamicRelaxation::computeKineticEnergy(bodies);
+		Energy::inst().computeKineticEnergy(bodies);
 
 		// verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
