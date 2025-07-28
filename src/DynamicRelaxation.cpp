@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter) { 
+void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies) { 
 
     // damping type verification
     if (ModelSetup::getDampingType() != ModelSetup::KINETIC_DYNAMIC_RELAXATION)
@@ -16,7 +16,7 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
     }
 
     // first iteration
-    if (loopCounter == 1)
+    if (ModelSetup::getLoopCounter() == 1)
     {
         Energy::inst().setLastKineticEnergy(0.0);
         return;

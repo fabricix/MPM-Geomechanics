@@ -22,8 +22,16 @@
 	"results":
 	{
 		"print":50,
-		"fields":["all","displacement","material","active","plastic_strain"],
-		"grid_fields": ["all"]
+
+		"material-point-results":
+		{
+			"fields":["all"]
+		},
+		
+		"grid-nodal-results":
+		{
+			"fields":["all"]
+		}
 	},
 
 	"mesh":

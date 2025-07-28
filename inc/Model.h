@@ -242,6 +242,17 @@ namespace ModelSetup {
 	
 	/// \brief Set terrain contact active
 	void setTerrainContactActive(bool);
+
+	/// \brief Get the current loop counter
+	/// \return loopCounter
+	int getLoopCounter();
+
+	/// \brief Set the current loop counter
+	/// \param[in] a The loop counter value
+	void setLoopCounter(int a);
+
+	/// \brief Increment the loop counter by one
+	void incrementLoopCounter();
 };
 
 #endif /* MODEL_H_ */

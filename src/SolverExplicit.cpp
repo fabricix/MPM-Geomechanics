@@ -10,6 +10,9 @@
 #include "DynamicRelaxation.h"
 #include "Energy.h"
 #include "TerrainContact.h"
+#include "Parallelization.h"
+
+#include <iostream>
 
 #include <iostream>
 
@@ -21,24 +24,36 @@ void SolverExplicit::Solve()
 	// Initialize simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
+	int numThreads = ModelSetup::getThreads();
+	int factor = ModelSetup::getPartitionFactor();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
-	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useContact = ModelSetup::getTerrainContactActive();
 
-	// Write initial state
-	Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime, mesh);
+	// write initial particles and grid states
+	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
 
 	// Solve in time
 	while (iTime < time)
 	{
-		// Step 1: Interpolate mass and momentum from Particles to Nodes
+		// increment loop counter
+		ModelSetup::incrementLoopCounter();
+
+		// Advance time
+		ModelSetup::setCurrentTime(iTime += dt);
+
+		// update contribution nodes
 		Update::contributionNodes(mesh, particles);
+
+		// calculate the interfaces particles
+		Parallelization::calculateInterfaceParticles(mesh, *particlesPerThread);
+
+		// Step 1: Interpolate mass and momentum from Particles to Nodes
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
-			Interpolation::nodalMass(mesh, particles);
+			Parallelization::interpolateMass(mesh, *particlesPerThread, factor);
 
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh, particles);
@@ -64,10 +79,10 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
-		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity (if active)
 		if (useContact)
@@ -105,9 +120,10 @@ void SolverExplicit::Solve()
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
-
-		// Write results in step
-		Output::writeResultInStep(loopCounter, resultSteps, bodies, iTime, mesh);
+		
+		// write particles and grid in step
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
@@ -115,15 +131,9 @@ void SolverExplicit::Solve()
 		// Compute current kinetic energy
 		Energy::inst().computeKineticEnergy(bodies);
 
-		// Check for static solution
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter++);
-
-		// Advance time
-		ModelSetup::setCurrentTime(iTime += dt);
+		// Check for quase-static solution
+		DynamicRelaxation::setStaticSolution(bodies);
 	}
-
-	// // Write results
-	// Output::writeGrid(mesh, Output::CELLS);
 
 	Output::writeResultsSeries();
 }

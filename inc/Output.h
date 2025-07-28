@@ -32,7 +32,7 @@ namespace Output {
 	/// \brief Write the grid mesh into a vtu file
 	/// \param[in] mesh Mesh reference
 	/// \param[in] cell_type_representation Cell type representation Output::CellType
-	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS);
+	void writeGrid(Mesh* mesh, CellType cell_type_representation=CellType::CELLS, double time=0.0);
 	
 	/// \brief Write the particles of the model into a vtu file
 	/// \param[in] particles List containing pointers to particles
@@ -57,6 +57,12 @@ namespace Output {
 	/// \param[in] fields List of fields
 	void configureResultFiels(vector<string> fields);
 
+	/// \brief Verify is the grid field must be written
+	/// \param[in] field Grid field to verify
+	/// \return True if the grid field must be written
+	bool isFieldRequired(string field);
+
+
 	/// \brief Configures the grid fields to be written
 	/// \param[in] fields List of fields
 	void configureGridResultFiels(vector<string> fields);
@@ -70,9 +76,21 @@ namespace Output {
 /// \param[in] field Field to verify
 /// \return True if the field must be written
 	bool isGridFieldRequired(string field);
+/// \param[in] field Field to verify
+/// \return True if the field must be written
+	bool isGridFieldRequired(string field);
 
 	/// \brief Write results if the step is the step result
 	/// 
+	void writeResultInStep(int resultSteps, vector<Body*>* bodies, double iTime);
+
+	/// \brief Write grid results if the step is the step result
+	/// 
+	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime);
+
+	/// \brief Write the initial state of the simulation
+	/// 
+	void writeInitialState(int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
 	void writeResultInStep(int loopCounter, int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
 
 	/// \brief Print initial program screen

@@ -140,7 +140,7 @@ Solver* Input::getSolver() {
 				if (ModelSetup::getTwoPhaseActive()) {
 					return new SolverExplicitTwoPhaseUSL();
 				}
-				return new SolverExplicitUSL();
+				return new SolverExplicit();
 			}
 			else if (scheme == "MUSL") {
 				ModelSetup::setUpdateStressScheme(ModelSetup::MUSL);
@@ -922,19 +922,28 @@ vector<string> Input::getGridResultFields()
 
 		if (inputFile["results"].is_null())
 		{
-			fields.push_back("all");
+			fields.push_back("none");
+			fields.push_back("id");
 			return fields;
 		}
 
-		if (inputFile["results"]["grid_fields"].is_null())
+		if (inputFile["results"]["grid_nodal_results"].is_null())
 		{
-			fields.push_back("all");
+			fields.push_back("none");
+			fields.push_back("id");
+			return fields;
+		}
+
+		if (inputFile["results"]["grid_nodal_results"][0] == "none")
+		{
+			fields.push_back("none");
+			fields.push_back("id");
 			return fields;
 		}
 
 		// get all results fields
 		json::iterator it;
-		for (it = inputFile["results"]["grid_fields"].begin();it != inputFile["results"]["grid_fields"].end();it++) {
+		for (it = inputFile["results"]["grid_nodal_results"].begin();it != inputFile["results"]["grid_nodal_results"].end();it++) {
 
 			if ((*it).is_string()) {
 				fields.push_back(*it);
@@ -961,6 +970,7 @@ vector<string> Input::getResultFields()
 	try
 	{
 		vector<string> fields;
+		string material_point_results = "material_point_results";
 		
 		if (inputFile["results"].is_null())
 		{
@@ -968,17 +978,31 @@ vector<string> Input::getResultFields()
 			return fields;
 		}
 
-		if (inputFile["results"]["fields"].is_null())
+		if (inputFile["results"][material_point_results].is_null())
 		{
-			fields.push_back("all");
+			if (!inputFile["results"]["fields"].is_null())
+			{
+				Warning::printMessage("'fields' is no longer supported. Use 'material_point_results' instead.\nPlease check the .json file");
+				material_point_results = "fields";
+			}
+			else
+			{
+				fields.push_back("all");
+				return fields;
+			}
+		}
+
+		if (inputFile["results"][material_point_results][0] == "none")
+		{
+			fields.push_back("none");
 			return fields;
 		}
 
 		// get all results fields
 		json::iterator it;
-		for( it=inputFile["results"]["fields"].begin();it!=inputFile["results"]["fields"].end();it++){
+		for (it = inputFile["results"][material_point_results].begin(); it != inputFile["results"][material_point_results].end(); it++) {
 
-			if ((*it).is_string()){
+			if ((*it).is_string()) {
 				fields.push_back(*it);
 			}
 		}
