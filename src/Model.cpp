@@ -200,8 +200,6 @@ namespace ModelSetup {
 	}
 
 	// Seismic analysis
-	string seismic_file_name = "base_acceleration.csv";
-	string getSeismicFileName() {return seismic_file_name;}
 	bool getSeismicAnalysis() {return seismicAnalysisActive;}
 	void setSeismicAnalysis(bool a) {seismicAnalysisActive = a;}
 }

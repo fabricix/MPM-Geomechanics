@@ -92,65 +92,95 @@ With these data we will to create an MPM model consisting in uniformly distribut
 
 The complete JSON file with the keywords we write:
 
+{
+  "stress_scheme_update":"USL",
+
+  "shape_function":"GIMP",
+
+  "time":10,
+
+  "time_step":0.0005,
+
+  "gravity":[0.0,0.0,0.0],
+
+  "n_threads":1,
+
+  "damping":
+  {
+    "type":"local",
+    "value":0.0
+  },
+
+  "results":
+  {
+    "print":100,
+    "fields":["id","displacement","velocity","material","active","body"]
+  },
+
+  "n_phases":1,
+
+  "mesh":
+  { 
+    "cells_dimension":[0.1,0.1,0.1],
+    "cells_number":[10,10,15],
+    "origin":[0,0,0]
+
+  },
+
+  "earthquake": {
+  "active": true,
+  "file": "base_acceleration.csv",
+  "header": true
+}
+,
+  "material":
+  {
+    "elastic_1":
     {
-        "body":
-        {
-            "elastic-cuboid-body":
-            {
-            "type":"cuboid",
-            "id":1,
-            "point_p1":[0.4,0.4,0],
-            "point_p2":[0.7,0.7,0.8],
-            "material_id":1
-            }
-        },
-            "materials":
-        {
-            "material-1":
-            {
-            "type":"elastic",
-            "id":1,
-            "young":100e6,
-            "density":2500,
-            "poisson":0.25
-            }
-        },
-        "mesh":
-        { 
-            "cells_dimension":[0.1,0.1,0.1],
-            "cells_number":[12,12,15],
-            "origin":[0,0,0],
-            "boundary_conditions":
-            {
-            "plane_X0":"sliding",
-            "plane_Y0":"sliding",
-            "plane_Z0":"earthquake",
-            "plane_Xn":"sliding",
-            "plane_Yn":"sliding",
-            "plane_Zn":"sliding"
-            }
-        },
-        "time":2,
-        "time_step":1e-4,
-        "results":
-        {
-            "print":40,
-            "fields":["displacement","velocity"]
-        }
+      "type":"elastic",
+      "id":1,
+      "young":10e6,
+      "density":2500,
+      "poisson":0.25
+    }
+ },
+
+  "body":
+  {
+    "columns_1":
+    {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[0.2,0.2,0],
+      "point_p2":[0.5,0.5,1.0],
+      "material_id":1
     }
 
-When the "earthquake" keyword is defined in any plane in the mesh, the simulator will search for the acceleration record "base_acceleration.csv" in the working directory. This record must to be the data in the following structure: time, acceleration_x, acceleration_y, acceleration_z. The five first lines of the acceleration record is:
+    }
+  }
 
-    
-        t,ax,ay,az
-        0.0,-1.8849555921538759,-0.9424777960769379,-0.0
-        5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
-        0.0001,-1.884955220078568,-0.9424777495675233,-0.0
-        0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
-        ...
-    
+The `"earthquake"` block in the JSON input defines the parameters to activate seismic loading in the simulation and to specify the file containing the seismic record:
 
-Note that the base acceleration record must to contain a header, that will be ignored during the reading acceleration data.
+```json
+"earthquake": {
+  "active": true,
+  "file": "base_acceleration.csv",
+  "header": true
+}
+
+Where, 
+- active: Enables (true) or disables (false) the use of the seismic record.
+- file: Path to the CSV file containing the seismic acceleration time series. The file must include at least four comma-separated columns: time, acceleration in X, Y, and Z directions.
+- header: Indicates whether the CSV file includes a header row (usually true).
+
+The record must to be the data in the following structure: time, acceleration_x, acceleration_y, acceleration_z. The five first lines of the acceleration record is:
+
+    t,ax,ay,az
+    0.0,-1.8849555921538759,-0.9424777960769379,-0.0
+    5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
+    0.0001,-1.884955220078568,-0.9424777495675233,-0.0
+    0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
+    ...
 
 Once we have the JSON input file, we can execute the simulator with the input file as parameter. When the simulation ends we can find the particle results in the "/particle" directory, and the grid mesh in the "/grid" directory. The particles results are written in uniformly separated times determined by the number of results defined in the "print" keyword. The number of total results must be 40. In this example, the particles results must be "particle_1.vtu", "particle_2.vtu", ..., "particle_41.vtu". Together with the "particle_i.vtu" results, a particle serie file "particleTimeSerie.pvd" is created. This time series file can be used to load all the results in the Paraview scientific visualization program.
 

@@ -4,59 +4,7 @@
 #include "Update.h"
 #include "Loads.h"
 #include "Interpolation.h"
-#include "BoundingBox.h"
-
-#include <iostream>
-using std::cout;
-
-void Update::boundingBox(vector<Particle*>* particles, BoundingBox* boundingBox, int numThreads){
-
-	Vector3d minPoint;	
-	Vector3d maxPoint;
-
-	// set body id and shape function
-	for (size_t i = 0; i < particles->size(); ++i){
-
-		minPoint = minPoint.cwiseMin(particles->at(i)->getPosition());
-		maxPoint = maxPoint.cwiseMax(particles->at(i)->getPosition());
-		
-	}
-	//cout << minPoint << " " << maxPoint;
-	//cout << "punto minimo: " << minPoint << "punto maximo: " << maxPoint;
-	*boundingBox = BoundingBox(minPoint,maxPoint,numThreads);
-
-}
-
-void Update::particlesSubdomains(vector<Particle*>* particles, BoundingBox* boundingBox){
-
-    float width = boundingBox->getWidth();
-	double frontier = width/2;
-	//float particleMeanPerDomain = particles.size()/box.getSubdomainsNumber();
-    //float frontier = width/this->boundingBox.getSubdomainsNumber();
-	//Tolerancia de cuantas particulas pueden sobrepasar 0 a 1 (%)
-	//float tolerance = 0.1; //10%
-
-	//vector<Particle*> subdomain1 = std::vector<Particle*>(particles.size());
-	//vector<Particle*> subdomain2 = std::vector<Particle*>(particles.size());
-
-    //recorremos las particulas
-	//for (size_t i = 0; i < this->particles.size(); ++i){
-	for (size_t i = 0; i < particles->size(); ++i){
-		Vector3d position = particles->at(i)->getPosition();
-		//cambiar por los arrays de los subdomains
-		if(position.x() < frontier){
-			//almacenamos las particulas en el subdominio izquierdo
-			//box.setSubdomainParticle(0,particles.at(i));
-			//subdomain1.push_back(particles.at(i));
-			particles->at(i)->setThreadId(0);
-			continue;
-		}	
-
-		particles->at(i)->setThreadId(1);
-		//box.setSubdomainParticle(1,particles.at(i));
-		//subdomain2.push_back(particles.at(i));
-	}
-}
+#include "Seismic.h"
 
 void Update::nodalVelocity(Mesh* mesh) {
 
@@ -386,6 +334,11 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 					nodeI->setMomentum(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// sliding restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -453,6 +406,10 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 					nodeI->setMomentumFluid(Vector3d::Zero());
 					break;
 				
+				// Absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{	
@@ -522,7 +479,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -548,6 +505,11 @@ void Update::setPlaneForce(const Boundary::planeBoundary* plane, vector<Node*>* 
 					nodeI->setTotalForce(Vector3d::Zero());
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
+
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:
 				{
@@ -611,7 +573,7 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Loads::getSeismicData().time, Loads::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
+	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -642,6 +604,10 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 					nodeI->setTotalForceFluid(nodeI->getMassFluid() * interpolatedAcceleration);
 					break;
 				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+				// fall through: treat as SLIDING for now
 
 				// perpendicular restriction
 				case Boundary::BoundaryType::SLIDING:

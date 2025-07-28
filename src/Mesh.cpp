@@ -326,6 +326,13 @@ void Mesh::activateNodes(const vector<int>& nodesId,const bool activeValue) {
     }
 }
 
+void Mesh::setBoundaryRestrictionsSeismic() {
+
+    // setup boundaries
+	this->boundary.setRestrictions(Boundary::ABSORBING);
+	this->boundary.setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::EARTHQUAKE);
+}
+
 void Mesh::setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions) {
 
     // verify if there are restrictions to the six planes
