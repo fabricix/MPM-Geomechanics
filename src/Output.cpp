@@ -643,7 +643,7 @@ namespace Output{
 
 	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
     // Get total kinetic energy
-		double ienergy = Energy::inst().getCurrentKineticEnergy();
+	double ienergy = Energy::inst().getCurrentKineticEnergy();
 
     // Open the simulation CSV file in append mode
     std::ofstream csv_file("time-energy.csv", std::ios::app);
@@ -652,11 +652,12 @@ namespace Output{
     }
     
     // Write time and energy to the file
-    if(iTime==0)
+    if(iTime==0){
 		csv_file << "time,energy" << "\n";
-    
-		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
-    
+	}
+	
+	csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
+	
     // Close the file
     csv_file.close();
 }

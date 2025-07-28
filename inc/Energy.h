@@ -8,34 +8,30 @@
 
 class Energy
 {
+public:
 
-  private:
-  double currentKineticEnergy = 0.0;
-  double lastKineticEnergy = 0.0;
+    static Energy& inst()
+    {
+        static Energy instance;
+        return instance;
+    }
+    
+    inline double getCurrentKineticEnergy() { return currentKineticEnergy; } //!< Get current kinetic energy
+    inline void setCurrentKineticEnergy(double energy) { currentKineticEnergy = energy; } //<!< Set current kinetic energy
+    inline double getLastKineticEnergy() { return lastKineticEnergy; } //!< Get last kinetic energy
+    inline void setLastKineticEnergy(double energy) { lastKineticEnergy = energy; } //<!< Set last kinetic energy
+    inline void setLastKineticEnergyAsCurrent() { lastKineticEnergy = currentKineticEnergy; } //<!< Set last kinetic energy as current
+    
+    void computeKineticEnergy(vector<Body*>* bodies); //!< Compute the kinetic energy of the bodies
+    
+private:
 
-  Energy() = default; 
-  Energy(const Energy&) = delete;
-  Energy& operator=(const Energy&) = delete;
+    double currentKineticEnergy = 0.0; //!< Current kinetic energy
+    double lastKineticEnergy = 0.0; //!< Last kinetic energy
 
-  public:
-  static Energy& inst()
-  {
-    static Energy instance;
-    return instance;
-  }
-
-  inline double getCurrentKineticEnergy() { return currentKineticEnergy; }
-  inline void setCurrentKineticEnergy(double energy) { currentKineticEnergy = energy; }
-
-  inline double getLastKineticEnergy() { return lastKineticEnergy; }
-  inline void setLastKineticEnergy(double energy) { lastKineticEnergy = energy; }
-
-  void setLastKineticEnergyAsCurrent()
-  {
-    lastKineticEnergy = currentKineticEnergy;
-  }
-
-  void computeKineticEnergy(vector<Body*>* bodies);
+    Energy() = default; 
+    Energy(const Energy&) = delete;
+    Energy& operator=(const Energy&) = delete;
 
 };
 
