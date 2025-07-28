@@ -77,14 +77,23 @@ namespace Seismic
     void setSeismicAnalysis(const SeismicAnalysis& info);
     
     /**
-     * @brief Applies seismic velocity to the marked seismic nodes.
+     * @brief Applies seismic velocity to the marked seismic nodes using STL mesh.
      *
      * @param currentTime Current simulation time (s).
      * @param dt Simulation time step (s).
      * @param mesh Pointer to the Eulerian background mesh.
      */
-    void applySeismicVelocity(double currentTime, double dt, Mesh* mesh);
+    void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh);
     
+    /**
+     * @brief Updates the accumulated seismic velocity based on the current time and time step.
+     * 
+     * @param currentTime Current simulation time (s).
+     * @param dt Simulation time step (s).
+     * @note This function updates the global `accumulatedVelocity` variable with the seismic velocity
+     */
+    void updateAccumulatedSeismicVelocity(const double currentTime, const double dt);
+
     /**
      * @brief Marks the nodes that will receive seismic loading.
      * @param epsilon Grid dimension factor threshold to mark nodes as seismic nodes.

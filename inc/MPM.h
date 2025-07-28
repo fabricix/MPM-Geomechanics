@@ -132,10 +132,7 @@ private:
 	void setThreads();
 
 	/// \brief Get seismic analysis active
-	bool getSeismicAnalysis();
-
-	/// \brief Set seismic analysis active
-	void setSeismicAnalysis(bool);
+	bool getSeismicAnalysisActive();
 
 	/// \brief Configure one direction hydro-mechanical coupling
 	void setOneDirectionHydromechanicalCoupling();

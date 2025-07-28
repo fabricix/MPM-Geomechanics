@@ -23,7 +23,7 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
-	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysis();
+	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
 
 	// Solve in time
 	while (iTime < time)
@@ -42,12 +42,16 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
 
+		if(isSeismicAnalysis){
+			Seismic::updateAccumulatedSeismicVelocity(iTime, loopCounter == 1 ? dt / 2.0 : dt);
+		}
+
 		// Step 2: Apply boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
 		// Step 2.1: Apply seismic velocity to marked nodes
 		if (isSeismicAnalysis && useSTLContact){
-			Seismic::applySeismicVelocity(iTime, dt, mesh);
+			Seismic::applySeismicVelocityMarkedSTLNodes(iTime, dt, mesh);
 		}
 
 		// Step 3.1: Interpolate internal and external force from particles to nodes

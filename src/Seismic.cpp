@@ -26,15 +26,12 @@ namespace Seismic
     Eigen::Vector3d& getAccumulatedVelocity() { return accumulatedVelocity; }
 
     // Set seismic analysis information
-    void setSeismicAnalysis(const SeismicAnalysis& info) 
-    { 
-        seismic_analysis = info; 
-    }
+    void setSeismicAnalysis(const SeismicAnalysis& info) { seismic_analysis = info; }
 
     // disable seismic analysis
     void disableSeismicAnalysis() 
     {
-        ModelSetup::setSeismicAnalysis(false);
+        ModelSetup::setSeismicAnalysisActive(false);
         seismic_analysis.isActive = false;
         seismicRecord.time.clear();
         seismicRecord.acceleration.clear();
@@ -79,26 +76,26 @@ namespace Seismic
     }
 
     // get seismic node indices
-    const std::vector<int>& getSeismicNodeIndices() {
-        return seismicNodeIndices;
-    }
+    const std::vector<int>& getSeismicNodeIndices() { return seismicNodeIndices; }
 
     // check if a node is a seismic node
-    bool isSeismicNode(int nodeId) {
-        return seismicNodeSet.count(nodeId) > 0;
-    }
+    bool isSeismicNode(int nodeId) { return seismicNodeSet.count(nodeId) > 0; }
 
-    void applySeismicVelocity(double currentTime, double dt, Mesh* mesh)
-    {
-        const Eigen::Vector3d a_sismo = Interpolation::interpolateVector(
-            Seismic::getSeismicData().time,
-            Seismic::getSeismicData().acceleration,
+    void updateAccumulatedSeismicVelocity(const double currentTime, const double dt) {
+
+        // Interpolate seismic acceleration at the current time
+        Eigen::Vector3d a_sismo = Interpolation::interpolateVector(
+            seismicRecord.time,
+            seismicRecord.acceleration,
             currentTime
         );
 
-        // integration of accumulated velocity 
+        // Integrate to get the accumulated velocity
         accumulatedVelocity += a_sismo * dt;
+    }
 
+    void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh)
+    {
         std::vector<Node*>* nodes = mesh->getNodes();
 
         #pragma omp parallel for

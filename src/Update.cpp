@@ -307,7 +307,7 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	}
 }
 
-void Update::setPlaneMomentum( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
+void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -325,7 +325,12 @@ void Update::setPlaneMomentum( const Boundary::planeBoundary* plane, vector<Node
 				case Boundary::BoundaryType::FREE: { break; }
 				
 				// earthquake condition
-				case Boundary::BoundaryType::EARTHQUAKE: { break; }
+				case Boundary::BoundaryType::EARTHQUAKE:
+				{ 	
+					// set the seismic momentum
+                	nodeI->setMomentum(nodeI->getMass()*Seismic::getAccumulatedVelocity());
+					break; 
+				}
 
 				// fixed condition
 				case Boundary::BoundaryType::FIXED:
@@ -462,8 +467,9 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 
 void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
-	// verify if seismic was disabled
-	if (!ModelSetup::getSeismicAnalysis() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
+	// Verify if seismic was disabled during the simulation.
+	// This can happen if the simulation time is greater than the seismic data time.
+	if (!ModelSetup::getSeismicAnalysisActive() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
 		// change EARTHQUAKE to SLIDING
 		mesh->getBoundary()->setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
 	}
@@ -472,7 +478,7 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 	vector<Node*>* nodes = mesh->getNodes();
 
 	// set p = 0 in fixed direction
-	
+
 	setPlaneMomentum(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
 	setPlaneMomentum(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
@@ -485,8 +491,6 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
-	
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
@@ -549,10 +553,15 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 					nodeI->setTotalForce(force);
 					break;
 				}
-				// earthquake boundary condition
+				// Earthquake boundary condition
+				// The force is set to zero in order to do not modify the nodal momentum
+				// during the seismic analysis. The seismic force is applied in the nodal momentum BCs.
+				// p_iI^{k+1/2} = p_iI^{k-1/2} + f_iI^{k}*dt
+				// if f_iI^{k} = 0, then p_iI^{k+1/2} = p_iI^{k-1/2}
+				// p_iI^{k-1/2} = p_iI^{Seismic}
 				case Boundary::BoundaryType::EARTHQUAKE:
 				{ 
-					nodeI->setTotalForce(nodeI->getMass() * interpolatedAcceleration);
+					nodeI->setTotalForce(Eigen::Vector3d::Zero());
 					break;
 				}
 			}
@@ -562,12 +571,6 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 
 void Update::boundaryConditionsForce(Mesh* mesh) {
 	
-	// verify if seismic was disabled
-	if (!ModelSetup::getSeismicAnalysis() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
-		// change EARTHQUAKE to SLIDING
-		mesh->getBoundary()->setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
-	}
-
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
@@ -584,8 +587,6 @@ void Update::boundaryConditionsForce(Mesh* mesh) {
 }
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
-
-	Eigen::Vector3d interpolatedAcceleration = ModelSetup::getSeismicAnalysis() ? Interpolation::interpolateVector(Seismic::getSeismicData().time, Seismic::getSeismicData().acceleration, ModelSetup::getCurrentTime()) : Vector3d{ 0,0,0 };
 
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
@@ -613,7 +614,7 @@ void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Nod
 				// earthquake boundary condition
 				case Boundary::BoundaryType::EARTHQUAKE:
 				{ 
-					nodeI->setTotalForceFluid(nodeI->getMassFluid() * interpolatedAcceleration);
+					nodeI->setTotalForceFluid(Eigen::Vector3d::Zero());
 					break;
 				}
 

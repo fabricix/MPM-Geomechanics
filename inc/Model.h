@@ -204,11 +204,11 @@ namespace ModelSetup {
 	
 	/// \brief Return true if seismic analysis is active
 	/// \return if_seismic_analysis_active
-	bool getSeismicAnalysis();
+	bool getSeismicAnalysisActive();
 
 	/// \brief Configure if seismic analysis is active
 	/// \param[in] seismic_analysis_active 
-	void setSeismicAnalysis(bool seismic_analysis_active);
+	void setSeismicAnalysisActive(bool seismic_analysis_active);
 
 	/// \brief Return if two-phase calculation is active
 	/// \return True if two-phase calculation is active
