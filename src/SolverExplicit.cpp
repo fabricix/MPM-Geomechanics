@@ -42,17 +42,13 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
 
+		// Update seismic velocity and acceleration from record if seismic analysis is active
 		if(isSeismicAnalysis){
 			Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
 		}
 
 		// Step 2: Apply boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
-
-		// Step 2.1: Apply seismic velocity to marked nodes
-		if (isSeismicAnalysis && useSTLContact){
-			Seismic::applySeismicVelocityMarkedSTLNodes(iTime, dt, mesh);
-		}
 
 		// Step 3.1: Interpolate internal and external force from particles to nodes
 		#pragma omp parallel sections num_threads(2)
@@ -76,8 +72,13 @@ void SolverExplicit::Solve()
 		// Step 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 5.2: Apply contact correction in particle velocity (if active)
+		// Step 5.2: Apply contact correction in particle velocity
 		if (useSTLContact){
+
+			// Step 5.2.1: Apply seismic velocity to marked nodes
+			if (isSeismicAnalysis){
+				Seismic::applySeismicVelocityMarkedSTLNodes(iTime, dt, mesh);
+			}
 			terrainContact->apply(mesh, particles, dt);
 		}
 
@@ -118,7 +119,7 @@ void SolverExplicit::Solve()
 		// Check for static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 
-		// Advance time
+		// Step 11: Advance time
 		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
