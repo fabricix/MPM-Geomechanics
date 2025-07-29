@@ -199,8 +199,8 @@ namespace ModelSetup {
 	}
 
 	// Seismic analysis
-	bool getSeismicAnalysis() {return seismicAnalysisActive;}
-	void setSeismicAnalysis(bool a) {seismicAnalysisActive = a;}
+	bool getSeismicAnalysisActive() {return seismicAnalysisActive;}
+	void setSeismicAnalysisActive(bool a) {seismicAnalysisActive = a;}
 
 	// hydro-mechanical coupling
 

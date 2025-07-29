@@ -1,15 +1,14 @@
 {
   "time":2,
   "critical_time_step_multiplier":0.3,
-  "stress_scheme_update":"USL",
+  "stress_scheme_update":"MUSL",
   "results":
   {
     "print":40,
     "fields":["displacement","velocity"]
   },
   "body":
-  {
-    "elastic-cuboid-body":
+  [
     {
       "type":"cuboid",
       "id":1,
@@ -17,12 +16,13 @@
       "point_p2":[0.7,0.7,0.8],
       "material_id":1
     }
-  },
+  ],
 	"materials":
-  [{
+  [
+    {
       "type":"elastic",
       "id":1,
-      "young":100e6,
+      "young":50e6,
       "density":2500,
       "poisson":0.25
     }
@@ -36,7 +36,7 @@
   "earthquake": 
   {
     "active":true,
-    "file": "base_acceleration.csv",
+    "file":"base_acceleration.csv",
     "header":true
   }
 }
