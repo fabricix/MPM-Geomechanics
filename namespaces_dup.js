@@ -123,7 +123,7 @@ var namespaces_dup =
       [ "getResultNum", "namespaceModelSetup.html#a31009b398464ca9a7a95a479ef04f236", null ],
       [ "getResultSteps", "namespaceModelSetup.html#a7386088c1d7d90126661d500744ab435", null ],
       [ "getSaveState", "namespaceModelSetup.html#a4b24a55ce0f3b4af6103d9c1fcd4c967", null ],
-      [ "getSeismicAnalysis", "namespaceModelSetup.html#a69db078b0bc38c70bb30834e14bd5632", null ],
+      [ "getSeismicAnalysisActive", "namespaceModelSetup.html#ae1e3abc52ff1aaa46feaf1ba1bc715f9", null ],
       [ "getSeismicFileName", "namespaceModelSetup.html#a3cd47bd6b391f22d9d4616f7cd7c399a", null ],
       [ "getTerrainContactActive", "namespaceModelSetup.html#ada0238847842b436a7aa9349832a8ec1", null ],
       [ "getThreads", "namespaceModelSetup.html#a6d82576fd6bcfef46c27fc5fd3f6ad31", null ],
@@ -149,7 +149,7 @@ var namespaces_dup =
       [ "setNumThreads", "namespaceModelSetup.html#a51772099d7f35cfad360ca6519709341", null ],
       [ "setResultNum", "namespaceModelSetup.html#ad19798e152617f7975ef32d64d2e7292", null ],
       [ "setSaveState", "namespaceModelSetup.html#a52a1faeec98cc872b3511b6ca577422c", null ],
-      [ "setSeismicAnalysis", "namespaceModelSetup.html#aeb92766c5252201b8e08bd7171203620", null ],
+      [ "setSeismicAnalysisActive", "namespaceModelSetup.html#aad42371a9755ac5c2ac98cd4a8a2a32a", null ],
       [ "setTerrainContactActive", "namespaceModelSetup.html#a07f343c6b35e8c341c126bd4b342e213", null ],
       [ "setThreads", "namespaceModelSetup.html#a63d0c1adb226159999474f9a46078150", null ],
       [ "setTime", "namespaceModelSetup.html#a4e2e339527ae0b3fc8affb1f1eb6cdbd", null ],
@@ -176,16 +176,18 @@ var namespaces_dup =
       [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ]
     ] ],
     [ "Seismic", "namespaceSeismic.html", [
-      [ "applySeismicVelocity", "namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096", null ],
+      [ "applySeismicVelocityMarkedSTLNodes", "namespaceSeismic.html#acf7354adb39bbe82df3333454c338e3f", null ],
       [ "disableSeismicAnalysis", "namespaceSeismic.html#a816d8ff526fe0bf0750fd4cb886cf429", null ],
-      [ "getAccumulatedVelocity", "namespaceSeismic.html#a98f0f3c17a3a660d9728862d00cf902d", null ],
+      [ "getAcceleration", "namespaceSeismic.html#a51c3df6239c886d0408ecac9d1e446c4", null ],
+      [ "getAccumulatedVelocity", "namespaceSeismic.html#afb62f9db103e0fab89bfe97d6dfa5ff4", null ],
       [ "getSeismicAnalysis", "namespaceSeismic.html#a8d343ec1884b7314fdfa2ea541ad4348", null ],
       [ "getSeismicData", "namespaceSeismic.html#ac0b55a98c66a0ad7335de252c84351cb", null ],
       [ "getSeismicNodeIndices", "namespaceSeismic.html#a3905e93546db74c37ce46a65af234b24", null ],
       [ "isSeismicNode", "namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862", null ],
       [ "markSeismicNodes", "namespaceSeismic.html#a805c3b1846fa1a0597aea59aa4ec3cc4", null ],
       [ "setSeismicAnalysis", "namespaceSeismic.html#a846fa8b8f13c513f02e2c01f554d8524", null ],
-      [ "setSeismicData", "namespaceSeismic.html#a243b05a52c5ce884652b7e8b6afb7f78", null ]
+      [ "setSeismicData", "namespaceSeismic.html#a243b05a52c5ce884652b7e8b6afb7f78", null ],
+      [ "updateSeismicVectors", "namespaceSeismic.html#ab8278518f75e24ff576ece1a27978b92", null ]
     ] ],
     [ "States", "namespaceStates.html", [
       [ "loadParticleStress", "namespaceStates.html#a4642af2e182f79a07339ec84ac2750df", null ],

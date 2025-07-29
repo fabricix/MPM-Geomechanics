@@ -13,5 +13,5 @@ var searchData=
   ['addmomentumfluid_10',['addmomentumfluid',['../classNode.html#af10f71c9cf899ccedee385942ec65f83',1,'Node::addMomentumFluid()'],['../classNodeMixture.html#a81ce62f4ebbd0cbe14280449b858c03f',1,'NodeMixture::addMomentumFluid()']]],
   ['addplasticstrain_11',['addPlasticStrain',['../classParticle.html#a49b197c3a37ad792289581d13f99bf1c',1,'Particle']]],
   ['apply_12',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
-  ['applyseismicvelocity_13',['applySeismicVelocity',['../namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096',1,'Seismic']]]
+  ['applyseismicvelocitymarkedstlnodes_13',['applySeismicVelocityMarkedSTLNodes',['../namespaceSeismic.html#acf7354adb39bbe82df3333454c338e3f',1,'Seismic']]]
 ];

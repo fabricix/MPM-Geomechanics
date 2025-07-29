@@ -118,9 +118,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a846fa8b8f13c513f02e2c01f554d8524" id="r_a846fa8b8f13c513f02e2c01f554d8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a846fa8b8f13c513f02e2c01f554d8524">setSeismicAnalysis</a> (const <a class="el" href="structSeismicAnalysis.html">SeismicAnalysis</a> &amp;info)</td></tr>
 <tr class="memdesc:a846fa8b8f13c513f02e2c01f554d8524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the seismic analysis configuration.  <br /></td></tr>
 <tr class="separator:a846fa8b8f13c513f02e2c01f554d8524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dc0527ea27fbfd1f32cfd4efe4a2096" id="r_a8dc0527ea27fbfd1f32cfd4efe4a2096"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a8dc0527ea27fbfd1f32cfd4efe4a2096">applySeismicVelocity</a> (double currentTime, double dt, <a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:a8dc0527ea27fbfd1f32cfd4efe4a2096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies seismic velocity to the marked seismic nodes.  <br /></td></tr>
-<tr class="separator:a8dc0527ea27fbfd1f32cfd4efe4a2096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf7354adb39bbe82df3333454c338e3f" id="r_acf7354adb39bbe82df3333454c338e3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#acf7354adb39bbe82df3333454c338e3f">applySeismicVelocityMarkedSTLNodes</a> (double currentTime, double dt, <a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:acf7354adb39bbe82df3333454c338e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies seismic velocity to the marked seismic nodes using STL mesh.  <br /></td></tr>
+<tr class="separator:acf7354adb39bbe82df3333454c338e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8278518f75e24ff576ece1a27978b92" id="r_ab8278518f75e24ff576ece1a27978b92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#ab8278518f75e24ff576ece1a27978b92">updateSeismicVectors</a> (const double currentTime, const double dt)</td></tr>
+<tr class="memdesc:ab8278518f75e24ff576ece1a27978b92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the accumulated seismic velocity and acceleration based on the current time and time step.  <br /></td></tr>
+<tr class="separator:ab8278518f75e24ff576ece1a27978b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a805c3b1846fa1a0597aea59aa4ec3cc4" id="r_a805c3b1846fa1a0597aea59aa4ec3cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a805c3b1846fa1a0597aea59aa4ec3cc4">markSeismicNodes</a> (double epsilon, <a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:a805c3b1846fa1a0597aea59aa4ec3cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the nodes that will receive seismic loading.  <br /></td></tr>
 <tr class="separator:a805c3b1846fa1a0597aea59aa4ec3cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,22 +133,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a8497529ebd0b9c8488dc8afa8574b862" id="r_a8497529ebd0b9c8488dc8afa8574b862"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862">isSeismicNode</a> (int nodeId)</td></tr>
 <tr class="memdesc:a8497529ebd0b9c8488dc8afa8574b862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a node is marked as seismic.  <br /></td></tr>
 <tr class="separator:a8497529ebd0b9c8488dc8afa8574b862"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98f0f3c17a3a660d9728862d00cf902d" id="r_a98f0f3c17a3a660d9728862d00cf902d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a98f0f3c17a3a660d9728862d00cf902d">getAccumulatedVelocity</a> ()</td></tr>
-<tr class="memdesc:a98f0f3c17a3a660d9728862d00cf902d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the accumulated seismic velocity.  <br /></td></tr>
-<tr class="separator:a98f0f3c17a3a660d9728862d00cf902d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb62f9db103e0fab89bfe97d6dfa5ff4" id="r_afb62f9db103e0fab89bfe97d6dfa5ff4"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#afb62f9db103e0fab89bfe97d6dfa5ff4">getAccumulatedVelocity</a> ()</td></tr>
+<tr class="memdesc:afb62f9db103e0fab89bfe97d6dfa5ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the accumulated seismic velocity.  <br /></td></tr>
+<tr class="separator:afb62f9db103e0fab89bfe97d6dfa5ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51c3df6239c886d0408ecac9d1e446c4" id="r_a51c3df6239c886d0408ecac9d1e446c4"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a51c3df6239c886d0408ecac9d1e446c4">getAcceleration</a> ()</td></tr>
+<tr class="memdesc:a51c3df6239c886d0408ecac9d1e446c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the seismic acceleration.  <br /></td></tr>
+<tr class="separator:a51c3df6239c886d0408ecac9d1e446c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a816d8ff526fe0bf0750fd4cb886cf429" id="r_a816d8ff526fe0bf0750fd4cb886cf429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSeismic.html#a816d8ff526fe0bf0750fd4cb886cf429">disableSeismicAnalysis</a> ()</td></tr>
 <tr class="memdesc:a816d8ff526fe0bf0750fd4cb886cf429"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables seismic analysis.  <br /></td></tr>
 <tr class="separator:a816d8ff526fe0bf0750fd4cb886cf429"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a8dc0527ea27fbfd1f32cfd4efe4a2096" name="a8dc0527ea27fbfd1f32cfd4efe4a2096"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dc0527ea27fbfd1f32cfd4efe4a2096">&#9670;&#160;</a></span>applySeismicVelocity()</h2>
+<a id="acf7354adb39bbe82df3333454c338e3f" name="acf7354adb39bbe82df3333454c338e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf7354adb39bbe82df3333454c338e3f">&#9670;&#160;</a></span>applySeismicVelocityMarkedSTLNodes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Seismic::applySeismicVelocity </td>
+          <td class="memname">void Seismic::applySeismicVelocityMarkedSTLNodes </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>currentTime</em>, </td>
@@ -170,7 +176,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Applies seismic velocity to the marked seismic nodes. </p>
+<p>Applies seismic velocity to the marked seismic nodes using STL mesh. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">currentTime</td><td>Current simulation time (s). </td></tr>
@@ -202,14 +208,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a98f0f3c17a3a660d9728862d00cf902d" name="a98f0f3c17a3a660d9728862d00cf902d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98f0f3c17a3a660d9728862d00cf902d">&#9670;&#160;</a></span>getAccumulatedVelocity()</h2>
+<a id="a51c3df6239c886d0408ecac9d1e446c4" name="a51c3df6239c886d0408ecac9d1e446c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51c3df6239c886d0408ecac9d1e446c4">&#9670;&#160;</a></span>getAcceleration()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d &amp; Seismic::getAccumulatedVelocity </td>
+          <td class="memname">const Eigen::Vector3d &amp; Seismic::getAcceleration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the seismic acceleration. </p>
+<dl class="section return"><dt>Returns</dt><dd>Eigen::Vector3d&amp; Reference to the seismic acceleration vector. </dd></dl>
+
+</div>
+</div>
+<a id="afb62f9db103e0fab89bfe97d6dfa5ff4" name="afb62f9db103e0fab89bfe97d6dfa5ff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb62f9db103e0fab89bfe97d6dfa5ff4">&#9670;&#160;</a></span>getAccumulatedVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Vector3d &amp; Seismic::getAccumulatedVelocity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -389,6 +415,44 @@ Functions</h2></td></tr>
 
 <p><a class="el" href="namespaceLoads.html" title="Operations to manage loads in the MPM model.">Loads</a> seismic data from the file specified in the model configuration. </p>
 <p>This function reads the seismic input file defined in the JSON configuration and stores the time and acceleration data into the global <code><a class="el" href="structSeismicData.html" title="Stores seismic time series data.">SeismicData</a></code> structure. </p>
+
+</div>
+</div>
+<a id="ab8278518f75e24ff576ece1a27978b92" name="ab8278518f75e24ff576ece1a27978b92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8278518f75e24ff576ece1a27978b92">&#9670;&#160;</a></span>updateSeismicVectors()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Seismic::updateSeismicVectors </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>currentTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the accumulated seismic velocity and acceleration based on the current time and time step. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentTime</td><td>Current simulation time (s). </td></tr>
+    <tr><td class="paramname">dt</td><td>Simulation time step (s). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function updates the global <code>accumulatedVelocity</code> variable with the seismic velocity </dd></dl>
 
 </div>
 </div>
