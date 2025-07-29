@@ -37,11 +37,66 @@ For downloading the compiled binaries
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
 4. Download the `compiled-binaries` artifact to get the compiled code.
 
-# Compilation in windows
+# Compilation Instructions (Windows/Linux)
 
-## CMake Compilation
+## CMake
 
-See the [Cmake Compilation Manual](@ref cmake_compilation_manual) for more information on compiling with CMake and Windows. 
+Windows Instructions text 
+
+### Required Programs
+
+| Program          | Installation |
+| ---------------- | ------------ |
+| **CMake**        | via Winget   |
+| **MinGW32-make** | via MSYS2    |
+| **GCC**          | via MSYS2    |
+| **G++**          | via MSYS2    |
+
+### Compilation with Windows
+
+The simplest way to compile on windows is by using the `.bat` file at `/build/CMake`, just execute:
+
+```
+cd build/CMake
+./cmake-build-win.bat
+```
+
+Alternatively, you can use the following commands:
+
+```
+cd build/CMake
+cmake -G "MinGW Makefiles" -B build
+cmake --build build
+```
+
+### Linux Instructions text 
+
+#### Required Programs
+
+| Program   | Installation |
+| --------- | ------------ |
+| **CMake** | via apt      |
+| **Make**  | via apt      |
+| **GCC**   | via apt      |
+| **G++**   | via apt      |
+
+#### Compilation with Linux
+
+The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
+
+```
+cd build/CMake
+./cmake-build-linux.bash
+```
+
+Alternatively, you can use the following commands:
+
+```
+cd build/CMake
+cmake -G "Unix Makefiles" -B build
+cmake --build build
+```
+
 
 ## Visual Studio Solution
 
@@ -51,13 +106,6 @@ Alternatively you can compile it by using command in a *Developer Command Prompt
 ```
 msbuild MPM-Geomechanics.sln -p:Configuration=Release
 ```
-
-# Compilation in Linux
-
-
-## CMake Compilation
-
-See the [Cmake Compilation Manual](@ref cmake_compilation_manual) for more information on compiling with CMake and Linux. 
 
 ## Make Compilation
 For compile the code in a linux environment, execute the [make](https://www.gnu.org/software/make/) command into the make folder, in with is located de makefile `MPM-Geomechanics\build\make\makefile`:
