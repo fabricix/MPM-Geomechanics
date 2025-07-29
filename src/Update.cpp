@@ -467,13 +467,13 @@ void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 	setPlaneMomentumFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
-void Update::boundaryConditionsMomentum(Mesh* mesh) {
-
+void Update::boundaryConditionsMomentum(Mesh* mesh) 
+{
 	// Verify if seismic was disabled during the simulation.
 	// This can happen if the simulation time is greater than the seismic data time.
 	if (!ModelSetup::getSeismicAnalysisActive() && mesh->getBoundary()->getPlaneZ0()->restriction == Boundary::BoundaryType::EARTHQUAKE) {
-		// change EARTHQUAKE to SLIDING
-		mesh->getBoundary()->setRestrictions(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+		// change EARTHQUAKE to FIXED for the mesh boundary
+		mesh->getBoundary()->setRestrictions(Boundary::BoundaryType::FIXED);
 	}
 
 	// get nodes
@@ -491,8 +491,10 @@ void Update::boundaryConditionsMomentum(Mesh* mesh) {
 
 } 
 
-void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
-
+/// @brief Set force boundary conditions in the specified plane
+/// @details This function applies boundary conditions to the nodal forces based on the specified plane
+void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) 
+{
 	// get boundary nodes
 	#pragma omp parallel for shared(plane, nodes, dir)
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
@@ -500,17 +502,17 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 		// get node handle 
 		Node* nodeI = nodes->at(plane->nodes.at(i));
 
+		// check if the node is active
+		// and apply the boundary condition based on the restriction type
 		if (nodeI->getActive()) {
 			
 			// witch type of restriction
 			switch(plane->restriction)
 			{
 				// free condition
-				case Boundary::BoundaryType::FREE:
-				{
-					break;
-				}
-				// fixed condition
+				case Boundary::BoundaryType::FREE: { break; }
+				
+				// fixed condition f_iI = 0
 				case Boundary::BoundaryType::FIXED:
 				{
 					// set all force component as zero 
@@ -566,13 +568,14 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 	}
 }
 
-void Update::boundaryConditionsForce(Mesh* mesh) {
-	
+/// @brief Set force boundary conditions
+/// @param mesh Pointer to the mesh object 
+void Update::boundaryConditionsForce(Mesh* mesh)
+{	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
 	// set f = 0 in fixed direction
-
 	setPlaneForce(mesh->getBoundary()->getPlaneX0(), nodes, Update::Direction::X);
 	setPlaneForce(mesh->getBoundary()->getPlaneY0(), nodes, Update::Direction::Y);
 	setPlaneForce(mesh->getBoundary()->getPlaneZ0(), nodes, Update::Direction::Z);
