@@ -296,6 +296,12 @@ Vector3d Input::getOrigin() {
 
 	try
 	{
+		
+		if(inputFile["mesh"]["origin"].is_null() || !inputFile["mesh"]["origin"].is_array()) {
+			// default origin
+			return Vector3d(0.0, 0.0, 0.0);
+		}
+
 		if(inputFile["mesh"]["origin"].is_array()){
 				
 			Vector3d originVector;
@@ -305,7 +311,6 @@ Vector3d Input::getOrigin() {
 
 			return originVector;	
 		}
-	
 		throw(0);
 	}
 	catch(...)

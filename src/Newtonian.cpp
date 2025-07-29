@@ -7,41 +7,18 @@
 
 void Newtonian::updateStress(Particle* particle) const {
 
-    // strain rate increment
-    Matrix3d dE = particle->getStrainIncrement();
     double dt = ModelSetup::getTimeStep();
 
-    // Compute strain rate tensor: D = dE / dt
-    Matrix3d D = dE / dt;
-   
-    // Volumetric strain rate (trace of D)
-    double volumetric_strain_rate = D.trace();
+    // strain rate tensor
+    Matrix3d D = particle->getStrainIncrement() / dt;
+    double Dvol = D.trace(); // volumetric strain rate
+    Matrix3d Ddev = D - Matrix3d::Identity() * Dvol /3.0; // deviatoric strain rate tensor
 
-    // pressure increment
-    double pressure_increment = Bulk * volumetric_strain_rate * dt;
-
-    // update pressure
-    double pressure = particle->getStress().trace()/3.0 + pressure_increment;
-
-    // volumetric part
-    double stress_vol = pressure - 2.0 * Viscosity * volumetric_strain_rate/3.0;
-
-    // update stress components
-    
-    Matrix3d stress = Matrix3d::Zero();
-
-    // Diagonal components
-    stress(0,0) = stress_vol + 2.0 * Viscosity * dE(0,0);
-    stress(1,1) = stress_vol + 2.0 * Viscosity * dE(1,1);
-    stress(2,2) = stress_vol + 2.0 * Viscosity * dE(2,2);
-
-    // Off-diagonal components
-    stress(0,1) = stress(1,0) = Viscosity * dE(0,1);
-    stress(0,2) = stress(2,0) = Viscosity * dE(0,2);
-    stress(1,2) = stress(2,1) = Viscosity * dE(1,2);
+    // mean stress update
+    double mean_stress = particle->getStress().trace()/3.0 + Bulk * Dvol * dt;
 
     // Set updated stress in the particle
-    particle->setStress(stress);
+    particle->setStress(Matrix3d::Identity()*mean_stress + 2.0 * Viscosity * Ddev);
 }
 
 double Newtonian::getSoundSpeed() const {
