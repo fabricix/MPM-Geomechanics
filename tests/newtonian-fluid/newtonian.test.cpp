@@ -1,12 +1,19 @@
 #include <gtest/gtest.h>
 #include "Material.h"
 #include "Particle.h"
-#include "ModelSetup.h"
+#include "Model.h"
 #include "Newtonian.h"
 
-TEST(MaterialNewtonian, UpdateStress_SimpleCases) {
+#include <gtest/gtest.h>
+#include "Material.h"
+#include "Particle.h"
+#include "Model.h"
+#include "Newtonian.h"
+
+TEST(MaterialNewtonian, PureShear) {
+    
     // Set time step
-    ModelSetup::setTimeStep(0.1); // 0.1 seconds
+    ModelSetup::setTimeStep(0.1);
 
     // Material properties
     double density = 1000.0;   // kg/m3
@@ -14,46 +21,80 @@ TEST(MaterialNewtonian, UpdateStress_SimpleCases) {
     double bulk = 1000.0;      // Pa
 
     // Create a Newtonian material
-    Newtonian newtonian(0, density, viscosity, bulk);
+    Newtonian* newtonian = new Newtonian (1, density, viscosity, bulk);
 
     // Create a particle
-    Particle particle(Vector3d(0.0, 0.0, 0.0), nullptr, Vector3d(1.0, 1.0, 1.0));
-    particle.setStress(Matrix3d::Zero());  // Initial stress = 0
-
-    // ----------------------------------------------------------------------
-    // Case 1: Pure volumetric deformation
-    // ----------------------------------------------------------------------
-    Matrix3d dE_vol = Matrix3d::Identity() * 0.01;  // 1% strain in all directions
-    particle.setStrainIncrement(dE_vol);
-
-    newtonian.updateStress(&particle);
-    Matrix3d stress_vol = particle.getStress();
-
-    // Expected stress: only diagonal terms (hydrostatic pressure)
-    double expected_mean_stress = bulk * (0.01 + 0.01 + 0.01);
-    EXPECT_NEAR(stress_vol(0,0), expected_mean_stress, 1e-6);
-    EXPECT_NEAR(stress_vol(1,1), expected_mean_stress, 1e-6);
-    EXPECT_NEAR(stress_vol(2,2), expected_mean_stress, 1e-6);
-    EXPECT_NEAR(stress_vol(0,1), 0.0, 1e-6);
-
-    // ----------------------------------------------------------------------
-    // Case 2: Pure shear
-    // ----------------------------------------------------------------------
-    Matrix3d dE_shear = Matrix3d::Zero();
-    dE_shear(0,1) = 0.02; // Shear strain XY
-    dE_shear(1,0) = 0.02;
+    Particle particle(Vector3d(0.0, 0.0, 0.0), newtonian, Vector3d(1.0, 1.0, 1.0));
+    
+    // Set initial stress
     particle.setStress(Matrix3d::Zero());
-    particle.setStrainIncrement(dE_shear);
+    
+    // Set time step for the model
+    ModelSetup::setTimeStep(0.1);
+    double dt = ModelSetup::getTimeStep();
+    
+    // strain increment
+    double strain = 0.01;
+    Matrix3d dE = Matrix3d::Identity() * strain;
+    particle.setStrainIncrement(dE);
 
-    newtonian.updateStress(&particle);
-    Matrix3d stress_shear = particle.getStress();
+    // Update stress
+    particle.updateStress( );
+    Matrix3d stress = particle.getStress();
+    
+    // Expected stress is the hydrostatic pressure increment
+    double expected_mean_stress = bulk * dE.trace();
+    
+    // Check if the stress is correctly updated
+    EXPECT_NEAR(stress(0,0), expected_mean_stress, 1e-6) << "Failed at (0,0) in volumetric deformation case";
+    EXPECT_NEAR(stress(1,1), expected_mean_stress, 1e-6) << "Failed at (1,1) in volumetric deformation case";
+    EXPECT_NEAR(stress(2,2), expected_mean_stress, 1e-6) << "Failed at (2,2) in volumetric deformation case";
+}
 
-    // For pure shear, sigma_xy = mu * gamma_dot
-    double gamma_dot = dE_shear(0,1) / ModelSetup::getTimeStep();
-    double expected_shear_stress = viscosity * gamma_dot;
+TEST(MaterialNewtonian, PureVolumetric) {
+    
+    // Set time step
+    ModelSetup::setTimeStep(0.1);
 
-    EXPECT_NEAR(stress_shear(0,1), expected_shear_stress, 1e-6);
-    EXPECT_NEAR(stress_shear(1,0), expected_shear_stress, 1e-6);
-    EXPECT_NEAR(stress_shear(0,0), 0.0, 1e-6);
-    EXPECT_NEAR(stress_shear(1,1), 0.0, 1e-6);
+    // Material properties
+    double density = 1000.0;   // kg/m3
+    double viscosity = 0.01;   // Pa·s
+    double bulk = 1000.0;      // Pa
+
+    // Create a Newtonian material
+    Newtonian* newtonian = new Newtonian (1, density, viscosity, bulk);
+
+    // Create a particle
+    Particle particle(Vector3d(0.0, 0.0, 0.0), newtonian, Vector3d(1.0, 1.0, 1.0));
+    
+    // Set initial stress
+    particle.setStress(Matrix3d::Zero());
+    
+    // Set time step for the model
+    ModelSetup::setTimeStep(0.1);
+    double dt = ModelSetup::getTimeStep();
+    
+    // Reset particle stress and strain increment    
+    Matrix3d dE = Matrix3d::Zero();
+    particle.setStress(Matrix3d::Zero());
+    
+    // Set pure shear strain increment in XY plane
+    double strain = 0.02;
+    dE(0,1) = strain; // Shear strain XY
+    dE(1,0) = strain; // Shear strain YX
+    particle.setStrainIncrement(dE);
+
+    // Update stress (integrate stress increment)
+    particle.updateStress( );
+    Matrix3d stress = particle.getStress();
+    
+    // Expected pure shear
+    double expected_shear_stress = 2 * viscosity * strain / dt;
+
+    // Check if the stress is correctly updated
+    EXPECT_NEAR(stress(0,1), expected_shear_stress, 1e-6) << "Failed at (0,1) in pure shear case";
+    EXPECT_NEAR(stress(1,0), expected_shear_stress, 1e-6) << "Failed at (1,0) in pure shear case";
+    EXPECT_NEAR(stress(0,0), 0.0, 1e-6) << "Failed at (0,0) in pure shear case";
+    EXPECT_NEAR(stress(1,1), 0.0, 1e-6) << "Failed at (1,1) in pure shear case";
+    EXPECT_NEAR(stress(2,2), 0.0, 1e-6) << "Failed at (2,2) in pure shear case";
 }
