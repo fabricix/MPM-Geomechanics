@@ -17,7 +17,7 @@ var searchData=
   ['bodypolygon_2eh_14',['BodyPolygon.h',['../BodyPolygon_8h.html',1,'']]],
   ['bodysphere_15',['bodysphere',['../classBodySphere.html#a5b713f631f795d48a837d486d1e36dcd',1,'BodySphere::BodySphere()'],['../classBodySphere.html',1,'BodySphere']]],
   ['bodysphere_2eh_16',['BodySphere.h',['../BodySphere_8h.html',1,'']]],
-  ['boundary_17',['boundary',['../classMesh.html#ae856f697db9b5c61445e64cff311c46a',1,'Mesh::boundary'],['../classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71',1,'Boundary::Boundary()'],['../classBoundary.html',1,'Boundary']]],
+  ['boundary_17',['boundary',['../classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71',1,'Boundary::Boundary()'],['../classMesh.html#ae856f697db9b5c61445e64cff311c46a',1,'Mesh::boundary'],['../classBoundary.html',1,'Boundary']]],
   ['boundary_20conditions_18',['Definition of the planes for setting boundary conditions',['../classBoundary.html#autotoc_md0',1,'']]],
   ['boundary_2eh_19',['Boundary.h',['../Boundary_8h.html',1,'']]],
   ['boundaryconditionsforce_20',['boundaryConditionsForce',['../namespaceUpdate.html#ad736c14ab7703c85030b4ddd9f162cdb',1,'Update']]],
@@ -28,6 +28,7 @@ var searchData=
   ['boundarytype_25',['BoundaryType',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5',1,'Boundary']]],
   ['bousssinesq_20s_20problem_26',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md85',1,'']]],
   ['box_20example_27',['box example',['../namespaceInput.html#autotoc_md12',1,'Distributed load in box example'],['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
-  ['bulkmodulusfluid_28',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],
-  ['by_20particles_29',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]]
+  ['bulk_28',['Bulk',['../classNewtonian.html#ad12b730269f0df771f8125724a2077a0',1,'Newtonian']]],
+  ['bulkmodulusfluid_29',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],
+  ['by_20particles_30',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]]
 ];

@@ -3,7 +3,8 @@ var classMaterial =
     [ "MaterialType", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439", [
       [ "NONE", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da", null ],
       [ "ELASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42", null ],
-      [ "ELASTOPLASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae", null ]
+      [ "ELASTOPLASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae", null ],
+      [ "NEWTONIAN", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749", null ]
     ] ],
     [ "Material", "classMaterial.html#a4fca8e76ddfb7e310071a258174de41d", null ],
     [ "~Material", "classMaterial.html#a2c19452d71f54075df8f5405b03129f4", null ],

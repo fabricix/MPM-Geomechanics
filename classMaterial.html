@@ -116,13 +116,15 @@ Inheritance diagram for Material:</div>
 <div class="dyncontent">
 <div class="center"><img src="classMaterial__inherit__graph.png" border="0" usemap="#aMaterial_inherit__map" alt="Inheritance graph"/></div>
 <map name="aMaterial_inherit__map" id="aMaterial_inherit__map">
-<area shape="rect" title="Represents a material." alt="" coords="29,5,96,32"/>
-<area shape="rect" href="classElastic.html" title="Represents an elastic material." alt="" coords="32,80,93,107"/>
-<area shape="poly" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
-<area shape="rect" href="classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,155,120,181"/>
-<area shape="poly" title=" " alt="" coords="65,122,65,154,60,154,60,122"/>
-<area shape="rect" href="classMohrCoulomb.html" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="11,229,114,256"/>
-<area shape="poly" title=" " alt="" coords="65,197,65,229,60,229,60,197"/>
+<area shape="rect" title="Represents a material." alt="" coords="79,5,155,31"/>
+<area shape="rect" href="classElastic.html" title="Represents an elastic material." alt="" coords="34,79,99,104"/>
+<area shape="poly" title=" " alt="" coords="103,44,77,80,73,77,99,41"/>
+<area shape="rect" href="classNewtonian.html" title="Represents a Newtonian fluid." alt="" coords="123,79,215,104"/>
+<area shape="poly" title=" " alt="" coords="136,40,163,77,159,80,132,43"/>
+<area shape="rect" href="classElasticJaumann.html" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,152,128,177"/>
+<area shape="poly" title=" " alt="" coords="69,118,69,152,64,152,64,118"/>
+<area shape="rect" href="classMohrCoulomb.html" title="Represents an elasto&#45;plastic material using the Mohr&#45;Coulomb failure criteria" alt="" coords="10,225,123,251"/>
+<area shape="poly" title=" " alt="" coords="69,191,69,225,64,225,64,191"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -141,6 +143,7 @@ Public Types</h2></td></tr>
 <tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439" id="r_aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">NONE</a>
 , <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42">ELASTIC</a>
 , <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae">ELASTOPLASTIC</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749">NEWTONIAN</a>
  }</td></tr>
 <tr class="separator:aaaec00187d5d2d1827eb7b7a684cf439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -244,6 +247,7 @@ Protected Attributes</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da" name="aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42" name="aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42"></a>ELASTIC&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae" name="aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae"></a>ELASTOPLASTIC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749" name="aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749"></a>NEWTONIAN&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -515,7 +519,7 @@ Protected Attributes</h2></td></tr>
 <p>Get sound speed. </p>
 <dl class="section return"><dt>Returns</dt><dd>sound_speed Sound speed </dd></dl>
 
-<p>Implemented in <a class="el" href="classElastic.html#a65dd0fef9eb6fbe6c73cb49515aa92d4">Elastic</a>.</p>
+<p>Implemented in <a class="el" href="classElastic.html#a65dd0fef9eb6fbe6c73cb49515aa92d4">Elastic</a>, and <a class="el" href="classNewtonian.html#a668df8a657e86b75e57832e3c331ef6c">Newtonian</a>.</p>
 
 </div>
 </div>
@@ -545,7 +549,7 @@ Protected Attributes</h2></td></tr>
 <p>Returns the material type. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">Material::MaterialType</a> </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classElastic.html#af1114f0a9f7b04f8d2ffd803c6666677">Elastic</a>.</p>
+<p>Reimplemented in <a class="el" href="classElastic.html#af1114f0a9f7b04f8d2ffd803c6666677">Elastic</a>, and <a class="el" href="classNewtonian.html#a8561b2640ea291f18df934071f790b23">Newtonian</a>.</p>
 
 </div>
 </div>
@@ -820,7 +824,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classElastic.html#a70e104591aa936a1593b56bf9c743400">Elastic</a>, <a class="el" href="classElasticJaumann.html#acfad190dd0fcf34258f0258e06d9c954">ElasticJaumann</a>, and <a class="el" href="classMohrCoulomb.html#a80720b3595d8ddc144ee58cf78e7ff83">MohrCoulomb</a>.</p>
+<p>Implemented in <a class="el" href="classElastic.html#a70e104591aa936a1593b56bf9c743400">Elastic</a>, <a class="el" href="classElasticJaumann.html#acfad190dd0fcf34258f0258e06d9c954">ElasticJaumann</a>, <a class="el" href="classMohrCoulomb.html#a80720b3595d8ddc144ee58cf78e7ff83">MohrCoulomb</a>, and <a class="el" href="classNewtonian.html#a78cf814b178af8f0dbdafa5445cadb25">Newtonian</a>.</p>
 
 </div>
 </div>

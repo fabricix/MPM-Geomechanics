@@ -16,7 +16,8 @@ var hierarchy =
         [ "ElasticJaumann", "classElasticJaumann.html", [
           [ "MohrCoulomb", "classMohrCoulomb.html", null ]
         ] ]
-      ] ]
+      ] ],
+      [ "Newtonian", "classNewtonian.html", null ]
     ] ],
     [ "Mesh", "classMesh.html", null ],
     [ "MPM", "classMPM.html", null ],

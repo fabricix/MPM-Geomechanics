@@ -194,6 +194,8 @@ var NAVTREEINDEX0 =
 "Model_8h_source.html":[12,0,0,16],
 "MohrCoulomb_8h.html":[12,0,0,1,3],
 "MohrCoulomb_8h_source.html":[12,0,0,1,3],
+"Newtonian_8h.html":[12,0,0,1,4],
+"Newtonian_8h_source.html":[12,0,0,1,4],
 "NodeMixture_8h.html":[12,0,0,2,3],
 "NodeMixture_8h_source.html":[12,0,0,2,3],
 "Node_8h.html":[12,0,0,2,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "SolverExplicitUSL_8h_source.html":[12,0,0,5,3],
 "SolverExplicit_8h.html":[12,0,0,5,1],
 "SolverExplicit_8h_source.html":[12,0,0,5,1],
-"Solver_8h.html":[12,0,0,5,0],
-"Solver_8h_source.html":[12,0,0,5,0],
-"States_8h.html":[12,0,0,20]
+"Solver_8h.html":[12,0,0,5,0]
 };

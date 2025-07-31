@@ -23,6 +23,7 @@ var annotated_dup =
     [ "Mesh", "classMesh.html", "classMesh" ],
     [ "MohrCoulomb", "classMohrCoulomb.html", "classMohrCoulomb" ],
     [ "MPM", "classMPM.html", "classMPM" ],
+    [ "Newtonian", "classNewtonian.html", "classNewtonian" ],
     [ "NodalPointLoad", "structNodalPointLoad.html", null ],
     [ "Node", "classNode.html", "classNode" ],
     [ "NodeMixture", "classNodeMixture.html", "classNodeMixture" ],
