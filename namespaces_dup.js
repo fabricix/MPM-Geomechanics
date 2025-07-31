@@ -176,7 +176,7 @@ var namespaces_dup =
       [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ]
     ] ],
     [ "Seismic", "namespaceSeismic.html", [
-      [ "applySeismicVelocityMarkedSTLNodes", "namespaceSeismic.html#acf7354adb39bbe82df3333454c338e3f", null ],
+      [ "applySeismicVelocityMarkedSTLNodes", "namespaceSeismic.html#a4aed6a906097df08e741f79131f86f12", null ],
       [ "disableSeismicAnalysis", "namespaceSeismic.html#a816d8ff526fe0bf0750fd4cb886cf429", null ],
       [ "getAcceleration", "namespaceSeismic.html#a51c3df6239c886d0408ecac9d1e446c4", null ],
       [ "getAccumulatedVelocity", "namespaceSeismic.html#afb62f9db103e0fab89bfe97d6dfa5ff4", null ],
