@@ -101,7 +101,7 @@ namespace Seismic
         seismicAcceleration = a_sismo; // Update the seismic acceleration
     }
 
-    void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh)
+    void applySeismicVelocityMarkedSTLNodes(Mesh* mesh)
     {
         std::vector<Node*>* nodes = mesh->getNodes();
 

@@ -79,11 +79,9 @@ namespace Seismic
     /**
      * @brief Applies seismic velocity to the marked seismic nodes using STL mesh.
      *
-     * @param currentTime Current simulation time (s).
-     * @param dt Simulation time step (s).
      * @param mesh Pointer to the Eulerian background mesh.
      */
-    void applySeismicVelocityMarkedSTLNodes(double currentTime, double dt, Mesh* mesh);
+    void applySeismicVelocityMarkedSTLNodes(Mesh* mesh);
     
     /**
      * @brief Updates the accumulated seismic velocity and acceleration based on the current time and time step.

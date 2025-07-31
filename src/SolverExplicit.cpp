@@ -79,7 +79,7 @@ void SolverExplicit::Solve()
 
 			// 5.2.1: Apply seismic velocity to marked nodes
 			if (isSeismicAnalysis){
-				Seismic::applySeismicVelocityMarkedSTLNodes(iTime, dt, mesh);
+				Seismic::applySeismicVelocityMarkedSTLNodes(mesh);
 			}
 			terrainContact->apply(mesh, particles, dt);
 		}
