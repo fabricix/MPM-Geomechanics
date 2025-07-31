@@ -32,21 +32,27 @@ void SolverExplicit::Solve()
 		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
+
+		// 1.1: Update contribution nodes weights and derivatives
 		Update::contributionNodes(mesh, bodies);
-		#pragma omp parallel sections num_threads(2)
+				
+		#pragma omp parallel sections num_threads(3)
 		{
+			// 1.2: Nodal mass
 			#pragma omp section
 			Interpolation::nodalMass(mesh, bodies);
 
+			// 1.3: Nodal momentum
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh, bodies);
+			
+			// 1.4: Interpolate seismic velocity and acceleration from record
+			#pragma omp section
+			if(isSeismicAnalysis){
+				Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
+			}
 		}
-
-		// Update seismic velocity and acceleration from record
-		if(isSeismicAnalysis){
-			Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
-		}
-
+			
 		// Step 2: Impose boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
@@ -112,20 +118,32 @@ void SolverExplicit::Solve()
 		}
 
 		// Step 9: Update density and stress
-		Update::particleDensity(bodies);
-		Update::particleStress(bodies);
+		#pragma omp parallel sections num_threads(5)
+		{
+			#pragma omp section
+			Update::particleDensity(bodies);
 
-		// Step 10: Reset nodal values
-		Update::resetNodalValues(mesh);
-
-		// Static solution check (Dynamic Relaxation)
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
-
-		// Step 11: Advance simulation time
-		ModelSetup::setCurrentTime(iTime += dt);
+			#pragma omp section
+			Update::particleStress(bodies);
+			
+			// Step 10: Reset nodal values
+			Update::resetNodalValues(mesh);
+			
+			// Static solution check (Dynamic Relaxation)
+			DynamicRelaxation::setStaticSolution(bodies, loopCounter);
+			
+			// Step 11: Advance simulation time
+			ModelSetup::setCurrentTime(iTime += dt);
+		}
 	}
 
 	// Final output
-	Output::writeGrid(mesh, Output::CELLS);
-	Output::writeResultsSeries();
+	#pragma omp parallel sections num_threads(2)
+	{
+		#pragma omp section
+		Output::writeGrid(mesh, Output::CELLS);
+		
+		#pragma omp section
+		Output::writeResultsSeries();
+	}
 }
