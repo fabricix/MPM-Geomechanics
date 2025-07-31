@@ -48,6 +48,7 @@
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
     <ClCompile Include="..\..\src\Seismic.cpp" />
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
+    <ClCompile Include="..\..\src\Newtonian.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\..\inc\Mesh\Cell.h" />
     <ClInclude Include="..\..\inc\Seismic.h" />
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
+    <ClInclude Include="..\..\inc\Materials\Newtonian.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">
