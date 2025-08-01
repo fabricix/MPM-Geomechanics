@@ -26,7 +26,6 @@
     <ClCompile Include="..\..\src\ShapeGimp.cpp" />
     <ClCompile Include="..\..\src\ShapeLinear.cpp" />
     <ClCompile Include="..\..\src\SolverExplicitTwoPhaseUSL.cpp" />
-    <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />
     <ClCompile Include="..\..\src\Update.cpp" />
     <ClCompile Include="..\..\src\Warning.cpp" />
@@ -81,7 +80,6 @@
     <ClInclude Include="..\..\inc\Shape\ShapeLinear.h" />
     <ClInclude Include="..\..\inc\Solver\Solver.h" />
     <ClInclude Include="..\..\inc\Solver\SolverExplicitTwoPhaseUSL.h" />
-    <ClInclude Include="..\..\inc\Solver\SolverExplicitUSL.h" />
     <ClInclude Include="..\..\inc\States.h" />
     <ClInclude Include="..\..\inc\Update.h" />
     <ClInclude Include="..\..\inc\Warning.h" />
