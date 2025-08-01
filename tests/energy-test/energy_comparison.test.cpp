@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <mpm.h>
+#include <filesystem>
 
 double sum_energy(const std::string& filename)
 {
@@ -43,8 +44,11 @@ double sum_energy(const std::string& filename)
 
 void executeSimulation()
 {
-  int response;
-  response = system("..\\CMake\\MPM-Geomechanics.exe test-files\\energy-comparison\\cuboid.json");
+
+  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "tests" / "energy-test";
+  std::filesystem::current_path(test_dir);
+
+  int response = system("..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
 
   if (response == 0)
   {
@@ -79,8 +83,7 @@ TEST(ENERGY_COMPARISON, ENERGY_SUM)
 
   executeSimulation();
 
-  std::string folder = "test-files/energy-comparison/";
-  double main_energy = sum_energy(folder + "analytical_energy.csv");
+  double main_energy = sum_energy("analytical_energy.csv");
   double test_energy = sum_energy("time-energy.csv");
 
   if (main_energy == -1.0 || test_energy == -1.0) {
