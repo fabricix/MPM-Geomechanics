@@ -9,23 +9,24 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
-
       - name: Install build dependencies
-        run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake git
 
-      - name: Change to test build directory
+      - name: Clone GoogleTest into external directory
+        run: git clone https://github.com/google/googletest.git external/googletest
+
+      - name: Make test build script executable
+        run: chmod +x build/testing/cmake-build-linux.bash
+
+      - name: Run build script from testing directory
+        run: ./cmake-build-linux.bash
         working-directory: build/testing
-        run: |
-          chmod +x cmake-build-linux.bash
-          ./cmake-build-linux.bash
 
-      - name: Run tests
-        working-directory: build/testing/build
+      - name: Run compiled tests
         run: ./MPM-Geomechanics-tests
-
+        working-directory: build/testing/build
