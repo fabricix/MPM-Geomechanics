@@ -29,4 +29,4 @@ jobs:
 
       - name: Run compiled tests
         run: ./MPM-Geomechanics-tests
-        working-directory: build/testing/build
+        working-directory: build/testing
