@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <mpm.h>
+#include <MPM.h>
 #include <filesystem>
 
 double sum_energy(const std::string& filename)
