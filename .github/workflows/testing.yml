@@ -17,11 +17,12 @@ jobs:
       - name: Install build dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake
 
-      - name: Make script executable
-        run: chmod +x build/testing/cmake-build-linux.bash
-
-      - name: Build project with test target
-        run: ./build/testing/cmake-build-linux.bash
+      - name: Change to test build directory
+        working-directory: build/testing
+        run: |
+          chmod +x cmake-build-linux.bash
+          ./cmake-build-linux.bash
 
       - name: Run tests
-        run: ./build/MPM-Geomechanics-tests
+        working-directory: build/testing/build
+        run: ./MPM-Geomechanics-tests
