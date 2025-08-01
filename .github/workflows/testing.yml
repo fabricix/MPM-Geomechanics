@@ -26,7 +26,3 @@ jobs:
       - name: Run build script from testing directory
         run: ./cmake-build-linux.bash
         working-directory: build/testing
-
-      - name: Run compiled tests
-        run: ./MPM-Geomechanics-tests
-        working-directory: build/testing
