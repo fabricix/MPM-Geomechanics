@@ -26,7 +26,6 @@ jobs:
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
           zip
-          ldd
 
     # Step 3: Configure the project using CMake and Ninja
     - name: Configure with CMake using Ninja
