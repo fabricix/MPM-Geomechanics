@@ -122,9 +122,6 @@ void SolverExplicit::Solve()
 		// Compute current kinetic energy
 		Energy::computeKineticEnergy(bodies);
 
-		// Compute current kinetic energy
-		Energy::computeKineticEnergy(bodies);
-
 		// Static solution check (Dynamic Relaxation)
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 
