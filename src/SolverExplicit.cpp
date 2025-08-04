@@ -127,12 +127,15 @@ void SolverExplicit::Solve()
 			Update::particleStress(bodies);
 			
 			// Step 10: Reset nodal values
+			#pragma omp section
 			Update::resetNodalValues(mesh);
 			
 			// Static solution check (Dynamic Relaxation)
+			#pragma omp section
 			DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 			
 			// Step 11: Advance simulation time
+			#pragma omp section
 			ModelSetup::setCurrentTime(iTime += dt);
 		}
 	}
