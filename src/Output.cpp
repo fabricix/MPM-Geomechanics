@@ -616,7 +616,7 @@ namespace Output{
 	void updateTerminal(vector<Body*>* bodies, double itime)
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
-		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::inst().getCurrentKineticEnergy() << " J - ";
+		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::getCurrentKineticEnergy() << " J - ";
 		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
 	} 
 
@@ -643,7 +643,7 @@ namespace Output{
 
 	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
     // Get total kinetic energy
-	double ienergy = Energy::inst().getCurrentKineticEnergy();
+	double ienergy = Energy::getCurrentKineticEnergy();
 
     // Open the simulation CSV file in append mode
     std::ofstream csv_file("time-energy.csv", std::ios::app);

@@ -18,12 +18,12 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
     // first iteration
     if (loopCounter == 1)
     {
-        Energy::inst().setLastKineticEnergy(0.0);
+        Energy::setLastKineticEnergy(0.0);
         return;
     }
 
     // compute the kinetic energy increment
-    double deltaKineticEnergy = Energy::inst().getCurrentKineticEnergy() - Energy::inst().getLastKineticEnergy();
+    double deltaKineticEnergy = Energy::deltaKineticEnergy();
 
     // check if there was a peak
     if (deltaKineticEnergy < 0.0)
@@ -46,9 +46,9 @@ void DynamicRelaxation::setStaticSolution(vector<Body*>* bodies, int loopCounter
             }
         }
         
-        Energy::inst().setCurrentKineticEnergy(0.0);
+        Energy::setCurrentKineticEnergy(0.0);
     }
 
     // update last kinetic energy
-    Energy::inst().setLastKineticEnergyAsCurrent();
+    Energy::setLastKineticEnergyAsCurrent();
 }

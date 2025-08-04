@@ -6,33 +6,15 @@
 
 #include "Body/Body.h"
 
-class Energy
+namespace Energy
 {
-public:
-
-    static Energy& inst()
-    {
-        static Energy instance;
-        return instance;
-    }
-    
-    inline double getCurrentKineticEnergy() { return currentKineticEnergy; } //!< Get current kinetic energy
-    inline void setCurrentKineticEnergy(double energy) { currentKineticEnergy = energy; } //<!< Set current kinetic energy
-    inline double getLastKineticEnergy() { return lastKineticEnergy; } //!< Get last kinetic energy
-    inline void setLastKineticEnergy(double energy) { lastKineticEnergy = energy; } //<!< Set last kinetic energy
-    inline void setLastKineticEnergyAsCurrent() { lastKineticEnergy = currentKineticEnergy; } //<!< Set last kinetic energy as current
-    
+    double getCurrentKineticEnergy(); //!< Get current kinetic energy
+    void setCurrentKineticEnergy(double energy);  //<!< Set current kinetic energy
+    double getLastKineticEnergy();  //!< Get last kinetic energy
+    void setLastKineticEnergy(double energy);  //<!< Set last kinetic energy
+    void setLastKineticEnergyAsCurrent(); //<!< Set last kinetic energy as current
+    double deltaKineticEnergy(); //<!< Set last kinetic energy as current
     void computeKineticEnergy(vector<Body*>* bodies); //!< Compute the kinetic energy of the bodies
-    
-private:
-
-    double currentKineticEnergy = 0.0; //!< Current kinetic energy
-    double lastKineticEnergy = 0.0; //!< Last kinetic energy
-
-    Energy() = default; 
-    Energy(const Energy&) = delete;
-    Energy& operator=(const Energy&) = delete;
-
 };
 
 #endif /* INC_ENERGY_H_ */

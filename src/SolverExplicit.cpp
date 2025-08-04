@@ -107,7 +107,7 @@ void SolverExplicit::Solve()
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		Energy::inst().computeKineticEnergy(bodies);
+		Energy::computeKineticEnergy(bodies);
 
 		// Check for static solution
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);

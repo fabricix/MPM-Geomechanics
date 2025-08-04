@@ -1,5 +1,18 @@
 #include "Energy.h"
 
+namespace Energy
+{
+  double currentKineticEnergy = 0.0; //!< Current kinetic energy
+  double lastKineticEnergy = 0.0; //!< Last kinetic energy
+}
+
+double Energy::getCurrentKineticEnergy() { return currentKineticEnergy; } //!< Get current kinetic energy
+void Energy::setCurrentKineticEnergy(double energy) { currentKineticEnergy = energy; } //!< Set current kinetic energy
+double Energy::getLastKineticEnergy() { return lastKineticEnergy; } //!< Get last kinetic energy
+void Energy::setLastKineticEnergy(double energy) { lastKineticEnergy = energy; } //!< Set last kinetic energy
+void Energy::setLastKineticEnergyAsCurrent() { currentKineticEnergy = lastKineticEnergy; } //!< Set last kinetic energy as current
+double Energy::deltaKineticEnergy() { return (currentKineticEnergy - lastKineticEnergy); } //!< Set last kinetic energy as current
+
 void Energy::computeKineticEnergy(vector<Body*>* bodies)
 {
   // initial value for energy
@@ -12,7 +25,7 @@ void Energy::computeKineticEnergy(vector<Body*>* bodies)
     vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
     // for each particle
-    #pragma omp parallel for reduction(+:energy) shared(particles)
+#pragma omp parallel for reduction(+:energy) shared(particles)
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
       // verify active particle
@@ -27,5 +40,5 @@ void Energy::computeKineticEnergy(vector<Body*>* bodies)
     }
   }
 
-  Energy::inst().setCurrentKineticEnergy(energy);
+  Energy::setCurrentKineticEnergy(energy);
 }
