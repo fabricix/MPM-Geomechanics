@@ -625,7 +625,7 @@ namespace Input {
 	/// \return seismic_data Seismic data
 	SeismicData readSeismicData(const std::string& filename, bool hasHeader);
 
-	/// \brief Return the seismic analysis information
+    /// \brief Return the seismic analysis information
 	/// \return seismic_analisys_info Seismic analysis information
 	SeismicAnalysis getSeismicAnalysisInfo();
 
@@ -636,11 +636,31 @@ namespace Input {
 	/// \brief Return the terrain contact active
 	bool getTerrainContactActive();
 
-	/// \brief Return if the STL mesh file should be written
+	/// \brief Return if the penalty contact is active
+	/// \return penalty_contact_active Penalty contact active
+    bool getPenaltyContactActive();
+
+	/// \brief Return the penalty stiffness
+	/// \return penalty_stiffness Penalty stiffness
+    double getPenaltyStiffness();	
+
+    /// \brief Return if the STL mesh file should be written
 	bool getWriteSTLMeshFile();
 
 	/// \brief Return the distance threshold for contact detection
 	double getDistanceThreshold();
+
+	/// \brief Return the hydro-mechanical coupling enabled
+	/// \return hydro_mech_coupling_enabled Hydro-mechanical coupling enabled
+	bool getHydroMechCouplingEnabled();
+
+    /// \brief Return the hydro-mechanical coupling type
+	/// \return hydro_mech_coupling_type Hydro-mechanical coupling type
+	bool getHydroMechCouplingOneWay();
+
+    /// \brief Return the pore pressure filename
+	/// \return pore_pressure_filename Pore pressure filename
+	std::string getPorePressureFilename();
 };
 
 #endif /* INPUT_H_ */

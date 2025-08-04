@@ -32,6 +32,10 @@ namespace ModelSetup {
 	/// \brief Defines the type of interpolation function
 	enum InterpolationFunctionType{ LINEAR, GIMP };
 
+	/// \enum HydroMechanicalCouplingType
+	/// \brief Defines the type of hydro-mechanical coupling
+	enum class HydroMechanicalCouplingType { NONE, ONE_WAY };
+
 	/// \brief Return true is the system is Windows
 	/// \return True if is Windows system
 	bool getWindowsSystem();
@@ -200,11 +204,11 @@ namespace ModelSetup {
 	
 	/// \brief Return true if seismic analysis is active
 	/// \return if_seismic_analysis_active
-	bool getSeismicAnalysis();
+	bool getSeismicAnalysisActive();
 
 	/// \brief Configure if seismic analysis is active
 	/// \param[in] seismic_analysis_active 
-	void setSeismicAnalysis(bool seismic_analysis_active);
+	void setSeismicAnalysisActive(bool seismic_analysis_active);
 
 	/// \brief Return if two-phase calculation is active
 	/// \return True if two-phase calculation is active
@@ -238,6 +242,18 @@ namespace ModelSetup {
 	
 	/// \brief Set terrain contact active
 	void setTerrainContactActive(bool);
+
+	/// \brief return the hydro-mechanical coupling type
+	/// \return HydroMechanicalCouplingType
+	HydroMechanicalCouplingType getHydroMechanicalCouplingType();
+	
+	/// \brief Set hydro-mechanical coupling type
+	/// \param[in] type HydroMechanicalCouplingType
+	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type);
+
+	/// \brief Return if one way hydro-mechanical coupling is enabled
+	/// \return True if one-way hydro-mechanical coupling is enabled
+	bool getHydroMechOneWayEnabled();
 };
 
 #endif /* MODEL_H_ */

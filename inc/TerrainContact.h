@@ -22,6 +22,10 @@ private:
 
     double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
+    bool usePenaltyContact = false; //!< Use penalty contact method
+
+    double penaltyStiffness = 0.0; //!< Penalty stiffness for contact forces
+
 public:
 
     TerrainContact( STLReader* mesh, double friction)
@@ -62,6 +66,12 @@ public:
 
     /// @brief Apply the terrain contact algorithm
     void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
+
+    /// @brief Enable the penalty contact method
+    void enablePenaltyContact(bool enable);
+    
+    /// @brief Set the penalty stiffness for contact forces
+    void setPenaltyStiffness(double k);
 };
 
 #endif // TERRAINCONTACT_H
