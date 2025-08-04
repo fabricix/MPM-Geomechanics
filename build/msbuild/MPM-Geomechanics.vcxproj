@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\src\DynamicRelaxation.cpp" />
     <ClCompile Include="..\..\src\Elastic.cpp" />
     <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
+    <ClCompile Include="..\..\src\Energy.cpp" />
     <ClCompile Include="..\..\src\Geometry.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\Integration.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="..\..\inc\Contact.h" />
     <ClInclude Include="..\..\inc\Contribution.h" />
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
+    <ClInclude Include="..\..\inc\Energy.h" />
     <ClInclude Include="..\..\inc\Geometry.h" />
     <ClInclude Include="..\..\inc\Input.h" />
     <ClInclude Include="..\..\inc\Integration.h" />
