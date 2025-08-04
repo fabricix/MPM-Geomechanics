@@ -216,3 +216,10 @@ cmake --build .
 ```
 
 These commands will generate a executable file named `MPM-Test`.
+
+## Contributing
+
+If you are part of the team, clone the repo and submit pull requests from your branches.
+
+If you are an external contributor, please fork the repository and submit a pull request from your fork.
+
