@@ -1,18 +1,22 @@
 {
   "stress_scheme_update":"MUSL",
-  "time":2.5,
+  "time":1.0,
   "critical_time_step_multiplier":0.1,
   "gravity":[0.0,0.0,-10.0],
   "n_threads":10,
+  "damping":{
+    "type":"kinetic",
+    "value":0.1
+  },
   "results":
   {
     "print":25,
-    "fields":["id","displacement","velocity","material"]
+    "fields":["id","displacement","velocity","material","stress"]
   },
   "mesh":
   { 
     "cells_dimension":[0.1,0.1,0.1],
-    "cells_number":[10,10,20]
+    "cells_number":[10,1,20]
   },
  "material":
  [
@@ -30,7 +34,7 @@
       "type":"cuboid",
       "id":1,
       "point_p1":[0.0,0.0,0.0],
-      "point_p2":[1.0,0.6,0.5],
+      "point_p2":[1.0,0.1,1.5],
       "material_id":1
     }
   ]
