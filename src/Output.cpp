@@ -686,26 +686,27 @@ namespace Output{
 		}
 	}
 
-	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
-    // Get total kinetic energy
-	double ienergy = Energy::getCurrentKineticEnergy();
+	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) 
+	{
+		// Get total kinetic energy
+		double ienergy = Energy::getCurrentKineticEnergy();
 
-    // Open the simulation CSV file in append mode
-    std::ofstream csv_file("time-energy.csv", std::ios::app);
-    if (!csv_file.is_open()) {
-        std::cerr << "Error opening the CSV file" << std::endl;
-    }
-    
-    // Write time and energy to the file
-    if(iTime==0){
-		csv_file << "time,energy" << "\n";
+		// Open the simulation CSV file in append mode
+		std::ofstream csv_file("time-energy.csv", std::ios::app);
+		if (!csv_file.is_open()) {
+			std::cerr << "Error opening the CSV file" << std::endl;
+		}
+		
+		// Write time and energy to the file
+		if(iTime==0){
+			csv_file << "time,energy" << "\n";
+		}
+		
+		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
+		
+		// Close the file
+		csv_file.close();
 	}
-	
-	csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
-	
-    // Close the file
-    csv_file.close();
-}
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
