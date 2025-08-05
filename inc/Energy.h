@@ -12,9 +12,8 @@ namespace Energy
     void setCurrentKineticEnergy(double energy);  //<!< Set current kinetic energy
     double getLastKineticEnergy();  //!< Get last kinetic energy
     void setLastKineticEnergy(double energy);  //<!< Set last kinetic energy
-    void setLastKineticEnergyAsCurrent(); //<!< Set last kinetic energy as current
     double deltaKineticEnergy(); //<!< Set last kinetic energy as current
-    void computeKineticEnergy(vector<Body*>* bodies); //!< Compute the kinetic energy of the bodies
+    void computeKineticEnergy(vector<Particle*>* particles); //!< Compute the kinetic energy of the bodies
 };
 
 #endif /* INC_ENERGY_H_ */

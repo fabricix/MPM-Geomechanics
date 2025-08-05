@@ -643,7 +643,7 @@ namespace Output{
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
 	}
 
-	void updateTerminal(vector<Body*>* bodies, double itime)
+	void updateTerminal(double itime)
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
 		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::getCurrentKineticEnergy() << " J - ";
@@ -686,7 +686,7 @@ namespace Output{
 		}
 	}
 
-	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) 
+	void writeCSVEnergyFile(double iTime) 
 	{
 		// Get total kinetic energy
 		double ienergy = Energy::getCurrentKineticEnergy();
@@ -718,9 +718,9 @@ namespace Output{
 			writeBodies(bodies,iTime);
 
 			// update terminal
-			updateTerminal(bodies,iTime);
+			updateTerminal(iTime);
 
-			writeCSVEnergyFile(bodies,iTime);
+			writeCSVEnergyFile(iTime);
 		}
 	}
 

@@ -120,10 +120,10 @@ void SolverExplicit::Solve()
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		Energy::computeKineticEnergy(bodies);
+		Energy::computeKineticEnergy(particles);
 
 		// Static solution check (Dynamic Relaxation)
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
+		DynamicRelaxation::setStaticSolution(particles);
 
 		// Step 11: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
