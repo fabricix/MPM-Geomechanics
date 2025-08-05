@@ -19,8 +19,17 @@
 
 	"results":
 	{
-		"print":250,
-		"fields":["id","displacement","material","active"]
+		"print":50,
+
+		"material_point_results":
+		{
+			"fields":["id","displacement","material","active"]
+		},
+		
+		"grid_nodal_results":
+		{
+			"fields":["all"]
+		}
 	},
 
 	"mesh":
