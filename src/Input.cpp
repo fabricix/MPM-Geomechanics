@@ -960,7 +960,8 @@ vector<string> Input::getResultFields()
 		{
 			if (!inputFile["results"]["fields"].is_null())
 			{
-				Warning::printMessage("'fields' is no longer supported. Use 'material_point_results' instead.\nPlease check the .json file");
+				Warning::printMessage("'fields' keyword is no longer supported.");
+				Warning::printMessage("Use 'material_point_results' instead.");
 				material_point_results = "fields";
 			}
 			else

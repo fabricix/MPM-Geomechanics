@@ -16,7 +16,6 @@ SolverExplicit::SolverExplicit() : Solver() {}
 
 void SolverExplicit::Solve()
 {
-	std::cout << "Starting explicit solver..." << std::endl;
 	// Initialize simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
