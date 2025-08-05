@@ -756,7 +756,7 @@ namespace Output{
 		}
 	}
 
-	void writeInitialState(int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
 		// write initial state 
 		printModelInfo(bodies, iTime);

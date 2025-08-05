@@ -75,7 +75,7 @@ namespace Output {
 
 	/// \brief Write the initial state of the simulation
 	/// 
-	void writeInitialState(int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh);
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh);
 
 	/// \brief Print initial program screen
 	///

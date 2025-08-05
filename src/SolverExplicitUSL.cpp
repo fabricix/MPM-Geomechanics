@@ -27,7 +27,7 @@ void SolverExplicitUSL::Solve()
 	double iTime = 0.0;
 
 	// write initial particles and grid states
-	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh);
 
 	// solve in time
 	while (iTime < time)

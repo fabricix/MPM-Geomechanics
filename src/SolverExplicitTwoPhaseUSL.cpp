@@ -30,7 +30,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 	double iTime = 0.0;
 
 	// write initial particles and grid states
-	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh);
 
 	// solve in time
 	while (iTime < time)
@@ -157,6 +157,10 @@ void SolverExplicitTwoPhaseUSL::Solve()
 
 		// update particle stress
 		Update::particleStress(bodies);
+
+		// write particles and grid in step
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// reset all nodal values
 		Update::resetNodalValues(mesh);

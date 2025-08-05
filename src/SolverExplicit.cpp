@@ -26,7 +26,7 @@ void SolverExplicit::Solve()
 	bool useContact = ModelSetup::getTerrainContactActive();
 
 	// write initial particles and grid states
-	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh);
 
 	// Solve in time
 	while (iTime < time)
