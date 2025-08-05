@@ -4,13 +4,11 @@
 #ifndef INC_DYNAMICRELAXATION_H_
 #define INC_DYNAMICRELAXATION_H_
 
-#include "Body/Body.h"
+#include "Particle/Particle.h"
 
-namespace DynamicRelaxation {
-
-    double computeKineticEnergy(vector<Body *> *bodies);
-
-    void setStaticSolution(vector<Body *> *bodies, int loopCounter);
+namespace DynamicRelaxation
+{
+    void setStaticSolution(vector<Particle*>* particles);
 }
 
 #endif /* INC_DYNAMICRELAXATION_H_ */

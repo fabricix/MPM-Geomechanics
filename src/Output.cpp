@@ -11,6 +11,7 @@
 #endif
 
 #include "Output.h"
+#include "Energy.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
 
@@ -642,10 +643,10 @@ namespace Output{
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
 	}
 
-	void updateTerminal(vector<Body*>* bodies, double itime)
+	void updateTerminal(double itime)
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
-		std::cout <<"Energy: "<< std::setw(8) << std::scientific << std::setprecision(4) << DynamicRelaxation::computeKineticEnergy(bodies) << " J - ";
+		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::getCurrentKineticEnergy() << " J - ";
 		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
 	} 
 
@@ -685,25 +686,27 @@ namespace Output{
 		}
 	}
 
-	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
-    // Get total kinetic energy
-    double ienergy = DynamicRelaxation::computeKineticEnergy(bodies);
-    
-    // Open the simulation CSV file in append mode
-    std::ofstream csv_file("time-energy.csv", std::ios::app);
-    if (!csv_file.is_open()) {
-        std::cerr << "Error opening the CSV file" << std::endl;
-    }
-    
-    // Write time and energy to the file
-    if(iTime==0)
-		csv_file << "time,energy" << "\n";
-    
-	csv_file << iTime << "," << ienergy << "\n";
-    
-    // Close the file
-    csv_file.close();
-}
+	void writeCSVEnergyFile(double iTime) 
+	{
+		// Get total kinetic energy
+		double ienergy = Energy::getCurrentKineticEnergy();
+
+		// Open the simulation CSV file in append mode
+		std::ofstream csv_file("time-energy.csv", std::ios::app);
+		if (!csv_file.is_open()) {
+			std::cerr << "Error opening the CSV file" << std::endl;
+		}
+		
+		// Write time and energy to the file
+		if(iTime==0){
+			csv_file << "time,energy" << "\n";
+		}
+		
+		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
+		
+		// Close the file
+		csv_file.close();
+	}
 
 	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
 	{
@@ -715,9 +718,9 @@ namespace Output{
 			writeBodies(bodies,iTime);
 
 			// update terminal
-			updateTerminal(bodies,iTime);
+			updateTerminal(iTime);
 
-			writeCSVEnergyFile(bodies,iTime);
+			writeCSVEnergyFile(iTime);
 		}
 	}
 

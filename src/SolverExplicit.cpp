@@ -8,6 +8,7 @@
 #include "Update.h"
 #include "Output.h"
 #include "DynamicRelaxation.h"
+#include "Energy.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
 
@@ -118,8 +119,11 @@ void SolverExplicit::Solve()
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
+		// Compute current kinetic energy
+		Energy::computeKineticEnergy(particles);
+
 		// Static solution check (Dynamic Relaxation)
-		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
+		DynamicRelaxation::setStaticSolution(particles);
 
 		// Step 11: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);

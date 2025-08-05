@@ -46,6 +46,7 @@
     <ClCompile Include="..\..\src\TerrainContact.cpp" />
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
     <ClCompile Include="..\..\src\Seismic.cpp" />
+    <ClCompile Include="..\..\src\Energy.cpp" />
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
     <ClCompile Include="..\..\src\Newtonian.cpp" />
   </ItemGroup>
@@ -88,6 +89,7 @@
     <ClInclude Include="..\..\inc\TerrainContact.h" />
     <ClInclude Include="..\..\inc\Mesh\Cell.h" />
     <ClInclude Include="..\..\inc\Seismic.h" />
+    <ClInclude Include="..\..\inc\Energy.h" />
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
     <ClInclude Include="..\..\inc\Materials\Newtonian.h" />
   </ItemGroup>
