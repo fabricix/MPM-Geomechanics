@@ -28,7 +28,7 @@
 		
 		"grid_nodal_results":
 		{
-			"fields":["all"]
+			"fields":["id","mass"]
 		}
 	},
 

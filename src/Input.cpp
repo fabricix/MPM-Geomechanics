@@ -897,32 +897,52 @@ vector<string> Input::getGridResultFields()
 	try
 	{
 		vector<string> fields;
-
-		if (inputFile["results"].is_null())
+		
+		if ((!inputFile.contains("results") || inputFile["results"].is_null()) || 
+			(!inputFile["results"].contains("grid_nodal_results") || inputFile["results"]["grid_nodal_results"].is_null()))
 		{
 			fields.push_back("none");
 			fields.push_back("id");
 			return fields;
 		}
 
-		if (inputFile["results"]["grid_nodal_results"].is_null())
+		// check for none field
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("grid_nodal_results") &&
+			inputFile["results"]["grid_nodal_results"].contains("fields") &&
+			inputFile["results"]["grid_nodal_results"]["fields"].is_array())
 		{
-			fields.push_back("none");
-			fields.push_back("id");
-			return fields;
+			for (const auto& field : inputFile["results"]["grid_nodal_results"]["fields"])
+			{
+				if (field == "none")
+				{
+					fields.push_back("none");
+					fields.push_back("id");
+					return fields;
+				}
+			}
 		}
 
-		if (inputFile["results"]["grid_nodal_results"][0] == "none")
+		// check for all fields
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("grid_nodal_results") &&
+			inputFile["results"]["grid_nodal_results"].contains("fields") &&
+			inputFile["results"]["grid_nodal_results"]["fields"].is_array())
 		{
-			fields.push_back("none");
-			fields.push_back("id");
-			return fields;
+			for (const auto& field : inputFile["results"]["grid_nodal_results"]["fields"])
+			{
+				if (field == "all")
+				{
+					fields.push_back("all");
+					return fields;
+				}
+			}
 		}
 
 		// get all results fields
 		json::iterator it;
-		for (it = inputFile["results"]["grid_nodal_results"].begin();it != inputFile["results"]["grid_nodal_results"].end();it++) {
-
+		for (it = inputFile["results"]["grid_nodal_results"]["fields"].begin(); it != inputFile["results"]["grid_nodal_results"]["fields"].end(); it++)
+		{
 			if ((*it).is_string()) {
 				fields.push_back(*it);
 			}
@@ -944,42 +964,65 @@ vector<string> Input::getGridResultFields()
 
 vector<string> Input::getResultFields()
 {
-
 	try
 	{
 		vector<string> fields;
-		string material_point_results = "material_point_results";
 		
-		if (inputFile["results"].is_null())
+		if (!inputFile.contains("results") || inputFile["results"].is_null())
 		{
+			fields.push_back("id");
 			fields.push_back("displacement");
 			return fields;
 		}
 
-		if (inputFile["results"][material_point_results].is_null())
+		if (!inputFile["results"].contains("material_point_results") || inputFile["results"]["material_point_results"].is_null())
 		{
-			if (!inputFile["results"]["fields"].is_null())
+			if (inputFile["results"].contains("fields") && (!inputFile["results"]["fields"].is_null()))
 			{
 				Warning::printMessage("'fields' keyword is no longer supported.");
 				Warning::printMessage("Use 'material_point_results' instead.");
-				material_point_results = "fields";
 			}
-			else
+			// if no results defined, return the minimal set of fields
+			fields.push_back("id");
+			fields.push_back("displacement");
+			return fields;
+		}
+
+		// check for none field
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("material_point_results") &&
+			inputFile["results"]["material_point_results"].contains("fields") &&
+			inputFile["results"]["material_point_results"]["fields"].is_array())
+		{
+			for (const auto& field : inputFile["results"]["material_point_results"]["fields"])
 			{
-				fields.push_back("all");
-				return fields;
+				if (field == "none")
+				{
+					fields.push_back("none");
+					return fields;
+				}
 			}
 		}
 
-		if (inputFile["results"][material_point_results][0] == "none")
+		// check for all fields
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("material_point_results") &&
+			inputFile["results"]["material_point_results"].contains("fields") &&
+			inputFile["results"]["material_point_results"]["fields"].is_array())
 		{
-			fields.push_back("none");
-			return fields;
+			for (const auto& field : inputFile["results"]["material_point_results"]["fields"])
+			{
+				if (field == "all")
+				{
+					fields.push_back("all");
+					return fields;
+				}
+			}
 		}
 
 		// get all results fields
 		json::iterator it;
-		for (it = inputFile["results"][material_point_results].begin(); it != inputFile["results"][material_point_results].end(); it++) {
+		for (it = inputFile["results"]["material_point_results"]["fields"].begin(); it != inputFile["results"]["material_point_results"]["fields"].end(); it++) {
 
 			if ((*it).is_string()) {
 				fields.push_back(*it);
