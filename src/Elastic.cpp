@@ -8,7 +8,7 @@ using std::sqrt;
 
 void Elastic::updateStress(Particle* particle) const {
 
-	// strain increment and its deviate
+	// strain increment and its deviator
 	Matrix3d de = particle->getStrainIncrement();
 	Matrix3d deDev = de-Matrix3d::Identity()*de.trace()/3.0;
 	double deVol = de.trace();

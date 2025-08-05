@@ -1,20 +1,13 @@
 {
 	"stress_scheme_update":"USL",
-
 	"shape_function":"GIMP",
-
 	"time":4,
-
 	"time_step":0.001,
-
 	"gravity":[0.0,0.0,-9.81],
-
-	"n_threads":4,
-
+	"n_threads":10,
 	"damping":
 	{
-		"type":"local",
-		"value":0.1
+		"type":"kinetic"
 	},
 
 	"results":
@@ -37,8 +30,7 @@
 		"cells_dimension":[0.25,0.25,0.25],
 		"cells_number":[20,1,10],
 		"origin":[0,0,0],
-		
-		"boundary_conditions":
+				"boundary_conditions":
 		{
 			"plane_X0":"fixed",
 			"plane_Y0":"sliding",

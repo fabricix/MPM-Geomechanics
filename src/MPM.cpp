@@ -11,6 +11,8 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "HydroMechanicalCoupling.h"
+#include "Seismic.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -144,6 +146,10 @@ void MPM::setupMesh() {
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
+	if(ModelSetup::getSeismicAnalysisActive()){
+		// set the boundary conditions for seismic analysis
+		mesh.setBoundaryRestrictionsSeismic();
+	}
 	if (ModelSetup::getTwoPhaseActive()){
 		// configure the mesh boundary conditions of fluid
 		mesh.setBoundaryRestrictionsFluid(Input::getMeshBoundaryConditionsFluid());		
@@ -187,6 +193,30 @@ void MPM::setupTerrainContact()
 		
 		// compute distance level set function
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
+
+		// mark seismic nodes for STL seismic loading
+		if (ModelSetup::getSeismicAnalysisActive() && terrainContact != nullptr)
+		{
+	    	double epsilon = 0.25 * mesh.getCellDimension().mean();
+    		
+			// mark seismic nodes based on distance from level set
+			// this will mark nodes that are close to the terrain contact surface
+			// and will be used to apply seismic loading in the seismic analysis
+			Seismic::markSeismicNodes(epsilon, &mesh);
+
+			// disable Zo earthquake treatment for seismic nodes
+			mesh.setRestriction(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+		}
+
+		// configure penalty contact method
+		if (Input::getPenaltyContactActive()) {
+			terrainContact->enablePenaltyContact(true);
+			terrainContact->setPenaltyStiffness(Input::getPenaltyStiffness());
+		}
+		else {
+			terrainContact->enablePenaltyContact(false);
+		}	
+
 	}
 }
 
@@ -279,9 +309,20 @@ void MPM::setupLoads() {
 
 	// set initial velocity
 	Loads::setInitialVelocity(bodies);
+}
 
-	// set seismic acceleration
-	Loads::setSeismicData();
+void MPM::setupSeismicAnalysis() {
+
+	// set seismic analysis info
+	Seismic::setSeismicAnalysis(Input::getSeismicAnalysisInfo());
+
+	// configure seismic analysis in mpm model
+	if(!Seismic::getSeismicAnalysis().isActive) return;
+	
+	ModelSetup::setSeismicAnalysisActive(true);
+
+	// setup seismic data
+	Seismic::setSeismicData();
 }
 
 void MPM::setupDamping() {
@@ -338,6 +379,11 @@ void MPM::saveState()
 	}
 }
 
+void MPM::setOneDirectionHydromechanicalCoupling()
+{
+	HydroMechanicalCoupling::configureOneDirectionCoupling(particles);
+}
+
 void MPM::createModel() {
 
 	try{
@@ -352,6 +398,9 @@ void MPM::createModel() {
 
 		// set number of phases in the simulations
 		setNumberPhasesInSimulation();
+
+		// configures the seismic analysis
+		setupSeismicAnalysis();
 
 		// setup the background mesh
 		setupMesh();
@@ -382,6 +431,9 @@ void MPM::createModel() {
 
 		// configures the loads
 		setupLoads();
+
+		// configures the hydro-mechanical coupling type
+		setOneDirectionHydromechanicalCoupling();
 
 		// configures the damping
 		setupDamping();

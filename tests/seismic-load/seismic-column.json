@@ -11,12 +11,6 @@
 
   "n_threads":1,
 
-  "damping":
-  {
-    "type":"local",
-    "value":0.0
-  },
-
   "results":
   {
     "print":100,
@@ -29,19 +23,16 @@
   { 
     "cells_dimension":[0.1,0.1,0.1],
     "cells_number":[10,10,15],
-    "origin":[0,0,0],
-    
-    "boundary_conditions":
-    {
-      "plane_X0":"sliding",
-      "plane_Y0":"sliding",
-      "plane_Z0":"earthquake",
-      "plane_Xn":"sliding",
-      "plane_Yn":"sliding",
-      "plane_Zn":"sliding"
-    }
+    "origin":[0,0,0]
+
   },
 
+  "earthquake": {
+  "active": true,
+  "file": "base_acceleration_space.csv",
+  "header": true
+}
+,
   "material":
   {
     "elastic_1":

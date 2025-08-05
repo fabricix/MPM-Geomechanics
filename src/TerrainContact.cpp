@@ -6,6 +6,7 @@
 #include "limits"
 #include "Contribution.h"
 #include "Particle/Particle.h"
+#include "Seismic.h"
 
 #include <utility>  // std::pair
 
@@ -325,7 +326,13 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
     
     // unused for now
     (void)particles;
-    
+
+    // check if seismic analysis is enabled
+    bool isSeismic = ModelSetup::getSeismicAnalysisActive();
+
+    // get the accumulated velocity from seismic analysis
+    Vector3d v_surface = isSeismic ? Seismic::getAccumulatedVelocity() : Vector3d::Zero(); 
+
     // for all contact pairs
     #pragma omp parallel for shared(particles)
     for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
@@ -339,7 +346,8 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // get the mass and velocity of the particle
         double mass = particle->getMass();
-        Vector3d velocityPredictor = particle->getVelocity();
+
+        Vector3d velocityPredictor = isSeismic ? (particle->getVelocity() - v_surface) : particle->getVelocity();
 
         // calculate the normal velocity v_n = (v_p . e_n) e_n
         double vn_magnitude = velocityPredictor.dot(normal);
@@ -351,7 +359,19 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // calculate the normal force f_n = -m_p * vn_p / dt * e_n
         Vector3d fn = - (mass * vn_magnitude / dt) * normal;
-
+        
+        // if penalty contact is enabled, apply the penalty force
+        if (usePenaltyContact) {
+            double penetration = -particle->getDistanceLevelSet();
+            if (penetration > 0.0)
+            {
+                // calculate the penalty force f_penalty = k * penetration * e_n
+                Vector3d f_penalty = penaltyStiffness * penetration * normal;
+                // apply the penalty force to the normal force
+                fn += f_penalty;
+            }
+        }
+        
         // calculate tangential force f_t = -m_p (v_p - vn) / dt
         Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
 
@@ -367,6 +387,11 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
         Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
+
+        if (isSeismic) {
+            // if seismic analysis is enabled, add the surface velocity
+            velocityCorrected += v_surface;
+        }
 
         // update the velocity of the particle
         particle->setVelocity(velocityCorrected);
@@ -389,4 +414,12 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
 
     // compute the contact forces and correct velocities
     computeContactForces(particles, dt);
+}
+
+void TerrainContact::enablePenaltyContact(bool enable) {
+    usePenaltyContact = enable;
+}
+
+void TerrainContact::setPenaltyStiffness(double k) {
+    penaltyStiffness = k;
 }

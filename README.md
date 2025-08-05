@@ -7,6 +7,7 @@
 [![CMake-Linux](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-linux.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-linux.yml)
 [![CMake-Windows](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-windows.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-windows.yml)
 [![Documentation](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml)
+[![Testing](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml)
 
 ## Documentation
 
@@ -23,12 +24,13 @@ The objective of this repository is to provide a platform for developing the MPM
 If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl. There are several topics for developing in this project, here there are a few of them:
 
 - contact method for large terrain models using STL meshes [(Zhang et al., 2023)](https://www.sciencedirect.com/science/article/abs/pii/S0266352X23001684) :white_check_mark:
-
+- penalty method for avoiding any penetration in STL meshes :white_check_mark:
+- one direction hydro-mechanical coupling :white_check_mark:
 - axisymmetric formulation [(Nairn & Guilkey, 2015)](https://www.cof.orst.edu/cof/wse/faculty/Nairn/papers/AxisymGIMP.pdf)
 - implicit [(Nair & Roy, 2012)](https://doi.org/10.1080/15376494.2010.550082) and semi-implicit [(Kularathna et al., 2021)](https://doi.org/10.1002/nag.3207) time integration
 - convected particle domain interpolation [(Sadeghirad et al., 2011)](https://onlinelibrary.wiley.com/doi/10.1002/nme.3110)
 - thermo-mechanics formulation [(Zhan et al., 2024)](https://ui.adsabs.harvard.edu/link_gateway/2024CGeot.17006313Z/doi:10.1016/j.compgeo.2024.106313)
-- update stress schemes USF and MUSL [(Buzzi et al., 2008)](https://www.newcastle.edu.au/__data/assets/pdf_file/0015/22236/Caveats-on-the-implementation-of-the-generalized-material-point-method.pdf)
+- update stress schemes USF :construction:, USL :white_check_mark: and MUSL :white_check_mark: [(Buzzi et al., 2008)](https://www.newcastle.edu.au/__data/assets/pdf_file/0015/22236/Caveats-on-the-implementation-of-the-generalized-material-point-method.pdf)
 - damage constitutive models [(Homel & Herbold, 2016)](https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.5317)
 - viscous constitutive models
 - critical state constitutive models [(Sheng et al., 2000)](https://www.newcastle.edu.au/__data/assets/pdf_file/0015/22560/45_Aspects-of-finite-element-implementation-of-critical-state-models.pdf)
@@ -214,3 +216,10 @@ cmake --build .
 ```
 
 These commands will generate a executable file named `MPM-Test`.
+
+## Contributing
+
+If you are part of the team, clone the repo and submit pull requests from your branches.
+
+If you are an external contributor, please fork the repository and submit a pull request from your fork.
+

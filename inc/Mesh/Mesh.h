@@ -80,7 +80,9 @@ public:
     /// \param[in] active_value Active value can be true for activate
     /// the node or false for inactivate the node
     void activateNodes(const vector<int>& id_list, bool active_value=true);
-    
+
+    void setBoundaryRestrictionsSeismic();
+
     /// \brief Activate node by its id
     /// \param[in] id The id of the node to modify its active attribute
     /// \param[in] active_value Active value can be true for activate
@@ -151,6 +153,11 @@ public:
     /// \param[in] restrictions Vector containing the restriction to the planes
     /// X0, Y0, Z0, Xn, Yn and Zn
     void setBoundaryRestrictions(vector<Boundary::BoundaryType> restrictions);
+
+    /// \brief Configures the restriction of the boundary nodes
+    /// \param[in] plane The plane to set the restriction
+    /// \param[in] restriction The type of restriction to be applied
+    void setRestriction(Boundary::BoundaryPlane plane, Boundary::BoundaryType restriction);
 
     /// \brief Configures the restriction of fluid phase at the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes

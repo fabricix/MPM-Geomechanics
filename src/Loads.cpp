@@ -7,16 +7,13 @@
 #include "Input.h"
 #include "Warning.h"
 
-namespace Loads {
-
+namespace Loads 
+{
 	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
-	SeismicData seismicRecord;
 	NodalPointLoadData nodalPointLoadList;
 }
 
-
 Loads::NodalPointLoadData& Loads::getNodalPointList() { return nodalPointLoadList; }
-Loads::SeismicData& Loads::getSeismicData() { return seismicRecord; }
 
 void Loads::setGravity(vector<Body*>& bodies) {
 
@@ -266,13 +263,4 @@ void Loads::setInitialVelocity(vector<Body*>& bodies) {
 			particle->setVelocity(body->getInitialVelocity());
 		}
 	}
-}
-
-void Loads::setSeismicData()
-{
-	if(!ModelSetup::getSeismicAnalysis()) return;
-
-	bool has_header = true;
-
-	seismicRecord = Input::readSeismicData(ModelSetup::getSeismicFileName(), has_header);
 }
