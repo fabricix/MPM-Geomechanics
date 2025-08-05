@@ -796,14 +796,6 @@ namespace Output{
 		}
 	}
 
-	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
-	{
-		if (ModelSetup::getLoopCounter()%resultSteps == 0)
-		{
-			writeGrid(mesh, Output::CELLS, iTime);
-		}
-	}
-
 	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
 		// write initial state 
@@ -813,10 +805,10 @@ namespace Output{
 		initializeCSVFile("time-energy.csv");
 
 		// write time and energy in the terminal
-		updateTerminal(bodies, iTime);
+		updateTerminal(iTime);
 
 		// write energy in the CSV file
-		writeCSVEnergyFile(bodies, iTime);
+		writeCSVEnergyFile(iTime);
 
 		// write particles as a .vtu files
 		writeBodies(bodies, iTime);
@@ -831,27 +823,6 @@ namespace Output{
 		{
 			writeGrid(mesh, Output::CELLS, iTime);
 		}
-	}
-
-	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
-	{
-		// write initial state 
-		printModelInfo(bodies, iTime);
-
-		// initialize CSV file
-		initializeCSVFile("time-energy.csv");
-
-		// write time and energy in the terminal
-		updateTerminal(bodies, iTime);
-
-		// write energy in the CSV file
-		writeCSVEnergyFile(bodies, iTime);
-
-		// write particles as a .vtu files
-		writeBodies(bodies, iTime);
-
-		// write grid as a .vtu files
-		writeGrid(mesh, Output::CELLS);
 	}
 
 	void printElapsedTime() {
