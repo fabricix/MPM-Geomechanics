@@ -22,7 +22,7 @@ var searchData=
   ['computecontactforces_19',['computeContactForces',['../classTerrainContact.html#a1fb2d2aeeb409505ac41d9c01039c7d4',1,'TerrainContact']]],
   ['computedistancelevelsetfunction_20',['computeDistanceLevelSetFunction',['../classTerrainContact.html#a1629583d8c75c02c2e9864deb59960ca',1,'TerrainContact']]],
   ['computegradient_21',['computegradient',['../classShapeLinear.html#a5aa2c2710b253785549a49b0ab9df6fb',1,'ShapeLinear::computeGradient()'],['../classShapeGimp.html#aec66a5261e3b4dcc6895eebfa0457912',1,'ShapeGimp::computeGradient()'],['../classShape.html#ace2d591e1020c4d4a0cee59c65340b2c',1,'Shape::computeGradient()']]],
-  ['computekineticenergy_22',['computeKineticEnergy',['../namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4',1,'DynamicRelaxation']]],
+  ['computekineticenergy_22',['computeKineticEnergy',['../namespaceEnergy.html#a18b0c50dddeaf59acb0a3f19c167f422',1,'Energy']]],
   ['computenodevolumes_23',['computeNodeVolumes',['../classMesh.html#ab215e9dfa14b5e1b15e11c461b857990',1,'Mesh']]],
   ['computeshape_24',['computeshape',['../classShapeLinear.html#a8e6a7e7e501e2fdaab1825480cb561d2',1,'ShapeLinear::computeShape()'],['../classShapeGimp.html#a6b9bf93afe40d0b02249cfffeb35b1f2',1,'ShapeGimp::computeShape()'],['../classShape.html#a821108891fd1b3d8a51895d04259b9f1',1,'Shape::computeShape()']]],
   ['computetotalstress_25',['computeTotalStress',['../namespaceHydroMechanicalCoupling.html#ab95eae22c8e5fb0a2344e840edd3a933',1,'HydroMechanicalCoupling']]],

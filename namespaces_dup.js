@@ -1,8 +1,15 @@
 var namespaces_dup =
 [
     [ "DynamicRelaxation", "namespaceDynamicRelaxation.html", [
-      [ "computeKineticEnergy", "namespaceDynamicRelaxation.html#a38a5e330e200901d13f65efc46f6a7e4", null ],
-      [ "setStaticSolution", "namespaceDynamicRelaxation.html#a1f54527a48bcdca9f6d8a3639a10d5f6", null ]
+      [ "setStaticSolution", "namespaceDynamicRelaxation.html#a31ed910f26a9196fdddf8379c585c324", null ]
+    ] ],
+    [ "Energy", "namespaceEnergy.html", [
+      [ "computeKineticEnergy", "namespaceEnergy.html#a18b0c50dddeaf59acb0a3f19c167f422", null ],
+      [ "deltaKineticEnergy", "namespaceEnergy.html#a4fb2482de2a2a868778a0cbf0e122091", null ],
+      [ "getCurrentKineticEnergy", "namespaceEnergy.html#ab7aabb340b9e64ef5ebe946e304f0291", null ],
+      [ "getLastKineticEnergy", "namespaceEnergy.html#a036f9a81cd97c6b72a347ac53c0b3b3c", null ],
+      [ "setCurrentKineticEnergy", "namespaceEnergy.html#ab19b948b62a8229cab3e79372dbe4369", null ],
+      [ "setLastKineticEnergy", "namespaceEnergy.html#af1b028e57e988b06cda0d0fe5ff77f37", null ]
     ] ],
     [ "Geometry", "namespaceGeometry.html", [
       [ "getBoundingBox", "namespaceGeometry.html#a39ea187dea01bb4261e59d14f5f52552", null ],

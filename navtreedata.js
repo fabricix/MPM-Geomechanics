@@ -83,7 +83,7 @@ var NAVTREE =
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
+        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
         [ "Functions", "namespacemembers_func.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ],
         [ "Enumerator", "namespacemembers_eval.html", null ]
@@ -114,10 +114,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BodyCuboid_8h.html",
-"Solver_8h_source.html",
-"classMesh.html#a2af137f1571af89172b9c102302c416b",
-"classParticleMixture.html#a68b403be60f9522c7660724ec356244c",
-"namespaceInterpolation.html#ad6b0c362a03102b2ffceb06039f46935"
+"SolverExplicitTwoPhaseUSL_8h.html",
+"classMaterial.html#afc3949394033e0133d1c60a925cbeb13",
+"classParticleMixture.html#a0aca84b37c315255a1a68a2ae8a7e789",
+"namespaceInterpolation.html#a096b4d5b1dc8125a39cd0a29a761c50b",
+"structTriangle.html#a8d6c471f2e9dbf62e0aa7b9d98f65bd5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
