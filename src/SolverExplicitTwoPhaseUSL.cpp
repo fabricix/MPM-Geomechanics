@@ -29,6 +29,8 @@ void SolverExplicitTwoPhaseUSL::Solve()
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
+	int loopCounter = 0;
+	ModelSetup::setLoopCounter(loopCounter);
 
 	// write initial particles and grid states
 	Output::writeInitialState(bodies, iTime, mesh);
@@ -37,7 +39,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 	while (iTime < time)
 	{
 		// increment loop counter
-		ModelSetup::incrementLoopCounter();
+		loopCounter = ModelSetup::incrementLoopCounter();
 
 		// advance in time
 		ModelSetup::setCurrentTime(iTime += dt);
@@ -114,13 +116,13 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		}
 
 		// integrate the grid nodal momentum equation in mixture
-		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
+		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of solid phase
-		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of fluid phase
-		Update::particleVelocityFluid(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
+		Update::particleVelocityFluid(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle position of solid phase
 		Update::particlePosition(mesh, bodies, dt);
