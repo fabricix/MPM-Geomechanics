@@ -444,7 +444,6 @@ namespace Output{
 		
 		// points
 		gridFile<<"<Points>\n";
-		
 		// node position
 		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
@@ -452,8 +451,6 @@ namespace Output{
 			gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
-
-		// end points
 		gridFile<<"</Points>\n";
 		
 		// point data
@@ -503,7 +500,6 @@ namespace Output{
 			}
 			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
 		// print seismic nodes
 		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysisActive()) {

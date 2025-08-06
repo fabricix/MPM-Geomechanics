@@ -999,6 +999,7 @@ vector<string> Input::getResultFields()
 		{
 			fields.push_back("id");
 			fields.push_back("displacement");
+			Warning::printMessage("Bad definition of material points results");
 			return fields;
 		}
 
@@ -1017,7 +1018,7 @@ vector<string> Input::getResultFields()
 			}
 		}
 
-		// check for all fields
+		// check for all field
 		if (inputFile.contains("results") &&
 			inputFile["results"].contains("material_point_results")  &&
 			inputFile["results"]["material_point_results"].is_array())
