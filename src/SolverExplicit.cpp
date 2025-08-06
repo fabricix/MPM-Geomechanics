@@ -21,16 +21,20 @@ void SolverExplicit::Solve()
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
-	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
 	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
+	int loopCounter = 0;
+	ModelSetup::setLoopCounter(loopCounter);
+
+	// write initial particles and grid states
+	Output::writeInitialState(bodies, iTime, mesh);
 
 	// Time integration loop
 	while (iTime < time)
 	{
-		// Write output results
-		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
+		// increment loop counter
+		loopCounter = ModelSetup::incrementLoopCounter();
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
@@ -115,6 +119,10 @@ void SolverExplicit::Solve()
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
+		
+		// write particles and grid in step
+		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);

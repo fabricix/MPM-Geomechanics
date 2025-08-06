@@ -38,18 +38,35 @@ using std::vector;
 namespace Output{
 
 	vector<string> printFields;
+	vector<string> printGridFields;
 
 	void configureResultFiels(vector<string> fields)
 	{
 		printFields=fields;
 	}
 
+	void configureGridResultFiels(vector<string> fields)
+	{
+		printGridFields=fields;
+	}
+
 	bool isFieldRequired(string ifield) {
 
 		for (size_t i = 0; i < printFields.size(); ++i) {
 
-			if (printFields.at(i)==ifield || printFields.at(i)=="all" ) {
+			if (printFields.at(i)==ifield || (printFields.at(i)=="all"  && ifield != "none")) {
 
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool isGridFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printGridFields.size(); ++i) {
+
+			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
 				return true;
 			}
 		}
@@ -68,14 +85,16 @@ namespace Output{
 		// grid
 		bool gridFolderExist=false;
 		string gridFolderName="grid";
-		string gridFileName="eulerianGrid.vtu";
-		
+		string gridFileName="eulerianGrid";
+		string gridFileTimeSerie = "gridTimeSerie";
+		vector<double> gridFilesTime;
+
 		// particles
 		bool particleFolderExist=false;
 		string particleFolderName="particles";
 		string particleFileName="particles";
-		string particleFileTimeSerie="particleTimeSerie";
-		vector<double> particleFilesTime;
+		string particleFileTimeSerie = "particleTimeSerie";
+		vector<double> particlesFilesTime;
 	}
 
 	void defineEdian(){
@@ -123,7 +142,12 @@ namespace Output{
 			Folders::particleFolderExist=true;
 	}
 	
-	void writeParticles(vector<Particle*>* particles, double time){
+	void writeParticles(vector<Particle*>* particles, double time)
+	{
+
+		if (isFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
+			return;
+		}
 
 		// define edian
 		if(Folders::edian==""){
@@ -134,13 +158,13 @@ namespace Output{
 		if(!Folders::particleFolderExist){
 			createParticleFolder();
 		}
-		
+
 		// add time in loop time vector
-		Folders::particleFilesTime.push_back(time);
+		Folders::particlesFilesTime.push_back(time);
 
 		// open particle file
 		ofstream partFile;
-		partFile.open(Folders::particleFolderName+"/"+Folders::particleFileName+"_"+to_string(Folders::particleFilesTime.size())+".vtu");
+		partFile.open(Folders::particleFolderName + "/" + Folders::particleFileName + "_" + to_string(Folders::particlesFilesTime.size()) + ".vtu");
 		partFile.precision(4);
 
 		// particle data
@@ -378,7 +402,14 @@ namespace Output{
 		partFile.close();
 	}
 
-	void writeGrid(Mesh* mesh, CellType gridType){
+	void writeGrid(Mesh* mesh, CellType gridType, double time)
+	{
+
+		if (isGridFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
+			return;
+		}
+		
+		vector<Node*>* inodes = mesh->getNodes();
 
 		// define edian
 		if(Folders::edian==""){
@@ -390,9 +421,12 @@ namespace Output{
 			createGridFolder();
 		}
 		
+		// add time in loop time vector
+		Folders::gridFilesTime.push_back(time);
+
 		// open grid file
 		ofstream gridFile;
-		gridFile.open(Folders::gridFolderName+"/"+Folders::gridFileName);
+		gridFile.open(Folders::gridFolderName + "/" + Folders::gridFileName + "_" + to_string(Folders::gridFilesTime.size()) + ".vtu");
 		gridFile.precision(4);
 
 		// mesh data
@@ -410,56 +444,62 @@ namespace Output{
 		
 		// points
 		gridFile<<"<Points>\n";
-		
 		// node position
 		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-		vector<Node*>* inodes = mesh->getNodes();
 		for (int i = 0; i < nPoints; ++i) {
 			Vector3d pos=inodes->at(i)->getCoordinates();
 			gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
-
-		// end points
 		gridFile<<"</Points>\n";
 		
 		// point data
 		gridFile<<"<PointData>\n";
-		
-		// local ID of nodes
-		gridFile<<"<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<inodes->at(i)->getId()<<"\n";
-		}
-		gridFile<<"</DataArray>\n";
 
-		// active nodes
-		gridFile<<"<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getActive())<<"\n";
+		if (isGridFieldRequired("id")) {
+			// local ID of nodes
+			gridFile << "<DataArray type=\"UInt64\" Name=\"NodeId\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << inodes->at(i)->getId() << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
-		// nodal mass
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getMass())<<"\n";
+		if (isGridFieldRequired("active")) {
+			// active nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"Active\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getActive()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
-		// nodal velocity
-		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+		if (isGridFieldRequired("mass")) {
+			// nodal mass
+			gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getMass()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile << "</DataArray>\n";
 
-		// nodal distance level set function value
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getDistanceLevelSet())<<"\n";
+		if (isGridFieldRequired("velocity")) {
+			// nodal velocity
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
+
+		if (isGridFieldRequired("distance_stl")) {
+			// nodal distance level set function value
+			gridFile << "<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getDistanceLevelSet()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
 
 		// print seismic nodes
 		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysisActive()) {
@@ -471,12 +511,14 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
-		// nodal volume
-		gridFile<<"<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			gridFile<<scientific<<(inodes->at(i)->getVolume())<<"\n";
+		if (isGridFieldRequired("volume")) {
+			// nodal volume
+			gridFile << "<DataArray type=\"Float64\" Name=\"Volume\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getVolume()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
 		// end point data
 		gridFile<<"</PointData>\n";
@@ -567,6 +609,7 @@ namespace Output{
 
 	void writeResultsSeries() {
 
+		// Particle serie file
 		// define edian
 		if(Folders::edian=="") {
 			defineEdian();
@@ -585,12 +628,38 @@ namespace Output{
 		serieFile <<"<?xml version=\"1.0\"?>\n";
 		serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
 		serieFile <<"\t<Collection>\n";
-		for (size_t i = 0; i < Folders::particleFilesTime.size(); ++i)
+		for (size_t i = 0; i < Folders::particlesFilesTime.size(); ++i)
 		{
-			serieFile <<"\t\t<DataSet timestep=\""<<Folders::particleFilesTime.at(i)<<"\" group=\"\" part=\"0\" file=\""<<Folders::particleFileName<<"_"<<i+1<<".vtu\"/>\n";
+			serieFile << "\t\t<DataSet timestep=\"" << Folders::particlesFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
 		}
 		serieFile <<"\t</Collection>\n";
-		serieFile <<"</VTKFile>\n";
+		serieFile << "</VTKFile>\n";
+
+		// Grid serie file
+		// define edian
+		if (Folders::edian == "") {
+			defineEdian();
+		}
+
+		// create grid folder
+		if (!Folders::gridFolderExist) {
+			createGridFolder();
+		}
+
+		// open grid serie file
+		ofstream gridSerieFile;
+		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
+
+		// write the file
+		gridSerieFile << "<?xml version=\"1.0\"?>\n";
+		gridSerieFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+		gridSerieFile << "\t<Collection>\n";
+		for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i)
+		{
+			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::gridFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}
+		gridSerieFile << "\t</Collection>\n";
+		gridSerieFile << "</VTKFile>\n";
 	}
 
 	void clearScreen() {
@@ -708,11 +777,9 @@ namespace Output{
 		csv_file.close();
 	}
 
-	void writeResultInStep(int loopCounter, int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(int resultSteps,vector<Body*>* bodies, double iTime)
 	{
-		if (iTime == 0) { printModelInfo(bodies, iTime); initializeCSVFile("time-energy.csv");}
-
-		if (loopCounter%resultSteps==0)
+		if (ModelSetup::getLoopCounter() % resultSteps == 0)
 		{
 			// write model results
 			writeBodies(bodies,iTime);
@@ -720,7 +787,37 @@ namespace Output{
 			// update terminal
 			updateTerminal(iTime);
 
-			writeCSVEnergyFile(iTime);
+			// write energy in the CSV file
+			writeCSVEnergyFile( iTime);
+		}
+	}
+
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
+	{
+		// write initial state 
+		printModelInfo(bodies, iTime);
+
+		// initialize CSV file
+		initializeCSVFile("time-energy.csv");
+
+		// write time and energy in the terminal
+		updateTerminal(iTime);
+
+		// write energy in the CSV file
+		writeCSVEnergyFile(iTime);
+
+		// write particles as a .vtu files
+		writeBodies(bodies, iTime);
+
+		// write grid as a .vtu files
+		writeGrid(mesh, Output::CELLS);
+	}
+
+	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
+	{
+		if (ModelSetup::getLoopCounter()%resultSteps == 0)
+		{
+			writeGrid(mesh, Output::CELLS, iTime);
 		}
 	}
 

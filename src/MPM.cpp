@@ -344,6 +344,7 @@ void MPM::setupResults() {
 	
 	// configures the fields
 	Output::configureResultFiels(Input::getResultFields());
+	Output::configureGridResultFiels(Input::getGridResultFields());
 }
 
 void MPM::setThreads() {

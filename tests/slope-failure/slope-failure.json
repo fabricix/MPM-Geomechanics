@@ -3,7 +3,7 @@
 
 	"shape_function":"GIMP",
 
-	"time":10,
+	"time":1,
 
 	"time_step":0.001,
 
@@ -20,7 +20,16 @@
 	"results":
 	{
 		"print":50,
-		"fields":["all","displacement","material","active","plastic_strain"]
+
+		"material-point-results":
+		{
+			"fields":["all"]
+		},
+		
+		"grid-nodal-results":
+		{
+			"fields":["all"]
+		}
 	},
 
 	"mesh":

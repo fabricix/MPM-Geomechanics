@@ -919,35 +919,130 @@ int Input::getResultNum(){
 	}
 }
 
-vector<string> Input::getResultFields() {
-
+vector<string> Input::getGridResultFields()
+{
 	try
 	{
 		vector<string> fields;
 		
-		if (inputFile["results"].is_null())
+		// verify if results are defined
+		if ((!inputFile.contains("results") || inputFile["results"].is_null()) || 
+			(!inputFile["results"].contains("grid_nodal_results") || inputFile["results"]["grid_nodal_results"].is_null()))
 		{
-			fields.push_back("displacement");
+			fields.push_back("none");
+			fields.push_back("id");
 			return fields;
 		}
 
-		if (inputFile["results"]["fields"].is_null())
+		// check for none field
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("grid_nodal_results") &&
+			inputFile["results"]["grid_nodal_results"].is_array())
 		{
-			fields.push_back("all");
-			return fields;
+			for (const auto& field : inputFile["results"]["grid_nodal_results"])
+			{
+				if (field == "none")
+				{
+					fields.push_back("none");
+					fields.push_back("id");
+					return fields;
+				}
+			}
+		}
+
+		// check for all fields
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("grid_nodal_results") &&
+			inputFile["results"]["grid_nodal_results"].is_array())
+		{
+			for (const auto& field : inputFile["results"]["grid_nodal_results"])
+			{
+				if (field == "all")
+				{
+					fields.push_back("all");
+					return fields;
+				}
+			}
 		}
 
 		// get all results fields
 		json::iterator it;
-		for( it=inputFile["results"]["fields"].begin();it!=inputFile["results"]["fields"].end();it++){
+		for (it = inputFile["results"]["grid_nodal_results"].begin(); it != inputFile["results"]["grid_nodal_results"].end(); it++)
+		{
+			if ((*it).is_string()) {
+				fields.push_back(*it);
+			}
+		}
 
-			if ((*it).is_string()){
+		if (fields.empty()) {
+			throw (0);
+		}
+
+		return fields;
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during the grid field results creation");
+		throw;
+	}
+}
+
+vector<string> Input::getResultFields()
+{
+	try
+	{
+		vector<string> fields;
+		
+		// verify if results are defined
+		if ((!inputFile.contains("results") || inputFile["results"].is_null()) || 
+			(!inputFile["results"].contains("material_point_results") || inputFile["results"]["material_point_results"].is_null()))
+		{
+			fields.push_back("id");
+			fields.push_back("displacement");
+			Warning::printMessage("Bad definition of material points results");
+			return fields;
+		}
+
+		// check for none field
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("material_point_results") &&
+			inputFile["results"]["material_point_results"].is_array())
+		{
+			for (const auto& field : inputFile["results"]["material_point_results"])
+			{
+				if (field == "none")
+				{
+					fields.push_back("none");
+					return fields;
+				}
+			}
+		}
+
+		// check for all field
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("material_point_results")  &&
+			inputFile["results"]["material_point_results"].is_array())
+		{
+			for (const auto& field : inputFile["results"]["material_point_results"])
+			{
+				if (field == "all")
+				{
+					fields.push_back("all");
+					return fields;
+				}
+			}
+		}
+
+		// get needed results fields
+		json::iterator it;
+		for (it = inputFile["results"]["material_point_results"].begin(); it != inputFile["results"]["material_point_results"].end(); it++) {
+
+			if ((*it).is_string()) {
 				fields.push_back(*it);
 			}
 		}
 
 		if (fields.empty()){
-
 			throw (0);
 		}
 
