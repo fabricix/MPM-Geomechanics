@@ -14,8 +14,8 @@
 	"results":
 	{
 		"print":20,
-		"material-point-results":{"fields":["none"]},
-		"grid-nodal-results":{"fields":["none"]}
+		"material_point_results":["none"],
+		"grid_nodal_results":["none"]
 	},
 
   "n_phases":1,
