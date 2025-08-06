@@ -11,6 +11,7 @@ var Input_8h =
     [ "getFileName", "Input_8h.html#af336494f96212aa307fcd9c00a9b29a1", null ],
     [ "getFrictionCoefficient", "Input_8h.html#a5e6d39c7c857d3fc55088e2956e8def6", null ],
     [ "getGravity", "Input_8h.html#a4855a7486e30198da32c4b2c5cc31379", null ],
+    [ "getGridResultFields", "Input_8h.html#a5180c88a040e1ade2d2522400eb4919e", null ],
     [ "getHydroMechCouplingEnabled", "Input_8h.html#a5b2048602b6a82bfd8c510d4d48c0256", null ],
     [ "getHydroMechCouplingOneWay", "Input_8h.html#a9b349adc98df2b56c394260e211f6efa", null ],
     [ "getInitialPressureBox", "Input_8h.html#a97422e69d79524393797b06479882bb6", null ],

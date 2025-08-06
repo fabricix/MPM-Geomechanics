@@ -302,6 +302,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a0bfce42397ffc5da1c79e6c951862cb5" id="r_a0bfce42397ffc5da1c79e6c951862cb5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a0bfce42397ffc5da1c79e6c951862cb5">getHydroMechOneWayEnabled</a> ()</td></tr>
 <tr class="memdesc:a0bfce42397ffc5da1c79e6c951862cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if one way hydro-mechanical coupling is enabled.  <br /></td></tr>
 <tr class="separator:a0bfce42397ffc5da1c79e6c951862cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751ba95c19cbb373b61db97c44acfcb5" id="r_a751ba95c19cbb373b61db97c44acfcb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a751ba95c19cbb373b61db97c44acfcb5">getLoopCounter</a> ()</td></tr>
+<tr class="memdesc:a751ba95c19cbb373b61db97c44acfcb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current loop counter.  <br /></td></tr>
+<tr class="separator:a751ba95c19cbb373b61db97c44acfcb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c91644289f5395c17f80b20db0512a0" id="r_a1c91644289f5395c17f80b20db0512a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a1c91644289f5395c17f80b20db0512a0">setLoopCounter</a> (int a)</td></tr>
+<tr class="memdesc:a1c91644289f5395c17f80b20db0512a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current loop counter.  <br /></td></tr>
+<tr class="separator:a1c91644289f5395c17f80b20db0512a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e3298b9129571112f14b9cb0d2896e" id="r_a62e3298b9129571112f14b9cb0d2896e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModelSetup.html#a62e3298b9129571112f14b9cb0d2896e">incrementLoopCounter</a> ()</td></tr>
+<tr class="memdesc:a62e3298b9129571112f14b9cb0d2896e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the loop counter by one.  <br /></td></tr>
+<tr class="separator:a62e3298b9129571112f14b9cb0d2896e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contain the configuration variables that defines an specific simulation. </p>
@@ -777,6 +786,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a751ba95c19cbb373b61db97c44acfcb5" name="a751ba95c19cbb373b61db97c44acfcb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751ba95c19cbb373b61db97c44acfcb5">&#9670;&#160;</a></span>getLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ModelSetup::getLoopCounter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current loop counter. </p>
+<dl class="section return"><dt>Returns</dt><dd>loopCounter </dd></dl>
+
+</div>
+</div>
 <a id="a31009b398464ca9a7a95a479ef04f236" name="a31009b398464ca9a7a95a479ef04f236"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31009b398464ca9a7a95a479ef04f236">&#9670;&#160;</a></span>getResultNum()</h2>
 
@@ -1012,6 +1041,26 @@ Functions</h2></td></tr>
 
 <p>Return true is the system is Windows. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if is Windows system </dd></dl>
+
+</div>
+</div>
+<a id="a62e3298b9129571112f14b9cb0d2896e" name="a62e3298b9129571112f14b9cb0d2896e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e3298b9129571112f14b9cb0d2896e">&#9670;&#160;</a></span>incrementLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ModelSetup::incrementLoopCounter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Increment the loop counter by one. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current loop counter value </dd></dl>
 
 </div>
 </div>
@@ -1375,6 +1424,32 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">load_state_activated</td><td>Flag to load an state </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1c91644289f5395c17f80b20db0512a0" name="a1c91644289f5395c17f80b20db0512a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c91644289f5395c17f80b20db0512a0">&#9670;&#160;</a></span>setLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelSetup::setLoopCounter </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the current loop counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>The loop counter value </td></tr>
   </table>
   </dd>
 </dl>
