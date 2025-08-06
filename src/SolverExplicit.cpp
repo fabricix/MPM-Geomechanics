@@ -36,6 +36,9 @@ void SolverExplicit::Solve()
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
 
+		// Advance time
+		ModelSetup::setCurrentTime(iTime += dt);
+
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
 		#pragma omp parallel sections num_threads(2)
@@ -116,6 +119,12 @@ void SolverExplicit::Solve()
 			Interpolation::particleVorticityIncrement(mesh, bodies, dt);
 		}
 
+		// Compute current kinetic energy
+		Energy::computeKineticEnergy(particles);
+
+		// Static solution check (Dynamic Relaxation)
+		DynamicRelaxation::setStaticSolution(particles);
+
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);
 		Update::particleStress(bodies);
@@ -126,15 +135,6 @@ void SolverExplicit::Solve()
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
-
-		// Compute current kinetic energy
-		Energy::computeKineticEnergy(particles);
-
-		// Static solution check (Dynamic Relaxation)
-		DynamicRelaxation::setStaticSolution(particles);
-
-		// Step 11: Advance simulation time
-		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
 	// Final output
