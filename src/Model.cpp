@@ -14,7 +14,10 @@ namespace ModelSetup {
 	///
 	/// Default values for the model
 	///
-	
+
+	// counter for the general bucle
+	int loopCounter = 0;
+
 	// terrain contact
 	bool terrainContactActive=false; //!< is terrain contact active
 	bool getTerrainContactActive() { return terrainContactActive; }
@@ -85,7 +88,12 @@ namespace ModelSetup {
 	/// Function members
 	///
 
-    // states 
+	// loop counter
+	int getLoopCounter() { return loopCounter; }
+	void setLoopCounter(int a) { loopCounter = a; }
+	int incrementLoopCounter() { loopCounter++; return loopCounter; }
+
+		// states 
 	bool getLoadState() { return loadState; }
 	void setLoadState(bool st) { loadState = st; }
 	bool getSaveState() { return saveState; }

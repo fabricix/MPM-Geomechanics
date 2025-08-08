@@ -20,7 +20,7 @@
 	"results":
 	{
 		"print":10,
-		"fields":["id","displacement","material","active"]
+		"material_point_results":["id","displacement","material","active"]
 	},
 
 	"mesh":

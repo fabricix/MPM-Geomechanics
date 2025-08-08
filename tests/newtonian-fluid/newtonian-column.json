@@ -11,7 +11,7 @@
   "results":
   {
     "print":25,
-    "fields":["id","displacement","velocity","material","stress"]
+    "material_point_results":["id","displacement","velocity","material","stress"]
   },
   "mesh":
   { 

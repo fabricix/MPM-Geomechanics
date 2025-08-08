@@ -1,30 +1,16 @@
 {
 	"stress_scheme_update":"USL",
-
 	"shape_function":"GIMP",
-
-	"time":1,
-
+	"time":0.5,
 	"time_step":1e-5,
-
 	"gravity":[0.0,0.0,0],
-
-	"n_threads":2,
-
-	"n_phases":1,
-
-	"damping":
-	{
-		"type":"local",
-		"value":0.00
-	},
-
+	"n_threads":10,
 	"results":
 	{
-		"print":50,
-		"fields":["id","displacement","material","active","pressure","external_force"]
+		"print":10,
+		"material_point_results":["id","displacement","material","active","pressure","external_force"],
+		"grid_nodal_results":["none"]
 	},
-
 	"mesh":
 	{	
 		"cells_dimension":[0.75,0.75,0.75],
@@ -41,10 +27,8 @@
 			"plane_Zn":"sliding"
 		}
 	},
-
 	"material":
-	{
-		"elastic":
+	[	
 		{
 			"type":"elastic",
 			"id":1,
@@ -52,8 +36,6 @@
 			"density":2700,
 			"poisson":0.25
 		},
-
-		"plastic":
 		{
 			"id":2,
 			"type":"mohr-coulomb",
@@ -64,15 +46,13 @@
 			"cohesion":6e6,
 			"tensile":3e6,
 			"softening":"exponential",
-			"softening.exponential.eta":50,
+			"softening.exponential.eta":150,
 			"softening.tensile.residual":1e-6,
 			"softening.tensile.active":true
 		}
-	},
-
+	],
 	"body":
-	{
-		"body_1":
+	[
 		{
 			"type":"cuboid",
 			"id":1,
@@ -81,15 +61,13 @@
 			"material_id":1,
 			"initial_velocity":[0,0,0]
 		},
-		
-		"body_2":
 		{
 			"type":"cuboid",
 			"id":2,
-			"point_p1":[8,8,6],
-			"point_p2":[12,12,10],
+			"point_p1":[8,8,3],
+			"point_p2":[12,12,6],
 			"material_id":2,
-			"initial_velocity":[0,0,-5]
+			"initial_velocity":[0,0,-10]
 		}
-	}
+	]
 }

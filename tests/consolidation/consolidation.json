@@ -14,7 +14,7 @@
 	"results":
 	{
 		"print":100,
-		"fields":["id","displacement","material","active","pressure","external_force","stress"]
+		"material_point_results":["id","displacement","material","active","pressure","external_force","stress"]
 	},
 
 	"n_phases":2,

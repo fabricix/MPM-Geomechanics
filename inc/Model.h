@@ -254,6 +254,18 @@ namespace ModelSetup {
 	/// \brief Return if one way hydro-mechanical coupling is enabled
 	/// \return True if one-way hydro-mechanical coupling is enabled
 	bool getHydroMechOneWayEnabled();
+
+	/// \brief Get the current loop counter
+	/// \return loopCounter
+	int getLoopCounter();
+
+	/// \brief Set the current loop counter
+	/// \param[in] a The loop counter value
+	void setLoopCounter(int a);
+
+	/// \brief Increment the loop counter by one
+	/// \return The current loop counter value
+	int incrementLoopCounter();
 };
 
 #endif /* MODEL_H_ */

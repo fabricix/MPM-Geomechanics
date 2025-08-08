@@ -9,11 +9,12 @@
 
 /// @brief Class to compute terrain contact
 class TerrainContact {
+
 private:
     
     STLReader* stlMesh; //!< triangular mesh for terrain contact 
     
-    double frictionCoefficient; ///< Friction coefficient \f$\mu\f$
+    double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
 
     std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 

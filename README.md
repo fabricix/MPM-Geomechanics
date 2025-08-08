@@ -223,3 +223,8 @@ If you are part of the team, clone the repo and submit pull requests from your b
 
 If you are an external contributor, please fork the repository and submit a pull request from your fork.
 
+## Disclaimer of Liability
+
+This simulator is provided for academic and research purposes. It is distributed "as is", without any warranties of any kind, express or implied, including but not limited to warranties of merchantability or fitness for a particular purpose.
+
+The use of this simulator and the interpretation of its results are the **sole responsibility of the user**. The developers and the affiliated institution shall not be held liable for any direct or indirect damages, economic losses, or consequences resulting from the use of this software.

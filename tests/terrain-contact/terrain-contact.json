@@ -10,7 +10,7 @@
 	"results":
 	{
 		"print":25,
-		"fields":["id","displacement","material","active","plastic_strain","distance_levelset"]
+		"material_point_results":["id","displacement","material","active","plastic_strain","distance_levelset"]
 	},
 
 	"mesh":
