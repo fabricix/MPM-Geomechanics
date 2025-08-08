@@ -13,8 +13,8 @@
 
 	"results":
 	{
-		"number":10,
-		"fields":["displacement","stress"]
+		"print":10,
+		"material_point_results":["displacement","stress"]
 	},
 
 	"mesh":{

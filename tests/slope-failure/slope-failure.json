@@ -28,7 +28,7 @@
 		
 		"grid-nodal-results":
 		{
-			"fields":["all"]
+			"fields":["none"]
 		}
 	},
 

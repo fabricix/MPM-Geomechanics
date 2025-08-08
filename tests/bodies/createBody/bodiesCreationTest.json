@@ -14,7 +14,7 @@
   "results":
   {
     "print":10,
-    "fields":["id","displacement","material","active","body"]
+    "material_point_results":["id","displacement","material","active","body"]
   },
 
   "n_phases":1,
