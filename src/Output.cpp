@@ -461,7 +461,7 @@ namespace Output{
 		gridFile<<"</DataArray>\n";
 
 		// print seismic nodes
-		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysis()) {
+		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysisActive()) {
 			// export seismic nodes
 			gridFile << "<DataArray type=\"UInt8\" Name=\"Seismic Node\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {

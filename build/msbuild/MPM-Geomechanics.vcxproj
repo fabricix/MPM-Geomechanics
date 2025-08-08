@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\Model.cpp" />
     <ClCompile Include="..\..\src\MohrCoulomb.cpp" />
     <ClCompile Include="..\..\src\MPM.cpp" />
+    <ClCompile Include="..\..\src\Newtonian.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
     <ClCompile Include="..\..\src\NodeMixture.cpp" />
     <ClCompile Include="..\..\src\Output.cpp" />
@@ -165,7 +166,6 @@
     <ClCompile Include="..\..\src\ShapeLinear.cpp" />
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
     <ClCompile Include="..\..\src\SolverExplicitTwoPhaseUSL.cpp" />
-    <ClCompile Include="..\..\src\SolverExplicitUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />
     <ClCompile Include="..\..\src\STLReader.cpp" />
     <ClCompile Include="..\..\src\TerrainContact.cpp" />
@@ -208,6 +208,7 @@
     <ClInclude Include="..\..\inc\Materials\ElasticJaumann.h" />
     <ClInclude Include="..\..\inc\Materials\Material.h" />
     <ClInclude Include="..\..\inc\Materials\MohrCoulomb.h" />
+    <ClInclude Include="..\..\inc\Materials\Newtonian.h" />
     <ClInclude Include="..\..\inc\Mesh\Cell.h" />
     <ClInclude Include="..\..\inc\Mesh\Mesh.h" />
     <ClInclude Include="..\..\inc\Mesh\Node.h" />
@@ -224,7 +225,6 @@
     <ClInclude Include="..\..\inc\Shape\ShapeLinear.h" />
     <ClInclude Include="..\..\inc\Solver\Solver.h" />
     <ClInclude Include="..\..\inc\Solver\SolverExplicitTwoPhaseUSL.h" />
-    <ClInclude Include="..\..\inc\Solver\SolverExplicitUSL.h" />
     <ClInclude Include="..\..\inc\States.h" />
     <ClInclude Include="..\..\inc\TerrainContact.h" />
     <ClInclude Include="..\..\inc\Update.h" />

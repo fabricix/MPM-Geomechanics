@@ -7,6 +7,7 @@
 [![CMake-Linux](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-linux.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-linux.yml)
 [![CMake-Windows](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-windows.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/cmake-windows.yml)
 [![Documentation](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml)
+[![Testing](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml)
 
 ## Documentation
 
@@ -171,4 +172,54 @@ make --version
 gcc --version   
 g++ --version   
 ```
+
+### GoogleTest Usage
+
+The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+
+```
+cd external
+git clone https://github.com/google/googletest.git
+```
+
+## How to Compile the Tests
+
+Your directory must have the following structure:
+
+```
+mpm-geomechanics/
+├─ build/
+│  ├─ CMakeFiles/
+│  ├─ make/
+│  ├─ msbuild/
+│  ├─ testing/
+│  │  ├─ CMakeLists.txt
+│  │  ├─ build/
+```
+
+The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
+
+### Windows
+
+```
+cmake -G "MinGW Makefiles" ..
+cmake --build .
+```
+
+These commands will generate a .exe file named `MPM-Test.exe`.
+
+### Linux (Ubuntu/Debian)
+
+```
+cmake -G "Unix Makefiles" ..
+cmake --build .
+```
+
+These commands will generate a executable file named `MPM-Test`.
+
+## Contributing
+
+If you are part of the team, clone the repo and submit pull requests from your branches.
+
+If you are an external contributor, please fork the repository and submit a pull request from your fork.
 

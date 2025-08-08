@@ -15,7 +15,7 @@ SolverExplicit::SolverExplicit() : Solver() {}
 
 void SolverExplicit::Solve()
 {
-	// Initialize simulation variables
+	// Initialization of simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
@@ -23,15 +23,15 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
-	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysis();
+	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
 
-	// Solve in time
+	// Time integration loop
 	while (iTime < time)
 	{
-		// Output results
+		// Write output results
 		Output::writeResultInStep(loopCounter++, resultSteps, bodies, iTime);
 
-		// Step 1: Interpolate mass and momentum from Particles to Nodes
+		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
 		#pragma omp parallel sections num_threads(2)
 		{
@@ -42,15 +42,16 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
 
-		// Step 2: Apply boundary conditions on nodal momentum
-		Update::boundaryConditionsMomentum(mesh);
-
-		// Step 2.1: Apply seismic velocity to marked nodes
-		if (isSeismicAnalysis && useSTLContact){
-			Seismic::applySeismicVelocity(iTime, dt, mesh);
+		// Update seismic velocity and acceleration from record
+		if(isSeismicAnalysis){
+			Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
 		}
 
-		// Step 3.1: Interpolate internal and external force from particles to nodes
+		// Step 2: Impose boundary conditions on nodal momentum
+		Update::boundaryConditionsMomentum(mesh);
+
+		// Step 3: Compute nodal forces
+		// 3.1: Internal and external nodal force
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
@@ -60,34 +61,40 @@ void SolverExplicit::Solve()
 			Interpolation::nodalExternalForce(mesh, bodies);
 		}
 
-		// Step 3.2: Compute total nodal force
+		// 3.2: Total force nodal force
 		Update::nodalTotalForce(mesh);
 
-		// Step 3.3: Apply boundary conditions on total force
+		// 3.3: Impose boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 5.1: Update particle velocity
+		// Step 5: Particle updates
+		// 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 5.2: Apply contact correction in particle velocity (if active)
+		// 5.2: Apply contact correction in particle velocity
 		if (useSTLContact){
+
+			// 5.2.1: Apply seismic velocity to marked nodes
+			if (isSeismicAnalysis){
+				Seismic::applySeismicVelocityMarkedSTLNodes(mesh);
+			}
 			terrainContact->apply(mesh, particles, dt);
 		}
 
-		// Step 5.3: Update particle position
+		// 5.3: Update particle position
 		Update::particlePosition(mesh, bodies, dt);
 
-		// Step 6 (MUSL only): Recalculate nodal momentum and apply BCs on nodal momentum 
+		// Step 6 (MUSL): Momentum recalculation 
 		if (useMUSL)
 		{	
-			// Step 6.1 (MUSL only): Recalculate nodal momentum with updated particle velocity
+			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
 			Interpolation::nodalMomentum(mesh, bodies);
 			
-			// Step 6.2 (MUSL only): Reapply BCs on nodal momentum
+			// 6.2: Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
 		}
 
@@ -111,14 +118,14 @@ void SolverExplicit::Solve()
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Check for static solution
+		// Static solution check (Dynamic Relaxation)
 		DynamicRelaxation::setStaticSolution(bodies, loopCounter);
 
-		// Advance time
+		// Step 11: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
-	// Write results
+	// Final output
 	Output::writeGrid(mesh, Output::CELLS);
 	Output::writeResultsSeries();
 }

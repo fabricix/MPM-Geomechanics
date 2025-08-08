@@ -146,7 +146,7 @@ void MPM::setupMesh() {
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
-	if(ModelSetup::getSeismicAnalysis()){
+	if(ModelSetup::getSeismicAnalysisActive()){
 		// set the boundary conditions for seismic analysis
 		mesh.setBoundaryRestrictionsSeismic();
 	}
@@ -195,7 +195,7 @@ void MPM::setupTerrainContact()
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
 
 		// mark seismic nodes for STL seismic loading
-		if (ModelSetup::getSeismicAnalysis() && terrainContact != nullptr)
+		if (ModelSetup::getSeismicAnalysisActive() && terrainContact != nullptr)
 		{
 	    	double epsilon = 0.25 * mesh.getCellDimension().mean();
     		
@@ -319,7 +319,7 @@ void MPM::setupSeismicAnalysis() {
 	// configure seismic analysis in mpm model
 	if(!Seismic::getSeismicAnalysis().isActive) return;
 	
-	ModelSetup::setSeismicAnalysis(true);
+	ModelSetup::setSeismicAnalysisActive(true);
 
 	// setup seismic data
 	Seismic::setSeismicData();
