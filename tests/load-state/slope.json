@@ -21,7 +21,7 @@
 	"results":
 	{
 		"print":10,
-		"fields":["id","displacement","material","stress","plastic_strain"]
+		"material_point_results":["id","displacement","material","stress","plastic_strain"]
 	},
 
 	"mesh":

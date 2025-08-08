@@ -5,7 +5,7 @@
   "results":
   {
     "print":40,
-    "fields":["displacement","velocity"]
+    "material_point_results":["displacement","velocity"]
   },
   "body":
   [
