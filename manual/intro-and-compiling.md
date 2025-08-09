@@ -39,17 +39,9 @@ For downloading the compiled binaries
 
 # Compilation Instructions (Windows/Linux)
 
+Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
+
 ## Compilation with Windows
-
-### Required Programs
-
-| Program   | Installation      | Command                          |
-| --------- | ----------------- | -------------------------------- |
-| **CMake** | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-cmake |
-| **GCC**   | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-gcc   |
-| **G++**   | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-gcc   |
-| **Make**  | via MSYS2 MINGW64 | pacman -S make                   |
-
 
 The simplest way to compile on windows is by using the **`.bash`** file at **`/build/CMake`** with **`MSYS2 MINGW64`** console line, just execute:
 
@@ -68,15 +60,6 @@ cmake --build build
 
 ## Compiling with Linux
 
-### Required Programs
-
-| Program   | Installation | Command                          |
-| --------- | ------------ | -------------------------------- |
-| **CMake** | via apt      | sudo apt install cmake           |
-| **GCC**   | via apt      | sudo apt install build-essential |
-| **G++**   | via apt      | sudo apt install build-essential |
-| **Make**  | via apt      | sudo apt install build-essential |
-
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 
 ```
@@ -91,7 +74,6 @@ cd build/CMake
 cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
-
 
 ## Visual Studio Solution
 

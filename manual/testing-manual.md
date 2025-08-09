@@ -1,5 +1,9 @@
 \page testing_manual Testing Compilation Manual
 
+## 1. Required Programs
+
+See [Required Programs](#required_programs).
+
 The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
 ```
@@ -7,7 +11,7 @@ cd external
 git clone https://github.com/google/googletest.git
 ```
 
-## How to Compile the Tests
+## 2. How to Compile the Tests
 
 Your directory must have the following structure:
 
@@ -21,8 +25,6 @@ mpm-geomechanics/
 │  │  ├─ CMakeLists.txt
 │  │  ├─ build/
 ```
-
-The commands must be executed in the `/build/testing/build` directory (If it does not exist, it must be created), otherwise, the process will produce an error.
 
 ### Windows
 
@@ -61,3 +63,4 @@ cmake --build build
 ```
 
 These commands will generate a executable file named `MPM-Test`.
+
