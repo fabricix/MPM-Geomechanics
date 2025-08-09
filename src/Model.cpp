@@ -82,6 +82,9 @@ namespace ModelSetup {
     // seismic analysis
 	bool seismicAnalysisActive = false; //!< is seismic analysis
 
+	// hydro-mechanical coupling type
+	HydroMechanicalCouplingType hydroCouplingType = HydroMechanicalCouplingType::NONE;
+
 	///
 	/// Function members
 	///
@@ -185,11 +188,11 @@ namespace ModelSetup {
 			{
 				#pragma omp master
 				{
-					std::cout << "   OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+					std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
 				}
 			}
 		#else
-			std::cout <<"   OpenMP : Compilation without supporting OpenMP" << std::endl;
+			std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
 		#endif
 	}
 
@@ -208,6 +211,22 @@ namespace ModelSetup {
 	}
 
 	// Seismic analysis
-	bool getSeismicAnalysis() {return seismicAnalysisActive;}
-	void setSeismicAnalysis(bool a) {seismicAnalysisActive = a;}
+	bool getSeismicAnalysisActive() {return seismicAnalysisActive;}
+	void setSeismicAnalysisActive(bool a) {seismicAnalysisActive = a;}
+
+	// hydro-mechanical coupling
+
+	/// get hydro-mechanical coupling type
+	HydroMechanicalCouplingType getHydroMechanicalCouplingType() { return hydroCouplingType; }
+
+	/// set hydro-mechanical coupling type
+	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type) { hydroCouplingType = type; }
+
+	/// get hydro-mechanical coupling enabled
+	bool getHydroMechOneWayEnabled() {
+		return hydroCouplingType == HydroMechanicalCouplingType::ONE_WAY;
+	}
+
 }
+
+

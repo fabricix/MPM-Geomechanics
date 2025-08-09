@@ -54,7 +54,6 @@ void States::saveParticleStress(const std::string& filename, const std::vector<P
     // write json data in to the file
     outFile << jsonData << std::endl;
     outFile.close();
-    std::cout << "Stress field exported correctly ..." << std::endl;
 }
 
 void States::loadParticleStress(const std::string& filename, std::vector<Particle*>& particles) {
@@ -95,5 +94,4 @@ void States::loadParticleStress(const std::string& filename, std::vector<Particl
 
     // close file and print information
     inFile.close();
-    std::cout << "Stress field loaded ..." << std::endl;
 }

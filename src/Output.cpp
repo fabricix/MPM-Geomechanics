@@ -11,7 +11,9 @@
 #endif
 
 #include "Output.h"
-#include <Energy.h>
+#include "Energy.h"
+#include "DynamicRelaxation.h"
+#include "Seismic.h"
 
 #include <iostream>
 using std::cout;
@@ -247,10 +249,28 @@ namespace Output{
 			// fluid pressure
 			partFile<<"<DataArray type=\"Float64\" Name=\"Pressure\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
-				partFile<<scientific<<particles->at(i)->getPressureFluid()<<"\n";
+
+				double pressure = 0.0;
+
+				if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
+		           pressure = particles->at(i)->getPorePressure();
+				else
+		           pressure = particles->at(i)->getPressureFluid();
+				
+				partFile << scientific << pressure <<"\n";
 			}
 			partFile<<"</DataArray>\n";
 		}
+
+		if (isFieldRequired("pore_pressure")) {
+			// particle pore pressure
+			partFile << "<DataArray type=\"Float64\" Name=\"Pore Pressure\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile << scientific << particles->at(i)->getPorePressure() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		
 		if (isFieldRequired("plastic_strain")){
 			
@@ -516,6 +536,17 @@ namespace Output{
 			}
 			gridFile << "</DataArray>\n";
 		}
+		gridFile<<"</DataArray>\n";
+
+		// print seismic nodes
+		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysisActive()) {
+			// export seismic nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"Seismic Node\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << (Seismic::isSeismicNode(i) ? 1 : 0) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
 
 		if (isGridFieldRequired("volume")) {
 			// nodal volume
@@ -718,10 +749,10 @@ namespace Output{
 		 cout<<"\n"<<left<<setw(width)<<hLines<<"\n";
 	}
 
-	void updateTerminal(vector<Body*>* bodies, double itime)
+	void updateTerminal(double itime)
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
-		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::inst().getCurrentKineticEnergy() << " J - ";
+		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::getCurrentKineticEnergy() << " J - ";
 		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
 	} 
 
@@ -731,11 +762,26 @@ namespace Output{
 		(void)bodies;
 		(void)itime;
 
-		std::cout << "     Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
-		std::cout << "Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
-		std::cout << "Particles : " << Particle::getTotalParticles() << std::endl;
-		std::cout << "  Results : " << ModelSetup::getResultNum() << std::endl;
-		std::cout << "  Solver  : " << (ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::USL ? "USL" : "MUSL") << std::endl;
+		std::cout << "      Time : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTime() << "s" << std::endl;
+		std::cout << " Time step : " << std::setw(8) << std::scientific << std::setprecision(4) << ModelSetup::getTimeStep() << "s" << std::endl;
+		std::cout << " Particles : " << Particle::getTotalParticles() << std::endl;
+		std::cout << "   Results : " << ModelSetup::getResultNum() << std::endl;
+		std::cout << "    Solver : " << (ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::USL ? "USL" : "MUSL") << std::endl;
+		
+		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
+			std::cout << "  Coupling : One-way" << std::endl;
+
+		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL)
+			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;
+		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION)
+			std::cout << "   Damping : Kinetic" << std::endl;
+
+		if (ModelSetup::getSaveState()) {
+			std::cout << "Save state : Enabled" << std::endl;
+		}
+		if (ModelSetup::getLoadState()) {
+			std::cout << "Load state : Enabled" << std::endl;
+		}
 	}
 
 	void initializeCSVFile(const std::string& filename) {
@@ -746,25 +792,27 @@ namespace Output{
 		}
 	}
 
-	void writeCSVEnergyFile(std::vector<Body*>* bodies, double iTime) {
-    // Get total kinetic energy
-		double ienergy = Energy::inst().getCurrentKineticEnergy();
+	void writeCSVEnergyFile(double iTime) 
+	{
+		// Get total kinetic energy
+		double ienergy = Energy::getCurrentKineticEnergy();
 
-    // Open the simulation CSV file in append mode
-    std::ofstream csv_file("time-energy.csv", std::ios::app);
-    if (!csv_file.is_open()) {
-        std::cerr << "Error opening the CSV file" << std::endl;
-    }
-    
-    // Write time and energy to the file
-    if(iTime==0)
-		csv_file << "time,energy" << "\n";
-    
+		// Open the simulation CSV file in append mode
+		std::ofstream csv_file("time-energy.csv", std::ios::app);
+		if (!csv_file.is_open()) {
+			std::cerr << "Error opening the CSV file" << std::endl;
+		}
+		
+		// Write time and energy to the file
+		if(iTime==0){
+			csv_file << "time,energy" << "\n";
+		}
+		
 		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ienergy << "\n";
-    
-    // Close the file
-    csv_file.close();
-}
+		
+		// Close the file
+		csv_file.close();
+	}
 
 	void writeResultInStep(int resultSteps,vector<Body*>* bodies, double iTime)
 	{
@@ -775,10 +823,10 @@ namespace Output{
 			writeBodies(bodies,iTime);
 
 			// update terminal
-			updateTerminal(bodies,iTime);
+			updateTerminal(iTime);
 
 			// write energy in the CSV file
-			writeCSVEnergyFile(bodies, iTime);
+			writeCSVEnergyFile(iTime);
 		}
 	}
 
@@ -791,10 +839,10 @@ namespace Output{
 		initializeCSVFile("time-energy.csv");
 
 		// write time and energy in the terminal
-		updateTerminal(bodies, iTime);
+		updateTerminal(iTime);
 
 		// write energy in the CSV file
-		writeCSVEnergyFile(bodies, iTime);
+		writeCSVEnergyFile(iTime);
 
 		// write particles as a .vtu files
 		writeBodies(bodies, iTime);

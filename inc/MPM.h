@@ -34,10 +34,10 @@ public:
 	/// \param[in] argument_counter Argument counter
 	/// \param[in] argument_vector Argument vector
 	void readInputFile(int argument_counter, char ** argument_vector);
-	
-	/// \brief Create the numerical MPM model
-	///
-	void createModel();
+
+    /// \brief Create the numerical MPM model
+    ///
+    void createModel();
 	
 	/// \brief Solve the problem in time
 	///
@@ -143,10 +143,10 @@ private:
 	void setPartitionFactor();
 
 	/// \brief Get seismic analysis active
-	bool getSeismicAnalysis();
+	bool getSeismicAnalysisActive();
 
-	/// \brief Set seismic analysis active
-	void setSeismicAnalysis(bool);
+	/// \brief Configure one direction hydro-mechanical coupling
+	void setOneDirectionHydromechanicalCoupling();
 
 	/// \brief Setup particles per thread in the solver
 	void setupParticlesPerThread();

@@ -163,10 +163,13 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Update::resetNodalValues(mesh);
 
 		// Compute current kinetic energy
-		Energy::inst().computeKineticEnergy(bodies);
+		Energy::computeKineticEnergy(particles);
 
 		// verify the static solution requirements
-		DynamicRelaxation::setStaticSolution(bodies);
+		DynamicRelaxation::setStaticSolution(particles);
+
+		// advance in time
+		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
 	// write results series

@@ -7,6 +7,7 @@
 #include "Body/Body.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "Seismic.h"
 
 ///
 /// From particle to node:
@@ -190,6 +191,9 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 	// is two-phase calculations
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
 
+	// check if is one direction hydro-mechanical coupling
+	bool isOneDirectionHydromechanicalCoupling = ModelSetup::getHydroMechOneWayEnabled();
+
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
@@ -209,8 +213,13 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
 			// get effective stress of solid
-			const Matrix3d pStress = particles->at(i)->getStress();
-			
+			Matrix3d pStress = particles->at(i)->getStress();
+
+			// use total stress if hydro-mechanical coupling is enabled
+			if (isOneDirectionHydromechanicalCoupling) {
+				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+			}
+
 			// get the particle volume
 			double pVolume = particles->at(i)->getCurrentVolume();
 
@@ -691,9 +700,16 @@ void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodie
 // function to interpolate vector values in time
 Eigen::Vector3d Interpolation::interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime) {
 	
-	// get the first and last values in the interval
-	if (itime <= times.front()) return values.front();
-	if (itime >= times.back()) return values.back();
+	// check if the time is out of bounds
+	if (itime <= times.front()) {
+		return Eigen::Vector3d::Zero();
+	}
+    
+	if(itime >= times.back()) {
+		// if the time is greater than the last time disable seismic analysis
+		Seismic::disableSeismicAnalysis();
+		return Eigen::Vector3d::Zero();
+	}
 
 	// find the upper limit where the time is located
 	auto upper = std::upper_bound(times.begin(), times.end(), itime);
@@ -702,8 +718,9 @@ Eigen::Vector3d Interpolation::interpolateVector(const std::vector<double>& time
 	// get the limit values in the interval
 	double t0 = times[idx];
 	double t1 = times[idx + 1];
-	Eigen::Vector3d v0 = values[idx];
-	Eigen::Vector3d v1 = values[idx + 1];
+	
+	const Eigen::Vector3d v0 = values[idx];
+	const Eigen::Vector3d v1 = values[idx + 1];
 
 	// linear interpolation using limit values in the interval
 	double factor = (itime - t0) / (t1 - t0);

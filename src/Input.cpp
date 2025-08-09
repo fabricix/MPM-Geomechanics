@@ -7,6 +7,7 @@
 #include "Solver/SolverExplicitTwoPhaseUSL.h"
 #include "Materials/Elastic.h"
 #include "Materials/MohrCoulomb.h"
+#include "Materials/Newtonian.h"
 #include "Body/BodyCuboid.h"
 #include "Body/BodyPolygon.h"
 #include "Body/BodyParticle.h"
@@ -296,6 +297,12 @@ Vector3d Input::getOrigin() {
 
 	try
 	{
+		
+		if(inputFile["mesh"]["origin"].is_null() || !inputFile["mesh"]["origin"].is_array()) {
+			// default origin
+			return Vector3d(0.0, 0.0, 0.0);
+		}
+
 		if(inputFile["mesh"]["origin"].is_array()){
 				
 			Vector3d originVector;
@@ -305,7 +312,6 @@ Vector3d Input::getOrigin() {
 
 			return originVector;	
 		}
-	
 		throw(0);
 	}
 	catch(...)
@@ -347,6 +353,26 @@ vector<Material*> Input::getMaterialList(){
 						
 						// create a new elastic material
 						material = new Elastic(id, density, young, poisson);
+					}
+
+					// newtonian fluid material
+					if ((*it)["type"] == "newtonian")
+					{
+						// material properties
+						int id = 0; 
+						if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+
+						double viscosity = 0.0; 
+						if ((*it)["viscosity"].is_number()) { viscosity = ((*it)["viscosity"]); }
+
+						double bulk = 0.0; 
+						if ((*it)["bulk"].is_number()) { bulk = ((*it)["bulk"]); }
+
+						double density = 0.0; 
+						if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+						
+						// create a new newtonian material
+						material = new Newtonian(id, density, viscosity, bulk);
 					}
 
 					// mohr-coulomb material
@@ -1614,6 +1640,42 @@ bool Input::getTerrainContactActive()
 	}
 }
 
+bool Input::getPenaltyContactActive()
+{
+    try
+    {
+        if (inputFile["terrain_contact"].is_null()) { return false; }
+        if (inputFile["terrain_contact"]["penalty_contact_active"].is_null()) { return false; }
+        if (inputFile["terrain_contact"]["penalty_contact_active"].is_boolean()) {
+            return inputFile["terrain_contact"]["penalty_contact_active"];
+        }
+        throw(0);
+    }
+    catch (...)
+    {
+        Warning::printMessage("Error during reading the penalty_contact keyword in terrain_contact");
+        throw;
+    }
+}
+
+double Input::getPenaltyStiffness()
+{
+    try
+    {
+        if (inputFile["terrain_contact"].is_null()) { return 0.0; }
+        if (inputFile["terrain_contact"]["penalty_stiffness"].is_null()) { return 0.0; }
+        if (inputFile["terrain_contact"]["penalty_stiffness"].is_number()) {
+            return inputFile["terrain_contact"]["penalty_stiffness"];
+        }
+        throw(0);
+    }
+    catch (...)
+    {
+        Warning::printMessage("Error during reading the penalty_stiffness keyword in terrain_contact");
+        throw;
+    }
+}
+
 std::string Input::getSTLMeshFile()
 {
 	try
@@ -1689,40 +1751,54 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 	}
 
 	std::string line;
-
 	// ignore headers if we have ones
 	if (hasHeader && std::getline(file, line)) {
-		// headers manipulations if needed 
+		// headers manipulations if needed
 	}
 
-	while (std::getline(file, line)) {
-	
-		std::stringstream ss(line);
-		std::string item;
-		double t;
-		Eigen::Vector3d acc(0.0, 0.0, 0.0);
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
 
-		// time
-		if (!std::getline(ss, item, ',')) continue;
-		t = std::stod(item);
+        // replace commas and tabs with spaces
+        std::replace(line.begin(), line.end(), ',', ' ');
+        std::replace(line.begin(), line.end(), '\t', ' ');
+		std::replace(line.begin(), line.end(), ';', ' ');
 
-		// ax
-		if (!std::getline(ss, item, ',')) continue;
-		acc.x() = std::stod(item);
+        // use istringstream to parse the line with spaces
+        std::istringstream ss(line);
+        double t, ax, ay, az;
 
-		// ay
-		if (!std::getline(ss, item, ',')) continue;
-		acc.y() = std::stod(item);
+		// if the line does not have almost 4 values, skip it
+        if (!(ss >> t >> ax >> ay >> az)) continue;
 
-		// az
-		if (!std::getline(ss, item, ',')) continue;
-		acc.z() = std::stod(item);
+        data.time.push_back(t);
+        data.acceleration.push_back(Eigen::Vector3d(ax, ay, az));
+    }
 
-		data.time.push_back(t);
-		data.acceleration.push_back(acc);
-	}
+    file.close();
+    return data;
+}
 
-	file.close();
-	
-	return data;
+bool Input::getHydroMechCouplingEnabled() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("enabled") &&
+		inputFile["hydro_mechanical_coupling"]["enabled"].is_boolean())
+		return inputFile["hydro_mechanical_coupling"]["enabled"];
+	return false;
+}
+
+bool Input::getHydroMechCouplingOneWay() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("type") &&
+		inputFile["hydro_mechanical_coupling"]["type"].is_string())
+		return inputFile["hydro_mechanical_coupling"]["type"] == "one_way";
+	return false;
+}
+
+std::string Input::getPorePressureFilename() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("pore_pressure_field") &&
+		inputFile["hydro_mechanical_coupling"]["pore_pressure_field"].is_string())
+		return inputFile["hydro_mechanical_coupling"]["pore_pressure_field"];
+	return "";
 }

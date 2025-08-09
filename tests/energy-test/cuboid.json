@@ -9,12 +9,12 @@
 
   "gravity":[0.0,0.0,-9.81],
 
-  "n_threads":1,
+  "n_threads":8,
 
   "results":
   {
     "print":20,
-    "fields":["id","displacement","material","active","body"]
+    "fields":["id"]
   },
 
   "n_phases":1,

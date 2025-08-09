@@ -9,10 +9,13 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
+    # Step 1: Clone the repository
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Step 2: Set up MSYS2 with MinGW64 and install required tools
     - name: Setup MSYS2 with MinGW64
       uses: msys2/setup-msys2@v2
       with:
@@ -22,18 +25,43 @@ jobs:
           mingw-w64-x86_64-gcc
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
+          zip
 
+    # Step 3: Configure the project using CMake and Ninja
     - name: Configure with CMake using Ninja
       shell: msys2 {0}
       run: cmake -G "Ninja" -S build/CMake -B build/CMake
 
+    # Step 4: Build the project
     - name: Build with CMake
       shell: msys2 {0}
       run: cmake --build build/CMake
 
-    - name: Upload Windows binary
+    # Step 5: Create distribution folder and copy executable
+    - name: Create dist folder and copy executable
+      shell: msys2 {0}
+      run: |
+        mkdir -p dist
+        cp build/CMake/MPM-Geomechanics.exe dist/
+
+    # Step 6: Automatically detect and copy required DLLs using ldd
+    - name: Detect and copy runtime DLLs
+      shell: msys2 {0}
+      run: |
+        cd dist
+        # Copy only DLLs located in mingw64 path
+        for dll in $(ldd MPM-Geomechanics.exe | grep mingw64 | awk '{print $3}'); do
+          cp "$dll" .
+        done
+
+    # Step 7: Zip the executable and its DLL dependencies
+    - name: Zip executable and DLLs
+      shell: msys2 {0}
+      run: zip -j MPM-Geomechanics-windows.zip dist/*
+
+    # Step 8: Upload the ZIP file as an artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: MPM-Geomechanics-windows
-        path: build/CMake/MPM-Geomechanics.exe
-
+        path: MPM-Geomechanics-windows.zip

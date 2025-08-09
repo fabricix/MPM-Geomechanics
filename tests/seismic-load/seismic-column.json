@@ -11,12 +11,6 @@
 
   "n_threads":1,
 
-  "damping":
-  {
-    "type":"local",
-    "value":0.0
-  },
-
   "results":
   {
     "print":100,
@@ -35,7 +29,7 @@
 
   "earthquake": {
   "active": true,
-  "file": "base_acceleration.csv",
+  "file": "base_acceleration_space.csv",
   "header": true
 }
 ,

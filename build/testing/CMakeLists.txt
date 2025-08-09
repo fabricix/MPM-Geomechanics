@@ -28,9 +28,9 @@ list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
 
 find_package(OpenMP REQUIRED)
 
-add_executable(MPM-Test ${TEST_SOURCES} ${EXECUTABLES})
+add_executable(MPM-Geomechanics-tests ${TEST_SOURCES} ${EXECUTABLES})
 
 # Link the executable with the GoogleTest libraries (gtest and gtest_main)
 # gtest: GoogleTest's main library
 # gtest_main: Provides a main() function to run the tests
-target_link_libraries(MPM-Test gtest gtest_main OpenMP::OpenMP_CXX)
+target_link_libraries(MPM-Geomechanics-tests gtest gtest_main OpenMP::OpenMP_CXX)

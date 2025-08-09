@@ -69,9 +69,6 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		// set the node id
 		contributionNodes.at(i).setNodeId(nodesId.at(i));
 
-		// reset the node id to -1 (no thread)
-		gNodes->at(nodesId.at(i))->threadId = -1;
-
 		// update the shape functions and gradients
 		shape->update(position,gNodes->at(nodesId.at(i))->getCoordinates(),mesh->getCellDimension(),size);
 

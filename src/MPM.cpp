@@ -11,6 +11,8 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "HydroMechanicalCoupling.h"
+#include "Seismic.h"
 #include "Parallelization.h"
 
 #include "Json/json.hpp"
@@ -156,7 +158,7 @@ void MPM::setupMesh() {
 	// configure the mesh boundary conditions
 	mesh.setBoundaryRestrictions(Input::getMeshBoundaryConditions());
 
-	if(ModelSetup::getSeismicAnalysis()){
+	if(ModelSetup::getSeismicAnalysisActive()){
 		// set the boundary conditions for seismic analysis
 		mesh.setBoundaryRestrictionsSeismic();
 	}
@@ -203,6 +205,30 @@ void MPM::setupTerrainContact()
 		
 		// compute distance level set function
 		terrainContact->computeDistanceLevelSetFunction(&mesh);
+
+		// mark seismic nodes for STL seismic loading
+		if (ModelSetup::getSeismicAnalysisActive() && terrainContact != nullptr)
+		{
+	    	double epsilon = 0.25 * mesh.getCellDimension().mean();
+    		
+			// mark seismic nodes based on distance from level set
+			// this will mark nodes that are close to the terrain contact surface
+			// and will be used to apply seismic loading in the seismic analysis
+			Seismic::markSeismicNodes(epsilon, &mesh);
+
+			// disable Zo earthquake treatment for seismic nodes
+			mesh.setRestriction(Boundary::BoundaryPlane::Z0, Boundary::BoundaryType::SLIDING);
+		}
+
+		// configure penalty contact method
+		if (Input::getPenaltyContactActive()) {
+			terrainContact->enablePenaltyContact(true);
+			terrainContact->setPenaltyStiffness(Input::getPenaltyStiffness());
+		}
+		else {
+			terrainContact->enablePenaltyContact(false);
+		}	
+
 	}
 }
 
@@ -397,7 +423,7 @@ void MPM::setupSeismicAnalysis() {
 	// configure seismic analysis in mpm model
 	if(!Seismic::getSeismicAnalysis().isActive) return;
 	
-	ModelSetup::setSeismicAnalysis(true);
+	ModelSetup::setSeismicAnalysisActive(true);
 
 	// setup seismic data
 	Seismic::setSeismicData();
@@ -426,12 +452,19 @@ void MPM::setupResults() {
 }
 
 void MPM::setThreads() {
-
-	// configures the number of threads
-	ModelSetup::setNumThreads(Input::getNumThreads());
+	try
+	{
+		// configures the number of threads
+		ModelSetup::setNumThreads(Input::getNumThreads());
+	}
+	catch (const std::exception& e)
+	{
+		Warning::printMessage("Error setting number of threads: " + string(e.what()));
+	}
 }
 
-void MPM::setPartitionFactor() {
+void MPM::setPartitionFactor()
+{
 
 	// configures the number of threads
 	ModelSetup::setPartitionFactor(Input::getPartitionFactor());
@@ -461,6 +494,11 @@ void MPM::saveState()
 	{
 		States::saveParticleStress("particle_stress_data.json", particles);
 	}
+}
+
+void MPM::setOneDirectionHydromechanicalCoupling()
+{
+	HydroMechanicalCoupling::configureOneDirectionCoupling(particles);
 }
 
 void MPM::createModel() {
@@ -514,6 +552,9 @@ void MPM::createModel() {
 		// configures the loads
 		setupLoads();
 
+		// configures the hydro-mechanical coupling type
+		setOneDirectionHydromechanicalCoupling();
+
 		// configures the damping
 		setupDamping();
 
@@ -527,9 +568,10 @@ void MPM::createModel() {
 		setupParticlesPerThread();
 
 	}
-	catch(...)
+	catch (const std::exception& e)
 	{
 		Warning::printMessage("Error during model creation");
+		Warning::printMessage(e.what());
 		Warning::printMessage("Verify the input file");
 		Warning::printMessage("The program finished");
 		Output::farewellScreen();

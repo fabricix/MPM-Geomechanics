@@ -21,7 +21,7 @@ public:
 	///
 	Node();
 
-	int threadId = -1;
+
 	bool isInterface = false;
 
 	/// \brief Configure node identification
@@ -183,11 +183,17 @@ public:
 	/// \brief Get the nodal volume
 	double getVolume() { return this->volume; }
 
+	int getThreadId() const { return threadId; }
+
+	void setThreadId(int id) { this->threadId = id; }
+
 protected:
 
 	bool active; //!< is active node
 
 	int id; //!< nodal identification
+
+	int threadId = -1;
 
 	double mass; //!< nodal mass: \f$m_{I}\f$, or solid mass in two-phase calculations: \f$m_{I}^{s}\f$
 	double volume; //!< nodal volume: \f$V_{I}\f$ 
@@ -227,7 +233,8 @@ inline void Node::resetValues()
     momentum.setZero();
     externalForce.setZero();
     internalForce.setZero();
-	densityLevelSet=0.0;
+		densityLevelSet = 0.0;
+		threadId = -1;
 }
 
 inline Node::~Node() { }

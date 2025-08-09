@@ -9,17 +9,22 @@
 
 /// @brief Class to compute terrain contact
 class TerrainContact {
+
 private:
     
     STLReader* stlMesh; //!< triangular mesh for terrain contact 
     
-    double frictionCoefficient; ///< Friction coefficient \f$\mu\f$
+    double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
 
     std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 
     std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
 
     double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
+
+    bool usePenaltyContact = false; //!< Use penalty contact method
+
+    double penaltyStiffness = 0.0; //!< Penalty stiffness for contact forces
 
 public:
 
@@ -61,6 +66,12 @@ public:
 
     /// @brief Apply the terrain contact algorithm
     void apply(Mesh* mesh, std::vector<Particle*>* particles, double dt);
+
+    /// @brief Enable the penalty contact method
+    void enablePenaltyContact(bool enable);
+    
+    /// @brief Set the penalty stiffness for contact forces
+    void setPenaltyStiffness(double k);
 };
 
 #endif // TERRAINCONTACT_H
