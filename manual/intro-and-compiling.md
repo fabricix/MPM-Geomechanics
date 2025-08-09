@@ -37,9 +37,9 @@ For downloading the compiled binaries
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
 4. Download the `compiled-binaries` artifact to get the compiled code.
 
-Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
-
 # Compilation with Windows
+
+\note Prior to proceeding with these instructions, please consult the [Windows Required Programs](#required_programs_windows) section.
 
 The simplest way to compile on windows is by using the **`.bash`** file at **`/build/CMake`** with **`MSYS2 MINGW64`** console line, just execute:
 
@@ -57,6 +57,8 @@ cmake --build build
 ```
 
 # Compiling with Linux
+
+\note Prior to proceeding with these instructions, please consult the [Linux Required Programs](#required_programs_linux) section.
 
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 

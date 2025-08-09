@@ -2,7 +2,7 @@
 
 The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
 
-## Required Programs - Windows
+## Required Programs - Windows {#required_programs_windows}
 
 | Program    | Installation                                             | Command                                            |
 | ---------- | -------------------------------------------------------- | -------------------------------------------------- |
@@ -16,7 +16,7 @@ The following instructions outline the steps required to install all necessary p
 
 **Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website][winget_installation_link]
 
-1. Install **Git** and **MSYS2** using `winget`, by running the following commands:
+Step 1: Install **Git** and **MSYS2** using `winget`, by running the following commands:
 
 ```
 # Git
@@ -26,7 +26,7 @@ winget install -e --id Git.Git -e --source winget
 winget install -e --id MSYS2.MSYS2 --source winget
 ```
 
-2. Open the `MSYS2 MINGW64` console and execute the following commands:
+Step 2: Open the `MSYS2 MINGW64` console and install CMake, GCC, G++ and Make:
 
 ```
 # CMake
@@ -39,8 +39,7 @@ pacman -S mingw-w64-x86_64-gcc
 pacman -S make
 ```
 
-Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. If it does not exist, add it.
-Then, in the **MSYS2 MINGW64 console line**, you must verify the versions of each installation via:
+Step 3: Verify the versions of each installation :
 
 ```
 git --version
@@ -49,8 +48,8 @@ make --version
 gcc --version   
 g++ --version   
 ```
-
-## Required Programs - Linux (Ubuntu/Debian)
+---
+## Required Programs - Linux (Ubuntu/Debian) {#required_programs_linux}
 
 | Program   | Installation | Command                          |
 | --------- | ------------ | -------------------------------- |
@@ -60,7 +59,7 @@ g++ --version
 | **G++**   | via apt      | sudo apt install build-essential |
 | **Make**  | via apt      | sudo apt install build-essential |
 
-1. Install all the necessary progrmas using `apt` by running the following commands:
+Step 1: Install all the necessary progrmas using `apt`:
 
 ```
 # Git
@@ -73,7 +72,7 @@ sudo apt install cmake
 sudo apt install build-essential
 ```
 
-2. You must verify the versions of each installation via:
+Step 2: Verify the versions of each installation:
 
 ```
 git --version

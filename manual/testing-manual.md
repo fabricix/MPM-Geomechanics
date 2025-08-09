@@ -2,7 +2,7 @@
 
 ## 1. Required Programs
 
-See [Required Programs](#required_programs).
+\note Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
 
 The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
 
