@@ -39,48 +39,43 @@ For downloading the compiled binaries
 
 # Compilation Instructions (Windows/Linux)
 
-## CMake
-
-Windows Instructions text 
+## Compilation with Windows
 
 ### Required Programs
 
-| Program          | Installation |
-| ---------------- | ------------ |
-| **CMake**        | via Winget   |
-| **MinGW32-make** | via MSYS2    |
-| **GCC**          | via MSYS2    |
-| **G++**          | via MSYS2    |
+| Program   | Installation      | Command                          |
+| --------- | ----------------- | -------------------------------- |
+| **CMake** | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-cmake |
+| **GCC**   | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-gcc   |
+| **G++**   | via MSYS2 MINGW64 | pacman -S mingw-w64-x86_64-gcc   |
+| **Make**  | via MSYS2 MINGW64 | pacman -S make                   |
 
-### Compilation with Windows
 
-The simplest way to compile on windows is by using the `.bat` file at `/build/CMake`, just execute:
+The simplest way to compile on windows is by using the **`.bash`** file at **`/build/CMake`** with **`MSYS2 MINGW64`** console line, just execute:
 
 ```
-cd build/CMake
-./cmake-build-win.bat
+cd project-directory/build/CMake
+./cmake-build-win.bash
 ```
 
 Alternatively, you can use the following commands:
 
 ```
-cd build/CMake
-cmake -G "MinGW Makefiles" -B build
+cd project-directory/build/CMake
+cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-### Linux Instructions text 
+## Compiling with Linux
 
-#### Required Programs
+### Required Programs
 
-| Program   | Installation |
-| --------- | ------------ |
-| **CMake** | via apt      |
-| **Make**  | via apt      |
-| **GCC**   | via apt      |
-| **G++**   | via apt      |
-
-#### Compilation with Linux
+| Program   | Installation | Command                          |
+| --------- | ------------ | -------------------------------- |
+| **CMake** | via apt      | sudo apt install cmake           |
+| **GCC**   | via apt      | sudo apt install build-essential |
+| **G++**   | via apt      | sudo apt install build-essential |
+| **Make**  | via apt      | sudo apt install build-essential |
 
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 
@@ -110,7 +105,6 @@ msbuild MPM-Geomechanics.sln -p:Configuration=Release
 ## Make Compilation
 For compile the code in a linux environment, execute the [make](https://www.gnu.org/software/make/) command into the make folder, in with is located de makefile `MPM-Geomechanics\build\make\makefile`:
  
-
 # Documentation
 
 The program documentation is generated using [Doxygen](https://www.doxygen.nl/index.html):

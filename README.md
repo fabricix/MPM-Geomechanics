@@ -93,19 +93,19 @@ See [exponential-softening-refined.json](/tests/exponential-softening/refined%20
 ### 1. WINDOWS
 
 #### 1.1. Required Programs
-| Program             | Installation    | Description | 
-| ------------------- | --------------- | ------------|
-| **Winget**          | [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)| Package manager for Windows  | 
-| **Git**             | via Winget  | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**           | via Winget  | Build system generator                                                          | 
-| **MSYS2**           | via Winget  | Package manager that includes MinGW                                             | 
-| **MinGW32-make**    | via MSYS2   | Environment for the GCC compiler                                                |
-| **GCC**             | via MSYS2   | GNU Compiler Collection                                                         |
-| **G++**             | via MSYS2   | C++ Compiler                                                                    |
+| Program    | Installation                                             | Description                                                                     |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Winget** | [Microsoft's official website][winget_installation_link] | Package manager for Windows                                                     |
+| **Git**    | via Winget                                               | Version control system. Used in this project to clone the GoogleTest repository |
+| **MSYS2**  | via Winget                                               | Package manager that includes MinGW                                             |
+| **CMake**  | via MSYS2 MINGW64                                        | Build system generator                                                          |
+| **Make**   | via MSYS2 MINGW64                                        | Build automation                                                                |
+| **GCC**    | via MSYS2 MINGW64                                        | GNU Compiler Collection                                                         |
+| **G++**    | via MSYS2 MINGW64                                        | C++ Compiler                                                                    |
 
-**Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website](https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only)
+**Make sure you have Winget installed**, you can verify this by running `winget --version`. If you don't have installed **Winget**, you can get it from [Microsoft's official website][winget_installation_link]
 
-1. Install **Git**, **CMake** and **MSYS2** using `winget` by running the following commands:
+1. Install **Git** and **MSYS2** using `winget`, by running the following commands:
 
 ```
 # Git
@@ -113,28 +113,28 @@ winget install -e --id Git.Git -e --source winget
 
 # MSYS2
 winget install -e --id MSYS2.MSYS2 --source winget
+```
 
+2. Open the `MSYS2 MINGW64` console and execute the following commands:
+
+```
 # CMake
-winget install -e --id Kitware.CMake --source winget
-```
+pacman -S mingw-w64-x86_64-cmake
 
-2. Open the `MSYS` console and execute the following commands:
-
-```
 # GCC and G++
 pacman -S mingw-w64-x86_64-gcc
 
-# mingw32-make
-pacman -S mingw-w64-x86_64-make
+# Make
+pacman -S make
 ```
 
 Verify the **environment variables** for the directory `C:/msys64/mingw64/bin`. If it does not exist, add it.
-Then, in the **console line of windows** (or powershell), you must verify the versions of each installation via:
+Then, in the **MSYS MINGW64 console line**, you must verify the versions of each installation via:
 
 ```
 git --version
 cmake --version
-mingw32-make --version 
+make --version 
 gcc --version   
 g++ --version   
 ```
@@ -142,13 +142,13 @@ g++ --version
 ### 2. Linux (Ubuntu/Debian)
 
 #### 2.1. Required Programs
-| Program     | Installation    | Description                                                                     | 
-| ------------| --------------- | ------------------------------------------------------------------------------- |
-| **Git**     | via apt         | Version control system. Used in this project to clone the GoogleTest repository | 
-| **CMake**   | via apt         | Build system generator                                                          | 
-| **Make**    | via apt         | Package manager that includes MinGW                                             | 
-| **GCC**     | via apt         | GNU Compiler Collection                                                         |
-| **G++**     | via apt         | C++ Compiler                                                                    |
+| Program   | Installation | Description                                                                     |
+| --------- | ------------ | ------------------------------------------------------------------------------- |
+| **Git**   | via apt      | Version control system. Used in this project to clone the GoogleTest repository |
+| **CMake** | via apt      | Build system generator                                                          |
+| **Make**  | via apt      | Package manager that includes MinGW                                             |
+| **GCC**   | via apt      | GNU Compiler Collection                                                         |
+| **G++**   | via apt      | C++ Compiler                                                                    |
 
 1. Install all the necessary progrmas using `apt` by running the following commands:
 
@@ -228,3 +228,6 @@ If you are an external contributor, please fork the repository and submit a pull
 This simulator is provided for academic and research purposes. It is distributed "as is", without any warranties of any kind, express or implied, including but not limited to warranties of merchantability or fitness for a particular purpose.
 
 The use of this simulator and the interpretation of its results are the **sole responsibility of the user**. The developers and the affiliated institution shall not be held liable for any direct or indirect damages, economic losses, or consequences resulting from the use of this software.
+
+[link_lists]: link_lists
+[winget_installation_link]: https://learn.microsoft.com/es-es/windows/package-manager/winget/#install-winget-preview-version-developers-only
