@@ -1,4 +1,4 @@
-\page testing_manual Testing Compilation Manual
+# Testing Compilation Manual {#testing_manual}
 
 ## 1. Required Programs
 

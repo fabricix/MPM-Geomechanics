@@ -37,11 +37,9 @@ For downloading the compiled binaries
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
 4. Download the `compiled-binaries` artifact to get the compiled code.
 
-# Compilation Instructions (Windows/Linux)
-
 Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
 
-## Compilation with Windows
+# Compilation with Windows
 
 The simplest way to compile on windows is by using the **`.bash`** file at **`/build/CMake`** with **`MSYS2 MINGW64`** console line, just execute:
 
@@ -58,7 +56,7 @@ cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-## Compiling with Linux
+# Compiling with Linux
 
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 
@@ -75,7 +73,7 @@ cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-## Visual Studio Solution
+# Visual Studio Solution
 
 For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
 Alternatively you can compile it by using command in a *Developer Command Prompt*: 
@@ -84,7 +82,7 @@ Alternatively you can compile it by using command in a *Developer Command Prompt
 msbuild MPM-Geomechanics.sln -p:Configuration=Release
 ```
 
-## Make Compilation
+# Make Compilation
 For compile the code in a linux environment, execute the [make](https://www.gnu.org/software/make/) command into the make folder, in with is located de makefile `MPM-Geomechanics\build\make\makefile`:
  
 # Documentation

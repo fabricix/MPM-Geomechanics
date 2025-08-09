@@ -1,4 +1,4 @@
-\page required_programs Required Programs 
+# Required Programs {#required_programs}
 
 The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
 
