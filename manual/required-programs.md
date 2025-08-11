@@ -1,8 +1,8 @@
-# Required Programs {#required_programs}
+\page required_programs Required Programs
 
 The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
 
-## Required Programs - Windows {#required_programs_windows}
+\section required_programs_windows Required Programs - Windows
 
 | Program    | Installation                                             | Command                                              |
 | ---------- | -------------------------------------------------------- | ---------------------------------------------------- |
@@ -52,7 +52,8 @@ gcc --version
 g++ --version   
 ```
 ---
-## Required Programs - Linux (Ubuntu/Debian) {#required_programs_linux}
+
+\section required_programs_linux Required Programs - Linux
 
 | Program   | Installation | Command                            |
 | --------- | ------------ | ---------------------------------- |

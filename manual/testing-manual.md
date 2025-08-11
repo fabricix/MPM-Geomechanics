@@ -1,6 +1,6 @@
-# Testing Compilation Manual {#testing_manual}
+\page testing_manual Testing Compilation Manual
 
-## 1. Required Programs
+\section testing_manual_required_programs 1. Required Programs
 
 \note Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
 
@@ -11,7 +11,7 @@ cd external
 git clone https://github.com/google/googletest.git
 ```
 
-## 2. How to Compile the Tests
+\section testing_manual_howto 2. How to Compile the Tests
 
 Your directory must have the following structure:
 
@@ -26,7 +26,7 @@ mpm-geomechanics/
 │  │  ├─ build/
 ```
 
-### Windows
+\subsection testing_manual_windows Windows
 
 The simplest way to compile on windows is by using the **`.bash`** file at **`/build/Testing`** with **`MSYS2 MINGW64`** console line, just execute:
 
@@ -45,7 +45,7 @@ cmake --build build
 
 These commands will generate a .exe file named `MPM-Test.exe`.
 
-### Linux (Ubuntu/Debian)
+\subsection testing_manual_linux Linux (Ubuntu/Debian)
 
 The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
 
