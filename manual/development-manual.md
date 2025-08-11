@@ -1,10 +1,10 @@
 \page development_manual Development manual
 
-# Keywords for commit messages
+\section development_manual_keywords Keywords for commit messages
 
 This section provides a list of keywords to include in commits comments. These keywords help organize and identify different types of contributions for better readability and maintainability.
 
-## **Keywords**
+## Keywords List
 
 ### **1. `doc:`**
 - **Purpose**: For documentation-related comments or detailed explanations.
@@ -90,7 +90,7 @@ This section provides a list of keywords to include in commits comments. These k
   // deprecated: This method will be removed in the next version
   ```
 
-## **Best Practices**
+\section development_manual_best_practices Best Practices
 
 1. **Consistency**:
    - Always use these keywords in lowercase to maintain clarity.

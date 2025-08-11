@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['materialtype_0',['MaterialType',['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439',1,'Material']]]
+  ['interpolationfunctiontype_0',['InterpolationFunctionType',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab',1,'ModelSetup']]]
 ];

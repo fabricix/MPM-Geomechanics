@@ -43,7 +43,11 @@ public:
 	
 	/// \brief Configure the nodal momentum of fluid phase
 	/// \param[in] nodal_momentum_fluid Vector containing the nodal momentum of fluid phase
-	virtual inline void setMomentumFluid(const Vector3d& ) { return; }
+	virtual inline void setMomentumFluid(const Vector3d& nodal_momentum_fluid) 
+	{ 
+		(void)nodal_momentum_fluid;
+		return;
+	}
 
 	/// \brief Configure the total nodal force
 	/// \param[in] total_nodal_force Vector containing the total
@@ -53,7 +57,11 @@ public:
 	/// \brief Configure the total nodal force in fluid phase
 	/// \param[in] total_nodal_force_fluid Vector containing the total
 	/// nodal force in fluid phase
-	virtual inline void setTotalForceFluid(const Vector3d&) { return; }
+	virtual inline void setTotalForceFluid(const Vector3d& total_nodal_force_fluid) 
+	{ 
+		(void)total_nodal_force_fluid;
+		return;
+	}
 
 	/// \brief Return the nodal identification
 	/// \return Nodal identification 
@@ -118,15 +126,22 @@ public:
 
 	/// \brief Add fluid mass increment to the nodal mass
 	/// \param[in] fluid_mass_increment Nodal mass increment 
-	virtual inline void addMassFluid(double) { return; }
-
+	virtual inline void addMassFluid(double fluid_mass_increment)
+	{ 
+		(void)fluid_mass_increment;
+		return;
+	}
 	/// \brief Add a momentum increment to the nodal momentum
 	/// \param[in] momentum_increment Vector containing the nodal momentum increment 
 	inline void addMomentum(const Vector3d& momentum_increment) { this->momentum+=momentum_increment; }
 
 	/// \brief Add fluid momentum increment to the nodal momentum of fluid
 	/// \param[in] fluid_momentum_increment Vector containing the nodal momentum increment of fluid
-	virtual inline void addMomentumFluid(const Vector3d&) { return; }
+	virtual inline void addMomentumFluid(const Vector3d& fluid_momentum_increment) 
+	{ 
+		(void)fluid_momentum_increment;
+		return;
+	}
 		
 	/// \brief Add a internal force increment to the nodal internal force
 	/// \param[in] internal_force_increment Vector containing nodal internal force increment 
@@ -134,7 +149,10 @@ public:
 	
 	/// \brief Add a internal force increment of fluid to the nodal internal force
 	/// \param[in] internal_force_fluid_increment Vector containing nodal internal force increment of fluid
-	virtual inline void addInternalForceFluid(const Vector3d&) { return; }
+	virtual inline void addInternalForceFluid(const Vector3d& internal_force_fluid_increment) { 
+		(void)internal_force_fluid_increment;
+		return;
+	}
 		
 	/// \brief Add a external force increment to the nodal external force
 	/// \param[in] external_force_increment Vector containing nodal external force increment 
@@ -142,7 +160,10 @@ public:
 
 	/// \brief Add a external force of fluid increment to the nodal external force
 	/// \param[in] external_force_fluid_increment Vector containing nodal external force increment 
-	virtual inline void addExternalForceFluid(const Vector3d&) { return; }
+	virtual inline void addExternalForceFluid(const Vector3d& external_force_fluid_increment) {
+		(void)external_force_fluid_increment;
+		return; 
+	}
 	
 	/// \brief Delete all values stored in node
 	///
@@ -161,10 +182,11 @@ public:
 	inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
 
 	/// brief Integrate momentum
-	///
+	/// \param[in] dt Time step
 	virtual inline void integrateMomentum(double dt) { this->momentum +=  this->totalForce*dt; }
 
 	/// \brief Set the distance level set function value of the node
+	/// \param[in] distance Distance level set function value of the node
 	void setDistanceLevelSet(double distance) { this->distanceLevelSet = distance; }
 
 	/// \brief Get the distance level set function value of the node
@@ -175,6 +197,7 @@ public:
 	double getDensityLevelSet() { return this->densityLevelSet; }
 
 	/// \brief Set the nodal volume
+	/// \param[in] volume Nodal volume
 	void setVolume(double volume) { this->volume = volume; }
 
 	/// \brief Get the nodal volume

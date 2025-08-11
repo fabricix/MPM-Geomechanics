@@ -139,6 +139,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of interpolation function.  <a href="#a73c7cfb411f9b3b1062e5fbe694051ab">More...</a><br /></td></tr>
 <tr class="separator:a73c7cfb411f9b3b1062e5fbe694051ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674a0b34f56c6cdda86026c8b6ba5ab2" id="r_a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> { <a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693">NONE</a>
+, <a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1">ONE_WAY</a>
+ }</td></tr>
+<tr class="memdesc:a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of hydro-mechanical coupling.  <a href="#a674a0b34f56c6cdda86026c8b6ba5ab2">More...</a><br /></td></tr>
+<tr class="separator:a674a0b34f56c6cdda86026c8b6ba5ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -262,12 +267,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a51772099d7f35cfad360ca6519709341" id="r_a51772099d7f35cfad360ca6519709341"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51772099d7f35cfad360ca6519709341">setNumThreads</a> (unsigned nThreads)</td></tr>
 <tr class="memdesc:a51772099d7f35cfad360ca6519709341"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the number of threads in the model.  <br /></td></tr>
 <tr class="separator:a51772099d7f35cfad360ca6519709341"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69db078b0bc38c70bb30834e14bd5632" id="r_a69db078b0bc38c70bb30834e14bd5632"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69db078b0bc38c70bb30834e14bd5632">getSeismicAnalysis</a> ()</td></tr>
-<tr class="memdesc:a69db078b0bc38c70bb30834e14bd5632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if seismic analysis is active.  <br /></td></tr>
-<tr class="separator:a69db078b0bc38c70bb30834e14bd5632"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb92766c5252201b8e08bd7171203620" id="r_aeb92766c5252201b8e08bd7171203620"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb92766c5252201b8e08bd7171203620">setSeismicAnalysis</a> (bool seismic_analysis_active)</td></tr>
-<tr class="memdesc:aeb92766c5252201b8e08bd7171203620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure if seismic analysis is active.  <br /></td></tr>
-<tr class="separator:aeb92766c5252201b8e08bd7171203620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1e3abc52ff1aaa46feaf1ba1bc715f9" id="r_ae1e3abc52ff1aaa46feaf1ba1bc715f9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1e3abc52ff1aaa46feaf1ba1bc715f9">getSeismicAnalysisActive</a> ()</td></tr>
+<tr class="memdesc:ae1e3abc52ff1aaa46feaf1ba1bc715f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if seismic analysis is active.  <br /></td></tr>
+<tr class="separator:ae1e3abc52ff1aaa46feaf1ba1bc715f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad42371a9755ac5c2ac98cd4a8a2a32a" id="r_aad42371a9755ac5c2ac98cd4a8a2a32a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad42371a9755ac5c2ac98cd4a8a2a32a">setSeismicAnalysisActive</a> (bool seismic_analysis_active)</td></tr>
+<tr class="memdesc:aad42371a9755ac5c2ac98cd4a8a2a32a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure if seismic analysis is active.  <br /></td></tr>
+<tr class="separator:aad42371a9755ac5c2ac98cd4a8a2a32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f9050bb6d4192b6b1d97359b384c185" id="r_a2f9050bb6d4192b6b1d97359b384c185"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f9050bb6d4192b6b1d97359b384c185">getTwoPhaseActive</a> ()</td></tr>
 <tr class="memdesc:a2f9050bb6d4192b6b1d97359b384c185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if two-phase calculation is active.  <br /></td></tr>
 <tr class="separator:a2f9050bb6d4192b6b1d97359b384c185"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -295,6 +300,24 @@ Functions</h2></td></tr>
 <tr class="memitem:a07f343c6b35e8c341c126bd4b342e213" id="r_a07f343c6b35e8c341c126bd4b342e213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07f343c6b35e8c341c126bd4b342e213">setTerrainContactActive</a> (bool)</td></tr>
 <tr class="memdesc:a07f343c6b35e8c341c126bd4b342e213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set terrain contact active.  <br /></td></tr>
 <tr class="separator:a07f343c6b35e8c341c126bd4b342e213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc238b7690e1baac965b1e293f56e7f" id="r_a6fc238b7690e1baac965b1e293f56e7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fc238b7690e1baac965b1e293f56e7f">getHydroMechanicalCouplingType</a> ()</td></tr>
+<tr class="memdesc:a6fc238b7690e1baac965b1e293f56e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the hydro-mechanical coupling type  <br /></td></tr>
+<tr class="separator:a6fc238b7690e1baac965b1e293f56e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33bc09348a4dd18652f62ee157cf55df" id="r_a33bc09348a4dd18652f62ee157cf55df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33bc09348a4dd18652f62ee157cf55df">setHydroMechanicalCouplingType</a> (<a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> type)</td></tr>
+<tr class="memdesc:a33bc09348a4dd18652f62ee157cf55df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set hydro-mechanical coupling type.  <br /></td></tr>
+<tr class="separator:a33bc09348a4dd18652f62ee157cf55df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bfce42397ffc5da1c79e6c951862cb5" id="r_a0bfce42397ffc5da1c79e6c951862cb5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bfce42397ffc5da1c79e6c951862cb5">getHydroMechOneWayEnabled</a> ()</td></tr>
+<tr class="memdesc:a0bfce42397ffc5da1c79e6c951862cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if one way hydro-mechanical coupling is enabled.  <br /></td></tr>
+<tr class="separator:a0bfce42397ffc5da1c79e6c951862cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751ba95c19cbb373b61db97c44acfcb5" id="r_a751ba95c19cbb373b61db97c44acfcb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a751ba95c19cbb373b61db97c44acfcb5">getLoopCounter</a> ()</td></tr>
+<tr class="memdesc:a751ba95c19cbb373b61db97c44acfcb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current loop counter.  <br /></td></tr>
+<tr class="separator:a751ba95c19cbb373b61db97c44acfcb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c91644289f5395c17f80b20db0512a0" id="r_a1c91644289f5395c17f80b20db0512a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c91644289f5395c17f80b20db0512a0">setLoopCounter</a> (int a)</td></tr>
+<tr class="memdesc:a1c91644289f5395c17f80b20db0512a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current loop counter.  <br /></td></tr>
+<tr class="separator:a1c91644289f5395c17f80b20db0512a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e3298b9129571112f14b9cb0d2896e" id="r_a62e3298b9129571112f14b9cb0d2896e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62e3298b9129571112f14b9cb0d2896e">incrementLoopCounter</a> ()</td></tr>
+<tr class="memdesc:a62e3298b9129571112f14b9cb0d2896e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the loop counter by one.  <br /></td></tr>
+<tr class="separator:a62e3298b9129571112f14b9cb0d2896e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contain the configuration variables that defines an specific simulation. </p>
@@ -316,6 +339,34 @@ Functions</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8" name="a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8"></a>UNDAMPED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092" name="a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092"></a>LOCAL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5" name="a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5"></a>KINETIC_DYNAMIC_RELAXATION&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a674a0b34f56c6cdda86026c8b6ba5ab2" name="a674a0b34f56c6cdda86026c8b6ba5ab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a674a0b34f56c6cdda86026c8b6ba5ab2">&#9670;&#160;</a></span>HydroMechanicalCouplingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">ModelSetup::HydroMechanicalCouplingType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines the type of hydro-mechanical coupling. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693" name="a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1" name="a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1"></a>ONE_WAY&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -582,6 +633,46 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a6fc238b7690e1baac965b1e293f56e7f" name="a6fc238b7690e1baac965b1e293f56e7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc238b7690e1baac965b1e293f56e7f">&#9670;&#160;</a></span>getHydroMechanicalCouplingType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a> ModelSetup::getHydroMechanicalCouplingType </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the hydro-mechanical coupling type </p>
+<dl class="section return"><dt>Returns</dt><dd>HydroMechanicalCouplingType </dd></dl>
+
+</div>
+</div>
+<a id="a0bfce42397ffc5da1c79e6c951862cb5" name="a0bfce42397ffc5da1c79e6c951862cb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bfce42397ffc5da1c79e6c951862cb5">&#9670;&#160;</a></span>getHydroMechOneWayEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ModelSetup::getHydroMechOneWayEnabled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return if one way hydro-mechanical coupling is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if one-way hydro-mechanical coupling is enabled </dd></dl>
+
+</div>
+</div>
 <a id="a33c1ffa724e176734a1cb73726e9e993" name="a33c1ffa724e176734a1cb73726e9e993"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33c1ffa724e176734a1cb73726e9e993">&#9670;&#160;</a></span>getInitialSimulationTime()</h2>
 
@@ -702,6 +793,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a751ba95c19cbb373b61db97c44acfcb5" name="a751ba95c19cbb373b61db97c44acfcb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751ba95c19cbb373b61db97c44acfcb5">&#9670;&#160;</a></span>getLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ModelSetup::getLoopCounter </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current loop counter. </p>
+<dl class="section return"><dt>Returns</dt><dd>loopCounter </dd></dl>
+
+</div>
+</div>
 <a id="a31009b398464ca9a7a95a479ef04f236" name="a31009b398464ca9a7a95a479ef04f236"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31009b398464ca9a7a95a479ef04f236">&#9670;&#160;</a></span>getResultNum()</h2>
 
@@ -762,14 +873,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a69db078b0bc38c70bb30834e14bd5632" name="a69db078b0bc38c70bb30834e14bd5632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69db078b0bc38c70bb30834e14bd5632">&#9670;&#160;</a></span>getSeismicAnalysis()</h2>
+<a id="ae1e3abc52ff1aaa46feaf1ba1bc715f9" name="ae1e3abc52ff1aaa46feaf1ba1bc715f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1e3abc52ff1aaa46feaf1ba1bc715f9">&#9670;&#160;</a></span>getSeismicAnalysisActive()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ModelSetup::getSeismicAnalysis </td>
+          <td class="memname">bool ModelSetup::getSeismicAnalysisActive </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -937,6 +1048,26 @@ Functions</h2></td></tr>
 
 <p>Return true is the system is Windows. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if is Windows system </dd></dl>
+
+</div>
+</div>
+<a id="a62e3298b9129571112f14b9cb0d2896e" name="a62e3298b9129571112f14b9cb0d2896e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e3298b9129571112f14b9cb0d2896e">&#9670;&#160;</a></span>incrementLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ModelSetup::incrementLoopCounter </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Increment the loop counter by one. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current loop counter value </dd></dl>
 
 </div>
 </div>
@@ -1141,6 +1272,31 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a33bc09348a4dd18652f62ee157cf55df" name="a33bc09348a4dd18652f62ee157cf55df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33bc09348a4dd18652f62ee157cf55df">&#9670;&#160;</a></span>setHydroMechanicalCouplingType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelSetup::setHydroMechanicalCouplingType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a674a0b34f56c6cdda86026c8b6ba5ab2">HydroMechanicalCouplingType</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set hydro-mechanical coupling type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>HydroMechanicalCouplingType </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aa061b13d6f2ddae675ad8f93c16a016e" name="aa061b13d6f2ddae675ad8f93c16a016e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa061b13d6f2ddae675ad8f93c16a016e">&#9670;&#160;</a></span>setInitialSimulationTime()</h2>
 
@@ -1267,6 +1423,31 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a1c91644289f5395c17f80b20db0512a0" name="a1c91644289f5395c17f80b20db0512a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c91644289f5395c17f80b20db0512a0">&#9670;&#160;</a></span>setLoopCounter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelSetup::setLoopCounter </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>a</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the current loop counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>The loop counter value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a51772099d7f35cfad360ca6519709341" name="a51772099d7f35cfad360ca6519709341"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a51772099d7f35cfad360ca6519709341">&#9670;&#160;</a></span>setNumThreads()</h2>
 
@@ -1342,14 +1523,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aeb92766c5252201b8e08bd7171203620" name="aeb92766c5252201b8e08bd7171203620"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb92766c5252201b8e08bd7171203620">&#9670;&#160;</a></span>setSeismicAnalysis()</h2>
+<a id="aad42371a9755ac5c2ac98cd4a8a2a32a" name="aad42371a9755ac5c2ac98cd4a8a2a32a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad42371a9755ac5c2ac98cd4a8a2a32a">&#9670;&#160;</a></span>setSeismicAnalysisActive()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ModelSetup::setSeismicAnalysis </td>
+          <td class="memname">void ModelSetup::setSeismicAnalysisActive </td>
           <td>(</td>
           <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>seismic_analysis_active</em></span></td><td>)</td>
           <td></td>
