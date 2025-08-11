@@ -152,6 +152,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5e2023696040cddd054d4c52f6000cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fb2d2aeeb409505ac41d9c01039c7d4" id="r_a1fb2d2aeeb409505ac41d9c01039c7d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fb2d2aeeb409505ac41d9c01039c7d4">computeContactForces</a> (std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *particles, double dt)</td></tr>
 <tr class="separator:a1fb2d2aeeb409505ac41d9c01039c7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1d6e460075c91a21e08806da17b8a5" id="r_a1c1d6e460075c91a21e08806da17b8a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c1d6e460075c91a21e08806da17b8a5">setDistanceThreshold</a> (double threshold)</td></tr>
+<tr class="memdesc:a1c1d6e460075c91a21e08806da17b8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the distance threshold for contact detection.  <br /></td></tr>
+<tr class="separator:a1c1d6e460075c91a21e08806da17b8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e453e1e74221e486103e8df6aa66ef3" id="r_a2e453e1e74221e486103e8df6aa66ef3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e453e1e74221e486103e8df6aa66ef3">apply</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *particles, double dt)</td></tr>
+<tr class="memdesc:a2e453e1e74221e486103e8df6aa66ef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply the terrain contact algorithm.  <br /></td></tr>
+<tr class="separator:a2e453e1e74221e486103e8df6aa66ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eca447fa28df2d702abe5b09c1a1bfb" id="r_a0eca447fa28df2d702abe5b09c1a1bfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0eca447fa28df2d702abe5b09c1a1bfb">enablePenaltyContact</a> (bool enable)</td></tr>
+<tr class="memdesc:a0eca447fa28df2d702abe5b09c1a1bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the penalty contact method.  <br /></td></tr>
+<tr class="separator:a0eca447fa28df2d702abe5b09c1a1bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70c6edf60f61a873441c672a2c76b5a" id="r_af70c6edf60f61a873441c672a2c76b5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af70c6edf60f61a873441c672a2c76b5a">setPenaltyStiffness</a> (double k)</td></tr>
+<tr class="memdesc:af70c6edf60f61a873441c672a2c76b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the penalty stiffness for contact forces.  <br /></td></tr>
+<tr class="separator:af70c6edf60f61a873441c672a2c76b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -167,9 +179,15 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ab9810c6c61d1e1238f4576d10f87caf9" id="r_ab9810c6c61d1e1238f4576d10f87caf9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="classParticle.html">Particle</a> *, <a class="el" href="structTriangle.html">Triangle</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9810c6c61d1e1238f4576d10f87caf9">contactPairs</a></td></tr>
 <tr class="memdesc:ab9810c6c61d1e1238f4576d10f87caf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">contact potential pairs  <br /></td></tr>
 <tr class="separator:ab9810c6c61d1e1238f4576d10f87caf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab98ab5fbe0e54dee6dc00215a6e223e9" id="r_ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab98ab5fbe0e54dee6dc00215a6e223e9">scalingFactor</a> = 2.0</td></tr>
+<tr class="memitem:ab98ab5fbe0e54dee6dc00215a6e223e9" id="r_ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab98ab5fbe0e54dee6dc00215a6e223e9">scalingFactor</a></td></tr>
 <tr class="memdesc:ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">scaling factor for the distance threshold in contact detection \( \alpha \)  <br /></td></tr>
 <tr class="separator:ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b039395662fded4a9202ce39b14f41b" id="r_a1b039395662fded4a9202ce39b14f41b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b039395662fded4a9202ce39b14f41b">usePenaltyContact</a> = false</td></tr>
+<tr class="memdesc:a1b039395662fded4a9202ce39b14f41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use penalty contact method.  <br /></td></tr>
+<tr class="separator:a1b039395662fded4a9202ce39b14f41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a395d86cdd6648b52df59fd9966eff02b" id="r_a395d86cdd6648b52df59fd9966eff02b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a395d86cdd6648b52df59fd9966eff02b">penaltyStiffness</a> = 0.0</td></tr>
+<tr class="memdesc:a395d86cdd6648b52df59fd9966eff02b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Penalty stiffness for contact forces.  <br /></td></tr>
+<tr class="separator:a395d86cdd6648b52df59fd9966eff02b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to compute terrain contact. </p>
@@ -204,6 +222,34 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2e453e1e74221e486103e8df6aa66ef3" name="a2e453e1e74221e486103e8df6aa66ef3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e453e1e74221e486103e8df6aa66ef3">&#9670;&#160;</a></span>apply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TerrainContact::apply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *</td>          <td class="paramname"><span class="paramname"><em>mesh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>particles</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>dt</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Apply the terrain contact algorithm. </p>
+
+</div>
+</div>
 <a id="a1fb2d2aeeb409505ac41d9c01039c7d4" name="a1fb2d2aeeb409505ac41d9c01039c7d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1fb2d2aeeb409505ac41d9c01039c7d4">&#9670;&#160;</a></span>computeContactForces()</h2>
 
@@ -264,6 +310,25 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Determine the contact potential pairs. </p>
+
+</div>
+</div>
+<a id="a0eca447fa28df2d702abe5b09c1a1bfb" name="a0eca447fa28df2d702abe5b09c1a1bfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eca447fa28df2d702abe5b09c1a1bfb">&#9670;&#160;</a></span>enablePenaltyContact()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TerrainContact::enablePenaltyContact </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable the penalty contact method. </p>
 
 </div>
 </div>
@@ -337,6 +402,59 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Interpolate distance level set function value of particle \( d_p = \sum_I d_I N_{Ip} \). </p>
+
+</div>
+</div>
+<a id="a1c1d6e460075c91a21e08806da17b8a5" name="a1c1d6e460075c91a21e08806da17b8a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1d6e460075c91a21e08806da17b8a5">&#9670;&#160;</a></span>setDistanceThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TerrainContact::setDistanceThreshold </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>threshold</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the distance threshold for contact detection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">threshold</td><td><br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af70c6edf60f61a873441c672a2c76b5a" name="af70c6edf60f61a873441c672a2c76b5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af70c6edf60f61a873441c672a2c76b5a">&#9670;&#160;</a></span>setPenaltyStiffness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TerrainContact::setPenaltyStiffness </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>k</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the penalty stiffness for contact forces. </p>
 
 </div>
 </div>
@@ -432,6 +550,30 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a395d86cdd6648b52df59fd9966eff02b" name="a395d86cdd6648b52df59fd9966eff02b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a395d86cdd6648b52df59fd9966eff02b">&#9670;&#160;</a></span>penaltyStiffness</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double TerrainContact::penaltyStiffness = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Penalty stiffness for contact forces. </p>
+
+</div>
+</div>
 <a id="ab98ab5fbe0e54dee6dc00215a6e223e9" name="ab98ab5fbe0e54dee6dc00215a6e223e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab98ab5fbe0e54dee6dc00215a6e223e9">&#9670;&#160;</a></span>scalingFactor</h2>
 
@@ -442,7 +584,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double TerrainContact::scalingFactor = 2.0</td>
+          <td class="memname">double TerrainContact::scalingFactor</td>
         </tr>
       </table>
   </td>
@@ -477,6 +619,30 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>triangular mesh for terrain contact </p>
+
+</div>
+</div>
+<a id="a1b039395662fded4a9202ce39b14f41b" name="a1b039395662fded4a9202ce39b14f41b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b039395662fded4a9202ce39b14f41b">&#9670;&#160;</a></span>usePenaltyContact</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool TerrainContact::usePenaltyContact = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Use penalty contact method. </p>
 
 </div>
 </div>

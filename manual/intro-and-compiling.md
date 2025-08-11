@@ -37,7 +37,7 @@ For downloading the compiled binaries
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
 4. Download the `compiled-binaries` artifact to get the compiled code.
 
-# Compilation with Windows
+# Compilation on Windows
 
 \note Prior to proceeding with these instructions, please consult the [Windows Required Programs](#required_programs_windows) section.
 
@@ -45,7 +45,7 @@ The simplest way to compile on windows is by using the **`.bash`** file at **`/b
 
 ```
 cd project-directory/build/CMake
-./cmake-build-win.bash
+./cmake-build.bash
 ```
 
 Alternatively, you can use the following commands:
@@ -56,7 +56,7 @@ cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-# Compiling with Linux
+# Compiling on Linux
 
 \note Prior to proceeding with these instructions, please consult the [Linux Required Programs](#required_programs_linux) section.
 
@@ -64,7 +64,7 @@ The simplest way to compile on Linux is by using the `.bash` file at `/build/CMa
 
 ```
 cd build/CMake
-./cmake-build-linux.bash
+./cmake-build.bash
 ```
 
 Alternatively, you can use the following commands:

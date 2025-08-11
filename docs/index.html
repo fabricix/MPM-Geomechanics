@@ -136,18 +136,38 @@ Compiled binaries</h1>
 <li>Download the <code>compiled-binaries</code> artifact to get the compiled code.</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md66"></a>
-Compilation in windows</h1>
+Compilation with Windows</h1>
+<dl class="section note"><dt>Note</dt><dd>Prior to proceeding with these instructions, please consult the <a class="el" href="required_programs.html#required_programs_windows">Windows Required Programs</a> section.</dd></dl>
+<p>The simplest way to compile on windows is by using the <b><code>.bash</code></b> file at <b><code>/build/CMake</code></b> with <b><code>MSYS2 MINGW64</code></b> console line, just execute:</p>
+<div class="fragment"><div class="line">cd project-directory/build/CMake</div>
+<div class="line">./cmake-build-win.bash</div>
+</div><!-- fragment --><p>Alternatively, you can use the following commands:</p>
+<div class="fragment"><div class="line">cd project-directory/build/CMake</div>
+<div class="line">cmake -G &quot;Unix Makefiles&quot; -B build</div>
+<div class="line">cmake --build build</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md67"></a>
+Compiling with Linux</h1>
+<dl class="section note"><dt>Note</dt><dd>Prior to proceeding with these instructions, please consult the <a class="el" href="required_programs.html#required_programs_linux">Linux Required Programs</a> section.</dd></dl>
+<p>The simplest way to compile on Linux is by using the <code>.bash</code> file at <code>/build/CMake</code>, just execute:</p>
+<div class="fragment"><div class="line">cd build/CMake</div>
+<div class="line">./cmake-build-linux.bash</div>
+</div><!-- fragment --><p>Alternatively, you can use the following commands:</p>
+<div class="fragment"><div class="line">cd build/CMake</div>
+<div class="line">cmake -G &quot;Unix Makefiles&quot; -B build</div>
+<div class="line">cmake --build build</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md68"></a>
+Visual Studio Solution</h1>
 <p>For compiling the code in windows you can use the Visual Studio solution file <code>/build/MPM-Geomechanics.sln</code>, and build it by pressing <code>Ctr+B</code>. Alternatively you can compile it by using command in a <em>Developer Command Prompt</em>:</p>
 <div class="fragment"><div class="line">msbuild MPM-Geomechanics.sln -p:Configuration=Release</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md67"></a>
-Compilation in Linux</h1>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md69"></a>
+Make Compilation</h1>
 <p>For compile the code in a linux environment, execute the <a href="https://www.gnu.org/software/make/">make</a> command into the make folder, in with is located de makefile <code>MPM-Geomechanics\build\make\makefile</code>:</p>
-<h1><a class="anchor" id="autotoc_md68"></a>
+<h1><a class="anchor" id="autotoc_md70"></a>
 Documentation</h1>
 <p>The program documentation is generated using <a href="https://www.doxygen.nl/index.html">Doxygen</a>:</p>
 <div class="fragment"><div class="line">doxygen Doxyfile</div>
 </div><!-- fragment --><p>The HTML generated documentation is located in <code>/docs/index.html</code>.</p>
-<h1><a class="anchor" id="autotoc_md69"></a>
+<h1><a class="anchor" id="autotoc_md71"></a>
 Execution</h1>
 <p>In order to run simulations in several terminal, you can add the compiled code in the system <code>PATH</code>. After that, the common use is to call the program with the input file as argument: </p>
 </div></div><!-- PageDoc -->

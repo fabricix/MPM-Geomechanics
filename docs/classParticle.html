@@ -330,6 +330,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aae4db89c2f430c0ed093e7bd2eb3a9d5" id="r_aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae4db89c2f430c0ed093e7bd2eb3a9d5">getDistanceLevelSet</a> ()</td></tr>
 <tr class="memdesc:aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the distance level set function value.  <br /></td></tr>
 <tr class="separator:aae4db89c2f430c0ed093e7bd2eb3a9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8725dff539b4b24b0a1bfa24c47d4b65" id="r_a8725dff539b4b24b0a1bfa24c47d4b65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8725dff539b4b24b0a1bfa24c47d4b65">setPorePressure</a> (double p)</td></tr>
+<tr class="memdesc:a8725dff539b4b24b0a1bfa24c47d4b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pore pressure of the particle.  <br /></td></tr>
+<tr class="separator:a8725dff539b4b24b0a1bfa24c47d4b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a877b8ba1aa9d4530e32f336519fc838e" id="r_a877b8ba1aa9d4530e32f336519fc838e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a877b8ba1aa9d4530e32f336519fc838e">getPorePressure</a> () const</td></tr>
+<tr class="memdesc:a877b8ba1aa9d4530e32f336519fc838e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pore pressure of the particle.  <br /></td></tr>
+<tr class="separator:a877b8ba1aa9d4530e32f336519fc838e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -381,6 +387,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:af14ff528876e9d128baf6bc16eb92947" id="r_af14ff528876e9d128baf6bc16eb92947"><td class="memItemLeft" align="right" valign="top">Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af14ff528876e9d128baf6bc16eb92947">strain</a></td></tr>
 <tr class="memdesc:af14ff528876e9d128baf6bc16eb92947"><td class="mdescLeft">&#160;</td><td class="mdescRight">current particle strain: \(\epsilon_{ijp}\)  <br /></td></tr>
 <tr class="separator:af14ff528876e9d128baf6bc16eb92947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e2abd8b2aaf30432098f648641dfe5" id="r_aa8e2abd8b2aaf30432098f648641dfe5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8e2abd8b2aaf30432098f648641dfe5">porePressure</a> = 0.0</td></tr>
+<tr class="memdesc:aa8e2abd8b2aaf30432098f648641dfe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">current pore pressure of fluid in particle: \(p_{p}\)  <br /></td></tr>
+<tr class="separator:aa8e2abd8b2aaf30432098f648641dfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b4af101a14e8c5a6bf67619c986fc8" id="r_a03b4af101a14e8c5a6bf67619c986fc8"><td class="memItemLeft" align="right" valign="top">Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03b4af101a14e8c5a6bf67619c986fc8">strainIncrement</a></td></tr>
 <tr class="memdesc:a03b4af101a14e8c5a6bf67619c986fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">current particle strain increment: \(\Delta \epsilon_{ijp}\)  <br /></td></tr>
 <tr class="separator:a03b4af101a14e8c5a6bf67619c986fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1088,6 +1097,33 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a877b8ba1aa9d4530e32f336519fc838e" name="a877b8ba1aa9d4530e32f336519fc838e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a877b8ba1aa9d4530e32f336519fc838e">&#9670;&#160;</a></span>getPorePressure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Particle::getPorePressure </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get pore pressure of the particle. </p>
+
+</div>
+</div>
 <a id="a3bfe32709cdbfe1ed5f762d6f007c922" name="a3bfe32709cdbfe1ed5f762d6f007c922"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bfe32709cdbfe1ed5f762d6f007c922">&#9670;&#160;</a></span>getPorosity()</h2>
 
@@ -1754,6 +1790,33 @@ Static Protected Attributes</h2></td></tr>
 </dl>
 
 <p>Reimplemented in <a class="el" href="classParticleMixture.html#a9528f79374f7190ac8df198ebbacb2ad">ParticleMixture</a>.</p>
+
+</div>
+</div>
+<a id="a8725dff539b4b24b0a1bfa24c47d4b65" name="a8725dff539b4b24b0a1bfa24c47d4b65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8725dff539b4b24b0a1bfa24c47d4b65">&#9670;&#160;</a></span>setPorePressure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Particle::setPorePressure </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set pore pressure of the particle. </p>
 
 </div>
 </div>
@@ -2515,6 +2578,30 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>current effective plastic strain: \(\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\) </p>
+
+</div>
+</div>
+<a id="aa8e2abd8b2aaf30432098f648641dfe5" name="aa8e2abd8b2aaf30432098f648641dfe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8e2abd8b2aaf30432098f648641dfe5">&#9670;&#160;</a></span>porePressure</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Particle::porePressure = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>current pore pressure of fluid in particle: \(p_{p}\) </p>
 
 </div>
 </div>
