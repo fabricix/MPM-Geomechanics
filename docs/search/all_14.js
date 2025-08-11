@@ -6,7 +6,7 @@ var searchData=
   ['linear_3',['LINEAR',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd',1,'ModelSetup']]],
   ['linear_20elastic_4',['Linear Elastic',['../namespaceInput.html#autotoc_md33',1,'']]],
   ['linux_5',['LINUX',['../namespaceModelSetup.html#a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22',1,'ModelSetup']]],
-  ['linux_6',['Compiling with Linux',['../index.html#autotoc_md67',1,'']]],
+  ['linux_6',['Compiling on Linux',['../index.html#autotoc_md67',1,'']]],
   ['linux_20ubuntu_20debian_7',['Linux Ubuntu Debian',['../testing_manual.html#autotoc_md76',1,'Linux (Ubuntu/Debian)'],['../required_programs.html#required_programs_linux',1,'Required Programs - Linux (Ubuntu/Debian)']]],
   ['load_8',['load',['../structLoads_1_1LoadDistributedBox.html#a40c36d1273d64d21ce2a39a5044efe34',1,'Loads::LoadDistributedBox']]],
   ['load_20definition_20examples_9',['Load definition examples',['../namespaceInput.html#autotoc_md10',1,'']]],
