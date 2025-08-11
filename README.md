@@ -9,10 +9,6 @@
 [![Documentation](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/doxygen.yml)
 [![Testing](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/testing.yml)
 
-## Documentation
-
-See the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
-
 ## Motivation
 
 MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
@@ -46,16 +42,30 @@ The main features of the program in the actuality are:
 - Shared memory parallelization (for computational time reduction)
 - Several constitutive models for soils and rock, including softening and hardening options.
 
+## Documentation and Compilation
+
+To generate the documentation locally with **Doxygen**, run the following command from the project root:
+
+```bash
+doxygen Doxyfile
+```
+
+The documentation will be saved in the `/docs/` folder, with the main entry point at:
+
+```
+/docs/index.html
+```
+
+You can open this file in any web browser.
+
+For the **online documentation**, visit: [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/)
+
 ## Compiled binaries
 
 1. Go to the [Actions page](https://github.com/fabricix/MPM-Geomechanics/actions).
 2. Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
 3. At the bottom, you will find the available artifacts under the **Artifacts** section.
 4. Download the `compiled-binaries` artifact to get the compiled code.
-
-## Documentation and Compilation
-
-For generating documentation and compilation of the code please see the documentation at [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/).
 
 ## Examples
 
