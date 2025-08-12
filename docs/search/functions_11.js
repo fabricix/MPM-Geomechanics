@@ -14,12 +14,13 @@ var searchData=
   ['_7emesh_11',['~Mesh',['../classMesh.html#ad6a041191ed55c693254e945ce2869ff',1,'Mesh']]],
   ['_7emohrcoulomb_12',['~MohrCoulomb',['../classMohrCoulomb.html#aea6b900413c60d229349cd4705782ce5',1,'MohrCoulomb']]],
   ['_7empm_13',['~MPM',['../classMPM.html#a7f161c883961fe1b451d40ec439fd773',1,'MPM']]],
-  ['_7enode_14',['~Node',['../classNode.html#aa0840c3cb5c7159be6d992adecd2097c',1,'Node']]],
-  ['_7enodemixture_15',['~NodeMixture',['../classNodeMixture.html#abf4787784c49c518287a0fea4d7b0242',1,'NodeMixture']]],
-  ['_7eparticle_16',['~Particle',['../classParticle.html#ad030d0fe7b88cf81744b127c99244ff4',1,'Particle']]],
-  ['_7eparticlemixture_17',['~ParticleMixture',['../classParticleMixture.html#a13050211cbbcf2e0e22396a0f6de0242',1,'ParticleMixture']]],
-  ['_7eshape_18',['~Shape',['../classShape.html#a935afc9e576015f967d90de56977167d',1,'Shape']]],
-  ['_7eshapegimp_19',['~ShapeGimp',['../classShapeGimp.html#a4b85d16c96fff5c3b75b01ec842abd6d',1,'ShapeGimp']]],
-  ['_7eshapelinear_20',['~ShapeLinear',['../classShapeLinear.html#a1137ab91000c6a9da0d52bdb76733f7c',1,'ShapeLinear']]],
-  ['_7esolver_21',['~Solver',['../classSolver.html#aba52d3c92fafceb6fe39f937f2d73db3',1,'Solver']]]
+  ['_7enewtonian_14',['~Newtonian',['../classNewtonian.html#a179ef3ac66571c2880578fc37cbe44a8',1,'Newtonian']]],
+  ['_7enode_15',['~Node',['../classNode.html#aa0840c3cb5c7159be6d992adecd2097c',1,'Node']]],
+  ['_7enodemixture_16',['~NodeMixture',['../classNodeMixture.html#abf4787784c49c518287a0fea4d7b0242',1,'NodeMixture']]],
+  ['_7eparticle_17',['~Particle',['../classParticle.html#ad030d0fe7b88cf81744b127c99244ff4',1,'Particle']]],
+  ['_7eparticlemixture_18',['~ParticleMixture',['../classParticleMixture.html#a13050211cbbcf2e0e22396a0f6de0242',1,'ParticleMixture']]],
+  ['_7eshape_19',['~Shape',['../classShape.html#a935afc9e576015f967d90de56977167d',1,'Shape']]],
+  ['_7eshapegimp_20',['~ShapeGimp',['../classShapeGimp.html#a4b85d16c96fff5c3b75b01ec842abd6d',1,'ShapeGimp']]],
+  ['_7eshapelinear_21',['~ShapeLinear',['../classShapeLinear.html#a1137ab91000c6a9da0d52bdb76733f7c',1,'ShapeLinear']]],
+  ['_7esolver_22',['~Solver',['../classSolver.html#aba52d3c92fafceb6fe39f937f2d73db3',1,'Solver']]]
 ];

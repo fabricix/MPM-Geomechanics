@@ -49,7 +49,11 @@ public:
 
 	/// \brief Update the particle pressure
 	/// \param[in] dt time step
-	virtual inline void updatePressure(double) { return; }
+	virtual inline void updatePressure(double dt) 
+	{	
+		(void)dt; 
+		return;
+	}
 
 	/// \brief Update the particle density
 	///  
@@ -201,15 +205,23 @@ public:
 
 	/// \brief Configures particle velocity of fluid phase
 	/// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
-	virtual inline void setVelocityFluid(const Vector3d&) { return; }
+	virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) 
+	{ 
+		(void)particle_velocity_fluid;
+		return;
+	}
 
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
 	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }
 
 	/// \brief Configures the strain increment of fluid phase
-	/// \param[in] strain_increment Particle strain increment of fluid phase
-	virtual inline void setStrainIncrementFluid(const Matrix3d&) { return; }
+	/// \param[in] strain_increment_fluid Particle strain increment of fluid phase
+	virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment_fluid) 
+	{	
+		(void)strain_increment_fluid; 
+		return;
+	}
 
 	/// \brief Configures the vorticity increment
 	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
@@ -233,7 +245,11 @@ public:
 
 	/// \brief Adds a external fluid force increment
 	/// \param[in] delta_external_fluid_force External fluid force increment
-	virtual inline void addExternalForceFluid(const Vector3d&) { return; }
+	virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) 
+	{ 
+		(void)delta_external_fluid_force;
+		return;
+	}
 
 	/// \brief Returns o number of particles created
 	/// \return Total created particles
@@ -253,7 +269,10 @@ public:
 
 	/// \brief Configure the pressure of fluid
     /// \param[in] pressure Pressure of the fluid
-    virtual inline void setPressureFluid(double) { return; }
+    virtual inline void setPressureFluid(double pressure) { 
+		(void)pressure;
+		return; 
+	}
 
     /// \brief Returns current porosity
     /// \return Current porosity of mixture

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cells_0',['CELLS',['../namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab',1,'Output']]]
+  ['absorbing_0',['ABSORBING',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5ae298e0b055454c73150abd1c56744b74',1,'Boundary']]]
 ];

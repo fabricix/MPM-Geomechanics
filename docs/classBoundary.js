@@ -13,7 +13,8 @@ var classBoundary =
       [ "FREE", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a2db868e31ca79040aafb4151a8837274", null ],
       [ "FIXED", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a29c767f767de3a18692913e6216a19c2", null ],
       [ "SLIDING", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7", null ],
-      [ "EARTHQUAKE", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a68f1c42fe9fd2e9eb35894a0fe3742f2", null ]
+      [ "EARTHQUAKE", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a68f1c42fe9fd2e9eb35894a0fe3742f2", null ],
+      [ "ABSORBING", "classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5ae298e0b055454c73150abd1c56744b74", null ]
     ] ],
     [ "Boundary", "classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71", null ],
     [ "~Boundary", "classBoundary.html#a86eab4f2362618c5b1e3d0df3a5f7f42", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['young_0',['Young',['../classElastic.html#a68fd6e866a2dec082c4dbe107de0d15b',1,'Elastic']]]
+  ['weight_0',['weight',['../classContribution.html#a1b51bfbf5103349bf1890fbef503ca43',1,'Contribution']]]
 ];

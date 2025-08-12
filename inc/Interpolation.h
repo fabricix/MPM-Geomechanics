@@ -152,7 +152,8 @@ namespace Interpolation
 	/// \brief Interpolate a vector3d in time using linear interpolation
 	///	\param[in] times A list of times
 	///	\param[in] values A list of vector3d values
-	/// \param[out] interpolated_vector Interpolated vector3d
+	/// \param[in] itime Time to interpolate
+	/// \return Interpolated vector3d
 	Eigen::Vector3d interpolateVector(const std::vector<double>& times, const std::vector<Eigen::Vector3d>& values, double itime);
 };
 
