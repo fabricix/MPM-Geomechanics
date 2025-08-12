@@ -74,7 +74,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		{
 			// nodal internal force of mixture
 			#pragma omp section
-			Interpolation::nodalInternalForce(mesh, bodies);
+			Interpolation::nodalInternalForce(mesh, particles);
 
 			// nodal internal force of fluid phase
 			#pragma omp section
@@ -82,7 +82,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 
 			// nodal external force of mixture
 			#pragma omp section
-			Interpolation::nodalExternalForce(mesh, bodies);
+			Interpolation::nodalExternalForce(mesh, particles);
 
 			// nodal external force of fluid phase
 			#pragma omp section

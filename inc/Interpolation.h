@@ -65,8 +65,8 @@ namespace Interpolation
 	/// \f$ f_{iI}^{int,s}=-\sum_p \sigma_{ijp}' N_{Ip,i} V_p + \sum_p p^f N_{Ip,i} V_p\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalInternalForce(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list o Body pointers
+	void nodalInternalForce(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate internal force of fluid from particles to nodes
 	///
@@ -85,8 +85,8 @@ namespace Interpolation
 	/// \f$ f_{iI}^{ext,s} = \sum_p b_{ip} m_p^f N_{Ip} + \sum_p b_{ip} m_p^s N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalExternalForce(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list o Body pointers
+	void nodalExternalForce(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate external force of fluid from particles to nodes
 	///

@@ -36,11 +36,11 @@ void SolverExplicit::Solve()
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
 
-		// Step 1: Particle-to-Grid mass and momentum interpolation
-
+		// Step 0: Update contribution nodes	
 		// update contribution nodes
 		Update::contributionNodes(mesh, particles);
-
+		
+		// Step 1: Particle-to-Grid mass and momentum interpolation
 		// Interpolate nodal mass
 		Interpolation::nodalMass(mesh, particles);
 
@@ -56,15 +56,11 @@ void SolverExplicit::Solve()
 		Update::boundaryConditionsMomentum(mesh);
 
 		// Step 3: Compute nodal forces
-		// 3.1: Internal and external nodal force
-		#pragma omp parallel sections num_threads(2)
-		{
-			#pragma omp section
-			Interpolation::nodalInternalForce(mesh, bodies);
-
-			#pragma omp section
-			Interpolation::nodalExternalForce(mesh, bodies);
-		}
+		// 3.1.a: Internal nodal force
+		Interpolation::nodalInternalForce(mesh, particles);
+		
+		// 3.1.b: External nodal force
+		Interpolation::nodalExternalForce(mesh, particles);
 
 		// 3.2: Total force nodal force
 		Update::nodalTotalForce(mesh);

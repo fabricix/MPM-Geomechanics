@@ -280,7 +280,7 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles) {
 
 	// is two-phase calculations
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
@@ -291,66 +291,59 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get effective stress of solid
+		Matrix3d pStress = particles->at(i)->getStress();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// use total stress if hydro-mechanical coupling is enabled
+		if (isOneDirectionHydromechanicalCoupling) {
+			pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+		}
 
-			// get effective stress of solid
-			Matrix3d pStress = particles->at(i)->getStress();
+		// get the particle volume
+		double pVolume = particles->at(i)->getCurrentVolume();
 
-			// use total stress if hydro-mechanical coupling is enabled
-			if (isOneDirectionHydromechanicalCoupling) {
-				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+		// particle pressure
+		double pPressure{0};
+		
+		if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
+
+			// get pore pressure pressure
+			pPressure = particles->at(i)->getPressureFluid();
+		}
+
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// get the nodal gradients
+			const Vector3d gradient = contribution->at(j).getGradients();
+
+			// compute the particle's contribution to the nodal internal force
+			Vector3d internalForce;
+			internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
+			internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
+			internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
+
+			if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
+			{
+				internalForce.x()+=pPressure*gradient(0)*pVolume;
+				internalForce.y()+=pPressure*gradient(1)*pVolume;
+				internalForce.z()+=pPressure*gradient(2)*pVolume;
 			}
 
-			// get the particle volume
-			double pVolume = particles->at(i)->getCurrentVolume();
-
-			// particle pressure
-			double pPressure{0};
-			
-			if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
-
-				// get pore pressure pressure
-				pPressure = particles->at(i)->getPressureFluid();
-			}
-
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradients
-				const Vector3d gradient = contribution->at(j).getGradients();
-
-				// compute the particle's contribution to the nodal internal force
-				Vector3d internalForce;
-				internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
-				internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
-				internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
-
-				if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
-				{
-					internalForce.x()+=pPressure*gradient(0)*pVolume;
-					internalForce.y()+=pPressure*gradient(1)*pVolume;
-					internalForce.z()+=pPressure*gradient(2)*pVolume;
-				}
-
-				// add the internal force contribution in node
-				nodeI->addInternalForce(internalForce);
-			}
+			// add the internal force contribution in node
+			nodeI->addInternalForce(internalForce);
 		}
 	}
 }
@@ -412,47 +405,39 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles) {
 
 	// The nodal external force is calculated from two sources,
 	// one from the stored force in the particles (1), like gravity,
 	// and two, from the external force imposed directly at the grid nodes (2)
 	
 	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
+	vector<Node*>* nodes = mesh->getNodes();
 
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get nodes
-		vector<Node*>* nodes = mesh->getNodes();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get particle external force
+		const Vector3d pExtForce = particles->at(i)->getExternalForce();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// get particle external force
-			const Vector3d pExtForce = particles->at(i)->getExternalForce();
-
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// add weighted force in node
-				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
-			}
+			// add weighted force in node
+			nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
 		}
 	}
 
-	// (2) - External force from nodes _ f_ext_I <- f_ext_I + f_ext_BC
+	// (2) - External force from nodes: f_ext_I += f_ext_BC
 	// External boundary condition force 
 	Loads::NodalPointLoadData& nodal_force_list = Loads::getNodalPointList();
 	for (size_t i = 0; i < nodal_force_list.loads.size() ; i++)
