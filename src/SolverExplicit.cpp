@@ -39,7 +39,7 @@ void SolverExplicit::Solve()
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 
 		// update contribution nodes
-		Update::contributionNodes(mesh, bodies);
+		Update::contributionNodes(mesh, particles);
 
 		// Interpolate nodal mass
 		Interpolation::nodalMass(mesh, particles);

@@ -670,23 +670,16 @@ void Update::boundaryConditionsForceFluid(Mesh* mesh) {
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
-void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
+void Update::contributionNodes(Mesh* mesh, vector<Particle*>* particles) 
+{
+	// for each particle
+	#pragma omp parallel for shared(particles, mesh)
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 		
-		// for each particle
-		#pragma omp parallel for shared(particles, mesh)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update the contribution nodes
-			particles->at(i)->updateContributionNodes(mesh);
-		}
+		// update the contribution nodes
+		particles->at(i)->updateContributionNodes(mesh);
 	}
 }

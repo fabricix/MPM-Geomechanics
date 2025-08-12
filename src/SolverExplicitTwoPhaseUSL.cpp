@@ -45,7 +45,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		ModelSetup::setCurrentTime(iTime += dt);
 
 		// update contribution nodes
-		Update::contributionNodes(mesh, bodies);
+		Update::contributionNodes(mesh, particles);
 
 		#pragma omp parallel sections num_threads(4)
 		{
