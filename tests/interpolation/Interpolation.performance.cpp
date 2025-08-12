@@ -7,6 +7,7 @@
 #include "Particle.h"
 #include "ShapeGimp.h"
 #include "Interpolation.h"
+#include "ConfigParallel.h"
 
 using namespace std;
 
@@ -36,7 +37,7 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<double> dist(0.0, 49.0);
 
-	int numParticles = 100000; // number of particles to create
+	int numParticles = 150000; // number of particles to create
 	double particleSize = 1.0; // size of each particle
 	double particleMass = 1.0; // mass of each particle
 
