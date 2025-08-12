@@ -10,7 +10,7 @@
 
 using namespace std;
 
-TEST(InterpolationPerformance, NodalMass_10000Particles)
+TEST(InterpolationPerformance, NodalMass_nParticles)
 {
 	#ifdef USE_PARALLEL_INTERPOLATION
 		std::cout << "[ INFO ] USE_PARALLEL_INTERPOLATION is defined" << std::endl;
@@ -36,10 +36,16 @@ TEST(InterpolationPerformance, NodalMass_10000Particles)
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<double> dist(0.0, 49.0);
 
-	for (int i = 0; i < 10000; ++i) {
-		Particle* p = new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, Vector3d(1.0, 1.0, 1.0));
+	int numParticles = 100000; // number of particles to create
+	double particleSize = 1.0; // size of each particle
+	double particleMass = 1.0; // mass of each particle
+
+	std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
+
+	for (int i = 0; i < numParticles; ++i) {
+		Particle* p = new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, Vector3d(particleSize, particleSize, particleSize));
 		p->setId(i);
-		p->setMass(1.0);
+		p->setMass(particleMass);
 		p->setShape(new ShapeGimp);
 		p->updateContributionNodes(&mesh);
 		particles.push_back(p);
@@ -59,7 +65,7 @@ TEST(InterpolationPerformance, NodalMass_10000Particles)
 	for (size_t j = 0; j < nodes->size(); ++j) {
 		totalMass += nodes->at(j)->getMass();
 	}
-	EXPECT_NEAR(totalMass, 10000.0, 1e-8);
+	EXPECT_NEAR(totalMass, numParticles*particleMass, 1e-8);
 
 	// free memory
 	for (auto* p : particles)
