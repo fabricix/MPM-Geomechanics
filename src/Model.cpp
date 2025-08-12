@@ -92,7 +92,7 @@ namespace ModelSetup {
 	// loop counter
 	int getLoopCounter() { return loopCounter; }
 	void setLoopCounter(int a) { loopCounter = a; }
-	void incrementLoopCounter() { loopCounter++; }
+	int incrementLoopCounter() { loopCounter++; return loopCounter; }
 
 		// states 
 	bool getLoadState() { return loadState; }

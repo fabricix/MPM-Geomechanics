@@ -28,9 +28,11 @@ void SolverExplicit::Solve()
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
 	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
+	int loopCounter = 0;
+	ModelSetup::setLoopCounter(loopCounter);
 
 	// write initial particles and grid states
-	Output::writeInitialState(resultSteps, bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh);
 
 	// Time integration loop
 	while (iTime < time)
@@ -84,7 +86,8 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
-		// Step 5.1: Update particle velocity
+		// Step 5: Particle updates
+		// 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, ModelSetup::getLoopCounter() == 1 ? dt / 2.0 : dt);
 
 		// 5.2: Apply contact correction in particle velocity

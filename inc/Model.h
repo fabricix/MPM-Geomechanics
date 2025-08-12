@@ -268,7 +268,7 @@ namespace ModelSetup {
 	void setLoopCounter(int a);
 
 	/// \brief Increment the loop counter by one
-	void incrementLoopCounter();
+	int incrementLoopCounter();
 };
 
 #endif /* MODEL_H_ */

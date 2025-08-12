@@ -441,19 +441,19 @@ namespace Output{
 		if (isGridFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
-		
+
 		vector<Node*>* inodes = mesh->getNodes();
 
 		// define edian
-		if(Folders::edian==""){
+		if (Folders::edian == "") {
 			defineEdian();
 		}
 
 		// create grid folder
-		if(!Folders::gridFolderExist){
+		if (!Folders::gridFolderExist) {
 			createGridFolder();
 		}
-		
+
 		// add time in loop time vector
 		Folders::gridFilesTime.push_back(time);
 
@@ -463,34 +463,31 @@ namespace Output{
 		gridFile.precision(4);
 
 		// mesh data
-		int nPoints=mesh->getNumNodes();
+		int nPoints = mesh->getNumNodes();
 		Vector3i nCellsVec = mesh->getTotalCells();
-		int nCells=nCellsVec(0)*nCellsVec(1)*nCellsVec(2);
+		int nCells = nCellsVec(0) * nCellsVec(1) * nCellsVec(2);
 
 		// write results
-		gridFile<<"<?xml version=\"1.0\"?>\n";
-		gridFile<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<<Folders::edian.c_str()<<"\">\n";
-		gridFile<<"<UnstructuredGrid>\n";
-		
-		// piece
-		gridFile<<fixed<<"<Piece NumberOfPoints=\""<<nPoints<<"\" NumberOfCells=\""<<nCells<<"\">\n";
-		
-		// points
-		gridFile<<"<Points>\n";
-		
-		// node position
-		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			Vector3d pos=inodes->at(i)->getCoordinates();
-			gridFile<<scientific<<pos(0)<<" "<<pos(1)<<" "<<pos(2)<<"\n";
-		}
-		gridFile<<"</DataArray>\n";
+		gridFile << "<?xml version=\"1.0\"?>\n";
+		gridFile << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"" << Folders::edian.c_str() << "\">\n";
+		gridFile << "<UnstructuredGrid>\n";
 
-		// end points
-		gridFile<<"</Points>\n";
-		
+		// piece
+		gridFile << fixed << "<Piece NumberOfPoints=\"" << nPoints << "\" NumberOfCells=\"" << nCells << "\">\n";
+
+		// points
+		gridFile << "<Points>\n";
+		// node position
+		gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			Vector3d pos = inodes->at(i)->getCoordinates();
+			gridFile << scientific << pos(0) << " " << pos(1) << " " << pos(2) << "\n";
+		}
+		gridFile << "</DataArray>\n";
+		gridFile << "</Points>\n";
+
 		// point data
-		gridFile<<"<PointData>\n";
+		gridFile << "<PointData>\n";
 
 		if (isGridFieldRequired("id")) {
 			// local ID of nodes
@@ -536,7 +533,6 @@ namespace Output{
 			}
 			gridFile << "</DataArray>\n";
 		}
-		gridFile<<"</DataArray>\n";
 
 		// print seismic nodes
 		if (ModelSetup::getTerrainContactActive() && ModelSetup::getSeismicAnalysisActive()) {
@@ -830,7 +826,15 @@ namespace Output{
 		}
 	}
 
-	void writeInitialState(int resultSteps, vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
+	{
+		if (ModelSetup::getLoopCounter()%resultSteps == 0)
+		{
+			writeGrid(mesh, Output::CELLS, iTime);
+		}
+	}
+
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
 	{
 		// write initial state 
 		printModelInfo(bodies, iTime);
@@ -849,14 +853,6 @@ namespace Output{
 
 		// write grid as a .vtu files
 		writeGrid(mesh, Output::CELLS);
-	}
-
-	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
-	{
-		if (ModelSetup::getLoopCounter()%resultSteps == 0)
-		{
-			writeGrid(mesh, Output::CELLS, iTime);
-		}
 	}
 
 	void printElapsedTime() {

@@ -22,7 +22,7 @@
 	"results":
 	{
 		"print":50,
-		"fields":["id","displacement","material","active","plastic_strain"]
+		"material_point_results":["id","displacement","material","active","plastic_strain"]
 	},
 
 	"mesh":
