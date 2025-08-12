@@ -9,6 +9,8 @@
 #include "TerrainContact.h"
 #include "Seismic.h"
 
+#include <omp.h>
+
 ///
 /// From particle to node:
 ///		
@@ -62,49 +64,94 @@ void Interpolation::nodalMassWithParticles(Mesh *mesh, vector<Particle *> *parti
   }
 }
 
-void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
-
+void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles) 
+{
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+	const int nNodes = nodes->size();
+	const int nParticles = particles->size();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#if defined(USE_PARALLEL_INTERPOLATION) && defined(_OPENMP)
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+	const int nThreads = omp_get_max_threads();
+	vector<vector<double>> localMass(nThreads, vector<double>(nNodes, 0.0));
+	vector<vector<bool>> localActive(nThreads, vector<bool>(nNodes, false));
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+	// parallel loop over particles
+	#pragma omp parallel for schedule(static)
+	for (int i = 0; i < nParticles; ++i) 
+	{
+		if (!particles->at(i)->getActive()) continue;
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		const int tid = omp_get_thread_num();
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		const double pMass = particles->at(i)->getMass();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		for (size_t j = 0; j < contribution->size(); ++j) 
+		{
+			const int nodeId = contribution->at(j).getNodeId();
+			const double weight = contribution->at(j).getWeight();
+			const double nodalMass = pMass * weight;
 
-			// get the particle mass
-			const double pMass = particles->at(i)->getMass();
+			if (nodalMass <= 0.0) continue;
 
-			// for each node in the contribution list 
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// compute the weighted nodal mass
-				const double nodalMass = pMass*contribution->at(j).getWeight();
-				
-				// check any mass in node
-				if (nodalMass<=0.0) { continue; }
-		
-				// the node is inactivate if he doesn't have mass
-				nodeI->setActive(true);
-
-				// add mass at node
-				nodeI->addMass(nodalMass);
-			}
+			localMass[tid][nodeId] += nodalMass;
+			localActive[tid][nodeId] = true;
 		}
 	}
+
+	// combine results from all threads
+	#pragma omp parallel for
+	for (int n = 0; n < nNodes; ++n) 
+	{
+		double totalMass = 0.0;
+		bool isActive = false;
+
+		for (int t = 0; t < nThreads; ++t) 
+		{
+			totalMass += localMass[t][n];
+			isActive |= localActive[t][n];
+		}
+
+		if (totalMass > 0.0) 
+		{
+			nodes->at(n)->setActive(isActive);
+			nodes->at(n)->addMass(totalMass);
+		}
+	}
+#else
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
+
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+		// get the particle mass
+		const double pMass = particles->at(i)->getMass();
+
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// compute the weighted nodal mass
+			const double nodalMass = pMass*contribution->at(j).getWeight();
+			
+			// check any mass in node
+			if (nodalMass<=0.0) { continue; }
+	
+			// the node is inactivate if he doesn't have mass
+			nodeI->setActive(true);
+
+			// add mass at node
+			nodeI->addMass(nodalMass);
+		}
+	}
+#endif
 }
 
 void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
@@ -155,43 +202,75 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+	const int nNodes = nodes->size();
+	const int nParticles = particles->size();
+	
+#if defined(USE_PARALLEL_INTERPOLATION) && defined(_OPENMP)
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	const int nThreads = omp_get_max_threads();
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+	// Local Buffers
+	vector<vector<Vector3d>> localMomentum(nThreads, vector<Vector3d>(nNodes, Vector3d::Zero()));
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+	#pragma omp parallel for schedule(static)
+	for (int i = 0; i < nParticles; ++i)
+	{
+		if (!particles->at(i)->getActive()) continue;
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		const int tid = omp_get_thread_num();
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		const Vector3d pVelocity = particles->at(i)->getVelocity();
+		const double pMass = particles->at(i)->getMass();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-
-			// get particle velocity
-			const Vector3d pVelocity = particles->at(i)->getVelocity();
-
-			// get particle mass
-			const double pMass = particles->at(i)->getMass();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// add the weighted momentum in node
-				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
-			}
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{
+			int nodeId = contribution->at(j).getNodeId();
+			double weight = contribution->at(j).getWeight();
+			localMomentum[tid][nodeId] += pMass * pVelocity * weight;
 		}
 	}
+
+	// Combine results from all threads
+	#pragma omp parallel for
+	for (int n = 0; n < nNodes; ++n)
+	{
+		Vector3d totalMomentum = Vector3d::Zero();
+		for (int t = 0; t < nThreads; ++t)
+			totalMomentum += localMomentum[t][n];
+
+		nodes->at(n)->addMomentum(totalMomentum);
+	}
+#else
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
+
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+		// get particle velocity
+		const Vector3d pVelocity = particles->at(i)->getVelocity();
+
+		// get particle mass
+		const double pMass = particles->at(i)->getMass();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+			// add the weighted momentum in node
+			nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+		}
+	}
+#endif
 }
 
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {

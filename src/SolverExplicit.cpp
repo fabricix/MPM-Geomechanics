@@ -37,15 +37,15 @@ void SolverExplicit::Solve()
 		loopCounter = ModelSetup::incrementLoopCounter();
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
-		Update::contributionNodes(mesh, bodies);
-		#pragma omp parallel sections num_threads(2)
-		{
-			#pragma omp section
-			Interpolation::nodalMass(mesh, bodies);
 
-			#pragma omp section
-			Interpolation::nodalMomentum(mesh, bodies);
-		}
+		// update contribution nodes
+		Update::contributionNodes(mesh, bodies);
+
+		// Interpolate nodal mass
+		Interpolation::nodalMass(mesh, particles);
+
+		// Interpolate nodal momentum
+		Interpolation::nodalMomentum(mesh, particles);
 
 		// Update seismic velocity and acceleration from record
 		if(isSeismicAnalysis){
@@ -97,7 +97,7 @@ void SolverExplicit::Solve()
 		{	
 			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
-			Interpolation::nodalMomentum(mesh, bodies);
+			Interpolation::nodalMomentum(mesh, particles);
 			
 			// 6.2: Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);

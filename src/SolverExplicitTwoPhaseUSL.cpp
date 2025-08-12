@@ -51,19 +51,11 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		{
 			// nodal mass of solid
 			#pragma omp section
-			Interpolation::nodalMass(mesh, bodies);
+			Interpolation::nodalMass(mesh, particles);
 
 			// nodal mass of fluid
 			#pragma omp section
 			Interpolation::nodalMassFuid(mesh, bodies);
-
-			// nodal momentum of solid
-			#pragma omp section
-			Interpolation::nodalMomentum(mesh, bodies);
-
-			// nodal momentum of fluid
-			#pragma omp section
-			Interpolation::nodalMomentumFluid(mesh, bodies);
 		}
 
 		// impose essential boundary condition on nodal momentum in mixture
