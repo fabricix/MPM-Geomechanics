@@ -75,7 +75,6 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 		delete p;
 }
 
-
 TEST(InterpolationPerformance, NodalMomentum_nParticles)
 {
 #ifdef _OPENMP
@@ -157,9 +156,9 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 #endif
 
 #ifdef _OPENMP
-    std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-#else
-    std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
+	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(10);  // Set the number of threads for the test
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
     // Number of particles
@@ -209,4 +208,69 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
         delete p;
 }
 
+TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nParticles)
+{
+    const int numParticles = 15000;
+    const Vector3d appliedForce(1.0, 2.0, 3.0);
 
+    #if defined(USE_PARALLEL_EXTERNAL_FORCE)
+    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is defined\n";
+    #else
+    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is NOT defined\n";
+    #endif
+
+    #ifdef _OPENMP
+	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(10);  // Set the number of threads for the test
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+    #endif
+
+    // Create mesh
+    Mesh mesh;
+    mesh.setNumCells(50, 50, 50);
+    mesh.setCellDimension(1.0, 1.0, 1.0);
+    mesh.createGrid(false);
+
+    // Create particles
+    std::mt19937 gen(42);
+    std::uniform_real_distribution<double> dist(0.0, 49.9);
+    std::vector<Particle*> particles;
+    particles.reserve(numParticles);
+
+    for (int i = 0; i < numParticles; ++i)
+    {
+        Vector3d pos(dist(gen), dist(gen), dist(gen));
+        Particle* p = new Particle(pos, nullptr, Vector3d(1.0, 1.0, 1.0));
+        p->setId(i);
+        p->setMass(1.0);
+        p->setShape(new ShapeGimp);
+        p->addExternalForce(appliedForce);
+        particles.push_back(p);
+    }
+
+    // Update contribution nodes
+    for (auto& p : particles)
+        p->updateContributionNodes(&mesh);
+
+    // Interpolate external force
+    auto start = std::chrono::high_resolution_clock::now();
+    Interpolation::nodalExternalForce(&mesh, &particles);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> duration = end - start;
+    std::cout << "[ PERF ] nodalExternalForce took " << duration.count() << " ms\n";
+
+    // Verify result
+    Vector3d totalForce = Vector3d::Zero();
+    for (const auto& node : *mesh.getNodes())
+        totalForce += node->getExternalForce();
+
+    Vector3d expectedForce = appliedForce * static_cast<double>(numParticles);
+    EXPECT_NEAR(totalForce(0), expectedForce(0), 1e-5);
+    EXPECT_NEAR(totalForce(1), expectedForce(1), 1e-5);
+    EXPECT_NEAR(totalForce(2), expectedForce(2), 1e-5);
+
+    // Clean up
+    for (auto& p : particles)
+        delete p;
+}
