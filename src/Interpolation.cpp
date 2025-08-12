@@ -25,53 +25,15 @@
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-// Nodal Mass function using particles instead bodies
-void Interpolation::nodalMassWithParticles(Mesh *mesh, vector<Particle *> *particles) {
-  vector<Node *> *nodes = mesh->getNodes();
-
-  // for each particle
-  for (size_t i = 0; i < particles->size(); ++i) {
-    // only active particle can contribute
-    if (!particles->at(i)->getActive()) {
-      continue;
-    }
-
-    // get nodes and weights that the particle contributes
-    const vector<Contribution> *contribution = particles->at(i)->getContributionNodes();
-
-    // get the particle mass
-    const double pMass = particles->at(i)->getMass();
-
-    // for each node in the contribution list
-    for (size_t j = 0; j < contribution->size(); ++j) {
-      // get the contributing node
-      Node *nodeI = nodes->at(contribution->at(j).getNodeId());
-
-      // compute the weighted nodal mass
-      const double nodalMass = pMass * contribution->at(j).getWeight();
-
-      // check any mass in node
-      if (nodalMass <= 0.0) {
-        continue;
-      }
-
-      // the node is inactivate if he doesn't have mass
-      nodeI->setActive(true);
-
-      // add mass at node
-      nodeI->addMass(nodalMass);
-    }
-  }
-}
-
 void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles) 
 {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+	
+	#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
+	
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
-
-#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
 
 	const int nThreads = omp_get_max_threads();
 	vector<vector<double>> localMass(nThreads, vector<double>(nNodes, 0.0));
@@ -206,11 +168,11 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+	
+	#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
+	
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
-	
-#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
-
 	const int nThreads = omp_get_max_threads();
 
 	// Local Buffers

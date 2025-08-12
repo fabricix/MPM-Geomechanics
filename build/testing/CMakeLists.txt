@@ -51,9 +51,9 @@ file(GLOB_RECURSE PERFORMANCE_SOURCES "../../tests/*.performance.cpp")
 add_executable(MPM-Geomechanics-benchmark ${PERFORMANCE_SOURCES} ${EXECUTABLES})
 
 # Define USE_PARALLEL_INTERPOLATION to enable parallel interpolation in the benchmark executable
-#target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_COMPUTATION)
+target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_COMPUTATION)
 #target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_MASS)
-target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_MOMENTUM)
+#target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_MOMENTUM)
 
 # Link Google Test and OpenMP
 target_link_libraries(MPM-Geomechanics-benchmark gtest gtest_main OpenMP::OpenMP_CXX)
