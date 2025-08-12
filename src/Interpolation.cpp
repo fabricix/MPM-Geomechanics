@@ -71,7 +71,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
 
-#if defined(USE_PARALLEL_INTERPOLATION) && defined(_OPENMP)
+#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
 
 	const int nThreads = omp_get_max_threads();
 	vector<vector<double>> localMass(nThreads, vector<double>(nNodes, 0.0));
@@ -209,7 +209,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
 	
-#if defined(USE_PARALLEL_INTERPOLATION) && defined(_OPENMP)
+#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
 
 	const int nThreads = omp_get_max_threads();
 
