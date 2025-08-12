@@ -8,6 +8,7 @@
 #include "Particle.h"
 #include "ShapeGimp.h"
 #include "Update.h"
+#include "ConfigParallel.h"
 
 using namespace std;
 
