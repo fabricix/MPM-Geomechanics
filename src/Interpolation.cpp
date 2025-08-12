@@ -8,6 +8,7 @@
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
+#include "ConfigParallel.h"
 
 #include <omp.h>
 
@@ -224,55 +225,55 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 		
 		// for each node in the contribution list
 		for (size_t j = 0; j < contribution->size(); ++j) {
-
+			
 			// get the contributing node
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
+			
 			// add the weighted momentum in node
 			nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
 		}
 	}
-#endif
+	#endif
 }
 
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
-
+	
 	// check if is two-phase calculations
 	if(!ModelSetup::getTwoPhaseActive()) return;
-
+	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-
+	
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
+		
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
+		
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
-
+			
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
-
+			
 			// only saturated particles can interpolate mass of fluid
 			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
-
+			
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-
+			
 			// get particle velocity of fluid
 			const Vector3d pVelocityFluid = *(particles->at(i)->getVelocityFluid());
-
+			
 			// get particle mass
 			const double pMassFluid = particles->at(i)->getMassFluid();
 			
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
-
+				
 				// get the contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
+				
 				// add the weighted momentum in node
 				nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
 			}
@@ -281,16 +282,77 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles) {
-
+	
 	// is two-phase calculations
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
-
+	
 	// check if is one direction hydro-mechanical coupling
 	bool isOneDirectionHydromechanicalCoupling = ModelSetup::getHydroMechOneWayEnabled();
-
+	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+	
+	#ifdef USE_PARALLEL_INTERNAL_FORCE
+	#ifdef _OPENMP
 
+	const int nNodes = static_cast<int>(nodes->size());
+	const int nParticles = static_cast<int>(particles->size());
+	const int nThreads = omp_get_max_threads();
+	vector<vector<Vector3d>> localInternalForce(nThreads, vector<Vector3d>(nNodes, Vector3d::Zero()));
+
+	#pragma omp parallel for
+	for (int i = 0; i < nParticles; ++i)
+	{
+		if (!particles->at(i)->getActive()) continue;
+
+		int tid = omp_get_thread_num();
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		Matrix3d pStress = particles->at(i)->getStress();
+
+		if (isOneDirectionHydromechanicalCoupling)
+			pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+
+		const double pVolume = particles->at(i)->getCurrentVolume();
+		double pPressure = 0.0;
+
+		if (isTwoPhase && particles->at(i)->getSaturation() > 0.0)
+			pPressure = particles->at(i)->getPressureFluid();
+
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{
+			int nodeId = contribution->at(j).getNodeId();
+			const Vector3d& gradient = contribution->at(j).getGradients();
+
+			Vector3d internalForce;
+			internalForce.x() = -(pStress(0, 0) * gradient(0) + pStress(1, 0) * gradient(1) + pStress(2, 0) * gradient(2)) * pVolume;
+			internalForce.y() = -(pStress(0, 1) * gradient(0) + pStress(1, 1) * gradient(1) + pStress(2, 1) * gradient(2)) * pVolume;
+			internalForce.z() = -(pStress(0, 2) * gradient(0) + pStress(1, 2) * gradient(1) + pStress(2, 2) * gradient(2)) * pVolume;
+
+			if (isTwoPhase && particles->at(i)->getSaturation() > 0.0)
+			{
+				internalForce.x() += pPressure * gradient(0) * pVolume;
+				internalForce.y() += pPressure * gradient(1) * pVolume;
+				internalForce.z() += pPressure * gradient(2) * pVolume;
+			}
+
+			localInternalForce[tid][nodeId] += internalForce;
+		}
+	}
+
+	// Reduction step
+	for (int n = 0; n < nNodes; ++n)
+	{
+		Vector3d totalForce = Vector3d::Zero();
+		for (int t = 0; t < nThreads; ++t)
+		{
+			totalForce += localInternalForce[t][n];
+		}
+		if (totalForce.norm() > 0.0)
+			nodes->at(n)->addInternalForce(totalForce);
+	}
+	return;
+	#endif
+	#endif
 	// for each particle
 	for (size_t i = 0; i < particles->size(); ++i) {
 

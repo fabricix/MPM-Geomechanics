@@ -21,9 +21,11 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 #endif
 
 #ifdef _OPENMP
-	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+		std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+		omp_set_num_threads(10);  // Set the number of threads for the test
+		std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #else
-	std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
+		std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
 #endif
 
 	// Number of particles to test

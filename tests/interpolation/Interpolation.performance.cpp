@@ -145,3 +145,68 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
     for (auto& p : particles)
         delete p;
 }
+
+using namespace std;
+
+TEST(InterpolationPerformance, NodalInternalForce_nParticles)
+{
+#if defined(USE_PARALLEL_INTERNAL_FORCE)
+    std::cout << "[ INFO ] USE_PARALLEL_INTERNAL_FORCE is defined" << std::endl;
+#else
+    std::cout << "[ INFO ] USE_PARALLEL_INTERNAL_FORCE is NOT defined" << std::endl;
+#endif
+
+#ifdef _OPENMP
+    std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+#else
+    std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
+#endif
+
+    // Number of particles
+    const int numParticles = 150000;
+    std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
+
+    // Create mesh
+    Mesh mesh;
+    mesh.setNumCells(50, 50, 50);
+    mesh.setCellDimension(1.0, 1.0, 1.0);
+    mesh.createGrid(false);
+
+    // Create particles with uniform properties
+    std::random_device rd;
+    std::mt19937 gen(42);
+    std::uniform_real_distribution<double> dist(0.0, 49.9);
+
+    std::vector<Particle*> particles;
+    particles.reserve(numParticles);
+
+    for (int i = 0; i < numParticles; ++i) {
+        Vector3d pos(dist(gen), dist(gen), dist(gen));
+        Vector3d size(1.0, 1.0, 1.0);
+        Particle* p = new Particle(pos, nullptr, size);
+        p->setShape(new ShapeGimp());
+        p->setActive(true);
+        p->setStress(Matrix3d::Identity());
+        p->setPorePressure(0.0);
+        particles.push_back(p);
+    }
+
+    // Update contributions
+    for (auto& p : particles) {
+        p->updateContributionNodes(&mesh);
+    }
+
+    // Measure performance of nodalInternalForce
+    auto start = std::chrono::high_resolution_clock::now();
+    Interpolation::nodalInternalForce(&mesh, &particles);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    std::cout << "[ PERF ] nodalInternalForce took " << duration_ms << " ms" << std::endl;
+
+    // Clean up
+    for (auto p : particles)
+        delete p;
+}
+
+
