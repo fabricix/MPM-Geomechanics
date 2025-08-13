@@ -646,59 +646,52 @@ void Interpolation::nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize a matrix for strain increment computation
+		Matrix3d dstrain = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// initialize a matrix for strain increment computation
-			Matrix3d dstrain = Matrix3d::Zero();
+			// get the nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
+
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
+
+			// compute the nodal contribution to the particle strain increment
+
+			dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
+			dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
+			dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
+
+			dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt; // y,x
+			dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt; // y,y
+			dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt; // y,z
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution to the particle strain increment
-
-				dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
-				dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
-				dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
-
-				dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt; // y,x
-				dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt; // y,y
-				dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt; // y,z
-				
-				dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt; // z,x
-				dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
-				dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
-			}
-
-			// set total particle strain increment
-			particles->at(i)->setStrainIncrement(dstrain);
+			dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt; // z,x
+			dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
+			dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
 		}
+
+		// set total particle strain increment
+		particles->at(i)->setStrainIncrement(dstrain);
 	}
 }
 
@@ -761,59 +754,52 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 	}
 }
 
-void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle 
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particles can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle 
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particles can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize a matrix for spin increment computation
+		Matrix3d dvorticity = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// initialize a matrix for spin increment computation
-			Matrix3d dvorticity = Matrix3d::Zero();
+			// get nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
+
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
+
+			// compute the nodal contribution to the particle spin increment
+
+			dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt; // x,x
+			dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt; // x,y
+			dvorticity(0,2) += (dN(2)*v(0)-dN(0)*v(2))*0.5*dt; // x,z
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution to the particle spin increment
-
-				dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt; // x,x
-				dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt; // x,y
-				dvorticity(0,2) += (dN(2)*v(0)-dN(0)*v(2))*0.5*dt; // x,z
-				
-				dvorticity(1,0) += (dN(0)*v(1)-dN(1)*v(0))*0.5*dt; // y,x
-				dvorticity(1,1) += (dN(1)*v(1)-dN(1)*v(1))*0.5*dt; // y,y
-				dvorticity(1,2) += (dN(2)*v(1)-dN(1)*v(2))*0.5*dt; // y,z
-				
-				dvorticity(2,0) += (dN(0)*v(2)-dN(2)*v(0))*0.5*dt; // z,x
-				dvorticity(2,1) += (dN(1)*v(2)-dN(2)*v(1))*0.5*dt; // z,y
-				dvorticity(2,2) += (dN(2)*v(2)-dN(2)*v(2))*0.5*dt; // z,z
-			}
-
-			// add total spin tensor in the particle
-			particles->at(i)->setVorticityIncrement(dvorticity);
+			dvorticity(1,0) += (dN(0)*v(1)-dN(1)*v(0))*0.5*dt; // y,x
+			dvorticity(1,1) += (dN(1)*v(1)-dN(1)*v(1))*0.5*dt; // y,y
+			dvorticity(1,2) += (dN(2)*v(1)-dN(1)*v(2))*0.5*dt; // y,z
+			
+			dvorticity(2,0) += (dN(0)*v(2)-dN(2)*v(0))*0.5*dt; // z,x
+			dvorticity(2,1) += (dN(1)*v(2)-dN(2)*v(1))*0.5*dt; // z,y
+			dvorticity(2,2) += (dN(2)*v(2)-dN(2)*v(2))*0.5*dt; // z,z
 		}
+
+		// add total spin tensor in the particle
+		particles->at(i)->setVorticityIncrement(dvorticity);
 	}
 }
 

@@ -103,14 +103,8 @@ void SolverExplicit::Solve()
 		Update::nodalVelocity(mesh);
 
 		// Step 8: Update strain and vorticity increments
-		#pragma omp parallel sections num_threads(2)
-		{
-			#pragma omp section
-			Interpolation::particleStrainIncrement(mesh, bodies, dt);
-
-			#pragma omp section
-			Interpolation::particleVorticityIncrement(mesh, bodies, dt);
-		}
+		Interpolation::particleStrainIncrement(mesh, particles, dt);
+		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
 		// Step 9: Update density and stress
 		Update::particleDensity(bodies);

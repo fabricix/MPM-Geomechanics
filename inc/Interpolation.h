@@ -117,9 +117,9 @@ namespace Interpolation
 	/// \f$ \Delta \epsilon_{ijp} = \frac{1}{2}(N_{Ip,j} v_{iI} + N_{Ip,i} v_{jI}) \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
+	/// \param[in] particles A list o particles pointers
 	/// \param[in] time_step Time step
-	void particleStrainIncrement(Mesh *mesh, vector<Body *> *bodies, double time_step);
+	void particleStrainIncrement(Mesh *mesh, vector<Particle *> *particles, double time_step);
 
 	/// \brief Interpolate the strain increment of fluid at particle
 	///
@@ -135,9 +135,9 @@ namespace Interpolation
 	/// \f$ \Delta \Omega_{ijp} = \frac{1}{2}(N_{Ip,j} v_{iI} - N_{Ip,i} v_{jI}) \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
+	/// \param[in] particles A list o particles pointers
 	/// \param[in] time_step Time step
-	void particleVorticityIncrement(Mesh *mesh, vector<Body *> *bodies, double time_step);
+	void particleVorticityIncrement(Mesh *mesh, vector<Particle *> *particles, double time_step);
 
 	/// \brief Interpolate deformation gradient of solid at particle
 	///

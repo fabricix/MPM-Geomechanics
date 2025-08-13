@@ -126,7 +126,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		{
 			// calculate particle strain increment
 			#pragma omp section
-			Interpolation::particleStrainIncrement(mesh, bodies, dt);
+			Interpolation::particleStrainIncrement(mesh, particles, dt);
 
 			// calculate particle strain increment of fluid phase
 			#pragma omp section
@@ -134,7 +134,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 
 			// calculate particle vorticity increment
 			#pragma omp section
-			Interpolation::particleVorticityIncrement(mesh, bodies, dt);
+			Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
 			// calculate particle deformation gradient
 			#pragma omp section
