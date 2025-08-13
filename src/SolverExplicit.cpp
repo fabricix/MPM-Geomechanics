@@ -23,6 +23,7 @@ void SolverExplicit::Solve()
 	double iTime = 0.0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
+	bool contactActive = ModelSetup::getContactActive();
 	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
