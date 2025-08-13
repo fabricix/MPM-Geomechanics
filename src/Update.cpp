@@ -73,25 +73,19 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	}
 }
 
+void Update::particleDensity(vector<Particle*>* particles)
+{
+	// for each particle
+#if defined(USE_PARALLEL_DENSITY) && defined(_OPENMP)
+	#pragma omp parallel for shared(particles)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-void Update::particleDensity(vector<Body*>* bodies) {
-
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle
-		#pragma omp parallel for shared (particles)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update density
-			particles->at(i)->updateDensity();
-		}
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+		
+		// update density
+		particles->at(i)->updateDensity();
 	}
 }
 

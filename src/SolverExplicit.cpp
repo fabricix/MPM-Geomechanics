@@ -102,13 +102,16 @@ void SolverExplicit::Solve()
 		// Step 7: Compute nodal velocity
 		Update::nodalVelocity(mesh);
 
-		// Step 8: Update strain and vorticity increments
+		// Step 8.a: Update strain increments
 		Interpolation::particleStrainIncrement(mesh, particles, dt);
-		
+
+		// Step 8.b: Update vorticity increments
 		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
-		// Step 9: Update density and stress
-		Update::particleDensity(bodies);
+		// Step 9.a: Update density 
+		Update::particleDensity(particles);
+
+		// Step 9.b: Update stress
 		Update::particleStress(bodies);
 		
 		// write particles and grid in step

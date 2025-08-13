@@ -142,7 +142,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		}
 
 		// update particle density
-		Update::particleDensity(bodies);
+		Update::particleDensity(particles);
 
 		// update particle porosity
 		Update::particlePorosity(bodies);

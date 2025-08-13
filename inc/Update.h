@@ -57,8 +57,8 @@ namespace Update {
 	///
 	/// \f$ \rho_{p}^{t+1,f}=\rho_{p}^{t,f} /\left(1+\Delta \epsilon_{i i p}^{t-1/2,f}\right) \f$
 	///
-	/// \param[in] bodies List of Body pointers
-	void particleDensity(vector<Body*>* bodies);
+	/// \param[in] particles List of Particle pointers
+	void particleDensity(vector<Particle*>* particles);
 	
 	/// \brief Updates the porosity of the mixture
 	///
