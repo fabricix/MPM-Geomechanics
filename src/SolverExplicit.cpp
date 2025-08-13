@@ -86,7 +86,7 @@ void SolverExplicit::Solve()
 		}
 
 		// 5.3: Update particle position
-		Update::particlePosition(mesh, bodies, dt);
+		Update::particlePosition(mesh, particles, dt);
 
 		// Step 6 (MUSL): Momentum recalculation 
 		if (useMUSL)

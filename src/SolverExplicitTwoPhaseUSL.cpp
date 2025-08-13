@@ -117,7 +117,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Update::particleVelocityFluid(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle position of solid phase
-		Update::particlePosition(mesh, bodies, dt);
+		Update::particlePosition(mesh, particles, dt);
 
 		// nodal velocity
 		Update::nodalVelocity(mesh);

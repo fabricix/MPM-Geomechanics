@@ -99,9 +99,9 @@ namespace Update {
 
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Body pointers
 	/// \param[in] time_step Time step
-	void particlePosition(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particlePosition(Mesh* mesh, vector<Particle*>* particles, double time_step);
 
 	/// \brief Apply essential boundary condition in 
 	/// terms of force

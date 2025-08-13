@@ -240,52 +240,45 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 	}
 }
 
-void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	#pragma omp parallel for shared(particles, nodes, dt)
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		#pragma omp parallel for shared(particles, nodes, dt)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize the position rate vector
+		Vector3d positionRate = Vector3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get the contributing structure
+			const Contribution contribI = contribution->at(j);
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node
+			Node* nodeI = nodes->at(contribI.getNodeId());
 
-			// initialize the position rate vector
-			Vector3d positionRate = Vector3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j)
-			{	
-				// get the contributing structure
-				const Contribution contribI = contribution->at(j);
+			if (nodeI->getMass()!=0.0){
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribI.getNodeId());
-
-				if (nodeI->getMass()!=0.0){
-
-					// compute the position rate contribution
-					positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
-				}
+				// compute the position rate contribution
+				positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
 			}
-
-			// get particle handle
-			Particle* particleP = particles->at(i);
-
-			// update particle position
-			particleP->setPosition(particleP->getPosition()+positionRate*dt);
 		}
+
+		// get particle handle
+		Particle* particleP = particles->at(i);
+
+		// update particle position
+		particleP->setPosition(particleP->getPosition()+positionRate*dt);
 	}
 }
 
