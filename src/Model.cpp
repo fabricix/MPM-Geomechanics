@@ -179,7 +179,7 @@ namespace ModelSetup {
 
 	// print the number of active threads
 	void printActiveThreads() {
-		#ifdef _OPENMP
+#ifdef _OPENMP
 			#pragma omp parallel
 			{
 				#pragma omp master
@@ -187,9 +187,9 @@ namespace ModelSetup {
 					std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
 				}
 			}
-		#else
+#else
 			std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
-		#endif
+#endif
 	}
 
 	// openMP threads

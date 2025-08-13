@@ -104,8 +104,9 @@ namespace Seismic
     void applySeismicVelocityMarkedSTLNodes(Mesh* mesh)
     {
         std::vector<Node*>* nodes = mesh->getNodes();
-
+#ifdef _OPENMP
         #pragma omp parallel for
+#endif 
         for (int i = 0; i < static_cast<int>(seismicNodeIndices.size()); ++i) {
             
             int nodeId = seismicNodeIndices[i];

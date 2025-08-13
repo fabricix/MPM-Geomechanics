@@ -12,7 +12,9 @@ void Update::nodalVelocity(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i)
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -28,7 +30,9 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared (gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -47,7 +51,9 @@ void Update::resetNodalValues(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared (gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -63,7 +69,9 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared (gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -76,7 +84,7 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 void Update::particleDensity(vector<Particle*>* particles)
 {
 	// for each particle
-#if defined(USE_PARALLEL_DENSITY) && defined(_OPENMP)
+#ifdef _OPENMP
 	#pragma omp parallel for shared(particles)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
@@ -98,7 +106,9 @@ void Update::particlePorosity(vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
+#ifdef _OPENMP
 		#pragma omp parallel for shared (particles)
+#endif
 		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 			// only active particle can contribute
@@ -113,7 +123,7 @@ void Update::particlePorosity(vector<Body*>* bodies) {
 void Update::particleStress(vector<Particle*>* particles) {
 
 	// for each particle
-#if defined(USE_PARALLEL_STRESS) && defined(_OPENMP)
+#ifdef _OPENMP
 	#pragma omp parallel for shared (particles)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
@@ -135,7 +145,9 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
+#ifdef _OPENMP
 		#pragma omp parallel for shared (particles)
+#endif
 		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 			// only active particle can contribute
@@ -154,8 +166,10 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each particle 
+	// for each particle
+#ifdef _OPENMP
 	#pragma omp parallel for shared (particles, nodes, dt)
+#endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
@@ -202,8 +216,10 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt)
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
-		// for each particle 
+		// for each particle
+#ifdef _OPENMP 
 		#pragma omp parallel for shared (particles, nodes, dt)
+#endif
 		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 			// only active particle can contribute
@@ -246,7 +262,9 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each particle
+#ifdef _OPENMP
 	#pragma omp parallel for shared(particles, nodes, dt)
+#endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
@@ -285,7 +303,9 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i){
 
 		// get node handle
@@ -362,7 +382,9 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// for each boundary node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i){
 
 		// get node handle
@@ -471,7 +493,9 @@ void Update::boundaryConditionsMomentum(Mesh* mesh)
 void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) 
 {
 	// get boundary nodes
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
 
 		// get node handle 
@@ -564,7 +588,9 @@ void Update::boundaryConditionsForce(Mesh* mesh)
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// get boundary nodes
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
 
 		// get node handle 
@@ -648,7 +674,9 @@ void Update::boundaryConditionsForceFluid(Mesh* mesh) {
 void Update::contributionNodes(Mesh* mesh, vector<Particle*>* particles) 
 {
 	// for each particle
+#ifdef _OPENMP
 	#pragma omp parallel for shared(particles, mesh)
+#endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute

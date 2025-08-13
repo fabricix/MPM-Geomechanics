@@ -22,7 +22,9 @@ namespace Energy
         double energy = 0.0;
 
         // for each particle
+#ifdef _OPENMP
         #pragma omp parallel for reduction(+:energy) shared(particles)
+#endif
         for (int i = 0; i < static_cast<int>(particles->size()); ++i) 
         {
             // verify active particle

@@ -649,7 +649,7 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-#if defined(USE_PARALLEL_STRAIN_INCREMENT) && defined(_OPENMP)
+#ifdef _OPENMP
 	#pragma omp parallel for
 #endif
 	// for each particle
@@ -760,7 +760,7 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-#if defined(USE_PARALLEL_VORTICITY_INCREMENT) && defined(_OPENMP)
+#ifdef _OPENMP
     #pragma omp parallel for
 #endif
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) 
@@ -790,20 +790,6 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
             dvorticity(0,1) += (dN(1)*v(0) - dN(0)*v(1)) * 0.5 * dt; // x,y
             dvorticity(0,2) += (dN(2)*v(0) - dN(0)*v(2)) * 0.5 * dt; // x,z
             dvorticity(1,2) += (dN(2)*v(1) - dN(1)*v(2)) * 0.5 * dt; // y,z
-
-			/*
-			dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt; // x,x
-			dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt; // x,y
-			dvorticity(0,2) += (dN(2)*v(0)-dN(0)*v(2))*0.5*dt; // x,z
-			
-			dvorticity(1,0) += (dN(0)*v(1)-dN(1)*v(0))*0.5*dt; // y,x
-			dvorticity(1,1) += (dN(1)*v(1)-dN(1)*v(1))*0.5*dt; // y,y
-			dvorticity(1,2) += (dN(2)*v(1)-dN(1)*v(2))*0.5*dt; // y,z
-			
-			dvorticity(2,0) += (dN(0)*v(2)-dN(2)*v(0))*0.5*dt; // z,x
-			dvorticity(2,1) += (dN(1)*v(2)-dN(2)*v(1))*0.5*dt; // z,y
-			dvorticity(2,2) += (dN(2)*v(2)-dN(2)*v(2))*0.5*dt; // z,z
-			*/
 		}
 		
 		// fill the anti-symmetric part of the spin tensor

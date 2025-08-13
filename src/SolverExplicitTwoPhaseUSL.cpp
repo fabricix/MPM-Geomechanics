@@ -47,65 +47,41 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		// update contribution nodes
 		Update::contributionNodes(mesh, particles);
 
-		#pragma omp parallel sections num_threads(4)
-		{
-			// nodal mass of solid
-			#pragma omp section
-			Interpolation::nodalMass(mesh, particles);
+		// nodal mass of solid
+		Interpolation::nodalMass(mesh, particles);
 
-			// nodal mass of fluid
-			#pragma omp section
-			Interpolation::nodalMassFuid(mesh, bodies);
-		}
+		// nodal mass of fluid
+		Interpolation::nodalMassFuid(mesh, bodies);
 
-		// impose essential boundary condition on nodal momentum in mixture
-		#pragma omp parallel sections num_threads(2)
-		{
-			// impose momentum boundary condition in solid phase
-			#pragma omp section
-			Update::boundaryConditionsMomentum(mesh);
+		// impose momentum boundary condition in solid phase
+		Update::boundaryConditionsMomentum(mesh);
 
-			// impose momentum boundary condition in fluid phase
-			#pragma omp section
-			Update::boundaryConditionsMomentumFluid(mesh);
-		}
+		// impose momentum boundary condition in fluid phase
+		Update::boundaryConditionsMomentumFluid(mesh);
+		
+		// nodal internal force of mixture
+		Interpolation::nodalInternalForce(mesh, particles);
 
-		#pragma omp parallel sections num_threads(5)
-		{
-			// nodal internal force of mixture
-			#pragma omp section
-			Interpolation::nodalInternalForce(mesh, particles);
+		// nodal internal force of fluid phase
+		Interpolation::nodalInternalForceFluid(mesh, bodies);
 
-			// nodal internal force of fluid phase
-			#pragma omp section
-			Interpolation::nodalInternalForceFluid(mesh, bodies);
+		// nodal external force of mixture	
+		Interpolation::nodalExternalForce(mesh, particles);
 
-			// nodal external force of mixture
-			#pragma omp section
-			Interpolation::nodalExternalForce(mesh, particles);
+		// nodal external force of fluid phase
+		Interpolation::nodalExternalForceFluid(mesh, bodies);
 
-			// nodal external force of fluid phase
-			#pragma omp section
-			Interpolation::nodalExternalForceFluid(mesh, bodies);
-
-			// nodal drag force of fluid
-			#pragma omp section
-			Interpolation::nodalDragForceFluid(mesh, bodies);
-		}
+		// nodal drag force of fluid
+		Interpolation::nodalDragForceFluid(mesh, bodies);
 
 		// nodal total force in mixture
 		Update::nodalTotalForce(mesh);
 
-		#pragma omp parallel sections num_threads(2)
-		{
-			// impose force boundary conditions
-			#pragma omp section
-			Update::boundaryConditionsForce(mesh);
+		// impose force boundary conditions
+		Update::boundaryConditionsForce(mesh);
 
-			// impose force boundary conditions
-			#pragma omp section
-			Update::boundaryConditionsForceFluid(mesh);
-		}
+		// impose force boundary conditions
+		Update::boundaryConditionsForceFluid(mesh);
 
 		// integrate the grid nodal momentum equation in mixture
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
@@ -122,24 +98,17 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		// nodal velocity
 		Update::nodalVelocity(mesh);
 
-		#pragma omp parallel sections num_threads(4)
-		{
-			// calculate particle strain increment
-			#pragma omp section
-			Interpolation::particleStrainIncrement(mesh, particles, dt);
+		// calculate particle strain increment
+		Interpolation::particleStrainIncrement(mesh, particles, dt);
 
-			// calculate particle strain increment of fluid phase
-			#pragma omp section
-			Interpolation::particleStrainIncrementFluid(mesh, bodies, dt);
+		// calculate particle strain increment of fluid phase
+		Interpolation::particleStrainIncrementFluid(mesh, bodies, dt);
 
-			// calculate particle vorticity increment
-			#pragma omp section
-			Interpolation::particleVorticityIncrement(mesh, particles, dt);
+		// calculate particle vorticity increment	
+		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
-			// calculate particle deformation gradient
-			#pragma omp section
-			Interpolation::particleDeformationGradient(mesh, bodies, dt);
-		}
+		// calculate particle deformation gradient
+		Interpolation::particleDeformationGradient(mesh, bodies, dt);
 
 		// update particle density
 		Update::particleDensity(particles);
