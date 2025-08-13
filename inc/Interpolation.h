@@ -144,9 +144,9 @@ namespace Interpolation
 	/// \f$ F_{ijp}^{s,n+1} = (\delta_{ik} + \delta t \sum_I N_{Ip,k} v_{iI}^{s,n}) F_{kjp}^{s,n} \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
+	/// \param[in] particles A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleDeformationGradient(Mesh *mesh, vector<Body *> *bodies, double time_step);
+	void particleDeformationGradient(Mesh *mesh, vector<Particle *> *particles, double time_step);
 
 	/// \brief Interpolate a vector3d in time using linear interpolation
 	///	\param[in] times A list of times

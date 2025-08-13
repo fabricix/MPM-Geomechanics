@@ -64,8 +64,8 @@ namespace Update {
 	///
 	/// \f$ n^{t+1} = V^{t+1,f}/(V^{t+1,f}+V^{t+1,s})\f$
 	///
-	/// \param[in] bodies List of Body pointers
-	void particlePorosity(vector<Body*>* bodies);
+	/// \param[in] particles List of Body pointers
+	void particlePorosity(vector<Particle*>* particles);
 
 	/// \brief Update the particles' stress
 	/// \param[in] particles List of Particle pointers
@@ -93,9 +93,9 @@ namespace Update {
 	/// \f$ v_{ip}^{f,t+1/2} = v_{ip}^{f,t-1/2} + \sum_I N_{ip} f_{iI}^{t,f}/m_I^f \Delta t \f$  
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Particles pointers
 	/// \param[in] time_step Time step
-	void particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particleVelocityFluid(Mesh* mesh, vector<Particle*>* particles, double time_step);
 
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
@@ -153,7 +153,6 @@ namespace Update {
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
-	
 };
 
 #endif /* UPDATE_H_ */

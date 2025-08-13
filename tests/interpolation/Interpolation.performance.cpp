@@ -272,17 +272,11 @@ TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nPart
 
 TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_nParticles)
 {
-    #if defined(USE_PARALLEL_STRAIN_INCREMENT)
-        std::cout << "[ INFO ] USE_PARALLEL_STRAIN_INCREMENT is defined" << std::endl;
-    #else
-        std::cout << "[ INFO ] USE_PARALLEL_STRAIN_INCREMENT is NOT defined" << std::endl;
-    #endif
-
-    #ifdef _OPENMP
-        std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-        omp_set_num_threads(numThreads);  // Set the number of threads for the test
-        std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
-    #endif
+#ifdef _OPENMP
+    std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(numThreads);  // Set the number of threads for the test
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+#endif
 
     // Set up parameters
     const double dt = 0.01;
@@ -365,17 +359,11 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_
 
 TEST(InterpolationPerformance, InterpolationPerformance_ParticleVorticityIncrement_nParticles)
 {
-    #if defined(USE_PARALLEL_VORTICITY_INCREMENT)
-        std::cout << "[ INFO ] USE_PARALLEL_VORTICITY_INCREMENT is defined" << std::endl;
-    #else
-        std::cout << "[ INFO ] USE_PARALLEL_VORTICITY_INCREMENT is NOT defined" << std::endl;
-    #endif
-
-    #ifdef _OPENMP
-        std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-        omp_set_num_threads(numThreads);
-        std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
-    #endif
+#ifdef _OPENMP
+    std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(numThreads);
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+#endif
 
     const double dt = 0.01;
     const Vector3d omega(1.0, 2.0, 3.0);  // Angular velocity around z, y, x

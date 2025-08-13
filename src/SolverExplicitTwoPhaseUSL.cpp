@@ -90,7 +90,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of fluid phase
-		Update::particleVelocityFluid(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocityFluid(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle position of solid phase
 		Update::particlePosition(mesh, particles, dt);
@@ -108,13 +108,13 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
 		// calculate particle deformation gradient
-		Interpolation::particleDeformationGradient(mesh, bodies, dt);
+		Interpolation::particleDeformationGradient(mesh, particles, dt);
 
 		// update particle density
 		Update::particleDensity(particles);
 
 		// update particle porosity
-		Update::particlePorosity(bodies);
+		Update::particlePorosity(particles);
 
 		// update particle pressure
 		Update::particlePressure(bodies, dt);

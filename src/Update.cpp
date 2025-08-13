@@ -81,9 +81,8 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	}
 }
 
-void Update::particleDensity(vector<Particle*>* particles)
-{
-	// for each particle
+void Update::particleDensity(vector<Particle*>* particles) {
+	
 #ifdef _OPENMP
 	#pragma omp parallel for shared(particles)
 #endif
@@ -97,32 +96,23 @@ void Update::particleDensity(vector<Particle*>* particles)
 	}
 }
 
-void Update::particlePorosity(vector<Body*>* bodies) {
+void Update::particlePorosity(vector<Particle*>* particles) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle
 #ifdef _OPENMP
 		#pragma omp parallel for shared (particles)
 #endif
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update density
-			particles->at(i)->updatePorosity();
-		}
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+		
+		// update density
+		particles->at(i)->updatePorosity();
 	}
 }
 
 void Update::particleStress(vector<Particle*>* particles) {
 
-	// for each particle
 #ifdef _OPENMP
 	#pragma omp parallel for shared (particles)
 #endif
@@ -205,54 +195,47 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 	}
 }
 
-void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Update::particleVelocityFluid(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
 #ifdef _OPENMP 
 		#pragma omp parallel for shared (particles, nodes, dt)
 #endif
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// initialize the velocity rate vector
-			Vector3d velocityRate = Vector3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j)
-			{	
-				// get the contributing node structure
-				const Contribution contribI = contribution->at(j);
+		// initialize the velocity rate vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get the contributing node structure
+			const Contribution contribI = contribution->at(j);
 
-				// get the contributing node handle
-				Node* nodeI = nodes->at(contribI.getNodeId());
+			// get the contributing node handle
+			Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI->getMassFluid()!=0.0) {
+			if (nodeI->getMassFluid()!=0.0) {
 
-					// compute the velocity rate contribution
-					velocityRate+= (*(nodeI->getTotalForceFluid()))*contribI.getWeight()/nodeI->getMassFluid();
-				}
+				// compute the velocity rate contribution
+				velocityRate+= (*(nodeI->getTotalForceFluid()))*contribI.getWeight()/nodeI->getMassFluid();
 			}
-
-			// get particle handle
-			Particle* particleP = particles->at(i);
-
-			// update particle velocity
-			particleP->setVelocityFluid((*particleP->getVelocityFluid())+velocityRate*dt);
 		}
+
+		// get particle handle
+		Particle* particleP = particles->at(i);
+
+		// update particle velocity
+		particleP->setVelocityFluid((*particleP->getVelocityFluid())+velocityRate*dt);
 	}
 }
 
@@ -302,7 +285,6 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	// for each boundary node
 #ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
 #endif
@@ -381,7 +363,6 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	// for each boundary node
 #ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
 #endif

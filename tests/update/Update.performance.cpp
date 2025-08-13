@@ -24,18 +24,12 @@ const int ramdomSeed = 42;
 
 TEST(UpdatePerformance, ContributionNodes_nParticles)
 {
-#if defined(USE_PARALLEL_CONTRIBUTION)
-	std::cout << "[ INFO ] USE_PARALLEL_CONTRIBUTION is defined" << std::endl;
-#else
-	std::cout << "[ INFO ] USE_PARALLEL_CONTRIBUTION is NOT defined" << std::endl;
-#endif
-
 #ifdef _OPENMP
-		std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-		omp_set_num_threads(numThreads);  // Set the number of threads for the test
-		std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+	omp_set_num_threads(numThreads);  // Set the number of threads for the test
+	std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #else
-		std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
+	std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
 #endif
 
 	// Number of particles to test
@@ -76,17 +70,11 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 
 TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 {
-    #if defined(USE_PARALLEL_DENSITY)
-        std::cout << "[ INFO ] USE_PARALLEL_DENSITY is defined" << std::endl;
-    #else
-        std::cout << "[ INFO ] USE_PARALLEL_DENSITY is NOT defined" << std::endl;
-    #endif
-
-    #ifdef _OPENMP
-        std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-        omp_set_num_threads(numThreads);
-        std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
-    #endif
+#ifdef _OPENMP
+    std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(numThreads);
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+#endif
 
     // Test parameters
     const double initialDensity = 2000.0;
@@ -130,12 +118,6 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 
 TEST(UpdatePerformance, ParticleStress_nParticles)
 {
-#if defined(USE_PARALLEL_STRESS)
-    std::cout << "[ INFO ] USE_PARALLEL_STRESS is defined\n";
-#else
-    std::cout << "[ INFO ] USE_PARALLEL_STRESS is NOT defined\n";
-#endif
-
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined\n";
     omp_set_num_threads(numThreads);

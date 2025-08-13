@@ -802,62 +802,57 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 	}
 }
 
-void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < static_cast<int>(particles->size()); ++i)  {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize a matrix for velocity gradient
+		Matrix3d gradV = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node
+			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// initialize a matrix for velocity gradient
-			Matrix3d gradV = Matrix3d::Zero();
+			// get the nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
+
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
+
+			// compute the nodal contribution deformation gradient increment
+
+			gradV(0,0) += (dN(0)*v(0)); // x,x
+			gradV(0,1) += (dN(1)*v(0)); // x,y
+			gradV(0,2) += (dN(2)*v(0)); // x,z
+
+			gradV(1,0) += (dN(0)*v(1)); // y,x
+			gradV(1,1) += (dN(1)*v(1)); // y,y
+			gradV(1,2) += (dN(2)*v(1)); // y,z
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution deformation gradient increment
-
-				gradV(0,0) += (dN(0)*v(0)); // x,x
-				gradV(0,1) += (dN(1)*v(0)); // x,y
-				gradV(0,2) += (dN(2)*v(0)); // x,z
-
-				gradV(1,0) += (dN(0)*v(1)); // y,x
-				gradV(1,1) += (dN(1)*v(1)); // y,y
-				gradV(1,2) += (dN(2)*v(1)); // y,z
-				
-				gradV(2,0) += (dN(0)*v(2)); // z,x
-				gradV(2,1) += (dN(1)*v(2)); // z,y
-				gradV(2,2) += (dN(2)*v(2)); // z,z
-			}
-
-			// get deformation gradient
-			const Matrix3d Fn = particles->at(i)->getDeformationGradient();
-
-			// set current deformation gradient
-			particles->at(i)->setDeformationGradient((Matrix3d::Identity()+dt*gradV)*Fn);
+			gradV(2,0) += (dN(0)*v(2)); // z,x
+			gradV(2,1) += (dN(1)*v(2)); // z,y
+			gradV(2,2) += (dN(2)*v(2)); // z,z
 		}
+
+		// get deformation gradient
+		const Matrix3d Fn = particles->at(i)->getDeformationGradient();
+
+		// set current deformation gradient
+		particles->at(i)->setDeformationGradient((Matrix3d::Identity()+dt*gradV)*Fn);
 	}
 }
 
