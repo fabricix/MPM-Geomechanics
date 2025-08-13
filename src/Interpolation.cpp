@@ -31,7 +31,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 	
-	#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
+#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
 	
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
@@ -170,7 +170,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 	
-	#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
+#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
 	
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
@@ -233,7 +233,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 			nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
 		}
 	}
-	#endif
+#endif
 }
 
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
@@ -291,9 +291,8 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-	
-	#ifdef USE_PARALLEL_INTERNAL_FORCE
-	#ifdef _OPENMP
+
+#if defined(USE_PARALLEL_INTERNAL_FORCE) && defined(_OPENMP)
 
 	const int nNodes = static_cast<int>(nodes->size());
 	const int nParticles = static_cast<int>(particles->size());
@@ -351,8 +350,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 			nodes->at(n)->addInternalForce(totalForce);
 	}
 	return;
-	#endif
-	#endif
+#else
 	// for each particle
 	for (size_t i = 0; i < particles->size(); ++i) {
 
@@ -408,6 +406,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 			nodeI->addInternalForce(internalForce);
 		}
 	}
+#endif
 }
 
 void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
@@ -476,7 +475,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
 	vector<Node*>* nodes = mesh->getNodes();
 
-	#if defined(USE_PARALLEL_EXTERNAL_FORCE) && defined(_OPENMP)
+#if defined(USE_PARALLEL_EXTERNAL_FORCE) && defined(_OPENMP)
 	
 	const int nNodes = nodes->size();
 	const int nParticles = particles->size();
@@ -536,7 +535,6 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 		}
 	}
 #endif
-
 	// (2) - External force from nodes: f_ext_I += f_ext_BC
 	// External boundary condition force 
 	Loads::NodalPointLoadData& nodal_force_list = Loads::getNodalPointList();
@@ -651,10 +649,9 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	#if defined(USE_PARALLEL_STRAIN_INCREMENT) && defined(_OPENMP)
+#if defined(USE_PARALLEL_STRAIN_INCREMENT) && defined(_OPENMP)
 	#pragma omp parallel for
-	#endif
-
+#endif
 	// for each particle
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
@@ -763,9 +760,9 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	#if defined(USE_PARALLEL_VORTICITY_INCREMENT) && defined(_OPENMP)
+#if defined(USE_PARALLEL_VORTICITY_INCREMENT) && defined(_OPENMP)
     #pragma omp parallel for
-    #endif
+#endif
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) 
 	{
 		// only active particles can contribute
