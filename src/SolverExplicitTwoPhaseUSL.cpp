@@ -151,7 +151,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Update::particlePressure(bodies, dt);
 
 		// update particle stress
-		Update::particleStress(bodies);
+		Update::particleStress(particles);
 
 		// write particles and grid in step
 		Output::writeResultInStep(resultSteps, bodies, iTime);

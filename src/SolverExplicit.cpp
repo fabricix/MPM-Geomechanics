@@ -112,7 +112,7 @@ void SolverExplicit::Solve()
 		Update::particleDensity(particles);
 
 		// Step 9.b: Update stress
-		Update::particleStress(bodies);
+		Update::particleStress(particles);
 		
 		// write particles and grid in step
 		Output::writeResultInStep(resultSteps, bodies, iTime);

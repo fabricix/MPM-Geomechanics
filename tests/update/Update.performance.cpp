@@ -9,6 +9,7 @@
 #include "ShapeGimp.h"
 #include "Update.h"
 #include "ConfigParallel.h"
+#include "Materials/Elastic.h"
 
 using namespace std;
 
@@ -125,4 +126,107 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 
     // Cleanup
     for (auto p : particles) delete p;
+}
+
+TEST(UpdatePerformance, ParticleStress_nParticles)
+{
+#if defined(USE_PARALLEL_STRESS)
+    std::cout << "[ INFO ] USE_PARALLEL_STRESS is defined\n";
+#else
+    std::cout << "[ INFO ] USE_PARALLEL_STRESS is NOT defined\n";
+#endif
+
+#ifdef _OPENMP
+    std::cout << "[ INFO ] _OPENMP is defined\n";
+    omp_set_num_threads(numThreads);
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << '\n';
+#endif
+
+    // Material parameters
+    const double E = 1000.0;   // Young's modulus
+    const double nu = 0.3;     // Poisson's ratio
+	const double epsilon0 = 0.01; // Initial strain increment
+
+    // Create particles
+    vector<Particle*> particles;
+    particles.reserve(numParticles);
+    for (int i = 0; i < numParticles; ++i) {
+        Vector3d position(0.0, 0.0, 0.0);
+        Particle* p = new Particle(position, nullptr, particleSize);
+        p->setId(i);
+        p->setMass(particleMass);
+        p->setShape(new ShapeGimp);
+        p->setActive(true);
+        p->setStress(Matrix3d::Zero());
+        p->setStrainIncrement(Matrix3d::Zero());
+
+        // Apply a uniaxial strain increment in the x-direction
+        Matrix3d dstrain = Matrix3d::Zero();
+        dstrain(0, 0) = epsilon0;
+        p->setStrainIncrement(dstrain);
+
+        // Assign linear elastic material
+        Material* mat = new Elastic(1, 1, E, nu);
+        p->setMaterial(mat);
+
+        particles.push_back(p);
+    }
+
+    // Measure performance
+    auto start = chrono::high_resolution_clock::now();
+    Update::particleStress(&particles);
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+    std::cout << "[ PERF ] particleStress took " << duration.count() << " ms\n";
+
+	/*
+	Analytical verification (uniaxial strain test):
+
+	We apply a uniaxial strain state:
+		strain_xx = strain0
+		strain_yy = strain_zz = 0
+
+	The expected stress components for an isotropic linear elastic material are:
+
+		stress_xx = (lambda + 2G) * strain0
+		stress_yy = stress_zz = lambda * strain0
+		stress_xy = stress_yz = stress_xz = 0
+
+	where:
+		lambda = (E * v) / [(1 + v)(1 - 2v)]
+		G = E / [2(1 + v)]
+
+	These values are used to compare against the computed stress in each particle.
+	*/
+
+
+	double lambda = (E * nu) / ((1 + nu) * (1 - 2 * nu));
+	double G = E / (2 * (1 + nu));
+
+	double expected_sigma_xx = (lambda + 2.0 * G) * epsilon0;
+	double expected_sigma_yy = lambda * epsilon0;
+	double expected_sigma_zz = lambda * epsilon0;
+
+    // Check stress tensor for each particle
+    for (auto& p : particles) {
+        Matrix3d stress = p->getStress();
+
+        // Diagonal terms
+        EXPECT_NEAR(stress(0, 0), expected_sigma_xx, 1e-5);
+        EXPECT_NEAR(stress(1, 1), expected_sigma_yy, 1e-5);
+        EXPECT_NEAR(stress(2, 2), expected_sigma_zz, 1e-5);
+
+        // Off-diagonal terms must be zero
+        EXPECT_NEAR(stress(0, 1), 0.0, 1e-5);
+        EXPECT_NEAR(stress(1, 0), 0.0, 1e-5);
+        EXPECT_NEAR(stress(0, 2), 0.0, 1e-5);
+        EXPECT_NEAR(stress(2, 0), 0.0, 1e-5);
+        EXPECT_NEAR(stress(1, 2), 0.0, 1e-5);
+        EXPECT_NEAR(stress(2, 1), 0.0, 1e-5);
+    }
+
+    // Clean up
+    for (auto p : particles) {
+        delete p;
+    }
 }

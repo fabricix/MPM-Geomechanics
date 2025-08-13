@@ -110,24 +110,19 @@ void Update::particlePorosity(vector<Body*>* bodies) {
 	}
 }
 
-void Update::particleStress(vector<Body*>* bodies) {
+void Update::particleStress(vector<Particle*>* particles) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+#if defined(USE_PARALLEL_STRESS) && defined(_OPENMP)
+	#pragma omp parallel for shared (particles)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		#pragma omp parallel for shared (particles)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-
-			// update particle stress
-			particles->at(i)->updateStress();
-		}
+		// update particle stress
+		particles->at(i)->updateStress();
 	}
 }
 

@@ -68,8 +68,8 @@ namespace Update {
 	void particlePorosity(vector<Body*>* bodies);
 
 	/// \brief Update the particles' stress
-	/// \param[in] bodies List of Body pointers
-	void particleStress(vector<Body*>* bodies);
+	/// \param[in] particles List of Particle pointers
+	void particleStress(vector<Particle*>* particles);
 	
 	/// \brief Update the particles pressure
 	///
