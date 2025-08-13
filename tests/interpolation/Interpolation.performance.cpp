@@ -11,6 +11,15 @@
 
 using namespace std;
 
+// Global configuration variables
+const int numParticles = 150000;
+const int numThreads = 10;
+const Vector3d particleSize(1.0, 1.0, 1.0);
+const double particleMass = 1.0;
+const Vector3d cellDimension(1.0, 1.0, 1.0);
+const Vector3i numCells(50, 50, 50);
+const int ramdomSeed = 42;
+
 TEST(InterpolationPerformance, NodalMass_nParticles)
 {
 #ifdef USE_PARALLEL_MASS
@@ -21,7 +30,7 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 
 #ifdef _OPENMP
 		std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-		omp_set_num_threads(10);  // Set the number of threads for the test
+		omp_set_num_threads(numThreads);  // Set the number of threads for the test
 		std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #else
 		std::cout << "[ INFO ] _OPENMP is NOT defined" << std::endl;
@@ -29,24 +38,21 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 
 	// create the mesh
 	Mesh mesh;
-	mesh.setNumCells(50, 50, 50);
-	mesh.setCellDimension(1.0, 1.0, 1.0);
-	mesh.createGrid(false);
+	mesh.setNumCells(numCells(0), numCells(1),numCells(2));
+	mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+	mesh.createGrid();
 
 	// create particles
 	vector<Particle*> particles;
-	//std::random_device rd;
-	std::mt19937 gen(42);
-	std::uniform_real_distribution<double> dist(0.0, 49.0);
+    particles.reserve(numParticles);
 
-	int numParticles = 150000; // number of particles to create
-	double particleSize = 1.0; // size of each particle
-	double particleMass = 1.0; // mass of each particle
+	std::mt19937 gen(ramdomSeed);
+	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
 
 	std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
 
 	for (int i = 0; i < numParticles; ++i) {
-		Particle* p = new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, Vector3d(particleSize, particleSize, particleSize));
+		Particle* p = new Particle(Vector3d(dist(gen), dist(gen), dist(gen)), NULL, particleSize);
 		p->setId(i);
 		p->setMass(particleMass);
 		p->setShape(new ShapeGimp);
@@ -79,7 +85,7 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
 {
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-    omp_set_num_threads(10);  // Set the number of threads for the test
+    omp_set_num_threads(numThreads);  // Set the number of threads for the test
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
@@ -89,26 +95,24 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
     std::cout << "[ INFO ] USE_PARALLEL_MOMENTUM is NOT defined" << std::endl;
 #endif
 
-    const int numParticles = 150000;
-    std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
+    Vector3d particleVelocity (1.0, 2.0, 3.0);
+    
+	// create the mesh
+	Mesh mesh;
+	mesh.setNumCells(numCells(0), numCells(1),numCells(2));
+	mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+	mesh.createGrid();
 
-	double particleSize = 1.0; // size of each particle
-	double particleMass = 1.0; // mass of each particle
-	Vector3d particleVelocity (1.0, 2.0, 3.0);
-    // Create the mesh
-    Mesh mesh;
-    mesh.setNumCells(50, 50, 50);
-    mesh.setCellDimension(1, 1, 1);
-    mesh.createGrid(false);
+	// create particles
+	std::vector<Particle*> particles;
+    particles.reserve(numParticles);
 
-    // Create particles with random positions
-    std::vector<Particle*> particles;
-    std::mt19937 gen(42);
-    std::uniform_real_distribution<double> dist(0.0, 49.9);
+	std::mt19937 gen(ramdomSeed);
+	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
 
     for (int i = 0; i < numParticles; i++) {
         Vector3d pos(dist(gen), dist(gen), dist(gen));
-        Particle* p = new Particle(pos, nullptr, Vector3d(particleSize, particleSize, particleSize));
+        Particle* p = new Particle(pos, nullptr, particleSize );
         p->setId(i);
         p->setMass(particleMass);
         p->setVelocity(particleVelocity);
@@ -145,8 +149,6 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
         delete p;
 }
 
-using namespace std;
-
 TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 {
 #if defined(USE_PARALLEL_INTERNAL_FORCE)
@@ -157,32 +159,25 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-    omp_set_num_threads(10);  // Set the number of threads for the test
+    omp_set_num_threads(numThreads);  // Set the number of threads for the test
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
-    // Number of particles
-    const int numParticles = 150000;
-    std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
+	// create the mesh
+	Mesh mesh;
+	mesh.setNumCells(numCells(0), numCells(1),numCells(2));
+	mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+	mesh.createGrid();
 
-    // Create mesh
-    Mesh mesh;
-    mesh.setNumCells(50, 50, 50);
-    mesh.setCellDimension(1.0, 1.0, 1.0);
-    mesh.createGrid(false);
-
-    // Create particles with uniform properties
-    std::random_device rd;
-    std::mt19937 gen(42);
-    std::uniform_real_distribution<double> dist(0.0, 49.9);
-
-    std::vector<Particle*> particles;
+	// create particles
+	vector<Particle*> particles;
     particles.reserve(numParticles);
+	std::mt19937 gen(ramdomSeed);
+	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
 
     for (int i = 0; i < numParticles; ++i) {
         Vector3d pos(dist(gen), dist(gen), dist(gen));
-        Vector3d size(1.0, 1.0, 1.0);
-        Particle* p = new Particle(pos, nullptr, size);
+        Particle* p = new Particle(pos, nullptr, particleSize);
         p->setShape(new ShapeGimp());
         p->setActive(true);
         p->setStress(Matrix3d::Identity());
@@ -210,39 +205,39 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 
 TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nParticles)
 {
-    const int numParticles = 15000;
+
+#if defined(USE_PARALLEL_EXTERNAL_FORCE)
+    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is defined\n";
+#else
+    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is NOT defined\n";
+#endif
+    
+#ifdef _OPENMP
+	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+    omp_set_num_threads(numThreads);  // Set the number of threads for the test
+    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+#endif
+ 
     const Vector3d appliedForce(1.0, 2.0, 3.0);
 
-    #if defined(USE_PARALLEL_EXTERNAL_FORCE)
-    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is defined\n";
-    #else
-    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is NOT defined\n";
-    #endif
+	// create the mesh
+	Mesh mesh;
+	mesh.setNumCells(numCells(0), numCells(1),numCells(2));
+	mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+	mesh.createGrid();
 
-    #ifdef _OPENMP
-	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
-    omp_set_num_threads(10);  // Set the number of threads for the test
-    std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
-    #endif
-
-    // Create mesh
-    Mesh mesh;
-    mesh.setNumCells(50, 50, 50);
-    mesh.setCellDimension(1.0, 1.0, 1.0);
-    mesh.createGrid(false);
-
-    // Create particles
-    std::mt19937 gen(42);
-    std::uniform_real_distribution<double> dist(0.0, 49.9);
-    std::vector<Particle*> particles;
+	// create particles
+	vector<Particle*> particles;
+	std::mt19937 gen(ramdomSeed);
+	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
     particles.reserve(numParticles);
 
     for (int i = 0; i < numParticles; ++i)
     {
         Vector3d pos(dist(gen), dist(gen), dist(gen));
-        Particle* p = new Particle(pos, nullptr, Vector3d(1.0, 1.0, 1.0));
+        Particle* p = new Particle(pos, nullptr, particleSize);
         p->setId(i);
-        p->setMass(1.0);
+        p->setMass(particleMass);
         p->setShape(new ShapeGimp);
         p->addExternalForce(appliedForce);
         particles.push_back(p);
@@ -273,4 +268,97 @@ TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nPart
     // Clean up
     for (auto& p : particles)
         delete p;
+}
+
+TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_nParticles)
+{
+    #if defined(USE_PARALLEL_STRAIN_INCREMENT)
+        std::cout << "[ INFO ] USE_PARALLEL_STRAIN_INCREMENT is defined" << std::endl;
+    #else
+        std::cout << "[ INFO ] USE_PARALLEL_STRAIN_INCREMENT is NOT defined" << std::endl;
+    #endif
+
+    #ifdef _OPENMP
+        std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+        omp_set_num_threads(numThreads);  // Set the number of threads for the test
+        std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+    #endif
+
+    // Set up parameters
+    const double dt = 0.01;
+    const Vector3d nodalVelocity(1.0, 2.0, 3.0);
+
+	// create the mesh
+	Mesh mesh;
+	mesh.setNumCells(numCells(0), numCells(1),numCells(2));
+	mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+	mesh.createGrid();
+
+	// create particles
+	vector<Particle*> particles;
+	std::mt19937 gen(ramdomSeed);
+	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
+    particles.reserve(numParticles);
+
+    for (int i = 0; i < numParticles; ++i) {
+        Vector3d position(dist(gen), dist(gen), 0.0);
+        Particle* p = new Particle(position, nullptr, particleSize);
+        p->setId(i);
+        p->setMass(particleMass);
+        p->setShape(new ShapeGimp);
+        p->setActive(true);
+        particles.push_back(p);
+    }
+
+    // Update contribution nodes for all particles
+    for (int i = 0; i < numParticles; ++i)
+        particles[i]->updateContributionNodes(&mesh);
+
+    // Assign a space variated velocity field to all nodes
+    for (auto& node : *mesh.getNodes()) {
+    Vector3d coords = node->getCoordinates();
+        node->setVelocity(Vector3d(nodalVelocity(0) * coords(0), nodalVelocity(1) * coords(1), nodalVelocity(2) * coords(2)));
+    }
+
+    // Measure performance
+    auto start = chrono::high_resolution_clock::now();
+    Interpolation::particleStrainIncrement(&mesh, &particles, dt);
+    auto end = chrono::high_resolution_clock::now();
+
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+    std::cout << "[ PERF ] particleStrainIncrement took " << duration.count() << " ms" << std::endl;
+
+    // ===================================================
+    // Analytical Expectation for Strain Increment
+    // ===================================================
+    // Given:
+    //   - nodal velocity field: v(x, y, z) = (ax, by, cz)
+    //   - with a = 1.0, b = 2.0, c = 3.0
+    //   - and time step dt = 0.01
+    // Then:
+    //   - dv_x/dx = a then strain_xx = a * dt = 0.01
+    //   - dv_y/dy = b then strain_yy = b * dt = 0.02
+    //   - dv_z/dz = c then strain_zz = c * dt = 0.03
+    //   - all off-diagonal terms are zero due to pure diagonal velocity gradient
+
+    // Verify numeric consistency
+    for (int i = 0; i < numParticles; ++i) {
+        Matrix3d strain = particles[i]->getStrainIncrement();
+
+        // Diagonal terms (strain increment = velocity / dt)
+        EXPECT_NEAR(strain(0,0), nodalVelocity(0)*dt, 1e-5);
+        EXPECT_NEAR(strain(1,1), nodalVelocity(1)*dt, 1e-5);
+        EXPECT_NEAR(strain(2,2), nodalVelocity(2)*dt, 1e-5);
+
+        // Off-diagonal terms (should be zero)
+        EXPECT_NEAR(strain(0,1), 0.0, 1e-5);
+        EXPECT_NEAR(strain(0,2), 0.0, 1e-5);
+        EXPECT_NEAR(strain(1,0), 0.0, 1e-5);
+        EXPECT_NEAR(strain(1,2), 0.0, 1e-5);
+        EXPECT_NEAR(strain(2,0), 0.0, 1e-5);
+        EXPECT_NEAR(strain(2,1), 0.0, 1e-5);
+    }
+
+    // Cleanup
+    for (auto p : particles) delete p;
 }
