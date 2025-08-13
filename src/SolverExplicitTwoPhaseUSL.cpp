@@ -111,7 +111,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of solid phase
-		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// update particle velocity of fluid phase
 		Update::particleVelocityFluid(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);

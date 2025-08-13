@@ -84,9 +84,9 @@ namespace Update {
 	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}^{t}/m_I \Delta t\f$ 
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Particle pointers
 	/// \param[in] time_step Time step
-	void particleVelocity(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particleVelocity(Mesh* mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Update the particle velocity fluid
 	///

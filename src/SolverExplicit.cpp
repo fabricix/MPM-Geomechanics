@@ -73,7 +73,7 @@ void SolverExplicit::Solve()
 
 		// Step 5: Particle updates
 		// 5.1: Update particle velocity
-		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// 5.2: Apply contact correction in particle velocity
 		if (useSTLContact){
@@ -116,7 +116,7 @@ void SolverExplicit::Solve()
 		
 		// write particles and grid in step
 		Output::writeResultInStep(resultSteps, bodies, iTime);
-		
+
 		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// Step 10: Reset nodal values
