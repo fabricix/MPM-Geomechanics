@@ -362,3 +362,95 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_
     // Cleanup
     for (auto p : particles) delete p;
 }
+
+TEST(InterpolationPerformance, InterpolationPerformance_ParticleVorticityIncrement_nParticles)
+{
+    #if defined(USE_PARALLEL_VORTICITY_INCREMENT)
+        std::cout << "[ INFO ] USE_PARALLEL_VORTICITY_INCREMENT is defined" << std::endl;
+    #else
+        std::cout << "[ INFO ] USE_PARALLEL_VORTICITY_INCREMENT is NOT defined" << std::endl;
+    #endif
+
+    #ifdef _OPENMP
+        std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
+        omp_set_num_threads(numThreads);
+        std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
+    #endif
+
+    const double dt = 0.01;
+    const Vector3d omega(1.0, 2.0, 3.0);  // Angular velocity around z, y, x
+
+    // ================================
+    // Setup mesh and particles
+    // ================================
+    Mesh mesh;
+    mesh.setNumCells(numCells(0), numCells(1), numCells(2));
+    mesh.setCellDimension(cellDimension(0), cellDimension(1), cellDimension(2));
+    mesh.createGrid();
+
+    std::vector<Particle*> particles;
+    std::mt19937 gen(ramdomSeed);
+    std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
+    particles.reserve(numParticles);
+
+    for (int i = 0; i < numParticles; ++i) {
+        Vector3d pos(dist(gen), dist(gen), dist(gen));
+        auto* p = new Particle(pos, nullptr, particleSize);
+        p->setId(i);
+        p->setMass(particleMass);
+        p->setShape(new ShapeGimp);
+        p->setActive(true);
+        particles.push_back(p);
+    }
+
+    for (auto* p : particles)
+        p->updateContributionNodes(&mesh);
+
+    // ================================
+    // Assign a velocity field v = w x r
+    // ================================
+    for (auto& node : *mesh.getNodes()) {
+        Vector3d r = node->getCoordinates();
+        Vector3d v = omega.cross(r);
+        node->setVelocity(v);
+    }
+
+    // ================================
+    // Performance measurement
+    // ================================
+    auto start = std::chrono::high_resolution_clock::now();
+    Interpolation::particleVorticityIncrement(&mesh, &particles, dt);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "[ PERF ] particleVorticityIncrement took " << duration.count() << " ms" << std::endl;
+
+    // =====================================================
+    // Analytical verification
+    // =====================================================
+    // Given a rotational velocity field v = w × r,
+    // the vorticity increment tensor W is:
+    //     W = 0.5 * (grad(v) - (grad(v))^T)
+    // For a constant angular velocity w = (1, 2, 3),
+    // and time step dt = 0.01, the expected increment is:
+    //
+    // grad(W)_expected = dt * 
+    //  [  0   -3    2 ]
+    //  [  3    0   -1 ]
+    //  [ -2    1    0 ]
+    //
+    // The test compares this expected result against the 
+    // interpolated vorticity increment in each particle.
+    // Expected rotation tensor: skew-symmetric matrix
+    
+    Matrix3d expected;
+    expected << 0, -omega(2)*dt,  omega(1)*dt, omega(2)*dt, 0, -omega(0)*dt, -omega(1)*dt, omega(0)*dt, 0;
+
+    for (int i = 0; i < numParticles; ++i) {
+        const Matrix3d& W = particles[i]->getVorticityIncrement();
+        for (int r = 0; r < 3; ++r)
+            for (int c = 0; c < 3; ++c)
+                EXPECT_NEAR(W(r, c), expected(r, c), 1e-5);
+    }
+
+    for (auto* p : particles) delete p;
+}

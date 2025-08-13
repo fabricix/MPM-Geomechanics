@@ -104,6 +104,7 @@ void SolverExplicit::Solve()
 
 		// Step 8: Update strain and vorticity increments
 		Interpolation::particleStrainIncrement(mesh, particles, dt);
+		
 		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
 		// Step 9: Update density and stress
