@@ -12,12 +12,12 @@
 using namespace std;
 
 // Global configuration variables
-const int numParticles = 150000;
-const int numThreads = 10;
+const int numParticles = 500000;
+const int numThreads = 1;
 const Vector3d particleSize(1.0, 1.0, 1.0);
 const double particleMass = 1.0;
 const Vector3d cellDimension(1.0, 1.0, 1.0);
-const Vector3i numCells(50, 50, 50);
+const Vector3i numCells(100, 100, 100);
 const int ramdomSeed = 42;
 
 TEST(InterpolationPerformance, NodalMass_nParticles)
