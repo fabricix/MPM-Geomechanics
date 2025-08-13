@@ -100,3 +100,41 @@ This section provides a list of keywords to include in commits comments. These k
      // feat: Added error handling for invalid inputs
      // fix: Corrected edge case with empty arrays
      ```
+
+
+\section development_manual_parallelization_guidelines Parallelization Guidelines
+
+## Parallelization Guidelines in MPM-Geomechanics
+
+This project uses OpenMP to accelerate selected functions through multi-threaded parallelization.
+
+To maintain clarity and avoid unnecessary code duplication, we adopt the following convention:
+
+---
+
+### Use macro-controlled dual versions **only when needed**
+
+Separate sequential and parallel versions (using `#if defined(...)`) **should be used only** when the function requires thread-local storage such as:
+
+- **Mass or force accumulation** into nodal values
+- **Boolean flags** (e.g. node activation)
+- **Temporary vectors** shared across threads
+
+**Examples:**  
+- `nodalMass`  
+- `nodalMomentum`  
+- `nodalInternalForce`
+
+---
+
+### Use a single-version pattern with conditional pragma otherwise
+
+If the function **does not require thread-local storage**, and the parallel and sequential logic is the same, then use this structure:
+
+```cpp
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+for (int i = 0; i < N; ++i) {
+    // loop body
+}
