@@ -651,8 +651,12 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
+	#if defined(USE_PARALLEL_STRAIN_INCREMENT) && defined(_OPENMP)
+	#pragma omp parallel for
+	#endif
+
 	// for each particle
-	for (size_t i = 0; i < particles->size(); ++i) {
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -677,17 +681,17 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 
 			// compute the nodal contribution to the particle strain increment
 
-			dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
-			dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
-			dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
+			dstrain(0,0) += (dN(0)*v(0) + dN(0)*v(0)) * 0.5 * dt; // x,x
+			dstrain(0,1) += (dN(1)*v(0) + dN(0)*v(1)) * 0.5 * dt; // x,y
+			dstrain(0,2) += (dN(2)*v(0) + dN(0)*v(2)) * 0.5 * dt; // x,z
 
-			dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt; // y,x
-			dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt; // y,y
-			dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt; // y,z
+			dstrain(1,0) += (dN(0)*v(1) + dN(1)*v(0)) * 0.5 * dt; // y,x
+			dstrain(1,1) += (dN(1)*v(1) + dN(1)*v(1)) * 0.5 * dt; // y,y
+			dstrain(1,2) += (dN(2)*v(1) + dN(1)*v(2)) * 0.5 * dt; // y,z
 			
-			dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt; // z,x
-			dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
-			dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
+			dstrain(2,0) += (dN(0)*v(2) + dN(2)*v(0)) * 0.5 * dt; // z,x
+			dstrain(2,1) += (dN(1)*v(2) + dN(2)*v(1)) * 0.5 * dt; // z,y
+			dstrain(2,2) += (dN(2)*v(2) + dN(2)*v(2)) * 0.5 * dt; // z,z
 		}
 
 		// set total particle strain increment
