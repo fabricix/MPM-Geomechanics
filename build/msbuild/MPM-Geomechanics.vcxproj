@@ -73,6 +73,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)_debug</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -138,6 +141,7 @@
     <ClCompile Include="..\..\src\BodyPolygon.cpp" />
     <ClCompile Include="..\..\src\BodySphere.cpp" />
     <ClCompile Include="..\..\src\Contact.cpp" />
+    <ClCompile Include="..\..\src\ContactManager.cpp" />
     <ClCompile Include="..\..\src\DynamicRelaxation.cpp" />
     <ClCompile Include="..\..\src\Elastic.cpp" />
     <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
@@ -197,6 +201,7 @@
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
     <ClInclude Include="..\..\inc\Boundary.h" />
     <ClInclude Include="..\..\inc\Contact.h" />
+    <ClInclude Include="..\..\inc\ContactManager.h" />
     <ClInclude Include="..\..\inc\Contribution.h" />
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
     <ClInclude Include="..\..\inc\Energy.h" />

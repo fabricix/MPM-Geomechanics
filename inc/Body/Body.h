@@ -48,6 +48,10 @@ public:
 	/// \brief Return the particles forming the body
 	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
+
+	/// \brief Return the body friction Coefficient
+	/// \return Body friction Coefficient
+	inline double getFrictionCoefficient() const { return this->friction; }
 	
 	/// \brief Configure the id of the body
 	/// \param[in] body_id Body identification 
@@ -61,6 +65,10 @@ public:
 	/// \param[in] particle_list A vector containing pointers to the particle
 	inline void setParticles(const vector<Particle*>& particle_list) { this->particles=particle_list; }
 
+	/// \brief Configure the friction coefficient of the body
+	/// \param[in] body_mu Body friction coefficient 
+	inline void setFrictionCoefficient(double _friction) { this->friction = _friction; }
+
 	/// \brief Add particles to the current particle list
 	/// \param[in] particle_list A vector containing pointers to particles
 	inline void insertParticles(const vector<Particle*>& particle_list) { this->particles.insert(this->particles.end(),particle_list.begin(),particle_list.end()); }
@@ -69,7 +77,8 @@ protected:
 	
 	int id; //!< body identification
 	Vector3d initial_velocity; //!< initial velocity of the body
-	vector<Particle*> particles; //!< material points forming the body  
+	vector<Particle*> particles; //!< material points forming the body
+	double friction; //!< friction coefficient 
 };
 
 inline Body::Body():id(-1),initial_velocity(0,0,0) { }

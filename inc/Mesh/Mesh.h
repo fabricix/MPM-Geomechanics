@@ -11,6 +11,9 @@ using std::vector;
 using Eigen::Vector3d;
 using Eigen::Vector3i;
 
+#include <unordered_map>
+using std::unordered_map;
+
 #include "Node.h"
 #include "Boundary.h"
 #include "Cell.h"
@@ -34,6 +37,37 @@ public:
     /// \brief Default destructor
     ///
     virtual ~Mesh();
+
+    struct ContactNodeData 
+    {
+        int nodeId = -1;
+        int bodyMasterId = -1;
+        int bodySlaveId = -1;
+        double mu = 0.0;
+
+        double massMaster = 0.0;
+        double massSlave = 0.0;
+        double closestParticleDistanceMaster = 999.0;
+        double closestParticleDistanceSlave = 999.0;
+        Vector3d momentumMaster = Vector3d::Zero();
+        Vector3d momentumSlave = Vector3d::Zero();
+        Vector3d velocityMaster = Vector3d::Zero();
+        Vector3d velocitySlave = Vector3d::Zero();
+        Vector3d internalForceMaster = Vector3d::Zero();
+        Vector3d internalForceSlave = Vector3d::Zero();
+        Vector3d externalForceMaster = Vector3d::Zero();
+        Vector3d externalForceSlave = Vector3d::Zero();
+        Vector3d dampingForceMaster = Vector3d::Zero();
+        Vector3d dampingForceSlave = Vector3d::Zero();
+        Vector3d totalForceMaster = Vector3d::Zero();
+        Vector3d totalForceSlave = Vector3d::Zero();
+        Vector3d contactForce = Vector3d::Zero();
+        Vector3d normalContactForce = Vector3d::Zero();
+        Vector3d tangentialContactForce = Vector3d::Zero();
+        Vector3d normalMaster = Vector3d::Zero();
+        Vector3d normalSlave = Vector3d::Zero();
+        Vector3d normal = Vector3d::Zero();
+    };
 
     /// \brief Create a structured mesh grid
     /// \param[in] is_two_phase_simulation True if two phase simulation is required
@@ -149,6 +183,10 @@ public:
     /// \return boundary_pointer A pointer to the Boundary structure
     inline Boundary* getBoundary() { return &(this->boundary); }
 
+    /// \brief return nodes where there is contact between two bodies
+    /// \return an unordered_map of the nodes where there is contact between two bodies
+    unordered_map<int, ContactNodeData>& getContactNodes() { return contactNodes; }
+
     /// \brief Configures the restriction of the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes
     /// X0, Y0, Z0, Xn, Yn and Zn
@@ -164,6 +202,10 @@ public:
     /// X0, Y0, Z0, Xn, Yn and Zn
     void setBoundaryRestrictionsFluid(vector<Boundary::BoundaryType> restrictions);
 
+    /// \brief Configures the contact nodes
+    /// \param[in] unordered_map containing the contact nodes
+    void setContactNodes(unordered_map<int, ContactNodeData> _contactNodes) { this->contactNodes = _contactNodes; }
+
     /// \brief Verify if the position is inside the limits
     /// \param[in] point A vector containing the
     /// coordinates of a point
@@ -172,6 +214,10 @@ public:
 
     /// \brief Return compute the nodal volumes
     void computeNodeVolumes();
+
+    /// \Clear Contact Nodes
+    void clearContactNodes() { contactNodes.clear(); };
+
 
 private:
     
@@ -192,6 +238,8 @@ private:
     std::vector<Cell*> gridCells; //!< all cells in mesh
 
     Boundary boundary; //!< mesh boundary
+
+    unordered_map<int, ContactNodeData> contactNodes; //!< nodes in contact
     
     /// \brief Return the cell id in a position coordinates
     /// \param[in] point A vector containing the 

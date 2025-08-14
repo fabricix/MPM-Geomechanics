@@ -11,6 +11,7 @@
 #include "Energy.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
+#include "ContactManager.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
 
@@ -39,6 +40,13 @@ void SolverExplicit::Solve()
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
+
+		// 1.1: Check contact active
+		ContactManager contactManager = ContactManager();
+		if (contactActive) {
+			contactManager.contactCheck(mesh, bodies);
+		}
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
@@ -47,6 +55,7 @@ void SolverExplicit::Solve()
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
+
 
 		// Update seismic velocity and acceleration from record
 		if(isSeismicAnalysis){
@@ -76,6 +85,32 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
+		//4.1: Contact force correction
+		if (ModelSetup::getContactActive()) {
+
+			{
+				// nodal unit normal
+				ContactManager::nodalUnitNormal(mesh, bodies);
+			}
+
+			ContactManager::computeContactForces(mesh, bodies, dt);
+
+			if (ModelSetup::getContactActive()) {
+
+				// impose force boundary conditions
+				Update::boundaryConditionsContactForce(mesh);
+				
+
+				// update nodal momentum after contact
+				Update::nodalMomentumContact(mesh, dt);
+			}
+			else {
+				ModelSetup::setContactActive(true);
+			}
+		}
+
+
+
 		// Step 5: Particle updates
 		// 5.1: Update particle velocity
 		Update::particleVelocity(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
@@ -98,6 +133,15 @@ void SolverExplicit::Solve()
 		{	
 			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
+			if (ModelSetup::getContactActive()) {
+				unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
+					Mesh::ContactNodeData& contactNodesData = it->second;
+					contactNodesData.momentumMaster = Vector3d::Zero();
+					contactNodesData.momentumSlave = Vector3d::Zero();
+				}
+			}
+
 			Interpolation::nodalMomentum(mesh, bodies);
 			
 			// 6.2: Reapply BCs on nodal momentum

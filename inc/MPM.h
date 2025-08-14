@@ -79,6 +79,9 @@ private:
 	/// \brief Configure the mesh
 	///
 	void setupMesh();
+
+	/// \brief Configure contact
+	void setupContact();
 	
 	/// \brief Configure Terrain contact
 	void setupTerrainContact();

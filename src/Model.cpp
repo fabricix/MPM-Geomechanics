@@ -27,7 +27,9 @@ namespace ModelSetup {
 	bool twoPhaseCalculationActive=false; //!< is two-phase calculation active
 
 	// contact
-	bool contactActive=false; //!< is contact active
+	bool contactActive = false; //!< is contact active
+	bool getContactActive() { return contactActive; }
+	void setContactActive(bool d) { contactActive = d; }
 
 	// states
 	bool loadState = false; //!< if state need to be loaded
@@ -126,10 +128,6 @@ namespace ModelSetup {
 	// threads
 	unsigned getThreads() { return nThreads; }
 	void setThreads(unsigned d) { nThreads=d; }
-
-	// contact method
-	bool getContactActive() { return contactActive; }
-	void setContactActive(bool d) { contactActive=d; }
 
 	// gravity
 	bool getGravityActive() { return gravityActive; }

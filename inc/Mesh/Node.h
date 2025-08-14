@@ -55,6 +55,10 @@ public:
 	/// nodal force in fluid phase
 	virtual inline void setTotalForceFluid(const Vector3d&) { return; }
 
+	/// \brief Configure the has contact flag
+	/// Has contact flag
+	virtual inline void setContactStatus(bool flag) { return; }
+
 	/// \brief Return the nodal identification
 	/// \return Nodal identification 
 	inline int getId() const { return this->id; }

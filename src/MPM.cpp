@@ -156,6 +156,14 @@ void MPM::setupMesh() {
 	}
 }
 
+void MPM::setupContact()
+{
+	// verity if contact active
+	bool contactActive = Input::getContactActive();
+	ModelSetup::setContactActive(contactActive);
+	if (!contactActive) { return; }
+}
+
 void MPM::setupTerrainContact()
 {
 	// verity if terrain contact active
@@ -401,6 +409,9 @@ void MPM::createModel() {
 
 		// configures the seismic analysis
 		setupSeismicAnalysis();
+
+		// setup contact
+		setupContact();
 
 		// setup the background mesh
 		setupMesh();

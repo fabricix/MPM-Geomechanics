@@ -631,6 +631,9 @@ namespace Input {
 	/// \return seismic_analisys_info Seismic analysis information
 	SeismicAnalysis getSeismicAnalysisInfo();
 
+	/// \brief Return the contact active
+	bool getContactActive();
+
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
 	double getFrictionCoefficient ();

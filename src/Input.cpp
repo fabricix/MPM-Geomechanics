@@ -506,6 +506,15 @@ vector<Body*> Input::getBodyList(){
 					initial_velocity(2) = (*it)["initial_velocity"][2];
 				}
 
+				//friction coefficient
+				int mu = 0;
+				if ((*it)["mu"].is_number())
+				{
+					mu = ((*it)["mu"]);
+				}
+				else
+					throw(0);
+
 				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
 				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
 				if ((*it)["particles_per_direction"].is_array()) {
@@ -525,6 +534,7 @@ vector<Body*> Input::getBodyList(){
 					iBody->setMaterialId(material_id);
 					iBody->setInitialVelocity(initial_velocity);
 					iBody->setParticlesPerDirection(particles_in_direction);
+					iBody->setFrictionCoefficient(mu);
 				}
 
 				bodies.push_back(iBody);
@@ -580,6 +590,15 @@ vector<Body*> Input::getBodyList(){
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
 
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
+					}
+					else
+						throw(0);
+
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
@@ -593,6 +612,7 @@ vector<Body*> Input::getBodyList(){
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
 						iBody->setInitialVelocity(initial_velocity);
+						iBody->setFrictionCoefficient(mu);
 					}
 
 					bodies.push_back(iBody);
@@ -614,6 +634,15 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) 
 					{
 					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
 					}
 					else
 						throw(0);
@@ -676,6 +705,7 @@ vector<Body*> Input::getBodyList(){
 								iBody->setExtrudeDirection(extrude_direction);
 								iBody->setExtrudeDisplacement(extrude_displacement);
 								iBody->setDiscretizationLength(discretization_length);
+								iBody->setFrictionCoefficient(mu);
 							}
 						
 							bodies.push_back(iBody);
@@ -702,6 +732,15 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) {
 						material_id = ((*it)["material_id"]);
 					} else {
+						throw(0);
+					}
+					
+					// friction
+					int mu = 0;
+					if ((*it)["friction"].is_number()) {
+						mu = ((*it)["friction"]);
+					}
+					else {
 						throw(0);
 					}
 
@@ -755,6 +794,7 @@ vector<Body*> Input::getBodyList(){
 								new Particle(pt1, NULL, Vector3d(particleSize, particleSize, particleSize)));
 						}
 						iBody->insertParticles(particle_list);
+						iBody->setFrictionCoefficient(mu);
 					}
 					bodies.push_back(iBody);
 				}
@@ -775,6 +815,15 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) 
 					{
 					 	material_id = ((*it)["material_id"]);
+					}
+					else
+						throw(0);
+
+					//friction coefficient
+					int mu = 0;
+					if ((*it)["mu"].is_number())
+					{
+						mu = ((*it)["mu"]);
 					}
 					else
 						throw(0);
@@ -845,6 +894,7 @@ vector<Body*> Input::getBodyList(){
 							particle_list.push_back( is_two_phase ? (new ParticleMixture(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))) : (new Particle(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))));
 						}
 						iBody->insertParticles(particle_list);
+						iBody->setFrictionCoefficient(mu);
 					}
 					bodies.push_back(iBody);
 				}
@@ -1588,6 +1638,29 @@ double Input::getDistanceThreshold(){
 	catch(...)
 	{
 		Warning::printMessage("Error during reading the distance threshold in terrain contact");
+		throw;
+	}
+}
+
+bool Input::getContactActive() 
+{
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return false;
+		}
+
+		if (inputFile["contact"].is_boolean())
+		{
+			return inputFile["contact"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the contact active keyword");
 		throw;
 	}
 }

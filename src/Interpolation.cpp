@@ -99,6 +99,27 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 		
 				// the node is inactivate if he doesn't have mass
 				nodeI->setActive(true);
+				
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes= mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+					
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+						
+						//add mass at node of the master body 
+						if (ibody == contactNodeData.bodyMasterId) {
+							contactNodeData.massMaster += nodalMass;
+						}
+						//add mass at node of the slave body 
+						else {
+							contactNodeData.massSlave += nodalMass;
+						}
+					}
+				}
 
 				// add mass at node
 				nodeI->addMass(nodalMass);
@@ -186,6 +207,28 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 
 				// get the contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+
+						//add momentum at node of the master body 
+						if (ibody == contactNodeData.bodyMasterId) {
+							contactNodeData.momentumMaster += pMass * pVelocity * contribution->at(j).getWeight();
+						}
+						//add momentum at node of the slave body 
+						else {
+							contactNodeData.momentumSlave += pMass * pVelocity * contribution->at(j).getWeight();
+						}
+					}
+				}
+
 
 				// add the weighted momentum in node
 				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
@@ -307,6 +350,27 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 					internalForce.z()+=pPressure*gradient(2)*pVolume;
 				}
 
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+
+						//add mass at node of the master body 
+						if (ibody == contactNodeData.bodyMasterId) {
+							contactNodeData.internalForceMaster += internalForce;
+						}
+						//add mass at node of the slave body 
+						else {
+							contactNodeData.internalForceSlave += internalForce;
+						}
+					}
+				}
+
 				// add the internal force contribution in node
 				nodeI->addInternalForce(internalForce);
 			}
@@ -404,6 +468,27 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 				// get contributing node
 				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+
+						//add external force at node of the master body 
+						if (ibody == contactNodeData.bodyMasterId) {
+							contactNodeData.externalForceMaster += pExtForce * contribution->at(j).getWeight();
+						}
+						//add external force at node of the slave body 
+						else {
+							contactNodeData.externalForceSlave += pExtForce * contribution->at(j).getWeight();
+						}
+					}
+				}
 
 				// add weighted force in node
 				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());

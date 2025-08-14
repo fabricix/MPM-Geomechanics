@@ -35,7 +35,11 @@ namespace Update {
 	/// \f$ f_{iI}^{tot,s} = f_{iI}^{int,s} + f_{iI}^{ext,s} + f_{iI}^{dmp,s} - \dot{v}_{iI}^f m_I^f \f$
 	///
 	/// \param[in] mesh Mesh reference
-	void nodalTotalForce(Mesh* mesh); 
+	void nodalTotalForce(Mesh* mesh);
+
+	/// \brief Update the nodal momentum due contact
+	/// \param[in] mesh Mesh reference
+	void nodalMomentumContact(Mesh* mesh, double dt);
 	
 	/// \brief Delete all stored values in nodes 
 	/// \param[in] mesh Mesh reference
@@ -107,6 +111,11 @@ namespace Update {
 	/// terms of force
 	/// \param[in] mesh Mesh reference
 	void boundaryConditionsForce(Mesh* mesh);
+
+	/// \brief Apply essential boundary condition in 
+	/// terms of contact force
+	/// \param[in] mesh Mesh reference
+	void boundaryConditionsContactForce(Mesh* mesh);
 	
 	/// \brief Apply essential boundary condition in 
 	/// terms of force of fluid phase
@@ -133,6 +142,12 @@ namespace Update {
 	/// \param[in] nodes Node list pointer
 	/// \param[in] direction Direction to apply de boundary condition 
 	void setPlaneForce(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
+
+	/// \brief Configure the force in each node in boundary planes for contact points
+	/// \param[in] boundary Boundary plane
+	/// \param[in] contactNodes unordered_map pointer
+	/// \param[in] direction Direction to apply de boundary condition 
+	void setPlaneForceContact(const Boundary::planeBoundary* boundary, Mesh* mesh, unsigned direction);
 	
 	/// \brief Configure the force in fluid phase in each node in boundary planes
 	/// \param[in] boundary Boundary plane
