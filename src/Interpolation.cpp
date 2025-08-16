@@ -54,10 +54,10 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 			const double nodalMass = pMass*contribution->at(j).getWeight();
 			
 			// check any mass in node
-			if (nodalMass<=0.0) { continue; }
+			if (nodalMass<=0.0)  continue;
 
 			#pragma omp atomic
-			nodeI->addMass(nodalMass);
+			nodeI->getMassRef() += nodalMass;
 		}
 	}
 

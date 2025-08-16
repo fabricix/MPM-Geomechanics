@@ -120,6 +120,9 @@ public:
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }
 
+	/// \brief Get a reference of the mass
+	inline double& getMassRef() { return this->mass; }
+
 	/// \brief Add a density increment to the nodal density level set
 	/// \param[in] density_increment Nodal density increment
 	inline void addDensityLevelSet(double density_increment) { this->densityLevelSet+=density_increment; }
