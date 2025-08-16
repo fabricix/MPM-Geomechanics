@@ -30,60 +30,9 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-	
-#if defined(USE_PARALLEL_MASS) && defined(_OPENMP)
-	
-	const int nNodes = nodes->size();
-	const int nParticles = particles->size();
+	const int nNodes = static_cast<int>(nodes->size());
 
-	const int nThreads = omp_get_max_threads();
-	vector<vector<double>> localMass(nThreads, vector<double>(nNodes, 0.0));
-	vector<vector<bool>> localActive(nThreads, vector<bool>(nNodes, false));
-
-	// parallel loop over particles
 	#pragma omp parallel for schedule(static)
-	for (int i = 0; i < nParticles; ++i) 
-	{
-		if (!particles->at(i)->getActive()) continue;
-
-		const int tid = omp_get_thread_num();
-		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-		const double pMass = particles->at(i)->getMass();
-
-		for (size_t j = 0; j < contribution->size(); ++j) 
-		{
-			const int nodeId = contribution->at(j).getNodeId();
-			const double weight = contribution->at(j).getWeight();
-			const double nodalMass = pMass * weight;
-
-			if (nodalMass <= 0.0) continue;
-
-			localMass[tid][nodeId] += nodalMass;
-			localActive[tid][nodeId] = true;
-		}
-	}
-
-	// combine results from all threads
-	#pragma omp parallel for
-	for (int n = 0; n < nNodes; ++n) 
-	{
-		double totalMass = 0.0;
-		bool isActive = false;
-
-		for (int t = 0; t < nThreads; ++t) 
-		{
-			totalMass += localMass[t][n];
-			isActive |= localActive[t][n];
-		}
-
-		if (totalMass > 0.0) 
-		{
-			nodes->at(n)->setActive(isActive);
-			nodes->at(n)->addMass(totalMass);
-		}
-	}
-#else
-	// for each particle
 	for (size_t i = 0; i < particles->size(); ++i) {
 
 		// only active particle can contribute
@@ -106,15 +55,18 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 			
 			// check any mass in node
 			if (nodalMass<=0.0) { continue; }
-	
-			// the node is inactivate if he doesn't have mass
-			nodeI->setActive(true);
 
-			// add mass at node
+			#pragma omp atomic
 			nodeI->addMass(nodalMass);
 		}
 	}
-#endif
+
+	// Node activation: mark nodes with mass > 0 as active
+	#pragma omp parallel for
+    for (int i = 0; i < nNodes; ++i) {
+        if (nodes->at(i)->getMass() > 0.0)
+            nodes->at(i)->setActive(true);
+    }
 }
 
 void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
