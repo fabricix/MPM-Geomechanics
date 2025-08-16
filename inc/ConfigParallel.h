@@ -6,7 +6,6 @@
 
 // Master switch: enable all validated parallel features
 #ifdef USE_PARALLEL_COMPUTATION
-	#define USE_PARALLEL_MOMENTUM
 	#define USE_PARALLEL_INTERNAL_FORCE
 	#define USE_PARALLEL_EXTERNAL_FORCE
 #endif

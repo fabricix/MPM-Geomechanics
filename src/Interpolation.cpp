@@ -122,45 +122,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 	
-#if defined(USE_PARALLEL_MOMENTUM) && defined(_OPENMP)
-	
-	const int nNodes = nodes->size();
-	const int nParticles = particles->size();
-	const int nThreads = omp_get_max_threads();
-
-	// Local Buffers
-	vector<vector<Vector3d>> localMomentum(nThreads, vector<Vector3d>(nNodes, Vector3d::Zero()));
-
 	#pragma omp parallel for schedule(static)
-	for (int i = 0; i < nParticles; ++i)
-	{
-		if (!particles->at(i)->getActive()) continue;
-
-		const int tid = omp_get_thread_num();
-		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-		const Vector3d pVelocity = particles->at(i)->getVelocity();
-		const double pMass = particles->at(i)->getMass();
-
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{
-			int nodeId = contribution->at(j).getNodeId();
-			double weight = contribution->at(j).getWeight();
-			localMomentum[tid][nodeId] += pMass * pVelocity * weight;
-		}
-	}
-
-	// Combine results from all threads
-	#pragma omp parallel for
-	for (int n = 0; n < nNodes; ++n)
-	{
-		Vector3d totalMomentum = Vector3d::Zero();
-		for (int t = 0; t < nThreads; ++t)
-			totalMomentum += localMomentum[t][n];
-
-		nodes->at(n)->addMomentum(totalMomentum);
-	}
-#else
-	// for each particle
 	for (size_t i = 0; i < particles->size(); ++i) {
 
 		// only active particle can contribute
@@ -181,11 +143,20 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 			// get the contributing node
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 			
+			// nodal momentum
+			const Vector3d nodalMomentum = pMass*pVelocity*contribution->at(j).getWeight();
+
 			// add the weighted momentum in node
-			nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
+			#pragma omp atomic update
+			nodeI->getMomentumRef().x() += nodalMomentum.x();
+
+			#pragma omp atomic update
+			nodeI->getMomentumRef().y() += nodalMomentum.y();
+
+			#pragma omp atomic update
+			nodeI->getMomentumRef().z() += nodalMomentum.z();
 		}
 	}
-#endif
 }
 
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
