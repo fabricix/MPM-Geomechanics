@@ -345,44 +345,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
 	vector<Node*>* nodes = mesh->getNodes();
 
-#if defined(USE_PARALLEL_EXTERNAL_FORCE) && defined(_OPENMP)
-	
-	const int nNodes = nodes->size();
-	const int nParticles = particles->size();
-
-	// Thread-local storage for nodal external forces
-	const int nThreads = omp_get_max_threads();
-	std::vector<std::vector<Vector3d>> localExternalForce(nThreads, std::vector<Vector3d>(nNodes, Vector3d::Zero()));
-
-	#pragma omp parallel for
-	for (int i = 0; i < nParticles; ++i) {
-
-		if (!particles->at(i)->getActive()) continue;
-
-		int tid = omp_get_thread_num();
-		const auto* contribution = particles->at(i)->getContributionNodes();
-		const Vector3d& pExtForce = particles->at(i)->getExternalForce();
-
-		for (size_t j = 0; j < contribution->size(); ++j) {
-			int nodeId = contribution->at(j).getNodeId();
-			double weight = contribution->at(j).getWeight();
-			localExternalForce[tid][nodeId] += pExtForce * weight;
-		}
-	}
-
-	// Reduction of local external force into global nodes
-	#pragma omp parallel for
-	for (int n = 0; n < nNodes; ++n) {
-		Vector3d totalForce = Vector3d::Zero();
-		for (int t = 0; t < nThreads; ++t) {
-			totalForce += localExternalForce[t][n];
-		}
-		if (totalForce.norm() > 0.0) {
-			nodes->at(n)->addExternalForce(totalForce);
-		}
-	}
-#else
-	// for each particle
+	#pragma omp parallel for schedule(static)
 	for (size_t i = 0; i < particles->size(); ++i) {
 
 		// only active particle can contribute
@@ -401,10 +364,20 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
 			// add weighted force in node
-			nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
+			const Vector3d externalForce = pExtForce*contribution->at(j).getWeight();
+			
+			// add the external force contribution in node
+			#pragma omp atomic update
+			nodeI->getExternalForceRef().x() += externalForce.x();
+
+			#pragma omp atomic update
+			nodeI->getExternalForceRef().y() += externalForce.y();
+
+			#pragma omp atomic update
+			nodeI->getExternalForceRef().z() += externalForce.z();
 		}
 	}
-#endif
+
 	// (2) - External force from nodes: f_ext_I += f_ext_BC
 	// External boundary condition force 
 	Loads::NodalPointLoadData& nodal_force_list = Loads::getNodalPointList();

@@ -105,7 +105,10 @@ public:
 	/// \brief Return the nodal external force
 	/// \return Vector containing the nodal external force
 	inline const Vector3d& getExternalForce() const { return this->externalForce; }
-		
+	
+	/// \brief Return a reference of external force for atomic calculation
+	inline Vector3d& getExternalForceRef() { return this->externalForce; }
+
 	/// \brief Return the nodal total force
 	/// \return Vector containing the nodal total force
 	inline const Vector3d& getTotalForce() const { return this->totalForce; }
