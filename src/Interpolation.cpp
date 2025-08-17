@@ -215,66 +215,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-#if defined(USE_PARALLEL_INTERNAL_FORCE) && defined(_OPENMP)
-
-	const int nNodes = static_cast<int>(nodes->size());
-	const int nParticles = static_cast<int>(particles->size());
-	const int nThreads = omp_get_max_threads();
-	vector<vector<Vector3d>> localInternalForce(nThreads, vector<Vector3d>(nNodes, Vector3d::Zero()));
-
-	#pragma omp parallel for
-	for (int i = 0; i < nParticles; ++i)
-	{
-		if (!particles->at(i)->getActive()) continue;
-
-		int tid = omp_get_thread_num();
-		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-		Matrix3d pStress = particles->at(i)->getStress();
-
-		if (isOneDirectionHydromechanicalCoupling)
-			pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
-
-		const double pVolume = particles->at(i)->getCurrentVolume();
-		double pPressure = 0.0;
-
-		if (isTwoPhase && particles->at(i)->getSaturation() > 0.0)
-			pPressure = particles->at(i)->getPressureFluid();
-
-		for (size_t j = 0; j < contribution->size(); ++j)
-		{
-			int nodeId = contribution->at(j).getNodeId();
-			const Vector3d& gradient = contribution->at(j).getGradients();
-
-			Vector3d internalForce;
-			internalForce.x() = -(pStress(0, 0) * gradient(0) + pStress(1, 0) * gradient(1) + pStress(2, 0) * gradient(2)) * pVolume;
-			internalForce.y() = -(pStress(0, 1) * gradient(0) + pStress(1, 1) * gradient(1) + pStress(2, 1) * gradient(2)) * pVolume;
-			internalForce.z() = -(pStress(0, 2) * gradient(0) + pStress(1, 2) * gradient(1) + pStress(2, 2) * gradient(2)) * pVolume;
-
-			if (isTwoPhase && particles->at(i)->getSaturation() > 0.0)
-			{
-				internalForce.x() += pPressure * gradient(0) * pVolume;
-				internalForce.y() += pPressure * gradient(1) * pVolume;
-				internalForce.z() += pPressure * gradient(2) * pVolume;
-			}
-
-			localInternalForce[tid][nodeId] += internalForce;
-		}
-	}
-
-	// Reduction step
-	for (int n = 0; n < nNodes; ++n)
-	{
-		Vector3d totalForce = Vector3d::Zero();
-		for (int t = 0; t < nThreads; ++t)
-		{
-			totalForce += localInternalForce[t][n];
-		}
-		if (totalForce.norm() > 0.0)
-			nodes->at(n)->addInternalForce(totalForce);
-	}
-	return;
-#else
-	// for each particle
+	#pragma omp parallel for schedule(static)
 	for (size_t i = 0; i < particles->size(); ++i) {
 
 		// only active particle can contribute
@@ -326,10 +267,16 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 			}
 
 			// add the internal force contribution in node
-			nodeI->addInternalForce(internalForce);
+			#pragma omp atomic update
+			nodeI->getInternalForceRef().x() += internalForce.x();
+
+			#pragma omp atomic update
+			nodeI->getInternalForceRef().y() += internalForce.y();
+
+			#pragma omp atomic update
+			nodeI->getInternalForceRef().z() += internalForce.z();
 		}
 	}
-#endif
 }
 
 void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {

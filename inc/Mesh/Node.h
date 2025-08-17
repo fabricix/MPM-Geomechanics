@@ -88,16 +88,19 @@ public:
 	/// \return Vector containing the nodal momentum
 	inline const Vector3d& getMomentum() const { return this->momentum; }
 	
-	/// \brief Return a reference fo momentum for atomic calculation
+	/// \brief Return a reference of momentum for atomic calculation
 	inline Vector3d& getMomentumRef() { return this->momentum; }
 
 	/// \brief Return the nodal momentum of fluid phase
 	/// \return Vector containing the nodal momentum of fluid phase
 	virtual inline const Vector3d* getMomentumFluid() const { return NULL; }
-
+	
 	/// \brief Return the nodal internal force
 	/// \return Vector containing the nodal internal force
 	inline const Vector3d& getInternalForce() const { return this->internalForce; }
+	
+	/// \brief Return a reference of internal force for atomic calculation
+	inline Vector3d& getInternalForceRef() { return this->internalForce; }
 		
 	/// \brief Return the nodal external force
 	/// \return Vector containing the nodal external force
