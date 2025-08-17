@@ -21,12 +21,6 @@ const int ramdomSeed = 42;
 
 TEST(InterpolationPerformance, NodalMass_nParticles)
 {
-#ifdef USE_PARALLEL_MASS
-		std::cout << "[ INFO ] USE_PARALLEL_MASS is defined" << std::endl;
-#else
-		std::cout << "[ INFO ] USE_PARALLEL_MASS is NOT defined" << std::endl;
-#endif
-
 #ifdef _OPENMP
 		std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
 		omp_set_num_threads(numThreads);  // Set the number of threads for the test
@@ -88,12 +82,6 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
-#if defined(USE_PARALLEL_MOMENTUM)
-    std::cout << "[ INFO ] USE_PARALLEL_MOMENTUM is defined" << std::endl;
-#else
-    std::cout << "[ INFO ] USE_PARALLEL_MOMENTUM is NOT defined" << std::endl;
-#endif
-
     Vector3d particleVelocity (1.0, 2.0, 3.0);
     
 	// create the mesh
@@ -150,12 +138,6 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
 
 TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 {
-#if defined(USE_PARALLEL_INTERNAL_FORCE)
-    std::cout << "[ INFO ] USE_PARALLEL_INTERNAL_FORCE is defined" << std::endl;
-#else
-    std::cout << "[ INFO ] USE_PARALLEL_INTERNAL_FORCE is NOT defined" << std::endl;
-#endif
-
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
     omp_set_num_threads(numThreads);  // Set the number of threads for the test
@@ -203,14 +185,7 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 }
 
 TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nParticles)
-{
-
-#if defined(USE_PARALLEL_EXTERNAL_FORCE)
-    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is defined\n";
-#else
-    std::cout << "[ INFO ] USE_PARALLEL_EXTERNAL_FORCE is NOT defined\n";
-#endif
-    
+{    
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
     omp_set_num_threads(numThreads);  // Set the number of threads for the test
