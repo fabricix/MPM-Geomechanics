@@ -8,7 +8,6 @@
 #include "Particle.h"
 #include "ShapeGimp.h"
 #include "Update.h"
-#include "ConfigParallel.h"
 #include "Materials/Elastic.h"
 
 using namespace std;

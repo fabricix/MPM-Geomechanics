@@ -7,7 +7,6 @@
 #include "Particle.h"
 #include "ShapeGimp.h"
 #include "Interpolation.h"
-#include "ConfigParallel.h"
 
 using namespace std;
 

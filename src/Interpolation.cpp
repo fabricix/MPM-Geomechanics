@@ -8,7 +8,6 @@
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
-#include "ConfigParallel.h"
 
 #include <omp.h>
 
