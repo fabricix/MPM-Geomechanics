@@ -10,20 +10,20 @@
 #include "Update.h"
 #include "Materials/Elastic.h"
 #include "Body/BodyParticle.h"
+#include "performance/configuration.performance.h"
 
 using namespace std;
 
-// Global configuration variables
-const int numParticles = 500000;
-const int numThreads = 10;
-const Vector3d particleSize(1.0, 1.0, 1.0);
-const double particleMass = 1.0;
-const Vector3d cellDimension(1.0, 1.0, 1.0);
-const Vector3i numCells(100, 100, 100);
-const int ramdomSeed = 42;
-
 TEST(UpdatePerformance, ContributionNodes_nParticles)
 {
+    const int numParticles = Configuration::getNumParticles();
+    const int numThreads = Configuration::getNumThreads();
+    const Vector3d particleSize = Configuration::getParticleSize();
+    const double particleMass = Configuration::getParticleMass();
+    const Vector3d cellDimension = Configuration::getCellDimension();
+    const Vector3i numCells = Configuration::getNumCells();
+    const int randomSeed = Configuration::getRandomSeed();
+
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
 	omp_set_num_threads(numThreads);  // Set the number of threads for the test
@@ -33,7 +33,7 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 #endif
 
 	// Number of particles to test
-	std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
+    std::cout << "[ INFO ] Total particles: " << numParticles << std::endl;
 
 	// create the mesh
 	Mesh mesh;
@@ -45,7 +45,7 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 	vector<Particle*> particles;
     particles.reserve(numParticles);
 
-	std::mt19937 gen(ramdomSeed);
+    std::mt19937 gen(randomSeed);
 	std::uniform_real_distribution<double> dist(0.0, cellDimension.maxCoeff());
 
 	for (int i = 0; i < numParticles; ++i) {
@@ -76,6 +76,15 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 
 TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 {
+
+    const int numParticles = Configuration::getNumParticles();
+    const int numThreads = Configuration::getNumThreads();
+    const Vector3d particleSize = Configuration::getParticleSize();
+    const double particleMass = Configuration::getParticleMass();
+    const Vector3d cellDimension = Configuration::getCellDimension();
+    const Vector3i numCells = Configuration::getNumCells();
+    const int randomSeed = Configuration::getRandomSeed();
+
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
     omp_set_num_threads(numThreads);
@@ -129,6 +138,15 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 
 TEST(UpdatePerformance, ParticleStress_nParticles)
 {
+
+    const int numParticles = Configuration::getNumParticles();
+    const int numThreads = Configuration::getNumThreads();
+    const Vector3d particleSize = Configuration::getParticleSize();
+    const double particleMass = Configuration::getParticleMass();
+    const Vector3d cellDimension = Configuration::getCellDimension();
+    const Vector3i numCells = Configuration::getNumCells();
+    const int randomSeed = Configuration::getRandomSeed();
+
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined\n";
     omp_set_num_threads(numThreads);
