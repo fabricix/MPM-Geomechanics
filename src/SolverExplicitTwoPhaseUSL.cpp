@@ -123,7 +123,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Update::particleStress(particles);
 
 		// write particles and grid in step
-		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// reset all nodal values

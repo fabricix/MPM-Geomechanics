@@ -777,12 +777,12 @@ namespace Output{
 		csv_file.close();
 	}
 
-	void writeResultInStep(int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(int resultSteps,vector<Particle*>* particles, double iTime)
 	{
 		if (ModelSetup::getLoopCounter() % resultSteps == 0)
 		{
 			// write model results
-			writeBodies(bodies,iTime);
+			writeParticles(particles,iTime);
 
 			// update terminal
 			updateTerminal(iTime);

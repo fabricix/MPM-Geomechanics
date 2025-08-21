@@ -108,7 +108,7 @@ void SolverExplicit::Solve()
 		Update::particleStress(particles);
 		
 		// write particles and grid results in step
-		Output::writeResultInStep(resultSteps, bodies, iTime);
+		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
 
 		// Step 10: Reset nodal values
