@@ -9,7 +9,9 @@
 #include "TerrainContact.h"
 #include "Seismic.h"
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 ///
 /// From particle to node:
@@ -29,10 +31,11 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-	const int nNodes = static_cast<int>(nodes->size());
 
+#ifdef _OPENMP
 	#pragma omp parallel for schedule(static)
-	for (size_t i = 0; i < particles->size(); ++i) {
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -52,17 +55,24 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 			// compute the weighted nodal mass
 			const double nodalMass = pMass*contribution->at(j).getWeight();
 			
+			
 			// check any mass in node
 			if (nodalMass<=0.0)  continue;
 
-			#pragma omp atomic
-			nodeI->getMassRef() += nodalMass;
+			// get mass reference
+			double& massRef = nodeI->getMassRef();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			massRef += nodalMass;
 		}
 	}
 
 	// Node activation: mark nodes with mass > 0 as active
-	#pragma omp parallel for
-    for (int i = 0; i < nNodes; ++i) {
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(nodes->size()); ++i) {
         if (nodes->at(i)->getMass() > 0.0)
             nodes->at(i)->setActive(true);
     }
@@ -120,9 +130,10 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-	
+#ifdef _OPENMP
 	#pragma omp parallel for schedule(static)
-	for (size_t i = 0; i < particles->size(); ++i) {
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -144,16 +155,23 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 			
 			// nodal momentum
 			const Vector3d nodalMomentum = pMass*pVelocity*contribution->at(j).getWeight();
-
-			// add the weighted momentum in node
+			
+			// take references for atomic updates
+            double& p_x = nodeI->getMomentumRef().x();
+            double& p_y = nodeI->getMomentumRef().y();
+            double& p_z = nodeI->getMomentumRef().z();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getMomentumRef().x() += nodalMomentum.x();
-
+#endif
+			p_x += nodalMomentum.x();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getMomentumRef().y() += nodalMomentum.y();
-
+#endif
+			p_y += nodalMomentum.y();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getMomentumRef().z() += nodalMomentum.z();
+#endif
+			p_z += nodalMomentum.z();
 		}
 	}
 }
@@ -214,8 +232,10 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
+#ifdef _OPENMP
 	#pragma omp parallel for schedule(static)
-	for (size_t i = 0; i < particles->size(); ++i) {
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -265,15 +285,22 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 				internalForce.z()+=pPressure*gradient(2)*pVolume;
 			}
 
-			// add the internal force contribution in node
+			// get references for atomic updates
+			double& fint_x = nodeI->getInternalForceRef().x();
+			double& fint_y = nodeI->getInternalForceRef().y();
+			double& fint_z = nodeI->getInternalForceRef().z();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getInternalForceRef().x() += internalForce.x();
-
+#endif
+			fint_x += internalForce.x();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getInternalForceRef().y() += internalForce.y();
-
+#endif
+			fint_y += internalForce.y();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getInternalForceRef().z() += internalForce.z();
+#endif
+			fint_z += internalForce.z();
 		}
 	}
 }
@@ -344,8 +371,10 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
 	vector<Node*>* nodes = mesh->getNodes();
 
+#ifdef _OPENMP
 	#pragma omp parallel for schedule(static)
-	for (size_t i = 0; i < particles->size(); ++i) {
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -365,15 +394,22 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 			// add weighted force in node
 			const Vector3d externalForce = pExtForce*contribution->at(j).getWeight();
 			
-			// add the external force contribution in node
+			// take references for atomic updates
+			double& fext_x = nodeI->getExternalForceRef().x();
+			double& fext_y = nodeI->getExternalForceRef().y();
+			double& fext_z = nodeI->getExternalForceRef().z();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getExternalForceRef().x() += externalForce.x();
-
+#endif
+			fext_x += externalForce.x();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getExternalForceRef().y() += externalForce.y();
-
+#endif
+			fext_y += externalForce.y();
+#ifdef _OPENMP
 			#pragma omp atomic update
-			nodeI->getExternalForceRef().z() += externalForce.z();
+#endif
+			fext_z += externalForce.z();
 		}
 	}
 
@@ -491,10 +527,10 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
+	// particle strain increment for each particle
 #ifdef _OPENMP
 	#pragma omp parallel for
 #endif
-	// for each particle
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 		// only active particle can contribute
