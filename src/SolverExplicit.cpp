@@ -23,7 +23,6 @@ void SolverExplicit::Solve()
 	double iTime = 0.0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
-	bool isSeismicAnalysis = ModelSetup::getSeismicAnalysisActive();
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
 
@@ -46,9 +45,7 @@ void SolverExplicit::Solve()
 		Interpolation::nodalMomentum(mesh, particles);
 
 		// Step 1.c: Update seismic velocity and acceleration from record
-		if(isSeismicAnalysis){
-			Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
-		}
+		Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 2: Impose boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
@@ -75,9 +72,8 @@ void SolverExplicit::Solve()
 		if (useSTLContact){
 
 			// 5.2.a: Apply seismic velocity to marked nodes
-			if (isSeismicAnalysis){
-				Seismic::applySeismicVelocityMarkedSTLNodes(mesh);
-			}
+			Seismic::applySeismicVelocityMarkedSTLNodes(mesh);
+			
 			// 5.2.b: Apply velocity contact correction
 			terrainContact->apply(mesh, particles, dt);
 		}
