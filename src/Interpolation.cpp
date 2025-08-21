@@ -50,7 +50,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// compute the weighted nodal mass
 			const double nodalMass = pMass*contribution->at(j).getWeight();
@@ -108,7 +108,7 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// compute the weighted nodal mass
 				const double nodalMassFluid = pMassFluid*contribution->at(j).getWeight();
@@ -151,8 +151,8 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 		for (size_t j = 0; j < contribution->size(); ++j) {
 			
 			// get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-			
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
+
 			// nodal momentum
 			const Vector3d nodalMomentum = pMass*pVelocity*contribution->at(j).getWeight();
 			
@@ -212,7 +212,7 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 				
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 				
 				// add the weighted momentum in node
 				nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
@@ -267,7 +267,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// get the nodal gradients
 			const Vector3d gradient = contribution->at(j).getGradients();
@@ -344,7 +344,7 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// get the nodal gradients
 				const Vector3d gradient = contribution->at(j).getGradients();
@@ -389,7 +389,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// add weighted force in node
 			const Vector3d externalForce = pExtForce*contribution->at(j).getWeight();
@@ -457,7 +457,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// add weighted force in node
 				nodeI->addExternalForceFluid(pExtForceFluid*contribution->at(j).getWeight());
@@ -499,7 +499,7 @@ void Interpolation::nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// add weighted force in node
 				nodeI->addExternalForceFluid(pDragForceFluid*contribution->at(j).getWeight());
@@ -546,7 +546,7 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// get the nodal gradient
 			const Vector3d dN = contribution->at(j).getGradients();
@@ -604,7 +604,7 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
@@ -656,7 +656,7 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// get nodal gradient
 			const Vector3d dN = contribution->at(j).getGradients();
@@ -703,7 +703,7 @@ void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Particle*>* p
 		for (size_t j = 0; j < contribution->size(); ++j) {
 
 			// get the contributing node
-			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 			// get the nodal gradient
 			const Vector3d dN = contribution->at(j).getGradients();
