@@ -20,24 +20,25 @@ namespace Energy
     {
         // initial value for energy
         double energy = 0.0;
+        const int np = static_cast<int>(particles->size());
 
-        // for each particle
+        // compute kinetic energy contribution of each particle
 #ifdef _OPENMP
-        #pragma omp parallel for reduction(+:energy) shared(particles)
+        #pragma omp parallel for shared(particles) reduction(+:energy) 
 #endif
-        for (int i = 0; i < static_cast<int>(particles->size()); ++i) 
+        for (int i = 0; i < np; ++i) 
         {
-            // verify active particle
-            if (!particles->at(i)->getActive()) { continue; }
+            Particle* p = (*particles)[i];
 
-            // get mass and velocity
-            const double mass = particles->at(i)->getMass();
-            const Vector3d velocity = particles->at(i)->getVelocity();
+            if (!p->getActive()) continue;
+            
+            const double mass = p->getMass();
 
-            // compute the particle kinetic energy contribution
-            energy += 0.5 * mass * (velocity.x() * velocity.x() + velocity.y() * velocity.y() + velocity.z() * velocity.z());
+            const Vector3d velocity = p->getVelocity();
+
+            energy += 0.5 * mass * velocity.squaredNorm();
         }
-           
+        // set the current total kinetic energy
         setCurrentKineticEnergy(energy);
     }
 }
