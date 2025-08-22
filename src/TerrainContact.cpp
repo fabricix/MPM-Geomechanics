@@ -329,10 +329,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
     }
 }
 
-void TerrainContact::computeContactForces(std::vector< Particle* >* particles, double dt) {
-    
-    // unused for now
-    (void)particles;
+void TerrainContact::computeContactForces(double dt) {
 
     // check if seismic analysis is enabled
     bool isSeismic = ModelSetup::getSeismicAnalysisActive();
@@ -342,7 +339,7 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
 
     // for all contact pairs
 #ifdef _OPENMP
-    #pragma omp parallel for shared(particles)
+    #pragma omp parallel for shared(v_surface, isSeismic)
 #endif
     for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
     {
@@ -422,7 +419,7 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
     determineContactPotentialPairs(mesh, particles);
 
     // compute the contact forces and correct velocities
-    computeContactForces(particles, dt);
+    computeContactForces(dt);
 }
 
 void TerrainContact::enablePenaltyContact(bool enable) {

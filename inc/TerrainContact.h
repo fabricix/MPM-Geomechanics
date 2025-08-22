@@ -20,7 +20,7 @@ private:
 
     std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
 
-    double scalingFactor; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
+    double scalingFactor = 2.0; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
     bool usePenaltyContact = false; //!< Use penalty contact method
 
@@ -28,7 +28,7 @@ private:
 
 public:
 
-    TerrainContact( STLReader* mesh, double friction)
+    TerrainContact(STLReader* mesh, double friction)
         : stlMesh(mesh), frictionCoefficient(friction) {}
 
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i) e_n \f$
@@ -58,7 +58,7 @@ public:
     // \brief Compute the contact forces
     // \f$ f_n = -m_p \frac{v_p^n}{dt} e_n \f$
     // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
-    void computeContactForces(std::vector< Particle* >* particles, double dt);
+    void computeContactForces(double dt);
 
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 
