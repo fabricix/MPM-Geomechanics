@@ -74,8 +74,9 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
 {
     std::vector<Node*>* gNodes = mesh->getNodes();
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
-
+#ifdef _OPENMP
     #pragma omp parallel for
+#endif
     for (int i = 0; i < static_cast<int> (gNodes->size()); ++i)
     {
         Node* node = gNodes->at(i);
@@ -242,7 +243,9 @@ void TerrainContact::trianglesDensityLevelSet(Mesh* mesh) {
     vector<double> interpolatedValues(triangles.size(), 0.0);
 
     // iterate over all triangles
+#ifdef _OPENMP
     #pragma omp parallel for shared(triangles, mesh, interpolatedValues)
+#endif
     for (int i = 0; i < static_cast<int>(triangles.size()); ++i) {
         
         // get the current triangle
@@ -283,7 +286,9 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
     contactPairs.clear();
 
     // loop over the particles to determine the contact potential pairs
+#ifdef _OPENMP
     #pragma omp parallel for shared(particles, triangles, densityValues)
+#endif
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
     
         // get the particle
@@ -315,7 +320,9 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
             // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
             if (densityValues[closestTriangleIndex] > 0.0) {
+#ifdef _OPENMP
                 #pragma omp critical
+#endif
                 contactPairs.push_back(std::make_pair(particle, const_cast<Triangle*>(&triangles[closestTriangleIndex])));
             }
         }
@@ -334,7 +341,9 @@ void TerrainContact::computeContactForces(std::vector< Particle* >* particles, d
     Vector3d v_surface = isSeismic ? Seismic::getAccumulatedVelocity() : Vector3d::Zero(); 
 
     // for all contact pairs
+#ifdef _OPENMP
     #pragma omp parallel for shared(particles)
+#endif
     for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
     {
         // get the particle and the triangle in contact
