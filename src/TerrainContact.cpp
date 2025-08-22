@@ -109,11 +109,14 @@ void TerrainContact::computeDistanceLevelSetFunction(Mesh* mesh)
 
 void TerrainContact::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* particles) {
     
-	// get nodes
     vector<Node*>* nodes = mesh->getNodes();
+    const int np = static_cast<int>(particles->size());
 
+#ifdef _OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
     // iterate over all particles
-    for (size_t i = 0; i < particles->size(); ++i) 
+    for (int i = 0; i < np; ++i) 
 	{	
 		// get the particle
         Particle* particle = particles->at(i);
@@ -150,11 +153,13 @@ void TerrainContact::particleDistanceLevelSet(Mesh* mesh, vector<Particle*>* par
 
 void TerrainContact::nodalDensityLevelSet(Mesh* mesh, vector<Particle*>* particles) 
 {
-	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+    const int np = static_cast<int>(particles->size());
 
-	// for each particle
-	for (size_t i = 0; i < particles->size(); ++i) {
+#ifdef _OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < np; ++i) {
 
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
@@ -171,8 +176,15 @@ void TerrainContact::nodalDensityLevelSet(Mesh* mesh, vector<Particle*>* particl
 			// get the contributing node
 			Node* nodeI = nodes->at(contribution->at(j).getNodeId());
 
-			// compute and set the weighted density level set
-			nodeI->addDensityLevelSet(pVolume*contribution->at(j).getWeight()/nodeI->getVolume());
+            const double rho_increment = pVolume*contribution->at(j).getWeight()/nodeI->getVolume();
+
+            double& rho = nodeI->getDensityLevelSetRef();
+
+#ifdef _OPENMP
+            #pragma omp atomic update
+#endif
+            rho += rho_increment;
+
 		}
 	}
 }
