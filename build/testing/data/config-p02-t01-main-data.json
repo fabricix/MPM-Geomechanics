@@ -1,0 +1,11 @@
+{
+    "contributionNodes": 17895.0,
+    "particleDensity": 71.0,
+    "particleStress": 1498.0,
+    "nodalMass": 352.0,
+    "nodalMomentum": 5019.4,
+    "nodalInternalForce": 8608.0,
+    "nodalExternalForce": 4117.65,
+    "particleStrainIncrement": 14215.0,
+    "particleVorticityIncrement": 13383.0
+}
