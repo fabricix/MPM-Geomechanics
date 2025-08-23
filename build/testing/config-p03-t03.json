@@ -1,0 +1,9 @@
+{
+  "num_particles": 500000,
+  "num_threads": 10,
+  "particle_size": [1.0, 1.0, 1.0],
+  "particle_mass": 1.0,
+  "cell_dimension": [1.0, 1.0, 1.0],
+  "num_cells": [100, 100, 100],
+  "random_seed": 42
+}
