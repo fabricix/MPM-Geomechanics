@@ -200,11 +200,79 @@ Best Practices</h1>
 <li><b>Combination</b>:<ul>
 <li>Combine keywords if necessary to clarify intent. For example: <div class="fragment"><div class="line"><span class="comment">// feat: Added error handling for invalid inputs</span></div>
 <div class="line"><span class="comment">// fix: Corrected edge case with empty arrays</span></div>
-</div><!-- fragment --> </li>
+</div><!-- fragment --></li>
 </ul>
 </li>
 </ol>
-</div></div><!-- contents -->
+<h1><a class="anchor" id="development_manual_parallelization_guidelines"></a>
+Parallelization Guidelines</h1>
+<h2><a class="anchor" id="autotoc_md61"></a>
+Parallelization Guidelines in MPM-Geomechanics</h2>
+<p>This project uses OpenMP to accelerate selected functions through multi-threaded parallelization.</p>
+<p>To maintain clarity and avoid unnecessary code duplication, we adopt the following convention:</p>
+<hr  />
+<h3><a class="anchor" id="autotoc_md63"></a>
+Use macro-controlled dual versions &lt;strong&gt;only when needed&lt;/strong&gt;</h3>
+<p>Separate sequential and parallel versions (using <code>#if defined(...)</code>) <b>should be used only</b> when the function requires thread-local storage such as:</p>
+<ul>
+<li><b>Mass or force accumulation</b> into nodal values</li>
+<li><b>Boolean flags</b> (e.g. node activation)</li>
+<li><b>Temporary vectors</b> shared across threads</li>
+</ul>
+<p><b>Examples:</b> <br  />
+</p><ul>
+<li><code>nodalMass</code> <br  />
+</li>
+<li><code>nodalMomentum</code> <br  />
+</li>
+<li><code>nodalInternalForce</code></li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md65"></a>
+Use a single-version pattern with conditional pragma otherwise</h3>
+<p>If the function <b>does not require thread-local storage</b>, and the parallel and sequential logic is the same, then use this structure:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifdef _OPENMP</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel for</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><span class="comment">// loop body</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md66"></a>
+Use of &lt;tt&gt;static_cast&lt;int&gt;&lt;/tt&gt; in &lt;tt&gt;for&lt;/tt&gt; loops</h3>
+<p>In several parts of the simulator, loops iterate over particle or node containers whose size is returned as <code>size_t</code>. Since OpenMP requires a <b>signed integer</b> loop counter, we must convert <code>size_t</code> to <code>int</code>.</p>
+<p>To ensure clarity and safety, always use **<code>static_cast&lt;int&gt;</code>** instead of the C-style <code>(int)</code> cast.</p>
+<p><b>Rationale:</b></p><ul>
+<li><code>static_cast&lt;int&gt;</code> is the C++ standard and makes the conversion intention explicit. <br  />
+</li>
+<li>It prevents unsafe or ambiguous conversions allowed by the C-style cast. <br  />
+</li>
+<li>It improves code readability and consistency across the project.</li>
+</ul>
+<p><b>Example (correct usage):</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#ifdef _OPENMP</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel for</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; static_cast&lt;int&gt;(particles-&gt;size()); ++i) {</div>
+<div class="line">    <span class="keywordflow">if</span> (!particles-&gt;at(i)-&gt;getActive()) <span class="keywordflow">continue</span>;</div>
+<div class="line">    <span class="comment">// ... //</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md67"></a>
+Normalization of OpenMP pragmas</h3>
+<p>All parallel loops must be guarded with <code>#ifdef _OPENMP</code> to ensure clean compilation with or without OpenMP support. Always use the same style:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifdef _OPENMP</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel for schedule(static)</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; static_cast&lt;int&gt;(particles-&gt;size()); ++i) {</div>
+<div class="line">    <span class="comment">// loop body</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md68"></a>
+Atomic operations: always take the reference first</h3>
+<p>When using <code>#pragma omp atomic</code>, always assign the target variable to a reference before the atomic operation:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">double</span>&amp; m = nodeI-&gt;getMassRef();</div>
+<div class="line"><span class="preprocessor">#ifdef _OPENMP</span></div>
+<div class="line"><span class="preprocessor">  #pragma omp atomic update</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line">m += nodalMass;</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -25,15 +25,15 @@
 var NAVTREE =
 [
   [ "MPM-Geomechanics", "index.html", [
-    [ "Introduction", "index.html#autotoc_md61", null ],
-    [ "Program features", "index.html#autotoc_md62", null ],
-    [ "Compiled binaries", "index.html#autotoc_md63", null ],
-    [ "Compilation on Windows", "index.html#autotoc_md64", null ],
-    [ "Compiling on Linux", "index.html#autotoc_md65", null ],
-    [ "Visual Studio Solution", "index.html#autotoc_md66", null ],
-    [ "Make Compilation", "index.html#autotoc_md67", null ],
-    [ "Documentation", "index.html#autotoc_md68", null ],
-    [ "Execution", "index.html#autotoc_md69", null ],
+    [ "Introduction", "index.html#autotoc_md69", null ],
+    [ "Program features", "index.html#autotoc_md70", null ],
+    [ "Compiled binaries", "index.html#autotoc_md71", null ],
+    [ "Compilation on Windows", "index.html#autotoc_md72", null ],
+    [ "Compiling on Linux", "index.html#autotoc_md73", null ],
+    [ "Visual Studio Solution", "index.html#autotoc_md74", null ],
+    [ "Make Compilation", "index.html#autotoc_md75", null ],
+    [ "Documentation", "index.html#autotoc_md76", null ],
+    [ "Execution", "index.html#autotoc_md77", null ],
     [ "Development manual", "development_manual.html", [
       [ "Keywords for commit messages", "development_manual.html#development_manual_keywords", [
         [ "Keywords List", "development_manual.html#autotoc_md48", [
@@ -51,7 +51,16 @@ var NAVTREE =
           [ "<strong>12. <tt>deprecated:</tt></strong>", "development_manual.html#autotoc_md60", null ]
         ] ]
       ] ],
-      [ "Best Practices", "development_manual.html#development_manual_best_practices", null ]
+      [ "Best Practices", "development_manual.html#development_manual_best_practices", null ],
+      [ "Parallelization Guidelines", "development_manual.html#development_manual_parallelization_guidelines", [
+        [ "Parallelization Guidelines in MPM-Geomechanics", "development_manual.html#autotoc_md61", [
+          [ "Use macro-controlled dual versions <strong>only when needed</strong>", "development_manual.html#autotoc_md63", null ],
+          [ "Use a single-version pattern with conditional pragma otherwise", "development_manual.html#autotoc_md65", null ],
+          [ "Use of <tt>static_cast<int></tt> in <tt>for</tt> loops", "development_manual.html#autotoc_md66", null ],
+          [ "Normalization of OpenMP pragmas", "development_manual.html#autotoc_md67", null ],
+          [ "Atomic operations: always take the reference first", "development_manual.html#autotoc_md68", null ]
+        ] ]
+      ] ]
     ] ],
     [ "Required Programs", "required_programs.html", [
       [ "Required Programs - Windows", "required_programs.html#required_programs_windows", null ],
@@ -65,26 +74,26 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Theory and Numerical Formulation", "theory_and_numerical_formulation_.html", [
-      [ "Introduction to the Material Point Method (MPM)", "theory_and_numerical_formulation_.html#autotoc_md71", null ],
-      [ "MPM Formulation", "theory_and_numerical_formulation_.html#autotoc_md72", null ],
-      [ "Explicit MPM integration", "theory_and_numerical_formulation_.html#autotoc_md73", null ],
-      [ "Central difference Method", "theory_and_numerical_formulation_.html#autotoc_md74", null ],
-      [ "Numerical implementation", "theory_and_numerical_formulation_.html#autotoc_md75", null ],
-      [ "Stability Requirement", "theory_and_numerical_formulation_.html#autotoc_md76", null ],
-      [ "Explicit MPM Scheme", "theory_and_numerical_formulation_.html#autotoc_md77", null ],
-      [ "Update Stress First - USF - Scheme", "theory_and_numerical_formulation_.html#autotoc_md78", null ],
-      [ "Update Stress Last - USL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md79", null ],
-      [ "Modified Update Stress Last - MUSL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md80", null ],
-      [ "References", "theory_and_numerical_formulation_.html#autotoc_md81", null ]
+      [ "Introduction to the Material Point Method (MPM)", "theory_and_numerical_formulation_.html#autotoc_md79", null ],
+      [ "MPM Formulation", "theory_and_numerical_formulation_.html#autotoc_md80", null ],
+      [ "Explicit MPM integration", "theory_and_numerical_formulation_.html#autotoc_md81", null ],
+      [ "Central difference Method", "theory_and_numerical_formulation_.html#autotoc_md82", null ],
+      [ "Numerical implementation", "theory_and_numerical_formulation_.html#autotoc_md83", null ],
+      [ "Stability Requirement", "theory_and_numerical_formulation_.html#autotoc_md84", null ],
+      [ "Explicit MPM Scheme", "theory_and_numerical_formulation_.html#autotoc_md85", null ],
+      [ "Update Stress First - USF - Scheme", "theory_and_numerical_formulation_.html#autotoc_md86", null ],
+      [ "Update Stress Last - USL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md87", null ],
+      [ "Modified Update Stress Last - MUSL - Scheme", "theory_and_numerical_formulation_.html#autotoc_md88", null ],
+      [ "References", "theory_and_numerical_formulation_.html#autotoc_md89", null ]
     ] ],
     [ "Verification problems", "verification_problems.html", [
-      [ "Bousssinesq's problem", "verification_problems.html#autotoc_md82", [
-        [ "Introduction", "verification_problems.html#autotoc_md83", null ],
-        [ "Analytical solution", "verification_problems.html#autotoc_md84", null ],
-        [ "MPM model and result comparison", "verification_problems.html#autotoc_md85", null ]
+      [ "Bousssinesq's problem", "verification_problems.html#autotoc_md90", [
+        [ "Introduction", "verification_problems.html#autotoc_md91", null ],
+        [ "Analytical solution", "verification_problems.html#autotoc_md92", null ],
+        [ "MPM model and result comparison", "verification_problems.html#autotoc_md93", null ]
       ] ],
-      [ "Base acceleration example", "verification_problems.html#autotoc_md86", [
-        [ "MPM-Model", "verification_problems.html#autotoc_md87", null ]
+      [ "Base acceleration example", "verification_problems.html#autotoc_md94", [
+        [ "MPM-Model", "verification_problems.html#autotoc_md95", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -121,11 +130,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BodyCuboid_8h.html",
-"Seismic_8h.html#afb62f9db103e0fab89bfe97d6dfa5ff4",
-"classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42",
-"classParticle.html#af14ff528876e9d128baf6bc16eb92947",
-"namespaceInput.html#aec95c042d839e3ae12de0b73ee08279d",
-"structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692"
+"Seismic_8h_source.html",
+"classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae",
+"classParticle.html#ae6d46dc24a6666d526f211151fecca5f",
+"namespaceInput.html#a9394b9c8be44c0fef8a9a7dfd727a70c",
+"structLoads_1_1PressureBox.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

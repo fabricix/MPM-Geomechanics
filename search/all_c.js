@@ -23,7 +23,7 @@ var searchData=
   ['development_20manual_20',['Development manual',['../development_manual.html',1,'']]],
   ['development_2dmanual_2emd_21',['development-manual.md',['../development-manual_8md.html',1,'']]],
   ['diameter_22',['diameter',['../classBodySphere.html#ac81e013e0b40464c83535655727c5497',1,'BodySphere']]],
-  ['difference_20method_23',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md74',1,'']]],
+  ['difference_20method_23',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md82',1,'']]],
   ['dilation_24',['dilation',['../classMohrCoulomb.html#a9718a4d56fc38f21cf55f7666e8f0811',1,'MohrCoulomb']]],
   ['dilation_5fresidual_25',['dilation_residual',['../classMohrCoulomb_1_1Softening.html#a97e76e5206eb85d089731acf6b47135b',1,'MohrCoulomb::Softening']]],
   ['dilation_5fsoftening_5factive_26',['dilation_softening_active',['../classMohrCoulomb_1_1Softening.html#a453210352f4ed8e2f2f0be361e1196f5',1,'MohrCoulomb::Softening']]],
@@ -31,11 +31,12 @@ var searchData=
   ['disableseismicanalysis_28',['disableSeismicAnalysis',['../namespaceSeismic.html#a816d8ff526fe0bf0750fd4cb886cf429',1,'Seismic']]],
   ['discretization_20length_29',['The Discretization Length',['../classBodyPolygon.html#autotoc_md45',1,'']]],
   ['displacement_30',['Extrusion displacement',['../classBodyPolygon.html#autotoc_md44',1,'']]],
-  ['distancelevelset_31',['distancelevelset',['../classNode.html#a2cb95712bded1fcb53e046c23d1e0e6d',1,'Node::distanceLevelSet'],['../classParticle.html#ac154826414667897c157989be6c64a34',1,'Particle::distanceLevelSet']]],
+  ['distancelevelset_31',['distancelevelset',['../classParticle.html#ac154826414667897c157989be6c64a34',1,'Particle::distanceLevelSet'],['../classNode.html#a2cb95712bded1fcb53e046c23d1e0e6d',1,'Node::distanceLevelSet']]],
   ['distretizationlength_32',['distretizationLength',['../classBodyPolygon.html#a115e3d227f3e53a599eafd8e3508f098',1,'BodyPolygon']]],
   ['distributed_20load_20in_20box_20example_33',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],
   ['doc_3a_20tt_20strong_34',['&lt;strong&gt;1. &lt;tt&gt;doc:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md49',1,'']]],
-  ['documentation_35',['Documentation',['../index.html#autotoc_md68',1,'']]],
-  ['dynamicrelaxation_36',['DynamicRelaxation',['../namespaceDynamicRelaxation.html',1,'']]],
-  ['dynamicrelaxation_2eh_37',['DynamicRelaxation.h',['../DynamicRelaxation_8h.html',1,'']]]
+  ['documentation_35',['Documentation',['../index.html#autotoc_md76',1,'']]],
+  ['dual_20versions_20strong_20only_20when_20needed_20strong_36',['Use macro-controlled dual versions &lt;strong&gt;only when needed&lt;/strong&gt;',['../development_manual.html#autotoc_md63',1,'']]],
+  ['dynamicrelaxation_37',['DynamicRelaxation',['../namespaceDynamicRelaxation.html',1,'']]],
+  ['dynamicrelaxation_2eh_38',['DynamicRelaxation.h',['../DynamicRelaxation_8h.html',1,'']]]
 ];

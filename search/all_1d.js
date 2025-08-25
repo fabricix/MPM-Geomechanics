@@ -7,8 +7,10 @@ var searchData=
   ['velocityfluid_4',['velocityfluid',['../classParticleMixture.html#af480837a21f9ad597c5b69933d328b2c',1,'ParticleMixture::velocityFluid'],['../classNodeMixture.html#aa6560e3f773520ce6fca08c02b5006b7',1,'NodeMixture::velocityFluid']]],
   ['verification_20problems_5',['Verification problems',['../verification_problems.html',1,'']]],
   ['verifications_2dmanual_2emd_6',['verifications-manual.md',['../verifications-manual_8md.html',1,'']]],
-  ['viscosity_7',['Viscosity',['../classNewtonian.html#af03c34a0aa14fdfcc01cb6689241b524',1,'Newtonian']]],
-  ['visual_20studio_20solution_8',['Visual Studio Solution',['../index.html#autotoc_md66',1,'']]],
-  ['volume_9',['volume',['../classCell.html#a426862431a79984cb040c6f396a8e1d9',1,'Cell::volume'],['../classNode.html#ac1dd81b5a10e0d6b6eb4857a221a7382',1,'Node::volume']]],
-  ['vorticityincrement_10',['vorticityIncrement',['../classParticle.html#a6766a701558c1679342e20e97f7f9f9e',1,'Particle']]]
+  ['version_20pattern_20with_20conditional_20pragma_20otherwise_7',['Use a single-version pattern with conditional pragma otherwise',['../development_manual.html#autotoc_md65',1,'']]],
+  ['versions_20strong_20only_20when_20needed_20strong_8',['Use macro-controlled dual versions &lt;strong&gt;only when needed&lt;/strong&gt;',['../development_manual.html#autotoc_md63',1,'']]],
+  ['viscosity_9',['Viscosity',['../classNewtonian.html#af03c34a0aa14fdfcc01cb6689241b524',1,'Newtonian']]],
+  ['visual_20studio_20solution_10',['Visual Studio Solution',['../index.html#autotoc_md74',1,'']]],
+  ['volume_11',['volume',['../classCell.html#a426862431a79984cb040c6f396a8e1d9',1,'Cell::volume'],['../classNode.html#ac1dd81b5a10e0d6b6eb4857a221a7382',1,'Node::volume']]],
+  ['vorticityincrement_12',['vorticityIncrement',['../classParticle.html#a6766a701558c1679342e20e97f7f9f9e',1,'Particle']]]
 ];
