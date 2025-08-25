@@ -64,15 +64,6 @@ def create_configuration_files():
             with open(f"{config_file(p, t)}.json", "w") as f:
                 json.dump(json_template, f, indent=4)
 
-def adjust_paths():
-    if sys.platform == "win32":
-        for exe in executables.keys():
-            executables[exe]["path"] = f"{executables[exe]['path']}.exe"
-    if sys.platform == "linux":
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        for exe in executables.keys():
-            executables[exe]["path"] = os.path.join(script_dir, executables[exe]["path"])
-
 def read_parameters_from_console():
     if len(sys.argv) > 1:
 
@@ -96,6 +87,18 @@ def read_parameters_from_console():
       print(f"[INFO] No parameters found")
       for executable in executables.values():
         executable["active"] = True
+
+    # Adjust executable paths
+    if sys.platform == "win32":
+        print("[INFO] Windows platform detected")
+        for exe in executables.keys():
+            executables[exe]["path"] = f"{executables[exe]['path']}.exe"
+
+    if sys.platform == "linux":
+        print("[INFO] Linux platform detected")
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        for exe in executables.keys():
+            executables[exe]["path"] = os.path.join(script_dir, executables[exe]["path"])
 
 def start_benchmarks():
 
@@ -131,8 +134,6 @@ def start_benchmarks():
 # Main function
 def main():
 
-    # Adjust executable paths
-    adjust_paths()
 
     # Create configuration files
     create_configuration_files()
