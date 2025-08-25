@@ -3,6 +3,7 @@ import threading
 import json
 import time
 import sys
+from pathlib import Path
 
 # Json template for testing
 json_template = {
@@ -27,7 +28,9 @@ threads = [1, 5, 10] # Numbers of threads
 
 # Configuration file name generator
 def config_file (p, t):
-  return f"config-p{p}k-t{t}"
+  folder = Path("benchmark")
+  folder.mkdir(parents=True, exist_ok=True)
+  return folder / f"config-p{p}k-t{t}"
 
 # Run a benchmark with a specific executable and configuration file
 def run_benchmark(executable_exe, executable_name, config_file):
