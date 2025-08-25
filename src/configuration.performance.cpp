@@ -54,6 +54,7 @@ namespace Configuration
             }
             catch (...)
             {
+                cerr << "--> [ERROR] Error opening file: " << jsonFileName << endl;
                 throw runtime_error("Failed to set configuration file: " + jsonFileName);
             }
         }
