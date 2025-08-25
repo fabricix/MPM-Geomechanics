@@ -7,6 +7,36 @@
 
 using namespace std;
 
+string getFilters()
+{
+    string filter = "";
+
+    cout << "----> Test Filters <----\n" << endl;
+    if (Configuration::getInterpolationTest())
+    {
+        cout << "----> Interpolation test: enabled" << endl;
+        filter += "Interpolation*";
+    }
+    else
+    {
+        cout << "----> Interpolation test: disabled" << endl;
+    }
+
+    if (Configuration::getUpdateTest())
+    {
+        cout << "----> Update test: enabled" << endl;
+        if (!filter.empty()) filter += ":";
+        filter += "Update*";
+    }
+    else
+    {
+        cout << "----> Update test: disabled" << endl;
+    }
+    cout << "\n----> Test Filters <----\n" << endl;
+
+    return filter;
+}
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
@@ -16,9 +46,16 @@ int main(int argc, char** argv)
     if (status != 0) {
         return status;
     }
-    else {
+    else
+    {
+        // Get test filters
+        string filter = getFilters();
+
+        // Set GoogleTest filter
+        if (!filter.empty()) { ::testing::GTEST_FLAG(filter) = filter; }
+
         cout << "Running tests..." << endl;
         return RUN_ALL_TESTS();
     }
-
 }
+

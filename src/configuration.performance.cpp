@@ -15,6 +15,7 @@ namespace Configuration
     json configuration;
     string jsonFileName = "test-configuration.json";
 
+    // Configuration parameters
     int numParticles = 0;
     int numThreads = 0;
     Vector3d particleSize = Vector3d::Zero();
@@ -23,6 +24,11 @@ namespace Configuration
     Vector3i numCells = Vector3i::Zero();
     int randomSeed = 0;
 
+    // Test flags
+    bool interpolationTest = true;
+    bool updateTest = true;
+
+    // Configuration getters
     int getNumParticles() { return numParticles; }
     int getNumThreads() { return numThreads; }
     Vector3d getParticleSize() { return particleSize; }
@@ -31,6 +37,11 @@ namespace Configuration
     Vector3i getNumCells() { return numCells; }
     int getRandomSeed() { return randomSeed; }
 
+    // Test flags getters
+    bool getInterpolationTest() { return interpolationTest; }
+    bool getUpdateTest() { return updateTest; }
+
+    // Configuration setters
     void setNumParticles(int n) { numParticles = n; }
     void setNumThreads(int n) { numThreads = n; }
     void setParticleSize(const Vector3d& size) { particleSize = size; }
@@ -38,6 +49,10 @@ namespace Configuration
     void setCellDimension(const Vector3d& dimension) { cellDimension = dimension; }
     void setNumCells(const Vector3i& cells) { numCells = cells; }
     void setRandomSeed(int seed) { randomSeed = seed; }
+
+    // Test flags setters
+    void setInterpolationTest(bool value) { interpolationTest = value; }
+    void setUpdateTest(bool value) { updateTest = value; }
 
     void openConfiguration()
     {
@@ -113,6 +128,20 @@ namespace Configuration
             randomSeed = int(configuration["random_seed"]);
             setRandomSeed(randomSeed);
 
+            step = "setting interpolation_test";
+            if (configuration.contains("interpolation_test"))
+            {
+                interpolationTest = configuration["interpolation_test"];
+            }
+            setInterpolationTest(interpolationTest);
+
+            step = "setting update_test";
+            if (configuration.contains("update_test"))
+            {
+                updateTest = configuration["update_test"];
+            }
+            setUpdateTest(updateTest);
+
             cout << "--> Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
             cout << "----> numParticles: " << getNumParticles() << endl;
@@ -122,6 +151,9 @@ namespace Configuration
             cout << "----> cellDimension: [" << getCellDimension()[0] << ", " << getCellDimension()[1] << ", " << getCellDimension()[2] << "]" << endl;
             cout << "----> numCells: [" << getNumCells()[0] << ", " << getNumCells()[1] << ", " << getNumCells()[2] << "]" << endl;
             cout << "----> randomSeed: " << getRandomSeed() << endl;
+            cout << "----> Test Flags <----" << endl;
+            cout << "----> interpolationTest: " << (getInterpolationTest() ? "true" : "false") << endl;
+            cout << "----> updateTest: " << (getUpdateTest() ? "true" : "false") << endl;
         }
         catch (const std::exception& e)
         {

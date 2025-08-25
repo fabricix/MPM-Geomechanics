@@ -19,6 +19,9 @@ namespace Configuration
     Vector3i getNumCells();
     int getRandomSeed();
 
+    bool getInterpolationTest();
+    bool getUpdateTest();
+
     int setup();
 };
 
