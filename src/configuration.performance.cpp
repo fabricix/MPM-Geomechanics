@@ -45,28 +45,21 @@ namespace Configuration
 
         vector<string> argv = ::testing::internal::GetArgvs();
 
-        if (argv.size() > 1 && argv[1] == "--config")
+        if (argv.size() > 1 && !argv[1].empty())
         {
-            if (!argv[2].empty())
+            try
             {
-                try
-                {
-                    jsonFileName = argv[2];
-                    cout << "--> Specifying configuration file: " << jsonFileName << endl;
-                }
-                catch (...)
-                {
-                    throw runtime_error("Failed to set configuration file: " + jsonFileName);
-                }
+                jsonFileName = argv[1];
+                cout << "--> Specifying configuration file: " << jsonFileName << endl;
             }
-            else
+            catch (...)
             {
-                throw runtime_error("No configuration file specified");
+                throw runtime_error("Failed to set configuration file: " + jsonFileName);
             }
         }
-        else if (argv.size() > 1)
+        else
         {
-            throw runtime_error("Invalid argument: " + argv[1]);
+            cout << "--> Using default configuration file: " << jsonFileName << endl;
         }
 
         ifstream file(jsonFileName);
