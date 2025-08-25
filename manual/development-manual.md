@@ -100,3 +100,88 @@ This section provides a list of keywords to include in commits comments. These k
      // feat: Added error handling for invalid inputs
      // fix: Corrected edge case with empty arrays
      ```
+
+
+\section development_manual_parallelization_guidelines Parallelization Guidelines
+
+## Parallelization Guidelines in MPM-Geomechanics
+
+This project uses OpenMP to accelerate selected functions through multi-threaded parallelization.
+
+To maintain clarity and avoid unnecessary code duplication, we adopt the following convention:
+
+---
+
+### Use macro-controlled dual versions **only when needed**
+
+Separate sequential and parallel versions (using `#if defined(...)`) **should be used only** when the function requires thread-local storage such as:
+
+- **Mass or force accumulation** into nodal values
+- **Boolean flags** (e.g. node activation)
+- **Temporary vectors** shared across threads
+
+**Examples:**  
+- `nodalMass`  
+- `nodalMomentum`  
+- `nodalInternalForce`
+
+---
+
+### Use a single-version pattern with conditional pragma otherwise
+
+If the function **does not require thread-local storage**, and the parallel and sequential logic is the same, then use this structure:
+
+```cpp
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+for (int i = 0; i < N; ++i) {
+// loop body
+}
+```
+
+### Use of `static_cast<int>` in `for` loops
+
+In several parts of the simulator, loops iterate over particle or node containers whose size is returned as `size_t`. Since OpenMP requires a **signed integer** loop counter, we must convert `size_t` to `int`.
+
+To ensure clarity and safety, always use **`static_cast<int>`** instead of the C-style `(int)` cast.
+
+**Rationale:**
+- `static_cast<int>` is the C++ standard and makes the conversion intention explicit.  
+- It prevents unsafe or ambiguous conversions allowed by the C-style cast.  
+- It improves code readability and consistency across the project.
+
+**Example (correct usage):**
+```cpp
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+	if (!particles->at(i)->getActive()) continue;
+	// ... //
+}
+```
+### Normalization of OpenMP pragmas
+
+All parallel loops must be guarded with `#ifdef _OPENMP` to ensure clean compilation with or without OpenMP support. Always use the same style:
+
+```cpp
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+	// loop body
+}
+```
+
+### Atomic operations: always take the reference first
+
+When using `#pragma omp atomic`, always assign the target variable to a reference before the atomic operation:
+
+```cpp
+double& m = nodeI->getMassRef();
+#ifdef _OPENMP
+  #pragma omp atomic update
+#endif
+m += nodalMass;
+```

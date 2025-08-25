@@ -33,3 +33,4 @@ include_directories(../../inc/Mesh)
 # Add executables for the MPM-GEOMECHANICS project
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 add_executable(MPM-Geomechanics ${EXECUTABLES})
+target_compile_definitions(MPM-Geomechanics PRIVATE USE_PARALLEL_COMPUTATION)

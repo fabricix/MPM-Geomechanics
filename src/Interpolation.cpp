@@ -9,6 +9,10 @@
 #include "TerrainContact.h"
 #include "Seismic.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 ///
 /// From particle to node:
 ///		
@@ -23,88 +27,55 @@
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-// Nodal Mass function using particles instead bodies
-void Interpolation::nodalMassWithParticles(Mesh *mesh, vector<Particle *> *particles) {
-  vector<Node *> *nodes = mesh->getNodes();
-
-  // for each particle
-  for (size_t i = 0; i < particles->size(); ++i) {
-    // only active particle can contribute
-    if (!particles->at(i)->getActive()) {
-      continue;
-    }
-
-    // get nodes and weights that the particle contributes
-    const vector<Contribution> *contribution = particles->at(i)->getContributionNodes();
-
-    // get the particle mass
-    const double pMass = particles->at(i)->getMass();
-
-    // for each node in the contribution list
-    for (size_t j = 0; j < contribution->size(); ++j) {
-      // get the contributing node
-      Node *nodeI = nodes->at(contribution->at(j).getNodeId());
-
-      // compute the weighted nodal mass
-      const double nodalMass = pMass * contribution->at(j).getWeight();
-
-      // check any mass in node
-      if (nodalMass <= 0.0) {
-        continue;
-      }
-
-      // the node is inactivate if he doesn't have mass
-      nodeI->setActive(true);
-
-      // add mass at node
-      nodeI->addMass(nodalMass);
-    }
-  }
-}
-
-void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
-
+void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles) 
+{
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get the particle mass
+		const double pMass = particles->at(i)->getMass();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// for each node in the contribution list 
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get the particle mass
-			const double pMass = particles->at(i)->getMass();
+			// get the contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-			// for each node in the contribution list 
-			for (size_t j = 0; j < contribution->size(); ++j) {
+			// compute the weighted nodal mass
+			const double nodalMass = pMass*contribution->at(j).getWeight();
+			
+			
+			// check any mass in node
+			if (nodalMass<=0.0)  continue;
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// compute the weighted nodal mass
-				const double nodalMass = pMass*contribution->at(j).getWeight();
-				
-				// check any mass in node
-				if (nodalMass<=0.0) { continue; }
-		
-				// the node is inactivate if he doesn't have mass
-				nodeI->setActive(true);
-
-				// add mass at node
-				nodeI->addMass(nodalMass);
-			}
+			// get mass reference
+			double& massRef = nodeI->getMassRef();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			massRef += nodalMass;
 		}
 	}
+
+	// Node activation: mark nodes with mass > 0 as active
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(nodes->size()); ++i) {
+        if (nodes->at(i)->getMass() > 0.0)
+            nodes->at(i)->setActive(true);
+    }
 }
 
 void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
@@ -137,7 +108,7 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// compute the weighted nodal mass
 				const double nodalMassFluid = pMassFluid*contribution->at(j).getWeight();
@@ -155,83 +126,94 @@ void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get particle velocity
+		const Vector3d pVelocity = particles->at(i)->getVelocity();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-
-			// get particle velocity
-			const Vector3d pVelocity = particles->at(i)->getVelocity();
-
-			// get particle mass
-			const double pMass = particles->at(i)->getMass();
+		// get particle mass
+		const double pMass = particles->at(i)->getMass();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
+			// get the contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// add the weighted momentum in node
-				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
-			}
+			// nodal momentum
+			const Vector3d nodalMomentum = pMass*pVelocity*contribution->at(j).getWeight();
+			
+			// take references for atomic updates
+            double& p_x = nodeI->getMomentumRef().x();
+            double& p_y = nodeI->getMomentumRef().y();
+            double& p_z = nodeI->getMomentumRef().z();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			p_x += nodalMomentum.x();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			p_y += nodalMomentum.y();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			p_z += nodalMomentum.z();
 		}
 	}
 }
 
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
-
+	
 	// check if is two-phase calculations
 	if(!ModelSetup::getTwoPhaseActive()) return;
-
+	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
-
+	
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
+		
 		// get particles
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
+		
 		// for each particle
 		for (size_t i = 0; i < particles->size(); ++i) {
-
+			
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
-
+			
 			// only saturated particles can interpolate mass of fluid
 			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
-
+			
 			// get nodes and weights that the particle contributes
 			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-
+			
 			// get particle velocity of fluid
 			const Vector3d pVelocityFluid = *(particles->at(i)->getVelocityFluid());
-
+			
 			// get particle mass
 			const double pMassFluid = particles->at(i)->getMassFluid();
 			
 			// for each node in the contribution list
 			for (size_t j = 0; j < contribution->size(); ++j) {
-
+				
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
+				
 				// add the weighted momentum in node
 				nodeI->addMomentumFluid(pMassFluid*pVelocityFluid*contribution->at(j).getWeight());
 			}
@@ -239,77 +221,86 @@ void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
-
+void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles) {
+	
 	// is two-phase calculations
 	bool isTwoPhase = ModelSetup::getTwoPhaseActive();
-
+	
 	// check if is one direction hydro-mechanical coupling
 	bool isOneDirectionHydromechanicalCoupling = ModelSetup::getHydroMechOneWayEnabled();
-
+	
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get effective stress of solid
+		Matrix3d pStress = particles->at(i)->getStress();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// use total stress if hydro-mechanical coupling is enabled
+		if (isOneDirectionHydromechanicalCoupling) {
+			pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+		}
 
-			// get effective stress of solid
-			Matrix3d pStress = particles->at(i)->getStress();
+		// get the particle volume
+		double pVolume = particles->at(i)->getCurrentVolume();
 
-			// use total stress if hydro-mechanical coupling is enabled
-			if (isOneDirectionHydromechanicalCoupling) {
-				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+		// particle pressure
+		double pPressure{0};
+		
+		if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
+
+			// get pore pressure pressure
+			pPressure = particles->at(i)->getPressureFluid();
+		}
+
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
+
+			// get contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
+
+			// get the nodal gradients
+			const Vector3d gradient = contribution->at(j).getGradients();
+
+			// compute the particle's contribution to the nodal internal force
+			Vector3d internalForce;
+			internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
+			internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
+			internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
+
+			if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
+			{
+				internalForce.x()+=pPressure*gradient(0)*pVolume;
+				internalForce.y()+=pPressure*gradient(1)*pVolume;
+				internalForce.z()+=pPressure*gradient(2)*pVolume;
 			}
 
-			// get the particle volume
-			double pVolume = particles->at(i)->getCurrentVolume();
-
-			// particle pressure
-			double pPressure{0};
-			
-			if (isTwoPhase && particles->at(i)->getSaturation()>0.0) {
-
-				// get pore pressure pressure
-				pPressure = particles->at(i)->getPressureFluid();
-			}
-
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradients
-				const Vector3d gradient = contribution->at(j).getGradients();
-
-				// compute the particle's contribution to the nodal internal force
-				Vector3d internalForce;
-				internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
-				internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
-				internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
-
-				if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
-				{
-					internalForce.x()+=pPressure*gradient(0)*pVolume;
-					internalForce.y()+=pPressure*gradient(1)*pVolume;
-					internalForce.z()+=pPressure*gradient(2)*pVolume;
-				}
-
-				// add the internal force contribution in node
-				nodeI->addInternalForce(internalForce);
-			}
+			// get references for atomic updates
+			double& fint_x = nodeI->getInternalForceRef().x();
+			double& fint_y = nodeI->getInternalForceRef().y();
+			double& fint_z = nodeI->getInternalForceRef().z();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fint_x += internalForce.x();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fint_y += internalForce.y();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fint_z += internalForce.z();
 		}
 	}
 }
@@ -353,7 +344,7 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// get the nodal gradients
 				const Vector3d gradient = contribution->at(j).getGradients();
@@ -371,47 +362,58 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles) {
 
 	// The nodal external force is calculated from two sources,
 	// one from the stored force in the particles (1), like gravity,
 	// and two, from the external force imposed directly at the grid nodes (2)
 	
 	// (1) - External force from particles: f_ext_I = sum_p f_ext_p N_Ip
+	vector<Node*>* nodes = mesh->getNodes();
 
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+	#pragma omp parallel for schedule(static)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get nodes
-		vector<Node*>* nodes = mesh->getNodes();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get particle external force
+		const Vector3d pExtForce = particles->at(i)->getExternalForce();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-			// get particle external force
-			const Vector3d pExtForce = particles->at(i)->getExternalForce();
-
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// add weighted force in node
-				nodeI->addExternalForce(pExtForce*contribution->at(j).getWeight());
-			}
+			// add weighted force in node
+			const Vector3d externalForce = pExtForce*contribution->at(j).getWeight();
+			
+			// take references for atomic updates
+			double& fext_x = nodeI->getExternalForceRef().x();
+			double& fext_y = nodeI->getExternalForceRef().y();
+			double& fext_z = nodeI->getExternalForceRef().z();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fext_x += externalForce.x();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fext_y += externalForce.y();
+#ifdef _OPENMP
+			#pragma omp atomic update
+#endif
+			fext_z += externalForce.z();
 		}
 	}
 
-	// (2) - External force from nodes _ f_ext_I <- f_ext_I + f_ext_BC
+	// (2) - External force from nodes: f_ext_I += f_ext_BC
 	// External boundary condition force 
 	Loads::NodalPointLoadData& nodal_force_list = Loads::getNodalPointList();
 	for (size_t i = 0; i < nodal_force_list.loads.size() ; i++)
@@ -455,7 +457,7 @@ void Interpolation::nodalExternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// add weighted force in node
 				nodeI->addExternalForceFluid(pExtForceFluid*contribution->at(j).getWeight());
@@ -497,7 +499,7 @@ void Interpolation::nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// add weighted force in node
 				nodeI->addExternalForceFluid(pDragForceFluid*contribution->at(j).getWeight());
@@ -520,59 +522,55 @@ void Interpolation::nodalDragForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 ///		N_I(x_p): is the weight function of the node I evaluated at particle position x_p
 ///
 
-void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// particle strain increment for each particle
+#ifdef _OPENMP
+	#pragma omp parallel for
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize a matrix for strain increment computation
+		Matrix3d dstrain = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-			// initialize a matrix for strain increment computation
-			Matrix3d dstrain = Matrix3d::Zero();
+			// get the nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
+
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
+
+			// compute the nodal contribution to the particle strain increment
+
+			dstrain(0,0) += (dN(0)*v(0) + dN(0)*v(0)) * 0.5 * dt; // x,x
+			dstrain(0,1) += (dN(1)*v(0) + dN(0)*v(1)) * 0.5 * dt; // x,y
+			dstrain(0,2) += (dN(2)*v(0) + dN(0)*v(2)) * 0.5 * dt; // x,z
+
+			dstrain(1,0) += (dN(0)*v(1) + dN(1)*v(0)) * 0.5 * dt; // y,x
+			dstrain(1,1) += (dN(1)*v(1) + dN(1)*v(1)) * 0.5 * dt; // y,y
+			dstrain(1,2) += (dN(2)*v(1) + dN(1)*v(2)) * 0.5 * dt; // y,z
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution to the particle strain increment
-
-				dstrain(0,0) += (dN(0)*v(0)+dN(0)*v(0))*0.5*dt; // x,x
-				dstrain(0,1) += (dN(1)*v(0)+dN(0)*v(1))*0.5*dt; // x,y
-				dstrain(0,2) += (dN(2)*v(0)+dN(0)*v(2))*0.5*dt; // x,z
-
-				dstrain(1,0) += (dN(0)*v(1)+dN(1)*v(0))*0.5*dt; // y,x
-				dstrain(1,1) += (dN(1)*v(1)+dN(1)*v(1))*0.5*dt; // y,y
-				dstrain(1,2) += (dN(2)*v(1)+dN(1)*v(2))*0.5*dt; // y,z
-				
-				dstrain(2,0) += (dN(0)*v(2)+dN(2)*v(0))*0.5*dt; // z,x
-				dstrain(2,1) += (dN(1)*v(2)+dN(2)*v(1))*0.5*dt; // z,y
-				dstrain(2,2) += (dN(2)*v(2)+dN(2)*v(2))*0.5*dt; // z,z
-			}
-
-			// set total particle strain increment
-			particles->at(i)->setStrainIncrement(dstrain);
+			dstrain(2,0) += (dN(0)*v(2) + dN(2)*v(0)) * 0.5 * dt; // z,x
+			dstrain(2,1) += (dN(1)*v(2) + dN(2)*v(1)) * 0.5 * dt; // z,y
+			dstrain(2,2) += (dN(2)*v(2) + dN(2)*v(2)) * 0.5 * dt; // z,z
 		}
+
+		// set total particle strain increment
+		particles->at(i)->setStrainIncrement(dstrain);
 	}
 }
 
@@ -606,7 +604,7 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
 				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
@@ -635,118 +633,104 @@ void Interpolation::particleStrainIncrementFluid(Mesh* mesh, vector<Body*>* bodi
 	}
 }
 
-void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < static_cast<int>(particles->size()); ++i) 
+	{
+		// only active particles can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-		// for each particle 
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// initialize a matrix for spin increment computation
+		Matrix3d dvorticity = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// only active particles can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+			// get contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
 
-			// initialize a matrix for spin increment computation
-			Matrix3d dvorticity = Matrix3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
 
-				// get contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution to the particle spin increment
-
-				dvorticity(0,0) += (dN(0)*v(0)-dN(0)*v(0))*0.5*dt; // x,x
-				dvorticity(0,1) += (dN(1)*v(0)-dN(0)*v(1))*0.5*dt; // x,y
-				dvorticity(0,2) += (dN(2)*v(0)-dN(0)*v(2))*0.5*dt; // x,z
-				
-				dvorticity(1,0) += (dN(0)*v(1)-dN(1)*v(0))*0.5*dt; // y,x
-				dvorticity(1,1) += (dN(1)*v(1)-dN(1)*v(1))*0.5*dt; // y,y
-				dvorticity(1,2) += (dN(2)*v(1)-dN(1)*v(2))*0.5*dt; // y,z
-				
-				dvorticity(2,0) += (dN(0)*v(2)-dN(2)*v(0))*0.5*dt; // z,x
-				dvorticity(2,1) += (dN(1)*v(2)-dN(2)*v(1))*0.5*dt; // z,y
-				dvorticity(2,2) += (dN(2)*v(2)-dN(2)*v(2))*0.5*dt; // z,z
-			}
-
-			// add total spin tensor in the particle
-			particles->at(i)->setVorticityIncrement(dvorticity);
+			// compute the nodal contribution to the particle spin increment
+            dvorticity(0,1) += (dN(1)*v(0) - dN(0)*v(1)) * 0.5 * dt; // x,y
+            dvorticity(0,2) += (dN(2)*v(0) - dN(0)*v(2)) * 0.5 * dt; // x,z
+            dvorticity(1,2) += (dN(2)*v(1) - dN(1)*v(2)) * 0.5 * dt; // y,z
 		}
+		
+		// fill the anti-symmetric part of the spin tensor
+		dvorticity(1,0) = -dvorticity(0,1);
+        dvorticity(2,0) = -dvorticity(0,2);
+        dvorticity(2,1) = -dvorticity(1,2);
+
+		// add total spin tensor in the particle
+		particles->at(i)->setVorticityIncrement(dvorticity);
 	}
 }
 
-void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Interpolation::particleDeformationGradient(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < static_cast<int>(particles->size()); ++i)  {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize a matrix for velocity gradient
+		Matrix3d gradV = Matrix3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-			// initialize a matrix for velocity gradient
-			Matrix3d gradV = Matrix3d::Zero();
+			// get the nodal gradient
+			const Vector3d dN = contribution->at(j).getGradients();
+
+			// get nodal velocity
+			const Vector3d v = nodeI->getVelocity();
+
+			// compute the nodal contribution deformation gradient increment
+
+			gradV(0,0) += (dN(0)*v(0)); // x,x
+			gradV(0,1) += (dN(1)*v(0)); // x,y
+			gradV(0,2) += (dN(2)*v(0)); // x,z
+
+			gradV(1,0) += (dN(0)*v(1)); // y,x
+			gradV(1,1) += (dN(1)*v(1)); // y,y
+			gradV(1,2) += (dN(2)*v(1)); // y,z
 			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
-
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
-				// get the nodal gradient
-				const Vector3d dN = contribution->at(j).getGradients();
-
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
-
-				// compute the nodal contribution deformation gradient increment
-
-				gradV(0,0) += (dN(0)*v(0)); // x,x
-				gradV(0,1) += (dN(1)*v(0)); // x,y
-				gradV(0,2) += (dN(2)*v(0)); // x,z
-
-				gradV(1,0) += (dN(0)*v(1)); // y,x
-				gradV(1,1) += (dN(1)*v(1)); // y,y
-				gradV(1,2) += (dN(2)*v(1)); // y,z
-				
-				gradV(2,0) += (dN(0)*v(2)); // z,x
-				gradV(2,1) += (dN(1)*v(2)); // z,y
-				gradV(2,2) += (dN(2)*v(2)); // z,z
-			}
-
-			// get deformation gradient
-			const Matrix3d Fn = particles->at(i)->getDeformationGradient();
-
-			// set current deformation gradient
-			particles->at(i)->setDeformationGradient((Matrix3d::Identity()+dt*gradV)*Fn);
+			gradV(2,0) += (dN(0)*v(2)); // z,x
+			gradV(2,1) += (dN(1)*v(2)); // z,y
+			gradV(2,2) += (dN(2)*v(2)); // z,z
 		}
+
+		// get deformation gradient
+		const Matrix3d Fn = particles->at(i)->getDeformationGradient();
+
+		// set current deformation gradient
+		particles->at(i)->setDeformationGradient((Matrix3d::Identity()+dt*gradV)*Fn);
 	}
 }
 

@@ -561,7 +561,7 @@ namespace Output{
 		int cellsType=gridType==CellType::POINTS?1:(gridType==CellType::CELLS?12:1);
 
 		gridFile<<"<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
+		for (int i = 0; i < nCells; ++i) {
 			gridFile<<cellsType<<"\n";
 		}
 		gridFile<<"</DataArray>\n";
@@ -777,12 +777,12 @@ namespace Output{
 		csv_file.close();
 	}
 
-	void writeResultInStep(int resultSteps,vector<Body*>* bodies, double iTime)
+	void writeResultInStep(int resultSteps,vector<Particle*>* particles, double iTime)
 	{
 		if (ModelSetup::getLoopCounter() % resultSteps == 0)
 		{
 			// write model results
-			writeBodies(bodies,iTime);
+			writeParticles(particles,iTime);
 
 			// update terminal
 			updateTerminal(iTime);

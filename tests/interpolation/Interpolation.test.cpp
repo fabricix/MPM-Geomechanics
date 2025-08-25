@@ -32,7 +32,7 @@ float interpolation(vector<Particle *> particles, Mesh mesh) {
   }
 
   // interpolate particle mass to nodes
-  Interpolation::nodalMassWithParticles(&mesh, &particles);
+  Interpolation::nodalMass(&mesh, &particles);
 
   // get grid nodes
   vector<Node *> *gridNodes = mesh.getNodes();

@@ -57,19 +57,19 @@ namespace Update {
 	///
 	/// \f$ \rho_{p}^{t+1,f}=\rho_{p}^{t,f} /\left(1+\Delta \epsilon_{i i p}^{t-1/2,f}\right) \f$
 	///
-	/// \param[in] bodies List of Body pointers
-	void particleDensity(vector<Body*>* bodies);
+	/// \param[in] particles List of Particle pointers
+	void particleDensity(vector<Particle*>* particles);
 	
 	/// \brief Updates the porosity of the mixture
 	///
 	/// \f$ n^{t+1} = V^{t+1,f}/(V^{t+1,f}+V^{t+1,s})\f$
 	///
-	/// \param[in] bodies List of Body pointers
-	void particlePorosity(vector<Body*>* bodies);
+	/// \param[in] particles List of Body pointers
+	void particlePorosity(vector<Particle*>* particles);
 
 	/// \brief Update the particles' stress
-	/// \param[in] bodies List of Body pointers
-	void particleStress(vector<Body*>* bodies);
+	/// \param[in] particles List of Particle pointers
+	void particleStress(vector<Particle*>* particles);
 	
 	/// \brief Update the particles pressure
 	///
@@ -84,24 +84,24 @@ namespace Update {
 	///	\f$ v_{ip}^{t+1/2} = v_{ip}^{t-1/2} + \sum_I N_{ip} f_{iI}^{t}/m_I \Delta t\f$ 
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Particle pointers
 	/// \param[in] time_step Time step
-	void particleVelocity(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particleVelocity(Mesh* mesh, vector<Particle*>* particles, double time_step);
 	
 	/// \brief Update the particle velocity fluid
 	///
 	/// \f$ v_{ip}^{f,t+1/2} = v_{ip}^{f,t-1/2} + \sum_I N_{ip} f_{iI}^{t,f}/m_I^f \Delta t \f$  
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Particles pointers
 	/// \param[in] time_step Time step
-	void particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particleVelocityFluid(Mesh* mesh, vector<Particle*>* particles, double time_step);
 
 	/// \brief Update particle position
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Body pointers
 	/// \param[in] time_step Time step
-	void particlePosition(Mesh* mesh, vector<Body*>* bodies, double time_step);
+	void particlePosition(Mesh* mesh, vector<Particle*>* particles, double time_step);
 
 	/// \brief Apply essential boundary condition in 
 	/// terms of force
@@ -125,8 +125,8 @@ namespace Update {
 
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of bodies
-	void contributionNodes(Mesh* mesh, vector<Body*>* bodies);
+	/// \param[in] particle List of particles
+	void contributionNodes(Mesh* mesh, vector<Particle*>* particles);
 
 	/// \brief Configure the force in each node in boundary planes
 	/// \param[in] boundary Boundary plane
@@ -153,7 +153,6 @@ namespace Update {
 	/// \param[in] direction Direction to apply de boundary condition 
 	/// \f$x=0\f$, \f$y=1\f$ , \f$z=2\f$ 
 	void setPlaneMomentumFluid(const Boundary::planeBoundary* boundary, vector<Node*>* nodes, unsigned direction);
-	
 };
 
 #endif /* UPDATE_H_ */
