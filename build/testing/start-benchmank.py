@@ -2,6 +2,7 @@ import subprocess
 import threading
 import json
 import time
+import sys
 
 # Json template for testing
 json_template = {
@@ -16,9 +17,9 @@ json_template = {
 
 # Executable file names
 executables = {
-    "atomic": "MPM-Geomechanics-benchmark-atomic.exe",
-    "main": "MPM-Geomechanics-benchmark-main.exe",
-    "local": "MPM-Geomechanics-benchmark-local.exe"
+    "atomic": {"path": "MPM-Geomechanics-benchmark-atomic.exe", "active": False},
+    "main": {"path": "MPM-Geomechanics-benchmark-main.exe", "active": False},
+    "local": {"path": "MPM-Geomechanics-benchmark-local.exe", "active": False}
 }
 
 materials_point = [150, 250, 500] # Materials points in **thousands**
@@ -51,37 +52,76 @@ def execute_benchmarks(executable, executable_name):
       run_benchmark(executable, executable_name, config_file(p, t))
   print(f"[INFO] Completed benchmarks for executable: {executable_name}\n")
 
-# Main function
-def main():
-
-    # Create configuration files
+def create_configuration_files():
     for p in materials_point:
-      for t in threads:
-        json_template["num_particles"] = p * 1000
-        json_template["num_threads"] = t
-        with open(f"{config_file(p, t)}.json", "w") as f:
-          json.dump(json_template, f, indent=4)
+        for t in threads:
+            json_template["num_particles"] = p * 1000
+            json_template["num_threads"] = t
+            with open(f"{config_file(p, t)}.json", "w") as f:
+                json.dump(json_template, f, indent=4)
+
+def read_parameters_from_console():
+    if len(sys.argv) > 1:
+
+      for parameter in sys.argv[1:]:
+        split_parameter = parameter.split(":")
+        exe_name = split_parameter[0]
+        path = split_parameter[1] if len(split_parameter) > 1 else executables[exe_name]["path"]
+
+        if exe_name in executables.keys():
+          executables[exe_name]["active"] = True
+          executables[exe_name]["path"] = path
+          print(f"[INFO] Enabled executable for {exe_name} | path: {path}")
+        else: 
+          print(f"[INFO] The parameter provided is not valid: {parameter}")
+
+    else: 
+      print(f"[INFO] No parameters found")
+      for executable in executables.values():
+        executable["active"] = True
+
+def start_benchmarks():
 
     # Start time measurement
     start_time = time.time()
 
-    thread01 = threading.Thread(target=execute_benchmarks, args=(executables["main"], "main"))
-    thread01.start()
+    if executables["main"]["active"]:
+      thread01 = threading.Thread(target=execute_benchmarks, args=(executables["main"]["path"], "main"))
+      thread01.start()
 
-    thread02 = threading.Thread(target=execute_benchmarks, args=(executables["atomic"], "atomic"))
-    thread02.start()
+    if executables["atomic"]["active"]:
+        thread02 = threading.Thread(target=execute_benchmarks, args=(executables["atomic"]["path"], "atomic"))
+        thread02.start()
 
-    thread03 = threading.Thread(target=execute_benchmarks, args=(executables["local"], "local"))
-    thread03.start()
+    if executables["local"]["active"]:
+        thread03 = threading.Thread(target=execute_benchmarks, args=(executables["local"]["path"], "local"))
+        thread03.start()
 
-    thread01.join()
-    thread02.join()
-    thread03.join()
+    if executables["main"]["active"]:
+        thread01.join()
+
+    if executables["atomic"]["active"]:
+        thread02.join()
+
+    if executables["local"]["active"]:
+        thread03.join()
 
     # End time measurement
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"[INFO] Total elapsed time: {elapsed_time:.2f} seconds")
+
+# Main function
+def main():
+
+    # Create configuration files
+    create_configuration_files()
+
+    # Read parameters from the console
+    read_parameters_from_console()
+
+    # Start benchmarking
+    start_benchmarks()
 
 # Start benchmarking
 main()
