@@ -4,6 +4,7 @@ import json
 import time
 import sys
 from pathlib import Path
+import os
 
 # Json template for testing
 json_template = {
