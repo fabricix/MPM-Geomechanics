@@ -21,8 +21,8 @@ jobs:
         run: git clone https://github.com/google/googletest.git external/googletest
 
       - name: Make test build script executable
-        run: chmod +x build/testing/cmake-build-linux.bash
+        run: chmod +x build/testing/cmake-build.bash
 
       - name: Run build script from testing directory
-        run: ./cmake-build-linux.bash
+        run: ./cmake-build.bash
         working-directory: build/testing
