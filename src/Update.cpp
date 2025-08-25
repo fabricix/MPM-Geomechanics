@@ -31,7 +31,7 @@ void Update::nodalTotalForce(Mesh* mesh) {
 
 	// for each node
 #ifdef _OPENMP
-	#pragma omp parallel for shared (gNodes)
+	#pragma omp parallel for shared(gNodes)
 #endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
@@ -52,7 +52,7 @@ void Update::resetNodalValues(Mesh* mesh) {
 
 	// for each node
 #ifdef _OPENMP
-	#pragma omp parallel for shared (gNodes)
+	#pragma omp parallel for shared(gNodes)
 #endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
@@ -70,7 +70,7 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 
 	// for each node
 #ifdef _OPENMP
-	#pragma omp parallel for shared (gNodes)
+	#pragma omp parallel for shared(gNodes)
 #endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
@@ -99,7 +99,7 @@ void Update::particleDensity(vector<Particle*>* particles) {
 void Update::particlePorosity(vector<Particle*>* particles) {
 
 #ifdef _OPENMP
-		#pragma omp parallel for shared (particles)
+	#pragma omp parallel for shared(particles)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
@@ -114,7 +114,7 @@ void Update::particlePorosity(vector<Particle*>* particles) {
 void Update::particleStress(vector<Particle*>* particles) {
 
 #ifdef _OPENMP
-	#pragma omp parallel for shared (particles)
+	#pragma omp parallel for shared(particles)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
@@ -136,7 +136,7 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 
 		// for each particle
 #ifdef _OPENMP
-		#pragma omp parallel for shared (particles)
+		#pragma omp parallel for shared(particles)
 #endif
 		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
@@ -158,7 +158,7 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 
 	// for each particle
 #ifdef _OPENMP
-	#pragma omp parallel for shared (particles, nodes, dt)
+	#pragma omp parallel for shared(particles, nodes, dt)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
@@ -202,7 +202,7 @@ void Update::particleVelocityFluid(Mesh* mesh, vector<Particle*>* particles, dou
 
 		// for each particle
 #ifdef _OPENMP 
-		#pragma omp parallel for shared (particles, nodes, dt)
+	#pragma omp parallel for shared(particles, nodes, dt)
 #endif
 	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 

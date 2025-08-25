@@ -136,6 +136,10 @@ public:
 	/// \param[in] density_increment Nodal density increment
 	inline void addDensityLevelSet(double density_increment) { this->densityLevelSet+=density_increment; }
 
+	/// \brief Get a reference of the density level set
+	/// \return Reference of the density level set
+	inline double& getDensityLevelSetRef(){ return this->densityLevelSet; }
+
 	/// \brief Add fluid mass increment to the nodal mass
 	/// \param[in] fluid_mass_increment Nodal mass increment 
 	virtual inline void addMassFluid(double fluid_mass_increment)

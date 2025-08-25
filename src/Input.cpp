@@ -17,8 +17,6 @@
 #include "Loads.h"
 #include "Seismic.h"
 
-#include <omp.h>
-
 #include <limits>
 using std::numeric_limits;
 

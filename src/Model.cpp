@@ -6,7 +6,10 @@
 #include <cmath>
 using std::floor;
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
+
 #include <iostream>
 
 namespace ModelSetup {
@@ -180,27 +183,27 @@ namespace ModelSetup {
 	// print the number of active threads
 	void printActiveThreads() {
 #ifdef _OPENMP
-			#pragma omp parallel
-			{
-				#pragma omp master
-				{
-					std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
-				}
-			}
+	#pragma omp parallel
+	{
+		#pragma omp master
+		{
+			std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+		}
+	}
 #else
-			std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
+		std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
 #endif
 	}
 
 	// openMP threads
 	void setNumThreads(unsigned nThreads){
 
-		#ifdef _OPENMP
+#ifdef _OPENMP
 		// fix the number of threads
 		omp_set_dynamic(0);
 		// set the number of threads of the simulation
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
-		#endif
+#endif
 
 		// print the number of active threads
 		printActiveThreads();
