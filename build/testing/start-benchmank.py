@@ -69,6 +69,7 @@ def adjust_paths():
         for exe in executables.keys():
             executables[exe]["path"] = f"{executables[exe]['path']}.exe"
     if sys.platform == "linux":
+        script_dir = os.path.dirname(os.path.abspath(__file__))
         for exe in executables.keys():
             executables[exe]["path"] = os.path.join(script_dir, executables[exe]["path"])
 
