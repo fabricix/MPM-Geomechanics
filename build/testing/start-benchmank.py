@@ -93,7 +93,7 @@ def read_parameters_from_console():
         print("[INFO] Windows platform detected")
         for exe in executables.keys():
             executables[exe]["path"] = f"{executables[exe]['path']}.exe"
-            if not os.path.exists(executables[exe]["path"]):
+            if executables[exe]["active"] and not os.path.exists(executables[exe]["path"]):
                 print(f"[ERROR] Executable not found for {exe}: {executables[exe]['path']}")
                 executables[exe]["active"] = False
 
@@ -102,7 +102,7 @@ def read_parameters_from_console():
         script_dir = os.path.dirname(os.path.abspath(__file__))
         for exe in executables.keys():
             executables[exe]["path"] = os.path.join(script_dir, executables[exe]["path"])
-            if not os.path.exists(executables[exe]["path"]):
+            if executables[exe]["active"] and not os.path.exists(executables[exe]["path"]):
                 print(f"[ERROR] Executable not found for {exe}: {executables[exe]['path']}")
                 executables[exe]["active"] = False
 
