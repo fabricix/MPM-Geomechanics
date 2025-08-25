@@ -18,9 +18,9 @@ json_template = {
 
 # Executable file names
 executables = {
-    "atomic": {"path": "MPM-Geomechanics-benchmark-atomic.exe", "active": False},
-    "main": {"path": "MPM-Geomechanics-benchmark-main.exe", "active": False},
-    "local": {"path": "MPM-Geomechanics-benchmark-local.exe", "active": False}
+    "atomic": {"path": "MPM-Geomechanics-benchmark-atomic", "active": False},
+    "main": {"path": "MPM-Geomechanics-benchmark-main", "active": False},
+    "local": {"path": "MPM-Geomechanics-benchmark-local", "active": False}
 }
 
 materials_point = [150, 250, 500] # Materials points in **thousands**
@@ -63,13 +63,21 @@ def create_configuration_files():
             with open(f"{config_file(p, t)}.json", "w") as f:
                 json.dump(json_template, f, indent=4)
 
+def adjust_paths():
+    if sys.platform == "win32":
+        for exe in executables.keys():
+            executables[exe]["path"] = f"{executables[exe]['path']}.exe"
+    if sys.platform == "linux":
+        for exe in executables.keys():
+            executables[exe]["path"] = os.path.join(script_dir, executables[exe]["path"])
+
 def read_parameters_from_console():
     if len(sys.argv) > 1:
 
       for parameter in sys.argv[1:]:
         split_parameter = parameter.split(":")
         exe_name = split_parameter[0]
-        
+
         if len(split_parameter) > 1:
             path = split_parameter[1]
         elif exe_name in executables.keys():
@@ -120,6 +128,9 @@ def start_benchmarks():
 
 # Main function
 def main():
+
+    # Adjust executable paths
+    adjust_paths()
 
     # Create configuration files
     create_configuration_files()
