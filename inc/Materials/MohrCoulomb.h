@@ -78,7 +78,7 @@ public:
     /// \param[in] dilation Dilatant angle in degree \f$\psi\f$
     /// \param[in] tensile Tensile strength \f$\sigma_t\f$
     /// \param[in] softening; //!< softening type
-    MohrCoulomb(int id, double density, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening);
+    MohrCoulomb(int id, double density, double mu, double young, double poisson, double friction, double cohesion, double dilation, double tensile, MohrCoulomb::Softening softening);
 
     /// \brief Update the stress in the particle
     /// \param[in] particle Particle

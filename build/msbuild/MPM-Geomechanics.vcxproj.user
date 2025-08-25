@@ -2,12 +2,12 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerCommandArguments>contact.json</LocalDebuggerCommandArguments>
-    <LocalDebuggerWorkingDirectory>C:\Users\mathe\OneDrive\Área de Trabalho\contact</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>..\..\tests\contact</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>terrain-contact.json</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>contact.json</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerWorkingDirectory>C:\Users\mathe\OneDrive\Área de Trabalho\terrain-contact</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>..\..\tests\contact</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>

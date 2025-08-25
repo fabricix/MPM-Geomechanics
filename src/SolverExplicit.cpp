@@ -86,7 +86,8 @@ void SolverExplicit::Solve()
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		//4.1: Contact force correction
-		if (ModelSetup::getContactActive()) {
+		bool contactActiveCurrent = ModelSetup::getContactActive();
+		if (contactActiveCurrent) {
 
 			{
 				// nodal unit normal
@@ -104,12 +105,7 @@ void SolverExplicit::Solve()
 				// update nodal momentum after contact
 				Update::nodalMomentumContact(mesh, dt);
 			}
-			else {
-				ModelSetup::setContactActive(true);
-			}
 		}
-
-
 
 		// Step 5: Particle updates
 		// 5.1: Update particle velocity
@@ -180,6 +176,10 @@ void SolverExplicit::Solve()
 
 		// Step 11: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
+
+		if (contactActive) {
+			ModelSetup::setContactActive(true);
+		}
 	}
 
 	// Final output

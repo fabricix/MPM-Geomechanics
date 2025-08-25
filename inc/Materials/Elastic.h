@@ -18,7 +18,7 @@ public:
 	/// \param[in] density Material density \f$\rho\f$
 	/// \param[in] young Young's modulus \f$E\f$
 	/// \param[in] poisson Poisson's ratio \f$\nu\f$
-	Elastic(int id, double density, double young, double poisson);
+	Elastic(int id, double density, double mu, double young, double poisson);
 	
 	/// \brief Default destructor
 	///
@@ -59,8 +59,8 @@ protected:
 	double Poisson; //!< Poisson's ratio \f$\nu\f$
 };
 
-inline Elastic::Elastic(int id, double density, double young, double poisson)
-: Material(id, density, Material::MaterialType::ELASTIC)
+inline Elastic::Elastic(int id, double density,double mu, double young, double poisson)
+: Material(id, density, mu, Material::MaterialType::ELASTIC)
 {
 	this->Young=young;
 	this->Poisson=poisson;

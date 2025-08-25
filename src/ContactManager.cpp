@@ -8,12 +8,10 @@
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	ModelSetup::setContactActive(false);
 	mesh->clearContactNodes();
-	
-
 
 	// get number of nodes and bodies
-	int nNodes = (int)mesh->getNumNodes();
-	int nBodies = (int)bodies->size();
+	size_t nNodes = (int)mesh->getNumNodes();
+	size_t nBodies = (int)bodies->size();
 
 	// create contribution matrix - Example:
 	//			body1	body2	
@@ -22,7 +20,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	// node3    1		1		-> indicates that node3 receives contribution from body1 and body2
 	// node4    0		0		-> indicates that node4 does not receive contribution any body
 	
-	vector<vector<int>> contributionMatrix(nNodes, vector<int>(nBodies, 0));
+	vector<vector<int>> contributionMatrix(static_cast<int>(nNodes), vector<int>(nBodies, 0));
 
 	// for each body
 	for (size_t ibody = 0; ibody < nBodies; ++ibody) {
@@ -31,8 +29,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared(particles, mesh)
-		for (int i = 0; i < particles->size(); ++i) {
+		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
@@ -40,7 +37,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			// get the contribution nodes
 			vector<Contribution>* contributions = particles->at(i)->getContributionNodes();
 
-			for (int j = 0; j < contributions->size(); j++) {
+			for (size_t j = 0; j < contributions->size(); j++) {
 
 				int nodeId = contributions->at(j).getNodeId();
 
@@ -54,16 +51,15 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 	
 	// for each node
-	for (int i = 0; i < nNodes; i++) {
+	for (size_t i = 0; i < nNodes; i++) {
 
 		// check if any body contributed to node i
 		Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
 		
-
 		Contact.nodeId = i;
 
 		// check if any bodies j contributed to node i
-		for (int j = 0; j < nBodies; j++) {
+		for (size_t j = 0; j < nBodies; j++) {
 			if (contributionMatrix[i][j] == 1)
 			{
 				// check if the the body i received contribution from another body
@@ -91,11 +87,9 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 	// get number of nodes and bodies 
-	int nNodes = (int)mesh->getNumNodes();
-	int nBodies = (int)bodies->size();
+	size_t nBodies = (int)bodies->size();
 
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
-
 
 	//Calculation of the distance between bodies
 	//for each body
@@ -105,8 +99,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared(particles, mesh)
-		for (int i = 0; i < particles->size(); ++i) {
+		for (size_t i = 0; i < particles->size(); ++i) {
 
 			// only active particle can contribute
 			if (!particles->at(i)->getActive()) { continue; }
@@ -116,7 +109,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 			// get the contribution nodes
 			vector<Contribution>* contributions = particles->at(i)->getContributionNodes();
 
-			for (int j = 0; j < contributions->size(); j++) {
+			for (size_t j = 0; j < contributions->size(); j++) {
 
 				int nodeId = contributions->at(j).getNodeId();
 				Node* node = mesh->getNodes()->at(nodeId);
@@ -136,7 +129,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 					Mesh::ContactNodeData& contactNodeData = it->second; 
 
 					//add mass at node of the master body 
-					if (ibody == contactNodeData.bodyMasterId) {
+					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 						//get closest distance to master body
 						double d = contactNodeData.closestParticleDistanceMaster;
 
@@ -177,12 +170,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 	//for each contact node
 	for (auto it = contactNodes.begin(); it != contactNodes.end();) {
-		int key = it->first;
 		Mesh::ContactNodeData& contactNodesData = it->second;
-
-		//Bodies in contact
-		int contactBodyIdA = contactNodesData.bodyMasterId;
-		int contactBodySlaveIdB = contactNodesData.bodySlaveId;
 
 		// get nodal momentum
 		Vector3d momentumA = contactNodesData.momentumMaster;
@@ -194,13 +182,6 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 		// get normal vector
 		Vector3d n = contactNodesData.normal;
-
-		// calculate velocity vectors
-		Vector3d vA = momentumA / massA;
-		Vector3d vB = momentumB / massB;
-
-		// calculate center of mass velocity
-		Vector3d vCM = (momentumA + momentumB) / (massA + massB);
 
 		if (n.dot(massB * momentumA - massA * momentumB) <= 0.0) {
 			it = contactNodes.erase(it); 
@@ -220,10 +201,6 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
-	int nNodes = mesh->getNumNodes();
-
-	// get nodes
-	vector<Node*>* nodes = mesh->getNodes();
 
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
@@ -248,9 +225,6 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 			// for each node in the contribution list 
 			for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
-
 				// compute the nodal mass gradient
 				const Vector3d nodalMassGradient = pMass * contribution->at(j).getGradients();
 
@@ -262,7 +236,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 					Mesh::ContactNodeData& contactNodeData = it->second;
 
 					//add mass at node of the master body 
-					if (ibody == contactNodeData.bodyMasterId) {
+					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 						contactNodeData.normalMaster += nodalMassGradient;
 					}
 					//add mass at node of the slave body 
@@ -276,7 +250,6 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 	//for each contact node
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		int key = it->first;
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
 		// nodal normal vector master
@@ -293,11 +266,13 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt) {
+
 	contactCheckCorrection(mesh, bodies);
 
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
-	if (contactNodes.empty()) {
+
+	if (contactNodes.size() == 0) {
 		ModelSetup::setContactActive(false);
 	}
 
@@ -308,8 +283,11 @@ void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, dou
 		int bodyA = contactNodesData.bodyMasterId;
 		int bodyB = contactNodesData.bodySlaveId;
 
+		double muA = bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
+		double muB = bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
+
 		// get friction coefficient
-		double mu = std::min(bodies->at(bodyB)->getFrictionCoefficient(), bodies->at(bodyA)->getFrictionCoefficient());
+		double mu = std::min(muA, muB);
 
 		// get nodal mass and momentum
 		double massA = contactNodesData.massMaster;

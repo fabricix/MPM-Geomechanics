@@ -111,7 +111,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 						
 						//add mass at node of the master body 
-						if (ibody == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 							contactNodeData.massMaster += nodalMass;
 						}
 						//add mass at node of the slave body 
@@ -219,7 +219,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add momentum at node of the master body 
-						if (ibody == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 							contactNodeData.momentumMaster += pMass * pVelocity * contribution->at(j).getWeight();
 						}
 						//add momentum at node of the slave body 
@@ -361,7 +361,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add mass at node of the master body 
-						if (ibody == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 							contactNodeData.internalForceMaster += internalForce;
 						}
 						//add mass at node of the slave body 
@@ -480,7 +480,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
-						if (ibody == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
 							contactNodeData.externalForceMaster += pExtForce * contribution->at(j).getWeight();
 						}
 						//add external force at node of the slave body 
@@ -637,8 +637,34 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				// get the nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
 
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
+				//initialize vector v
+				Vector3d v = Vector3d::Zero();
+
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+
+						//add external force at node of the master body 
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+							v = contactNodeData.velocityMaster;
+						}
+						//add external force at node of the slave body 
+						else {
+							v = contactNodeData.velocitySlave;
+						}
+					}
+				}
+				else
+				{
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
 
 				// compute the nodal contribution to the particle strain increment
 
@@ -752,8 +778,34 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 				// get nodal gradient
 				const Vector3d dN = contribution->at(j).getGradients();
 
-				// get nodal velocity
-				const Vector3d v = nodeI->getVelocity();
+				//initialize vector v
+				Vector3d v = Vector3d::Zero();
+
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Mesh::ContactNodeData& contactNodeData = it->second;
+
+						//add external force at node of the master body 
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+							v = contactNodeData.velocityMaster;
+						}
+						//add external force at node of the slave body 
+						else {
+							v = contactNodeData.velocitySlave;
+						}
+					}
+				}
+				else
+				{
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
 
 				// compute the nodal contribution to the particle spin increment
 

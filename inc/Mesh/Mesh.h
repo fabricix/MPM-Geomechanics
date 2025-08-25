@@ -41,8 +41,8 @@ public:
     struct ContactNodeData 
     {
         int nodeId = -1;
-        int bodyMasterId = -1;
-        int bodySlaveId = -1;
+        int bodyMasterId;
+        int bodySlaveId;
         double mu = 0.0;
 
         double massMaster = 0.0;

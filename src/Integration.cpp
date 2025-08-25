@@ -22,7 +22,6 @@ void Integration::nodalMomentum(Mesh* mesh, double dt) {
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	// for each contact node
-	#pragma omp parallel for shared(contactNodes)
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
