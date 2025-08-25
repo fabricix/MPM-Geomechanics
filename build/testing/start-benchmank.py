@@ -69,7 +69,11 @@ def read_parameters_from_console():
       for parameter in sys.argv[1:]:
         split_parameter = parameter.split(":")
         exe_name = split_parameter[0]
-        path = split_parameter[1] if len(split_parameter) > 1 else executables[exe_name]["path"]
+        
+        if len(split_parameter) > 1:
+            path = split_parameter[1]
+        elif exe_name in executables.keys():
+            path = executables[exe_name]["path"]
 
         if exe_name in executables.keys():
           executables[exe_name]["active"] = True
