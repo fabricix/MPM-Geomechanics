@@ -94,9 +94,10 @@ void SolverExplicit::Solve()
 				ContactManager::nodalUnitNormal(mesh, bodies);
 			}
 
+			ModelSetup::setSecondContactActive(false);
 			ContactManager::computeContactForces(mesh, bodies, dt);
 
-			if (ModelSetup::getContactActive()) {
+			if (ModelSetup::getSecondContactActive()) {
 
 				// impose force boundary conditions
 				Update::boundaryConditionsContactForce(mesh);

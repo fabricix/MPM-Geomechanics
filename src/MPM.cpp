@@ -161,7 +161,10 @@ void MPM::setupContact()
 	// verity if contact active
 	bool contactActive = Input::getContactActive();
 	ModelSetup::setContactActive(contactActive);
-	if (!contactActive) { return; }
+	if (contactActive) { 
+		int normalType = Input::getContactNormal();
+		ModelSetup::setContactNormal(normalType);
+	}
 }
 
 void MPM::setupTerrainContact()

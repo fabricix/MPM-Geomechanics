@@ -634,6 +634,10 @@ namespace Input {
 	/// \brief Return the contact active
 	bool getContactActive();
 
+	/// \brief Return the contact normal flag for the simulation
+	/// \return contact_normal Flag for the simulation
+	unsigned getContactNormal();
+
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
 	double getFrictionCoefficient ();

@@ -229,7 +229,6 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 					}
 				}
 
-
 				// add the weighted momentum in node
 				nodeI->addMomentum(pMass*pVelocity*contribution->at(j).getWeight());
 			}
@@ -659,6 +658,11 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 							v = contactNodeData.velocitySlave;
 						}
 					}
+					else
+					{
+						// get nodal velocity
+						v = nodeI->getVelocity();
+					}
 				}
 				else
 				{
@@ -799,6 +803,10 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 						else {
 							v = contactNodeData.velocitySlave;
 						}
+					}
+					else {
+						// get nodal velocity
+						v = nodeI->getVelocity();
 					}
 				}
 				else

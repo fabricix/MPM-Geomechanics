@@ -1617,6 +1617,44 @@ bool Input::getContactActive()
 	}
 }
 
+unsigned Input::getContactNormal() {
+
+	try
+	{
+		string keyword = "contact_normal";
+
+		// default simulations is no contact
+		if (inputFile[keyword].is_null()) { return 0; }
+
+		// define the normal reference
+		if (inputFile[keyword].is_string()) {
+
+			unsigned normalReference;
+
+			if (inputFile[keyword] == "master") {
+				normalReference = 1;
+			}
+			else if (inputFile[keyword] == "slave") {
+				normalReference = 2;
+			}
+			else {
+				normalReference = 0;
+			}
+
+
+			return normalReference;
+		}
+
+		throw(keyword);
+	}
+
+	catch (std::string& keyword)
+	{
+		Warning::printMessage("The keyword: \"" + string(keyword) + "\" must be a true/false value");
+		throw;
+	}
+}
+
 double Input::getFrictionCoefficient() {
 
 	try

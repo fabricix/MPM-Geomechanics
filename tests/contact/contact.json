@@ -1,72 +1,68 @@
 {
-    "contact": true,
+  "contact": true,
 
-    "time":2.0,
+  "contact_normal": "master",
 
-    "critical_time_step_multiplier":0.15,
+  "time": 2.0,
 
-    "gravity":[7.07,0.0,-7.07],
+  "critical_time_step_multiplier": 0.15,
 
-    "results": 
-    {
-        "print":25,
-        "fields":["id","displacement","material","active","pressure","external_force","contact", "velocity"]
-    },
+  "gravity": [ 7.07, 0.0, -7.07 ],
 
-    "mesh": 
-    {
-        "cells_dimension":[1,1,1],
-		"cells_number":[10,5,9],
-		"origin":[0,0,0],
+  "results": {
+    "print": 25,
+    "fields": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+  },
 
-        "boundary_conditions": 
-        {
-            "plane_X0":"sliding",
-            "plane_Y0":"sliding",
-            "plane_Z0":"sliding",
-            "plane_Xn":"sliding",
-            "plane_Yn":"sliding",
-            "plane_Zn":"sliding"
-        }
-    },
+  "mesh": {
+    "cells_dimension": [ 1, 1, 1 ],
+    "cells_number": [ 32, 14, 14 ],
+    "origin": [ 0, 0, 0 ],
 
-    "material": 
-    {
-      "elastic1": {
-        "type": "elastic",
-        "id": 1,
-        "young": 100e6,
-        "density": 2500,
-        "poisson": 0.3,
-        "mu": 0.5
-      },
-
-        "elastic2": 
-        {
-            "type": "elastic",
-            "id": 2,
-            "young": 100e8,
-            "density": 2500,
-            "poisson": 0.3,
-            "mu":0.5
-        }
-    },
-
-    "body": {
-        "body_1": 
-        {
-            "type":"cuboid",
-			"id":1,
-			"point_p1":[2,2,4],
-			"point_p2":[5,5,8],
-			"material_id":1
-        },        
-        "body_2": {
-            "type": "cuboid",
-            "id": 2,
-            "point_p1":[0,0,0],
-			"point_p2":[10,5,4],
-			"material_id":2
-        }
+    "boundary_conditions": {
+      "plane_X0": "sliding",
+      "plane_Y0": "sliding",
+      "plane_Z0": "sliding",
+      "plane_Xn": "sliding",
+      "plane_Yn": "sliding",
+      "plane_Zn": "sliding"
     }
+  },
+
+  "material": {
+    "elastic1": {
+      "type": "elastic",
+      "id": 1,
+      "young": 100e6,
+      "density": 2500,
+      "poisson": 0.3,
+      "mu": 0.5
+    },
+
+    "elastic2": {
+      "type": "elastic",
+      "id": 2,
+      "young": 100e6,
+      "density": 2500,
+      "poisson": 0.3,
+      "mu": 0.5
+    }
+  },
+
+  "body": {
+    "body_1": {
+      "type": "cuboid",
+      "id": 1,
+      "point_p1": [ 0, 0, 0 ],
+      "point_p2": [ 32, 14, 2 ],
+      "material_id": 1
+    },
+    "body_2": {
+      "type": "cuboid",
+      "id": 2,
+      "point_p1": [ 2, 2, 2 ],
+      "point_p2": [ 12, 12, 12 ],
+      "material_id": 2
+    }
+  }
 }

@@ -169,7 +169,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 
 	//for each contact node
-	for (auto it = contactNodes.begin(); it != contactNodes.end();) {
+	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
 		// get nodal momentum
@@ -183,18 +183,16 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 		// get normal vector
 		Vector3d n = contactNodesData.normal;
 
-		if (n.dot(massB * momentumA - massA * momentumB) <= 0.0) {
-			it = contactNodes.erase(it); 
-		}
-		else {
+		// relative velocity
+		Vector3d vAB = (massB * momentumA - massA * momentumB)/(massA * massB);
+
+		if (n.dot(vAB) > 0.0) {
 			// contact correction
 			double cellDimension = mesh->getCellDimension()[0];
 			double contactDistance = contactNodesData.closestParticleDistanceMaster + contactNodesData.closestParticleDistanceSlave;
-			if (contactDistance > 0.5 * cellDimension) {
-				it = contactNodes.erase(it);
-			}
-			else {
-				++it;
+			if (contactDistance <= 0.5 * cellDimension) {
+				contactNodesData.hasContact = true;
+				ModelSetup::setSecondContactActive(true);
 			}
 		}
 	}
@@ -252,6 +250,8 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
+		int normalType = ModelSetup::getContactNormal();
+
 		// nodal normal vector master
 		Vector3d nM = contactNodesData.normalMaster.normalized();
 
@@ -261,7 +261,15 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		// nodal unit normal vector
 		Vector3d n = (nM - nS).normalized();
 
-		contactNodesData.normal = n;
+		if (normalType == 0) {
+			contactNodesData.normal = n;
+		}
+		else if (normalType == 1) {
+			contactNodesData.normal = nM;
+		}
+		else if (normalType == 2) {
+			contactNodesData.normal = nS;
+		}
 	}
 }
 
@@ -271,54 +279,57 @@ void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, dou
 
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
-
-	if (contactNodes.size() == 0) {
-		ModelSetup::setContactActive(false);
-	}
-
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		Mesh::ContactNodeData& contactNodesData = it->second;
+		Mesh::ContactNodeData& contactNodeData = it->second;
 
-		// get contact bodies
-		int bodyA = contactNodesData.bodyMasterId;
-		int bodyB = contactNodesData.bodySlaveId;
+		if (contactNodeData.hasContact) {
 
-		double muA = bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
-		double muB = bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
+			if (!ModelSetup::getSecondContactActive())
+			{
+				ModelSetup::setSecondContactActive(true);
+			}
 
-		// get friction coefficient
-		double mu = std::min(muA, muB);
+			// get contact bodies
+			int bodyA = contactNodeData.bodyMasterId;
+			int bodyB = contactNodeData.bodySlaveId;
 
-		// get nodal mass and momentum
-		double massA = contactNodesData.massMaster;
-		double massB = contactNodesData.massSlave;
-		Vector3d momentumA = contactNodesData.momentumMaster;
-		Vector3d momentumB = contactNodesData.momentumSlave;
+			double muA = bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
+			double muB = bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
 
-		// calculate contact force
-		Vector3d f = (massA * momentumB - massB * momentumA) / (massA + massB) / dt;
-		// normal vector
-		Vector3d n = contactNodesData.normal;
+			// get friction coefficient
+			double mu = std::min(muA, muB);
 
-		// calculate normal force
-		Vector3d fn = f.dot(n) * n;
-		// calculate tangential force
-		Vector3d ft = f - fn;
+			// get nodal mass and momentum
+			double massA = contactNodeData.massMaster;
+			double massB = contactNodeData.massSlave;
+			Vector3d momentumA = contactNodeData.momentumMaster;
+			Vector3d momentumB = contactNodeData.momentumSlave;
 
-		// apply friction
-		if (ft.norm() > 0) {
-			ft = std::min(ft.norm(), mu * fn.norm()) * ft / ft.norm();
+			// calculate contact force
+			Vector3d f = (massA * momentumB - massB * momentumA) / (massA + massB) / dt;
+			// normal vector
+			Vector3d n = contactNodeData.normal;
+
+			// calculate normal force
+			Vector3d fn = f.dot(n) * n;
+			// calculate tangential force
+			Vector3d ft = f - fn;
+
+			// apply friction
+			if (ft.norm() > 0) {
+				ft = std::min(ft.norm(), mu * fn.norm()) * ft / ft.norm();
+			}
+
+			// set the contact force
+			f = ft + fn;
+
+			contactNodeData.contactForce = f;
+			contactNodeData.normalContactForce = fn;
+			contactNodeData.tangentialContactForce = ft;
+
+			//add the contact force to the total force
+			contactNodeData.totalForceMaster += f;
+			contactNodeData.totalForceSlave -= f;
 		}
-
-		// set the contact force
-		f = ft + fn;
-
-		contactNodesData.contactForce = f;
-		contactNodesData.normalContactForce = fn;
-		contactNodesData.tangentialContactForce = ft;
-
-		//add the contact force to the total force
-		contactNodesData.totalForceMaster += f;
-		contactNodesData.totalForceSlave -= f;
 	}
 }
