@@ -1,27 +1,11 @@
 {
-    "global": {
-        "num_particles": 250000,
-        "num_threads": 1,
-        "particle_size": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "particle_mass": 1.0,
-        "cell_dimension": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "num_cells": [
-            100,
-            100,
-            100
-        ],
-        "random_seed": 42
-    },
-    "ParticleStrainIncrement": {
-        "value1": 0.0,
-        "value2": "1/s"
-    }
+    "contributionNodes": 11408.0,
+    "particleDensity": 56.0,
+    "particleStress": 1052.0,
+    "nodalMass": 478.0,
+    "nodalMomentum": 3353.34,
+    "nodalInternalForce": 7416.0,
+    "nodalExternalForce": 2605.26,
+    "particleStrainIncrement": 10760.0,
+    "particleVorticityIncrement": 3318.0
 }
