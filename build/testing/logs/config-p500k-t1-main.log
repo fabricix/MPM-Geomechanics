@@ -1,0 +1,80 @@
+------------------------
+SETUP CONFIGURATION
+
+> Open configuration file...
+--> Specifying configuration file: config-p500k-t1.json
+--> File opened successfully: config-p500k-t1.json
+
+> Read content from configuration file...
+--> Configuration read successfully.
+--> Displaying configuration values:
+----> numParticles: 500000
+----> numThreads: 1
+----> particleSize: [1, 1, 1]
+----> particleMass: 1
+----> cellDimension: [1, 1, 1]
+----> numCells: [100, 100, 100]
+----> randomSeed: 42
+
+Setup complete with status: 0
+------------------------
+
+Running tests...
+[==========] Running 9 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 3 tests from UpdatePerformance
+[ RUN      ] UpdatePerformance.ContributionNodes_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ INFO ] Total particles: 500000
+[ PERF ] contributionNodes took 43273 ms
+[       OK ] UpdatePerformance.ContributionNodes_nParticles (63150 ms)
+[ RUN      ] UpdatePerformance.UpdatePerformance_ParticleDensity_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] particleDensity took 179 ms
+[       OK ] UpdatePerformance.UpdatePerformance_ParticleDensity_nParticles (4990 ms)
+[ RUN      ] UpdatePerformance.ParticleStress_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] particleStress took 2896 ms
+[       OK ] UpdatePerformance.ParticleStress_nParticles (9316 ms)
+[----------] 3 tests from UpdatePerformance (77457 ms total)
+
+[----------] 6 tests from InterpolationPerformance
+[ RUN      ] InterpolationPerformance.NodalMass_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ INFO ] Total particles: 500000
+[ PERF ] nodalMass took 1046 ms
+[       OK ] InterpolationPerformance.NodalMass_nParticles (57195 ms)
+[ RUN      ] InterpolationPerformance.NodalMomentum_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] nodalMomentum took 12285.5 ms
+[       OK ] InterpolationPerformance.NodalMomentum_nParticles (69742 ms)
+[ RUN      ] InterpolationPerformance.NodalInternalForce_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] nodalInternalForce took 24977 ms
+[       OK ] InterpolationPerformance.NodalInternalForce_nParticles (81514 ms)
+[ RUN      ] InterpolationPerformance.InterpolationPerformance_NodalExternalForce_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] nodalExternalForce took 10284.7 ms
+[       OK ] InterpolationPerformance.InterpolationPerformance_NodalExternalForce_nParticles (84797 ms)
+[ RUN      ] InterpolationPerformance.InterpolationPerformance_ParticleStrainIncrement_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] particleStrainIncrement took 31270 ms
+[       OK ] InterpolationPerformance.InterpolationPerformance_ParticleStrainIncrement_nParticles (113991 ms)
+[ RUN      ] InterpolationPerformance.InterpolationPerformance_ParticleVorticityIncrement_nParticles
+[ INFO ] _OPENMP is defined
+[ INFO ] OpenMP threads: 1
+[ PERF ] particleVorticityIncrement took 41124 ms
+[       OK ] InterpolationPerformance.InterpolationPerformance_ParticleVorticityIncrement_nParticles (102645 ms)
+[----------] 6 tests from InterpolationPerformance (509888 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 2 test suites ran. (587347 ms total)
+[  PASSED  ] 9 tests.
