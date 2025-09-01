@@ -92,9 +92,9 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 #endif
 
     // Test parameters
-    const double initialDensity = 2000.0;
-    const double traceStrain = 0.05;  // Volumetric strain increment
-    const double expectedDensity = initialDensity / (1.0 + traceStrain);
+    const double initialDensity = Configuration::getInitialDensity();
+    const double traceStrain = Configuration::getTraceStrain();
+    const double expectedDensity = Configuration::getExpectedDensity();
 
     // Create particles
     std::vector<Particle*> particles;

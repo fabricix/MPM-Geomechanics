@@ -11,6 +11,7 @@ using namespace std;
 
 namespace Configuration
 {
+    // Gloabal variables
     int getNumParticles();
     int getNumThreads();
     Vector3d getParticleSize();
@@ -19,6 +20,17 @@ namespace Configuration
     Vector3i getNumCells();
     int getRandomSeed();
 
+    // Update - UpdatePerformance_ParticleDensity_nParticles - Variables
+    double getInitialDensity();
+    double getTraceStrain();
+    double getExpectedDensity();
+
+    // Update - ParticleStress_nParticles - Variables
+    double getE();
+    double getNu();
+    double getEpsilon0();
+
+    // Get interpolation and update test flags
     bool getInterpolationTest();
     bool getUpdateTest();
 
