@@ -1,9 +1,41 @@
 {
-  "num_particles": 500000,
-  "num_threads": 10,
-  "particle_size": [1.0, 1.0, 1.0],
-  "particle_mass": 1.0,
-  "cell_dimension": [1.0, 1.0, 1.0],
-  "num_cells": [100, 100, 100],
-  "random_seed": 42
+  "global": {
+    "num_particles": 150000,
+    "num_threads": 1,
+    "particle_size": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "particle_mass": 1.0,
+    "cell_dimension": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "num_cells": [
+      100,
+      100,
+      100
+    ],
+    "random_seed": 42,
+    "ParticleStrainIncrement": {
+      "value1": 0.0,
+      "value2": "1/s"
+    },
+
+    "interpolation_test": true,
+    "update_test": true
+  },
+  
+  "UpdatePerformance_ParticleDensity_nParticles": {
+    "initialDensity": 2000.0,
+    "traceStrain": 0.05
+  },
+
+  "ParticleStress_nParticles": {
+    "E": 1000.0,
+    "nu": 0.3,
+    "epsilon0": 0.01
+  }
 }
