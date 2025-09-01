@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream> 
 #include "Json/json.hpp"
-#include "performance/configuration.performance.h"
+#include "configuration.performance.h"
 
 using namespace std;
 using json = nlohmann::json;

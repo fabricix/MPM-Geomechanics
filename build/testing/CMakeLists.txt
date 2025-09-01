@@ -21,14 +21,14 @@ include_directories(../../inc/Shape)
 include_directories(../../inc/Body)
 include_directories(../../inc/Materials)
 include_directories(../../inc/Mesh)
-include_directories(../../inc/performance)
+include_directories(../../tests/performance)
 
 # ====================================
 # Add executables for numerical tests
 # ====================================
 
 # Remove main.cpp file from the list of sources to avoid multiple definitions of the main function
-file(GLOB_RECURSE TEST_SOURCES "../../tests/*.test.cpp" "main.test.cpp")
+file(GLOB_RECURSE TEST_SOURCES "../../tests/testing/*.test.cpp" "../../tests/testing/main.test.cpp")
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
 add_executable(MPM-Geomechanics-tests ${TEST_SOURCES} ${EXECUTABLES})
@@ -46,7 +46,7 @@ target_link_libraries(MPM-Geomechanics-tests gtest)
 # ==============================================
 
 # Gather all performance test files (*.performance.cpp)
-file(GLOB_RECURSE PERFORMANCE_SOURCES "../../tests/*.performance.cpp" "main.performance.cpp")
+file(GLOB_RECURSE PERFORMANCE_SOURCES "../../tests/performance/*.performance.cpp" "../../tests/performance/main.performance.cpp")
 
 # Reuse the simulator sources (same as for MPM-Geomechanics-tests)
 add_executable(MPM-Geomechanics-benchmark ${PERFORMANCE_SOURCES} ${EXECUTABLES})

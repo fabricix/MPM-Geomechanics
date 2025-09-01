@@ -8,7 +8,7 @@
 #include "ShapeGimp.h"
 #include "Interpolation.h"
 #include "Body/BodyParticle.h"
-#include "performance/configuration.performance.h"
+#include "configuration.performance.h"
 
 using namespace std;
 

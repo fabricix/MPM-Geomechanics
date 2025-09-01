@@ -45,10 +45,10 @@ double sum_energy(const std::string& filename)
 void executeSimulation()
 {
 
-  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "tests" / "energy-test";
+  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "tests" / "testing" / "energy-test";
   std::filesystem::current_path(test_dir);
 
-  int response = system("..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
+  int response = system("..\\..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
 
   if (response == 0)
   {

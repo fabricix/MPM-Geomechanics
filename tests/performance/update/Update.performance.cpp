@@ -10,7 +10,7 @@
 #include "Update.h"
 #include "Materials/Elastic.h"
 #include "Body/BodyParticle.h"
-#include "performance/configuration.performance.h"
+#include "configuration.performance.h"
 
 using namespace std;
 
