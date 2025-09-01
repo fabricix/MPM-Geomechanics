@@ -62,7 +62,7 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 
     // measure execution time of nodalMass
     auto t0 = std::chrono::high_resolution_clock::now();
-    Interpolation::nodalMass(&mesh, &bodies);
+    Interpolation::nodalMass(&mesh, &particles);
     auto t1 = std::chrono::high_resolution_clock::now();
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
@@ -136,7 +136,7 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
     auto t1 = std::chrono::high_resolution_clock::now();
 
     // Interpolate momentum
-    Interpolation::nodalMomentum(&mesh, &bodies);
+    Interpolation::nodalMomentum(&mesh, &particles);
 
     auto t2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> elapsed = t2 - t1;
@@ -208,7 +208,7 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 
     // Measure performance of nodalInternalForce
     auto start = std::chrono::high_resolution_clock::now();
-    Interpolation::nodalInternalForce(&mesh, &bodies);
+    Interpolation::nodalInternalForce(&mesh, &particles);
     auto end = std::chrono::high_resolution_clock::now();
 
     auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -272,7 +272,7 @@ TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nPart
 
     // Interpolate external force
     auto start = std::chrono::high_resolution_clock::now();
-    Interpolation::nodalExternalForce(&mesh, &bodies);
+    Interpolation::nodalExternalForce(&mesh, &particles);
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double, std::milli> duration = end - start;
@@ -353,7 +353,7 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_
 
     // Measure performance
     auto start = chrono::high_resolution_clock::now();
-    Interpolation::particleStrainIncrement(&mesh, &bodies, dt);
+    Interpolation::particleStrainIncrement(&mesh, &particles, dt);
     auto end = chrono::high_resolution_clock::now();
 
     auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
@@ -458,7 +458,7 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleVorticityIncreme
     // Performance measurement
     // ================================
     auto start = std::chrono::high_resolution_clock::now();
-    Interpolation::particleVorticityIncrement(&mesh, &bodies, dt);
+    Interpolation::particleVorticityIncrement(&mesh, &particles, dt);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "[ PERF ] particleVorticityIncrement took " << duration.count() << " ms" << std::endl;

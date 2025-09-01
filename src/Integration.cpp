@@ -9,7 +9,9 @@ void Integration::nodalMomentum(Mesh* mesh, double dt) {
 	vector<Node*>* nodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(nodes, dt)
+#endif
 	for (int i = 0; i < static_cast<int>(nodes->size()); ++i) {
 
 		if (!nodes->at(i)->getActive()){ continue; }

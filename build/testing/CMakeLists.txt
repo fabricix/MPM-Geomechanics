@@ -7,6 +7,9 @@ project(Testing)
 # Enable OpenMP
 find_package(OpenMP REQUIRED)
 
+# Enable OpenMP
+find_package(OpenMP REQUIRED)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 # Add the subdirectory where GoogleTest is located (embedded in "external/googletest")
@@ -32,6 +35,9 @@ file(GLOB_RECURSE TEST_SOURCES "../../tests/testing/*.test.cpp" "../../tests/tes
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
 add_executable(MPM-Geomechanics-tests ${TEST_SOURCES} ${EXECUTABLES})
+
+# Define USE_PARALLEL_INTERPOLATION to enable parallel interpolation in the test executable
+target_compile_definitions(MPM-Geomechanics-tests PRIVATE USE_PARALLEL_COMPUTATION)
 
 # Define USE_PARALLEL_INTERPOLATION to enable parallel interpolation in the test executable
 target_compile_definitions(MPM-Geomechanics-tests PRIVATE USE_PARALLEL_COMPUTATION)

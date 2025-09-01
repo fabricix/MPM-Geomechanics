@@ -88,18 +88,27 @@ public:
 	/// \return Vector containing the nodal momentum
 	inline const Vector3d& getMomentum() const { return this->momentum; }
 	
+	/// \brief Return a reference of momentum for atomic calculation
+	inline Vector3d& getMomentumRef() { return this->momentum; }
+
 	/// \brief Return the nodal momentum of fluid phase
 	/// \return Vector containing the nodal momentum of fluid phase
 	virtual inline const Vector3d* getMomentumFluid() const { return NULL; }
-
+	
 	/// \brief Return the nodal internal force
 	/// \return Vector containing the nodal internal force
 	inline const Vector3d& getInternalForce() const { return this->internalForce; }
+	
+	/// \brief Return a reference of internal force for atomic calculation
+	inline Vector3d& getInternalForceRef() { return this->internalForce; }
 		
 	/// \brief Return the nodal external force
 	/// \return Vector containing the nodal external force
 	inline const Vector3d& getExternalForce() const { return this->externalForce; }
-		
+	
+	/// \brief Return a reference of external force for atomic calculation
+	inline Vector3d& getExternalForceRef() { return this->externalForce; }
+
 	/// \brief Return the nodal total force
 	/// \return Vector containing the nodal total force
 	inline const Vector3d& getTotalForce() const { return this->totalForce; }
@@ -120,9 +129,16 @@ public:
 	/// \param[in] mass_increment Nodal mass increment 
 	inline void addMass(double mass_increment) { this->mass+=mass_increment; }
 
+	/// \brief Get a reference of the mass
+	inline double& getMassRef() { return this->mass; }
+
 	/// \brief Add a density increment to the nodal density level set
 	/// \param[in] density_increment Nodal density increment
 	inline void addDensityLevelSet(double density_increment) { this->densityLevelSet+=density_increment; }
+
+	/// \brief Get a reference of the density level set
+	/// \return Reference of the density level set
+	inline double& getDensityLevelSetRef(){ return this->densityLevelSet; }
 
 	/// \brief Add fluid mass increment to the nodal mass
 	/// \param[in] fluid_mass_increment Nodal mass increment 

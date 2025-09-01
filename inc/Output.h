@@ -62,13 +62,15 @@ namespace Output {
 	bool isFieldRequired(string field);
 
 	/// \brief Verify is the field must be written
-/// \param[in] field Field to verify
-/// \return True if the field must be written
+	/// \param[in] field Field to verify
+	/// \return True if the field must be written
 	bool isGridFieldRequired(string field);
 
 	/// \brief Write results if the step is the step result
-	/// 
-	void writeResultInStep(int resultSteps, vector<Body*>* bodies, double iTime);
+	/// \param[in] resultSteps Result steps
+	/// \param[in] particles List of particles
+	/// \param[in] iTime Current time
+	void writeResultInStep(int resultSteps, vector<Particle*>* particles, double iTime);
 
 	/// \brief Write grid results if the step is the step result
 	/// 

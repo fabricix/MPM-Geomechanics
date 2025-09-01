@@ -89,6 +89,8 @@ namespace Seismic
     // This function integrates the seismic acceleration to update the accumulated velocity
     void updateSeismicVectors(const double currentTime, const double dt) {
 
+        if(!seismic_analysis.isActive) return;
+        
         // Interpolate seismic acceleration at the current time
         Eigen::Vector3d a_sismo = Interpolation::interpolateVector(
             seismicRecord.time,
@@ -103,9 +105,12 @@ namespace Seismic
 
     void applySeismicVelocityMarkedSTLNodes(Mesh* mesh)
     {
-        std::vector<Node*>* nodes = mesh->getNodes();
+        if(!seismic_analysis.isActive) return;
 
+        std::vector<Node*>* nodes = mesh->getNodes();
+#ifdef _OPENMP
         #pragma omp parallel for
+#endif 
         for (int i = 0; i < static_cast<int>(seismicNodeIndices.size()); ++i) {
             
             int nodeId = seismicNodeIndices[i];
