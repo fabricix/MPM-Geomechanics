@@ -42,9 +42,8 @@ void SolverExplicit::Solve()
 		Update::contributionNodes(mesh, bodies);
 
 		// 1.1: Check contact active
-		ContactManager contactManager = ContactManager();
 		if (contactActive) {
-			contactManager.contactCheck(mesh, bodies);
+			contactManager->contactCheck(mesh, bodies);
 		}
 
 		#pragma omp parallel sections num_threads(2)
@@ -85,27 +84,9 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		//4.1: Contact force correction
-		bool contactActiveCurrent = ModelSetup::getContactActive();
-		if (contactActiveCurrent) {
-
-			{
-				// nodal unit normal
-				ContactManager::nodalUnitNormal(mesh, bodies);
-			}
-
-			ModelSetup::setSecondContactActive(false);
-			ContactManager::computeContactForces(mesh, bodies, dt);
-
-			if (ModelSetup::getSecondContactActive()) {
-
-				// impose force boundary conditions
-				Update::boundaryConditionsContactForce(mesh);
-				
-
-				// update nodal momentum after contact
-				Update::nodalMomentumContact(mesh, dt);
-			}
+		//4.1: Nodal moment contact update
+		if (contactActive) {
+			contactManager->nodalMomentumContactUpdate(mesh, bodies, dt);
 		}
 
 		// Step 5: Particle updates
@@ -131,12 +112,7 @@ void SolverExplicit::Solve()
 			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
 			if (ModelSetup::getContactActive()) {
-				unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
-				for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-					Mesh::ContactNodeData& contactNodesData = it->second;
-					contactNodesData.momentumMaster = Vector3d::Zero();
-					contactNodesData.momentumSlave = Vector3d::Zero();
-				}
+				contactManager->nodalMomentumCorrection(mesh, dt);
 			}
 
 			Interpolation::nodalMomentum(mesh, bodies);
@@ -177,10 +153,6 @@ void SolverExplicit::Solve()
 
 		// Step 11: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
-
-		if (contactActive) {
-			ModelSetup::setContactActive(true);
-		}
 	}
 
 	// Final output

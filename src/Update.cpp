@@ -71,21 +71,6 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	}
 }
 
-void Update::nodalMomentumContact(Mesh* mesh, double dt) {
-
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
-
-	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		Mesh::ContactNodeData& contactNodesData = it->second;
-		
-		// master body
-		contactNodesData.momentumMaster += dt * contactNodesData.contactForce;
-		
-		// slave body
-		contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
-	}
-}
-
 void Update::resetNodalValues(Mesh* mesh) {
 
 	// get nodes
@@ -251,11 +236,11 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 							Mesh::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
-							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 								velocityRate += contactNodeData.totalForceMaster * contribI.getWeight() / contactNodeData.massMaster;
 							}
 							// compute the velocity rate contribution of the slave body 
-							else {
+							else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 								velocityRate += contactNodeData.totalForceSlave * contribI.getWeight() / contactNodeData.massSlave;
 							}
 						}
@@ -375,11 +360,11 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 							Mesh::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
-							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 								positionRate += contactNodeData.momentumMaster * contribI.getWeight() / contactNodeData.massMaster;
 							}
 							// compute the velocity rate contribution of the slave body 
-							else {
+							else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 								positionRate += contactNodeData.momentumSlave * contribI.getWeight() / contactNodeData.massSlave;
 							}
 						}

@@ -11,6 +11,7 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "ContactManager.h"
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
 
@@ -74,6 +75,7 @@ void MPM::setSolver() {
 	solver->registerBodies(&bodies);
 	solver->registerParticles(&particles);
 	solver->registerTerrainContact(terrainContact);
+	solver->registerContactManager(contactManager);
 }
 
 void MPM::setInterpolationFunctions() {
@@ -156,14 +158,27 @@ void MPM::setupMesh() {
 	}
 }
 
+//void MPM::setupContact()
+//{
+//	// verity if contact active
+//	bool contactActive = Input::getContactActive();
+//	ModelSetup::setContactActive(contactActive);
+//	if (contactActive) { 
+//		int normalType = Input::getContactNormal();
+//		ModelSetup::setContactNormal(normalType);
+//	}
+//}
+
 void MPM::setupContact()
 {
 	// verity if contact active
 	bool contactActive = Input::getContactActive();
 	ModelSetup::setContactActive(contactActive);
-	if (contactActive) { 
-		int normalType = Input::getContactNormal();
-		ModelSetup::setContactNormal(normalType);
+	if (!contactActive) { return; }
+	else {		
+		// set contact manager
+		contactManager = new ContactManager(Input::getFrictionCoefficientContact(), Input::getMasterBodyId(), Input::getSlaveBodyId(), 
+			Input::getContactNormalType(), Input::RealDistanceCorrectionCoefficient());
 	}
 }
 
@@ -227,7 +242,6 @@ void MPM::setupTerrainContact()
 		else {
 			terrainContact->enablePenaltyContact(false);
 		}	
-
 	}
 }
 

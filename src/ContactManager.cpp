@@ -2,11 +2,12 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "ContactManager.h"
+#include <numeric>
+#include "Update.h"
 
 
 
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
-	ModelSetup::setContactActive(false);
 	mesh->clearContactNodes();
 
 	// get number of nodes and bodies
@@ -49,46 +50,36 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 
+	//get contact nodes
+	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 	
 	// for each node
 	for (size_t i = 0; i < nNodes; i++) {
 
-		// check if any body contributed to node i
-		Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
-		
-		Contact.nodeId = i;
 
-		// check if any bodies j contributed to node i
-		for (size_t j = 0; j < nBodies; j++) {
-			if (contributionMatrix[i][j] == 1)
-			{
-				// check if the the body i received contribution from another body
-				if (Contact.bodyMasterId >= 0) {
-					Contact.bodySlaveId = j;
-				}
-				else
-				{
-					Contact.bodyMasterId = j;
-				}
-			}
-		}
 
-		// set contact status
-		if (Contact.bodySlaveId >= 0)
+		// check if more than one body contributed to node i
+		int soma = std::accumulate(contributionMatrix[i].begin(),
+			contributionMatrix[i].end(), 0);
+		if (soma > 1)
 		{
+			Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
+			Contact.nodeId = i;
+			Contact.bodySlaveId = slaveId;
+			Contact.bodyMasterId = masterId;
 			contactNodes[i] = Contact;
-			ModelSetup::setContactActive(true);
 		}
 	}
-	if (ModelSetup::getContactActive()) {
-		mesh->setContactNodes(contactNodes);
+	if (contactNodes.size() > 0) {
+		hasContact = true;
 	}
 }
 
-void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
+void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 	// get number of nodes and bodies 
 	size_t nBodies = (int)bodies->size();
 
+	//get contact nodes
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	//Calculation of the distance between bodies
@@ -129,7 +120,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 					Mesh::ContactNodeData& contactNodeData = it->second; 
 
 					//add mass at node of the master body 
-					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 						//get closest distance to master body
 						double d = contactNodeData.closestParticleDistanceMaster;
 
@@ -145,7 +136,7 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 						}
 					}
 					//add mass at node of the slave body 
-					else {
+					else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 						// get closest distance to slave body
 						double d = contactNodeData.closestParticleDistanceSlave;
 
@@ -190,9 +181,9 @@ void ContactManager::contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies) {
 			// contact correction
 			double cellDimension = mesh->getCellDimension()[0];
 			double contactDistance = contactNodesData.closestParticleDistanceMaster + contactNodesData.closestParticleDistanceSlave;
-			if (contactDistance <= 0.5 * cellDimension) {
+			if (contactDistance <= realDistanceCorrectionCoefficient * cellDimension) {
 				contactNodesData.hasContact = true;
-				ModelSetup::setSecondContactActive(true);
+				hasContact = true;
 			}
 		}
 	}
@@ -234,11 +225,11 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 					Mesh::ContactNodeData& contactNodeData = it->second;
 
 					//add mass at node of the master body 
-					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 						contactNodeData.normalMaster += nodalMassGradient;
 					}
 					//add mass at node of the slave body 
-					else {
+					else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 						contactNodeData.normalSlave += nodalMassGradient;
 					}
 				}
@@ -250,8 +241,6 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
-		int normalType = ModelSetup::getContactNormal();
-
 		// nodal normal vector master
 		Vector3d nM = contactNodesData.normalMaster.normalized();
 
@@ -261,53 +250,38 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		// nodal unit normal vector
 		Vector3d n = (nM - nS).normalized();
 
-		if (normalType == 0) {
+		if (normalType == "collinear") {
 			contactNodesData.normal = n;
 		}
-		else if (normalType == 1) {
+		else if (normalType == "master") {
 			contactNodesData.normal = nM;
 		}
-		else if (normalType == 2) {
-			contactNodesData.normal = nS;
+		else if (normalType == "slave") {
+			contactNodesData.normal = -nS;
 		}
 	}
 }
 
 void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt) {
-
-	contactCheckCorrection(mesh, bodies);
-
+	//get contact nodes
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodeData = it->second;
 
 		if (contactNodeData.hasContact) {
-
-			if (!ModelSetup::getSecondContactActive())
-			{
-				ModelSetup::setSecondContactActive(true);
-			}
-
-			// get contact bodies
-			int bodyA = contactNodeData.bodyMasterId;
-			int bodyB = contactNodeData.bodySlaveId;
-
-			double muA = bodies->at(bodyA)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
-			double muB = bodies->at(bodyB)->getParticles()->at(0)->getMaterial()->getFrictionCoefficient();
-
-			// get friction coefficient
-			double mu = std::min(muA, muB);
-
-			// get nodal mass and momentum
+			// get nodal mass
 			double massA = contactNodeData.massMaster;
 			double massB = contactNodeData.massSlave;
+
+			// get nodal momentum
 			Vector3d momentumA = contactNodeData.momentumMaster;
 			Vector3d momentumB = contactNodeData.momentumSlave;
 
 			// calculate contact force
 			Vector3d f = (massA * momentumB - massB * momentumA) / (massA + massB) / dt;
-			// normal vector
+
+			// get normal vector
 			Vector3d n = contactNodeData.normal;
 
 			// calculate normal force
@@ -317,12 +291,11 @@ void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, dou
 
 			// apply friction
 			if (ft.norm() > 0) {
-				ft = std::min(ft.norm(), mu * fn.norm()) * ft / ft.norm();
+				ft = std::min(ft.norm(), frictionCoefficient * fn.norm()) * ft / ft.norm();
 			}
 
 			// set the contact force
 			f = ft + fn;
-
 			contactNodeData.contactForce = f;
 			contactNodeData.normalContactForce = fn;
 			contactNodeData.tangentialContactForce = ft;
@@ -331,5 +304,43 @@ void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, dou
 			contactNodeData.totalForceMaster += f;
 			contactNodeData.totalForceSlave -= f;
 		}
+	}
+}
+
+void ContactManager::nodalMomentumCorrection(Mesh* mesh, double dt) {
+
+	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+
+	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
+		Mesh::ContactNodeData& contactNodesData = it->second;
+
+		// master body
+		contactNodesData.momentumMaster += dt * contactNodesData.contactForce;
+
+		// slave body
+		contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
+	}
+}
+
+void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double dt) {
+	
+	// a) nodal unit normal
+	nodalUnitNormal(mesh, bodies);
+
+	// verify real distance correction
+	if (realDistanceCorrectionActive) {
+		hasContact = false;
+		realDistanceCorrection(mesh, bodies);
+	}
+
+	if (hasContact) {
+		// b) compute contact force
+		computeContactForces(mesh, bodies, dt);
+
+		// b.1) impose force boundary conditions
+		Update::boundaryConditionsContactForce(mesh);
+
+		// c) update nodal momentum after contact
+		nodalMomentumCorrection(mesh, dt);
 	}
 }

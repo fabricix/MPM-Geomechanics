@@ -634,10 +634,6 @@ namespace Input {
 	/// \brief Return the contact active
 	bool getContactActive();
 
-	/// \brief Return the contact normal flag for the simulation
-	/// \return contact_normal Flag for the simulation
-	unsigned getContactNormal();
-
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
 	double getFrictionCoefficient ();
@@ -658,6 +654,23 @@ namespace Input {
 
 	/// \brief Return the distance threshold for contact detection
 	double getDistanceThreshold();
+
+	/// \brief Return the friction coefficient for contact analysis
+	/// \return friction_coefficient Friction coefficient
+	double getFrictionCoefficientContact();
+
+	/// \brief Return the distance threshold for contact detection
+	double RealDistanceCorrectionCoefficient();
+
+	/// \brief Return the master id for contact analysis
+	int getMasterBodyId();
+
+	/// \brief Return the slave id for contact analysis
+	int getSlaveBodyId();
+
+	/// \brief Return the contact normal type flag for the simulation
+	/// \return contact_normal_type Flag for the simulation
+	string getContactNormalType();
 
 	/// \brief Return the hydro-mechanical coupling enabled
 	/// \return hydro_mech_coupling_enabled Hydro-mechanical coupling enabled

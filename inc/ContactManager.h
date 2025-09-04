@@ -17,7 +17,37 @@ using Eigen::Vector3d;
 /// \brief Manages contact data and calculations for MPM nodes
 class ContactManager {
 public:
-    ContactManager() = default;
+    ContactManager(double _friction, double _master_id, double _slave_id, string _normal_type, double _real_distance_correction_coefficient)
+        :frictionCoefficient(_friction) {
+        if (_master_id == NULL) {
+            masterId = 0;
+        }
+        else {
+            masterId = _master_id;
+        }
+
+        if (_slave_id == NULL) {
+            slaveId = 1;
+        }
+        else {
+            slaveId = _slave_id;
+        }
+        
+        if (_normal_type != "collinear" and _normal_type != "slave") {
+            normalType = "master";
+        }
+        else {
+            normalType = _normal_type;
+        }
+
+        if (_real_distance_correction_coefficient == NULL) {
+            realDistanceCorrectionActive = false;
+        }
+        else {
+            realDistanceCorrectionActive = true;
+            realDistanceCorrectionCoefficient = _real_distance_correction_coefficient;
+        }
+    }
 
     /// \brief Clear all contact node data
     void clear();
@@ -26,7 +56,7 @@ public:
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
-    static void computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt);
+    void computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt);
 
     /// \brief Calculate the normal vector to the node
     ///
@@ -34,7 +64,7 @@ public:
     ///
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
-    static void nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies);
+    void nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies);
 
     /// \brief Check nodes in contact
     /// \param[in] mesh Mesh reference
@@ -44,14 +74,32 @@ public:
     /// \brief Check nodes in contact
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
-    static void contactCheckCorrection(Mesh* mesh, vector<Body*>* bodies);
+    void realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies);
+
+    /// \brief Update the nodal momentum after contact forces calculation
+    /// \param[in] mesh Mesh reference
+    /// \param[in] bodies List of Body pointers
+    /// \param[in] time_step Time step
+    void nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double dt);
+
+    /// \brief Update the nodal momentum after contact forces calculation
+    /// \param[in] mesh Mesh reference
+    /// \param[in] time_step Time step
+    void nodalMomentumCorrection(Mesh* mesh, double dt);
 
     /// \brief Get unordered_map contactNodes
-    const std::unordered_map<int, Mesh::ContactNodeData>& getContactNodes() const{return contactNodes;}
+    //const std::unordered_map<int, Mesh::ContactNodeData>& getContactNodes() const{return contactNodes;}
 
 private:
    
-    std::unordered_map<int, Mesh::ContactNodeData> contactNodes;
+    //std::unordered_map<int, Mesh::ContactNodeData> contactNodes;
+    string normalType; //Default: master
+    double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
+    bool realDistanceCorrectionActive;
+    double realDistanceCorrectionCoefficient;
+    bool hasContact;
+    int masterId; 
+    int slaveId;
 };
 
 #endif /* CONTACT_MANAGER_H_ */

@@ -111,11 +111,14 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 						
 						//add mass at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							contactNodeData.massMaster += nodalMass;
+							if (contribution->at(j).getNodeId() == 965) {
+								int a = 1;
+							}
 						}
 						//add mass at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							contactNodeData.massSlave += nodalMass;
 						}
 					}
@@ -219,11 +222,11 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add momentum at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							contactNodeData.momentumMaster += pMass * pVelocity * contribution->at(j).getWeight();
 						}
 						//add momentum at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							contactNodeData.momentumSlave += pMass * pVelocity * contribution->at(j).getWeight();
 						}
 					}
@@ -360,11 +363,11 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add mass at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							contactNodeData.internalForceMaster += internalForce;
 						}
 						//add mass at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							contactNodeData.internalForceSlave += internalForce;
 						}
 					}
@@ -479,11 +482,11 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							contactNodeData.externalForceMaster += pExtForce * contribution->at(j).getWeight();
 						}
 						//add external force at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							contactNodeData.externalForceSlave += pExtForce * contribution->at(j).getWeight();
 						}
 					}
@@ -650,11 +653,11 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							v = contactNodeData.velocityMaster;
 						}
 						//add external force at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							v = contactNodeData.velocitySlave;
 						}
 					}
@@ -796,11 +799,11 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 						Mesh::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
-						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId) {
+						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							v = contactNodeData.velocityMaster;
 						}
 						//add external force at node of the slave body 
-						else {
+						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 							v = contactNodeData.velocitySlave;
 						}
 					}

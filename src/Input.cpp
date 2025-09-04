@@ -349,10 +349,9 @@ vector<Material*> Input::getMaterialList(){
 						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
 						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						double mu = 0.0; if ((*it)["mu"].is_number()) { mu = ((*it)["mu"]); }
 						
 						// create a new elastic material
-						material = new Elastic(id, density,mu ,young, poisson);
+						material = new Elastic(id, density, young, poisson);
 					}
 
 					// newtonian fluid material
@@ -383,7 +382,6 @@ vector<Material*> Input::getMaterialList(){
 						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
 						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
 						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						double mu = 0.0; if ((*it)["mu"].is_number()) { mu = ((*it)["mu"]); }
 						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
 						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
@@ -405,7 +403,7 @@ vector<Material*> Input::getMaterialList(){
 						}
 						
 						// create a new material
-						material = new MohrCoulomb(id, density, mu, young, poisson, friction, cohesion, dilation, tensile, softening);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
 					}
 
 					// set up the two phases parameters
@@ -1603,9 +1601,14 @@ bool Input::getContactActive()
 			return false;
 		}
 
-		if (inputFile["contact"].is_boolean())
+		if (inputFile["contact"]["active"].is_null()) {
+
+			return false;
+		}
+
+		if (inputFile["contact"]["active"].is_boolean())
 		{
-			return inputFile["contact"];
+			return inputFile["contact"]["active"];
 		}
 
 		throw(0);
@@ -1613,44 +1616,6 @@ bool Input::getContactActive()
 	catch (...)
 	{
 		Warning::printMessage("Error during reading the contact active keyword");
-		throw;
-	}
-}
-
-unsigned Input::getContactNormal() {
-
-	try
-	{
-		string keyword = "contact_normal";
-
-		// default simulations is no contact
-		if (inputFile[keyword].is_null()) { return 0; }
-
-		// define the normal reference
-		if (inputFile[keyword].is_string()) {
-
-			unsigned normalReference;
-
-			if (inputFile[keyword] == "master") {
-				normalReference = 1;
-			}
-			else if (inputFile[keyword] == "slave") {
-				normalReference = 2;
-			}
-			else {
-				normalReference = 0;
-			}
-
-
-			return normalReference;
-		}
-
-		throw(keyword);
-	}
-
-	catch (std::string& keyword)
-	{
-		Warning::printMessage("The keyword: \"" + string(keyword) + "\" must be a true/false value");
 		throw;
 	}
 }
@@ -1679,6 +1644,146 @@ double Input::getFrictionCoefficient() {
 	catch(...)
 	{
 		Warning::printMessage("Error during reading the friction coefficient in terrain contact");
+		throw;
+	}
+}
+
+double Input::getFrictionCoefficientContact() {
+
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return 0.0;
+		}
+
+		if (inputFile["contact"]["friction"].is_null()) {
+
+			return 0.0;
+		}
+
+		if (inputFile["contact"]["friction"].is_number())
+		{
+			return inputFile["contact"]["friction"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the friction coefficient in contact");
+		throw;
+	}
+}
+
+string Input::getContactNormalType() {
+
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return NULL;
+		}
+		// if contact normal type not defined -> default Master 
+		if (inputFile["contact"]["normal_type"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["normal_type"].is_string())
+		{
+			return inputFile["contact"]["normal_type"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the contact normal type");
+		throw;
+	}
+}
+
+double Input::RealDistanceCorrectionCoefficient() {
+
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["real_distance_correction_coefficient"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["real_distance_correction_coefficient"].is_number())
+		{
+			return inputFile["contact"]["real_distance_correction_coefficient"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the real distance correction coefficient in contact");
+		throw;
+	}
+}
+
+int Input::getMasterBodyId() {
+
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["master_id"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["master_id"].is_number_integer())
+		{
+			return inputFile["contact"]["master_id"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the master body ID in contact");
+		throw;
+	}
+}
+
+int Input::getSlaveBodyId() {
+
+	try
+	{
+		if (inputFile["contact"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["slave_id"].is_null()) {
+
+			return NULL;
+		}
+
+		if (inputFile["contact"]["slave_id"].is_number_integer())
+		{
+			return inputFile["contact"]["slave_id"];
+		}
+
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the slave body ID in contact");
 		throw;
 	}
 }

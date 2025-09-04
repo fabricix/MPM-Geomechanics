@@ -8,6 +8,7 @@
 using std::vector;
 
 #include "TerrainContact.h"
+#include "ContactManager.h"
 
 class Body;
 class Mesh;
@@ -45,12 +46,16 @@ public:
 	/// \brief Register the terrain contact in the solver
 	inline void registerTerrainContact(TerrainContact* terrainContact){ this->terrainContact=terrainContact; }
 
+	/// \brief Register the contact manager in the solver
+	inline void registerContactManager(ContactManager* contactManager) { this->contactManager = contactManager; }
+
 protected:
 
 	Mesh* mesh; //!< pointer to mesh
 	vector<Body*>* bodies; //!< pointer to bodies
 	vector<Particle*>* particles; //!< pointer to particles
 	TerrainContact* terrainContact; //!< pointer to terrain contact
+	ContactManager* contactManager; //!< pointer to terrain contact
 };
 
 inline Solver::Solver():mesh(0),bodies(0),particles(0),terrainContact(0) { }

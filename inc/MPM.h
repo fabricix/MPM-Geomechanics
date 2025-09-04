@@ -12,6 +12,7 @@
 #include "States.h"
 #include "Solver/Solver.h"
 #include "TerrainContact.h"
+#include "ContactManager.h"
 
 /// \class MPM
 /// \brief Components and algorithms of the MPM
@@ -59,6 +60,8 @@ private:
 	Mesh mesh; //!< background grid mesh
 
 	TerrainContact* terrainContact; //!< terrain contact object
+
+	ContactManager* contactManager; //!< terrain contact object
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 
