@@ -55,7 +55,7 @@ protected:
 	vector<Body*>* bodies; //!< pointer to bodies
 	vector<Particle*>* particles; //!< pointer to particles
 	TerrainContact* terrainContact; //!< pointer to terrain contact
-	ContactManager* contactManager; //!< pointer to terrain contact
+	ContactManager* contactManager; //!< pointer to contact manager
 };
 
 inline Solver::Solver():mesh(0),bodies(0),particles(0),terrainContact(0) { }

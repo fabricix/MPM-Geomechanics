@@ -113,9 +113,6 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 						//add mass at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 							contactNodeData.massMaster += nodalMass;
-							if (contribution->at(j).getNodeId() == 965) {
-								int a = 1;
-							}
 						}
 						//add mass at node of the slave body 
 						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {

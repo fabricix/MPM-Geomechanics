@@ -111,7 +111,7 @@ void SolverExplicit::Solve()
 		{	
 			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
-			if (ModelSetup::getContactActive()) {
+			if (contactActive) {
 				contactManager->nodalMomentumCorrection(mesh, dt);
 			}
 
