@@ -5,8 +5,6 @@
 #include <numeric>
 #include "Update.h"
 
-
-
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	mesh->clearContactNodes();
 
@@ -55,8 +53,6 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	
 	// for each node
 	for (size_t i = 0; i < nNodes; i++) {
-
-
 
 		// check if more than one body contributed to node i
 		int soma = std::accumulate(contributionMatrix[i].begin(),
@@ -143,7 +139,6 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 						// get normal vector
 						Vector3d n = -contactNodeData.normal;
 
-
 						// particle-node distance
 						double dPN = -n.dot(PNVector);
 
@@ -157,7 +152,6 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 			}
 		}
 	}
-
 
 	//for each contact node
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
@@ -216,7 +210,6 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 				// compute the nodal mass gradient
 				const Vector3d nodalMassGradient = pMass * contribution->at(j).getGradients();
-
 
 				//check contact at this node
 				auto it = contactNodes.find(contribution->at(j).getNodeId());
