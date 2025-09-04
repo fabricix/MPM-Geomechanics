@@ -262,7 +262,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
-void ContactManager::computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 	//get contact nodes
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
@@ -335,7 +335,7 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodie
 
 	if (hasContact) {
 		// b) compute contact force
-		computeContactForces(mesh, bodies, dt);
+		computeContactForces(mesh, dt);
 
 		// b.1) impose force boundary conditions
 		Update::boundaryConditionsContactForce(mesh);

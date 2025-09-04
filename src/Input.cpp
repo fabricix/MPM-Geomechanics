@@ -1710,12 +1710,12 @@ double Input::RealDistanceCorrectionCoefficient() {
 	{
 		if (inputFile["contact"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["real_distance_correction_coefficient"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["real_distance_correction_coefficient"].is_number())
@@ -1738,12 +1738,12 @@ int Input::getMasterBodyId() {
 	{
 		if (inputFile["contact"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["master_id"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["master_id"].is_number_integer())
@@ -1766,12 +1766,12 @@ int Input::getSlaveBodyId() {
 	{
 		if (inputFile["contact"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["slave_id"].is_null()) {
 
-			return NULL;
+			return -1;
 		}
 
 		if (inputFile["contact"]["slave_id"].is_number_integer())

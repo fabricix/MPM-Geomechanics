@@ -17,16 +17,16 @@ using Eigen::Vector3d;
 /// \brief Manages contact data and calculations for MPM nodes
 class ContactManager {
 public:
-    ContactManager(double _friction, double _master_id, double _slave_id, string _normal_type, double _real_distance_correction_coefficient)
+    ContactManager(double _friction, int _master_id, int _slave_id, string _normal_type, double _real_distance_correction_coefficient)
         :frictionCoefficient(_friction) {
-        if (_master_id == NULL) {
+        if (_master_id <= 0) {
             masterId = 0;
         }
         else {
             masterId = _master_id;
         }
 
-        if (_slave_id == NULL) {
+        if (_slave_id <= 0) {
             slaveId = 1;
         }
         else {
@@ -40,7 +40,7 @@ public:
             normalType = _normal_type;
         }
 
-        if (_real_distance_correction_coefficient == NULL) {
+        if (_real_distance_correction_coefficient <= 0) {
             realDistanceCorrectionActive = false;
         }
         else {
@@ -56,7 +56,7 @@ public:
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
-    void computeContactForces(Mesh* mesh, vector<Body*>* bodies, double dt);
+    void computeContactForces(Mesh* mesh, double dt);
 
     /// \brief Calculate the normal vector to the node
     ///
