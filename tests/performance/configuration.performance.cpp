@@ -28,10 +28,54 @@ namespace Spaces
 
 namespace Configuration
 {
-    json configuration;
-    json globalConfiguration;
-    string jsonFileName = "test-configuration.json";
     const int PRINT_SPACES = 25;
+    bool usingDefaultConfigurationFile = false;
+    json configuration;
+    string jsonFileName = "test-configuration.json";
+    json defaultConfigurationFile = {
+        {"global", {
+            {"numParticles", static_cast<int>(numParticles)},
+            {"numThreads", static_cast<int>(numThreads)},
+            {"cellDimension", {static_cast<int>(cellDimension[0]), static_cast<int>(cellDimension[1]), static_cast<int>(cellDimension[2])}},
+            {"numCells", {static_cast<int>(numCells[0]), static_cast<int>(numCells[1]), static_cast<int>(numCells[2])}},
+            {"randomSeed", static_cast<int>(randomSeed)},
+            {"interpolationTest", static_cast<bool>(interpolationTest)},
+            {"updateTest", static_cast<bool>(updateTest)}
+        }},
+        {"update", {
+            {"UpdatePerformance_ParticleDensity_nParticles", {
+                {"initialDensity", static_cast<double>(initialDensity)},
+                {"traceStrain", static_cast<double>(traceStrain)}
+            }},
+            {"ParticleStress_nParticles", {
+                {"E", static_cast<double>(E)},
+                {"nu", static_cast<double>(nu)},
+                {"epsilon0", static_cast<double>(epsilon0)}
+            }}
+        }},
+        {"interpolation", {
+            {"NodalMass_nParticles", {
+                {"comment", "No specific parameters for this test"}
+            }},
+            {"NodalMomentum_nParticles", {
+                {"particleVelocity", {static_cast<double>(particleVelocity[0]), static_cast<double>(particleVelocity[1]), static_cast<double>(particleVelocity[2])}}
+            }},
+            {"NodalInternalForce_nParticles", {
+                {"comment", "No specific parameters for this test"} 
+            }},
+            {"NodalExternalForce_nParticles", {
+                {"appliedForce", {static_cast<double>(appliedForce[0]), static_cast<double>(appliedForce[1]), static_cast<double>(appliedForce[2])}}
+            }},
+            {"ParticleStrainIncrement_nParticles", {
+                {"dt01", static_cast<double>(dt01)},
+                {"nodalVelocity", {static_cast<double>(nodalVelocity[0]), static_cast<double>(nodalVelocity[1]), static_cast<double>(nodalVelocity[2])}}
+            }},
+            {"ParticleVorticityIncrement_nParticles", {
+                {"dt02", static_cast<double>(dt02)},
+                {"omega", {static_cast<double>(omega[0]), static_cast<double>(omega[1]), static_cast<double>(omega[2])}}
+            }}
+        }}
+    };
 
     // Track which fields were found in the JSON file
     unordered_map<string, bool> jsonFields = {
@@ -107,7 +151,7 @@ namespace Configuration
         out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
 
         return Spaces::getTextFormatted(out.str(),
-            (jsonFields[key] ? "" : printInBlue("(default)")),
+            (jsonFields[key] && !usingDefaultConfigurationFile ? "" : printInBlue("(default)")),
             PRINT_SPACES
         );
     }
@@ -128,7 +172,7 @@ namespace Configuration
         out << value;
 
         return Spaces::getTextFormatted(out.str(),
-            (jsonFields[key] ? "" : printInBlue("(default)")),
+            (jsonFields[key] && !usingDefaultConfigurationFile ? "" : printInBlue("(default)")),
             PRINT_SPACES
         );
     }
@@ -199,7 +243,7 @@ namespace Configuration
     T getValueFromJson(T defaultValue, string key01) { return getValueFromJson(defaultValue, key01, "", ""); }
 
     // Open and parse the JSON configuration file
-    void openConfiguration()
+    void openConfigurationFile()
     {
         cout << "> Open configuration file..." << endl;
 
@@ -217,23 +261,19 @@ namespace Configuration
                 throw runtime_error("Failed to set configuration file: " + jsonFileName);
             }
         }
-        else
-        {
-            cout << "--> Using default configuration file: " << jsonFileName << endl;
-        }
 
         ifstream file(jsonFileName);
         if (!file.is_open()) {
-            cerr << "--> [ERROR] Error opening file: " << jsonFileName << endl;
-            throw runtime_error("Configuration file not found");
+            cerr << "--> [INFO] There is no configuration file found: " << jsonFileName << endl;
+            cerr << "--> [INFO] Using default configuration values." << endl;
+            usingDefaultConfigurationFile = true;
+            configuration = defaultConfigurationFile;
         }
         else
         {
             cout << "--> File opened successfully: " << jsonFileName << endl;
+            file >> configuration;
         }
-
-        file >> configuration;
-        globalConfiguration = configuration["global"];
     }
 
     // Read global configuration parameters
@@ -262,10 +302,11 @@ namespace Configuration
             randomSeed = getValueFromJson(randomSeed, "global", "randomSeed");
 
             step = "setting interpolationTest";
-            if (globalConfiguration.contains("interpolationTest")) { interpolationTest = globalConfiguration["interpolationTest"]; }
+            interpolationTest = getValueFromJson(interpolationTest, "global", "interpolationTest");
 
             step = "setting updateTest";
-            if (globalConfiguration.contains("updateTest")) { updateTest = globalConfiguration["updateTest"]; }
+            updateTest = getValueFromJson(updateTest, "global", "updateTest");
+
 
             cout << "--> Global Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
@@ -383,7 +424,7 @@ namespace Configuration
         int status = 0;
         try
         {
-            openConfiguration();
+            openConfigurationFile();
             cout << "\n";
 
             readGlobalConfiguration();
