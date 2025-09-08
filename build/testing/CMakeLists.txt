@@ -31,7 +31,7 @@ include_directories(../../tests/performance)
 # ====================================
 
 # Remove main.cpp file from the list of sources to avoid multiple definitions of the main function
-file(GLOB_RECURSE TEST_SOURCES "../../tests/testing/*.test.cpp" "../../tests/testing/main.test.cpp")
+file(GLOB_RECURSE TEST_SOURCES "../../tests/numerical-verification/*.test.cpp" "../../tests/numerical-verification/main.test.cpp")
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
 add_executable(MPM-Geomechanics-tests ${TEST_SOURCES} ${EXECUTABLES})
