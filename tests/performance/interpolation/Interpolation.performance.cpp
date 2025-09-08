@@ -15,13 +15,13 @@ using namespace std;
 TEST(InterpolationPerformance, NodalMass_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -84,13 +84,13 @@ TEST(InterpolationPerformance, NodalMass_nParticles)
 TEST(InterpolationPerformance, NodalMomentum_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -98,7 +98,7 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
-    Vector3d particleVelocity(1.0, 2.0, 3.0);
+    Vector3d particleVelocity = Configuration::particleVelocity;
 
     // create the mesh
     Mesh mesh;
@@ -160,13 +160,13 @@ TEST(InterpolationPerformance, NodalMomentum_nParticles)
 TEST(InterpolationPerformance, NodalInternalForce_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -219,16 +219,16 @@ TEST(InterpolationPerformance, NodalInternalForce_nParticles)
         delete p;
 }
 
-TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nParticles)
+TEST(InterpolationPerformance, NodalExternalForce_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -236,7 +236,7 @@ TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nPart
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
-    const Vector3d appliedForce(1.0, 2.0, 3.0);
+    const Vector3d appliedForce = Configuration::appliedForce;
 
     // create the mesh
     Mesh mesh;
@@ -293,16 +293,16 @@ TEST(InterpolationPerformance, InterpolationPerformance_NodalExternalForce_nPart
         delete p;
 }
 
-TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_nParticles)
+TEST(InterpolationPerformance, ParticleStrainIncrement_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -311,8 +311,8 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_
 #endif
 
     // Set up parameters
-    const double dt = 0.01;
-    const Vector3d nodalVelocity(1.0, 2.0, 3.0);
+    const double dt = Configuration::dt01;
+    const Vector3d nodalVelocity = Configuration::nodalVelocity;
 
     // create the mesh
     Mesh mesh;
@@ -394,16 +394,16 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleStrainIncrement_
     for (auto p : particles) delete p;
 }
 
-TEST(InterpolationPerformance, InterpolationPerformance_ParticleVorticityIncrement_nParticles)
+TEST(InterpolationPerformance, ParticleVorticityIncrement_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -411,8 +411,8 @@ TEST(InterpolationPerformance, InterpolationPerformance_ParticleVorticityIncreme
     std::cout << "[ INFO ] OpenMP threads: " << omp_get_max_threads() << std::endl;
 #endif
 
-    const double dt = 0.01;
-    const Vector3d omega(1.0, 2.0, 3.0);  // Angular velocity around z, y, x
+    const double dt = Configuration::dt02;
+    const Vector3d omega = Configuration::omega;
 
     // ================================
     // Setup mesh and particles

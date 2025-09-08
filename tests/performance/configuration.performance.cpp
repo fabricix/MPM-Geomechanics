@@ -13,145 +13,197 @@ using json = nlohmann::json;
 
 namespace Spaces
 {
-    string getTextFormatted(string str01, float str02, int spacing)
+    string getTextFormatted(string str01, string str02, int spacing)
     {
         string spaces = "";
         int separation = spacing - str01.length();
-        if (separation < 1) separation = 0;
+        if (separation < 1) separation = 5;
         spaces += string(separation, ' ');
         std::ostringstream stream;
         stream << std::fixed << std::setprecision(2) << str02;
-        string value_to_2 = stream.str();
-        return str01 + spaces + value_to_2;
+        str02 = stream.str();
+        return str01 + spaces + str02;
     }
 }
 
 namespace Configuration
 {
-
     json configuration;
     json globalConfiguration;
     string jsonFileName = "test-configuration.json";
+    const int PRINT_SPACES = 25;
 
-    // Global variables
-    int numParticles = 0;
-    int numThreads = 0;
-    Vector3d particleSize = Vector3d::Zero();
-    double particleMass = 0.0;
-    Vector3d cellDimension = Vector3d::Zero();
-    Vector3i numCells = Vector3i::Zero();
-    int randomSeed = 0;
+    // Track which fields were found in the JSON file
+    unordered_map<string, bool> jsonFields = {
 
-    // Update - UpdatePerformance_ParticleDensity_nParticles - Variables
-    double initialDensity = 2000;
-    double traceStrain = 0.05;
-    double expectedDensity = 2000 / (1.0 + 0.05);
-
-    // Update - ParticleStress_nParticles - Variables
-    double E = 1000.0;
-    double nu = 0.3;
-    double epsilon0 = 0.01;
-
-    // Test flags
-    bool interpolationTest = true;
-    bool updateTest = true;
-
-    // Global variables - Functions
-    int getNumParticles() { return numParticles; }
-    void setNumParticles(int n) { numParticles = n; }
-
-    int getNumThreads() { return numThreads; }
-    void setNumThreads(int n) { numThreads = n; }
-
-    Vector3d getParticleSize() { return particleSize; }
-    void setParticleSize(const Vector3d& size) { particleSize = size; }
-
-    double getParticleMass() { return particleMass; }
-    void setParticleMass(double mass) { particleMass = mass; }
-
-    Vector3d getCellDimension() { return cellDimension; }
-    void setCellDimension(const Vector3d& dimension) { cellDimension = dimension; }
-
-    Vector3i getNumCells() { return numCells; }
-    void setNumCells(const Vector3i& cells) { numCells = cells; }
-
-    int getRandomSeed() { return randomSeed; }
-    void setRandomSeed(int seed) { randomSeed = seed; }
-
-    // Update - UpdatePerformance_ParticleDensity_nParticles - Functions
-    double getInitialDensity() { return initialDensity; }
-    void setInitialDensity(double density) { initialDensity = density; }
-
-    double getTraceStrain() { return traceStrain; }
-    void setTraceStrain(double strain) { traceStrain = strain; }
-
-    double getExpectedDensity() { return expectedDensity; }
-    void setExpectedDensity(double density) { expectedDensity = density; }
-    void setDefaultExpectedDensity() { expectedDensity = initialDensity / (1.0 + traceStrain); }
-
-    // Update - ParticleStress_nParticles - Functions
-    double getE() { return E; }
-    void setE(double value) { E = value; }
-
-    double getNu() { return nu; }
-    void setNu(double value) { nu = value; }
-
-    double getEpsilon0() { return epsilon0; }
-    void setEpsilon0(double value) { epsilon0 = value; }
-
-    // Test flags - Functions
-    bool getInterpolationTest() { return interpolationTest; }
-    void setInterpolationTest(bool value) { interpolationTest = value; }
-
-    bool getUpdateTest() { return updateTest; }
-    void setUpdateTest(bool value) { updateTest = value; }
-
-    // dictionary
-    unordered_map<string, function<float()>> configGetters = {
-        {"initialDensity",  getInitialDensity},
-        {"traceStrain",  getTraceStrain},
-        {"expectedDensity",  getExpectedDensity},
-        {"E",  getE},
-        {"nu",  getNu},
-        {"epsilon0",  getEpsilon0}
+        {"numParticles",  false},
+        {"numThreads",  false},
+        {"cellDimension",  false},
+        {"numCells",  false},
+        {"randomSeed",  false},
+        {"UpdatePerformance_ParticleDensity_nParticles",  false},
+        {"initialDensity",  false},
+        {"traceStrain",  false},
+        {"ParticleStress_nParticles",  false},
+        {"E",  false},
+        {"nu",  false},
+        {"epsilon0",  false},
+        {"NodalMass_nParticles",  false},
+        {"NodalMomentum_nParticles",  false},
+        {"particleVelocity",  false},
+        {"NodalInternalForce_nParticles",  false},
+        {"NodalExternalForce_nParticles",  false},
+        {"appliedForce",  false},
+        {"ParticleStrainIncrement_nParticles",  false},
+        {"dt01",  false},
+        {"nodalVelocity",  false},
+        {"ParticleVorticityIncrement_nParticles",  false},
+        {"dt02",  false},
+        {"omega",  false},
+        {"update",  false},
+        {"interpolation",  false},
+        {"interpolationTest",  false},
+        {"updateTest",  false}
     };
 
-    json getVar(string key)
+    // Helper function to print text in blue
+    string printInBlue(string text) { return "\033[34m" + text + "\033[0m"; }
+
+    // Check if a key exists in the JSON file
+    bool exists(json jsonFile, string key)
     {
-        json value = 0.0;
+        bool existsInConfigurationFile = false;
+        bool existsInMap = false;
         try
         {
-            value = configuration[key];
-            return value;
+            if (jsonFields.find(key) != jsonFields.end()) jsonFields[key] = true;
+
+            existsInConfigurationFile = jsonFile.contains(key);
+            if (!existsInConfigurationFile)
+            {
+                cerr << "--> [INFO] A configuration key was not found in the json file: [" << key << "]" << endl;
+                return false;
+            }
+            return existsInConfigurationFile;
         }
         catch (const std::exception& e)
         {
-            try
-            {
-                value = configGetters[key]();
-                string message = "--> [WARNING] Using default value for: " + key + ": ";
-                cout << Spaces::getTextFormatted(message, value, 55) << endl;
-                return value;
-            }
-            catch (const std::exception& e)
-            {
-                cerr << "--> [ERROR] Failed to get default configuration variable: " << e.what() << endl;
-                throw;
-            }
+            cerr << "--> [WARNING] An error occurred while checking configuration key: [" << key << "]. Reason: " << e.what() << endl;
+            cerr << "--> [WARNING] Please check your configuration file." << endl;
+            return false;
         }
     }
 
-    float getUpdateVar(string key)
+
+    // Print Vector for different types
+    template <typename T,
+        typename = std::enable_if_t<
+        std::is_same_v<T, Eigen::Vector3d> ||
+        std::is_same_v<T, Eigen::Vector3i>>>
+        string printVector(const T& vector, const string& key)
     {
-        return getVar("UpdatePerformance_ParticleDensity_nParticles")[key];
+        std::ostringstream out;
+        out << std::fixed << std::setprecision(2);
+        out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
+
+        return Spaces::getTextFormatted(out.str(),
+            (jsonFields[key] ? "" : printInBlue("(default)")),
+            PRINT_SPACES
+        );
     }
 
+    // Print value for different types
+    template <typename T,
+        typename = std::enable_if_t<
+        std::is_same_v<T, int> ||
+        std::is_same_v<T, float> ||
+        std::is_same_v<T, double> ||
+        std::is_same_v<T, bool>>>
+        string printValue(const T& value, const string& key)
+    {
+        std::ostringstream out;
+        out << std::fixed;
+        if constexpr (std::is_same_v<T, bool>) { out << std::boolalpha; }
+        else { out << std::setprecision(2); }
+        out << value;
+
+        return Spaces::getTextFormatted(out.str(),
+            (jsonFields[key] ? "" : printInBlue("(default)")),
+            PRINT_SPACES
+        );
+    }
+
+    // Helper function to format key printing
+    string printKeys(string key01, string key02, string key03)
+    {
+        string fullKey = "";
+        if (!key01.empty()) fullKey += printInBlue("[" + key01 + "]");
+        if (!key02.empty()) fullKey += static_cast<string>(fullKey.empty() ? "" : "->") + printInBlue("[" + key02 + "]");
+        if (!key03.empty()) fullKey += static_cast<string>(fullKey.empty() ? "" : "->") + printInBlue("[" + key03 + "]");
+        return fullKey;
+    }
+
+    // Template function to get value from JSON with error handling
+    template <typename T>
+    T getValueFromJson(T defaultValue, string key01, string key02, string key03)
+    {
+        json configurationReference = configuration;
+        if (!key01.empty() && !exists(configuration, key01))
+        {
+            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
+            return defaultValue;
+        }
+        if (!key01.empty()) configurationReference = configurationReference[key01];
+
+        if (!key02.empty() && !exists(configurationReference, key02))
+        {
+            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
+            return defaultValue;
+        }
+        if (!key02.empty()) configurationReference = configurationReference[key02];
+
+        if (!key03.empty() && !exists(configurationReference, key03))
+        {
+            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
+            return defaultValue;
+        }
+        if (!key03.empty()) configurationReference = configurationReference[key03];
+
+        if constexpr (std::is_same_v<T, Vector3d>)
+        {
+            if (configurationReference.size() != 3) return defaultValue;
+            return Vector3d(
+                static_cast<double>(configurationReference[0]),
+                static_cast<double>(configurationReference[1]),
+                static_cast<double>(configurationReference[2])
+            );
+        }
+        else if constexpr (std::is_same_v<T, Vector3i>)
+        {
+            if (configurationReference.size() != 3) return defaultValue;
+            return Vector3i(
+                static_cast<int>(configurationReference[0]),
+                static_cast<int>(configurationReference[1]),
+                static_cast<int>(configurationReference[2])
+            );
+        }
+        else { return configurationReference.get<T>(); }
+    }
+
+    // Overloaded functions for different number of keys
+    template <typename T>
+    T getValueFromJson(T defaultValue, string key01, string key02) { return getValueFromJson(defaultValue, key01, key02, ""); }
+
+    // Overloaded function for single key
+    template <typename T>
+    T getValueFromJson(T defaultValue, string key01) { return getValueFromJson(defaultValue, key01, "", ""); }
+
+    // Open and parse the JSON configuration file
     void openConfiguration()
     {
         cout << "> Open configuration file..." << endl;
 
         vector<string> argv = ::testing::internal::GetArgvs();
-
         if (argv.size() > 1 && !argv[1].empty())
         {
             try
@@ -171,7 +223,6 @@ namespace Configuration
         }
 
         ifstream file(jsonFileName);
-
         if (!file.is_open()) {
             cerr << "--> [ERROR] Error opening file: " << jsonFileName << endl;
             throw runtime_error("Configuration file not found");
@@ -182,73 +233,52 @@ namespace Configuration
         }
 
         file >> configuration;
-
         globalConfiguration = configuration["global"];
     }
 
+    // Read global configuration parameters
     void readGlobalConfiguration()
     {
         cout << "> Read global configuration..." << endl;
+
         string step;
         string expected;
-
         try
         {
             // Global variables
             step = "setting num_particles";
-            numParticles = int(globalConfiguration["num_particles"]);
-            setNumParticles(numParticles);
+            numParticles = getValueFromJson(numParticles, "global", "numParticles");
 
             step = "setting num_threads";
-            numThreads = int(globalConfiguration["num_threads"]);
-            setNumThreads(numThreads);
-
-            step = "setting particle_size";
-            particleSize = Vector3d(int(globalConfiguration["particle_size"][0]), int(globalConfiguration["particle_size"][1]), int(globalConfiguration["particle_size"][2]));
-            setParticleSize(particleSize);
-
-            step = "setting particle_mass";
-            particleMass = int(globalConfiguration["particle_mass"]);
-            setParticleMass(particleMass);
+            numThreads = getValueFromJson(numThreads, "global", "numThreads");
 
             step = "setting cell_dimension";
-            cellDimension = Vector3d(int(globalConfiguration["cell_dimension"][0]), int(globalConfiguration["cell_dimension"][1]), int(globalConfiguration["cell_dimension"][2]));
-            setCellDimension(cellDimension);
+            cellDimension = getValueFromJson(cellDimension, "global", "cellDimension");
 
             step = "setting num_cells";
-            numCells = Vector3i(int(globalConfiguration["num_cells"][0]), int(globalConfiguration["num_cells"][1]), int(globalConfiguration["num_cells"][2]));
-            setNumCells(numCells);
+            numCells = getValueFromJson(numCells, "global", "numCells");
 
             step = "setting random_seed";
-            randomSeed = int(globalConfiguration["random_seed"]);
-            setRandomSeed(randomSeed);
+            randomSeed = getValueFromJson(randomSeed, "global", "randomSeed");
 
-            step = "setting interpolation_test";
-            if (globalConfiguration.contains("interpolation_test"))
-            {
-                interpolationTest = globalConfiguration["interpolation_test"];
-            }
-            setInterpolationTest(interpolationTest);
+            step = "setting interpolationTest";
+            if (globalConfiguration.contains("interpolationTest")) { interpolationTest = globalConfiguration["interpolationTest"]; }
 
-            step = "setting update_test";
-            if (globalConfiguration.contains("update_test"))
-            {
-                updateTest = globalConfiguration["update_test"];
-            }
-            setUpdateTest(updateTest);
+            step = "setting updateTest";
+            if (globalConfiguration.contains("updateTest")) { updateTest = globalConfiguration["updateTest"]; }
 
             cout << "--> Global Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
-            cout << "----> numParticles:        " << getNumParticles() << endl;
-            cout << "----> numThreads:          " << getNumThreads() << endl;
-            cout << "----> particleSize:        [" << getParticleSize()[0] << ", " << getParticleSize()[1] << ", " << getParticleSize()[2] << "]" << endl;
-            cout << "----> particleMass:        " << getParticleMass() << endl;
-            cout << "----> cellDimension:       [" << getCellDimension()[0] << ", " << getCellDimension()[1] << ", " << getCellDimension()[2] << "]" << endl;
-            cout << "----> numCells:            [" << getNumCells()[0] << ", " << getNumCells()[1] << ", " << getNumCells()[2] << "]" << endl;
-            cout << "----> randomSeed:          " << getRandomSeed() << endl;
+            cout << "---->" << printInBlue("numParticles") << ":        " << printValue(numParticles, "numParticles") << endl;
+            cout << "---->" << printInBlue("numThreads") << ":          " << printValue(numThreads, "numThreads") << endl;
+            cout << "---->" << printInBlue("particleSize") << ":        " << printVector(particleSize, "particleSize") << endl;
+            cout << "---->" << printInBlue("particleMass") << ":        " << printValue(particleMass, "particleMass") << endl;
+            cout << "---->" << printInBlue("cellDimension") << ":       " << printVector(cellDimension, "cellDimension") << endl;
+            cout << "---->" << printInBlue("numCells") << ":            " << printVector(numCells, "numCells") << endl;
+            cout << "---->" << printInBlue("randomSeed") << ":          " << printValue(randomSeed, "randomSeed") << endl;
             cout << "--> Test Flags" << endl;
-            cout << "----> interpolationTest:   " << (getInterpolationTest() ? "true" : "false") << endl;
-            cout << "----> updateTest:          " << (getUpdateTest() ? "true" : "false") << endl;
+            cout << "---->" << printInBlue("interpolationTest") << ":   " << printValue(interpolationTest, "interpolationTest") << endl;
+            cout << "---->" << printInBlue("updateTest") << ":          " << printValue(updateTest, "updateTest") << endl;
         }
         catch (const std::exception& e)
         {
@@ -258,6 +288,7 @@ namespace Configuration
         }
     }
 
+    // Read specific configuration parameters for performance tests
     void readSpecificConfiguration()
     {
         cout << "> Read specific configuration..." << endl;
@@ -267,40 +298,72 @@ namespace Configuration
         {
             // --> Update - UpdatePerformance_ParticleDensity_nParticles
             step = "setting initialDensity";
-            initialDensity = float(configuration["UpdatePerformance_ParticleDensity_nParticles"]["initialDensity"]);
-            setInitialDensity(initialDensity);
+            initialDensity = getValueFromJson(initialDensity, "update", "UpdatePerformance_ParticleDensity_nParticles", "initialDensity");
 
             step = "setting traceStrain";
-            traceStrain = float(configuration["UpdatePerformance_ParticleDensity_nParticles"]["traceStrain"]);
-            setTraceStrain(traceStrain);
+            traceStrain = getValueFromJson(traceStrain, "update", "UpdatePerformance_ParticleDensity_nParticles", "traceStrain");
 
             // The expected density is calculated based on the initial density and trace strain
             step = "setting expectedDensity";
-            setDefaultExpectedDensity();
+            expectedDensity = initialDensity / (1.0 + traceStrain);
 
             // --> Update - ParticleStress_nParticles
             step = "setting E";
-            E = float(configuration["ParticleStress_nParticles"]["E"]);
-            setE(E);
+            E = getValueFromJson(E, "update", "ParticleStress_nParticles", "E");
 
             step = "setting nu";
-            nu = float(configuration["ParticleStress_nParticles"]["nu"]);
-            setNu(nu);
+            nu = getValueFromJson(nu, "update", "ParticleStress_nParticles", "nu");
 
             step = "setting epsilon0";
-            epsilon0 = float(configuration["ParticleStress_nParticles"]["epsilon0"]);
-            setEpsilon0(epsilon0);
+            epsilon0 = getValueFromJson(epsilon0, "update", "ParticleStress_nParticles", "epsilon0");
 
+            // --> Interpolation - NodalMomentum_nParticles
+            step = "setting particleVelocity";
+            particleVelocity = getValueFromJson(particleVelocity, "interpolation", "NodalMomentum_nParticles", "particleVelocity");
+
+            // --> Interpolation - NodalExternalForce_nParticles
+            step = "setting appliedForce";
+
+            appliedForce = getValueFromJson(appliedForce, "interpolation", "NodalExternalForce_nParticles", "appliedForce");
+
+            // --> Interpolation - ParticleStrainIncrement_nParticles
+            step = "setting dt01";
+            dt01 = getValueFromJson(dt01, "interpolation", "ParticleStrainIncrement_nParticles", "dt01");
+
+            step = "setting nodalVelocity";
+            nodalVelocity = getValueFromJson(nodalVelocity, "interpolation", "ParticleStrainIncrement_nParticles", "nodalVelocity");
+
+            // --> Interpolation - ParticleVorticityIncrement_nParticles
+            step = "setting dt02";
+            dt02 = getValueFromJson(dt02, "interpolation", "ParticleVorticityIncrement_nParticles", "dt02");
+
+            step = "setting omega";
+            omega = getValueFromJson(omega, "interpolation", "ParticleVorticityIncrement_nParticles", "omega");
+
+            // Finalizing
+            step = "finalizing configuration";
+
+            // Displaying configuration values
             cout << "--> Specific Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
-            cout << "----> UpdatePerformance_ParticleDensity_nParticles:" << endl;
-            cout << "------> initialDensity:    " << std::fixed << std::setprecision(2) << getInitialDensity() << endl;
-            cout << "------> traceStrain:       " << std::fixed << std::setprecision(2) << getTraceStrain() << endl;
-            cout << "------> expectedDensity:   " << std::fixed << std::setprecision(2) << getExpectedDensity() << " (calculated)"<< endl;
-            cout << "----> UpdatePerformance_ParticleStress_nParticles:" << endl;
-            cout << "------> E:                 " << std::fixed << std::setprecision(2) << getE() << endl;
-            cout << "------> nu:                " << std::fixed << std::setprecision(2) << getNu() << endl;
-            cout << "------> epsilon0:          " << std::fixed << std::setprecision(2) << getEpsilon0() << endl;
+            cout << "----> Performance Test: UpdatePerformance_ParticleDensity_nParticles:" << endl;
+            cout << "------> " << printInBlue("initialDensity") << ":    " << printValue(initialDensity, "initialDensity") << endl;
+            cout << "------> " << printInBlue("traceStrain") << ":       " << printValue(traceStrain, "traceStrain") << endl;
+            cout << "------> " << printInBlue("expectedDensity") << ":   " << printValue(expectedDensity, "expectedDensity") << " (calculated)" << endl;
+            cout << "----> Performance Test: UpdatePerformance_ParticleStress_nParticles:" << endl;
+            cout << "------> " << printInBlue("E") << ":                 " << printValue(E, "E") << endl;
+            cout << "------> " << printInBlue("nu") << ":                " << printValue(nu, "nu") << endl;
+            cout << "------> " << printInBlue("epsilon0") << ":          " << printValue(epsilon0, "epsilon0") << endl;
+            cout << "----> Performance Test: Interpolation_NodalMomentum_nParticles:" << endl;
+            cout << "------> " << printInBlue("particleVelocity") << ":  " << printVector(particleVelocity, "particleVelocity") << endl;
+            cout << "----> Performance Test: Interpolation_NodalExternalForce_nParticles:" << endl;
+            cout << "------> " << printInBlue("appliedForce") << ":      " << printVector(appliedForce, "appliedForce") << endl;
+            cout << "----> Performance Test: Interpolation_ParticleStrainIncrement_nParticles:" << endl;
+            cout << "------> " << printInBlue("dt01") << ":              " << printValue(dt01, "dt01") << endl;
+            cout << "------> " << printInBlue("nodalVelocity") << ":     " << printVector(nodalVelocity, "nodalVelocity") << endl;
+            cout << "----> Performance Test: Interpolation_ParticleVorticityIncrement_nParticles:" << endl;
+            cout << "------> " << printInBlue("dt02") << ":              " << printValue(dt02, "dt02") << endl;
+            cout << "------> " << printInBlue("omega") << ":             " << printVector(omega, "omega") << endl;
         }
         catch (const std::exception& e)
         {
@@ -310,13 +373,14 @@ namespace Configuration
         }
     }
 
+    // Setup function to initialize configuration
     int setup()
     {
-        int status = 0;
-
         cout << "------------------------" << endl;
         cout << "SETUP CONFIGURATION" << endl;
         cout << "\n";
+
+        int status = 0;
         try
         {
             openConfiguration();
@@ -334,7 +398,6 @@ namespace Configuration
         {
             cerr << "[ERROR] Error during configuration setup: " << e.what() << endl;
             status = -1;
-
         }
 
         cout << "Setup complete with status: " << status << endl;

@@ -12,7 +12,7 @@ string getFilters()
     string filter = "";
 
     cout << "----> Test Filters <----\n" << endl;
-    if (Configuration::getInterpolationTest())
+    if (Configuration::interpolationTest)
     {
         cout << "----> Interpolation test: enabled" << endl;
         filter += "Interpolation*";
@@ -22,7 +22,7 @@ string getFilters()
         cout << "----> Interpolation test: disabled" << endl;
     }
 
-    if (Configuration::getUpdateTest())
+    if (Configuration::updateTest)
     {
         cout << "----> Update test: enabled" << endl;
         if (!filter.empty()) filter += ":";

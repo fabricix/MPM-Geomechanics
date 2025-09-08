@@ -16,13 +16,13 @@ using namespace std;
 
 TEST(UpdatePerformance, ContributionNodes_nParticles)
 {
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
 	std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -77,13 +77,13 @@ TEST(UpdatePerformance, ContributionNodes_nParticles)
 TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined" << std::endl;
@@ -92,9 +92,9 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 #endif
 
     // Test parameters
-    const double initialDensity = Configuration::getInitialDensity();
-    const double traceStrain = Configuration::getTraceStrain();
-    const double expectedDensity = Configuration::getExpectedDensity();
+    const double initialDensity = Configuration::initialDensity;
+    const double traceStrain = Configuration::traceStrain;
+    const double expectedDensity = Configuration::expectedDensity;
 
     // Create particles
     std::vector<Particle*> particles;
@@ -139,13 +139,13 @@ TEST(UpdatePerformance, UpdatePerformance_ParticleDensity_nParticles)
 TEST(UpdatePerformance, ParticleStress_nParticles)
 {
 
-    const int numParticles = Configuration::getNumParticles();
-    const int numThreads = Configuration::getNumThreads();
-    const Vector3d particleSize = Configuration::getParticleSize();
-    const double particleMass = Configuration::getParticleMass();
-    const Vector3d cellDimension = Configuration::getCellDimension();
-    const Vector3i numCells = Configuration::getNumCells();
-    const int randomSeed = Configuration::getRandomSeed();
+    const int numParticles = Configuration::numParticles;
+    const int numThreads = Configuration::numThreads;
+    const Vector3d particleSize = Configuration::particleSize;
+    const double particleMass = Configuration::particleMass;
+    const Vector3d cellDimension = Configuration::cellDimension;
+    const Vector3i numCells = Configuration::numCells;
+    const int randomSeed = Configuration::randomSeed;
 
 #ifdef _OPENMP
     std::cout << "[ INFO ] _OPENMP is defined\n";
@@ -154,9 +154,9 @@ TEST(UpdatePerformance, ParticleStress_nParticles)
 #endif
 
     // Material parameters
-    const double E = 1000.0;   // Young's modulus
-    const double nu = 0.3;     // Poisson's ratio
-	const double epsilon0 = 0.01; // Initial strain increment
+    const double E = Configuration::E;                 // Young's modulus
+    const double nu = Configuration::nu;               // Poisson's ratio
+	const double epsilon0 = Configuration::epsilon0;   // Initial strain increment
 
     // Create particles
     vector<Particle*> particles;
