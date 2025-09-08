@@ -358,7 +358,13 @@ Local damping</h2>
 </p>
 <p>For activate local damping force with \( \alpha = 0.145 \):</p>
 <div class="fragment"><div class="line">&quot;damping&quot;:{&quot;type&quot;=&quot;:&quot;local&quot;, &quot;value&quot;:0.145}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md87"></a>
+</div><!-- fragment --><p>The stress field obtained from a local damping forced system, cam be used as initial stress field value.</p>
+<p>In geostatic analysis, the quasi static analysis can be store in to a simulation state:</p>
+<div class="fragment"><div class="line">&quot;save_state&quot;:true,</div>
+</div><!-- fragment --><p>And for loading the salved state</p>
+<div class="fragment"><div class="line">&quot;load_state&quot;:true,</div>
+</div><!-- fragment --><p> See the class <a class="el" href="namespaceStates.html">States</a></p>
+<h1><a class="anchor" id="autotoc_md87"></a>
 Explicit MPM Scheme</h1>
 <p>In the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> the particles stores all the material information and the mesh is used to integrate the motion equation \( \dot{p} = m \frac{dv}{dt} = f \). Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.</p>
 <p>The total force in the motion equation includes internal force and it depends on the stress state store in particles. The stresses can be updated by using a constitutive model, relating stresses with deformations. The deformation tensor can be obtained from the velocity field. The nodal velocities are used to calculate the strain and the vorticity tensor to update the stress. So, in the numerical integration the stresses could be updated with the velocities at the beginning or at the end of each time step. Regarding the velocity field used we have the <a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> Stress First - USF scheme or the <a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> Stress Last - USL scheme.</p>

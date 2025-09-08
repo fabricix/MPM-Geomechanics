@@ -273,6 +273,21 @@ For activate local damping force with \f$ \alpha = 0.145 \f$:
 "damping":{"type"=":"local", "value":0.145}
 ```
 
+The stress field obtained from a local damping forced system, cam be used as initial stress field value.
+
+In geostatic analysis, the quasi static analysis can be store in to a simulation state:
+
+```
+"save_state":true,
+```
+
+And for loading the salved state
+
+```
+"load_state":true,
+```
+See the class \ref States "States"
+
 # Explicit MPM Scheme
 
 In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation \f$ \dot{p} = m \frac{dv}{dt} = f \f$. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.
