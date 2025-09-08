@@ -21,10 +21,6 @@ namespace ModelSetup {
 	enum StressUpdateScheme{ USF, USL, MUSL };
 
 	/// \enum DampingType
-	/// \brief Defines the type of damping
-	enum DampingType{ UNDAMPED, LOCAL, KINETIC_DYNAMIC_RELAXATION };
-	
-	/// \enum DampingType
 	/// \brief Defines the type of damping used in the simulation.
 	///
 	/// This enumeration specifies the damping scheme applied during the analysis.
