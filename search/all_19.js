@@ -9,7 +9,7 @@ var searchData=
   ['recalculatenormals_6',['recalculateNormals',['../classSTLReader.html#a28951abd498b4d1bdec439f21f2958b8',1,'STLReader']]],
   ['refactor_3a_20tt_20strong_7',['&lt;strong&gt;4. &lt;tt&gt;refactor:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md52',1,'']]],
   ['reference_20first_8',['Atomic operations: always take the reference first',['../development_manual.html#autotoc_md68',1,'']]],
-  ['references_9',['References',['../theory_and_numerical_formulation_.html#autotoc_md89',1,'']]],
+  ['references_9',['References',['../theory_and_numerical_formulation_.html#autotoc_md91',1,'']]],
   ['registerbodies_10',['registerBodies',['../classSolver.html#a119ea70a054a7ad5cb7b2130fd6917a4',1,'Solver']]],
   ['registermesh_11',['registerMesh',['../classSolver.html#a5ea32c377f50d8f7b3f8725ebb4bf71a',1,'Solver']]],
   ['registerparticles_12',['registerParticles',['../classSolver.html#a2e4b04b3923da5b71b629934f8cf3e0c',1,'Solver']]],
@@ -25,7 +25,7 @@ var searchData=
   ['resetvalues_22',['resetvalues',['../classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b',1,'NodeMixture::resetValues()'],['../classNode.html#a5b1560f9d7c52bfd84307901f6c35cac',1,'Node::resetValues()']]],
   ['restriction_23',['restriction',['../structBoundary_1_1planeBoundary.html#af080470dddc2a34c98b3b9bf200219ed',1,'Boundary::planeBoundary']]],
   ['restrictionfluid_24',['restrictionFluid',['../structBoundary_1_1planeBoundary.html#ad49b9bca323f684e1495797d0ca79673',1,'Boundary::planeBoundary']]],
-  ['result_20comparison_25',['MPM model and result comparison',['../verification_problems.html#autotoc_md93',1,'']]],
+  ['result_20comparison_25',['MPM model and result comparison',['../verification_problems.html#autotoc_md95',1,'']]],
   ['results_26',['Results',['../namespaceInput.html#autotoc_md36',1,'']]],
   ['results_20definition_20example_27',['Results definition example',['../namespaceInput.html#autotoc_md37',1,'']]]
 ];

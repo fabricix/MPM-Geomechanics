@@ -101,9 +101,9 @@ $(document).ready(function(){initNavTree('verification_problems.html',''); initR
   <div class="headertitle"><div class="title">Verification problems</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md90"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md92"></a>
 Bousssinesq's problem</h1>
-<h2><a class="anchor" id="autotoc_md91"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 Introduction</h2>
 <p>In Geomechanics, the Boussinesq's problem refers to the point load acting on a surface of an elastic half-space problem. The boundary conditions for this problem are:</p>
 <ul>
@@ -112,7 +112,7 @@ Introduction</h2>
 <li>For any point infinitely distant from the origin, the displacements must all vanish.</li>
 </ul>
 <p>&lt;img src="/manual/images/boussinesq-problem.png" alt=""Boussinesq' problem""/&gt;</p>
-<h2><a class="anchor" id="autotoc_md92"></a>
+<h2><a class="anchor" id="autotoc_md94"></a>
 Analytical solution</h2>
 <p>The analytical solution of the vertical displacement field is:  </p><p class="formulaDsp">
 \[
@@ -120,7 +120,7 @@ Analytical solution</h2>
 \]
 </p>
 <p> where \( G = \frac{E}{2(1+\nu)} \) is the Shear modulus of the elastic material, \( \nu \) is the Poisson ratio and \( d = \sqrt{ x^2 + y^2 + z^2 } \) is the total distance from load to the point.</p>
-<h2><a class="anchor" id="autotoc_md93"></a>
+<h2><a class="anchor" id="autotoc_md95"></a>
 MPM model and result comparison</h2>
 <p>For model the displacement field generated due the point load we will create an elastic body with dimensions \( l_x = l_y = l_z = 1 m \), for this we can use the keyword "cuboid", with point 1 in (0,0,0) and Point 2 in (1,1,1). For the elastic parameters of the material, we will use Young's modulus equal to \( E = 200e6 \) Pa, a density equal to \( \rho = 1500 kg/m^3\). This body is placed in a computational mesh with cell dimension \( dx = dy = dz = 0.1\) m. The boundary condition of this problem is a nodal load at the middle point on the body surface acting in vertical direction with magnitude of 1. For set this condition we will use the "nodal_point_load" keyword. The displacement boundary condition of the mesh is set using the "boundary_conditions" keyword. In this problem the plane Zn (upper plane) is set as free no move, and all the others planes are set as sliding, allowing movements only in parallel direction of the plane. The current <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> formulation solves the motion equation so, we need to add some damping to avoid the transient solution using "damping" keyword, with "kinetic" option for the damping's type. The "kinetic" keyword is used to active dynamic relaxations techniques on the velocity field for obtaining the static solution of the problem.</p>
 <p>The input file for this problem is: </p><pre class="fragment">{
@@ -179,11 +179,11 @@ MPM model and result comparison</h2>
 </pre><p> The numerical results obtained with <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> were compared with the analytical solution. In general the numerical solution presents a good coincidence with the analytical solution, however, some diferences are observed due the discretization. The <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> formulation uses particles to represent the continuum's variables in a Lagrangian approach. This particles represents a portion of the domain, so they have an associated volume. The particles do not represent a particle located at the boundary of the body and some errors, in consequence some differences will be observed. This differences must to be reducing with the refinement of the computational mesh. <br  />
 </p>
 <p>&lt;img src="/manual/images/boussinesq-problem-verification.png" alt=""Results comparison""/&gt;</p>
-<h1><a class="anchor" id="autotoc_md94"></a>
+<h1><a class="anchor" id="autotoc_md96"></a>
 Base acceleration example</h1>
 <p>In this example we will show how to model the movement of an elastic body subjected to a dynamic boundary condition. The geometry of the body will be a regular cuboid with edge dimension \( l_x = 0.3\) m, \( l_y = 0.3 \) m, and \( l_z = 0.8 \) m in the \( xyz \) coordinate system. The lower coordinate point is located at \( p_{min} = (0.4, 0.4, 0.0) \) m. The dynamic boundary condition considered is a base acceleration defined as a function of time as \( \ddot{u} = A 2 \pi f cos ( 2 \pi f t + \alpha ) \). The total time of the simulation is 2 seconds, and the time step is \( \Delta t = 1e-4\) seconds. The material density considered is \( \rho = 2500 \) kg/m \(^3\), and the elastic behavior is defined by Young's modulus \( E = 100e6 \) MPa and Poisson ratio equal to \( \nu = 0.25 \). The figure below shows the body in the space.</p>
 <p>&lt;img src="/manual/images/geometry-body.png" alt=""<a class="el" href="namespaceGeometry.html" title="Contain auxiliary functions related with geometric operations.">Geometry</a> of the body""/&gt;</p>
-<h2><a class="anchor" id="autotoc_md95"></a>
+<h2><a class="anchor" id="autotoc_md97"></a>
 MPM-Model</h2>
 <p>With these data we will to create an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model consisting in uniformly distributed particles inside the geometry of the body. For do so, we used the "body" and "cuboid" keywords. When body type is "cuboid" we can create a body with the lower and highest coordinate point P1 (lower) and P2 (hight) of the geometry. The material established using the "material_id" keyword. This material must to be correctly defined using the keyword "materials". When we create a body using uniformly distributed particles, eight in the case of a regular element mesh, the number of total particles in the body depends of the mesh grid cell dimension. In this case we will consider a uniform mesh consisting in elements of dimension \( \Delta x = \Delta y = \Delta z = 0.1 \) m. In a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model the mesh must to cover the whole domain, covering the complete amplitude of the body movement. For this example we will consider the same number of element in each direction \( n_x=12, n_y=12, n_z=15 \) to account from the origin of coordinate \( (0,0,0) \).</p>
 <p>The complete JSON file with the keywords we write:</p>

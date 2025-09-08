@@ -1,13 +1,13 @@
 var searchData=
 [
   ['ubuntu_20debian_0',['Linux (Ubuntu/Debian)',['../testing_manual.html#testing_manual_linux',1,'']]],
-  ['undamped_1',['UNDAMPED',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8',1,'ModelSetup']]],
+  ['undamped_1',['UNDAMPED',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a37ead0e9b4ed1a5ea6c334f1aacd379e',1,'ModelSetup']]],
   ['update_2',['update',['../namespaceUpdate.html',1,'Update'],['../classShape.html#ac44c4dc52e9288f5dffe0b046c581a5a',1,'Shape::update()'],['../classShapeGimp.html#ad04d2a67e6e5c04eb47595fa9f7b2cc3',1,'ShapeGimp::update()'],['../classShapeLinear.html#a612ba26abe97a3c028f956c7e1c961c2',1,'ShapeLinear::update()']]],
   ['update_20scheme_3',['Stress update scheme',['../namespaceInput.html#autotoc_md26',1,'']]],
   ['update_20scheme_20definition_20example_4',['Stress update scheme definition example',['../namespaceInput.html#autotoc_md27',1,'']]],
-  ['update_20stress_20first_20usf_20scheme_5',['Update Stress First - USF - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md86',1,'']]],
-  ['update_20stress_20last_20musl_20scheme_6',['Modified Update Stress Last - MUSL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md88',1,'']]],
-  ['update_20stress_20last_20usl_20scheme_7',['Update Stress Last - USL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md87',1,'']]],
+  ['update_20stress_20first_20usf_20scheme_5',['Update Stress First - USF - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md88',1,'']]],
+  ['update_20stress_20last_20musl_20scheme_6',['Modified Update Stress Last - MUSL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md90',1,'']]],
+  ['update_20stress_20last_20usl_20scheme_7',['Update Stress Last - USL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md89',1,'']]],
   ['update_2eh_8',['Update.h',['../Update_8h.html',1,'']]],
   ['updatecontributionnodes_9',['updateContributionNodes',['../classParticle.html#ac859ff7588937a807597db15412e2fba',1,'Particle']]],
   ['updatedampingforce_10',['updatedampingforce',['../classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8',1,'Node::updateDampingForce()'],['../classNodeMixture.html#acf9ffdf17df8f2596f16e91be73c548b',1,'NodeMixture::updateDampingForce()']]],
@@ -24,7 +24,7 @@ var searchData=
   ['use_20of_20tt_20static_5fcast_20int_20tt_20in_20tt_20for_20tt_20loops_21',['Use of &lt;tt&gt;static_cast&lt;int&gt;&lt;/tt&gt; in &lt;tt&gt;for&lt;/tt&gt; loops',['../development_manual.html#autotoc_md66',1,'']]],
   ['usepenaltycontact_22',['usePenaltyContact',['../classTerrainContact.html#a1b039395662fded4a9202ce39b14f41b',1,'TerrainContact']]],
   ['usf_23',['USF',['../namespaceModelSetup.html#a95c5a2eb8b98cbf15989237803593b6cafeb425bfed125fa9b2091b3ebf83f598',1,'ModelSetup']]],
-  ['usf_20scheme_24',['Update Stress First - USF - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md86',1,'']]],
+  ['usf_20scheme_24',['Update Stress First - USF - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md88',1,'']]],
   ['usl_25',['USL',['../namespaceModelSetup.html#a95c5a2eb8b98cbf15989237803593b6ca795ce8efa267e7ebc51a283bcb5d54a5',1,'ModelSetup']]],
-  ['usl_20scheme_26',['Update Stress Last - USL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md87',1,'']]]
+  ['usl_20scheme_26',['Update Stress Last - USL - Scheme',['../theory_and_numerical_formulation_.html#autotoc_md89',1,'']]]
 ];

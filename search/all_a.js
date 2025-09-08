@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['base_20acceleration_20example_0',['Base acceleration example',['../verification_problems.html#autotoc_md94',1,'']]],
+  ['base_20acceleration_20example_0',['Base acceleration example',['../verification_problems.html#autotoc_md96',1,'']]],
   ['best_20practices_1',['Best Practices',['../development_manual.html#development_manual_best_practices',1,'']]],
   ['binaries_2',['Compiled binaries',['../index.html#autotoc_md71',1,'']]],
   ['bodies_3',['bodies',['../namespaceInput.html#autotoc_md2',1,'Bodies'],['../classSolver.html#ae69d529fe554b2ca852ce3dfeb79315b',1,'Solver::bodies'],['../classMPM.html#aa6a0e2948d663892851627f0cc52f2dd',1,'MPM::bodies']]],
@@ -26,7 +26,7 @@ var searchData=
   ['boundaryconditionsmomentumfluid_23',['boundaryConditionsMomentumFluid',['../namespaceUpdate.html#ad2f347f7a664156c4c3ef8f51c1e0827',1,'Update']]],
   ['boundaryplane_24',['BoundaryPlane',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70',1,'Boundary']]],
   ['boundarytype_25',['BoundaryType',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5',1,'Boundary']]],
-  ['bousssinesq_20s_20problem_26',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md90',1,'']]],
+  ['bousssinesq_20s_20problem_26',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md92',1,'']]],
   ['box_20example_27',['box example',['../namespaceInput.html#autotoc_md12',1,'Distributed load in box example'],['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
   ['bulk_28',['Bulk',['../classNewtonian.html#ad12b730269f0df771f8125724a2077a0',1,'Newtonian']]],
   ['bulkmodulusfluid_29',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],
