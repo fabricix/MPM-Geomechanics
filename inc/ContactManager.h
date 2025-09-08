@@ -66,19 +66,15 @@ public:
     /// \param[in] time_step Time step
     void nodalMomentumCorrection(Mesh* mesh, double dt);
 
-    /// \brief Get unordered_map contactNodes
-    //const std::unordered_map<int, Mesh::ContactNodeData>& getContactNodes() const{return contactNodes;}
-
 private:
-   
-    //std::unordered_map<int, Mesh::ContactNodeData> contactNodes;
+
     string normalType; //Default: master
     double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
-    bool realDistanceCorrectionActive;
-    double realDistanceCorrectionCoefficient;
-    bool hasContact;
-    int masterId; 
-    int slaveId;
+    bool realDistanceCorrectionActive; //!< Real distance correction active
+    double realDistanceCorrectionCoefficient; //!< Real distance correction coefficient
+    bool hasContact; //!< True if contact is active
+    int masterId; //<! Master body id
+    int slaveId; //<! Slave body id
 };
 
 #endif /* CONTACT_MANAGER_H_ */
