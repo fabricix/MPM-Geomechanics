@@ -1,6 +1,6 @@
-\page testing_manual Testing Compilation and Benchmarking Manual
+\page testing_manual Testing Compilation and Benchmarking
 
-\section testing_manual_required_programs 1. Required Programs
+\section testing_manual_howto 1. How to Compile
 
 \note Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
 
@@ -11,22 +11,7 @@ cd external
 git clone https://github.com/google/googletest.git
 ```
 
-\section testing_manual_howto 2. How to Compile
-
-Your directory must have the following structure:
-
-```
-mpm-geomechanics/
-├─ build/
-│  ├─ CMakeFiles/
-│  ├─ make/
-│  ├─ msbuild/
-│  ├─ testing/
-│  │  ├─ CMakeLists.txt
-│  │  ├─ build/
-```
-
-The simplest way to compile on windows and Linux is by using the **`.bash`** file at **`/build/Testing`** with **`MSYS2 MINGW64`** console line, just execute the following command in the directory **`project-directory/build/Testing`**:
+The simplest way to compile on Windows and Linux is by using the **`.bash`** file at **`/build/Testing`** with **`MSYS2 MINGW64`** console line, simply execute the following command in the directory **`MPM-Geomechanics/build/testing`**:
 ```
 ./cmake-build.bash
 ```
@@ -42,6 +27,14 @@ cmake --build build
 
 These commands will generate two executables: **`MPM-Geomechanics-Test`** and **`MPM-Geomechanics-Benchmark`**.
 
-- **`MPM-Geomechanics-Test`**: Run testing using GoogleTest. All files ended with **`.test.cpp`** are testing files, you can find them in the directory **`tests/numerical-verification`**.
+- **`MPM-Geomechanics-Test`**: Run testing using GoogleTest. All files ending with **`.test.cpp`** are testing files, you can find them in the directory **`tests/numerical-verification`**.
 
-- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ended with **`.performance.test`** are performance files. You can find them in the directory **`tests/performance`**.
+- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ending with **`.performance.test`** are performance files. You can find them in the directory **`tests/performance`**.
+
+\section testing_manual_benchmark How does benchmarking work?
+
+To correctly execute the benchmarking, a JSON file called `test-configuration.json` is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
+
+The executable **`MPM-Geomechanics-Benchmark`** allows the following command-line arguments:
+
+* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`test-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**
