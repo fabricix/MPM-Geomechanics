@@ -4,7 +4,7 @@ var searchData=
   ['damping_20definition_20example_1',['Damping definition example',['../namespaceInput.html#autotoc_md18',1,'']]],
   ['dampingforce_2',['dampingForce',['../classNode.html#a1beeb10273f0b88112508a2e31a72f77',1,'Node']]],
   ['dampingforcefluid_3',['dampingForceFluid',['../classNodeMixture.html#a2ef1c8b7238b49192e4f8a92f70a7358',1,'NodeMixture']]],
-  ['dampingtype_4',['dampingtype',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698',1,'ModelSetup::DampingType'],['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698',1,'ModelSetup::DampingType']]],
+  ['dampingtype_4',['DampingType',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698',1,'ModelSetup']]],
   ['debian_5',['Linux (Ubuntu/Debian)',['../testing_manual.html#testing_manual_linux',1,'']]],
   ['debug_3a_20tt_20strong_6',['&lt;strong&gt;10. &lt;tt&gt;debug:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md58',1,'']]],
   ['defined_20by_20particles_7',['Example of Body defined by particles',['../namespaceInput.html#autotoc_md4',1,'']]],
