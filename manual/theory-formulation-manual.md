@@ -239,6 +239,40 @@ In the MPM context the particles can has velocities in the begin ing of any time
 
 In a structured regular mesh, \f$ l^e \f$ is the grid cell dimension.
 
+# Numerical damping
+
+The damping of real material comes from internal friction and viscosities, and can be modelled using elasto-plastic and viscous materials.
+
+The numerical damping is a technique for getting a stationary solution of the dynamic system. In this simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
+
+## Local damping
+
+The local damping is used to get a quasi-static solution of the dynamic system using a viscous nodal force.
+
+In each time step, a viscous force is applied in each node, whose magnitude is proportional and opposite to the nodal velocity.
+
+\f[  f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} \f]
+
+Where 
+
+\f[ f_{iI}^{unb} =  f_{iI}^{int} + f_{iI}^{ext} \f]
+
+is the unbalanced nodal force. Therefore, the resulting discrete form of the motion equation with viscous nodal damping is:
+
+\f[
+\dot{p}_{iI} = f_{iI}
+\f]
+in which
+\f[
+\dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal}
+\f]
+
+For activate local damping force with \f$ \alpha = 0.145 \f$:
+
+```
+"damping":{"type"=":"local", "value":0.145}
+```
+
 # Explicit MPM Scheme
 
 In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation \f$ \dot{p} = m \frac{dv}{dt} = f \f$. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.

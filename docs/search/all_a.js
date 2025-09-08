@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['base_20acceleration_20example_0',['Base acceleration example',['../verification_problems.html#autotoc_md92',1,'']]],
-  ['best_20practices_20strong_1',['&lt;strong&gt;Best Practices&lt;/strong&gt;',['../development_manual.html#autotoc_md62',1,'']]],
-  ['binaries_2',['Compiled binaries',['../index.html#autotoc_md65',1,'']]],
+  ['base_20acceleration_20example_0',['Base acceleration example',['../verification_problems.html#autotoc_md96',1,'']]],
+  ['best_20practices_1',['Best Practices',['../development_manual.html#development_manual_best_practices',1,'']]],
+  ['binaries_2',['Compiled binaries',['../index.html#autotoc_md71',1,'']]],
   ['bodies_3',['Bodies',['../namespaceInput.html#autotoc_md2',1,'']]],
   ['bodies_4',['bodies',['../classMPM.html#aa6a0e2948d663892851627f0cc52f2dd',1,'MPM::bodies'],['../classSolver.html#ae69d529fe554b2ca852ce3dfeb79315b',1,'Solver::bodies']]],
   ['body_5',['Body',['../classBody.html',1,'Body'],['../classBody.html#a7727b0d8c998bbc2942e4c802e31e2eb',1,'Body::Body()']]],
@@ -29,7 +29,7 @@ var searchData=
   ['boundaryconditionsmomentumfluid_26',['boundaryConditionsMomentumFluid',['../namespaceUpdate.html#ad2f347f7a664156c4c3ef8f51c1e0827',1,'Update']]],
   ['boundaryplane_27',['BoundaryPlane',['../classBoundary.html#af26eedc4e6bdfcc2b12815b0afd0ca70',1,'Boundary']]],
   ['boundarytype_28',['BoundaryType',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5',1,'Boundary']]],
-  ['bousssinesq_20s_20problem_29',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md88',1,'']]],
+  ['bousssinesq_20s_20problem_29',['Bousssinesq&apos;s problem',['../verification_problems.html#autotoc_md92',1,'']]],
   ['box_20example_30',['box example',['../namespaceInput.html#autotoc_md12',1,'Distributed load in box example'],['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
   ['bulk_31',['Bulk',['../classNewtonian.html#ad12b730269f0df771f8125724a2077a0',1,'Newtonian']]],
   ['bulkmodulusfluid_32',['bulkModulusFluid',['../classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff',1,'Material']]],

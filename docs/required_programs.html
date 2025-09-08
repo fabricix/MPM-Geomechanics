@@ -108,8 +108,7 @@ $(function(){initNavTree('required_programs.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Required Programs</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_manual_2required-programs"></a></p>
-<p>The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.</p>
+<div class="textblock"><p>The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.</p>
 <h1><a class="anchor" id="required_programs_windows"></a>
 Required Programs - Windows</h1>
 <table class="markdownTable">
@@ -131,30 +130,22 @@ Required Programs - Windows</h1>
 <td class="markdownTableBodyNone"><b>Make</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S make</code>   </td></tr>
 </table>
 <p><b>Make sure you have Winget installed</b>, you can verify this by running <code>winget --version</code>. If you don't have installed <b>Winget</b>, you can get it from <a href="https://learn.microsoft.com/en-us/windows/package-manager/winget/">Microsoft's official website</a></p>
-<p>Step 1: Install <b>Git</b> and <b>MSYS2</b> using <code>winget</code>, by running the following commands:</p>
-<div class="fragment"><div class="line"># Git</div>
-<div class="line">winget install -e --id Git.Git -e --source winget</div>
-<div class="line"> </div>
-<div class="line"># MSYS2</div>
-<div class="line">winget install -e --id MSYS2.MSYS2 --source winget</div>
-</div><!-- fragment --><p>Step 2: Open the <code>MSYS2 MINGW64</code> console and install CMake, GCC, G++ and Make:</p>
-<div class="fragment"><div class="line"># CMake</div>
-<div class="line">pacman -S mingw-w64-x86_64-cmake</div>
-<div class="line"> </div>
-<div class="line"># GCC and G++</div>
-<div class="line">pacman -S mingw-w64-x86_64-gcc</div>
-<div class="line"> </div>
-<div class="line"># Make</div>
-<div class="line">pacman -S make</div>
-</div><!-- fragment --><p>Step 3: Verify the versions of each installation :</p>
+<p><b>Step 1</b>: Install <b>Git</b> and <b>MSYS2</b> using <code>winget</code>, by running the following commands:</p>
+<div class="fragment"><div class="line">winget install -e --id Git.Git -e --source winget</div>
+</div><!-- fragment --><div class="fragment"><div class="line">winget install -e --id MSYS2.MSYS2 --source winget</div>
+</div><!-- fragment --><p><b>Step 2</b>: Open the <code>MSYS2 MINGW64</code> console and install <b>CMake</b>, <b>GCC</b>, <b>G++</b> and <b>Make</b>:</p>
+<div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-cmake</div>
+</div><!-- fragment --><div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-gcc</div>
+</div><!-- fragment --><div class="fragment"><div class="line">pacman -S make</div>
+</div><!-- fragment --><p><b>Step 3</b>: Verify the versions of each installation :</p>
 <div class="fragment"><div class="line">git --version</div>
 <div class="line">cmake --version</div>
 <div class="line">make --version </div>
 <div class="line">gcc --version   </div>
 <div class="line">g++ --version   </div>
 </div><!-- fragment --> <hr  />
- <h1><a class="anchor" id="required_programs_linux"></a>
-Required Programs - Linux (Ubuntu/Debian)</h1>
+<h1><a class="anchor" id="required_programs_linux"></a>
+Required Programs - Linux</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Program   </th><th class="markdownTableHeadNone">Installation   </th><th class="markdownTableHeadNone">Command    </th></tr>
@@ -169,16 +160,11 @@ Required Programs - Linux (Ubuntu/Debian)</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Make</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install build-essential</code>   </td></tr>
 </table>
-<p>Step 1: Install all the necessary programs using <code>apt</code>:</p>
-<div class="fragment"><div class="line"># Git</div>
-<div class="line">sudo apt install git</div>
-<div class="line"> </div>
-<div class="line"># CMake</div>
-<div class="line">sudo apt install cmake</div>
-<div class="line"> </div>
-<div class="line"># Make, GCC, G++</div>
-<div class="line">sudo apt install build-essential</div>
-</div><!-- fragment --><p>Step 2: Verify the versions of each installation:</p>
+<p><b>Step 1</b>: Install all the necessary packages referenced above via <code>apt</code>:</p>
+<div class="fragment"><div class="line">sudo apt install git</div>
+</div><!-- fragment --><div class="fragment"><div class="line">sudo apt install cmake</div>
+</div><!-- fragment --><div class="fragment"><div class="line">sudo apt install build-essential</div>
+</div><!-- fragment --><p><b>Step 2</b>: Verify the versions of each installation:</p>
 <div class="fragment"><div class="line">git --version</div>
 <div class="line">cmake --version</div>
 <div class="line">make --version </div>

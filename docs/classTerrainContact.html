@@ -150,8 +150,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e2023696040cddd054d4c52f6000cee" id="r_a5e2023696040cddd054d4c52f6000cee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSTLReader.html">STLReader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e2023696040cddd054d4c52f6000cee">getSTLMesh</a> ()</td></tr>
 <tr class="memdesc:a5e2023696040cddd054d4c52f6000cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the triangular mesh.  <br /></td></tr>
 <tr class="separator:a5e2023696040cddd054d4c52f6000cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fb2d2aeeb409505ac41d9c01039c7d4" id="r_a1fb2d2aeeb409505ac41d9c01039c7d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fb2d2aeeb409505ac41d9c01039c7d4">computeContactForces</a> (std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *particles, double dt)</td></tr>
-<tr class="separator:a1fb2d2aeeb409505ac41d9c01039c7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9437ff0e8e57e990b2ab72b5cd7d496e" id="r_a9437ff0e8e57e990b2ab72b5cd7d496e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9437ff0e8e57e990b2ab72b5cd7d496e">computeContactForces</a> (double dt)</td></tr>
+<tr class="separator:a9437ff0e8e57e990b2ab72b5cd7d496e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c1d6e460075c91a21e08806da17b8a5" id="r_a1c1d6e460075c91a21e08806da17b8a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c1d6e460075c91a21e08806da17b8a5">setDistanceThreshold</a> (double threshold)</td></tr>
 <tr class="memdesc:a1c1d6e460075c91a21e08806da17b8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the distance threshold for contact detection.  <br /></td></tr>
 <tr class="separator:a1c1d6e460075c91a21e08806da17b8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,7 +179,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ab9810c6c61d1e1238f4576d10f87caf9" id="r_ab9810c6c61d1e1238f4576d10f87caf9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="classParticle.html">Particle</a> *, <a class="el" href="structTriangle.html">Triangle</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9810c6c61d1e1238f4576d10f87caf9">contactPairs</a></td></tr>
 <tr class="memdesc:ab9810c6c61d1e1238f4576d10f87caf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">contact potential pairs  <br /></td></tr>
 <tr class="separator:ab9810c6c61d1e1238f4576d10f87caf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab98ab5fbe0e54dee6dc00215a6e223e9" id="r_ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab98ab5fbe0e54dee6dc00215a6e223e9">scalingFactor</a></td></tr>
+<tr class="memitem:ab98ab5fbe0e54dee6dc00215a6e223e9" id="r_ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab98ab5fbe0e54dee6dc00215a6e223e9">scalingFactor</a> = 2.0</td></tr>
 <tr class="memdesc:ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">scaling factor for the distance threshold in contact detection \( \alpha \)  <br /></td></tr>
 <tr class="separator:ab98ab5fbe0e54dee6dc00215a6e223e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b039395662fded4a9202ce39b14f41b" id="r_a1b039395662fded4a9202ce39b14f41b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b039395662fded4a9202ce39b14f41b">usePenaltyContact</a> = false</td></tr>
@@ -250,8 +250,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a1fb2d2aeeb409505ac41d9c01039c7d4" name="a1fb2d2aeeb409505ac41d9c01039c7d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fb2d2aeeb409505ac41d9c01039c7d4">&#9670;&#160;</a></span>computeContactForces()</h2>
+<a id="a9437ff0e8e57e990b2ab72b5cd7d496e" name="a9437ff0e8e57e990b2ab72b5cd7d496e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9437ff0e8e57e990b2ab72b5cd7d496e">&#9670;&#160;</a></span>computeContactForces()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,12 +259,8 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">void TerrainContact::computeContactForces </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>particles</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>dt</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>dt</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -584,7 +580,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double TerrainContact::scalingFactor</td>
+          <td class="memname">double TerrainContact::scalingFactor = 2.0</td>
         </tr>
       </table>
   </td>

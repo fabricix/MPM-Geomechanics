@@ -24,6 +24,37 @@ namespace ModelSetup {
 	/// \brief Defines the type of damping
 	enum DampingType{ UNDAMPED, LOCAL, KINETIC_DYNAMIC_RELAXATION };
 	
+	/// \enum DampingType
+	/// \brief Defines the type of damping used in the simulation.
+	///
+	/// This enumeration specifies the damping scheme applied during the analysis.
+	/// The damping configuration is defined in the input file.
+	///
+	/// - **UNDAMPED**:  
+	///   No damping is applied. No need to specify any parameter in the input.
+	///
+	/// - **LOCAL**:  
+	///   Local damping is activated when `"local"` is specified in the input.  
+	///   The damping coefficient is defined through the parameter `"value"`.  
+	///   Example:
+	///   \code{.json}
+	///   "damping": { "type": "local", "value": 0.02 }
+	///   \endcode
+	///
+	/// - **KINETIC_DYNAMIC_RELAXATION**:  
+	///   Kinetic dynamic relaxation is activated when `"kinetic"` is specified in the input.  
+	///   No additional parameter is required.  
+	///   Example:
+	///   \code{.json}
+	///   "damping": { "type": "kinetic" }
+	///   \endcode
+	///
+	enum DampingType { 
+		UNDAMPED,                  ///< No damping applied
+		LOCAL,                     ///< Local damping (requires "value")
+		KINETIC_DYNAMIC_RELAXATION ///< Kinetic dynamic relaxation damping
+	};
+
 	/// \enum OperationalSystem
 	/// \brief Defines the current operational system
 	enum OperationalSystem{ WINDOWS, LINUX };

@@ -108,14 +108,13 @@ $(function(){initNavTree('testing_manual.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Testing Compilation Manual</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_manual_2testing-manual"></a></p>
-<h1><a class="anchor" id="autotoc_md73"></a>
+<div class="textblock"><h1><a class="anchor" id="testing_manual_required_programs"></a>
 1. Required Programs</h1>
 <dl class="section note"><dt>Note</dt><dd>Prior to proceeding with these instructions, please consult the <a class="el" href="required_programs.html">Required Programs</a> section.</dd></dl>
 <p>The tests use <b>GoogleTest</b>. It is necessary to import this library by cloning the official repository into the folder <code>/external</code>. Each developer must clone this repository independently.</p>
 <div class="fragment"><div class="line">cd external</div>
 <div class="line">git clone https://github.com/google/googletest.git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md74"></a>
+</div><!-- fragment --><h1><a class="anchor" id="testing_manual_howto"></a>
 2. How to Compile the Tests</h1>
 <p>Your directory must have the following structure:</p>
 <div class="fragment"><div class="line">mpm-geomechanics/</div>
@@ -126,7 +125,7 @@ $(function(){initNavTree('testing_manual.html',''); initResizable(true); });
 <div class="line">│  ├─ testing/</div>
 <div class="line">│  │  ├─ CMakeLists.txt</div>
 <div class="line">│  │  ├─ build/</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md75"></a>
+</div><!-- fragment --><h2><a class="anchor" id="testing_manual_windows"></a>
 Windows</h2>
 <p>The simplest way to compile on windows is by using the <b><code>.bash</code></b> file at <b><code>/build/Testing</code></b> with <b><code>MSYS2 MINGW64</code></b> console line, just execute:</p>
 <div class="fragment"><div class="line">cd project-directory/build/Testing</div>
@@ -136,7 +135,7 @@ Windows</h2>
 <div class="line">cmake -G &quot;Unix Makefiles&quot; -B build</div>
 <div class="line">cmake --build build</div>
 </div><!-- fragment --><p>These commands will generate a .exe file named <code>MPM-Test.exe</code>.</p>
-<h2><a class="anchor" id="autotoc_md76"></a>
+<h2><a class="anchor" id="testing_manual_linux"></a>
 Linux (Ubuntu/Debian)</h2>
 <p>The simplest way to compile on Linux is by using the <code>.bash</code> file at <code>/build/CMake</code>, just execute:</p>
 <div class="fragment"><div class="line">cd project-directory/build/Testing</div>
