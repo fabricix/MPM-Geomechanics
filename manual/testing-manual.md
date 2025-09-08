@@ -29,7 +29,7 @@ These commands will generate two executables: **`MPM-Geomechanics-Test`** and **
 
 - **`MPM-Geomechanics-Test`**: Run testing using GoogleTest. All files ending with **`.test.cpp`** are testing files, you can find them in the directory **`tests/numerical-verification`**.
 
-- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ending with **`.performance.test`** are performance files. You can find them in the directory **`tests/performance`**.
+- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ending with **`.performance.cpp`** are performance files. You can find them in the directory **`tests/performance`**.
 
 \section testing_manual_benchmark How does benchmarking work?
 
