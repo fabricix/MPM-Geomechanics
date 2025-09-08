@@ -4,50 +4,29 @@
 #ifndef CONTACT_MANAGER_H_
 #define CONTACT_MANAGER_H_
 
-#include <unordered_map>
-#include <vector>
 #include "Eigen/Core"
 #include "Mesh/Node.h"
 #include "Mesh/Mesh.h"
 #include "Body/Body.h"
 
+#include <unordered_map>
+#include <vector>
+
 using Eigen::Vector3d;
 
 /// \class ContactManager
-/// \brief Manages contact data and calculations for MPM nodes
+/// \brief Manages conventional contact method data and operations
+/// This class contain all variables and functions to manage
+/// the conventional contact method using two velocity fields.
 class ContactManager {
 public:
-    ContactManager(double _friction, int _master_id, int _slave_id, string _normal_type, double _real_distance_correction_coefficient)
-        :frictionCoefficient(_friction) {
-        if (_master_id <= 0) {
-            masterId = 0;
-        }
-        else {
-            masterId = _master_id;
-        }
-
-        if (_slave_id <= 0) {
-            slaveId = 1;
-        }
-        else {
-            slaveId = _slave_id;
-        }
-        
-        if (_normal_type != "collinear" and _normal_type != "slave") {
-            normalType = "master";
-        }
-        else {
-            normalType = _normal_type;
-        }
-
-        if (_real_distance_correction_coefficient <= 0) {
-            realDistanceCorrectionActive = false;
-        }
-        else {
-            realDistanceCorrectionActive = true;
-            realDistanceCorrectionCoefficient = _real_distance_correction_coefficient;
-        }
-    }
+    /// @brief  Constructor
+    /// @param friction Friction coefficient
+    /// @param master_id ID of the master body
+    /// @param slave_id ID of the slave body
+    /// @param normal_type Normal type: "master", "slave" or "collinear"
+    /// @param real_distance_correction_coefficient Real distance correction coefficient (0 to disable)
+    ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient);
 
     /// \brief Clear all contact node data
     void clear();

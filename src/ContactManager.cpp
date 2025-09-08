@@ -5,6 +5,39 @@
 #include <numeric>
 #include "Update.h"
 
+ContactManager::ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient)
+	:frictionCoefficient(friction) 
+	{
+	if (master_id <= 0) {
+		masterId = 0;
+	}
+	else {
+		masterId = master_id;
+	}
+
+	if (slave_id <= 0) {
+		slaveId = 1;
+	}
+	else {
+		slaveId = slave_id;
+	}
+	
+	if (normal_type != "collinear" and normal_type != "slave") {
+		normalType = "master";
+	}
+	else {
+		normalType = normal_type;
+	}
+
+	if (real_distance_correction_coefficient <= 0) {
+		realDistanceCorrectionActive = false;
+	}
+	else {
+		realDistanceCorrectionActive = true;
+		realDistanceCorrectionCoefficient = real_distance_correction_coefficient;
+	}
+}
+
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	mesh->clearContactNodes();
 
