@@ -7,11 +7,12 @@
 
 using namespace std;
 
+// Determine and print test filters based on configuration
 string getFilters()
 {
-    string filter = "";
-
     cout << "----> Test Filters <----\n" << endl;
+
+    string filter = "";
     if (Configuration::interpolationTest)
     {
         cout << "----> Interpolation test: enabled" << endl;
@@ -42,7 +43,6 @@ int main(int argc, char** argv)
     ::testing::InitGoogleTest(&argc, argv);
 
     int status = Configuration::setup();
-
     if (status != 0) {
         return status;
     }
