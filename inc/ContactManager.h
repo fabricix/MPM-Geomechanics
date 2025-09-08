@@ -29,13 +29,13 @@ public:
     ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient);
 
     /// \brief Clear all contact node data
+    /// Clear all contact node data
     void clear();
 
     /// \brief Compute contact forces (normal and tangential) for all contact nodes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies List of Body pointers
 	/// \param[in] time_step Time step
-    void computeContactForces(Mesh* mesh, double dt);
+    void computeContactForces(Mesh* mesh, double time_step);
 
     /// \brief Calculate the normal vector to the node
     ///
@@ -59,16 +59,15 @@ public:
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies List of Body pointers
     /// \param[in] time_step Time step
-    void nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double dt);
+    void nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double time_step);
 
     /// \brief Update the nodal momentum after contact forces calculation
     /// \param[in] mesh Mesh reference
     /// \param[in] time_step Time step
-    void nodalMomentumCorrection(Mesh* mesh, double dt);
+    void nodalMomentumCorrection(Mesh* mesh, double time_step);
 
 private:
-
-    string normalType; //Default: master
+    string normalType; //!< Normal type: "master", "slave" or "collinear"
     double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
     bool realDistanceCorrectionActive; //!< Real distance correction active
     double realDistanceCorrectionCoefficient; //!< Real distance correction coefficient
