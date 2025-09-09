@@ -192,6 +192,12 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 				contactNodesData.hasContact = true;
 				hasContact = true;
 			}
+			else {
+				contactNodesData.hasContact = false;
+			}
+		}
+		else {
+			contactNodesData.hasContact = false;
 		}
 	}
 }

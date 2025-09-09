@@ -44,7 +44,7 @@ public:
         int bodyMasterId = -1;
         int bodySlaveId = -1;
         double mu = 0.0;
-        bool hasContact = false;
+        bool hasContact = true;
 
         double massMaster = 0.0;
         double massSlave = 0.0;
