@@ -1,22 +1,11 @@
 {
-  "contact": {
-    "active": true,
-    "friction": 0.3,
-    "master_id": 1,
-    "slave_id": 2,
-    "normal_type": "master",
-    "real_distance_correction_coefficient": 0.5
-  },
-
     "time": 2.0,
-
     "critical_time_step_multiplier": 0.15,
-
     "gravity": [ 7.07, 0.0, -7.07 ],
 
     "results": {
       "print": 25,
-      "fields": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
     },
 
     "mesh": {
@@ -67,5 +56,13 @@
         "point_p2": [ 12, 12, 12 ],
         "material_id": 2
       }
-    }
+    },
+      "contact": {
+        "active": true,
+        "friction":0.3,
+        "master_id":1,
+        "slave_id":2,
+        "normal_type":"master",
+        "real_distance_correction_coefficient":0.5
+      }
   }
