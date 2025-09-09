@@ -5,40 +5,19 @@
 #include <numeric>
 #include "Update.h"
 
-ContactManager::ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient)
-	:frictionCoefficient(friction) 
+ContactManager::ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient):
+	frictionCoefficient(friction),
+    masterId(master_id > 0 ? master_id : 0),
+	slaveId(slave_id > 0 ? slave_id : 1),
+	normalType((normal_type != "collinear" && normal_type != "slave") ? "master" : normal_type),
+    realDistanceCorrectionActive(real_distance_correction_coefficient > 0),
+	realDistanceCorrectionCoefficient( real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
 	{
-	if (master_id <= 0) {
-		masterId = 0;
+		// void constructor
 	}
-	else {
-		masterId = master_id;
-	}
-
-	if (slave_id <= 0) {
-		slaveId = 1;
-	}
-	else {
-		slaveId = slave_id;
-	}
-	
-	if (normal_type != "collinear" and normal_type != "slave") {
-		normalType = "master";
-	}
-	else {
-		normalType = normal_type;
-	}
-
-	if (real_distance_correction_coefficient <= 0) {
-		realDistanceCorrectionActive = false;
-	}
-	else {
-		realDistanceCorrectionActive = true;
-		realDistanceCorrectionCoefficient = real_distance_correction_coefficient;
-	}
-}
 
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
+
 	mesh->clearContactNodes();
 
 	// get number of nodes and bodies
@@ -93,10 +72,10 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		if (soma > 1)
 		{
 			Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
-			Contact.nodeId = i;
+			Contact.nodeId = static_cast<int>(i);
 			Contact.bodySlaveId = slaveId;
 			Contact.bodyMasterId = masterId;
-			contactNodes[i] = Contact;
+			contactNodes[static_cast<int>(i)] = Contact;
 		}
 	}
 	if (contactNodes.size() > 0) {
@@ -105,6 +84,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
+
 	// get number of nodes and bodies 
 	size_t nBodies = (int)bodies->size();
 
@@ -263,7 +243,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 
-	//for each contact node
+	// for each contact node set the nodal unit normal
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
@@ -293,6 +273,7 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
+
 		Mesh::ContactNodeData& contactNodeData = it->second;
 
 		if (contactNodeData.hasContact) {
@@ -312,12 +293,17 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 
 			// calculate normal force
 			Vector3d fn = f.dot(n) * n;
+
 			// calculate tangential force
 			Vector3d ft = f - fn;
 
-			// apply friction
-			if (ft.norm() > 0) {
-				ft = std::min(ft.norm(), frictionCoefficient * fn.norm()) * ft / ft.norm();
+			// tangential and normal norms
+			double ft_norm = ft.norm();
+			double fn_norm = fn.norm();
+
+			// apply friction limit
+			if (ft_norm > 0) {
+				ft = std::min(ft_norm, frictionCoefficient * fn_norm) * ft / ft_norm;
 			}
 
 			// set the contact force
@@ -350,7 +336,7 @@ void ContactManager::nodalMomentumCorrection(Mesh* mesh, double dt) {
 
 void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double dt) {
 	
-	// a) nodal unit normal
+	// calculate nodal unit normal
 	nodalUnitNormal(mesh, bodies);
 
 	// verify real distance correction
@@ -360,13 +346,13 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodie
 	}
 
 	if (hasContact) {
-		// b) compute contact force
+		// compute contact force
 		computeContactForces(mesh, dt);
 
-		// b.1) impose force boundary conditions
+		// impose force boundary conditions
 		Update::boundaryConditionsContactForce(mesh);
 
-		// c) update nodal momentum after contact
+		// update nodal momentum after contact
 		nodalMomentumCorrection(mesh, dt);
 	}
 }

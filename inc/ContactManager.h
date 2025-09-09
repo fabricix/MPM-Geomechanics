@@ -67,13 +67,13 @@ public:
     void nodalMomentumCorrection(Mesh* mesh, double time_step);
 
 private:
-    string normalType; //!< Normal type: "master", "slave" or "collinear"
-    double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
-    bool realDistanceCorrectionActive; //!< Real distance correction active
-    double realDistanceCorrectionCoefficient; //!< Real distance correction coefficient
-    bool hasContact; //!< True if contact is active
-    int masterId; //<! Master body id
-    int slaveId; //<! Slave body id
+    string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
+    double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
+    bool realDistanceCorrectionActive = false; //!< Real distance correction active
+    double realDistanceCorrectionCoefficient = 0.0; //!< Real distance correction coefficient
+    bool hasContact = false; //!< True if contact is active
+    int masterId = 0; //<! Master body id
+    int slaveId = 1; //<! Slave body id
 };
 
 #endif /* CONTACT_MANAGER_H_ */
