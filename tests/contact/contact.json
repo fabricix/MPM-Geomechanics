@@ -59,10 +59,10 @@
     "contact":
     {
       "active":true,
-      "friction":0.3,
+      "friction":0.0,
       "master_id":1,
       "slave_id":2,
       "normal_type":"master",
-      "real_distance_correction_coefficient":0.5
+      "real_distance_correction_coefficient":0.0
     }
   }
