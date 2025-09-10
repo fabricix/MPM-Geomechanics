@@ -33,8 +33,8 @@ These commands will generate two executables: **`MPM-Geomechanics-Test`** and **
 
 \section testing_manual_benchmark How does benchmarking work?
 
-To correctly execute the benchmarking, a JSON file called `test-configuration.json` is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
+To correctly execute the benchmarking, a JSON file called `performance-configuration.json` is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
 
 The executable **`MPM-Geomechanics-Benchmark`** allows the following command-line arguments:
 
-* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`test-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**
+* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`performance-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**

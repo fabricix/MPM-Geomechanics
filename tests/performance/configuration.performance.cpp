@@ -16,7 +16,7 @@ namespace Configuration
     const int PRINT_SPACES = 25;
     bool usingDefaultConfigurationFile = false;
     json configuration;
-    string jsonFileName = "test-configuration.json";
+    string jsonFileName = "performance-configuration.json";
     json defaultConfigurationFile = {
         {"global", {
             {"numParticles", static_cast<int>(numParticles)},
