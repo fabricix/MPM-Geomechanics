@@ -55,6 +55,9 @@ namespace Configuration
     inline bool updateTest = true;
 
     int setup();
+    void openConfigurationFile();
+    void readGlobalConfiguration();
+    void readSpecificConfiguration();
 };
 
 #endif // CONFIGURATION_PERFORMANCE_H_

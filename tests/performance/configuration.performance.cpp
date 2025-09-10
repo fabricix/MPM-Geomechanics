@@ -11,21 +11,6 @@ using namespace std;
 
 using json = nlohmann::json;
 
-namespace Spaces
-{
-    string getTextFormatted(string str01, string str02, int spacing)
-    {
-        string spaces = "";
-        int separation = spacing - str01.length();
-        if (separation < 1) separation = 5;
-        spaces += string(separation, ' ');
-        std::ostringstream stream;
-        stream << std::fixed << std::setprecision(2) << str02;
-        str02 = stream.str();
-        return str01 + spaces + str02;
-    }
-}
-
 namespace Configuration
 {
     const int PRINT_SPACES = 25;
@@ -61,7 +46,7 @@ namespace Configuration
                 {"particleVelocity", {static_cast<double>(particleVelocity[0]), static_cast<double>(particleVelocity[1]), static_cast<double>(particleVelocity[2])}}
             }},
             {"NodalInternalForce_nParticles", {
-                {"comment", "No specific parameters for this test"} 
+                {"comment", "No specific parameters for this test"}
             }},
             {"NodalExternalForce_nParticles", {
                 {"appliedForce", {static_cast<double>(appliedForce[0]), static_cast<double>(appliedForce[1]), static_cast<double>(appliedForce[2])}}
@@ -78,8 +63,7 @@ namespace Configuration
     };
 
     // Track which fields were found in the JSON file
-    unordered_map<string, bool> jsonFields = {
-
+    unordered_map<string, bool> fields = {
         {"numParticles",  false},
         {"numThreads",  false},
         {"cellDimension",  false},
@@ -110,25 +94,65 @@ namespace Configuration
         {"updateTest",  false}
     };
 
-    // Helper function to print text in blue
-    string printInBlue(string text) { return "\033[34m" + text + "\033[0m"; }
-
-    // Check if a key exists in the JSON file
-    bool exists(json jsonFile, string key)
+    // Setup function to initialize configuration
+    int setup()
     {
-        bool existsInConfigurationFile = false;
-        bool existsInMap = false;
+        cout << "------------------------" << endl;
+        cout << "SETUP CONFIGURATION" << endl;
+        cout << "\n";
+
+        int status = 0;
         try
         {
-            if (jsonFields.find(key) != jsonFields.end()) jsonFields[key] = true;
+            openConfigurationFile();
+            cout << "\n";
 
-            existsInConfigurationFile = jsonFile.contains(key);
-            if (!existsInConfigurationFile)
+            readGlobalConfiguration();
+            cout << "\n";
+
+            readSpecificConfiguration();
+            cout << "\n";
+
+            status = 0;
+        }
+        catch (const std::exception& e)
+        {
+            cerr << "[ERROR] Error during configuration setup: " << e.what() << endl;
+            status = -1;
+        }
+
+        cout << "Setup complete with status: " << status << endl;
+        cout << "------------------------" << endl;
+        cout << "\n";
+
+        return status;
+    }
+
+    // Helper function to print text in blue
+    string textInBlue(string text) { return "\033[34m" + text + "\033[0m"; }
+
+    string getTextFormatted(string str01, string str02)
+    {
+        int separation = PRINT_SPACES - str01.length();
+        if (separation < 1) separation = 5;
+        return str01 + string(separation, ' ') + str02;
+    }
+
+    // Check if a key exists in the JSON file
+    bool exists(json configurationFile, string key)
+    {
+        if (key.empty()) return false;
+        try
+        {
+            if (configurationFile.contains(key))
             {
-                cerr << "--> [INFO] A configuration key was not found in the json file: [" << key << "]" << endl;
+                fields[key] = true;
+                return true;
+            }
+            else
+            {
                 return false;
             }
-            return existsInConfigurationFile;
         }
         catch (const std::exception& e)
         {
@@ -138,52 +162,53 @@ namespace Configuration
         }
     }
 
-
-    // Print Vector for different types
-    template <typename T,
-        typename = std::enable_if_t<
-        std::is_same_v<T, Eigen::Vector3d> ||
-        std::is_same_v<T, Eigen::Vector3i>>>
-        string printVector(const T& vector, const string& key)
-    {
-        std::ostringstream out;
-        out << std::fixed << std::setprecision(2);
-        out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
-
-        return Spaces::getTextFormatted(out.str(),
-            (jsonFields[key] && !usingDefaultConfigurationFile ? "" : printInBlue("(default)")),
-            PRINT_SPACES
-        );
-    }
-
-    // Print value for different types
     template <typename T,
         typename = std::enable_if_t<
         std::is_same_v<T, int> ||
         std::is_same_v<T, float> ||
         std::is_same_v<T, double> ||
-        std::is_same_v<T, bool>>>
-        string printValue(const T& value, const string& key)
+        std::is_same_v<T, bool> ||
+        std::is_same_v<T, Eigen::Vector3d> ||
+        std::is_same_v<T, Eigen::Vector3i>>>
+    string valueAsString(const T& value, const string& key)
     {
         std::ostringstream out;
-        out << std::fixed;
-        if constexpr (std::is_same_v<T, bool>) { out << std::boolalpha; }
-        else { out << std::setprecision(2); }
-        out << value;
+        out ;
 
-        return Spaces::getTextFormatted(out.str(),
-            (jsonFields[key] && !usingDefaultConfigurationFile ? "" : printInBlue("(default)")),
-            PRINT_SPACES
+        if constexpr (std::is_same_v<T, bool>)
+        {
+            out << std::boolalpha << value;
+        }
+        else if constexpr (std::is_same_v<T, Eigen::Vector3d> || std::is_same_v<T, Eigen::Vector3i>)
+        {
+            out << "[" << value[0] << ", " << value[1] << ", " << value[2] << "]";
+        }
+        else if constexpr (std::is_same_v<T, int>)
+        {
+            out << value;
+        }
+        else // float or double
+        {
+            out << std::setprecision(2) << std::scientific << value;
+        }
+
+        return getTextFormatted(
+            out.str(),
+            (fields[key] && !usingDefaultConfigurationFile ? "" : textInBlue("(default)"))
         );
     }
 
     // Helper function to format key printing
-    string printKeys(string key01, string key02, string key03)
+    string keysAsString(vector<string> keys)
     {
         string fullKey = "";
-        if (!key01.empty()) fullKey += printInBlue("[" + key01 + "]");
-        if (!key02.empty()) fullKey += static_cast<string>(fullKey.empty() ? "" : "->") + printInBlue("[" + key02 + "]");
-        if (!key03.empty()) fullKey += static_cast<string>(fullKey.empty() ? "" : "->") + printInBlue("[" + key03 + "]");
+        for (const auto& key : keys)
+        {
+            if (!key.empty())
+            {
+                fullKey += static_cast<string>(fullKey.empty() ? "" : "->") + textInBlue("[" + key + "]");
+            }
+        }
         return fullKey;
     }
 
@@ -192,26 +217,26 @@ namespace Configuration
     T getValueFromJson(T defaultValue, string key01, string key02, string key03)
     {
         json configurationReference = configuration;
-        if (!key01.empty() && !exists(configuration, key01))
-        {
-            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
-            return defaultValue;
-        }
-        if (!key01.empty()) configurationReference = configurationReference[key01];
+        vector<string> keys = { key01, key02, key03 };
+        string key = "";
 
-        if (!key02.empty() && !exists(configurationReference, key02))
-        {
-            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
-            return defaultValue;
-        }
-        if (!key02.empty()) configurationReference = configurationReference[key02];
+        // Navigate through the JSON structure based on provided keys
+        for (int k = 0; k < 3; k++) {
+            key = keys[k];
 
-        if (!key03.empty() && !exists(configurationReference, key03))
-        {
-            cerr << "--> [INFO] Keys not Found: " << printKeys(key01, key02, key03) << ". Using default value." << endl;
-            return defaultValue;
+            if (key.empty()) continue;
+
+            // If the key does not exist in the configuration, return the default value
+            if (exists(configurationReference, key))
+            {
+                configurationReference = configurationReference[key];
+            }
+            else
+            {
+                cerr << "--> [INFO] Keys not Found: " << keysAsString(keys) << ". Using default value." << endl;
+                return defaultValue;
+            }
         }
-        if (!key03.empty()) configurationReference = configurationReference[key03];
 
         if constexpr (std::is_same_v<T, Vector3d>)
         {
@@ -310,16 +335,16 @@ namespace Configuration
 
             cout << "--> Global Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
-            cout << "---->" << printInBlue("numParticles") << ":        " << printValue(numParticles, "numParticles") << endl;
-            cout << "---->" << printInBlue("numThreads") << ":          " << printValue(numThreads, "numThreads") << endl;
-            cout << "---->" << printInBlue("particleSize") << ":        " << printVector(particleSize, "particleSize") << endl;
-            cout << "---->" << printInBlue("particleMass") << ":        " << printValue(particleMass, "particleMass") << endl;
-            cout << "---->" << printInBlue("cellDimension") << ":       " << printVector(cellDimension, "cellDimension") << endl;
-            cout << "---->" << printInBlue("numCells") << ":            " << printVector(numCells, "numCells") << endl;
-            cout << "---->" << printInBlue("randomSeed") << ":          " << printValue(randomSeed, "randomSeed") << endl;
+            cout << "---->" << textInBlue("numParticles") << ":        " << valueAsString(numParticles, "numParticles") << endl;
+            cout << "---->" << textInBlue("numThreads") << ":          " << valueAsString(numThreads, "numThreads") << endl;
+            cout << "---->" << textInBlue("particleSize") << ":        " << valueAsString(particleSize, "particleSize") << endl;
+            cout << "---->" << textInBlue("particleMass") << ":        " << valueAsString(particleMass, "particleMass") << endl;
+            cout << "---->" << textInBlue("cellDimension") << ":       " << valueAsString(cellDimension, "cellDimension") << endl;
+            cout << "---->" << textInBlue("numCells") << ":            " << valueAsString(numCells, "numCells") << endl;
+            cout << "---->" << textInBlue("randomSeed") << ":          " << valueAsString(randomSeed, "randomSeed") << endl;
             cout << "--> Test Flags" << endl;
-            cout << "---->" << printInBlue("interpolationTest") << ":   " << printValue(interpolationTest, "interpolationTest") << endl;
-            cout << "---->" << printInBlue("updateTest") << ":          " << printValue(updateTest, "updateTest") << endl;
+            cout << "---->" << textInBlue("interpolationTest") << ":   " << valueAsString(interpolationTest, "interpolationTest") << endl;
+            cout << "---->" << textInBlue("updateTest") << ":          " << valueAsString(updateTest, "updateTest") << endl;
         }
         catch (const std::exception& e)
         {
@@ -388,23 +413,23 @@ namespace Configuration
             cout << "--> Specific Configuration read successfully." << endl;
             cout << "--> Displaying configuration values:" << endl;
             cout << "----> Performance Test: UpdatePerformance_ParticleDensity_nParticles:" << endl;
-            cout << "------> " << printInBlue("initialDensity") << ":    " << printValue(initialDensity, "initialDensity") << endl;
-            cout << "------> " << printInBlue("traceStrain") << ":       " << printValue(traceStrain, "traceStrain") << endl;
-            cout << "------> " << printInBlue("expectedDensity") << ":   " << printValue(expectedDensity, "expectedDensity") << " (calculated)" << endl;
+            cout << "------> " << textInBlue("initialDensity") << ":    " << valueAsString(initialDensity, "initialDensity") << endl;
+            cout << "------> " << textInBlue("traceStrain") << ":       " << valueAsString(traceStrain, "traceStrain") << endl;
+            cout << "------> " << textInBlue("expectedDensity") << ":   " << valueAsString(expectedDensity, "expectedDensity") << " (calculated)" << endl;
             cout << "----> Performance Test: UpdatePerformance_ParticleStress_nParticles:" << endl;
-            cout << "------> " << printInBlue("E") << ":                 " << printValue(E, "E") << endl;
-            cout << "------> " << printInBlue("nu") << ":                " << printValue(nu, "nu") << endl;
-            cout << "------> " << printInBlue("epsilon0") << ":          " << printValue(epsilon0, "epsilon0") << endl;
+            cout << "------> " << textInBlue("E") << ":                 " << valueAsString(E, "E") << endl;
+            cout << "------> " << textInBlue("nu") << ":                " << valueAsString(nu, "nu") << endl;
+            cout << "------> " << textInBlue("epsilon0") << ":          " << valueAsString(epsilon0, "epsilon0") << endl;
             cout << "----> Performance Test: Interpolation_NodalMomentum_nParticles:" << endl;
-            cout << "------> " << printInBlue("particleVelocity") << ":  " << printVector(particleVelocity, "particleVelocity") << endl;
+            cout << "------> " << textInBlue("particleVelocity") << ":  " << valueAsString(particleVelocity, "particleVelocity") << endl;
             cout << "----> Performance Test: Interpolation_NodalExternalForce_nParticles:" << endl;
-            cout << "------> " << printInBlue("appliedForce") << ":      " << printVector(appliedForce, "appliedForce") << endl;
+            cout << "------> " << textInBlue("appliedForce") << ":      " << valueAsString(appliedForce, "appliedForce") << endl;
             cout << "----> Performance Test: Interpolation_ParticleStrainIncrement_nParticles:" << endl;
-            cout << "------> " << printInBlue("dt01") << ":              " << printValue(dt01, "dt01") << endl;
-            cout << "------> " << printInBlue("nodalVelocity") << ":     " << printVector(nodalVelocity, "nodalVelocity") << endl;
+            cout << "------> " << textInBlue("dt01") << ":              " << valueAsString(dt01, "dt01") << endl;
+            cout << "------> " << textInBlue("nodalVelocity") << ":     " << valueAsString(nodalVelocity, "nodalVelocity") << endl;
             cout << "----> Performance Test: Interpolation_ParticleVorticityIncrement_nParticles:" << endl;
-            cout << "------> " << printInBlue("dt02") << ":              " << printValue(dt02, "dt02") << endl;
-            cout << "------> " << printInBlue("omega") << ":             " << printVector(omega, "omega") << endl;
+            cout << "------> " << textInBlue("dt02") << ":              " << valueAsString(dt02, "dt02") << endl;
+            cout << "------> " << textInBlue("omega") << ":             " << valueAsString(omega, "omega") << endl;
         }
         catch (const std::exception& e)
         {
@@ -412,39 +437,5 @@ namespace Configuration
             cerr << "--> [ERROR] Error reading configuration:" << e.what() << endl;
             throw (0);
         }
-    }
-
-    // Setup function to initialize configuration
-    int setup()
-    {
-        cout << "------------------------" << endl;
-        cout << "SETUP CONFIGURATION" << endl;
-        cout << "\n";
-
-        int status = 0;
-        try
-        {
-            openConfigurationFile();
-            cout << "\n";
-
-            readGlobalConfiguration();
-            cout << "\n";
-
-            readSpecificConfiguration();
-            cout << "\n";
-
-            status = 0;
-        }
-        catch (const std::exception& e)
-        {
-            cerr << "[ERROR] Error during configuration setup: " << e.what() << endl;
-            status = -1;
-        }
-
-        cout << "Setup complete with status: " << status << endl;
-        cout << "------------------------" << endl;
-        cout << "\n";
-
-        return status;
     }
 };
