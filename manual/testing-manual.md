@@ -1,66 +1,40 @@
-\page testing_manual Testing Compilation Manual
+\page testing_manual Testing Compilation and Benchmarking
 
-\section testing_manual_required_programs 1. Required Programs
+\section testing_manual_howto 1. How to Compile
 
 \note Prior to proceeding with these instructions, please consult the [Required Programs](#required_programs) section.
 
-The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder **`/external`**. Each developer must clone this repository independently.
 
 ```
 cd external
 git clone https://github.com/google/googletest.git
 ```
 
-\section testing_manual_howto 2. How to Compile the Tests
-
-Your directory must have the following structure:
-
+The simplest way to compile on Windows and Linux is by using the **`.bash`** file at **`/build/testing`** with **`MSYS2 MINGW64`** console line, simply execute the following command in the directory **`MPM-Geomechanics/build/testing`**:
 ```
-mpm-geomechanics/
-├─ build/
-│  ├─ CMakeFiles/
-│  ├─ make/
-│  ├─ msbuild/
-│  ├─ testing/
-│  │  ├─ CMakeLists.txt
-│  │  ├─ build/
-```
-
-\subsection testing_manual_windows Windows
-
-The simplest way to compile on windows is by using the **`.bash`** file at **`/build/Testing`** with **`MSYS2 MINGW64`** console line, just execute:
-
-```
-cd project-directory/build/Testing
-./cmake-build-win.bash
+./cmake-build.bash
 ```
 
 Alternatively, you can use the following commands:
+```
+cmake -G "Unix Makefiles" -B build
+```
 
 ```
-cd project-directory/build/Testing
-cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-These commands will generate a .exe file named `MPM-Test.exe`.
+These commands will generate two executables: **`MPM-Geomechanics-Test`** and **`MPM-Geomechanics-Benchmark`**.
 
-\subsection testing_manual_linux Linux (Ubuntu/Debian)
+- **`MPM-Geomechanics-Test`**: Run testing using GoogleTest. All files ending with **`.test.cpp`** are testing files, you can find them in the directory **`tests/numerical-verification`**.
 
-The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
+- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ending with **`.performance.cpp`** are performance files. You can find them in the directory **`tests/performance`**.
 
-```
-cd project-directory/build/Testing
-./cmake-build-linux.bash
-```
+\section testing_manual_benchmark How does benchmarking work?
 
-Alternatively, you can use the following commands:
+To correctly execute the benchmarking, a JSON file called `test-configuration.json` is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
 
-```
-cd project-directory/build/Testing
-cmake -G "Unix Makefiles" -B build
-cmake --build build
-```
+The executable **`MPM-Geomechanics-Benchmark`** allows the following command-line arguments:
 
-These commands will generate a executable file named `MPM-Test`.
-
+* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`test-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**
