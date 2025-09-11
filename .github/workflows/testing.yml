@@ -26,3 +26,9 @@ jobs:
       - name: Run build script from testing directory
         run: ./cmake-build.bash
         working-directory: build/testing
+
+      - name: Upload Linux binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: MPM-Geomechanics-benchmark-linux
+          path: build/testing/MPM-Geomechanics-benchmark
