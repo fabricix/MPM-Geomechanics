@@ -1,0 +1,31 @@
+name: Testing (Windows)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install MSYS2
+        run: choco install msys2 -y
+
+      - name: Update MSYS2
+        shell: bash
+        run: |
+          pacman -Syu --noconfirm
+          pacman -Su --noconfirm
+
+      - name: Install build tools
+        shell: bash
+        run: |
+          pacman -S --noconfirm base-devel mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc make
+
+      - name: Run build script
+        shell: bash
+        run: ./build/testing/cmake-build.bash
