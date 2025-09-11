@@ -15,17 +15,20 @@ jobs:
       - name: Install MSYS2
         run: choco install msys2 -y
 
+      - name: Add MSYS2 to PATH
+        run: setx PATH "%PATH%;C:\tools\msys64\usr\bin"
+
       - name: Update MSYS2
-        shell: bash
+        shell: C:\tools\msys64\usr\bin\bash.exe
         run: |
           pacman -Syu --noconfirm
           pacman -Su --noconfirm
 
       - name: Install build tools
-        shell: bash
+        shell: C:\tools\msys64\usr\bin\bash.exe
         run: |
-          pacman -S --noconfirm base-devel mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc make
+          pacman -S --noconfirm base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake make
 
       - name: Run build script
-        shell: bash
+        shell: C:\tools\msys64\usr\bin\bash.exe
         run: ./build/testing/cmake-build.bash
