@@ -26,13 +26,16 @@ jobs:
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
           zip
+          git
 
-    # Step 3: Configure the project using CMake and Ninja
+    - name: Clone GoogleTest into external directory
+      shell: msys2 {0}
+      run: git clone https://github.com/google/googletest.git external/googletest
+
     - name: Configure with CMake using Ninja
       shell: msys2 {0}
       run: cmake -G "Ninja" -S build/testing -B build/testing
 
-    # Step 4: Build the project
     - name: Build with CMake
       shell: msys2 {0}
       run: cmake --build build/testing
