@@ -40,3 +40,7 @@ The executable **`MPM-Geomechanics-Benchmark`** allows the following command-lin
 * **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`performance-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**
 
 The performance test can also be executed using the `start-benchmark.py` script, which supports running benchmarks with one or more executables downloaded as artifacts from GitHub, storing the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact. For this, an ID must be specified in the `start-benchmark-configuration.json` file. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file.
+
+The executable **`start-benchmark.py`** allows the following command-line flags:
+
+* **<--clear>**: Removes the `benchmark` folder.
