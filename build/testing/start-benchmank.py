@@ -39,62 +39,48 @@ LOGS_FOLDER = "logs"
 def config_file (p, t):
     return f"config-p{p}-t{t}"
 
-def get_logs_path(name):
-    return f"{BENCHMARK_FOLDER}/{LOGS_FOLDER}/{name}"
-
-def get_executable_name(executable_path):
-    return executable_path.split('/')[-1].split('\\')[-1]
-
 def create_folders():
+    # get parameters from the console line
+    arg = " ".join(sys.argv[1:])
+    if arg == "--clean":
+        if Path(f"{BENCHMARK_FOLDER}").exists():
+            response = input(f"> The folder {BENCHMARK_FOLDER} already exists. Do you want to delete it? (y/n): ")
+            if response.lower() == "y":
+                print(f"--> Deleting existing BENCHMARK folder")
+                shutil.rmtree(f"{BENCHMARK_FOLDER}")
+                print(f"--> Folder {BENCHMARK_FOLDER} deleted")
+
     print("\n> Creating folders")
     Path(f"{BENCHMARK_FOLDER}").mkdir(parents=True, exist_ok=True)
     Path(f"{BENCHMARK_FOLDER}/{CONFIG_FOLDER}").mkdir(parents=True, exist_ok=True)
     Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}").mkdir(parents=True, exist_ok=True)
     Path(f"{BENCHMARK_FOLDER}/{LOGS_FOLDER}").mkdir(parents=True, exist_ok=True)
-    for executable_path in executables.values():
-      executable_name = get_executable_name(executable_path)
-      Path(f"{get_logs_path(executable_name)}").mkdir(parents=True, exist_ok=True)
     print(f"--> Folders created in {BENCHMARK_FOLDER}")
+
+def create_log_folder():
+    for name in executables.keys():
+        Path(f"{BENCHMARK_FOLDER}/{LOGS_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
 
 # Run a benchmark with a specific executable and configuration file
 def run_benchmark(executable_path, name, config_file):
-    print(executable_path)
-    print(f"----> [{name}] Running config file: {config_file}.json with executable: {get_executable_name(executable_path)}")
+    print(f"----> [{name}] Running config file: {config_file}.json with executable: {executable_path}")
     try:
-            if sys.platform == "win32":
-                log_reference = (f"{get_logs_path(get_executable_name(executable_path))}\\{config_file}-{name}.log").replace('\\', '/')
-                print(log_reference)
-                with open(log_reference, "w") as log_file:
-                    subprocess.run(
-                        f".\\{executable_path.split('.exe')[0] + '.exe'} {BENCHMARK_FOLDER}\\{CONFIG_FOLDER}\\{config_file}.json",
-                            shell=True,
-                            text=True,
-                            stdout=log_file,
-                            stderr=subprocess.STDOUT,
-                            check=True
-                    )
-            else:
-                with open(f"{get_logs_path(get_executable_name(executable_path))}/{config_file}-{name}.log", "w") as log_file:
-                    subprocess.run(
-                        f"{executable_path} {BENCHMARK_FOLDER}/{CONFIG_FOLDER}/{config_file}.json",
-                            shell=True,
-                            text=True,
-                            stdout=log_file,
-                            stderr=subprocess.STDOUT,
-                            check=True
-                    )
+        log_reference = Path(f"{BENCHMARK_FOLDER}/{LOGS_FOLDER}/{name}/{config_file}-{name}.log")
+        config_path = Path(f"{BENCHMARK_FOLDER}/{CONFIG_FOLDER}/{config_file}.json")
+        with open(log_reference, "w") as log_file:
+            subprocess.run([executable_path, str(config_path)], stdout=log_file, stderr=subprocess.STDOUT, check=True)
+
     except Exception as e:
         print(f"----> [ERROR] An error occurred while running the benchmark: {e}")
         print(f"----> [ERROR] Executable: {executable_path} | Config File: {config_file}")
-        sys.exit(-1)
 
 # Run all the benchmarks of a specific executable
 def execute_benchmarks(executable_path, name):
-  print(f"--> [{name}] Starting benchmarks")
+  print(f"--> Starting benchmarks: [{name}] ")
   for p in materials_point:
     for t in threads:
       run_benchmark(executable_path, name, config_file(p, t))
-  print(f"--> [{name}] Completed benchmarks\n")
+  print(f"--> Completed benchmarks: [{name}]\n")
 
 def create_configuration_files():
     print(f"\n> Creating configuration files")
@@ -110,10 +96,9 @@ def read_configuration():
     global materials_point
     global threads
     global executables
+    json_configuration = {}
 
     print("\n> Reading configuration from 'start-benchmark-configuration.json'")
-
-    json_configuration = {}
     with open ("start-benchmark-configuration.json", "r") as f:
         json_configuration = json.load(f)
         
@@ -122,17 +107,15 @@ def read_configuration():
         executables.clear()
         executables_list = json_configuration["executables"]
         for name, path in executables_list.items():
-            if not path.isdigit():
-                print(f"----> Custom executable path provided for [{name}]: {path}")
-                executables[name] = path
-                continue
-            else:
+            if path.isdigit():
                 print(f"----> Custom executable ID provided for [{name}]: {path}")
-
-        # Delete ARTIFACT folder if exists
-        if Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}").exists():
-            print(f"----> Deleting existing ARTIFACT folder")
-            shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}")
+            else:
+                if not Path(path).is_file():
+                    print(f"----> [ERROR] The provided path for [{name}] is not a valid file: {path}")
+                    print(f"----> [ERROR] Please check the start-benchmark-configuration.json file")
+                    raise FileNotFoundError(f"The provided path for [{name}] is not a valid file: {path}")
+                print(f"----> Custom executable path provided for [{name}]: {path}")
+            executables[name] = path
 
         # Download executables from GitHub Actions using 'gh' CLI
         for name, path in executables_list.items():
@@ -146,7 +129,6 @@ def read_configuration():
                     print(f"------> [ERROR] An error occurred while checking the run ID [{path}]")
                     print(f"------> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"------> [ERROR] {e}")
-                    sys.exit(-1)
                     
                 try:
                     print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}...")
@@ -156,51 +138,24 @@ def read_configuration():
                     print(f"----> [ERROR] An error occurred while downloading executable for [{name}]")
                     print(f"----> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"----> [ERROR] {e}")
-                    sys.exit(-1)
+
+                artifact_folder_name = ""
+                if sys.platform == "win32" or sys.platform == "cygwin":
+                    artifact_folder_name = "MPM-Geomechanics-benchmark-windows"
+
+                if sys.platform == "linux":
+                    artifact_folder_name = "MPM-Geomechanics-benchmark-linux"
 
                 # Move the executable to a folder with the name of the executable
-                if sys.platform == "win32" or sys.platform == "cygwin":
-                    origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-windows/MPM-Geomechanics-benchmark.exe"
-                    destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark.exe"
-                    Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
-                    shutil.move(origin, destination)
-                    shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-windows")
-                    executables[name] = destination.split(".exe")[0]
-                    
-                if sys.platform == "linux":
-                    origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-linux/MPM-Geomechanics-benchmark"
-                    destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark"
-                    Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
-                    shutil.move(origin, destination)
-                    shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-linux")
-                    executables[name] = destination
-
-        # read all ARTIFACT in the ARTIFACT folder
-        ARTIFACT_files = os.listdir(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}")
-        if len(ARTIFACT_files) == 0:
-            print(f"----> [ERROR] No ARTIFACT found in {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}")
-            sys.exit(-1)
-            
-        # # get the first file with executable extension
-        # for file in ARTIFACT_files:
-        #     if sys.platform == "win32" and file.endswith(".exe"):
-        #         if not os.path.exists(f"{executables[name]}"):
-        #             print(f"--> [ERROR] Executable not found for [{name}]: {executables[name]}")
-        #             sys.exit(-1)
-        #         executables[name] = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{file}/MPM-Geomechanics-benchmark"
-        #         executables[name] = executables[name].replace("\\", "/")
-        #         print(f"------> Executable for [{name}] found: {executables[name]} via an artifact")
-                
-        #     if (sys.platform == "linux" or sys.platform == "cygwin") and not file.endswith(".exe"):
-        #         if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), executables[exe])):
-        #             print(f"--> [ERROR] Executable not found for [{exe}]: {executables[exe]}")
-        #             sys.exit(-1)
-        #         executables[file] = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{file}/MPM-Geomechanics-benchmark"
-        #         executables[file] = executables[file].replace("\\", "/")
-        #         print(f"----> Executable for [{file}] found: {executables[file]} via an artifact")
+                origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}/MPM-Geomechanics-benchmark.exe"
+                destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark.exe"
+                Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
+                shutil.move(origin, destination)
+                shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-windows")
+                executables[name] = destination
 
     if "parameters" in json_configuration:
-        print("--> Custom parameters found in configuration file")
+        print("\n--> Custom parameters found in configuration file")
         executables_parameters = json_configuration["parameters"]
         materials_point = executables_parameters["particles"] if "particles" in executables_parameters else materials_point
         threads = executables_parameters["threads"] if "threads" in executables_parameters else threads
@@ -208,16 +163,13 @@ def read_configuration():
         print(f"----> Threads: {threads}")
 
     if executables.values():
-        print("--> Executables to be used:")
+        print("\n--> Executables to be used:")
         for name, path in executables.items():
             print(f"----> [{name}]: {path}")
-            if sys.platform == "win32":
-                executables[name] = executables[name].replace("/", "\\")
 
-    print(f"--> All parameters read successfully")
+    print(f"\n--> All parameters read successfully")
 
 def start_benchmarks():
-
     print("\n> Starting benchmarks")
 
     # Start time measurement
@@ -242,20 +194,26 @@ def start_benchmarks():
 
 # Main function
 def main():
+    try: 
+        # Create necessary folders
+        create_folders()
 
-    # Create necessary folders
-    create_folders()
+        # Read parameters from the console
+        read_configuration()
 
-    # Read parameters from the console
-    read_configuration()
+        # Create log folders
+        create_log_folder()
 
-    # Create configuration files 
-    create_configuration_files()
+        # Create configuration files 
+        create_configuration_files()
 
-    # Start benchmarking
-    start_benchmarks()
+        # Start benchmarking
+        start_benchmarks()
 
-    return 0
+        return 0
+    except:
+        print(f"--> [ERROR] An error occurred during the benchmarking process")
+        return -1
 
 # Start benchmarking process
 main()
