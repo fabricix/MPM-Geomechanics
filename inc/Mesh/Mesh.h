@@ -203,10 +203,6 @@ public:
     /// X0, Y0, Z0, Xn, Yn and Zn
     void setBoundaryRestrictionsFluid(vector<Boundary::BoundaryType> restrictions);
 
-    /// \brief Configures the contact nodes
-    /// \param[in] unordered_map containing the contact nodes
-    void setContactNodes(unordered_map<int, ContactNodeData> _contactNodes) { this->contactNodes = _contactNodes; }
-
     /// \brief Verify if the position is inside the limits
     /// \param[in] point A vector containing the
     /// coordinates of a point

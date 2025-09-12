@@ -745,6 +745,12 @@ namespace Output{
 		if (ModelSetup::getLoadState()) {
 			std::cout << "Load state : Enabled" << std::endl;
 		}
+		if (ModelSetup::getTerrainContactActive()) {
+			std::cout << "   Contact : Terrain STL" << std::endl;
+		}
+		if (ModelSetup::getContactActive()) {
+			std::cout << "   Contact : Master-Slave" << std::endl;
+		}
 	}
 
 	void initializeCSVFile(const std::string& filename) {
