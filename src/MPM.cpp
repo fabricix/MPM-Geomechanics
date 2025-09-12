@@ -158,17 +158,6 @@ void MPM::setupMesh() {
 	}
 }
 
-//void MPM::setupContact()
-//{
-//	// verity if contact active
-//	bool contactActive = Input::getContactActive();
-//	ModelSetup::setContactActive(contactActive);
-//	if (contactActive) { 
-//		int normalType = Input::getContactNormal();
-//		ModelSetup::setContactNormal(normalType);
-//	}
-//}
-
 void MPM::setupContact()
 {
 	// verity if contact active
@@ -427,7 +416,7 @@ void MPM::createModel() {
 		// configures the seismic analysis
 		setupSeismicAnalysis();
 
-		// setup contact
+		// setup master-slave contact
 		setupContact();
 
 		// setup the background mesh

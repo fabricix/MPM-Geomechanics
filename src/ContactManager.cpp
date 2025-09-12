@@ -5,15 +5,18 @@
 #include <numeric>
 #include "Update.h"
 
+// Static variable for rapid contact detection
+static bool contactDetection = false;
+
 ContactManager::ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient):
 	frictionCoefficient(friction),
     masterId(master_id > 0 ? master_id : 0),
 	slaveId(slave_id > 0 ? slave_id : 1),
 	normalType((normal_type != "collinear" && normal_type != "slave") ? "master" : normal_type),
-    realDistanceCorrectionActive(real_distance_correction_coefficient > 0),
-	realDistanceCorrectionCoefficient( real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
+	realDistanceCorrectionCoefficient(real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
 	{
-		// void constructor
+		// verify if real distance correction is active
+		realDistanceCorrectionActive = real_distance_correction_coefficient > 0 ? true : false;
 	}
 
 void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
@@ -79,7 +82,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 	if (contactNodes.size() > 0) {
-		hasContact = true;
+		contactDetection = true;
 	}
 }
 
@@ -190,7 +193,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 			double contactDistance = contactNodesData.closestParticleDistanceMaster + contactNodesData.closestParticleDistanceSlave;
 			if (contactDistance <= realDistanceCorrectionCoefficient * cellDimension) {
 				contactNodesData.hasContact = true;
-				hasContact = true;
+				contactDetection = true;
 			}
 			else {
 				contactNodesData.hasContact = false;
@@ -347,11 +350,11 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodie
 
 	// verify real distance correction
 	if (realDistanceCorrectionActive) {
-		hasContact = false;
+		contactDetection = false;
 		realDistanceCorrection(mesh, bodies);
 	}
 
-	if (hasContact) {
+	if (contactDetection) {
 		// compute contact force
 		computeContactForces(mesh, dt);
 
