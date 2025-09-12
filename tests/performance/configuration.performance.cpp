@@ -14,6 +14,7 @@ using json = nlohmann::json;
 namespace Configuration
 {
     const int PRINT_SPACES = 25;
+    bool print_logs = false;
     bool usingDefaultConfigurationFile = false;
     json configuration;
     string jsonFileName = "performance-configuration.json";
@@ -156,8 +157,8 @@ namespace Configuration
         }
         catch (const std::exception& e)
         {
-            cerr << "--> [WARNING] An error occurred while checking configuration key: [" << key << "]. Reason: " << e.what() << endl;
-            cerr << "--> [WARNING] Please check your configuration file." << endl;
+            clog << "--> [WARNING] An error occurred while checking configuration key: [" << key << "]. Reason: " << e.what() << endl;
+            clog << "--> [WARNING] Please check your configuration file." << endl;
             return false;
         }
     }
@@ -170,10 +171,10 @@ namespace Configuration
         std::is_same_v<T, bool> ||
         std::is_same_v<T, Eigen::Vector3d> ||
         std::is_same_v<T, Eigen::Vector3i>>>
-    string valueAsString(const T& value, const string& key)
+        string valueAsString(const T& value, const string& key)
     {
         std::ostringstream out;
-        out ;
+        out;
 
         if constexpr (std::is_same_v<T, bool>)
         {
@@ -233,7 +234,7 @@ namespace Configuration
             }
             else
             {
-                cerr << "--> [INFO] Keys not Found: " << keysAsString(keys) << ". Using default value." << endl;
+                print_logs ? clog << "--> [INFO] Keys not Found: " << keysAsString(keys) << ". Using default value." << endl : clog;
                 return defaultValue;
             }
         }
@@ -273,24 +274,37 @@ namespace Configuration
         cout << "> Open configuration file..." << endl;
 
         vector<string> argv = ::testing::internal::GetArgvs();
-        if (argv.size() > 1 && !argv[1].empty())
+        if (argv.size() > 1)
         {
             try
             {
-                jsonFileName = argv[1];
-                cout << "--> Specifying configuration file: " << jsonFileName << endl;
+                for (string arg : argv) {
+                    if (arg.find(".json") != string::npos)
+                    {
+                        jsonFileName = arg;
+                        cout << "--> Specifying configuration file: " << jsonFileName << endl;
+                    }
+
+                    if (arg == "--log")
+                    {
+                        print_logs = true;
+                        cout << "--> [INFO] Logging enabled." << endl;
+                    }
+                }
             }
             catch (...)
             {
-                cerr << "--> [ERROR] Error opening file: " << jsonFileName << endl;
+                string parameters;
+                for (string arg : argv) { parameters += arg + " "; }
+                cerr << "--> [ERROR] Error reading parameters from console: " << parameters << endl;
                 throw runtime_error("Failed to set configuration file: " + jsonFileName);
             }
         }
 
         ifstream file(jsonFileName);
         if (!file.is_open()) {
-            cerr << "--> [INFO] There is no configuration file found: " << jsonFileName << endl;
-            cerr << "--> [INFO] Using default configuration values." << endl;
+            clog << "--> [INFO] There is no configuration file found: " << jsonFileName << endl;
+            clog << "--> [INFO] Using default configuration values." << endl;
             usingDefaultConfigurationFile = true;
             configuration = defaultConfigurationFile;
         }
