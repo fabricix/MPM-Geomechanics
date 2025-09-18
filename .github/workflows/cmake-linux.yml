@@ -43,11 +43,11 @@ jobs:
         working-directory: build/qa
 
       - name: (tests) Run tests
-        run: MPM-Geomechanics-tests
+        run: ./MPM-Geomechanics-tests
         working-directory: build/qa
 
       - name: (tests) Run benchmark
-        run: MPM-Geomechanics-benchmark
+        run: ./MPM-Geomechanics-benchmark
         working-directory: build/qa
 
       - name: (tests) Upload benchmark binary
