@@ -10,6 +10,7 @@ The following instructions outline the steps required to install all necessary p
 | **Git**        | via Winget                                               | `winget install -e --id Git.Git -e --source winget`  |
 | **MSYS2**      | via Winget                                               | `winget install -e --id MSYS2.MSYS2 --source winget` |
 | **GitHub cli** | via MSYS2 MINGW64                                        | `pacman -S mingw-w64-x86_64-github-cli`              |
+| **Python**     | via MSYS2 MINGW64                                        | `pacman -S mingw-w64-x86_64-python`                  |
 | **CMake**      | via MSYS2 MINGW64                                        | `pacman -S mingw-w64-x86_64-cmake`                   |
 | **GCC**        | via MSYS2 MINGW64                                        | `pacman -S mingw-w64-x86_64-gcc`                     |
 | **G++**        | via MSYS2 MINGW64                                        | `pacman -S mingw-w64-x86_64-gcc`                     |
@@ -29,10 +30,14 @@ winget install -e --id Git.Git -e --source winget
 winget install -e --id MSYS2.MSYS2 --source winget
 ```
 
-**Step 2**: Open the `MSYS2 MINGW64` console and install **GitHub cli**, **CMake**, **GCC**, **G++** and **Make**:
+**Step 2**: Open the `MSYS2 MINGW64` console and install **GitHub cli**, **Python**, **CMake**, **GCC**, **G++** and **Make**:
 
 ```
 pacman -S mingw-w64-x86_64-github-cli
+```
+
+```
+pacman -S mingw-w64-x86_64-python
 ```
 
 ```
@@ -52,6 +57,7 @@ pacman -S make
 ```
 git --version
 gh --version
+python --version
 cmake --version
 make --version 
 gcc --version   
@@ -61,16 +67,17 @@ g++ --version
 
 \section required_programs_linux Required Programs - Linux
 
-| Program        | Installation | Command                            |
-| -------------- | ------------ | ---------------------------------- |
-| **Git**        | via apt      | `sudo apt install git`             |
-| **GitHub cli** | via apt      | `sudo apt install gh`              |
-| **CMake**      | via apt      | `sudo apt install cmake`           |
-| **GCC**        | via apt      | `sudo apt install build-essential` |
-| **G++**        | via apt      | `sudo apt install build-essential` |
-| **Make**       | via apt      | `sudo apt install build-essential` |
+| Program        | Installation | Command                                |
+| -------------- | ------------ | -------------------------------------- |
+| **Git**        | via apt      | `sudo apt install git`                 |
+| **GitHub cli** | via apt      | `sudo apt install gh`                  |
+| **Python**     | via apt      | `sudo apt install python3 python3-pip` |
+| **CMake**      | via apt      | `sudo apt install cmake`               |
+| **GCC**        | via apt      | `sudo apt install build-essential`     |
+| **G++**        | via apt      | `sudo apt install build-essential`     |
+| **Make**       | via apt      | `sudo apt install build-essential`     |
 
-**Step 1**:  Install all the necessary packages referenced above (**Git**, **GitHub cli**, **CMake**, **GCC**, **G++** and **Make**) via `apt`:
+**Step 1**:  Install all the necessary packages referenced above (**Git**, **GitHub cli**, **Python**, **CMake**, **GCC**, **G++** and **Make**) via `apt`:
 
 ```
 sudo apt install git
@@ -78,6 +85,10 @@ sudo apt install git
 
 ```
 sudo apt install gh
+```
+
+```
+sudo apt install python3 python3-pip
 ```
 
 ```
@@ -93,6 +104,7 @@ sudo apt install build-essential
 ```
 git --version
 gh --version
+python3 --version
 cmake --version
 make --version 
 gcc --version   
