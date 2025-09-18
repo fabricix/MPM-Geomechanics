@@ -1,0 +1,47 @@
+name: Testing (Windows)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    # Step 1: Clone the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up MSYS2 with MinGW64 and install required tools
+    - name: Setup MSYS2 with MinGW64
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: >-
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          zip
+          git
+
+    - name: Clone GoogleTest into external directory
+      shell: msys2 {0}
+      run: git clone https://github.com/google/googletest.git external/googletest
+
+    - name: Configure with CMake using Ninja
+      shell: msys2 {0}
+      run: cmake -G "Ninja" -S build/qa -B build/qa
+
+    - name: Build with CMake
+      shell: msys2 {0}
+      run: cmake --build build/qa
+
+    - name: Upload Windows binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: MPM-Geomechanics-benchmark-windows
+        path: build/qa/MPM-Geomechanics-benchmark.exe

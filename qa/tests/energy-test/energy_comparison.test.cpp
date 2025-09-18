@@ -45,37 +45,44 @@ double sum_energy(const std::string& filename)
 void executeSimulation()
 {
 
-  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "tests" / "energy-test";
+  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "qa" / "tests" / "energy-test";
   std::filesystem::current_path(test_dir);
 
-  int response = system("..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
-
-  if (response == 0)
+  try
   {
-    std::cout << "Simulation executed successfully." << std::endl;
+    int response = system("..\\..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
+
+    if (response == 0)
+    {
+      std::cout << "Simulation executed successfully." << std::endl;
+    }
+    else
+    {
+      std::cerr << "Simulation failed with response code: " << response << std::endl;
+      std::cerr << "Please check if simulation program exists and try again." << std::endl;
+      FAIL() << "Simulation execution failed.";
+      return;
+    }
+
+    string filename = "time-energy.csv";
+
+    std::ifstream file(filename);
+    std::string line;
+    double sum = 0.0;
+
+    if (!file.is_open()) {
+      std::cerr << "Error opening file: " << filename << std::endl;
+    }
+    else
+    {
+      std::cout << "File opened successfully: " << filename << std::endl;
+    }
   }
-  else
+  catch (const std::exception& e)
   {
-    std::cerr << "Simulation failed with response code: " << response << std::endl;
-    std::cout << "Please check if simulation program exists and try again." << std::endl;
-    FAIL() << "Simulation execution failed.";
-    return;
+    std::cerr << "Exception during simulation execution: " << e.what() << std::endl;
+    FAIL() << "Simulation execution failed due to exception.";
   }
-
-  string filename = "time-energy.csv";
-
-  std::ifstream file(filename);
-  std::string line;
-  double sum = 0.0;
-
-  if (!file.is_open()) {
-    std::cerr << "Error opening file: " << filename << std::endl;
-  }
-  else
-  {
-    std::cout << "File opened successfully: " << filename << std::endl;
-  }
-
 }
 
 TEST(ENERGY_COMPARISON, ENERGY_SUM)

@@ -1,0 +1,56 @@
+name: Testing (Linux)
+
+on:
+  workflow_run:
+    workflows: ["CMake-Linux"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake git
+
+      - name: Clone GoogleTest into external directory
+        run: git clone https://github.com/google/googletest.git external/googletest
+
+      - name: Make test build script executable
+        run: chmod +x build/qa/cmake-build.bash
+
+      - name: Run build script from qa directory
+        run: ./cmake-build.bash
+        working-directory: build/qa
+
+      - name: Download artifact (MPM-Geomechanics binary)
+        uses: actions/download-artifact@v4
+        with:
+          name: MPM-Geomechanics-linux
+          path: ./build/CMake
+
+      - name: Rename binary
+        run: mv ./build/CMake/MPM-Geomechanics-linux ./build/CMake/MPM-Geomechanics
+
+      - name: Run tests
+        run: MPM-Geomechanics-tests
+        working-directory: build/qa
+
+      - name: Run benchmark
+        run: MPM-Geomechanics-benchmark
+        working-directory: build/qa
+
+      - name: Upload benchmark binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: MPM-Geomechanics-benchmark-linux
+          path: build/qa/MPM-Geomechanics-benchmark

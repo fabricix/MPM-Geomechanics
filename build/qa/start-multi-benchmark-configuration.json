@@ -1,0 +1,12 @@
+{
+  "executables": {
+    "win_omp": "17660487859",
+    "win_omp_02": "17661828896"
+  },
+
+  "parameters":
+  {
+    "particles": [150000, 250000, 500000],
+    "threads": [1, 5, 10]
+  }
+}
