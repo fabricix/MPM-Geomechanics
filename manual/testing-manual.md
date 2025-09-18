@@ -25,26 +25,28 @@ cmake -G "Unix Makefiles" -B build
 cmake --build build
 ```
 
-These commands will generate two executables: **`MPM-Geomechanics-Test`** and **`MPM-Geomechanics-Benchmark`**.
+These commands will generate two executables: **`MPM-Geomechanics-tests`** and **`MPM-Geomechanics-benchmark`**.
 
-- **`MPM-Geomechanics-Test`**: Run testing using GoogleTest. All files ending with **`.test.cpp`** are testing files, you can find them in the directory **`tests/numerical-verification`**.
+- **`MPM-Geomechanics-tests`**: Run testing using GoogleTest. All files ending with **`.test.cpp`** are testing files, you can find them in the directory **`qa/tests`**.
 
-- **`MPM-Geomechanics-Benchmark`**: Run benchmark using GoogleTest. All files ending with **`.performance.cpp`** are performance files. You can find them in the directory **`tests/performance`**.
+- **`MPM-Geomechanics-benchmark`**: Run benchmark using GoogleTest. All files ending with **`.benchmark.cpp`** are performance files. You can find them in the directory **`qa/benchmark`**.
 
 \section testing_manual_benchmark How does benchmarking work?
 
-To correctly execute the benchmarking, a JSON file called `performance-configuration.json` is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
+To correctly execute the benchmarking, a JSON file called **`benchmark-configuration.json`** is needed, which allows the user to specify the values for each test. If the file does not exist or if a value is not referenced in the JSON file, a default value will be used.
 
-The executable **`MPM-Geomechanics-Benchmark`** allows the following command-line arguments:
+The executable **`MPM-Geomechanics-benchmark`** allows the following command-line arguments:
 
-* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`performance-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-Benchmark configuration-file.json`**
+* **`<directory>`**: Indicates which file should be used to run the benchmarking. If no file is specified by the user, it will use a JSON file named **`benchmark-configuration.json`** located in the same directory as the executable. Example: **`MPM-Geomechanics-benchmark configuration-file.json`**
 
-The executable **`MPM-Geomechanics-Benchmark`** allows the following command-line flags:
+The executable **`MPM-Geomechanics-benchmark`** allows the following command-line flags:
 
-* **`--log`**: Shows more information about missing keys in the `performance-configuration.json` file
+* **`--log`**: Shows more information about missing keys in the **`benchmark-configuration.json`** file
 
-The performance test can also be executed using the `start-benchmark.py` script, which supports running benchmarks with one or more executables downloaded as artifacts from GitHub, storing the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact. For this, an ID must be specified in the `start-benchmark-configuration.json` file. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file.
+The performance test can also be executed using the **`start-multi-benchmark.py`** script, which supports running benchmarks with one or more executables downloaded as artifacts from GitHub, storing the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact. For this, an ID must be specified in the **`start-multi-benchmark-configuration.json`** file. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file. 
 
-The executable **`start-benchmark.py`** allows the following command-line flags:
+\note If you are using windows OS, make sure you are using the MINGW64 console-line. Check [Required Programs](#required_programs_windows) for more information.
 
-* **`--clear`**: Removes the `benchmark` folder before executing the performance tests.
+The executable **`start-multi-benchmark.py`** allows the following command-line flags:
+
+* **`--clear`**: Removes the **`benchmark`** folder before executing the performance tests.
