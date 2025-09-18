@@ -29,9 +29,10 @@ time-energy.csv
 simulation-data.csv
 particle_stress_data.json
 /external/*
-/build/testing/build/*
 !.gitkeep
 /build/CMake/*
 !CMakeLists.txt
 !cmake-compilation-manual.md
 !cmake-build.bash
+/build/qa/build/*
+/build/qa/benchmark/*
