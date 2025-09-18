@@ -34,6 +34,7 @@ CONFIG_FOLDER = "configuration-files"
 BENCHMARK_FOLDER = "benchmark"
 ARTIFACT_FOLDER = "artifact"
 LOGS_FOLDER = "logs"
+BENCHMARK_CONFIGURATION_FILE_NAME = "start-multi-benchmark-configuration.json"
 
 # Configuration file name generator
 def config_file (p, t):
@@ -98,8 +99,11 @@ def read_configuration():
     global executables
     json_configuration = {}
 
-    print("\n> Reading configuration from 'start-multi-performance-tests-configuration.json'")
-    with open ("start-multi-performance-tests-configuration.json", "r") as f:
+    print(f"\n> Reading configuration from {BENCHMARK_CONFIGURATION_FILE_NAME}")
+    if not Path(BENCHMARK_CONFIGURATION_FILE_NAME).is_file():
+        raise FileNotFoundError(f"Configuration file '{BENCHMARK_CONFIGURATION_FILE_NAME}' not found")
+
+    with open(BENCHMARK_CONFIGURATION_FILE_NAME, "r") as f:
         json_configuration = json.load(f)
         
     if "executables" in json_configuration:
@@ -122,7 +126,7 @@ def read_configuration():
             if path.isdigit():
                 print(f"----> Checking GitHub for run ID [{path}] for executable [{name}]...")
                 try:
-                    print(f"------> Checking if the run ID [{path}] exists...")
+                    print(f"------> Checking if the run ID [{path}] exists in GitHub Actions (command: gh run view {path})...")
                     subprocess.run(f"gh run view {path}", shell=True, text=True, capture_output=True, check=True)
                     print(f"------> ID [{path}] exists.")
                 except Exception as e:
@@ -131,7 +135,7 @@ def read_configuration():
                     print(f"------> [ERROR] {e}")
                     
                 try:
-                    print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}...")
+                    print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER} (command: gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER})...")
                     subprocess.run(f"gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}", shell=True, text=True, capture_output=True, check=True)
                     print(f"------> Download completed for [{name}]")
                 except Exception as e:
@@ -211,8 +215,9 @@ def main():
         start_benchmarks()
 
         return 0
-    except:
+    except Exception as e:
         print(f"--> [ERROR] An error occurred during the benchmarking process")
+        print(f"--> [ERROR] {e}")
         return -1
 
 # Start benchmarking process
