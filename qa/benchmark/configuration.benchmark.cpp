@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream> 
 #include "Json/json.hpp"
-#include "configuration.performance.h"
+#include "configuration.benchmark.h"
 
 using namespace std;
 #include <iomanip>
@@ -17,7 +17,7 @@ namespace Configuration
     bool print_logs = false;
     bool usingDefaultConfigurationFile = false;
     json configuration;
-    string jsonFileName = "performance-configuration.json";
+    string jsonFileName = "benchmark-configuration.json";
     json defaultConfigurationFile = {
         {"global", {
             {"numParticles", static_cast<int>(numParticles)},

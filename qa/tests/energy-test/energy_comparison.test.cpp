@@ -45,7 +45,7 @@ double sum_energy(const std::string& filename)
 void executeSimulation()
 {
 
-  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "tests" / "numerical-verification" / "energy-test";
+  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "qa" / "tests" / "energy-test";
   std::filesystem::current_path(test_dir);
 
   try

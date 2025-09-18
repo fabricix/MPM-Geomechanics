@@ -24,14 +24,15 @@ include_directories(../../inc/Shape)
 include_directories(../../inc/Body)
 include_directories(../../inc/Materials)
 include_directories(../../inc/Mesh)
-include_directories(../../tests/performance)
+include_directories(../../qa/benchmark)
+include_directories(../../qa/tests)
 
 # ====================================
 # Add executables for numerical tests
 # ====================================
 
 # Remove main.cpp file from the list of sources to avoid multiple definitions of the main function
-file(GLOB_RECURSE TEST_SOURCES "../../tests/numerical-verification/*.test.cpp" "../../tests/numerical-verification/main.test.cpp")
+file(GLOB_RECURSE TEST_SOURCES "../../qa/tests/*.test.cpp" "../../qa/tests/main.test.cpp")
 file(GLOB_RECURSE EXECUTABLES "../../src/*.cpp")
 list(REMOVE_ITEM EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/../../src/Main.cpp")
 add_executable(MPM-Geomechanics-tests ${TEST_SOURCES} ${EXECUTABLES})
@@ -51,11 +52,11 @@ target_link_libraries(MPM-Geomechanics-tests gtest)
 # Add benchmark executable for performance tests
 # ==============================================
 
-# Gather all performance test files (*.performance.cpp)
-file(GLOB_RECURSE PERFORMANCE_SOURCES "../../tests/performance/*.performance.cpp" "../../tests/performance/main.performance.cpp")
+# Gather all benchmark test files (*.benchmark.cpp)
+file(GLOB_RECURSE BENCHMARK_SOURCES "../../qa/benchmark/*.benchmark.cpp" "../../qa/benchmark/main.benchmark.cpp")
 
 # Reuse the simulator sources (same as for MPM-Geomechanics-tests)
-add_executable(MPM-Geomechanics-benchmark ${PERFORMANCE_SOURCES} ${EXECUTABLES})
+add_executable(MPM-Geomechanics-benchmark ${BENCHMARK_SOURCES} ${EXECUTABLES})
 
 # Define USE_PARALLEL_INTERPOLATION to enable parallel interpolation in the benchmark executable
 target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_COMPUTATION)

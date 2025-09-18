@@ -1,5 +1,5 @@
-#ifndef CONFIGURATION_PERFORMANCE_H_
-#define CONFIGURATION_PERFORMANCE_H_
+#ifndef CONFIGURATION_BENCHMARK_H_
+#define CONFIGURATION_BENCHMARK_H_
 
 #include <string>
 #include <vector>
@@ -60,4 +60,4 @@ namespace Configuration
     void readSpecificConfiguration();
 };
 
-#endif // CONFIGURATION_PERFORMANCE_H_
+#endif // CONFIGURATION_BENCHMARK_H_

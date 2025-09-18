@@ -46,7 +46,7 @@ def create_folders():
         if Path(f"{BENCHMARK_FOLDER}").exists():
             response = input(f"> The folder {BENCHMARK_FOLDER} already exists. Do you want to delete it? (y/n): ")
             if response.lower() == "y":
-                print(f"--> Deleting existing BENCHMARK folder")
+                print(f"--> Deleting existing {BENCHMARK_FOLDER} folder")
                 shutil.rmtree(f"{BENCHMARK_FOLDER}")
                 print(f"--> Folder {BENCHMARK_FOLDER} deleted")
 
@@ -98,8 +98,8 @@ def read_configuration():
     global executables
     json_configuration = {}
 
-    print("\n> Reading configuration from 'start-benchmark-configuration.json'")
-    with open ("start-benchmark-configuration.json", "r") as f:
+    print("\n> Reading configuration from 'start-multi-performance-tests-configuration.json'")
+    with open ("start-multi-performance-tests-configuration.json", "r") as f:
         json_configuration = json.load(f)
         
     if "executables" in json_configuration:

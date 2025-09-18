@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <iostream>
-#include "configuration.performance.h"
+#include "configuration.benchmark.h"
 
 using namespace std;
 
