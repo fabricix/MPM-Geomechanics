@@ -6,9 +6,14 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout repository
