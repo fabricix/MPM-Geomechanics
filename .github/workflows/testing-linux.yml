@@ -3,8 +3,8 @@ name: Testing (Linux)
 on:
   workflow_run:
     workflows: ["CMake-Linux"]
-    types:
-      - completed
+    types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: read
