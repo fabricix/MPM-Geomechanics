@@ -1,0 +1,56 @@
+# comment...
+stress_scheme_update = "USL"
+
+# comment...
+shape_function = "GIMP"
+
+# comment...
+time = 1
+
+# comment...
+time_step = 0.001
+
+# comment...
+n_threads = 10
+
+# comment...
+gravity = [0.0, 0.0, -9.81]
+
+# comment...
+damping_type = "local"
+damping_value = 0.0
+
+# comment...
+results_print = 50
+results_particles_fields = ["all"] 
+results_grid_fields = ["none"]
+
+# comment...
+mesh_cells_dimension = [1, 1, 1]
+mesh_cells_number = [110, 1, 36]
+mesh_origin = [0, 0, 0]
+mesh_boundary_planex0 = "fixed"
+mesh_boundary_planey0 = "sliding"
+mesh_boundary_planez0 = "fixed"
+mesh_boundary_planexn = "fixed"
+mesh_boundary_planeyn = "sliding"
+mesh_boundary_planezn = "fixed"
+
+# comment...
+materials_names = ["plastic", "solid"]
+m_plastic_type = "mohr-coulomb"
+m_plastic_young = 70e6
+m_plastic_density = 2100
+m_plastic_poisson = 0.3
+m_plastic_friction = 20.0
+m_plastic_cohesion = 1.0e3
+
+# comment...
+bodies_names = ["solid"]
+b_solid_type = "polygon_2d"
+b_solid_extrude_dir = "y"
+b_solid_displacement = 1
+b_solid_discretization = 1
+b_solid_material = "plastic"
+b_solid_points = "particles.json"
+

@@ -21,15 +21,8 @@
 	{
 		"print":50,
 
-		"material-point-results":
-		{
-			"fields":["all"]
-		},
-		
-		"grid-nodal-results":
-		{
-			"fields":["none"]
-		}
+		"material_point_results": ["all"],
+		"grid_nodal_results": ["none"]
 	},
 
 	"mesh":
