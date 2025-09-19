@@ -35,7 +35,8 @@ using std::to_string;
 using namespace Loads;
 
 
-namespace Input {
+namespace Input
+{
 
 	json inputFile; //!< data structure containing all the model information
 	string inputFileName; //!< file name to be read
@@ -43,21 +44,24 @@ namespace Input {
 	using json = nlohmann::json;
 
 	template<typename T>
-	T get_number(const json& j, const std::string& key, T default_value = T()) {
+	T get_number(const json& j, const std::string& key, T default_value = T())
+	{
 		if (j.contains(key) && j[key].is_number()) {
 			return j[key].get<T>();
 		}
 		return default_value;
 	}
 
-	bool get_boolean(const json& j, const std::string& key, bool default_value = false) {
+	bool get_boolean(const json& j, const std::string& key, bool default_value = false)
+	{
 		if (j.contains(key) && j[key].is_boolean()) {
 			return j[key].get<bool>();
 		}
 		return default_value;
 	}
 
-	std::string get_string(const json& j, const std::string& key, const std::string& default_value = "") {
+	std::string get_string(const json& j, const std::string& key, const std::string& default_value = "")
+	{
 		if (j.contains(key) && j[key].is_string()) {
 			return j[key].get<std::string>();
 		}
@@ -65,58 +69,61 @@ namespace Input {
 	}
 }
 
-inline const json& Input::getJson( ) { return inputFile; }
+inline const json& Input::getJson() { return inputFile; }
 
-inline string Input::getFileName( ) { return inputFileName; }
+inline string Input::getFileName() { return inputFileName; }
 
 bool Input::getLoadState() { return Input::get_boolean(Input::getJson(), "load_state", false); };
 
 bool Input::getSaveState() { return Input::get_boolean(Input::getJson(), "save_state", false); };
 
-void Input::readInputFile(string filename) {
+void Input::readInputFile(string filename)
+{
 
-	try{
+	try {
 		// configures the input file	
 		inputFileName = filename;
-		
-		if ( inputFileName != "" ) {
+
+		if (inputFileName != "") {
 
 			// read the file
 			ifstream i(inputFileName);
-			
+
 			// initialize the json structure
-			i >> inputFile;	
+			i >> inputFile;
 		}
 		else
 			throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Was not possible read the file,\nplease check the input file name...");
 		throw;
 	}
 }
 
-double Input::getSimulationTime(){
-	
-	try{
-		double time = get_number(inputFile,"time",0.0);
-		
-		if(time>0) 
-		{ 
-			return time; 
+double Input::getSimulationTime()
+{
+
+	try {
+		double time = get_number(inputFile, "time", 0.0);
+
+		if (time > 0)
+		{
+			return time;
 		}
 		else
 			throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Simulation time must be greater than zero");
 		throw;
 	}
 }
 
-Solver* Input::getSolver() {
+Solver* Input::getSolver()
+{
 	try
 	{
 		std::string key = "stress_scheme_update";
@@ -151,38 +158,39 @@ Solver* Input::getSolver() {
 		throw 0;
 	}
 
-	catch(std::string& key)
+	catch (std::string& key)
 	{
 		Warning::printMessage("Error in keyword: " + key);
 		throw;
 	}
 
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in solver definition in input file");
 		throw;
 	}
 }
 
-ModelSetup::InterpolationFunctionType Input::getInterpolationFunction() {
-	
+ModelSetup::InterpolationFunctionType Input::getInterpolationFunction()
+{
+
 	try
-	{	
+	{
 		// default value
 		if (inputFile["shape_function"].is_null())
 		{
-			return ModelSetup::GIMP;	
+			return ModelSetup::GIMP;
 		}
 
 		if (inputFile["shape_function"].is_string()) {
 
-			if(inputFile["shape_function"]=="GIMP") {
+			if (inputFile["shape_function"] == "GIMP") {
 
 				// return GIMP shape function type
 				return ModelSetup::GIMP;
 			}
 
-			if(inputFile["shape_function"]=="linear") {
+			if (inputFile["shape_function"] == "linear") {
 
 				// return Linear shape function type
 				return ModelSetup::LINEAR;
@@ -193,19 +201,20 @@ ModelSetup::InterpolationFunctionType Input::getInterpolationFunction() {
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of shape function in input file");
 		throw;
 	}
 }
 
-double Input::getTimeStep(){
+double Input::getTimeStep()
+{
 
 	try
 	{
-		if (inputFile["time_step"].is_null() || !inputFile["time_step"].is_number() )
-		{ 
+		if (inputFile["time_step"].is_null() || !inputFile["time_step"].is_number())
+		{
 			return 0;
 		}
 		else
@@ -214,7 +223,7 @@ double Input::getTimeStep(){
 		}
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of time step in input file");
 		throw;
@@ -226,7 +235,7 @@ double Input::getCriticalTimeStepMultiplier()
 	try
 	{
 		string key = "critical_time_step_multiplier";
-		
+
 		if (!inputFile[key].is_null() && inputFile[key].is_number())
 		{
 			return inputFile[key];
@@ -236,118 +245,121 @@ double Input::getCriticalTimeStepMultiplier()
 			return 0;
 		}
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of time step multiplier");
 		throw;
-	}	
+	}
 }
 
 Vector3i Input::getCellsNum()
 {
 	try
 	{
-		if(inputFile["mesh"]["cells_number"].is_array()){
-			
+		if (inputFile["mesh"]["cells_number"].is_array()) {
+
 			// return the number of cells
 			Vector3i cellsNumber;
-			cellsNumber(0)=inputFile["mesh"]["cells_number"][0];
-			cellsNumber(1)=inputFile["mesh"]["cells_number"][1];
-			cellsNumber(2)=inputFile["mesh"]["cells_number"][2];
+			cellsNumber(0) = inputFile["mesh"]["cells_number"][0];
+			cellsNumber(1) = inputFile["mesh"]["cells_number"][1];
+			cellsNumber(2) = inputFile["mesh"]["cells_number"][2];
 
-			return cellsNumber;	
+			return cellsNumber;
 		}
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of cell number in input file");
 		throw;
 	}
 }
 
-Vector3d Input::getCellDimension() {
+Vector3d Input::getCellDimension()
+{
 
 	try
-	{	
-		if(inputFile["mesh"]["cells_dimension"].is_array()){
-			
-			Vector3d cellDimension; 
-			cellDimension(0)=inputFile["mesh"]["cells_dimension"][0];
-			cellDimension(1)=inputFile["mesh"]["cells_dimension"][1];
-			cellDimension(2)=inputFile["mesh"]["cells_dimension"][2];
+	{
+		if (inputFile["mesh"]["cells_dimension"].is_array()) {
+
+			Vector3d cellDimension;
+			cellDimension(0) = inputFile["mesh"]["cells_dimension"][0];
+			cellDimension(1) = inputFile["mesh"]["cells_dimension"][1];
+			cellDimension(2) = inputFile["mesh"]["cells_dimension"][2];
 
 			return cellDimension;
 		}
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of cell dimension in input file");
 		throw;
 	}
 }
 
-Vector3d Input::getOrigin() {
+Vector3d Input::getOrigin()
+{
 
 	try
 	{
-		
-		if(inputFile["mesh"]["origin"].is_null() || !inputFile["mesh"]["origin"].is_array()) {
+
+		if (inputFile["mesh"]["origin"].is_null() || !inputFile["mesh"]["origin"].is_array()) {
 			// default origin
 			return Vector3d(0.0, 0.0, 0.0);
 		}
 
-		if(inputFile["mesh"]["origin"].is_array()){
-				
-			Vector3d originVector;
-			originVector(0)=inputFile["mesh"]["origin"][0];
-			originVector(1)=inputFile["mesh"]["origin"][1];
-			originVector(2)=inputFile["mesh"]["origin"][2];
+		if (inputFile["mesh"]["origin"].is_array()) {
 
-			return originVector;	
+			Vector3d originVector;
+			originVector(0) = inputFile["mesh"]["origin"][0];
+			originVector(1) = inputFile["mesh"]["origin"][1];
+			originVector(2) = inputFile["mesh"]["origin"][2];
+
+			return originVector;
 		}
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error reading mesh origin");
 		throw;
 	}
 }
 
-vector<Material*> Input::getMaterialList(){
+vector<Material*> Input::getMaterialList()
+{
 
-	try{
+	try {
 
-	vector<Material*> materials;
+		vector<Material*> materials;
 
-	// Setup the material list
-	if (!inputFile["material"].is_null() || !inputFile["materials"].is_null()) {
-		
-	// Determine the correct key
-	auto materialKey = inputFile["material"].is_null() ? "materials" : "material";
+		// Setup the material list
+		if (!inputFile["material"].is_null() || !inputFile["materials"].is_null()) {
 
-    // Loop over all defined materials
-    json::iterator it;
-    for (it = inputFile[materialKey].begin(); it != inputFile[materialKey].end(); it++) {
-	
+			// Determine the correct key
+			auto materialKey = inputFile["material"].is_null() ? "materials" : "material";
+
+			// Loop over all defined materials
+			json::iterator it;
+			for (it = inputFile[materialKey].begin(); it != inputFile[materialKey].end(); it++) {
+
 				// verify material type
-				if (!(*it)["type"].is_null() && (*it)["type"].is_string()){
-					
+				if (!(*it)["type"].is_null() && (*it)["type"].is_string()) {
+
 					Material* material = NULL;
 
 					// elastic material
 					if ((*it)["type"] == "elastic")
 					{
 						// material properties
-						int id=0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
-						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
-						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
-						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						
+						int id = 0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+						double young = 0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
+						double poisson = 0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
+						double density = 0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+
 						// create a new elastic material
 						material = new Elastic(id, density, young, poisson);
 					}
@@ -356,63 +368,63 @@ vector<Material*> Input::getMaterialList(){
 					if ((*it)["type"] == "newtonian")
 					{
 						// material properties
-						int id = 0; 
+						int id = 0;
 						if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
 
-						double viscosity = 0.0; 
+						double viscosity = 0.0;
 						if ((*it)["viscosity"].is_number()) { viscosity = ((*it)["viscosity"]); }
 
-						double bulk = 0.0; 
+						double bulk = 0.0;
 						if ((*it)["bulk"].is_number()) { bulk = ((*it)["bulk"]); }
 
-						double density = 0.0; 
+						double density = 0.0;
 						if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						
+
 						// create a new newtonian material
 						material = new Newtonian(id, density, viscosity, bulk);
 					}
 
 					// mohr-coulomb material
 					else if ((*it)["type"] == "mohr-coulomb")
-					{	
+					{
 						// material properties
-						int id=0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
-						double young=0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
-						double poisson=0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
-						double density=0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
-						double friction=0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
-						double cohesion=0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
-						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
+						int id = 0; if ((*it)["id"].is_number()) { id = ((*it)["id"]); }
+						double young = 0.0; if ((*it)["young"].is_number()) { young = ((*it)["young"]); }
+						double poisson = 0.0; if ((*it)["poisson"].is_number()) { poisson = ((*it)["poisson"]); }
+						double density = 0.0; if ((*it)["density"].is_number()) { density = ((*it)["density"]); }
+						double friction = 0.0; if ((*it)["friction"].is_number()) { friction = ((*it)["friction"]); }
+						double cohesion = 0.0; if ((*it)["cohesion"].is_number()) { cohesion = ((*it)["cohesion"]); }
+						double dilation = 0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
 						double tensile = 0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 
 						// create a new softening object and configure it
 						MohrCoulomb::Softening softening;
-						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
+						if ((*it).contains("softening") && (*it)["softening"] == "exponential")
 						{
 							softening.softening_type = MohrCoulomb::Softening::SofteningType::EXPONENTIAL;
-							softening.exponential_shape_factor = get_number((*it),"softening.exponential.eta",0);
-							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
-							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 
-							softening.tensile_residual = get_number((*it),"softening.tensile.residual",tensile);
+							softening.exponential_shape_factor = get_number((*it), "softening.exponential.eta", 0);
+							softening.friction_residual = get_number((*it), "softening.friction.residual", friction);
+							softening.cohesion_residual = get_number((*it), "softening.cohesion.residual", cohesion);
+							softening.tensile_residual = get_number((*it), "softening.tensile.residual", tensile);
 
-							softening.friction_softening_active = get_boolean((*it),"softening.friction.active",false);
-							softening.cohesion_softening_active = get_boolean((*it),"softening.cohesion.active",false);
-							softening.tensile_softening_active = get_boolean((*it),"softening.tensile.active",false);
+							softening.friction_softening_active = get_boolean((*it), "softening.friction.active", false);
+							softening.cohesion_softening_active = get_boolean((*it), "softening.cohesion.active", false);
+							softening.tensile_softening_active = get_boolean((*it), "softening.tensile.active", false);
 						}
-						
+
 						// create a new material
-						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);
 					}
 
 					// set up the two phases parameters
-					if (ModelSetup::getTwoPhaseActive() && material!=NULL)
+					if (ModelSetup::getTwoPhaseActive() && material != NULL)
 					{
-						double density_fluid=0.0; if ((*it)["density_fluid"].is_number()) { density_fluid = ((*it)["density_fluid"]); }
-						double porosity=0.0; if ((*it)["porosity"].is_number()) { porosity = ((*it)["porosity"]); }
-						double bulk_fluid=0.0; if ((*it)["bulk_fluid"].is_number()) { bulk_fluid = ((*it)["bulk_fluid"]); }
+						double density_fluid = 0.0; if ((*it)["density_fluid"].is_number()) { density_fluid = ((*it)["density_fluid"]); }
+						double porosity = 0.0; if ((*it)["porosity"].is_number()) { porosity = ((*it)["porosity"]); }
+						double bulk_fluid = 0.0; if ((*it)["bulk_fluid"].is_number()) { bulk_fluid = ((*it)["bulk_fluid"]); }
 
-						Vector3d hydraulic_conductivity(0,0,0); 
-						if ((*it)["hydraulic_conductivity"].is_array()) { 
+						Vector3d hydraulic_conductivity(0, 0, 0);
+						if ((*it)["hydraulic_conductivity"].is_array()) {
 
 							hydraulic_conductivity.x() = ((*it)["hydraulic_conductivity"])[0];
 							hydraulic_conductivity.y() = ((*it)["hydraulic_conductivity"])[1];
@@ -425,7 +437,7 @@ vector<Material*> Input::getMaterialList(){
 						material->setHydraulicConductivity(hydraulic_conductivity);
 					}
 
-					if (material!=NULL){
+					if (material != NULL) {
 
 						// set up the current material
 						materials.push_back(material);
@@ -441,139 +453,145 @@ vector<Material*> Input::getMaterialList(){
 		}
 		return materials;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in materials definition in input file");
 		throw;
 	}
 }
 
-vector<Body*> Input::getBodyList(){
+vector<Body*> Input::getBodyList()
+{
 
 	vector<Body*> bodies;
 	try
 	{
-		if (!inputFile["body"].is_null()){
+		if (!inputFile["body"].is_null()) {
 
 			// loop aver all bodies
 			json::iterator it;
-			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) {
-				
-			// sphere body
-			if ((*it)["type"] == "sphere") {
+			for (it = inputFile["body"].begin(); it != inputFile["body"].end();it++) {
 
-				// body id
-				int id = 0;
-				if ((*it)["id"].is_number()) {
-					id = ((*it)["id"]);
-				} else {
-					throw(0);
+				// sphere body
+				if ((*it)["type"] == "sphere") {
+
+					// body id
+					int id = 0;
+					if ((*it)["id"].is_number()) {
+						id = ((*it)["id"]);
+					}
+					else {
+						throw(0);
+					}
+
+					// center of the sphere
+					Vector3d center = Vector3d::Zero();
+					if ((*it)["center"].is_array()) {
+						center(0) = (*it)["center"][0];
+						center(1) = (*it)["center"][1];
+						center(2) = (*it)["center"][2];
+					}
+					else {
+						throw(0);
+					}
+
+					// diameter of the sphere
+					double diameter = 0.0;
+					if ((*it)["diameter"].is_number()) {
+						diameter = ((*it)["diameter"]);
+					}
+					else {
+						throw(0);
+					}
+
+					// material id
+					int material_id = 0;
+					if ((*it)["material_id"].is_number()) {
+						material_id = ((*it)["material_id"]);
+					}
+					else {
+						throw(0);
+					}
+
+					// initial velocity
+					Vector3d initial_velocity = Vector3d::Zero();
+					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array()) {
+						initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(1) = (*it)["initial_velocity"][1];
+						initial_velocity(2) = (*it)["initial_velocity"][2];
+					}
+
+					// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
+					Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
+					if ((*it)["particles_per_direction"].is_array()) {
+						particles_in_direction(0) = (*it)["particles_per_direction"][0];
+						particles_in_direction(1) = (*it)["particles_per_direction"][1];
+						particles_in_direction(2) = (*it)["particles_per_direction"][2];
+					}
+
+					// create a new sphere
+					BodySphere* iBody = new BodySphere();
+					if (iBody == NULL) {
+						throw(0);
+					}
+					else {
+						iBody->setId(id);
+						iBody->setCenter(center);
+						iBody->setDiameter(diameter);
+						iBody->setMaterialId(material_id);
+						iBody->setInitialVelocity(initial_velocity);
+						iBody->setParticlesPerDirection(particles_in_direction);
+					}
+
+					bodies.push_back(iBody);
 				}
-
-				// center of the sphere
-				Vector3d center = Vector3d::Zero();
-				if ((*it)["center"].is_array()) {
-					center(0) = (*it)["center"][0];
-					center(1) = (*it)["center"][1];
-					center(2) = (*it)["center"][2];
-				} else {
-					throw(0);
-				}
-
-				// diameter of the sphere
-				double diameter = 0.0;
-				if ((*it)["diameter"].is_number()) {
-					diameter = ((*it)["diameter"]);
-				} else {
-					throw(0);
-				}
-
-				// material id
-				int material_id = 0;
-				if ((*it)["material_id"].is_number()) {
-					material_id = ((*it)["material_id"]);
-				} else {
-					throw(0);
-				}
-
-				// initial velocity
-				Vector3d initial_velocity = Vector3d::Zero();
-				if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array()) {
-					initial_velocity(0) = (*it)["initial_velocity"][0];
-					initial_velocity(1) = (*it)["initial_velocity"][1];
-					initial_velocity(2) = (*it)["initial_velocity"][2];
-				}
-
-				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
-				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
-				if ((*it)["particles_per_direction"].is_array()) {
-					particles_in_direction(0) = (*it)["particles_per_direction"][0];
-					particles_in_direction(1) = (*it)["particles_per_direction"][1];
-					particles_in_direction(2) = (*it)["particles_per_direction"][2];
-				}
-
-				// create a new sphere
-				BodySphere* iBody = new BodySphere();
-				if (iBody == NULL) {
-					throw(0);
-				} else {
-					iBody->setId(id);
-					iBody->setCenter(center);
-					iBody->setDiameter(diameter);
-					iBody->setMaterialId(material_id);
-					iBody->setInitialVelocity(initial_velocity);
-					iBody->setParticlesPerDirection(particles_in_direction);
-				}
-
-				bodies.push_back(iBody);
-}
 				// cuboid body
 				if ((*it)["type"] == "cuboid") {
 
 					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
+					int id = 0;
+					if ((*it)["id"].is_number()) {
 						id = ((*it)["id"]);
 					}
 					else
 						throw(0);
 
 					// point P1
-					Vector3d pointP1=Vector3d::Zero();
+					Vector3d pointP1 = Vector3d::Zero();
 					if ((*it)["point_p1"].is_array())
 					{
-						pointP1(0)=(*it)["point_p1"][0];
-						pointP1(1)=(*it)["point_p1"][1];
-						pointP1(2)=(*it)["point_p1"][2];
+						pointP1(0) = (*it)["point_p1"][0];
+						pointP1(1) = (*it)["point_p1"][1];
+						pointP1(2) = (*it)["point_p1"][2];
 					}
 					else
 						throw(0);
-					
+
 					// point P2
-					Vector3d pointP2=Vector3d::Zero();
+					Vector3d pointP2 = Vector3d::Zero();
 					if ((*it)["point_p2"].is_array())
 					{
-						pointP2(0)=(*it)["point_p2"][0];
-						pointP2(1)=(*it)["point_p2"][1];
-						pointP2(2)=(*it)["point_p2"][2];
+						pointP2(0) = (*it)["point_p2"][0];
+						pointP2(1) = (*it)["point_p2"][1];
+						pointP2(2) = (*it)["point_p2"][2];
 					}
 					else
 						throw(0);
 
 					// material id
-					int material_id=0; 
-					if ((*it)["material_id"].is_number()) 
+					int material_id = 0;
+					if ((*it)["material_id"].is_number())
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
 
 					// initial velocity
-					Vector3d initial_velocity=Vector3d::Zero(); 
+					Vector3d initial_velocity = Vector3d::Zero();
 					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array())
 					{
-					 	initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(0) = (*it)["initial_velocity"][0];
 						initial_velocity(1) = (*it)["initial_velocity"][1];
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
@@ -581,14 +599,14 @@ vector<Body*> Input::getBodyList(){
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
-					if (iBody==NULL)
+					if (iBody == NULL)
 					{
 						throw(0);
 					}
 					else
 					{
 						iBody->setId(id);
-						iBody->setPoints(pointP1,pointP2);
+						iBody->setPoints(pointP1, pointP2);
 						iBody->setMaterialId(material_id);
 						iBody->setInitialVelocity(initial_velocity);
 					}
@@ -600,69 +618,69 @@ vector<Body*> Input::getBodyList(){
 				if ((*it)["type"] == "polygon_2d") {
 
 					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
+					int id = 0;
+					if ((*it)["id"].is_number()) {
 						id = ((*it)["id"]);
 					}
 					else
 						throw(0);
 
 					// material id
-					int material_id=0; 
-					if ((*it)["material_id"].is_number()) 
+					int material_id = 0;
+					if ((*it)["material_id"].is_number())
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
 
 					// extrude direction
-					string extrude_direction=""; 
-					if ((*it)["extrude_direction"].is_string()) 
+					string extrude_direction = "";
+					if ((*it)["extrude_direction"].is_string())
 					{
-					 	extrude_direction = ((*it)["extrude_direction"]);
+						extrude_direction = ((*it)["extrude_direction"]);
 					}
 					else
 						throw(0);
 
 					// extrude displacement
-					double extrude_displacement=0; 
-					if ((*it)["extrude_displacement"].is_number()) 
+					double extrude_displacement = 0;
+					if ((*it)["extrude_displacement"].is_number())
 					{
-					 	extrude_displacement = ((*it)["extrude_displacement"]);
+						extrude_displacement = ((*it)["extrude_displacement"]);
 					}
 					else
 						throw(0);
 
 					// discretization length
-					double discretization_length=0; 
-					if ((*it)["discretization_length"].is_number()) 
+					double discretization_length = 0;
+					if ((*it)["discretization_length"].is_number())
 					{
-					 	discretization_length = ((*it)["discretization_length"]);
+						discretization_length = ((*it)["discretization_length"]);
 					}
 					else
 						throw(0);
 
 					// points
 					vector<Vector3d> polygon_points;
-					if ((*it)["points"].is_array()) 
+					if ((*it)["points"].is_array())
 					{
-					 	for (size_t i = 0; i < (*it)["points"].size(); ++i)
-					 	{
-					 		// point position
-					 		double px = (*it)["points"].at(i).at(0);
-					 		double py = (*it)["points"].at(i).at(1);
-					 		double pz = (*it)["points"].at(i).at(2);
+						for (size_t i = 0; i < (*it)["points"].size(); ++i)
+						{
+							// point position
+							double px = (*it)["points"].at(i).at(0);
+							double py = (*it)["points"].at(i).at(1);
+							double pz = (*it)["points"].at(i).at(2);
 
-					 		polygon_points.push_back(Vector3d(px,py,pz));
-					 	}
-					 	
-					 	if (polygon_points.size()!=0)
-					 	{
-					 		// create a new polygon body
-					 		BodyPolygon* iBody = new BodyPolygon();
+							polygon_points.push_back(Vector3d(px, py, pz));
+						}
 
-							if (iBody==NULL)
+						if (polygon_points.size() != 0)
+						{
+							// create a new polygon body
+							BodyPolygon* iBody = new BodyPolygon();
+
+							if (iBody == NULL)
 							{
 								throw(0);
 							}
@@ -675,11 +693,11 @@ vector<Body*> Input::getBodyList(){
 								iBody->setExtrudeDisplacement(extrude_displacement);
 								iBody->setDiscretizationLength(discretization_length);
 							}
-						
+
 							bodies.push_back(iBody);
-					 	}
-					 	else
-					 		throw(0);
+						}
+						else
+							throw(0);
 					}
 					else
 						throw(0);
@@ -691,7 +709,8 @@ vector<Body*> Input::getBodyList(){
 					int id = 0;
 					if ((*it)["id"].is_number()) {
 						id = ((*it)["id"]);
-					} else {
+					}
+					else {
 						throw(0);
 					}
 
@@ -699,7 +718,8 @@ vector<Body*> Input::getBodyList(){
 					int material_id = 0;
 					if ((*it)["material_id"].is_number()) {
 						material_id = ((*it)["material_id"]);
-					} else {
+					}
+					else {
 						throw(0);
 					}
 
@@ -707,7 +727,8 @@ vector<Body*> Input::getBodyList(){
 					std::string filename;
 					if ((*it)["file"].is_string()) {
 						filename = (*it)["file"];
-					} else {
+					}
+					else {
 						throw(0);
 					}
 
@@ -740,7 +761,8 @@ vector<Body*> Input::getBodyList(){
 					BodyParticle* iBody = new BodyParticle();
 					if (iBody == NULL) {
 						throw(0);
-					} else {
+					}
+					else {
 						iBody->setId(id);
 						iBody->setMaterialId(material_id);
 						bool is_two_phase = ModelSetup::getTwoPhaseActive();
@@ -758,66 +780,66 @@ vector<Body*> Input::getBodyList(){
 				}
 
 				// particle list body type
-				if ((*it)["type"]=="particles")
+				if ((*it)["type"] == "particles")
 				{
 					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
+					int id = 0;
+					if ((*it)["id"].is_number()) {
 						id = ((*it)["id"]);
 					}
 					else
 						throw(0);
 
 					// material id
-					int material_id=0; 
-					if ((*it)["material_id"].is_number()) 
+					int material_id = 0;
+					if ((*it)["material_id"].is_number())
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
 
 					// particle list
-					
+
 					// particle's material id
 					std::vector<unsigned> paricles_id;
-					if ((*it)["particles"]["id"].is_array()) 
+					if ((*it)["particles"]["id"].is_array())
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["id"].size(); ++i)
-					 	{
-					 		// particle id
-					 		paricles_id.push_back((*it)["particles"]["id"].at(i));
-					 	}
+						for (size_t i = 0; i < (*it)["particles"]["id"].size(); ++i)
+						{
+							// particle id
+							paricles_id.push_back((*it)["particles"]["id"].at(i));
+						}
 					}
 					else
 						throw(0);
 
 					// particle position
 					std::vector<Vector3d> particles_position;
-					if ((*it)["particles"]["position"].is_array()) 
+					if ((*it)["particles"]["position"].is_array())
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["position"].size(); ++i)
-					 	{
-					 		// particle position
-					 		double px = (*it)["particles"]["position"].at(i).at(0);
-					 		double py = (*it)["particles"]["position"].at(i).at(1);
-					 		double pz = (*it)["particles"]["position"].at(i).at(2);
+						for (size_t i = 0; i < (*it)["particles"]["position"].size(); ++i)
+						{
+							// particle position
+							double px = (*it)["particles"]["position"].at(i).at(0);
+							double py = (*it)["particles"]["position"].at(i).at(1);
+							double pz = (*it)["particles"]["position"].at(i).at(2);
 
-					 		particles_position.push_back(Vector3d(px,py,pz));
-					 	}
+							particles_position.push_back(Vector3d(px, py, pz));
+						}
 					}
 					else
 						throw(0);
 
 					// particle volume
 					std::vector<double> particles_volume;
-					if ((*it)["particles"]["volume"].is_array()) 
+					if ((*it)["particles"]["volume"].is_array())
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["volume"].size(); ++i)
-					 	{
-					 		// particle volume
-					 		particles_volume.push_back((*it)["particles"]["volume"].at(i));
-					 	}
+						for (size_t i = 0; i < (*it)["particles"]["volume"].size(); ++i)
+						{
+							// particle volume
+							particles_volume.push_back((*it)["particles"]["volume"].at(i));
+						}
 					}
 					else
 						throw(0);
@@ -825,7 +847,7 @@ vector<Body*> Input::getBodyList(){
 					// create the body
 					BodyParticle* iBody = new BodyParticle();
 
-					if (iBody==NULL)
+					if (iBody == NULL)
 					{
 						throw(0);
 					}
@@ -839,8 +861,8 @@ vector<Body*> Input::getBodyList(){
 						for (size_t i = 0; i < n_particles; ++i)
 						{
 							Vector3d pt1 = particles_position.at(i);
-							double particleSize = std::pow(particles_volume.at(i), 1.0/3.0);
-							particle_list.push_back( is_two_phase ? (new ParticleMixture(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))) : (new Particle(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))));
+							double particleSize = std::pow(particles_volume.at(i), 1.0 / 3.0);
+							particle_list.push_back(is_two_phase ? (new ParticleMixture(pt1, NULL, Vector3d(particleSize, particleSize, particleSize))) : (new Particle(pt1, NULL, Vector3d(particleSize, particleSize, particleSize))));
 						}
 						iBody->insertParticles(particle_list);
 					}
@@ -849,26 +871,27 @@ vector<Body*> Input::getBodyList(){
 			}
 		}
 
-		if (bodies.empty()){
+		if (bodies.empty()) {
 
 			throw(0);
 		}
 
 		return bodies;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in body definition in input file");
 		throw;
 	}
 }
 
-Vector3d Input::getGravity(){
+Vector3d Input::getGravity()
+{
 
 	try
 	{
-		Vector3d gravity=Vector3d::Zero();
-		
+		Vector3d gravity = Vector3d::Zero();
+
 		// default value
 		if (inputFile["gravity"].is_null())
 		{
@@ -877,22 +900,23 @@ Vector3d Input::getGravity(){
 
 		if (inputFile["gravity"].is_array())
 		{
-			gravity.x()=inputFile["gravity"][0];
-			gravity.y()=inputFile["gravity"][1];
-			gravity.z()=inputFile["gravity"][2];
+			gravity.x() = inputFile["gravity"][0];
+			gravity.y() = inputFile["gravity"][1];
+			gravity.z() = inputFile["gravity"][2];
 			return gravity;
 		}
-		
+
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading gravity");
 		throw;
 	}
 }
 
-int Input::getResultNum(){
+int Input::getResultNum()
+{
 
 	try
 	{
@@ -901,16 +925,16 @@ int Input::getResultNum(){
 		if (inputFile["results"]["print"].is_null())
 		{
 			return results;
-		}		
+		}
 
 		if (inputFile["results"]["print"].is_number())
 		{
 			return inputFile["results"]["print"];
 		}
-		
+
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the number of results");
 		throw;
@@ -922,9 +946,9 @@ vector<string> Input::getGridResultFields()
 	try
 	{
 		vector<string> fields;
-		
+
 		// verify if results are defined
-		if ((!inputFile.contains("results") || inputFile["results"].is_null()) || 
+		if ((!inputFile.contains("results") || inputFile["results"].is_null()) ||
 			(!inputFile["results"].contains("grid_nodal_results") || inputFile["results"]["grid_nodal_results"].is_null()))
 		{
 			fields.push_back("none");
@@ -990,9 +1014,9 @@ vector<string> Input::getResultFields()
 	try
 	{
 		vector<string> fields;
-		
+
 		// verify if results are defined
-		if ((!inputFile.contains("results") || inputFile["results"].is_null()) || 
+		if ((!inputFile.contains("results") || inputFile["results"].is_null()) ||
 			(!inputFile["results"].contains("material_point_results") || inputFile["results"]["material_point_results"].is_null()))
 		{
 			fields.push_back("id");
@@ -1018,7 +1042,7 @@ vector<string> Input::getResultFields()
 
 		// check for all field
 		if (inputFile.contains("results") &&
-			inputFile["results"].contains("material_point_results")  &&
+			inputFile["results"].contains("material_point_results") &&
 			inputFile["results"]["material_point_results"].is_array())
 		{
 			for (const auto& field : inputFile["results"]["material_point_results"])
@@ -1040,60 +1064,62 @@ vector<string> Input::getResultFields()
 			}
 		}
 
-		if (fields.empty()){
+		if (fields.empty()) {
 			throw (0);
 		}
 
 		return fields;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during the field results creation");
 		throw;
 	}
 }
 
-ModelSetup::DampingType Input::getDampingType() {
+ModelSetup::DampingType Input::getDampingType()
+{
 
 	try
 	{
-		if (inputFile["damping"].is_null()){
+		if (inputFile["damping"].is_null()) {
 			return ModelSetup::DampingType::UNDAMPED;
 		}
 
-		if (inputFile["damping"]["type"].is_null()){
+		if (inputFile["damping"]["type"].is_null()) {
 			throw(0);
 		}
-		
-		if(inputFile["damping"]["type"]=="local"){
+
+		if (inputFile["damping"]["type"] == "local") {
 			return ModelSetup::DampingType::LOCAL;
 		}
 
-		if(inputFile["damping"]["type"]=="kinetic"){
+		if (inputFile["damping"]["type"] == "kinetic") {
 			return ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION;
 		}
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in damping keyword");
 		throw;
 	}
 }
 
-double Input::getDampingValue() {
+double Input::getDampingValue()
+{
 
 	try
 	{
-		if (inputFile["damping"].is_null()){
+		if (inputFile["damping"].is_null()) {
 
 			return 0.0;
 		}
 
 		if (inputFile["damping"]["type"].is_string())
 		{
-			if (inputFile["damping"]["type"]=="local" && inputFile["damping"]["value"].is_number())
+			if (inputFile["damping"]["type"] == "local" && inputFile["damping"]["value"].is_number())
 			{
 				return inputFile["damping"]["value"];
 			}
@@ -1103,26 +1129,27 @@ double Input::getDampingValue() {
 
 		throw (0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Bad definition of damping value");
 		throw;
 	}
 }
 
-static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrictions, string resPlane ) {
+static void setRestriction(size_t index, vector<Boundary::BoundaryType>& restrictions, string resPlane)
+{
 
-	if (resPlane=="fixed")
+	if (resPlane == "fixed")
 	{
-		restrictions.at(index)=Boundary::BoundaryType::FIXED;
+		restrictions.at(index) = Boundary::BoundaryType::FIXED;
 	}
-	else if (resPlane=="free")
+	else if (resPlane == "free")
 	{
-		restrictions.at(index)=Boundary::BoundaryType::FREE;
+		restrictions.at(index) = Boundary::BoundaryType::FREE;
 	}
-	else if (resPlane=="sliding")
+	else if (resPlane == "sliding")
 	{
-		restrictions.at(index)=Boundary::BoundaryType::SLIDING;
+		restrictions.at(index) = Boundary::BoundaryType::SLIDING;
 	}
 	else
 	{
@@ -1130,26 +1157,27 @@ static void setRestriction(size_t index,vector<Boundary::BoundaryType>& restrict
 	}
 }
 
-vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
+vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions()
+{
 
-	try{
+	try {
 		// initialize the vector as sliding restriction
-		vector<Boundary::BoundaryType> restrictions(6,Boundary::BoundaryType::SLIDING);
+		vector<Boundary::BoundaryType> restrictions(6, Boundary::BoundaryType::SLIDING);
 
 		// if not defined set all sliding boundaries
-		if(inputFile["mesh"]["boundary_conditions"].is_null()) {
+		if (inputFile["mesh"]["boundary_conditions"].is_null()) {
 			return 	restrictions;
 		}
 
 		// Planes X0, Y0 and Z0
-		setRestriction(0,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_X0"]);
-		setRestriction(1,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Y0"]);
-		setRestriction(2,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Z0"]);
+		setRestriction(0, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_X0"]);
+		setRestriction(1, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_Y0"]);
+		setRestriction(2, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_Z0"]);
 
 		// Planes Xn, Yn and Zn
-		setRestriction(3,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Xn"]);
-		setRestriction(4,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Yn"]);
-		setRestriction(5,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Zn"]);
+		setRestriction(3, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_Xn"]);
+		setRestriction(4, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_Yn"]);
+		setRestriction(5, restrictions, inputFile["mesh"]["boundary_conditions"]["plane_Zn"]);
 
 		return restrictions;
 	}
@@ -1159,26 +1187,27 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
 	}
 }
 
-vector<Boundary::BoundaryType> Input::getMeshBoundaryConditionsFluid() {
+vector<Boundary::BoundaryType> Input::getMeshBoundaryConditionsFluid()
+{
 
-	try{
+	try {
 		// initialize the vector as sliding restriction
-		vector<Boundary::BoundaryType> restrictions(6,Boundary::BoundaryType::SLIDING);
+		vector<Boundary::BoundaryType> restrictions(6, Boundary::BoundaryType::SLIDING);
 
 		// if not defined set all sliding boundaries
-		if(inputFile["mesh"]["boundary_conditions_fluid"].is_null()) {
+		if (inputFile["mesh"]["boundary_conditions_fluid"].is_null()) {
 			return 	restrictions;
 		}
 
 		// Planes X0, Y0 and Z0
-		setRestriction(0,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_X0"]);
-		setRestriction(1,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Y0"]);
-		setRestriction(2,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Z0"]);
+		setRestriction(0, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_X0"]);
+		setRestriction(1, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_Y0"]);
+		setRestriction(2, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_Z0"]);
 
 		// Planes Xn, Yn and Zn
-		setRestriction(3,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Xn"]);
-		setRestriction(4,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Yn"]);
-		setRestriction(5,restrictions,inputFile["mesh"]["boundary_conditions_fluid"]["plane_Zn"]);
+		setRestriction(3, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_Xn"]);
+		setRestriction(4, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_Yn"]);
+		setRestriction(5, restrictions, inputFile["mesh"]["boundary_conditions_fluid"]["plane_Zn"]);
 
 		return restrictions;
 	}
@@ -1188,15 +1217,16 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditionsFluid() {
 	}
 }
 
-unsigned Input::getNumThreads() {
+unsigned Input::getNumThreads()
+{
 
 	try
 	{
-		if(inputFile["n_threads"].is_null() || !inputFile["n_threads"].is_number()) {
-			
-			#ifdef _OPENMP
+		if (inputFile["n_threads"].is_null() || !inputFile["n_threads"].is_number()) {
+
+#ifdef _OPENMP
 			return omp_get_num_procs();
-			#endif
+#endif
 
 			return 	1;
 		}
@@ -1205,32 +1235,33 @@ unsigned Input::getNumThreads() {
 			return inputFile["n_threads"];
 		}
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the number of threads");
 		throw;
 	}
 }
 
-unsigned Input::getNumberPhases(){
+unsigned Input::getNumberPhases()
+{
 
 	try
 	{
 		string keyword = "n_phases";
 
 		// default simulations is one phase
-		if(inputFile[keyword].is_null()) { return 1; }
+		if (inputFile[keyword].is_null()) { return 1; }
 
 		// define the number of phases by an input
-		if(inputFile[keyword].is_number()) {
-			
+		if (inputFile[keyword].is_number()) {
+
 			unsigned nPhases = inputFile[keyword];
 
-			if (nPhases>0 && nPhases<=2){
+			if (nPhases > 0 && nPhases <= 2) {
 
-				return nPhases; 	
+				return nPhases;
 			}
-			else{
+			else {
 
 				throw(nPhases);
 			}
@@ -1239,88 +1270,91 @@ unsigned Input::getNumberPhases(){
 		throw(keyword);
 	}
 
-	catch(std::string& keyword)
+	catch (std::string& keyword)
 	{
-		Warning::printMessage("The keyword: \""+string(keyword)+"\" must be a number");
+		Warning::printMessage("The keyword: \"" + string(keyword) + "\" must be a number");
 		throw;
 	}
 
-	catch(unsigned nPhases)
+	catch (unsigned nPhases)
 	{
-		Warning::printMessage("The number of phases must be 1 or 2 (input = "+to_string(nPhases)+")");
+		Warning::printMessage("The number of phases must be 1 or 2 (input = " + to_string(nPhases) + ")");
 		throw;
 	}
 }
 
-NodalPointLoadData Input::readNodalPointLoads( ) {
+NodalPointLoadData Input::readNodalPointLoads()
+{
 
-    Loads::NodalPointLoadData nodalPointLoads;
+	Loads::NodalPointLoadData nodalPointLoads;
 
-    if (inputFile.contains("nodal_point_load")) {
+	if (inputFile.contains("nodal_point_load")) {
 
-        for (const auto& item : inputFile["nodal_point_load"]) {
+		for (const auto& item : inputFile["nodal_point_load"]) {
 
-            if (item.size() == 2 && item[0].is_array() && item[1].is_array() && 
-                item[0].size() == 3 && item[1].size() == 3) {
+			if (item.size() == 2 && item[0].is_array() && item[1].is_array() &&
+				item[0].size() == 3 && item[1].size() == 3) {
 
 				Vector3d point, load;
 				int id;
 
-                for (size_t i = 0; i < 3; ++i)
+				for (size_t i = 0; i < 3; ++i)
 				{
-                    point[i] = item[0][i];
-                    load[i] = item[1][i];
+					point[i] = item[0][i];
+					load[i] = item[1][i];
 					id = -1; // this must be configured with the mesh
-                }
+				}
 
 				nodalPointLoads.points.push_back(point);
 				nodalPointLoads.loads.push_back(load);
 				nodalPointLoads.nodal_ids.push_back(id);
 
-            } else {
-                throw std::runtime_error("Invalid structure in nodal_point_load");
-            }
-        }
-    }
-    return nodalPointLoads;
+			}
+			else {
+				throw std::runtime_error("Invalid structure in nodal_point_load");
+			}
+		}
+	}
+	return nodalPointLoads;
 }
 
-vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
+vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox()
+{
 
-	try{
+	try {
 		vector<Loads::LoadDistributedBox> load_box_distributed;
 
 		string key = "load_distributed_box";
 
-		if (!inputFile[key].is_null()){
-		
+		if (!inputFile[key].is_null()) {
+
 			json::iterator it;
-			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+			for (it = inputFile[key].begin(); it != inputFile[key].end();it++) {
 
 				Loads::LoadDistributedBox iload;
 
-				Vector3d p1(0,0,0), p2(0,0,0), load(0,0,0); 
-				
-				if ((*it)["point_p1"].is_array()) { 
-					p1.x() = ((*it)["point_p1"])[0]; 
-					p1.y() = ((*it)["point_p1"])[1]; 
+				Vector3d p1(0, 0, 0), p2(0, 0, 0), load(0, 0, 0);
+
+				if ((*it)["point_p1"].is_array()) {
+					p1.x() = ((*it)["point_p1"])[0];
+					p1.y() = ((*it)["point_p1"])[1];
 					p1.z() = ((*it)["point_p1"])[2];
 
 					iload.pointP1 = p1;
 				}
 
-				if ((*it)["point_p2"].is_array()) { 
-					p2.x() = ((*it)["point_p2"])[0]; 
-					p2.y() = ((*it)["point_p2"])[1]; 
-					p2.z() = ((*it)["point_p2"])[2]; 
+				if ((*it)["point_p2"].is_array()) {
+					p2.x() = ((*it)["point_p2"])[0];
+					p2.y() = ((*it)["point_p2"])[1];
+					p2.z() = ((*it)["point_p2"])[2];
 
 					iload.pointP2 = p2;
 				}
 
-				if ((*it)["load"].is_array()) { 
-					load.x() = ((*it)["load"])[0]; 
-					load.y() = ((*it)["load"])[1]; 
-					load.z() = ((*it)["load"])[2]; 
+				if ((*it)["load"].is_array()) {
+					load.x() = ((*it)["load"])[0];
+					load.y() = ((*it)["load"])[1];
+					load.z() = ((*it)["load"])[2];
 
 					iload.load = load;
 				}
@@ -1331,49 +1365,50 @@ vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 
 		return load_box_distributed;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in load box definition");
 		throw;
 	}
 }
 
-vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
+vector<Loads::PressureBox> Input::getPrescribedPressureBox()
+{
 
-	try{
+	try {
 		vector<Loads::PressureBox> pressure_box_list;
 
 		string key = "prescribed_pressure_box";
 
-		if (!inputFile[key].is_null()){
-		
+		if (!inputFile[key].is_null()) {
+
 			json::iterator it;
-			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+			for (it = inputFile[key].begin(); it != inputFile[key].end();it++) {
 
 				Loads::PressureBox ipressure_box;
 
-				Vector3d p1(0,0,0), p2(0,0,0);
+				Vector3d p1(0, 0, 0), p2(0, 0, 0);
 
-				double pressure(0); 
-				
-				if ((*it)["point_p1"].is_array()) { 
-					p1.x() = ((*it)["point_p1"])[0]; 
-					p1.y() = ((*it)["point_p1"])[1]; 
+				double pressure(0);
+
+				if ((*it)["point_p1"].is_array()) {
+					p1.x() = ((*it)["point_p1"])[0];
+					p1.y() = ((*it)["point_p1"])[1];
 					p1.z() = ((*it)["point_p1"])[2];
 
 					ipressure_box.pointP1 = p1;
 				}
 
-				if ((*it)["point_p2"].is_array()) { 
-					p2.x() = ((*it)["point_p2"])[0]; 
-					p2.y() = ((*it)["point_p2"])[1]; 
-					p2.z() = ((*it)["point_p2"])[2]; 
+				if ((*it)["point_p2"].is_array()) {
+					p2.x() = ((*it)["point_p2"])[0];
+					p2.y() = ((*it)["point_p2"])[1];
+					p2.z() = ((*it)["point_p2"])[2];
 
 					ipressure_box.pointP2 = p2;
 				}
 
-				if ((*it)["pressure"].is_number()) { 
-					pressure = ((*it)["pressure"]); 
+				if ((*it)["pressure"].is_number()) {
+					pressure = ((*it)["pressure"]);
 
 					ipressure_box.pressure = pressure;
 				}
@@ -1384,49 +1419,50 @@ vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
 
 		return pressure_box_list;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in prescribed pressure box definition");
 		throw;
 	}
 }
 
-vector<Loads::PressureBox> Input::getInitialPressureBox() {
+vector<Loads::PressureBox> Input::getInitialPressureBox()
+{
 
-	try{
+	try {
 		vector<Loads::PressureBox> pressure_box_list;
 
 		string key = "initial_pressure_box";
 
-		if (!inputFile[key].is_null()){
-		
+		if (!inputFile[key].is_null()) {
+
 			json::iterator it;
-			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+			for (it = inputFile[key].begin(); it != inputFile[key].end();it++) {
 
 				Loads::PressureBox ipressure_box;
 
-				Vector3d p1(0,0,0), p2(0,0,0);
+				Vector3d p1(0, 0, 0), p2(0, 0, 0);
 
-				double pressure(0); 
-				
-				if ((*it)["point_p1"].is_array()) { 
-					p1.x() = ((*it)["point_p1"])[0]; 
-					p1.y() = ((*it)["point_p1"])[1]; 
+				double pressure(0);
+
+				if ((*it)["point_p1"].is_array()) {
+					p1.x() = ((*it)["point_p1"])[0];
+					p1.y() = ((*it)["point_p1"])[1];
 					p1.z() = ((*it)["point_p1"])[2];
 
 					ipressure_box.pointP1 = p1;
 				}
 
-				if ((*it)["point_p2"].is_array()) { 
-					p2.x() = ((*it)["point_p2"])[0]; 
-					p2.y() = ((*it)["point_p2"])[1]; 
-					p2.z() = ((*it)["point_p2"])[2]; 
+				if ((*it)["point_p2"].is_array()) {
+					p2.x() = ((*it)["point_p2"])[0];
+					p2.y() = ((*it)["point_p2"])[1];
+					p2.z() = ((*it)["point_p2"])[2];
 
 					ipressure_box.pointP2 = p2;
 				}
 
-				if ((*it)["pressure"].is_number()) { 
-					pressure = ((*it)["pressure"]); 
+				if ((*it)["pressure"].is_number()) {
+					pressure = ((*it)["pressure"]);
 
 					ipressure_box.pressure = pressure;
 				}
@@ -1437,35 +1473,36 @@ vector<Loads::PressureBox> Input::getInitialPressureBox() {
 
 		return pressure_box_list;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in initial pressure box definition");
 		throw;
 	}
 }
 
-vector<Loads::PressureMaterial> Input::getInitialPressureMaterial() {
+vector<Loads::PressureMaterial> Input::getInitialPressureMaterial()
+{
 
-	try{
+	try {
 		vector<Loads::PressureMaterial> pressure_material_list;
 
 		string key = "initial_pressure_material";
 
-		if (!inputFile[key].is_null()){
-		
+		if (!inputFile[key].is_null()) {
+
 			json::iterator it;
-			for(it = inputFile[key].begin(); it!=inputFile[key].end();it++) {
+			for (it = inputFile[key].begin(); it != inputFile[key].end();it++) {
 
 				Loads::PressureMaterial ipressure_material;
-				
-				if ((*it)["material"].is_number()) { 
+
+				if ((*it)["material"].is_number()) {
 
 					ipressure_material.materialId = ((*it)["material_id"]);
 				}
 
-				if ((*it)["pressure"].is_number()) { 
+				if ((*it)["pressure"].is_number()) {
 
-					ipressure_material.pressure = ((*it)["pressure"]); 
+					ipressure_material.pressure = ((*it)["pressure"]);
 				}
 
 				pressure_material_list.push_back(ipressure_material);
@@ -1474,14 +1511,15 @@ vector<Loads::PressureMaterial> Input::getInitialPressureMaterial() {
 
 		return pressure_material_list;
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error in initial pressure by material definition");
 		throw;
 	}
 }
 
-vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
+vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox()
+{
 
 	try {
 		vector<Loads::PressureBoundaryForceBox> pressure_box_list;
@@ -1534,16 +1572,17 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 };
 
-bool Input::getWriteSTLMeshFile(){
+bool Input::getWriteSTLMeshFile()
+{
 
 	try
 	{
-		if (inputFile["terrain_contact"].is_null()){
+		if (inputFile["terrain_contact"].is_null()) {
 
 			return false;
 		}
 
-		if (inputFile["terrain_contact"]["write_stl"].is_null()){
+		if (inputFile["terrain_contact"]["write_stl"].is_null()) {
 
 			return false;
 		}
@@ -1555,23 +1594,24 @@ bool Input::getWriteSTLMeshFile(){
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the write STL file keyword in terrain contact");
 		throw;
 	}
 }
 
-double Input::getDistanceThreshold(){
+double Input::getDistanceThreshold()
+{
 
 	try
 	{
-		if (inputFile["terrain_contact"].is_null()){
+		if (inputFile["terrain_contact"].is_null()) {
 
 			return 0.0;
 		}
 
-		if (inputFile["terrain_contact"]["distance_threshold"].is_null()){
+		if (inputFile["terrain_contact"]["distance_threshold"].is_null()) {
 
 			return 0.0;
 		}
@@ -1583,23 +1623,24 @@ double Input::getDistanceThreshold(){
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the distance threshold in terrain contact");
 		throw;
 	}
 }
 
-double Input::getFrictionCoefficient() {
+double Input::getFrictionCoefficient()
+{
 
 	try
 	{
-		if (inputFile["terrain_contact"].is_null()){
+		if (inputFile["terrain_contact"].is_null()) {
 
 			return 0.0;
 		}
 
-		if (inputFile["terrain_contact"]["friction"].is_null()){
+		if (inputFile["terrain_contact"]["friction"].is_null()) {
 
 			return 0.0;
 		}
@@ -1611,7 +1652,7 @@ double Input::getFrictionCoefficient() {
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the friction coefficient in terrain contact");
 		throw;
@@ -1622,12 +1663,12 @@ bool Input::getTerrainContactActive()
 {
 	try
 	{
-		if (inputFile["terrain_contact"].is_null()){
+		if (inputFile["terrain_contact"].is_null()) {
 
 			return false;
 		}
 
-		if (inputFile["terrain_contact"]["active"].is_null()){
+		if (inputFile["terrain_contact"]["active"].is_null()) {
 
 			return false;
 		}
@@ -1639,7 +1680,7 @@ bool Input::getTerrainContactActive()
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the terrain contact active keyword");
 		throw;
@@ -1648,38 +1689,38 @@ bool Input::getTerrainContactActive()
 
 bool Input::getPenaltyContactActive()
 {
-    try
-    {
-        if (inputFile["terrain_contact"].is_null()) { return false; }
-        if (inputFile["terrain_contact"]["penalty_contact_active"].is_null()) { return false; }
-        if (inputFile["terrain_contact"]["penalty_contact_active"].is_boolean()) {
-            return inputFile["terrain_contact"]["penalty_contact_active"];
-        }
-        throw(0);
-    }
-    catch (...)
-    {
-        Warning::printMessage("Error during reading the penalty_contact keyword in terrain_contact");
-        throw;
-    }
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()) { return false; }
+		if (inputFile["terrain_contact"]["penalty_contact_active"].is_null()) { return false; }
+		if (inputFile["terrain_contact"]["penalty_contact_active"].is_boolean()) {
+			return inputFile["terrain_contact"]["penalty_contact_active"];
+		}
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the penalty_contact keyword in terrain_contact");
+		throw;
+	}
 }
 
 double Input::getPenaltyStiffness()
 {
-    try
-    {
-        if (inputFile["terrain_contact"].is_null()) { return 0.0; }
-        if (inputFile["terrain_contact"]["penalty_stiffness"].is_null()) { return 0.0; }
-        if (inputFile["terrain_contact"]["penalty_stiffness"].is_number()) {
-            return inputFile["terrain_contact"]["penalty_stiffness"];
-        }
-        throw(0);
-    }
-    catch (...)
-    {
-        Warning::printMessage("Error during reading the penalty_stiffness keyword in terrain_contact");
-        throw;
-    }
+	try
+	{
+		if (inputFile["terrain_contact"].is_null()) { return 0.0; }
+		if (inputFile["terrain_contact"]["penalty_stiffness"].is_null()) { return 0.0; }
+		if (inputFile["terrain_contact"]["penalty_stiffness"].is_number()) {
+			return inputFile["terrain_contact"]["penalty_stiffness"];
+		}
+		throw(0);
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during reading the penalty_stiffness keyword in terrain_contact");
+		throw;
+	}
 }
 
 std::string Input::getSTLMeshFile()
@@ -1698,7 +1739,7 @@ std::string Input::getSTLMeshFile()
 
 		throw(0);
 	}
-	catch(...)
+	catch (...)
 	{
 		Warning::printMessage("Error during reading the STL file name in terrain contact");
 		throw;
@@ -1719,7 +1760,8 @@ SeismicAnalysis Input::getSeismicAnalysisInfo()
 		// Check activation field
 		if (eq.contains("active") && eq["active"].is_boolean()) {
 			info.isActive = eq["active"];
-		} else {
+		}
+		else {
 			// If no explicit flag, assume false (disabled)
 			info.isActive = false;
 			return info;
@@ -1745,12 +1787,13 @@ SeismicAnalysis Input::getSeismicAnalysisInfo()
 	}
 }
 
-SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false) {
-	
+SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader = false)
+{
+
 	SeismicData data;
-	
+
 	std::ifstream file(filename);
-	
+
 	if (!file.is_open()) {
 		std::cerr << "Error during opening seismic data: " << filename << std::endl;
 		return data;
@@ -1762,30 +1805,31 @@ SeismicData Input::readSeismicData(const std::string& filename, bool hasHeader =
 		// headers manipulations if needed
 	}
 
-    while (std::getline(file, line)) {
-        if (line.empty()) continue;
+	while (std::getline(file, line)) {
+		if (line.empty()) continue;
 
-        // replace commas and tabs with spaces
-        std::replace(line.begin(), line.end(), ',', ' ');
-        std::replace(line.begin(), line.end(), '\t', ' ');
+		// replace commas and tabs with spaces
+		std::replace(line.begin(), line.end(), ',', ' ');
+		std::replace(line.begin(), line.end(), '\t', ' ');
 		std::replace(line.begin(), line.end(), ';', ' ');
 
-        // use istringstream to parse the line with spaces
-        std::istringstream ss(line);
-        double t, ax, ay, az;
+		// use istringstream to parse the line with spaces
+		std::istringstream ss(line);
+		double t, ax, ay, az;
 
 		// if the line does not have almost 4 values, skip it
-        if (!(ss >> t >> ax >> ay >> az)) continue;
+		if (!(ss >> t >> ax >> ay >> az)) continue;
 
-        data.time.push_back(t);
-        data.acceleration.push_back(Eigen::Vector3d(ax, ay, az));
-    }
+		data.time.push_back(t);
+		data.acceleration.push_back(Eigen::Vector3d(ax, ay, az));
+	}
 
-    file.close();
-    return data;
+	file.close();
+	return data;
 }
 
-bool Input::getHydroMechCouplingEnabled() {
+bool Input::getHydroMechCouplingEnabled()
+{
 	if (inputFile.contains("hydro_mechanical_coupling") &&
 		inputFile["hydro_mechanical_coupling"].contains("enabled") &&
 		inputFile["hydro_mechanical_coupling"]["enabled"].is_boolean())
@@ -1793,7 +1837,8 @@ bool Input::getHydroMechCouplingEnabled() {
 	return false;
 }
 
-bool Input::getHydroMechCouplingOneWay() {
+bool Input::getHydroMechCouplingOneWay()
+{
 	if (inputFile.contains("hydro_mechanical_coupling") &&
 		inputFile["hydro_mechanical_coupling"].contains("type") &&
 		inputFile["hydro_mechanical_coupling"]["type"].is_string())
@@ -1801,7 +1846,8 @@ bool Input::getHydroMechCouplingOneWay() {
 	return false;
 }
 
-std::string Input::getPorePressureFilename() {
+std::string Input::getPorePressureFilename()
+{
 	if (inputFile.contains("hydro_mechanical_coupling") &&
 		inputFile["hydro_mechanical_coupling"].contains("pore_pressure_field") &&
 		inputFile["hydro_mechanical_coupling"]["pore_pressure_field"].is_string())
