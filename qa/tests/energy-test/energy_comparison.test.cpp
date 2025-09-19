@@ -51,7 +51,7 @@ void executeSimulation()
 
   try
   {
-    std::filesystem::path exe_path = std::filesystem::path("..") / ".." / ".." / "build" / "CMake" / "MPM-Geomechanics";
+    exe_path = std::filesystem::path("..") / ".." / ".." / "build" / "CMake" / "MPM-Geomechanics";
 #ifdef _WIN32
     exe_path += ".exe";
 #endif
