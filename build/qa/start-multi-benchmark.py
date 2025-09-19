@@ -137,6 +137,17 @@ def read_configuration():
                 raise
 
         # Download executables from GitHub Actions using 'gh' CLI
+        file_name = ""
+        if sys.platform == "win32" or sys.platform == "cygwin":
+            file_name = "MPM-Geomechanics-benchmark-windows"
+
+        if sys.platform == "linux":
+            file_name = "MPM-Geomechanics-benchmark-linux"
+
+        if file_name == "":
+            print(f"----> [ERROR] Unsupported platform: {sys.platform}")
+            raise
+
         for name, path in executables_list.items():
             if path.isdigit():
                 print(f"----> Checking GitHub for run ID [{path}] for executable [{name}]...")
@@ -149,39 +160,19 @@ def read_configuration():
                     print(f"------> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"------> [ERROR] {e}")
                     raise
-                
+
                 try:
+                    print(f"------> Creating folder for [{name}] in {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}...")
+                    Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
                     print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER} (command: gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER})...")
-                    subprocess.run(f"gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}", shell=True, text=True, capture_output=True, check=True)
+                    subprocess.run(f"gh run download {path} --name {file_name} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}", shell=True, text=True, capture_output=True, check=True)
                     print(f"------> Download completed for [{name}]")
                 except Exception as e:
                     print(f"----> [ERROR] An error occurred while downloading executable for [{name}]")
                     print(f"----> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"----> [ERROR] {e}")
                     raise
-
-                extension = ""
-                artifact_folder_name = ""
-                if sys.platform == "win32" or sys.platform == "cygwin":
-                    artifact_folder_name = "MPM-Geomechanics-benchmark-windows"
-                    extension = ".exe"
-
-                if sys.platform == "linux":
-                    artifact_folder_name = "MPM-Geomechanics-benchmark-linux"
-                    extension = ""
-
-                if artifact_folder_name == "":
-                    print(f"----> [ERROR] Unsupported platform: {sys.platform}")
-                    raise
-
-                # Move the executable to a folder with the name of the executable
-                origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}/MPM-Geomechanics-benchmark" + extension
-                destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark" + extension
-                Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
-                shutil.move(origin, destination)
-                shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}")
-                executables[name] = destination
-
+                
     if "parameters" in json_configuration:
         print("\n--> Custom parameters found in configuration file")
         executables_parameters = json_configuration["parameters"]
