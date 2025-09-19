@@ -323,7 +323,7 @@ void checkRemainingLines(json& jsonFile, const std::vector<std::string>& linesTo
         }
 
         if (materialProperty == "FRICTION") {
-          jsonFile["material"][materialName]["friction_angle"] = std::stod(value);
+          jsonFile["material"][materialName]["friction"] = std::stod(value);
           continue;
         }
 
