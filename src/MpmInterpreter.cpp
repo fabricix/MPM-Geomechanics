@@ -327,7 +327,7 @@ namespace MpmInterpreter
             continue;
           }
 
-          if (bodyProperty == "discretization ")
+          if (bodyProperty == "discretization")
           {
             jsonFile["body"][bodyName]["discretization_length"] = std::stoi(value);
             continue;
@@ -359,37 +359,37 @@ namespace MpmInterpreter
             throw std::runtime_error("Material name not defined: " + materialName);
           }
 
-          if (materialProperty == "TYPE")
+          if (materialProperty == "type")
           {
             jsonFile["material"][materialName]["type"] = removeQuotes(value);
             continue;
           }
 
-          if (materialProperty == "YOUNG")
+          if (materialProperty == "young")
           {
             jsonFile["material"][materialName]["young"] = std::stod(value);
             continue;
           }
 
-          if (materialProperty == "DENSITY")
+          if (materialProperty == "density")
           {
             jsonFile["material"][materialName]["density"] = std::stod(value);
             continue;
           }
 
-          if (materialProperty == "POISSON")
+          if (materialProperty == "poisson")
           {
             jsonFile["material"][materialName]["poisson"] = std::stod(value);
             continue;
           }
 
-          if (materialProperty == "FRICTION")
+          if (materialProperty == "friction")
           {
             jsonFile["material"][materialName]["friction"] = std::stod(value);
             continue;
           }
 
-          if (materialProperty == "COHESION")
+          if (materialProperty == "cohesion")
           {
             jsonFile["material"][materialName]["cohesion"] = std::stod(value);
             continue;
