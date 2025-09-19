@@ -1,55 +1,56 @@
-# Comment...
-STRESS_SCHEME_UPDATE      = "USL"
+# comment...
+stress_scheme_update = "USL"
 
-# Comment...
-SHAPE_FUNCTION            = "GIMP" 
+# comment...
+shape_function = "GIMP"
 
-# Comment...
-TIME                      = 1 
+# comment...
+time = 1
 
-# Comment...
-TIME_STEP                 = 0.001
+# comment...
+time_step = 0.001
 
-# Comment...
-N_THREADS                 = 10
+# comment...
+n_threads = 10
 
-# Comment...
-GRAVITY                   = [0.0, 0.0, -9.81]
+# comment...
+gravity = [0.0, 0.0, -9.81]
 
-# Comment...
-DAMPING_TYPE              = "local"
-DAMPING_VALUE             = 0.0
+# comment...
+damping_type = "local"
+damping_value = 0.0
 
-# Comment...
-RESULTS_PRINT             = 50
-RESULTS_PARTICLES_FIELDS  = ["all"] 
-RESULTS_GRID_FIELDS       = ["none"]
+# comment...
+results_print = 50
+results_particles_fields = ["all"] 
+results_grid_fields = ["none"]
 
-# Comment...
-MESH_CELLS_DIMENSION      = [1, 1, 1]
-MESH_CELLS_NUMBER         = [110, 1, 36]
-MESH_ORIGIN               = [0, 0, 0]
-MESH_BOUNDARY_PLANEX0     = "fixed"
-MESH_BOUNDARY_PLANEY0     = "sliding"
-MESH_BOUNDARY_PLANEZ0     = "fixed"
-MESH_BOUNDARY_PLANEXN     = "fixed"
-MESH_BOUNDARY_PLANEYN     = "sliding"
-MESH_BOUNDARY_PLANEZN     = "fixed"
+# comment...
+mesh_cells_dimension = [1, 1, 1]
+mesh_cells_number = [110, 1, 36]
+mesh_origin = [0, 0, 0]
+mesh_boundary_planex0 = "fixed"
+mesh_boundary_planey0 = "sliding"
+mesh_boundary_planez0 = "fixed"
+mesh_boundary_planexn = "fixed"
+mesh_boundary_planeyn = "sliding"
+mesh_boundary_planezn = "fixed"
 
-# Comment...
-MATERIALS_NAMES           = ["plastic", "solid"]
-M_PLASTIC_TYPE            = "mohr-coulomb"
-M_PLASTIC_YOUNG           = 70e6
-M_PLASTIC_DENSITY         = 2100
-M_PLASTIC_POISSON         = 0.3
-M_PLASTIC_FRICTION        = 20.0
-M_PLASTIC_COHESION        = 1.0e3
+# comment...
+materials_names = ["plastic", "solid"]
+m_plastic_type = "mohr-coulomb"
+m_plastic_young = 70e6
+m_plastic_density = 2100
+m_plastic_poisson = 0.3
+m_plastic_friction = 20.0
+m_plastic_cohesion = 1.0e3
 
-# Comment...
-BODIES_NAMES              = ["solid"]
-B_SOLID_TYPE               = "polygon_2d"
-B_SOLID_EXTRUDE_DIR        = "y"
-B_SOLID_DISPLACEMENT       = 1
-B_SOLID_DISCRETIZATION     = 1
-B_SOLID_MATERIAL           = "plastic"
-B_SOLID_POINTS             = "particles.json"
+# comment...
+bodies_names = ["solid"]
+b_solid_type = "polygon_2d"
+b_solid_extrude_dir = "y"
+b_solid_displacement = 1
+b_solid_discretization = 1
+b_solid_material = "plastic"
+b_solid_points = "particles.json"
+

@@ -95,99 +95,99 @@ namespace MpmInterpreter
     try
     {
       // Interpret the key
-      if (key == "STRESS_SCHEME_UPDATE")
+      if (key == "stress_scheme_update")
       {
         jsonFile["stress_scheme_update"] = removeQuotes(value, false);
         return;
       }
 
-      if (key == "SHAPE_FUNCTION")
+      if (key == "shape_function")
       {
         jsonFile["shape_function"] = removeQuotes(value, false);
         return;
       }
 
-      if (key == "TIME")
+      if (key == "time")
       {
         jsonFile["time"] = std::stod(value);
         return;
       }
 
-      if (key == "TIME_STEP")
+      if (key == "time_step")
       {
         jsonFile["time_step"] = std::stod(value);
         return;
       }
 
-      if (key == "N_THREADS")
+      if (key == "n_threads")
       {
         jsonFile["n_threads"] = std::stoi(value);
         return;
       }
 
-      if (key == "GRAVITY")
+      if (key == "gravity")
       {
         jsonFile["gravity"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "DAMPING_TYPE")
+      if (key == "damping_type")
       {
         createJsonObjectIfNotExists(jsonFile, "damping");
         jsonFile["damping"]["type"] = removeQuotes(value);
         return;
       }
 
-      if (key == "DAMPING_VALUE")
+      if (key == "damping_value")
       {
         createJsonObjectIfNotExists(jsonFile, "damping");
         jsonFile["damping"]["value"] = std::stod(value);
         return;
       }
 
-      if (key == "RESULTS_PRINT")
+      if (key == "results_print")
       {
         createJsonObjectIfNotExists(jsonFile, "results");
         jsonFile["results"]["print"] = std::stoi(value);
         return;
       }
 
-      if (key == "RESULTS_PARTICLES_FIELDS")
+      if (key == "results_particles_fields")
       {
         createJsonObjectIfNotExists(jsonFile, "results");
         jsonFile["results"]["material_point_results"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "RESULTS_GRID_FIELDS")
+      if (key == "results_grid_fields")
       {
         createJsonObjectIfNotExists(jsonFile, "results");
         jsonFile["results"]["grid_nodal_results"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "MESH_CELLS_DIMENSION")
+      if (key == "mesh_cells_dimension")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         jsonFile["mesh"]["cells_dimension"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "MESH_CELLS_NUMBER")
+      if (key == "mesh_cells_number")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         jsonFile["mesh"]["cells_number"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "MESH_ORIGIN")
+      if (key == "mesh_origin")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         jsonFile["mesh"]["origin"] = static_cast<json::array_t>(json::parse(value));
         return;
       }
 
-      if (key == "MESH_BOUNDARY_PLANEX0")
+      if (key == "mesh_boundary_planex0")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
@@ -195,7 +195,7 @@ namespace MpmInterpreter
         return;
       }
 
-      if (key == "MESH_BOUNDARY_PLANEY0")
+      if (key == "mesh_boundary_planey0")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
@@ -203,7 +203,7 @@ namespace MpmInterpreter
         return;
       }
 
-      if (key == "MESH_BOUNDARY_PLANEZ0")
+      if (key == "mesh_boundary_planez0")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
@@ -211,15 +211,7 @@ namespace MpmInterpreter
         return;
       }
 
-      if (key == "MESH_BOUNDARY_PLANEYN")
-      {
-        createJsonObjectIfNotExists(jsonFile, "mesh");
-        createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
-        jsonFile["mesh"]["boundary_conditions"]["plane_Yn"] = removeQuotes(value);
-        return;
-      }
-
-      if (key == "MESH_BOUNDARY_PLANEXN")
+      if (key == "mesh_boundary_planexn")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
@@ -227,7 +219,15 @@ namespace MpmInterpreter
         return;
       }
 
-      if (key == "MESH_BOUNDARY_PLANEZN")
+      if (key == "mesh_boundary_planeyn")
+      {
+        createJsonObjectIfNotExists(jsonFile, "mesh");
+        createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
+        jsonFile["mesh"]["boundary_conditions"]["plane_Yn"] = removeQuotes(value);
+        return;
+      }
+
+      if (key == "mesh_boundary_planezn")
       {
         createJsonObjectIfNotExists(jsonFile, "mesh");
         createJsonObjectIfNotExists(jsonFile["mesh"], "boundary_conditions");
@@ -250,7 +250,7 @@ namespace MpmInterpreter
   {
     try
     {
-      if (key == "MATERIALS_NAMES")
+      if (key == "materials_names")
       {
         std::vector<std::string> materials = static_cast<std::vector<std::string>>(json::parse(value));
         createJsonObjectIfNotExists(jsonFile, "material");
@@ -262,7 +262,7 @@ namespace MpmInterpreter
         return;
       }
 
-      if (key == "BODIES_NAMES")
+      if (key == "bodies_names")
       {
         std::vector<std::string> bodies = static_cast<std::vector<std::string>>(json::parse(value));
         createJsonObjectIfNotExists(jsonFile, "body");
@@ -297,8 +297,8 @@ namespace MpmInterpreter
         key = line.substr(0, line.find('='));
         value = line.substr(line.find('=') + 1);
 
-        // if start with B_
-        if (key.rfind("B_", 0) == 0)
+        // if start with b_ for bodies
+        if (key.rfind("b_", 0) == 0)
         {
           std::string bodyName = toLower(key.substr(2, key.find('_', 2) - 2));
           std::string bodyProperty = key.substr(key.find('_', 2) + 1);
@@ -309,37 +309,37 @@ namespace MpmInterpreter
             throw std::runtime_error("Body name not defined: " + bodyName);
           }
 
-          if (bodyProperty == "TYPE")
+          if (bodyProperty == "type")
           {
             jsonFile["body"][bodyName]["type"] = removeQuotes(value);
             continue;
           }
 
-          if (bodyProperty == "EXTRUDE_DIR")
+          if (bodyProperty == "extrude_dir")
           {
             jsonFile["body"][bodyName]["extrude_direction"] = removeQuotes(value);
             continue;
           }
 
-          if (bodyProperty == "DISPLACEMENT")
+          if (bodyProperty == "displacement")
           {
             jsonFile["body"][bodyName]["extrude_displacement"] = std::stoi(value);
             continue;
           }
 
-          if (bodyProperty == "DISCRETIZATION")
+          if (bodyProperty == "discretization ")
           {
             jsonFile["body"][bodyName]["discretization_length"] = std::stoi(value);
             continue;
           }
 
-          if (bodyProperty == "MATERIAL")
+          if (bodyProperty == "material")
           {
             jsonFile["body"][bodyName]["material_id"] = jsonFile["material"][removeQuotes(value)]["id"];
             continue;
           }
 
-          if (bodyProperty == "POINTS")
+          if (bodyProperty == "points")
           {
             jsonFile["body"][bodyName]["points"] = removeQuotes(value);
             getBodyPointsFromFile(jsonFile, bodyName, jsonFile["body"][bodyName]["points"]);
@@ -347,7 +347,8 @@ namespace MpmInterpreter
           }
         }
 
-        if (key.rfind("M_", 0) == 0)
+        // if start with m_ for materials
+        if (key.rfind("m_", 0) == 0)
         {
           std::string materialName = toLower(key.substr(2, key.find('_', 2) - 2));
           std::string materialProperty = key.substr(key.find('_', 2) + 1);
