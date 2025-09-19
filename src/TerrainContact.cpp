@@ -349,6 +349,14 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
     // get the accumulated velocity from seismic analysis
     Vector3d v_surface = isSeismic ? Seismic::getAccumulatedVelocity() : Vector3d::Zero(); 
 
+    const double h_mean = mesh->getCellDimension().mean();
+
+    // small tolerance to avoid jitter/div-by-zero in tangential direction
+    const double vt_eps = 1e-4 * h_mean/std::max(dt, 1e-16);
+
+    // small tolerance for micro-penetrations
+    const double penetration_tol = 0.05 * h_mean;
+
     // for all contact pairs
 #ifdef _OPENMP
     #pragma omp parallel for shared(v_surface, isSeismic)
@@ -389,31 +397,45 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
         if (usePenaltyContact) {
 
             // ignore micro-penetrations to avoid lifting due to SDF noise
-            const double eps = 0.05 * mesh->getCellDimension().mean();
-            double penetration = std::max(-particle->getDistanceLevelSet() - eps, 0.0);
+            double penetration = std::max(-particle->getDistanceLevelSet() - penetration_tol, 0.0);
             if (penetration > 0.0)
             {
                 // calculate the penalty force f_penalty = k * penetration * e_n
                 Vector3d f_penalty = penaltyStiffness * penetration * normal;
                 
+                // optional: impulse cap to reduce per-step overshoot
+                const double beta = 1.0;
+                const double Jcap = beta * mass * h_mean / dt;
+                const double Jpen = f_penalty.norm() * dt;
+                if (Jpen > Jcap) f_penalty *= (Jcap / Jpen);
+
                 // apply the penalty force to the normal force
                 fn += f_penalty;
             }
         }
         
-        // Tangential force
+        // Tangential force calculation with Coulomb friction
+        double fn_mag = fn.norm();        
+        Vector3d ft = Vector3d::Zero();
 
-        // calculate equilibrium impulsive tangential force f_t = -m_p (v_p - vn) / dt
-        Vector3d ft = - (mass / dt) * vt;
+        // only apply friction if there is a normal force
+        if (fn_mag > 0.0) 
+        {
+            Vector3d ft_trial = - (mass / dt) * vt; // equilibrium impulsive tangential force
+            double ft_trial_mag = ft_trial.norm();
+            double vt_mag = vt.norm();
 
-        // apply Coulomb friction ||f_t|| <= mu ||f_n||
-        double fn_mag = fn.norm();
-        double ft_mag = ft.norm();
-        double mu =this->frictionCoefficient;
+            // apply Coulomb friction ||f_t|| <= mu ||f_n||
+            const double mu_s = this->frictionCoefficient; // static
+            const double mu_k = this->frictionCoefficient; // kinetic (same for now)
 
-        if (ft_mag > mu * fn_mag) {
-            // scale the tangential force to satisfy the Coulomb friction condition
-            ft = - mu *fn_mag * (vt/vt.norm());
+            if (vt_mag < vt_eps || ft_trial_mag <= mu_s * fn_mag) {
+                    // STICK: cancel tangential velocity this step
+                    ft = ft_trial;
+                } else {
+                    // SLIP: kinetic Coulomb at the limit
+                    ft = -(mu_k * fn_mag) * (vt / vt_mag);
+                }
         }
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
