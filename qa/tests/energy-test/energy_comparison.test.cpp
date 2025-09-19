@@ -33,7 +33,7 @@ double sum_energy(const std::string& filename)
       }
       catch (...) {
         std::cerr << "Error converting value to double in file: " << filename
-                  << " at line: " << line << std::endl;
+          << " at line: " << line << std::endl;
         return -1.0;
       }
     }
@@ -44,13 +44,27 @@ double sum_energy(const std::string& filename)
 
 void executeSimulation()
 {
-
   std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "qa" / "tests" / "energy-test";
   std::filesystem::current_path(test_dir);
+  std::filesystem::path exe_path;
+  std::string script;
 
   try
   {
-    int response = system("..\\..\\..\\build\\CMake\\MPM-Geomechanics.exe cuboid.json");
+    exe_path = std::filesystem::path("..") / ".." / ".." / "build" / "CMake" / "MPM-Geomechanics";
+#ifdef _WIN32
+    exe_path += ".exe";
+#endif
+
+    // verify is the binary exists
+    if (!std::filesystem::exists(exe_path)) {
+      std::cerr << "Executable not found: " << exe_path << std::endl;
+      FAIL() << "Could not find simulation executable.";
+      return;
+    }
+
+    script = exe_path.string() + " cuboid.json";
+    int response = system(script.c_str());
 
     if (response == 0)
     {
@@ -60,15 +74,14 @@ void executeSimulation()
     {
       std::cerr << "Simulation failed with response code: " << response << std::endl;
       std::cerr << "Please check if simulation program exists and try again." << std::endl;
-      FAIL() << "Simulation execution failed.";
+      FAIL() << "Could not execute simulation.";
+      // raise
+
       return;
     }
 
-    string filename = "time-energy.csv";
-
+    std::string filename = "time-energy.csv";
     std::ifstream file(filename);
-    std::string line;
-    double sum = 0.0;
 
     if (!file.is_open()) {
       std::cerr << "Error opening file: " << filename << std::endl;
@@ -87,7 +100,6 @@ void executeSimulation()
 
 TEST(ENERGY_COMPARISON, ENERGY_SUM)
 {
-
   executeSimulation();
 
   double main_energy = sum_energy("analytical_energy.csv");

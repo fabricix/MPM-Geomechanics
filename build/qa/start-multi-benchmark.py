@@ -34,6 +34,22 @@ CONFIG_FOLDER = "configuration-files"
 BENCHMARK_FOLDER = "benchmark"
 ARTIFACT_FOLDER = "artifact"
 LOGS_FOLDER = "logs"
+BENCHMARK_CONFIGURATION_FILE_NAME = "start-multi-benchmark-configuration.json"
+CACHE_FILE_NAME = "start-multi-benchmark-configuration-cached.json"
+
+def read_flags():
+    global clean_flag
+    global cache_flag
+    clean_flag = False
+    cache_flag = False
+    print("")
+    arg = " ".join(sys.argv[1:])
+    if arg == "--clean":
+        print("> Clean flag detected (--clean)")
+        clean_flag = True
+    if arg == "--cache":
+        print("> Cache flag detected (--cache)")
+        cache_flag = True
 
 # Configuration file name generator
 def config_file (p, t):
@@ -41,10 +57,9 @@ def config_file (p, t):
 
 def create_folders():
     # get parameters from the console line
-    arg = " ".join(sys.argv[1:])
-    if arg == "--clean":
+    if clean_flag:
         if Path(f"{BENCHMARK_FOLDER}").exists():
-            response = input(f"> The folder {BENCHMARK_FOLDER} already exists. Do you want to delete it? (y/n): ")
+            response = input(f"\n> The folder {BENCHMARK_FOLDER} already exists. Do you want to delete it? (y/n): ")
             if response.lower() == "y":
                 print(f"--> Deleting existing {BENCHMARK_FOLDER} folder")
                 shutil.rmtree(f"{BENCHMARK_FOLDER}")
@@ -67,12 +82,21 @@ def run_benchmark(executable_path, name, config_file):
     try:
         log_reference = Path(f"{BENCHMARK_FOLDER}/{LOGS_FOLDER}/{name}/{config_file}-{name}.log")
         config_path = Path(f"{BENCHMARK_FOLDER}/{CONFIG_FOLDER}/{config_file}.json")
-        with open(log_reference, "w") as log_file:
-            subprocess.run([executable_path, str(config_path)], stdout=log_file, stderr=subprocess.STDOUT, check=True)
 
+        exe_abs = os.path.abspath(executable_path)
+        cfg_abs = os.path.abspath(config_path)
+
+        Path(log_reference.parent).mkdir(parents=True, exist_ok=True)
+
+        with open(log_reference, "w") as log_file:
+            subprocess.run([exe_abs, str(cfg_abs)],
+                           stdout=log_file,
+                           stderr=subprocess.STDOUT,
+                           check=True,
+                           cwd=os.path.dirname(exe_abs))
     except Exception as e:
         print(f"----> [ERROR] An error occurred while running the benchmark: {e}")
-        print(f"----> [ERROR] Executable: {executable_path} | Config File: {config_file}")
+        print(f"----> [ERROR] Executable: {executable_path} | name: {name} | Config File: {config_file}")
 
 # Run all the benchmarks of a specific executable
 def execute_benchmarks(executable_path, name):
@@ -97,11 +121,38 @@ def read_configuration():
     global threads
     global executables
     json_configuration = {}
+    id_found = False
 
-    print("\n> Reading configuration from 'start-multi-performance-tests-configuration.json'")
-    with open ("start-multi-performance-tests-configuration.json", "r") as f:
+    if cache_flag and Path(f"{BENCHMARK_FOLDER}/{CACHE_FILE_NAME}").is_file():
+        print(f"\n> Reading cached configuration from {BENCHMARK_FOLDER}/{CACHE_FILE_NAME}")
+        with open(f"{BENCHMARK_FOLDER}/{CACHE_FILE_NAME}", "r") as f:
+            json_configuration = json.load(f)
+        if "executables" in json_configuration:
+            print("--> Cached executables found")
+            executables = json_configuration["executables"]
+            print("--> Cached executables loaded")
+        if "parameters" in json_configuration:
+            print("--> Cached parameters found")
+            executables_parameters = json_configuration["parameters"]
+            materials_point = executables_parameters["particles"] if "particles" in executables_parameters else materials_point
+            threads = executables_parameters["threads"] if "threads" in executables_parameters else threads
+            print(f"----> Materials points: {materials_point}")
+            print(f"----> Threads: {threads}")
+        print(f"--> All parameters read successfully from cache")
+        return
+    elif cache_flag:
+        print(f"--> [ERROR] Cached configuration file {BENCHMARK_FOLDER}/{CACHE_FILE_NAME} not found. Reading from {BENCHMARK_CONFIGURATION_FILE_NAME}")
+        raise
+
+    print(f"\n> Reading configuration from {BENCHMARK_CONFIGURATION_FILE_NAME}")
+    if not Path(BENCHMARK_CONFIGURATION_FILE_NAME).is_file():
+        print(f"--> [WARNING] Configuration file '{BENCHMARK_CONFIGURATION_FILE_NAME}' not found. Using default parameters.")
+        return
+
+    with open(BENCHMARK_CONFIGURATION_FILE_NAME, "r") as f:
         json_configuration = json.load(f)
-        
+
+    # Read executables from configuration file
     if "executables" in json_configuration:
         print("--> Custom executables found in configuration file") 
         executables.clear()
@@ -109,50 +160,69 @@ def read_configuration():
         for name, path in executables_list.items():
             if path.isdigit():
                 print(f"----> Custom executable ID provided for [{name}]: {path}")
+                id_found = True
             else:
                 if not Path(path).is_file():
                     print(f"----> [ERROR] The provided path for [{name}] is not a valid file: {path}")
                     print(f"----> [ERROR] Please check the start-benchmark-configuration.json file")
-                    raise FileNotFoundError(f"The provided path for [{name}] is not a valid file: {path}")
+                    raise
                 print(f"----> Custom executable path provided for [{name}]: {path}")
             executables[name] = path
 
+        # Verify GitHub CLI login status if any ID is found
+        if id_found:
+            try:
+                print("--> Verifying GitHub CLI login status...")
+                subprocess.run("gh auth status", shell=True, text=True, capture_output=True, check=True)
+                print(f"----> GitHub CLI is logged in!")
+            except Exception as e:
+                print(f"----> [ERROR] GitHub CLI is not logged in. Please run 'gh auth login' to log in.")
+                print(f"----> [ERROR] {e}")
+                raise
+            
         # Download executables from GitHub Actions using 'gh' CLI
+        ARTIFACT_FILE_NAME = "MPM-Geomechanics-benchmark"
+        artifact_name = ""
+        extension = ""
+        if sys.platform == "win32" or sys.platform == "cygwin":
+            artifact_name = "MPM-Geomechanics-benchmark-windows"
+            extension = ".exe"
+
+        if sys.platform == "linux":
+            artifact_name = "MPM-Geomechanics-benchmark-linux"
+
+        if artifact_name == "":
+            print(f"----> [ERROR] Unsupported platform: {sys.platform}")
+            raise
+
         for name, path in executables_list.items():
             if path.isdigit():
-                print(f"----> Checking GitHub for run ID [{path}] for executable [{name}]...")
+                print(f"\n----> Checking GitHub for run ID [{path}] for executable [{name}]...")
                 try:
-                    print(f"------> Checking if the run ID [{path}] exists...")
+                    print(f"------> Checking if the run ID [{path}] exists in GitHub Actions (command: gh run view {path})...")
                     subprocess.run(f"gh run view {path}", shell=True, text=True, capture_output=True, check=True)
-                    print(f"------> ID [{path}] exists.")
+                    print(f"------> ID [{path}] exists")
                 except Exception as e:
                     print(f"------> [ERROR] An error occurred while checking the run ID [{path}]")
                     print(f"------> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"------> [ERROR] {e}")
-                    
+                    raise
+
                 try:
-                    print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}...")
-                    subprocess.run(f"gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}", shell=True, text=True, capture_output=True, check=True)
+                    print(f"------> Creating folder for [{name}] in {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}...")
+                    Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
+                    print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER} (command: gh run download {path} --name {artifact_name} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name})...")
+                    subprocess.run(f"gh run download {path} --name {artifact_name} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}", shell=True, text=True, capture_output=True, check=True)
                     print(f"------> Download completed for [{name}]")
+
+                    # Set the executable path (example: benchmark/artifact/current/MPM-Geomechanics-benchmark <-- or MPM-Geomechanics-benchmark.exe)
+                    executables[name] = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/{ARTIFACT_FILE_NAME}" + extension
                 except Exception as e:
                     print(f"----> [ERROR] An error occurred while downloading executable for [{name}]")
                     print(f"----> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"----> [ERROR] {e}")
-
-                artifact_folder_name = ""
-                if sys.platform == "win32" or sys.platform == "cygwin":
-                    artifact_folder_name = "MPM-Geomechanics-benchmark-windows"
-
-                if sys.platform == "linux":
-                    artifact_folder_name = "MPM-Geomechanics-benchmark-linux"
-
-                # Move the executable to a folder with the name of the executable
-                origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}/MPM-Geomechanics-benchmark.exe"
-                destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark.exe"
-                Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
-                shutil.move(origin, destination)
-                shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-windows")
-                executables[name] = destination
+                    raise
+                
 
     if "parameters" in json_configuration:
         print("\n--> Custom parameters found in configuration file")
@@ -162,12 +232,29 @@ def read_configuration():
         print(f"----> Materials points: {materials_point}")
         print(f"----> Threads: {threads}")
 
+    # Verify if executables exist
+    if executables.values():
+        print("\n--> Verifying executables paths")
+        for name, path in executables.items():
+            if not Path(path).is_file():
+                print(f"----> [ERROR] The provided path for [{name}] is not a valid file: {path}")
+                print(f"----> [ERROR] Please check the start-benchmark-configuration.json file")
+                raise
+        print ("----> All executables paths are valid")
+        
     if executables.values():
         print("\n--> Executables to be used:")
         for name, path in executables.items():
             print(f"----> [{name}]: {path}")
 
-    print(f"\n--> All parameters read successfully")
+    print(f"--> All parameters read successfully")
+
+    # Save cached configuration
+    print(f"\n--> Saving cached configuration to {CACHE_FILE_NAME}")
+    with open(f"{BENCHMARK_FOLDER}/{CACHE_FILE_NAME}", "w") as f:
+        cache = {"executables": executables, "parameters": {"particles": materials_point, "threads": threads}}
+        json.dump(cache, f, indent=4)
+        print(f"----> Cached configuration saved to {BENCHMARK_FOLDER}/{CACHE_FILE_NAME}")
 
 def start_benchmarks():
     print("\n> Starting benchmarks")
@@ -195,6 +282,9 @@ def start_benchmarks():
 # Main function
 def main():
     try: 
+        # Read command line flags
+        read_flags()
+        
         # Create necessary folders
         create_folders()
 
@@ -211,8 +301,9 @@ def main():
         start_benchmarks()
 
         return 0
-    except:
+    except Exception as e:
         print(f"--> [ERROR] An error occurred during the benchmarking process")
+        print(f"--> [ERROR] {e}")
         return -1
 
 # Start benchmarking process
