@@ -266,6 +266,11 @@ void checkRemainingLines(json& jsonFile, const std::vector<std::string>& linesTo
         std::string bodyName = toLower(key.substr(2, key.find('_', 2) - 2));
         std::string bodyProperty = key.substr(key.find('_', 2) + 1);
 
+        if (jsonFile["body"].find(bodyName) == jsonFile["body"].end()) {
+          Warning::printMessage("Body name not defined: " + bodyName);
+          throw std::runtime_error("Body name not defined: " + bodyName);
+        }
+
         if (bodyProperty == "TYPE") {
           jsonFile["body"][bodyName]["type"] = removeQuotes(value);
           continue;
@@ -301,6 +306,11 @@ void checkRemainingLines(json& jsonFile, const std::vector<std::string>& linesTo
       if (key.rfind("M_", 0) == 0) {
         std::string materialName = toLower(key.substr(2, key.find('_', 2) - 2));
         std::string materialProperty = key.substr(key.find('_', 2) + 1);
+
+        if (jsonFile["material"].find(materialName) == jsonFile["material"].end()) {
+          Warning::printMessage("Material name not defined: " + materialName);
+          throw std::runtime_error("Material name not defined: " + materialName);
+        }
 
         if (materialProperty == "TYPE") {
           jsonFile["material"][materialName]["type"] = removeQuotes(value);

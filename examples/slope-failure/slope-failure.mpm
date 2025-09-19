@@ -46,10 +46,10 @@ M_PLASTIC_FRICTION        = 20.0
 M_PLASTIC_COHESION        = 1.0e3
 
 # Comment...
-BODIES_NAMES              = ["soil"]
-B_SOIL_TYPE               = "polygon_2d"
-B_SOIL_EXTRUDE_DIR        = "y"
-B_SOIL_DISPLACEMENT       = 1
-B_SOIL_DISCRETIZATION     = 1
-B_SOIL_MATERIAL           = "plastic"
-B_SOIL_POINTS             = "particles.json"
+BODIES_NAMES              = ["solid"]
+B_SOLID_TYPE               = "polygon_2d"
+B_SOLID_EXTRUDE_DIR        = "y"
+B_SOLID_DISPLACEMENT       = 1
+B_SOLID_DISCRETIZATION     = 1
+B_SOLID_MATERIAL           = "plastic"
+B_SOLID_POINTS             = "particles.json"
