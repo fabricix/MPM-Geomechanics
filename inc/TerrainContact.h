@@ -58,7 +58,7 @@ public:
     // \brief Compute the contact forces
     // \f$ f_n = -m_p \frac{v_p^n}{dt} e_n \f$
     // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
-    void computeContactForces(double dt);
+    void computeContactForces(Mesh* mesh, double dt);
 
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 

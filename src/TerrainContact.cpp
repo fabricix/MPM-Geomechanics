@@ -341,7 +341,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
     }
 }
 
-void TerrainContact::computeContactForces(double dt) {
+void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
 
     // check if seismic analysis is enabled
     bool isSeismic = ModelSetup::getSeismicAnalysisActive();
@@ -362,36 +362,49 @@ void TerrainContact::computeContactForces(double dt) {
         // get the normal of the triangle
         Vector3d normal = triangle->getNormal().normalized();
 
-        // get the mass and velocity of the particle
+        // get the mass
         double mass = particle->getMass();
 
+        // velocity predictor (if seismic analysis is enabled, subtract the surface velocity)
         Vector3d velocityPredictor = isSeismic ? (particle->getVelocity() - v_surface) : particle->getVelocity();
 
-        // calculate the normal velocity v_n = (v_p . e_n) e_n
-        double vn_magnitude = velocityPredictor.dot(normal);
+        // calculate the normal predictor velocity magnitude v_n = v_p . e_n
+        double vn_mag = velocityPredictor.dot(normal);
 
-        // prevent non-penetrating contact correction
-        if (vn_magnitude >= 0.0) continue;
-        
-        Vector3d vn = vn_magnitude * normal;
+        // normal velocity predictor
+        Vector3d vn = vn_mag * normal;
 
-        // calculate the normal force f_n = -m_p * vn_p / dt * e_n
-        Vector3d fn = - (mass * vn_magnitude / dt) * normal;
-        
+        // tangential velocity predictor
+        Vector3d vt = velocityPredictor - vn;
+
+        // normal force
+        Vector3d fn = Vector3d::Zero();
+        if (vn_mag < 0.0) 
+        {
+            // equilibrium impulsive normal force f_n = -m_p * vn_p / dt * e_n
+            fn = - (mass * vn_mag / dt) * normal;
+        }
+
         // if penalty contact is enabled, apply the penalty force
         if (usePenaltyContact) {
-            double penetration = -particle->getDistanceLevelSet();
+
+            // ignore micro-penetrations to avoid lifting due to SDF noise
+            const double eps = 0.05 * mesh->getCellDimension().mean();
+            double penetration = std::max(-particle->getDistanceLevelSet() - eps, 0.0);
             if (penetration > 0.0)
             {
                 // calculate the penalty force f_penalty = k * penetration * e_n
                 Vector3d f_penalty = penaltyStiffness * penetration * normal;
+                
                 // apply the penalty force to the normal force
                 fn += f_penalty;
             }
         }
         
-        // calculate tangential force f_t = -m_p (v_p - vn) / dt
-        Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
+        // Tangential force
+
+        // calculate equilibrium impulsive tangential force f_t = -m_p (v_p - vn) / dt
+        Vector3d ft = - (mass / dt) * vt;
 
         // apply Coulomb friction ||f_t|| <= mu ||f_n||
         double fn_mag = fn.norm();
@@ -400,7 +413,7 @@ void TerrainContact::computeContactForces(double dt) {
 
         if (ft_mag > mu * fn_mag) {
             // scale the tangential force to satisfy the Coulomb friction condition
-            ft = (mu * fn_mag / ft_mag) * ft;
+            ft = - mu *fn_mag * (vt/vt.norm());
         }
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
@@ -431,7 +444,7 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
     determineContactPotentialPairs(mesh, particles);
 
     // compute the contact forces and correct velocities
-    computeContactForces(dt);
+    computeContactForces(mesh, dt);
 }
 
 void TerrainContact::enablePenaltyContact(bool enable) {
