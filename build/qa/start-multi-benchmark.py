@@ -98,14 +98,17 @@ def read_configuration():
     global threads
     global executables
     json_configuration = {}
+    id_found = False
 
     print(f"\n> Reading configuration from {BENCHMARK_CONFIGURATION_FILE_NAME}")
     if not Path(BENCHMARK_CONFIGURATION_FILE_NAME).is_file():
-        raise FileNotFoundError(f"Configuration file '{BENCHMARK_CONFIGURATION_FILE_NAME}' not found")
+        print(f"--> [WARNING] Configuration file '{BENCHMARK_CONFIGURATION_FILE_NAME}' not found. Using default parameters.")
+        return
 
     with open(BENCHMARK_CONFIGURATION_FILE_NAME, "r") as f:
         json_configuration = json.load(f)
-        
+
+    # Read executables from configuration file
     if "executables" in json_configuration:
         print("--> Custom executables found in configuration file") 
         executables.clear()
@@ -113,13 +116,25 @@ def read_configuration():
         for name, path in executables_list.items():
             if path.isdigit():
                 print(f"----> Custom executable ID provided for [{name}]: {path}")
+                id_found = True
             else:
                 if not Path(path).is_file():
                     print(f"----> [ERROR] The provided path for [{name}] is not a valid file: {path}")
                     print(f"----> [ERROR] Please check the start-benchmark-configuration.json file")
-                    raise FileNotFoundError(f"The provided path for [{name}] is not a valid file: {path}")
+                    raise
                 print(f"----> Custom executable path provided for [{name}]: {path}")
             executables[name] = path
+
+        # Verify GitHub CLI login status if any ID is found
+        if id_found:
+            try:
+                print("--> Verifying GitHub CLI login status...")
+                subprocess.run("gh auth status", shell=True, text=True, capture_output=True, check=True)
+                print(f"----> GitHub CLI is logged in!")
+            except Exception as e:
+                print(f"----> [ERROR] GitHub CLI is not logged in. Please run 'gh auth login' to log in.")
+                print(f"----> [ERROR] {e}")
+                raise
 
         # Download executables from GitHub Actions using 'gh' CLI
         for name, path in executables_list.items():
@@ -128,12 +143,13 @@ def read_configuration():
                 try:
                     print(f"------> Checking if the run ID [{path}] exists in GitHub Actions (command: gh run view {path})...")
                     subprocess.run(f"gh run view {path}", shell=True, text=True, capture_output=True, check=True)
-                    print(f"------> ID [{path}] exists.")
+                    print(f"------> ID [{path}] exists")
                 except Exception as e:
                     print(f"------> [ERROR] An error occurred while checking the run ID [{path}]")
                     print(f"------> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"------> [ERROR] {e}")
-                    
+                    raise
+                
                 try:
                     print(f"------> Downloading the executable for [{name}] to {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER} (command: gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER})...")
                     subprocess.run(f"gh run download {path} -D {BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}", shell=True, text=True, capture_output=True, check=True)
@@ -142,20 +158,28 @@ def read_configuration():
                     print(f"----> [ERROR] An error occurred while downloading executable for [{name}]")
                     print(f"----> [ERROR] Please check if the run ID [{path}] exists in GitHub Actions")
                     print(f"----> [ERROR] {e}")
+                    raise
 
+                extension = ""
                 artifact_folder_name = ""
                 if sys.platform == "win32" or sys.platform == "cygwin":
                     artifact_folder_name = "MPM-Geomechanics-benchmark-windows"
+                    extension = ".exe"
 
                 if sys.platform == "linux":
                     artifact_folder_name = "MPM-Geomechanics-benchmark-linux"
+                    extension = ""
+
+                if artifact_folder_name == "":
+                    print(f"----> [ERROR] Unsupported platform: {sys.platform}")
+                    raise
 
                 # Move the executable to a folder with the name of the executable
-                origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}/MPM-Geomechanics-benchmark.exe"
-                destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark.exe"
+                origin = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}/MPM-Geomechanics-benchmark" + extension
+                destination = f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}/MPM-Geomechanics-benchmark" + extension
                 Path(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{name}").mkdir(parents=True, exist_ok=True)
                 shutil.move(origin, destination)
-                shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/MPM-Geomechanics-benchmark-windows")
+                shutil.rmtree(f"{BENCHMARK_FOLDER}/{ARTIFACT_FOLDER}/{artifact_folder_name}")
                 executables[name] = destination
 
     if "parameters" in json_configuration:
@@ -195,6 +219,7 @@ def start_benchmarks():
     print("--> All benchmarks completed")
     print(f"--> Check {BENCHMARK_FOLDER}/{LOGS_FOLDER} for logs")
     print(f"--> Total elapsed time: {elapsed_time:.2f} seconds")
+
 
 # Main function
 def main():
