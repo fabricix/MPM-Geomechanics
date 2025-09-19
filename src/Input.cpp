@@ -16,6 +16,7 @@
 #include "Warning.h"
 #include "Loads.h"
 #include "Seismic.h"
+#include "MpmInterpreter.h"
 
 #include <limits>
 using std::numeric_limits;
@@ -39,6 +40,7 @@ namespace Input
 {
 
 	json inputFile; //!< data structure containing all the model information
+	json interpretation;
 	string inputFileName; //!< file name to be read
 
 	using json = nlohmann::json;
@@ -79,21 +81,33 @@ bool Input::getSaveState() { return Input::get_boolean(Input::getJson(), "save_s
 
 void Input::readInputFile(string filename)
 {
-
 	try {
 		// configures the input file	
 		inputFileName = filename;
+		std::string extension = inputFileName.substr(inputFileName.find_last_of(".") + 1);
 
-		if (inputFileName != "") {
+		if (inputFileName == "") throw(0);
 
+		if (extension == "mpm")
+		{
+			inputFileName = MpmInterpreter::interpreter(inputFileName);
 			// read the file
 			ifstream i(inputFileName);
 
 			// initialize the json structure
 			i >> inputFile;
+			return;
 		}
-		else
-			throw(0);
+
+		if (extension == "json")
+		{
+			// read the file
+			ifstream i(inputFileName);
+
+			// initialize the json structure
+			i >> inputFile;
+			return;
+		}
 	}
 	catch (...)
 	{

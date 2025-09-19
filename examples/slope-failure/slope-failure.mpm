@@ -1,0 +1,55 @@
+# Comment...
+STRESS_SCHEME_UPDATE      = "USL"
+
+# Comment...
+SHAPE_FUNCTION            = "GIMP" 
+
+# Comment...
+TIME                      = 1 
+
+# Comment...
+TIME_STEP                 = 0.001
+
+# Comment...
+N_THREADS                 = 10
+
+# Comment...
+GRAVITY                   = [0.0, 0.0, -9.81]
+
+# Comment...
+DAMPING_TYPE              = "local"
+DAMPING_VALUE             = 0.0
+
+# Comment...
+RESULTS_PRINT             = 50
+RESULTS_PARTICLES_FIELDS  = ["all"] 
+RESULTS_GRID_FIELDS       = ["none"]
+
+# Comment...
+MESH_CELLS_DIMENSION      = [1, 1, 1]
+MESH_CELLS_NUMBER         = [110, 1, 36]
+MESH_ORIGIN               = [0, 0, 0]
+MESH_BOUNDARY_PLANEX0     = "fixed"
+MESH_BOUNDARY_PLANEY0     = "sliding"
+MESH_BOUNDARY_PLANEZ0     = "fixed"
+MESH_BOUNDARY_PLANEXN     = "fixed"
+MESH_BOUNDARY_PLANEYN     = "sliding"
+MESH_BOUNDARY_PLANEZN     = "fixed"
+
+# Comment...
+MATERIALS_NAMES           = ["plastic", "solid"]
+M_PLASTIC_TYPE            = "mohr-coulomb"
+M_PLASTIC_YOUNG           = 70e6
+M_PLASTIC_DENSITY         = 2100
+M_PLASTIC_POISSON         = 0.3
+M_PLASTIC_FRICTION        = 20.0
+M_PLASTIC_COHESION        = 1.0e3
+
+# Comment...
+BODIES_NAMES              = ["soil"]
+B_SOIL_TYPE               = "polygon_2d"
+B_SOIL_EXTRUDE_DIR        = "y"
+B_SOIL_DISPLACEMENT       = 1
+B_SOIL_DISCRETIZATION     = 1
+B_SOIL_MATERIAL           = "plastic"
+B_SOIL_POINTS             = "particles.json"
