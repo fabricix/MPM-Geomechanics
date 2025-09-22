@@ -37,18 +37,18 @@ var NAVTREE =
     [ "Development manual", "development_manual.html", [
       [ "Keywords for commit messages", "development_manual.html#development_manual_keywords", [
         [ "Keywords List", "development_manual.html#autotoc_md48", [
-          [ "<strong>1. <tt>doc:</tt></strong>", "development_manual.html#autotoc_md49", null ],
-          [ "<strong>2. <tt>feat:</tt></strong>", "development_manual.html#autotoc_md50", null ],
-          [ "<strong>3. <tt>fix:</tt></strong>", "development_manual.html#autotoc_md51", null ],
-          [ "<strong>4. <tt>refactor:</tt></strong>", "development_manual.html#autotoc_md52", null ],
-          [ "<strong>5. <tt>test:</tt></strong>", "development_manual.html#autotoc_md53", null ],
-          [ "<strong>6. <tt>perf:</tt></strong>", "development_manual.html#autotoc_md54", null ],
-          [ "<strong>7. <tt>todo:</tt></strong>", "development_manual.html#autotoc_md55", null ],
-          [ "<strong>8. <tt>hack:</tt></strong>", "development_manual.html#autotoc_md56", null ],
-          [ "<strong>9. <tt>warn:</tt></strong>", "development_manual.html#autotoc_md57", null ],
-          [ "<strong>10. <tt>debug:</tt></strong>", "development_manual.html#autotoc_md58", null ],
-          [ "<strong>11. <tt>chore:</tt></strong>", "development_manual.html#autotoc_md59", null ],
-          [ "<strong>12. <tt>deprecated:</tt></strong>", "development_manual.html#autotoc_md60", null ]
+          [ "<strong>1. <tt>doc:</tt>", "development_manual.html#autotoc_md49", null ],
+          [ "<strong>2. <tt>feat:</tt>", "development_manual.html#autotoc_md50", null ],
+          [ "<strong>3. <tt>fix:</tt>", "development_manual.html#autotoc_md51", null ],
+          [ "<strong>4. <tt>refactor:</tt>", "development_manual.html#autotoc_md52", null ],
+          [ "<strong>5. <tt>test:</tt>", "development_manual.html#autotoc_md53", null ],
+          [ "<strong>6. <tt>perf:</tt>", "development_manual.html#autotoc_md54", null ],
+          [ "<strong>7. <tt>todo:</tt>", "development_manual.html#autotoc_md55", null ],
+          [ "<strong>8. <tt>hack:</tt>", "development_manual.html#autotoc_md56", null ],
+          [ "<strong>9. <tt>warn:</tt>", "development_manual.html#autotoc_md57", null ],
+          [ "<strong>10. <tt>debug:</tt>", "development_manual.html#autotoc_md58", null ],
+          [ "<strong>11. <tt>chore:</tt>", "development_manual.html#autotoc_md59", null ],
+          [ "<strong>12. <tt>deprecated:</tt>", "development_manual.html#autotoc_md60", null ]
         ] ]
       ] ],
       [ "Best Practices", "development_manual.html#development_manual_best_practices", null ],

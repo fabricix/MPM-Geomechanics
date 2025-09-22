@@ -104,35 +104,35 @@ $(document).ready(function(){initNavTree('testing_manual.html',''); initResizabl
 <div class="textblock"><h1><a class="anchor" id="testing_manual_howto_compile"></a>
 1. How to Compile</h1>
 <dl class="section note"><dt>Note</dt><dd>Prior to proceeding with these instructions, please consult the <a class="el" href="required_programs.html">Required Programs</a> section.</dd></dl>
-<p>The tests use <b>GoogleTest</b>. It is necessary to import this library by cloning the official repository into the folder **<code>/external</code>**. Each developer must clone this repository independently.</p>
+<p>The tests use <b>GoogleTest</b>. It is necessary to import this library by cloning the official repository into the folder <code>/external</code>. Each developer must clone this repository independently.</p>
 <div class="fragment"><div class="line">cd external</div>
 <div class="line">git clone https://github.com/google/googletest.git</div>
-</div><!-- fragment --><p>The simplest way to compile on Windows and Linux is by using the **<code>.bash</code>** file at **<code>/build/qa</code>** with **<code>MSYS2 MINGW64</code>** console line, simply execute the following command in the directory **<code>MPM-Geomechanics/build/qa</code>**: </p><div class="fragment"><div class="line">./cmake-build.bash</div>
+</div><!-- fragment --><p>The simplest way to compile on Windows and Linux is by using the <code>.bash</code> file at <code>/build/qa</code> with <code>MSYS2 MINGW64</code> console line, simply execute the following command in the directory <code>MPM-Geomechanics/build/qa</code>: </p><div class="fragment"><div class="line">./cmake-build.bash</div>
 </div><!-- fragment --><p>Alternatively, you can use the following commands: </p><div class="fragment"><div class="line">cmake -G &quot;Unix Makefiles&quot; -B build</div>
 </div><!-- fragment --><div class="fragment"><div class="line">cmake --build build</div>
-</div><!-- fragment --><p>These commands will generate two executables: **<code>MPM-Geomechanics-tests</code>** and **<code>MPM-Geomechanics-benchmark</code>**.</p>
+</div><!-- fragment --><p>These commands will generate two executables: <code>MPM-Geomechanics-tests</code> and <code>MPM-Geomechanics-benchmark</code>.</p>
 <ul>
-<li>**<code>MPM-Geomechanics-tests</code>**: Run testing using GoogleTest. All files ending with **<code>.test.cpp</code>** are testing files, you can find them in the directory **<code>qa/tests</code>**.</li>
-<li>**<code>MPM-Geomechanics-benchmark</code>**: Run benchmark using GoogleTest. All files ending with **<code>.benchmark.cpp</code>** are performance files. You can find them in the directory **<code>qa/benchmark</code>**.</li>
+<li><code>MPM-Geomechanics-tests</code>: Run testing using GoogleTest. All files ending with <code>.test.cpp</code> are testing files, you can find them in the directory <code>qa/tests</code>.</li>
+<li><code>MPM-Geomechanics-benchmark</code>: Run benchmark using GoogleTest. All files ending with <code>.benchmark.cpp</code> are performance files. You can find them in the directory <code>qa/benchmark</code>.</li>
 </ul>
 <h1><a class="anchor" id="testing_manual_howto"></a>
 How does benchmarking work?</h1>
 <dl class="section note"><dt>Note</dt><dd>If you are using <b>Windows OS</b>, make sure to use the <b>MINGW64 command-line console</b>.</dd></dl>
 <h2><a class="anchor" id="testing_manual_howto_benchmark"></a>
 Executable: MPM-Geomechanics-benchmark</h2>
-<p>To run the benchmark correctly, a JSON file named **<code>benchmark-configuration.json</code>** is required. This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.</p>
-<p>The executable **<code>MPM-Geomechanics-benchmark</code>** allows the following command-line arguments:</p>
+<p>To run the benchmark correctly, a JSON file named <code>benchmark-configuration.json</code> is required. This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.</p>
+<p>The executable <code>MPM-Geomechanics-benchmark</code> allows the following command-line arguments:</p>
 <ul>
-<li>**<code>&lt;directory&gt;</code>**: Specifies which file should be used to run the benchmark. If no file is specified, the program will use **<code>benchmark-configuration.json</code>** located in the same directory as the executable. Example: **<code>MPM-Geomechanics-benchmark configuration-file.json</code>**</li>
+<li><code>&lt;directory&gt;</code>: Specifies which file should be used to run the benchmark. If no file is specified, the program will use <code>benchmark-configuration.json</code> located in the same directory as the executable. Example: <code>MPM-Geomechanics-benchmark configuration-file.json</code></li>
 </ul>
-<p>The executable **<code>MPM-Geomechanics-benchmark</code>** allows the following command-line flags:</p>
+<p>The executable <code>MPM-Geomechanics-benchmark</code> allows the following command-line flags:</p>
 <ul>
-<li>**<code>--log</code>**: Shows more information about missing keys in the **<code>benchmark-configuration.json</code>** file</li>
+<li><code>--log</code>: Shows more information about missing keys in the <code>benchmark-configuration.json</code> file</li>
 </ul>
 <h2><a class="anchor" id="testing_manual_howto_multibenchmark"></a>
 Executable: start-multi-benchmark.py</h2>
-<p>The performance test can also be executed using the **<code>start-multi-benchmark.py</code>** script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in **<code>start-multi-benchmark-configuration.json</code>**. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file.</p>
-<p>Example of a **<code>start-multi-benchmark-configuration.json</code>** file:</p>
+<p>The performance test can also be executed using the <code>start-multi-benchmark.py</code> script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in <code>start-multi-benchmark-configuration.json</code>. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file.</p>
+<p>Example of a <code>start-multi-benchmark-configuration.json</code> file:</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">    &quot;executables&quot;: {</div>
 <div class="line">        &quot;win_benchmark_executable&quot;: &quot;MPM-Geomechanics-benchmark.exe&quot;,  -&gt; An executable located at build/qa/MPM-Geomechanics-benchmark.exe</div>
@@ -144,10 +144,10 @@ Executable: start-multi-benchmark.py</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>As you can see, this setup will run 3x3 (particles x threads) tests for <b>win_benchmark_executable</b> and <b>win_github_id</b>, totaling 18 tests (3x3x2)</p>
-<p>The executable **<code>start-multi-benchmark.py</code>** allows the following command-line flags:</p>
+<p>The executable <code>start-multi-benchmark.py</code> allows the following command-line flags:</p>
 <ul>
-<li>**<code>--clear</code>**: Removes the <b>benchmark folder</b> (if it exists) before executing the performance tests.</li>
-<li>**<code>--cache</code>**: Uses the previously created cache instead of the **<code>start-multi-benchmark-configuration.json</code>** file. </li>
+<li><code>--clear</code>: Removes the <b>benchmark folder</b> (if it exists) before executing the performance tests.</li>
+<li><code>--cache</code>: Uses the previously created cache instead of the <code>start-multi-benchmark-configuration.json</code> file. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

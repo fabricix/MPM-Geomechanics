@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hack_3a_20tt_20strong_0',['&lt;strong&gt;8. &lt;tt&gt;hack:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md56',1,'']]],
+  ['hack_3a_20tt_0',['&lt;strong&gt;8. &lt;tt&gt;hack:&lt;/tt&gt;',['../development_manual.html#autotoc_md56',1,'']]],
   ['hasheader_1',['hasHeader',['../structSeismicAnalysis.html#a9f87846fd53afe57b25d965860694207',1,'SeismicAnalysis']]],
   ['how_20does_20benchmarking_20work_2',['How does benchmarking work?',['../testing_manual.html#testing_manual_howto',1,'']]],
   ['how_20the_20material_20points_20are_20placed_20in_20the_20body_3',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],

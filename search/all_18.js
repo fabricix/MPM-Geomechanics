@@ -26,7 +26,7 @@ var searchData=
   ['particlevorticityincrement_23',['particleVorticityIncrement',['../namespaceInterpolation.html#a894002304b773547cadcce41d29ca4cc',1,'Interpolation']]],
   ['pattern_20with_20conditional_20pragma_20otherwise_24',['Use a single-version pattern with conditional pragma otherwise',['../development_manual.html#autotoc_md65',1,'']]],
   ['penaltystiffness_25',['penaltyStiffness',['../classTerrainContact.html#a395d86cdd6648b52df59fd9966eff02b',1,'TerrainContact']]],
-  ['perf_3a_20tt_20strong_26',['&lt;strong&gt;6. &lt;tt&gt;perf:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md54',1,'']]],
+  ['perf_3a_20tt_26',['&lt;strong&gt;6. &lt;tt&gt;perf:&lt;/tt&gt;',['../development_manual.html#autotoc_md54',1,'']]],
   ['phase_20simulation_20definition_20example_27',['Two phase simulation definition example',['../namespaceInput.html#autotoc_md25',1,'']]],
   ['phase_20simulations_28',['Two phase simulations',['../namespaceInput.html#autotoc_md24',1,'']]],
   ['placed_20in_20the_20body_29',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],

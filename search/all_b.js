@@ -7,7 +7,7 @@ var searchData=
   ['celltype_4',['CellType',['../namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83d',1,'Output']]],
   ['center_5',['center',['../classBodySphere.html#a1b1ecde2c844cf03e218d62ce971e70c',1,'BodySphere']]],
   ['central_20difference_20method_6',['Central difference Method',['../theory_and_numerical_formulation_.html#autotoc_md82',1,'']]],
-  ['chore_3a_20tt_20strong_7',['&lt;strong&gt;11. &lt;tt&gt;chore:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md59',1,'']]],
+  ['chore_3a_20tt_7',['&lt;strong&gt;11. &lt;tt&gt;chore:&lt;/tt&gt;',['../development_manual.html#autotoc_md59',1,'']]],
   ['cohesion_8',['cohesion',['../classMohrCoulomb.html#ab8c0c43c40ef8e9229de8d13cc8b84c2',1,'MohrCoulomb']]],
   ['cohesion_5fresidual_9',['cohesion_residual',['../classMohrCoulomb_1_1Softening.html#a0299a7fac2f11761340b922dcf92a02f',1,'MohrCoulomb::Softening']]],
   ['cohesion_5fsoftening_5factive_10',['cohesion_softening_active',['../classMohrCoulomb_1_1Softening.html#a1dd56daab18af3a15b24cbab50ff9584',1,'MohrCoulomb::Softening']]],

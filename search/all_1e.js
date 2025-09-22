@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['warn_3a_20tt_20strong_0',['&lt;strong&gt;9. &lt;tt&gt;warn:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md57',1,'']]],
+  ['warn_3a_20tt_0',['&lt;strong&gt;9. &lt;tt&gt;warn:&lt;/tt&gt;',['../development_manual.html#autotoc_md57',1,'']]],
   ['warning_1',['Warning',['../namespaceWarning.html',1,'']]],
   ['warning_2eh_2',['Warning.h',['../Warning_8h.html',1,'']]],
   ['weight_3',['weight',['../classContribution.html#a1b51bfbf5103349bf1890fbef503ca43',1,'Contribution']]],

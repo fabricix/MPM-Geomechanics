@@ -111,8 +111,11 @@ Introduction</h2>
 <li>The load is zero in any other point.</li>
 <li>For any point infinitely distant from the origin, the displacements must all vanish.</li>
 </ul>
-<p>&lt;img src="/manual/images/boussinesq-problem.png" alt=""Boussinesq' problem""/&gt;</p>
-<h2><a class="anchor" id="autotoc_md94"></a>
+<div class="image">
+<img src="boussinesq-problem.png" alt="" width="300"/>
+<div class="caption">
+"Boussinesq' problem"</div></div>
+    <h2><a class="anchor" id="autotoc_md94"></a>
 Analytical solution</h2>
 <p>The analytical solution of the vertical displacement field is:  </p><p class="formulaDsp">
 \[
@@ -178,12 +181,18 @@ MPM model and result comparison</h2>
 }
 </pre><p> The numerical results obtained with <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> were compared with the analytical solution. In general the numerical solution presents a good coincidence with the analytical solution, however, some diferences are observed due the discretization. The <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> formulation uses particles to represent the continuum's variables in a Lagrangian approach. This particles represents a portion of the domain, so they have an associated volume. The particles do not represent a particle located at the boundary of the body and some errors, in consequence some differences will be observed. This differences must to be reducing with the refinement of the computational mesh. <br  />
 </p>
-<p>&lt;img src="/manual/images/boussinesq-problem-verification.png" alt=""Results comparison""/&gt;</p>
-<h1><a class="anchor" id="autotoc_md96"></a>
+<div class="image">
+<img src="boussinesq-problem-verification.png" alt="" width="600"/>
+<div class="caption">
+"Results comparison"</div></div>
+    <h1><a class="anchor" id="autotoc_md96"></a>
 Base acceleration example</h1>
 <p>In this example we will show how to model the movement of an elastic body subjected to a dynamic boundary condition. The geometry of the body will be a regular cuboid with edge dimension \( l_x = 0.3\) m, \( l_y = 0.3 \) m, and \( l_z = 0.8 \) m in the \( xyz \) coordinate system. The lower coordinate point is located at \( p_{min} = (0.4, 0.4, 0.0) \) m. The dynamic boundary condition considered is a base acceleration defined as a function of time as \( \ddot{u} = A 2 \pi f cos ( 2 \pi f t + \alpha ) \). The total time of the simulation is 2 seconds, and the time step is \( \Delta t = 1e-4\) seconds. The material density considered is \( \rho = 2500 \) kg/m \(^3\), and the elastic behavior is defined by Young's modulus \( E = 100e6 \) MPa and Poisson ratio equal to \( \nu = 0.25 \). The figure below shows the body in the space.</p>
-<p>&lt;img src="/manual/images/geometry-body.png" alt=""<a class="el" href="namespaceGeometry.html" title="Contain auxiliary functions related with geometric operations.">Geometry</a> of the body""/&gt;</p>
-<h2><a class="anchor" id="autotoc_md97"></a>
+<div class="image">
+<img src="geometry-body.png" alt="" width="600"/>
+<div class="caption">
+"Geometry of the body"</div></div>
+    <h2><a class="anchor" id="autotoc_md97"></a>
 MPM-Model</h2>
 <p>With these data we will to create an <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model consisting in uniformly distributed particles inside the geometry of the body. For do so, we used the "body" and "cuboid" keywords. When body type is "cuboid" we can create a body with the lower and highest coordinate point P1 (lower) and P2 (hight) of the geometry. The material established using the "material_id" keyword. This material must to be correctly defined using the keyword "materials". When we create a body using uniformly distributed particles, eight in the case of a regular element mesh, the number of total particles in the body depends of the mesh grid cell dimension. In this case we will consider a uniform mesh consisting in elements of dimension \( \Delta x = \Delta y = \Delta z = 0.1 \) m. In a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model the mesh must to cover the whole domain, covering the complete amplitude of the body movement. For this example we will consider the same number of element in each direction \( n_x=12, n_y=12, n_z=15 \) to account from the origin of coordinate \( (0,0,0) \).</p>
 <p>The complete JSON file with the keywords we write:</p>
@@ -216,10 +225,16 @@ MPM-Model</h2>
 ...
 </pre><p> Once we have the JSON input file, we can execute the simulator with the input file as parameter. When the simulation ends we can find the particle results in the "/particle" directory, and the grid mesh in the "/grid" directory. The particles results are written in uniformly separated times determined by the number of results defined in the "print" keyword. The number of total results must be 40. In this example, the particles results must be "particle_1.vtu", "particle_2.vtu", ..., "particle_41.vtu". Together with the "particle_i.vtu" results, a particle serie file "particleTimeSerie.pvd" is created. This time series file can be used to load all the results in the Paraview scientific visualization program.</p>
 <p>In other to visualize the results, the "particleTimeSerie.pvd" can be open in the Paraview by "&gt; File &gt; Open &gt; particleTimeSerie.pvd". And the mesh can be loaded by open the "&gt; File &gt; Open &gt; eulerianGrid.vtu".</p>
-<p>&lt;img src="/manual/images/mpm-model-particles-and-mesh.png" alt=""Particles and mesh of analyzed case""/&gt;</p>
-<p>In order to validate the implementation of the dynamic boundary condition the velocity calculated from the input function used to created the base acceleration, \( \dot{u} = A sin ( 2 \pi f t + \alpha ) \) is compared with the velocity of a particle located at the base of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model. The next figure shows this comparison. The velocities obtained with <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> at the base of the models coincides with the velocities obtained from the input record.</p>
-<p>&lt;img src="/manual/images/velocity-base-verification.png" alt=""Verification of velocities obtained with <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> simulation""/&gt; </p>
-</div></div><!-- contents -->
+<div class="image">
+<img src="mpm-model-particles-and-mesh.png" alt="" width="600"/>
+<div class="caption">
+"Particles and mesh of analyzed case"</div></div>
+    <p>In order to validate the implementation of the dynamic boundary condition the velocity calculated from the input function used to created the base acceleration, \( \dot{u} = A sin ( 2 \pi f t + \alpha ) \) is compared with the velocity of a particle located at the base of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model. The next figure shows this comparison. The velocities obtained with <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> at the base of the models coincides with the velocities obtained from the input record.</p>
+<div class="image">
+<img src="velocity-base-verification.png" alt="" width="600"/>
+<div class="caption">
+"Verification of velocities obtained with MPM simulation"</div></div>
+     </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

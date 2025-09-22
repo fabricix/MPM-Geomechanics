@@ -7,7 +7,7 @@ var searchData=
   ['readnodalpointloads_4',['readNodalPointLoads',['../namespaceInput.html#a4af9571f7842a96471572cd550d598a9',1,'Input']]],
   ['readseismicdata_5',['readSeismicData',['../namespaceInput.html#aec95c042d839e3ae12de0b73ee08279d',1,'Input']]],
   ['recalculatenormals_6',['recalculateNormals',['../classSTLReader.html#a28951abd498b4d1bdec439f21f2958b8',1,'STLReader']]],
-  ['refactor_3a_20tt_20strong_7',['&lt;strong&gt;4. &lt;tt&gt;refactor:&lt;/tt&gt;&lt;/strong&gt;',['../development_manual.html#autotoc_md52',1,'']]],
+  ['refactor_3a_20tt_7',['&lt;strong&gt;4. &lt;tt&gt;refactor:&lt;/tt&gt;',['../development_manual.html#autotoc_md52',1,'']]],
   ['reference_20first_8',['Atomic operations: always take the reference first',['../development_manual.html#autotoc_md68',1,'']]],
   ['references_9',['References',['../theory_and_numerical_formulation_.html#autotoc_md91',1,'']]],
   ['registerbodies_10',['registerBodies',['../classSolver.html#a119ea70a054a7ad5cb7b2130fd6917a4',1,'Solver']]],

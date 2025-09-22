@@ -72,11 +72,11 @@ a {
 }
 
 .fragment {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
+  background-color: #f9f9f9 !important;
+  border: 1px solid #ddd !important;
+  padding: 10px !important;
+  margin: 5px 0 !important;
+  border-radius: 5px !important;
 }
 
 .fragment .clipboard {
