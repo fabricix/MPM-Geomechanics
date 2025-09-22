@@ -88,9 +88,20 @@ var namespaces_dup =
     [ "Loads", "namespaceLoads.html", "namespaceLoads" ],
     [ "ModelSetup", "namespaceModelSetup.html", [
       [ "DampingType", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698", [
-        [ "UNDAMPED", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a26d01b79aba72ed5718e0346f5a2dfb8", null ],
-        [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aaeed93c6d5825077deaf0c6cb8092092", null ],
-        [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5", null ]
+        [ "UNDAMPED", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a37ead0e9b4ed1a5ea6c334f1aacd379e", null ],
+        [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698ac637e82110b5e53edcf981b582f95330", null ],
+        [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aa293ab41f999b4f67bea3ca2f6db8ef1", null ],
+        [ "UNDAMPED", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a37ead0e9b4ed1a5ea6c334f1aacd379e", null ],
+        [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698ac637e82110b5e53edcf981b582f95330", null ],
+        [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aa293ab41f999b4f67bea3ca2f6db8ef1", null ]
+      ] ],
+      [ "DampingType", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698", [
+        [ "UNDAMPED", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a37ead0e9b4ed1a5ea6c334f1aacd379e", null ],
+        [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698ac637e82110b5e53edcf981b582f95330", null ],
+        [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aa293ab41f999b4f67bea3ca2f6db8ef1", null ],
+        [ "UNDAMPED", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a37ead0e9b4ed1a5ea6c334f1aacd379e", null ],
+        [ "LOCAL", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698ac637e82110b5e53edcf981b582f95330", null ],
+        [ "KINETIC_DYNAMIC_RELAXATION", "namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698aa293ab41f999b4f67bea3ca2f6db8ef1", null ]
       ] ],
       [ "HydroMechanicalCouplingType", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2", [
         [ "NONE", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693", null ],
