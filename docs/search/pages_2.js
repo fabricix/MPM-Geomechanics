@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['development_20manual_0',['Development manual',['../development_manual.html',1,'']]]
+  ['compilation_20and_20benchmarking_0',['Testing Compilation and Benchmarking',['../testing_manual.html',1,'']]]
 ];

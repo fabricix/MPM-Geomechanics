@@ -31,7 +31,6 @@ var searchData=
   ['normal_28',['normal',['../structTriangle.html#a825a6dde1927e288afe4652a9cfcbaed',1,'Triangle']]],
   ['normalization_20of_20openmp_20pragmas_29',['Normalization of OpenMP pragmas',['../development_manual.html#autotoc_md67',1,'']]],
   ['nrows_30',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]],
-  ['numerical_20damping_31',['Numerical damping',['../theory_and_numerical_formulation_.html#autotoc_md85',1,'']]],
-  ['numerical_20formulation_32',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
-  ['numerical_20implementation_33',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md83',1,'']]]
+  ['numerical_20formulation_31',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
+  ['numerical_20implementation_32',['Numerical implementation',['../theory_and_numerical_formulation_.html#autotoc_md83',1,'']]]
 ];

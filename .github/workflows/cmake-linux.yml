@@ -6,24 +6,52 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Install build dependencies
-      run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake git
 
-    - name: Configure with CMake (Unix Makefiles)
-      run: cmake -G "Unix Makefiles" -S build/CMake -B build/CMake
+      - name: Configure with CMake (Unix Makefiles)
+        run: cmake -G "Unix Makefiles" -S build/CMake -B build/CMake
 
-    - name: Build with CMake
-      run: cmake --build build/CMake
+      - name: Build with CMake
+        run: cmake --build build/CMake
 
-    - name: Upload Linux binary
-      uses: actions/upload-artifact@v4
-      with:
-        name: MPM-Geomechanics-linux
-        path: build/CMake/MPM-Geomechanics
+      - name: Upload Linux binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: MPM-Geomechanics-linux
+          path: build/CMake/MPM-Geomechanics
+
+      - name: (tests) Clone GoogleTest into external directory
+        run: git clone https://github.com/google/googletest.git external/googletest
+
+      - name: (tests) Make test build script executable
+        run: chmod +x build/qa/cmake-build.bash
+
+      - name: (tests) Run build script from qa directory
+        run: ./cmake-build.bash
+        working-directory: build/qa
+
+      - name: (tests) Run tests
+        run: ./MPM-Geomechanics-tests
+        working-directory: build/qa
+
+      - name: (tests) Run benchmark
+        run: ./MPM-Geomechanics-benchmark
+        working-directory: build/qa
+
+      - name: (tests) Upload benchmark binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: MPM-Geomechanics-benchmark-linux
+          path: build/qa/MPM-Geomechanics-benchmark

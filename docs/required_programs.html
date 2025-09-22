@@ -121,6 +121,10 @@ Required Programs - Windows</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>MSYS2</b>   </td><td class="markdownTableBodyNone">via Winget   </td><td class="markdownTableBodyNone"><code>winget install -e --id MSYS2.MSYS2 --source winget</code>    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>GitHub cli</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S mingw-w64-x86_64-github-cli</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Python</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S mingw-w64-x86_64-python</code>    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>CMake</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S mingw-w64-x86_64-cmake</code>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>GCC</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S mingw-w64-x86_64-gcc</code>    </td></tr>
@@ -130,15 +134,19 @@ Required Programs - Windows</h1>
 <td class="markdownTableBodyNone"><b>Make</b>   </td><td class="markdownTableBodyNone">via MSYS2 MINGW64   </td><td class="markdownTableBodyNone"><code>pacman -S make</code>   </td></tr>
 </table>
 <p><b>Make sure you have Winget installed</b>, you can verify this by running <code>winget --version</code>. If you don't have installed <b>Winget</b>, you can get it from <a href="https://learn.microsoft.com/en-us/windows/package-manager/winget/">Microsoft's official website</a></p>
-<p><b>Step 1</b>: Install <b>Git</b> and <b>MSYS2</b> using <code>winget</code>, by running the following commands:</p>
+<p><b>Step 1</b>: Install <b>Git</b>, <b>GitHub</b> and <b>MSYS2</b> using <code>winget</code>, by running the following commands:</p>
 <div class="fragment"><div class="line">winget install -e --id Git.Git -e --source winget</div>
 </div><!-- fragment --><div class="fragment"><div class="line">winget install -e --id MSYS2.MSYS2 --source winget</div>
-</div><!-- fragment --><p><b>Step 2</b>: Open the <code>MSYS2 MINGW64</code> console and install <b>CMake</b>, <b>GCC</b>, <b>G++</b> and <b>Make</b>:</p>
-<div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-cmake</div>
+</div><!-- fragment --><p><b>Step 2</b>: Open the <code>MSYS2 MINGW64</code> console and install <b>GitHub cli</b>, <b>Python</b>, <b>CMake</b>, <b>GCC</b>, <b>G++</b> and <b>Make</b>:</p>
+<div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-github-cli</div>
+</div><!-- fragment --><div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-python</div>
+</div><!-- fragment --><div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-cmake</div>
 </div><!-- fragment --><div class="fragment"><div class="line">pacman -S mingw-w64-x86_64-gcc</div>
 </div><!-- fragment --><div class="fragment"><div class="line">pacman -S make</div>
 </div><!-- fragment --><p><b>Step 3</b>: Verify the versions of each installation :</p>
 <div class="fragment"><div class="line">git --version</div>
+<div class="line">gh --version</div>
+<div class="line">python --version</div>
 <div class="line">cmake --version</div>
 <div class="line">make --version </div>
 <div class="line">gcc --version   </div>
@@ -152,6 +160,10 @@ Required Programs - Linux</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Git</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install git</code>    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>GitHub cli</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install gh</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Python</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install python3 python3-pip</code>    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>CMake</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install cmake</code>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>GCC</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install build-essential</code>    </td></tr>
@@ -160,12 +172,16 @@ Required Programs - Linux</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Make</b>   </td><td class="markdownTableBodyNone">via apt   </td><td class="markdownTableBodyNone"><code>sudo apt install build-essential</code>   </td></tr>
 </table>
-<p><b>Step 1</b>: Install all the necessary packages referenced above via <code>apt</code>:</p>
+<p><b>Step 1</b>: Install all the necessary packages referenced above (<b>Git</b>, <b>GitHub cli</b>, <b>Python</b>, <b>CMake</b>, <b>GCC</b>, <b>G++</b> and <b>Make</b>) via <code>apt</code>:</p>
 <div class="fragment"><div class="line">sudo apt install git</div>
+</div><!-- fragment --><div class="fragment"><div class="line">sudo apt install gh</div>
+</div><!-- fragment --><div class="fragment"><div class="line">sudo apt install python3 python3-pip</div>
 </div><!-- fragment --><div class="fragment"><div class="line">sudo apt install cmake</div>
 </div><!-- fragment --><div class="fragment"><div class="line">sudo apt install build-essential</div>
 </div><!-- fragment --><p><b>Step 2</b>: Verify the versions of each installation:</p>
 <div class="fragment"><div class="line">git --version</div>
+<div class="line">gh --version</div>
+<div class="line">python3 --version</div>
 <div class="line">cmake --version</div>
 <div class="line">make --version </div>
 <div class="line">gcc --version   </div>
