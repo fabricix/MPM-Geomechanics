@@ -2,7 +2,7 @@ var classTerrainContact =
 [
     [ "TerrainContact", "classTerrainContact.html#ab05e8b3ab5a560ae041e99a23de84a6f", null ],
     [ "apply", "classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3", null ],
-    [ "computeContactForces", "classTerrainContact.html#a1fb2d2aeeb409505ac41d9c01039c7d4", null ],
+    [ "computeContactForces", "classTerrainContact.html#a9437ff0e8e57e990b2ab72b5cd7d496e", null ],
     [ "computeDistanceLevelSetFunction", "classTerrainContact.html#a1629583d8c75c02c2e9864deb59960ca", null ],
     [ "determineContactPotentialPairs", "classTerrainContact.html#ad28e97c774a0c053d101392878ec13bb", null ],
     [ "enablePenaltyContact", "classTerrainContact.html#a0eca447fa28df2d702abe5b09c1a1bfb", null ],

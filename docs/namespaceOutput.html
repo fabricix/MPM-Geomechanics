@@ -154,9 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a6d58672a69289bb29ddb62a4be2147bd" id="r_a6d58672a69289bb29ddb62a4be2147bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d58672a69289bb29ddb62a4be2147bd">isGridFieldRequired</a> (string field)</td></tr>
 <tr class="memdesc:a6d58672a69289bb29ddb62a4be2147bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify is the field must be written.  <br /></td></tr>
 <tr class="separator:a6d58672a69289bb29ddb62a4be2147bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71880b7e8739b49a8e7b3f3e4fb2e056" id="r_a71880b7e8739b49a8e7b3f3e4fb2e056"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71880b7e8739b49a8e7b3f3e4fb2e056">writeResultInStep</a> (int resultSteps, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies, double iTime)</td></tr>
-<tr class="memdesc:a71880b7e8739b49a8e7b3f3e4fb2e056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write results if the step is the step result.  <br /></td></tr>
-<tr class="separator:a71880b7e8739b49a8e7b3f3e4fb2e056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36983e00c0d61d77b07ffc2390a54ddd" id="r_a36983e00c0d61d77b07ffc2390a54ddd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36983e00c0d61d77b07ffc2390a54ddd">writeResultInStep</a> (int resultSteps, vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *particles, double iTime)</td></tr>
+<tr class="memdesc:a36983e00c0d61d77b07ffc2390a54ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write results if the step is the step result.  <br /></td></tr>
+<tr class="separator:a36983e00c0d61d77b07ffc2390a54ddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0fe49d1f2fd614ecb2c1eab5421845e" id="r_ab0fe49d1f2fd614ecb2c1eab5421845e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0fe49d1f2fd614ecb2c1eab5421845e">writeGridInStep</a> (int resultSteps, <a class="el" href="classMesh.html">Mesh</a> *mesh, double iTime)</td></tr>
 <tr class="memdesc:ab0fe49d1f2fd614ecb2c1eab5421845e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write grid results if the step is the step result.  <br /></td></tr>
 <tr class="separator:ab0fe49d1f2fd614ecb2c1eab5421845e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -557,8 +557,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a71880b7e8739b49a8e7b3f3e4fb2e056" name="a71880b7e8739b49a8e7b3f3e4fb2e056"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71880b7e8739b49a8e7b3f3e4fb2e056">&#9670;&#160;</a></span>writeResultInStep()</h2>
+<a id="a36983e00c0d61d77b07ffc2390a54ddd" name="a36983e00c0d61d77b07ffc2390a54ddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36983e00c0d61d77b07ffc2390a54ddd">&#9670;&#160;</a></span>writeResultInStep()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -571,7 +571,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>bodies</em></span>, </td>
+          <td class="paramtype">vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *</td>          <td class="paramname"><span class="paramname"><em>particles</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -582,6 +582,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Write results if the step is the step result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">resultSteps</td><td>Result steps </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">particles</td><td>List of particles </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iTime</td><td>Current time </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

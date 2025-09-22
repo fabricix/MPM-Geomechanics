@@ -1,0 +1,68 @@
+{
+  "global": {
+    "numParticles": 150000,
+    "numThreads": 1,
+    "cellDimension": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "numCells": [
+      100,
+      100,
+      100
+    ],
+    "randomSeed": 42,
+    "interpolationTest": true,
+    "updateTest": true
+  },
+  "update": {
+    "UpdatePerformance_ParticleDensity_nParticles": {
+      "initialDensity": 2000.0,
+      "traceStrain": 0.05
+    },
+    "ParticleStress_nParticles": {
+      "E": 1000.0,
+      "nu": 0.3,
+      "epsilon0": 0.01
+    }
+  },
+  "interpolation": {
+    "NodalMass_nParticles": {
+      "comment": "The performance test does not require any specific configuration."
+    },
+    "NodalMomentum_nParticles": {
+      "particleVelocity": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "NodalInternalForce_nParticles": {
+      "comment": "The performance test does not require any specific configuration."
+    },
+    "NodalExternalForce_nParticles": {
+      "appliedForce": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "ParticleStrainIncrement_nParticles": {
+      "dt01": 0.01,
+      "nodalVelocity": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "ParticleVorticityIncrement_nParticles": {
+      "dt02": 0.01,
+      "omega": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    }
+  }
+}
