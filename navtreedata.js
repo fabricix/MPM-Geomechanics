@@ -66,11 +66,11 @@ var NAVTREE =
       [ "Required Programs - Windows", "required_programs.html#required_programs_windows", null ],
       [ "Required Programs - Linux", "required_programs.html#required_programs_linux", null ]
     ] ],
-    [ "Testing Compilation Manual", "testing_manual.html", [
-      [ "1. Required Programs", "testing_manual.html#testing_manual_required_programs", null ],
-      [ "2. How to Compile the Tests", "testing_manual.html#testing_manual_howto", [
-        [ "Windows", "testing_manual.html#testing_manual_windows", null ],
-        [ "Linux (Ubuntu/Debian)", "testing_manual.html#testing_manual_linux", null ]
+    [ "Testing Compilation and Benchmarking", "testing_manual.html", [
+      [ "1. How to Compile", "testing_manual.html#testing_manual_howto_compile", null ],
+      [ "How does benchmarking work?", "testing_manual.html#testing_manual_howto", [
+        [ "Executable: MPM-Geomechanics-benchmark", "testing_manual.html#testing_manual_howto_benchmark", null ],
+        [ "Executable: start-multi-benchmark.py", "testing_manual.html#testing_manual_howto_multibenchmark", null ]
       ] ]
     ] ],
     [ "Theory and Numerical Formulation", "theory_and_numerical_formulation_.html", [

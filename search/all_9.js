@@ -20,10 +20,11 @@ var searchData=
   ['addplasticstrain_17',['addPlasticStrain',['../classParticle.html#a49b197c3a37ad792289581d13f99bf1c',1,'Particle']]],
   ['always_20take_20the_20reference_20first_18',['Atomic operations: always take the reference first',['../development_manual.html#autotoc_md68',1,'']]],
   ['analytical_20solution_19',['Analytical solution',['../verification_problems.html#autotoc_md94',1,'']]],
-  ['and_20numerical_20formulation_20',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
-  ['and_20result_20comparison_21',['MPM model and result comparison',['../verification_problems.html#autotoc_md95',1,'']]],
-  ['apply_22',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
-  ['applyseismicvelocitymarkedstlnodes_23',['applySeismicVelocityMarkedSTLNodes',['../namespaceSeismic.html#a4aed6a906097df08e741f79131f86f12',1,'Seismic']]],
-  ['are_20placed_20in_20the_20body_24',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],
-  ['atomic_20operations_3a_20always_20take_20the_20reference_20first_25',['Atomic operations: always take the reference first',['../development_manual.html#autotoc_md68',1,'']]]
+  ['and_20benchmarking_20',['Testing Compilation and Benchmarking',['../testing_manual.html',1,'']]],
+  ['and_20numerical_20formulation_21',['Theory and Numerical Formulation',['../theory_and_numerical_formulation_.html',1,'']]],
+  ['and_20result_20comparison_22',['MPM model and result comparison',['../verification_problems.html#autotoc_md95',1,'']]],
+  ['apply_23',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
+  ['applyseismicvelocitymarkedstlnodes_24',['applySeismicVelocityMarkedSTLNodes',['../namespaceSeismic.html#a4aed6a906097df08e741f79131f86f12',1,'Seismic']]],
+  ['are_20placed_20in_20the_20body_25',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],
+  ['atomic_20operations_3a_20always_20take_20the_20reference_20first_26',['Atomic operations: always take the reference first',['../development_manual.html#autotoc_md68',1,'']]]
 ];
