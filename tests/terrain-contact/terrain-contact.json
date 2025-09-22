@@ -60,7 +60,7 @@
 		"stl_mesh":"STLmesh/slope-mesh.stl",
 		"friction":1.3,
 		"distance_threshold":2.0,
-		"penalty_contact_active":true,
+		"penalty_contact_active":false,
 		"penalty_stiffness":1e6
 	}
 }
