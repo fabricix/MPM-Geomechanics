@@ -11,7 +11,7 @@ cd external
 git clone https://github.com/google/googletest.git
 ```
 
-The simplest way to compile on Windows and Linux is by using the **`.bash`** file at **`/build/testing`** with **`MSYS2 MINGW64`** console line, simply execute the following command in the directory **`MPM-Geomechanics/build/testing`**:
+The simplest way to compile on Windows and Linux is by using the **`.bash`** file at **`/build/qa`** with **`MSYS2 MINGW64`** console line, simply execute the following command in the directory **`MPM-Geomechanics/build/qa`**:
 ```
 ./cmake-build.bash
 ```
