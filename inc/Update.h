@@ -125,7 +125,7 @@ namespace Update {
 
 	/// \brief Update the weights in each nodes that contributes
 	/// \param[in] mesh Mesh reference
-	/// \param[in] particle List of particles
+	/// \param[in] particles List of particles
 	void contributionNodes(Mesh* mesh, vector<Particle*>* particles);
 
 	/// \brief Configure the force in each node in boundary planes
