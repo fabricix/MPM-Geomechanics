@@ -352,10 +352,10 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
     const double h_mean = mesh->getCellDimension().mean();
 
     // small tolerance to avoid jitter/div-by-zero in tangential direction
-    const double vt_eps = 1e-4 * h_mean/std::max(dt, 1e-16);
+    const double vt_eps = 0.0 * h_mean/std::max(dt, 1e-16);
 
     // small tolerance for micro-penetrations
-    const double penetration_tol = 0.05 * h_mean;
+    const double penetration_tol = 0.0 * h_mean;
 
     // for all contact pairs
 #ifdef _OPENMP
@@ -404,7 +404,7 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
                 Vector3d f_penalty = penaltyStiffness * penetration * normal;
                 
                 // optional: impulse cap to reduce per-step overshoot
-                const double beta = 1.0;
+                const double beta = 0.0;
                 const double Jcap = beta * mass * h_mean / dt;
                 const double Jpen = f_penalty.norm() * dt;
                 if (Jpen > Jcap) f_penalty *= (Jcap / Jpen);
