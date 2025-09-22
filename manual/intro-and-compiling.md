@@ -41,7 +41,7 @@ For downloading the compiled binaries
 
 \note Prior to proceeding with these instructions, please consult the [Windows Required Programs](#required_programs_windows) section.
 
-The simplest way to compile on windows is by using the **`.bash`** file at **`/build/CMake`** with **`MSYS2 MINGW64`** console line, just execute:
+The simplest way to compile on windows is by using the `.bash` file at `/build/CMake` with `MSYS2 MINGW64` console line, just execute:
 
 ```
 cd project-directory/build/CMake
