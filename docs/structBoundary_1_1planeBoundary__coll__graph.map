@@ -1,5 +1,0 @@
-<map id="Boundary::planeBoundary" name="Boundary::planeBoundary">
-<area shape="rect" id="Node000001" title="Represents the nodes and the type of restrictions." alt="" coords="5,96,176,123"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="43,5,138,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,48,93,95,88,95,88,48"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="Loads::NodalPointLoad" name="Loads::NodalPointLoad">
-<area shape="rect" id="Node000001" title="Define a structure to store point loads." alt="" coords="6,112,162,139"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,78,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,45,82,111,77,113,50,47"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="102,5,155,32"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="120,47,92,113,87,111,115,45"/>
-</map>

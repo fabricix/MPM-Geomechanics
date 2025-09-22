@@ -1,9 +1,0 @@
-<map id="ElasticJaumann" name="ElasticJaumann">
-<area shape="rect" id="Node000001" title="Represents an elastic material with the Jaumann rate correction." alt="" coords="5,248,120,275"/>
-<area shape="rect" id="Node000002" href="$classElastic.html" title="Represents an elastic material." alt="" coords="32,172,93,199"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,214,65,248,60,248,60,214"/>
-<area shape="rect" id="Node000003" href="$classMaterial.html" title="Represents a material." alt="" coords="29,96,96,123"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="65,138,65,172,60,172,60,138"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="26,5,99,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="65,48,65,95,60,95,60,48"/>
-</map>
