@@ -1,7 +1,0 @@
-<map id="Seismic.h" name="Seismic.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,85,32"/>
-<area shape="rect" id="Node000002" href="$Input_8h.html" title=" " alt="" coords="14,80,76,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,48,48,80,42,80,42,48"/>
-<area shape="rect" id="Node000003" href="$MPM_8h.html" title=" " alt="" coords="13,155,77,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="48,122,48,154,42,154,42,122"/>
-</map>

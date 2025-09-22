@@ -1,10 +1,6 @@
 Debug/
 Release/
 sublime/
-doxygen/html
-doxygen/docs
-doxygen/latex
-doxygen/output.txt 
 .settings/
 .tracecompass/
 .cproject
@@ -36,3 +32,5 @@ particle_stress_data.json
 !cmake-build.bash
 /build/qa/build/*
 /build/qa/benchmark/*
+docs/*
+!/docs/.gitkeep
