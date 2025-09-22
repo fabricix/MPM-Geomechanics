@@ -1,9 +1,9 @@
 <map id="STLReader.h" name="STLReader.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="137,5,235,32"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,135,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,35,105,74,102,69,164,30"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="159,80,213,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,33,189,64,183,64,183,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="237,80,295,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="202,31,243,68,239,72,198,35"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="149,5,251,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,147,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,33,109,74,107,69,179,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="171,79,229,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,31,203,65,197,65,197,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="254,79,317,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="215,29,263,68,259,72,212,33"/>
 </map>

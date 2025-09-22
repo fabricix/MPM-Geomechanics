@@ -1,5 +1,5 @@
 <map id="ElasticJaumann.h" name="ElasticJaumann.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,131,32"/>
-<area shape="rect" id="Node000002" href="$MohrCoulomb_8h.html" title=" " alt="" coords="11,80,125,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,48,71,80,65,80,65,48"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,140,31"/>
+<area shape="rect" id="Node000002" href="$MohrCoulomb_8h.html" title=" " alt="" coords="10,79,135,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,44,75,79,70,79,70,44"/>
 </map>

@@ -1,9 +1,9 @@
 <map id="BodyParticle" name="BodyParticle">
-<area shape="rect" id="Node000001" title="Is a Body created by a list of particles." alt="" coords="58,172,153,199"/>
-<area shape="rect" id="Node000002" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="80,96,131,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,138,108,172,103,172,103,138"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,78,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="47,47,56,71,68,83,82,93,79,98,64,87,52,73,42,48"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="102,5,237,32"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="159,47,142,74,121,97,117,94,138,70,154,44"/>
+<area shape="rect" id="Node000001" title="Is a Body created by a list of particles." alt="" coords="63,168,165,193"/>
+<area shape="rect" id="Node000002" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="87,93,141,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,133,117,168,111,168,111,133"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,84,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="48,43,56,68,70,82,88,92,85,97,67,86,52,71,43,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="109,5,261,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="175,44,157,71,131,95,128,91,153,68,171,41"/>
 </map>

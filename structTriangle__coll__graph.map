@@ -1,5 +1,5 @@
 <map id="Triangle" name="Triangle">
-<area shape="rect" id="Node000001" title="Struct representing a triangle." alt="" coords="8,144,75,171"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,78,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,48,44,143,39,143,39,48"/>
+<area shape="rect" id="Node000001" title="Struct representing a triangle." alt="" coords="8,137,81,163"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,84,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="47,44,47,137,42,137,42,44"/>
 </map>
