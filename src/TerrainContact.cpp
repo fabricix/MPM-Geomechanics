@@ -393,7 +393,7 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
         // normal force
         Vector3d fn = Vector3d::Zero();
         // only apply normal force if the particle is approaching the surface ( v_n < 0 )
-        if (vn_mag < 0.0) 
+        //if (vn_mag < 0.0) 
         {
             // equilibrium impulsive normal force f_n = - m_p * vn_p / dt * e_n
             fn = - (mass * vn_mag * inv_dt) * normal;
@@ -425,7 +425,7 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
         Vector3d ft = Vector3d::Zero();
 
         // only apply friction if there is a normal force
-        if (fn_mag > 0.0) 
+        //if (fn_mag > 0.0) 
         {
             // try with equilibrium impulsive tangential force
             Vector3d ft_trial = - (mass * inv_dt) * vt;
