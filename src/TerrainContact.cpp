@@ -351,7 +351,6 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
 
     // mean cell size and inverse time step (for safety, avoid division by zero)
     const double h_mean = (mesh->getCellDimension()).mean();
-    const double inv_dt = 1.0 / std::max(dt, 1e-12);
 
     // for theoretical tests, no tolerance in the decision rule:
     const double penetration_tol = 0.0 * h_mean; // 0.0 for no SDF tolerance
@@ -379,25 +378,22 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
         double mass = particle->getMass();
 
         // velocity predictor. If seismic analysis is enabled, subtract the surface velocity.
-        Vector3d velocityPredictor = isSeismic ? (particle->getVelocity() - v_surface) : particle->getVelocity();
+        Vector3d vp = isSeismic ? (particle->getVelocity() - v_surface) : particle->getVelocity();
 
-        // calculate the normal scalar component v_n = v_p . n
-        double vn_mag = velocityPredictor.dot(normal);
+        // calculate the normal scalar component projection, v_n = v_p . n
+        double vn_prj = vp.dot(normal);
 
         // normal velocity predictor
-        Vector3d vn = vn_mag * normal;
+        Vector3d vn = vn_prj * normal;
 
         // tangential velocity predictor
-        Vector3d vt = velocityPredictor - vn;
+        Vector3d vt = vp - vn;
 
         // normal force
         Vector3d fn = Vector3d::Zero();
-        // only apply normal force if the particle is approaching the surface ( v_n < 0 )
-        //if (vn_mag < 0.0) 
-        {
-            // equilibrium impulsive normal force f_n = - m_p * vn_p / dt * e_n
-            fn = - (mass * vn_mag * inv_dt) * normal;
-        }
+        
+        // equilibrium impulsive normal force f_n = - m_p * vn_p / dt * e_n
+        fn = - (mass * vn_prj /dt ) * normal;
 
         // if penalty contact is enabled, apply the penalty force
         if (usePenaltyContact) {
@@ -408,12 +404,6 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
             {
                 // calculate the penalty force f_penalty = k * penetration * e_n
                 Vector3d f_penalty = penaltyStiffness * penetration * normal;
-                
-                // optional: impulse cap to reduce per-step overshoot
-                const double beta = 0.0; // set > 0 for a cap
-                const double Jcap = beta * mass * h_mean * inv_dt;
-                const double Jpen = f_penalty.norm() / inv_dt;
-                if (beta > 0.0 && Jpen > Jcap) f_penalty *= (Jcap / Jpen);
  
                 // apply the penalty force to the normal force
                 fn += f_penalty;
@@ -421,46 +411,33 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
         }
         
         // Tangential force calculation with Coulomb friction
-        double fn_mag = fn.norm();        
+        double fn_norm = fn.norm();
+
         Vector3d ft = Vector3d::Zero();
 
-        // only apply friction if there is a normal force
-        //if (fn_mag > 0.0) 
-        {
-            // try with equilibrium impulsive tangential force
-            Vector3d ft_trial = - (mass * inv_dt) * vt;
-            double ft_trial_mag = ft_trial.norm();
+        // try with STICK contact with equilibrium impulsive tangential force
+        ft = - (mass / dt) * vt;
+        double ft_norm = ft.norm();
 
-            // apply Coulomb friction ||f_t|| <= mu ||f_n||
-            const double mu_s = this->frictionCoefficient; // static
-            const double mu_k = this->frictionCoefficient; // kinetic (same for now)
+        // Coulomb friction coefficients
+        const double mu_s = this->frictionCoefficient; // static
+        const double mu_k = this->frictionCoefficient; // kinetic (same for now)
 
-            if (ft_trial_mag <= mu_s * fn_mag) {
-                // STICK: cancel tangential velocity with impulsive equilibrium force
-                ft = ft_trial;
-            } 
-            else {
-                // SLIP: kinetic Coulomb at the limit (guard division by zero)
-                double vt_mag = vt.norm();
-                if (vt_mag > vt_eps_numeric) {
-                    ft = -(mu_k * fn_mag) * (vt / vt_mag);
-                } else {
-                   // numerically zero tangential speed: no well-defined slip direction
-                   ft.setZero();
-               }
-            }
+        if (ft_norm > mu_s * fn_norm) {
+            // SLIP: frictional contact with Coulomb law
+            ft = - std::min(ft_norm, (mu_k * fn_norm)) * (vt / vt.norm());
         }
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
-        Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
+        Vector3d vp_plus = vp + (dt / mass) * (fn + ft);
         
         // if seismic analysis is enabled, add the surface velocity
         if (isSeismic) {
-            velocityCorrected += v_surface;
+            vp_plus += v_surface;
         }
 
         // update the velocity of the particle
-        particle->setVelocity(velocityCorrected);
+        particle->setVelocity(vp_plus);
     }
 }
 
