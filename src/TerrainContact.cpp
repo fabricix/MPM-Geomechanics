@@ -354,9 +354,6 @@ void TerrainContact::computeContactForces(Mesh* mesh, double dt) {
 
     // for theoretical tests, no tolerance in the decision rule:
     const double penetration_tol = 0.0 * h_mean; // 0.0 for no SDF tolerance
-    
-    // purely numerical guard to avoid division by zero when normalizing vt:
-    const double vt_eps_numeric  = 1e-12;   // use only for vt normalization
  
     // for all contact pairs
 #ifdef _OPENMP
