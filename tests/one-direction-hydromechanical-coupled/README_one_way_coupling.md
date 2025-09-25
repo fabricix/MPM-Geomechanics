@@ -57,7 +57,7 @@ Enable this feature as:
   		"pore_pressure_field":"pore-pressure-3d.json",
 		
 		"unsaturated_analysis":true,
-		"chi":{
+		"bishop_chi":{
 			"model":"sr",
 			"sr_res":0.1,
 			"constant":1.0

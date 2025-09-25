@@ -20,7 +20,7 @@ using Eigen::Vector3d;
 #include "Boundary.h"
 #include "Loads.h"
 #include "Seismic.h"
-#include "Chi.h"
+#include "BishopChi.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -671,7 +671,7 @@ namespace Input {
 
 	/// \brief Return the chi model configuration
 	/// \return chi_config Chi model configuration
-	Chi::Parameters getChiParameters();
+	BishopChi::Parameters getChiParameters();
 };
 
 #endif /* INPUT_H_ */

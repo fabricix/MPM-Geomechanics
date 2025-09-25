@@ -14,7 +14,7 @@
 #include "Energy.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
-#include "Chi.h"
+#include "BishopChi.h"
 
 #include <iostream>
 using std::cout;
@@ -746,15 +746,15 @@ namespace Output{
 		if(ModelSetup::getUnsaturatedAnalysisActive())
 		{
 			std::cout << "Unsaturated: active" << std::endl;
-			if (Chi::getChiModelType() == Chi::Model::CONSTANT)
+			if (BishopChi::getChiModelType() == BishopChi::Model::CONSTANT)
 			{
 				std::cout << "       Chi : Constant" << std::endl;
 			}
-			else if (Chi::getChiModelType() == Chi::Model::SR)
+			else if (BishopChi::getChiModelType() == BishopChi::Model::SR)
 			{
 				std::cout << "       Chi : Saturation" << std::endl;
 			}
-			else if (Chi::getChiModelType() == Chi::Model::SE)
+			else if (BishopChi::getChiModelType() == BishopChi::Model::SE)
 			{
 				std::cout << "       Chi : Effective Saturation" << std::endl;
 			}

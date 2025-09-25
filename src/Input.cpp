@@ -1817,24 +1817,24 @@ bool Input::getUnsaturatedEnabled() {
 	return false;
 }
 
-Chi::Parameters Input::getChiParameters() {
+BishopChi::Parameters Input::getChiParameters() {
 
-    Chi::Parameters cfg; // defaults: SR, sr_res=0.10, chi_const=1.0
+    BishopChi::Parameters cfg; // defaults: SR, sr_res=0.10, chi_const=1.0
 
     if (!inputFile.contains("hydro_mechanical_coupling")) return cfg;
 
     const auto& hmc = inputFile["hydro_mechanical_coupling"];
 
-    if (!hmc.contains("chi") || !hmc["chi"].is_object()) return cfg;
+    if (!hmc.contains("bishop_chi") || !hmc["bishop_chi"].is_object()) return cfg;
     
-	const auto& chi = hmc["chi"];
+	const auto& chi = hmc["bishop_chi"];
 
     // model
     if (chi.contains("model") && chi["model"].is_string()) {
         const std::string m = chi["model"].get<std::string>();
-        if      (m == "sr")       cfg.model = Chi::Model::SR;
-        else if (m == "se")       cfg.model = Chi::Model::SE;
-        else if (m == "constant") cfg.model = Chi::Model::CONSTANT;
+        if      (m == "sr")       cfg.model = BishopChi::Model::SR;
+        else if (m == "se")       cfg.model = BishopChi::Model::SE;
+        else if (m == "constant") cfg.model = BishopChi::Model::CONSTANT;
     }
 
     // additional parameters

@@ -136,11 +136,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\BishopChi.cpp" />
     <ClCompile Include="..\..\src\BodyCuboid.cpp" />
     <ClCompile Include="..\..\src\BodyParticle.cpp" />
     <ClCompile Include="..\..\src\BodyPolygon.cpp" />
     <ClCompile Include="..\..\src\BodySphere.cpp" />
-    <ClCompile Include="..\..\src\Chi.cpp" />
     <ClCompile Include="..\..\src\Contact.cpp" />
     <ClCompile Include="..\..\src\DynamicRelaxation.cpp" />
     <ClCompile Include="..\..\src\Elastic.cpp" />
@@ -194,13 +194,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\inc\BishopChi.h" />
     <ClInclude Include="..\..\inc\Body\Body.h" />
     <ClInclude Include="..\..\inc\Body\BodyCuboid.h" />
     <ClInclude Include="..\..\inc\Body\BodyParticle.h" />
     <ClInclude Include="..\..\inc\Body\BodyPolygon.h" />
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
     <ClInclude Include="..\..\inc\Boundary.h" />
-    <ClInclude Include="..\..\inc\Chi.h" />
     <ClInclude Include="..\..\inc\Contact.h" />
     <ClInclude Include="..\..\inc\Contribution.h" />
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />

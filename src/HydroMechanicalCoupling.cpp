@@ -5,7 +5,6 @@
 #include "Input.h"
 #include "Model.h"
 #include "Particle/Particle.h"
-#include "Chi.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -30,7 +29,7 @@ namespace HydroMechanicalCoupling {
             if(Input::getUnsaturatedEnabled())
             {
                 ModelSetup::setUnsaturatedAnalysisActive(true);
-                Chi::setParameters(Input::getChiParameters());
+                BishopChi::setParameters(Input::getChiParameters());
             }
         }
         else

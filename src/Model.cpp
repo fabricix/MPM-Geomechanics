@@ -2,7 +2,6 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Model.h"
-#include "Chi.h"
 
 #include <cmath>
 using std::floor;

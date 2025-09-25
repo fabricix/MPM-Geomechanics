@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace Chi 
+namespace BishopChi 
 {
     /// @brief Chi model for unsaturated analysis
     enum class Model { SR, SE, CONSTANT };
@@ -18,10 +18,10 @@ namespace Chi
 
     /// \brief Get chi model configuration
 	/// \param[in] chi Chi model configuration
-	void setParameters(Chi::Parameters chi);
+	void setParameters(BishopChi::Parameters chi);
 
 	/// \brief Get chi model type
-	Chi::Model getChiModelType();
+	BishopChi::Model getChiModelType();
 
     /// \brief Compute chi from saturation ratio Sr
     /// \param[in] Sr Saturation ratio

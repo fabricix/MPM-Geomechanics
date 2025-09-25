@@ -8,7 +8,7 @@
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
-#include "Chi.h"
+#include "BishopChi.h"
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -252,7 +252,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 		if (isOneDirectionHydromechanicalCoupling) {
 
 			if (isUnsaturatedAnalysis){
-				double chi = Chi::getChiFromSr(particles->at(i)->getSaturation());
+				double chi = BishopChi::getChiFromSr(particles->at(i)->getSaturation());
 				pStress -= chi * particles->at(i)->getPorePressure() * Matrix3d::Identity();
 			}
 			else{
