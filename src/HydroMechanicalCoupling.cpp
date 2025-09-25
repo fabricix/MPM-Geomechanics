@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "Particle/Particle.h"
+#include "Chi.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -24,6 +25,13 @@ namespace HydroMechanicalCoupling {
         if (Input::getHydroMechCouplingEnabled() && Input::getHydroMechCouplingOneWay())
         {
             ModelSetup::setHydroMechanicalCouplingType(ModelSetup::HydroMechanicalCouplingType::ONE_WAY);
+
+            // Check if unsaturated analysis is enabled and setting the model setup
+            if(Input::getUnsaturatedEnabled())
+            {
+                ModelSetup::setUnsaturatedAnalysisActive(true);
+                Chi::setParameters(Input::getChiParameters());
+            }
         }
         else
         {
@@ -45,16 +53,35 @@ namespace HydroMechanicalCoupling {
         nlohmann::json jpressure;
         file >> jpressure;
 
+        // Variables for unsaturated analysis
+        const bool unsat = ModelSetup::getUnsaturatedAnalysisActive();
+
         // Assign pressure to particles based on position
         for (const auto& entry : jpressure) {
+
+            // Skip invalid entries or those missing required fields
+            if (!entry.contains("position") || !entry.contains("pressure")) { continue; }
+            
             Vector3d pos(entry["position"][0], entry["position"][1], entry["position"][2]);
             double pressure = entry["pressure"];
+
+            // For unsaturated analysis, read saturation if available
+            double Sr_val = 1.0; // default for saturated
+            if (unsat && entry.contains("saturation") && entry["saturation"].is_number()) {
+                Sr_val = std::clamp(entry["saturation"].get<double>(), 0.0, 1.0);
+            }
+
             bool assigned = false;
 
             for (auto* particle : particles) {
                 if ((particle->getPosition() - pos).norm() < tolerance) {
                     particle->setPorePressure(pressure);
                     assigned = true;
+
+                    // For unsaturated analysis, set saturation
+                    if (unsat) {
+                        particle->setSaturation(Sr_val);
+                    }
                 }
             }
 

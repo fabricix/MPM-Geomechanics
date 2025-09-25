@@ -14,6 +14,7 @@
 #include "Energy.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
+#include "Chi.h"
 
 #include <iostream>
 using std::cout;
@@ -252,7 +253,15 @@ namespace Output{
 			partFile << "</DataArray>\n";
 		}
 
-		
+		if (isFieldRequired("saturation")) {
+			// particle saturation
+			partFile << "<DataArray type=\"Float64\" Name=\"Saturation\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile << scientific << particles->at(i)->getSaturation() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		if (isFieldRequired("plastic_strain")){
 			
 			// effective plastic strain
@@ -733,6 +742,23 @@ namespace Output{
 		
 		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
 			std::cout << "  Coupling : One-way" << std::endl;
+
+		if(ModelSetup::getUnsaturatedAnalysisActive())
+		{
+			std::cout << "Unsaturated: active" << std::endl;
+			if (Chi::getChiModelType() == Chi::Model::CONSTANT)
+			{
+				std::cout << "       Chi : Constant" << std::endl;
+			}
+			else if (Chi::getChiModelType() == Chi::Model::SR)
+			{
+				std::cout << "       Chi : Saturation" << std::endl;
+			}
+			else if (Chi::getChiModelType() == Chi::Model::SE)
+			{
+				std::cout << "       Chi : Effective Saturation" << std::endl;
+			}
+		}
 
 		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL)
 			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;

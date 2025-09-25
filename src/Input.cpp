@@ -1808,3 +1808,42 @@ std::string Input::getPorePressureFilename() {
 		return inputFile["hydro_mechanical_coupling"]["pore_pressure_field"];
 	return "";
 }
+
+bool Input::getUnsaturatedEnabled() {
+	if (inputFile.contains("hydro_mechanical_coupling") &&
+		inputFile["hydro_mechanical_coupling"].contains("unsaturated_analysis") &&
+		inputFile["hydro_mechanical_coupling"]["unsaturated_analysis"].is_boolean())
+		return inputFile["hydro_mechanical_coupling"]["unsaturated_analysis"];
+	return false;
+}
+
+Chi::Parameters Input::getChiParameters() {
+
+    Chi::Parameters cfg; // defaults: SR, sr_res=0.10, chi_const=1.0
+
+    if (!inputFile.contains("hydro_mechanical_coupling")) return cfg;
+
+    const auto& hmc = inputFile["hydro_mechanical_coupling"];
+
+    if (!hmc.contains("chi") || !hmc["chi"].is_object()) return cfg;
+    
+	const auto& chi = hmc["chi"];
+
+    // model
+    if (chi.contains("model") && chi["model"].is_string()) {
+        const std::string m = chi["model"].get<std::string>();
+        if      (m == "sr")       cfg.model = Chi::Model::SR;
+        else if (m == "se")       cfg.model = Chi::Model::SE;
+        else if (m == "constant") cfg.model = Chi::Model::CONSTANT;
+    }
+
+    // additional parameters
+    if (chi.contains("sr_res") && chi["sr_res"].is_number()) {
+        cfg.sr_res = std::clamp(chi["sr_res"].get<double>(), 0.0, 0.999999999999);
+    }
+    if (chi.contains("constant") && chi["constant"].is_number()) {
+        cfg.chi_const = std::clamp(chi["constant"].get<double>(), 0.0, 1.0);
+    }
+
+    return cfg;
+}

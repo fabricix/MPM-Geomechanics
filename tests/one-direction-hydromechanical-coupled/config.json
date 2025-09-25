@@ -1,0 +1,20 @@
+{
+  "polygon": [
+    [0, 0],
+    [110, 0],
+    [110, 15],
+    [50, 15],
+    [30, 35],
+    [0, 35]
+  ],
+  "z_water": 18.0,
+  "density": 1000.0,
+  "gravity": 9.81,
+  "dx": 1.0,
+  "dy": 1.0,
+  "dz": 1.0,
+  "y_min": 0.0,
+  "y_max": 1.0,
+  "output_file": "pore-pressure-3d.json",
+  "unsaturated_analysis": true
+}

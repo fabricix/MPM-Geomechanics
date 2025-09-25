@@ -8,7 +8,8 @@
 #include <string>
 #include <Eigen/Core>
 
-namespace HydroMechanicalCoupling {
+namespace HydroMechanicalCoupling 
+{
 	/// Check if one-way hydro-mechanical coupling is active
 	bool isOneWayEnabled();
 

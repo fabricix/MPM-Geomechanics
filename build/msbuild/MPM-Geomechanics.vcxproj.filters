@@ -49,6 +49,7 @@
     <ClCompile Include="..\..\src\Energy.cpp" />
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
     <ClCompile Include="..\..\src\Newtonian.cpp" />
+    <ClCompile Include="..\..\src\Chi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="..\..\inc\Energy.h" />
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
     <ClInclude Include="..\..\inc\Materials\Newtonian.h" />
+    <ClInclude Include="..\..\inc\Chi.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">

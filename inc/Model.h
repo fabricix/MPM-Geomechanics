@@ -293,6 +293,15 @@ namespace ModelSetup {
 	/// \brief Increment the loop counter by one
 	/// \return The current loop counter value
 	int incrementLoopCounter();
+
+	/// \brief Get unsaturated analysis active
+	/// \return True if unsaturated analysis is active
+	bool getUnsaturatedAnalysisActive();
+	
+	/// \brief Set unsaturated analysis active
+	/// \param[in] d True to activate unsaturated analysis
+	void setUnsaturatedAnalysisActive(bool );
+
 };
 
 #endif /* MODEL_H_ */

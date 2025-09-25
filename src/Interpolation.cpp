@@ -8,6 +8,7 @@
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
+#include "Chi.h"
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -228,7 +229,8 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 	
 	// check if is one direction hydro-mechanical coupling
 	bool isOneDirectionHydromechanicalCoupling = ModelSetup::getHydroMechOneWayEnabled();
-	
+	bool isUnsaturatedAnalysis = ModelSetup::getUnsaturatedAnalysisActive();
+
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
@@ -248,7 +250,14 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 
 		// use total stress if hydro-mechanical coupling is enabled
 		if (isOneDirectionHydromechanicalCoupling) {
-			pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+
+			if (isUnsaturatedAnalysis){
+				double chi = Chi::getChiFromSr(particles->at(i)->getSaturation());
+				pStress -= chi * particles->at(i)->getPorePressure() * Matrix3d::Identity();
+			}
+			else{
+				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
+			}
 		}
 
 		// get the particle volume

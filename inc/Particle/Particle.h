@@ -262,10 +262,6 @@ public:
     /// \return Current porosity of mixture
     virtual inline double getPorosity() const { return 0.0; }
 
-    /// \brief Returns Saturation of fluid in void in mixture
-    /// \return saturation
-    virtual inline double getSaturation() const { return 0.0; }
-
     /// \brief Returns the drag force of fluid in particle
     /// \return Particle drag force of fluid
     virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }
@@ -290,6 +286,12 @@ public:
 	/// \brief Get pore pressure of the particle
 	double getPorePressure() const { return porePressure; }
 
+	/// \brief Set saturation of the particle
+	void setSaturation(double p) { saturation = p; }
+
+	/// \brief Get saturation of the particle
+	double getSaturation() const { return saturation; }
+
 protected:
 
 	bool active; //!< is particle active
@@ -310,6 +312,7 @@ protected:
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$
 	double porePressure = 0.0; //!< current pore pressure of fluid in particle: \f$p_{p}\f$
+	double saturation = 1.0; //!< current saturation of fluid in particle: \f$S_{rp}\f$
 
 	Matrix3d strainIncrement; //!< current particle strain increment: \f$\Delta \epsilon_{ijp}\f$
 	Matrix3d vorticityIncrement; //!< particle vorticity increment: \f$\Delta \Omega _{ijp}\f$

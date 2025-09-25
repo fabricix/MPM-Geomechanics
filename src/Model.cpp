@@ -2,6 +2,7 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Model.h"
+#include "Chi.h"
 
 #include <cmath>
 using std::floor;
@@ -86,29 +87,32 @@ namespace ModelSetup {
 
 	// hydro-mechanical coupling type
 	HydroMechanicalCouplingType hydroCouplingType = HydroMechanicalCouplingType::NONE;
-
+	
+	// usaturated hydro-mechanical coupling
+	bool unsaturatedAnalysisActive = false; //!< is unsaturated analysis active
+	
 	///
 	/// Function members
 	///
-
+	
 	// loop counter
 	int getLoopCounter() { return loopCounter; }
 	void setLoopCounter(int a) { loopCounter = a; }
 	int incrementLoopCounter() { loopCounter++; return loopCounter; }
-
-		// states 
+	
+	// states 
 	bool getLoadState() { return loadState; }
 	void setLoadState(bool st) { loadState = st; }
 	bool getSaveState() { return saveState; }
 	void setSaveState(bool st) { saveState = st; }
-
+	
 	// contribution nodes
 	unsigned getContributionNodesNum() { return contributionNodes; }
-
+	
 	// total time
 	double getTime() { return time; }
 	void setTime(double d) { time=d; }
-
+	
 	// results
 	unsigned getResultNum() { return resultNumber; }
 	void setResultNum(unsigned d) { resultNumber=d; }
@@ -125,107 +129,111 @@ namespace ModelSetup {
 	void setTimeStep(double d) { dt=d; }
 	double getCriticalTimeStepMultiplier() { return dt_critical_multiplier; }
 	void setCriticalTimeStepMultiplier(double d) { dt_critical_multiplier=d; }
-
+	
 	// threads
 	unsigned getThreads() { return nThreads; }
 	void setThreads(unsigned d) { nThreads=d; }
-
+	
 	// contact method
 	bool getContactActive() { return contactActive; }
 	void setContactActive(bool d) { contactActive=d; }
-
+	
 	// gravity
 	bool getGravityActive() { return gravityActive; }
 	void setGravityActive(bool d) { gravityActive=d; }
 	const Vector3d& getGravity() { return gravity; }
-
+	
 	void setGravity(const Vector3d& gravity_in) {
 		gravity=gravity_in; 
 		setGravityActive((gravity.x()!=0.0||gravity.y()!=0.0||gravity.z()!=0.0)?true:false);
 	}
-
+	
 	// coupled analysis
 	bool getTwoPhaseActive() { return twoPhaseCalculationActive; }
 	void setTwoPhaseActive(bool d) { twoPhaseCalculationActive=d; }
-
+	
     // simulation time
     void setInitialSimulationTime(std::chrono::system_clock::time_point initialTime) { ModelSetup::initialSimulationTime = initialTime; }
     std::chrono::system_clock::time_point getInitialSimulationTime() { return ModelSetup::initialSimulationTime;  }
 	double getCurrentTime() { return currentTime; }
 	void setCurrentTime(double a) { currentTime = a; }
-
+	
     // axisymmetric analisys
 	bool getAxisymetricActive() { return axisymetricActive; }
 	void setAxisymetricActive(bool d) { axisymetricActive=d; }
-
+	
 	// Jaumann rate
 	bool getJanumannActive() { return jaumannActive; }
 	void setJanumannActive(bool d) { jaumannActive=d; }
-
+	
 	// input file
 	string getInputFile() { return inputFile; }
 	void setInputFile(string d) { inputFile=d; }
-
+	
 	// stress update scheme
 	ModelSetup::StressUpdateScheme getUpdateStressScheme() { return stress; }
 	void setUpdateStressScheme(ModelSetup::StressUpdateScheme d) { stress=d; }
-
+	
 	// damping
 	ModelSetup::DampingType getDampingType() { return damping; }
 	void setDampingType(ModelSetup::DampingType d) { damping=d; }
 	double getDampingLocal() { return localDamping; }
 	void setDampingLocalValue(double dampingValue) {localDamping = dampingValue; }
-
+	
 	// interpolation functions
 	ModelSetup::InterpolationFunctionType getInterpolationFunction() { return interpolationType; }
 	void setInterpolationFunction(ModelSetup::InterpolationFunctionType d) { interpolationType=d; }
-
+	
 	// print the number of active threads
 	void printActiveThreads() {
-#ifdef _OPENMP
-	#pragma omp parallel
-	{
-		#pragma omp master
+		#ifdef _OPENMP
+		#pragma omp parallel
 		{
-			std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+			#pragma omp master
+			{
+				std::cout << "    OpenMP : Number of active threads: " << omp_get_num_threads() << std::endl;
+			}
 		}
-	}
-#else
+		#else
 		std::cout <<"    OpenMP : Compilation without supporting OpenMP" << std::endl;
-#endif
+		#endif
 	}
-
+	
 	// openMP threads
 	void setNumThreads(unsigned nThreads){
-
-#ifdef _OPENMP
+		
+		#ifdef _OPENMP
 		// fix the number of threads
 		omp_set_dynamic(0);
 		// set the number of threads of the simulation
 		omp_set_num_threads((nThreads>0&&nThreads<=(unsigned)omp_get_num_procs())?nThreads:omp_get_num_procs());
-#endif
-
+		#endif
+		
 		// print the number of active threads
 		printActiveThreads();
 	}
-
+	
 	// Seismic analysis
 	bool getSeismicAnalysisActive() {return seismicAnalysisActive;}
 	void setSeismicAnalysisActive(bool a) {seismicAnalysisActive = a;}
-
+	
 	// hydro-mechanical coupling
-
+	
 	/// get hydro-mechanical coupling type
 	HydroMechanicalCouplingType getHydroMechanicalCouplingType() { return hydroCouplingType; }
-
+	
 	/// set hydro-mechanical coupling type
 	void setHydroMechanicalCouplingType(HydroMechanicalCouplingType type) { hydroCouplingType = type; }
-
+	
 	/// get hydro-mechanical coupling enabled
 	bool getHydroMechOneWayEnabled() {
 		return hydroCouplingType == HydroMechanicalCouplingType::ONE_WAY;
 	}
-
+	
+	/// get and set unsaturated analysis active
+	bool getUnsaturatedAnalysisActive() { return unsaturatedAnalysisActive; }
+	void setUnsaturatedAnalysisActive(bool d) { unsaturatedAnalysisActive = d; }
+	
 }
 
 

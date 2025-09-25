@@ -20,6 +20,7 @@ using Eigen::Vector3d;
 #include "Boundary.h"
 #include "Loads.h"
 #include "Seismic.h"
+#include "Chi.h"
 
 /// \namespace Input
 /// \brief Operations to read the input file.
@@ -663,6 +664,14 @@ namespace Input {
     /// \brief Return the pore pressure filename
 	/// \return pore_pressure_filename Pore pressure filename
 	std::string getPorePressureFilename();
+
+	/// \brief Return if the unsaturated analysis is enabled
+	/// \return unsaturated_enabled Unsaturated analysis enabled
+	bool getUnsaturatedEnabled();
+
+	/// \brief Return the chi model configuration
+	/// \return chi_config Chi model configuration
+	Chi::Parameters getChiParameters();
 };
 
 #endif /* INPUT_H_ */
