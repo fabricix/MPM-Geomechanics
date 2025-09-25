@@ -13,7 +13,7 @@
 	"results":
 	{
 		"print":50,
-		"material_point_results":["displacement","material","active","plastic_strain","pressure","stress"]
+		"material_point_results":["displacement","material","active","plastic_strain","pressure","stress","saturation"]
 	},
 
 	"mesh":

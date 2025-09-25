@@ -748,15 +748,15 @@ namespace Output{
 			std::cout << "Unsaturated: active" << std::endl;
 			if (BishopChi::getChiModelType() == BishopChi::Model::CONSTANT)
 			{
-				std::cout << "       Chi : Constant" << std::endl;
+				std::cout << " BishopChi : Constant" << std::endl;
 			}
 			else if (BishopChi::getChiModelType() == BishopChi::Model::SR)
 			{
-				std::cout << "       Chi : Saturation" << std::endl;
+				std::cout << " BishopChi : Saturation" << std::endl;
 			}
 			else if (BishopChi::getChiModelType() == BishopChi::Model::SE)
 			{
-				std::cout << "       Chi : Effective Saturation" << std::endl;
+				std::cout << " BishopChi : Effective Saturation" << std::endl;
 			}
 		}
 
