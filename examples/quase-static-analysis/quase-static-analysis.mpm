@@ -1,34 +1,36 @@
-# comment...
+# stress scheme update, can be USL or MUSL
 stress_scheme_update = "USL"
 
-# comment...
+# Nodal interpolation functions: can be "GIMP" or "linear"
 shape_function = "GIMP"
 
-# comment...
+# Simulation time
 time = 4
 
-# comment...
+# Time step (time discretization)
 time_step = 0.001
 
-# comment...
+# Number of threads for parallel execution
 n_threads = 10
 
-# comment...
+# External forces (e.g., gravity)
 gravity = [0.0, 0.0, -9.81]
 
-# comment...
+# Damping parameters for the dynamic system
 damping.type = "local"
 damping.value = 0.1
 
-# comment...
+# Results output configuration
 results.print = 50
 results.particles.fields = ["id","displacement","material","active"]
 results.grid.fields = ["id","mass"]
 
-# comment...
+# Mesh configuration
 mesh.cells.dimension = [0.25,0.25,0.25]
 mesh.cells.number = [20,1,10]
 mesh.origin = [0,0,0]
+
+# Boundary conditions
 mesh.boundary.plane_x0 = "fixed"
 mesh.boundary.plane_y0 = "sliding"
 mesh.boundary.plane_z0 = "fixed"
@@ -36,14 +38,14 @@ mesh.boundary.plane_xn = "sliding"
 mesh.boundary.plane_yn = "sliding"
 mesh.boundary.plane_zn = "sliding"
 
-# comment...
+# Materials
 materials.names = ["elastic"]
 material.elastic.type = "elastic"
 material.elastic.young = 40e4
 material.elastic.density = 2000
 material.elastic.poisson = 0.2
 
-# comment...
+# Bodies
 bodies.names = ["soil"]
 body.soil.type = "polygon_2d"
 body.soil.material = "elastic"
@@ -51,5 +53,3 @@ body.soil.vertices = "vertices.json"
 body.soil.extrude.direction = "y"
 body.soil.extrude.distance = 0.25
 body.soil.discretization = 0.25
-
-
