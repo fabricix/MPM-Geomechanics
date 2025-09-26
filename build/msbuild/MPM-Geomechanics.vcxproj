@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\src\Model.cpp" />
     <ClCompile Include="..\..\src\MohrCoulomb.cpp" />
     <ClCompile Include="..\..\src\MPM.cpp" />
+    <ClCompile Include="..\..\src\MpmInterpreter.cpp" />
     <ClCompile Include="..\..\src\Newtonian.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
     <ClCompile Include="..\..\src\NodeMixture.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="..\..\inc\Mesh\STLReader.h" />
     <ClInclude Include="..\..\inc\Model.h" />
     <ClInclude Include="..\..\inc\MPM.h" />
+    <ClInclude Include="..\..\inc\MpmInterpreter.h" />
     <ClInclude Include="..\..\inc\Output.h" />
     <ClInclude Include="..\..\inc\Particle\Particle.h" />
     <ClInclude Include="..\..\inc\Particle\ParticleMixture.h" />
