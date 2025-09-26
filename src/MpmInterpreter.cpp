@@ -355,13 +355,13 @@ void MpmInterpreter::checkRemainingLines(json &jsonFile, const std::vector<std::
 
         if (bodyProperty == "extrude.distance")
         {
-          jsonFile["body"][bodyName]["extrude_displacement"] = std::stoi(value);
+          jsonFile["body"][bodyName]["extrude_displacement"] = std::stod(value);
           continue;
         }
 
         if (bodyProperty == "discretization")
         {
-          jsonFile["body"][bodyName]["discretization_length"] = std::stoi(value);
+          jsonFile["body"][bodyName]["discretization_length"] = std::stod(value);
           continue;
         }
 
