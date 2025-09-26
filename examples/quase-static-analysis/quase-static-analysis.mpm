@@ -1,0 +1,55 @@
+# comment...
+stress_scheme_update = "USL"
+
+# comment...
+shape_function = "GIMP"
+
+# comment...
+time = 4
+
+# comment...
+time_step = 0.001
+
+# comment...
+n_threads = 10
+
+# comment...
+gravity = [0.0, 0.0, -9.81]
+
+# comment...
+damping.type = "local"
+damping.value = 0.1
+
+# comment...
+results.print = 50
+results.particles.fields = ["id","displacement","material","active"]
+results.grid.fields = ["id","mass"]
+
+# comment...
+mesh.cells.dimension = [0.25,0.25,0.25]
+mesh.cells.number = [20,1,10]
+mesh.origin = [0,0,0]
+mesh.boundary.plane_x0 = "fixed"
+mesh.boundary.plane_y0 = "sliding"
+mesh.boundary.plane_z0 = "fixed"
+mesh.boundary.plane_xn = "sliding"
+mesh.boundary.plane_yn = "sliding"
+mesh.boundary.plane_zn = "sliding"
+
+# comment...
+materials.names = ["elastic"]
+material.elastic.type = "elastic"
+material.elastic.young = 40e4
+material.elastic.density = 2000
+material.elastic.poisson = 0.2
+
+# comment...
+bodies.names = ["soil"]
+body.soil.type = "polygon_2d"
+body.soil.material = "elastic"
+body.soil.vertices = "vertices.json"
+body.soil.extrude.direction = "y"
+body.soil.extrude.distance = 0.25
+body.soil.discretization = 0.25
+
+

@@ -1,0 +1,76 @@
+{
+	"stress_scheme_update":"USL",
+	"shape_function":"GIMP",
+	"time":4,
+	"time_step":0.001,
+	"gravity":[0.0,0.0,-9.81],
+	"n_threads":10,
+	"damping":
+	{
+		"type":"local",
+		"value":0.1
+	},
+
+	"results":
+	{
+		"print":50,
+
+		"material_point_results":
+		{
+			"fields":["id","displacement","material","active"]
+		},
+		
+		"grid_nodal_results":
+		{
+			"material_point_results":["id","mass"]
+		}
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[0.25,0.25,0.25],
+		"cells_number":[20,1,10],
+		"origin":[0,0,0],
+				"boundary_conditions":
+		{
+			"plane_X0":"fixed",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+    "material":
+    {
+        "elastic":
+        {
+            "type":"elastic",
+            "id":1,
+            "young":40e4,
+            "density":2000,
+            "poisson":0.2
+        }
+    },
+
+	"body":
+	{
+		"soil":
+		{
+			"type":"polygon_2d",
+			"extrude_direction":"y",
+			"extrude_displacement":0.25,
+			"discretization_length":0.25,
+			"id":1,
+			"points":
+			[
+				[0,     0,      0],
+				[4,     0,      0],
+				[2,     0,      2],
+				[0,     0,  	2]
+			],
+			"material_id":1
+		}
+	}
+}
