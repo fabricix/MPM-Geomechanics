@@ -8,7 +8,8 @@
 
 namespace MpmInterpreter
 {
-  string interpreter(const std::string& filename);
+  // Interpret the .mpm file and return the path to the generated JSON file
+  std::string interpreter(const std::string& filename);
 }
 
 #endif /* MPM_INTERPRETER_H_ */
