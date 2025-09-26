@@ -1,0 +1,52 @@
+# comment...
+stress_scheme_update = "USL"
+
+# comment...
+shape_function = "GIMP"
+
+# comment...
+time = 2
+
+# comment...
+time_step = 0.001
+
+# comment...
+n_threads = 8
+
+# comment...
+gravity = [0.0, 0.0, -9.81]
+
+# comment...
+results.print = 20
+results.particles.fields = ["none"] 
+results.grid.fields = ["none"]
+
+# comment...
+mesh.cells.dimension = [1, 1, 1]
+mesh.cells.number = [20, 20, 50]
+mesh.origin = [0, 0, 0]
+mesh.boundary.planex0 = "fixed"
+mesh.boundary.planey0 = "sliding"
+mesh.boundary.planez0 = "fixed"
+mesh.boundary.planexn = "fixed"
+mesh.boundary.planeyn = "sliding"
+mesh.boundary.planezn = "fixed"
+
+# comment...
+materials.names = ["mohr-coulomb"]
+material.mohr-coulomb.type = "mohr-coulomb"
+material.mohr-coulomb.young = 100e4
+material.mohr-coulomb.density = 1000
+material.mohr-coulomb.poisson = 0.25
+material.mohr-coulomb.friction = 30
+material.mohr-coulomb.cohesion = 6e6
+material.mohr-coulomb.tensile = 3e6
+
+# comment...
+bodies.names = ["body_cuboid_1"]
+body.body_cuboid_1.type = "cuboid"
+body.body_cuboid_1.material = "mohr-coulomb"
+body.body_cuboid_1.point_p1 = [8,8,40]
+body.body_cuboid_1.point_p2 = [12,12,44]
+
+

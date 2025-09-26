@@ -63,7 +63,7 @@ void executeSimulation()
       return;
     }
 
-    script = exe_path.string() + " cuboid.json";
+    script = exe_path.string() + " cuboid.mpm";
     int response = system(script.c_str());
 
     if (response == 0)
