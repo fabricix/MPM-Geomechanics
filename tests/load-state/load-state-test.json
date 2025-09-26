@@ -1,0 +1,77 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":2e-1,
+
+	"critical_time_step_multiplier":0.25,
+
+	"save_state":true,
+
+	"gravity":[0.0,0.0,-10.0],
+
+	"n_threads":10,
+
+	"damping":
+	{
+		"type":"kinetic"
+	},
+
+	"results":
+	{
+		"print":10,
+		"material_point_results":["id","displacement","material","stress","plastic_strain"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[1,1,1],
+		"cells_number":[110,1,36],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"fixed",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"fixed",
+			"plane_Yn":"sliding",
+			"plane_Zn":"fixed"
+		}
+	},
+
+	"material":
+	{
+		"plastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":100e6,
+			"density":2100,
+			"poisson":0.25
+		}
+	},
+
+	"body":
+	{
+		"soil":
+		{
+			"type":"polygon_2d",
+			"extrude_direction":"y",
+			"extrude_displacement":1,
+			"discretization_length":1,
+			"id":1,
+			"points":
+			[
+				[  0, 0, 0 ],
+				[110, 0, 0 ],
+				[110, 0, 15],
+				[ 50, 0, 15],
+				[ 30, 0, 35],
+				[  0, 0, 35]
+			],
+			"material_id":1
+		}
+	}
+}
