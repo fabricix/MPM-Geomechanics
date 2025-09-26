@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 #include "Json/json.hpp"
+#include <sstream>
+
 using json = nlohmann::json;
 
 int materialId = 0;
@@ -28,6 +30,8 @@ namespace MpmInterpreter
   void removeEquals(std::string &str);
   std::string toLower(const std::string &s);
   std::string removeQuotes(const std::string &str, bool to_lower = true);
+  void checkCsvFormat(const std::string &path, const std::string &bodyName, json &jsonFile);
+  void checkJsonFormat(const std::string &path, const std::string &bodyName, json &jsonFile);
 }
 
 std::string MpmInterpreter::interpreter(const std::string &filename)
@@ -277,20 +281,37 @@ void MpmInterpreter::interpretKey(json &jsonFile, std::string key, std::string v
 
 void MpmInterpreter::getBodyPointsFromFile(json &jsonFile, const std::string &bodyName, const std::string &filename)
 {
+  // determine the path to the file
+  std::string source = jsonFile["source"];
+  std::string path = filename;
+  if (filename.find('/') == std::string::npos && filename.find('\\') == std::string::npos)
+  {
+    size_t lastSlash = source.find_last_of("/\\");
+    if (lastSlash != std::string::npos)
+    {
+      path = source.substr(0, lastSlash + 1) + filename;
+    }
+  }
+
+  if (path.find(".csv") != std::string::npos)
+  {
+    MpmInterpreter::checkCsvFormat(path, bodyName, jsonFile);
+    return;
+  }
+
+  if (path.find(".json") != std::string::npos)
+  {
+    MpmInterpreter::checkJsonFormat(path, bodyName, jsonFile);
+    return;
+  }
+
+  Warning::printMessage("Unsupported file format for body points: " + filename);
+}
+
+void MpmInterpreter::checkJsonFormat(const std::string &path, const std::string &bodyName, json &jsonFile)
+{
   try
   {
-    // determine the path to the file
-    std::string source = jsonFile["source"];
-    std::string path = filename;
-    if (filename.find('/') == std::string::npos && filename.find('\\') == std::string::npos)
-    {
-      size_t lastSlash = source.find_last_of("/\\");
-      if (lastSlash != std::string::npos)
-      {
-        path = source.substr(0, lastSlash + 1) + filename;
-      }
-    }
-
     // open the file
     std::ifstream file_stream(path);
     if (!file_stream.is_open())
@@ -305,15 +326,61 @@ void MpmInterpreter::getBodyPointsFromFile(json &jsonFile, const std::string &bo
     file_stream.close();
     if (!pointsJson.contains("particles") || !pointsJson["particles"].is_array())
     {
-      Warning::printMessage("Invalid format in particle JSON file: " + filename);
-      throw std::runtime_error("Invalid format in particle JSON file: " + filename);
+      Warning::printMessage("Invalid format in particle JSON file: " + path);
+      throw std::runtime_error("Invalid format in particle JSON file: " + path);
     }
     jsonFile["body"][bodyName]["points"] = pointsJson["particles"];
   }
   catch (...)
   {
-    Warning::printMessage("Error reading body points from file: " + filename);
-    throw std::runtime_error("Error reading body points from file: " + filename);
+    Warning::printMessage("Error reading body points from file: " + path);
+    throw std::runtime_error("Error reading body points from file: " + path);
+  }
+}
+
+void MpmInterpreter::checkCsvFormat(const std::string &path, const std::string &bodyName, json &jsonFile)
+{
+  try
+  {
+    std::ifstream file(path);
+    if (!file.is_open())
+    {
+      Warning::printMessage("Cannot open particle CSV file: " + path);
+      throw std::runtime_error("Cannot open particle CSV file: " + path);
+    }
+
+    std::string line;
+    json points = json::array();
+    while (std::getline(file, line))
+    {
+      if (line.empty() || line[0] == '#' || line[0] == ';') continue;
+
+      line.erase(0, line.find_first_not_of(" \t"));
+      line.erase(line.find_last_not_of(" \t") + 1);
+      std::istringstream ss(line);
+      std::string token;
+      json point = json::array();
+      while (std::getline(ss, token, ','))
+      {
+        try
+        {
+          point.push_back(std::stod(token));
+        }
+        catch (...)
+        {
+          Warning::printMessage("Invalid number in particle CSV file: " + token);
+          throw std::runtime_error("Invalid number in particle CSV file: " + token);
+        }
+      }
+      if (!point.empty()) points.push_back(point);
+    }
+
+    jsonFile["body"][bodyName]["points"] = points;
+  }
+  catch (...)
+  {
+    Warning::printMessage("Error reading body points from CSV file: " + path);
+    throw std::runtime_error("Error reading body points from CSV file: " + path);
   }
 }
 
