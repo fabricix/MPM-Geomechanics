@@ -25,12 +25,12 @@ results.grid.fields = ["none"]
 mesh.cells.dimension = [1, 1, 1]
 mesh.cells.number = [20, 20, 50]
 mesh.origin = [0, 0, 0]
-mesh.boundary.planex0 = "fixed"
-mesh.boundary.planey0 = "sliding"
-mesh.boundary.planez0 = "fixed"
-mesh.boundary.planexn = "fixed"
-mesh.boundary.planeyn = "sliding"
-mesh.boundary.planezn = "fixed"
+mesh.boundary.plane_x0 = "fixed"
+mesh.boundary.plane_y0 = "sliding"
+mesh.boundary.plane_z0 = "fixed"
+mesh.boundary.plane_xn = "fixed"
+mesh.boundary.plane_yn = "sliding"
+mesh.boundary.plane_zn = "fixed"
 
 # comment...
 materials.names = ["mohr-coulomb"]
