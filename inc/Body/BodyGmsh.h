@@ -28,11 +28,11 @@ class BodyGmsh : public Body
 
         /// \brief Configure the material id
         /// \param[in] material_id Material identification
-        inline void setMaterialId(int material_id) { materialId = material_id; };
-
-        /// \brief Return the material id
+        inline virtual void setMaterialId(int material_id) { this->materialId=material_id; }
+        
+        /// \brief Return the material identification
         /// \return Material identification
-        inline int getMaterialId() { return materialId; };
+        inline virtual int getMaterialId() const { return this->materialId; }
 
     private:
         int materialId; //!< material identification
