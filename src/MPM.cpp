@@ -414,6 +414,9 @@ void MPM::createModel() {
 		// set time step
 		setTimeStep();
 		
+		// read gmsh mesh files for bodies
+		
+
 		// setup the body list
 		setupBodyList();
 

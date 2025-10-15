@@ -37,8 +37,7 @@
   },
 
   "material":
-  {
-    "elastic":
+  [
     {
       "type":"elastic",
       "id":1,
@@ -46,7 +45,6 @@
       "density":2600,
       "poisson":0.3
     },
-    "elastic_1":
     {
       "type":"elastic",
       "id":2,
@@ -54,20 +52,16 @@
       "density":2600,
       "poisson":0.3
     }
-  },
+  ],
 
   "body":
-  {
-    "body_cuboid_1":
-    {
-      "type":"cuboid",
+  [
+    {"type":"cuboid",
       "id":1,
-      "point_p1":[0,0,0],
-      "point_p2":[1,1,10],
+      "point_p1":[3,0,0],
+      "point_p2":[5,2,7],
       "material_id":1
     },
-
-    "body_cuboid_2":
     {
       "type":"cuboid",
       "id":2,
@@ -75,25 +69,15 @@
       "point_p2":[5,5,5],
       "material_id":1
     },
-
-    "body_polygon":
     {
       "type":"polygon_2d",
       "extrude_direction":"y",
       "extrude_displacement":2,
       "discretization_length":0.5,
       "id":3,
-      "points":
-      [
-          [0,     6,      0],
-          [5,     6,      0],
-          [5,     6,      2],
-          [3,     6,      2]
-      ],
+      "points":[[0,6,0],[5,6,0],[5,6,2],[3,6,2]],
       "material_id":1
     },
-
-    "body_particles":
     {
       "type":"particles",
       "id":4,
@@ -104,15 +88,20 @@
           "position":[[7.5,7.5,7.5],[8.0,7.5,7.5],[8.5,7.5,7.5]],
           "volume":[1,1,1]
       }
+    },
+    {
+      "type":"particles_from_file",
+      "id":5,
+      "material_id":2,
+      "file":"particle_list.json"
     }
-  ,
-  "body_particles_from_file":
-  {
-    "type": "particles_from_file",
-    "id": 5,
-    "material_id": 2,
-    "file": "particle_list.json"
-  }
+  ],
 
+  "gmsh": 
+  {
+    "mesh_file": "geometry.msh",
+    "physical_to_material": {"Soil":1,"Geotextil":2,"Force":-10e3},
+    "nppc_tet": 1,
+    "nppc_hex": 1
   }
 }
