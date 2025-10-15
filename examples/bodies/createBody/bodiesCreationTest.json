@@ -94,14 +94,13 @@
       "id":5,
       "material_id":2,
       "file":"particle_list.json"
+    }, 
+    {
+      "type":"gmsh",
+      "mesh_file": "geometry.msh",
+      "physical_to_material": {"Soil":1,"Geotextil":2},
+      "nppc_tet": 1,
+      "nppc_hex": 1
     }
-  ],
-
-  "gmsh": 
-  {
-    "mesh_file": "geometry.msh",
-    "physical_to_material": {"Soil":1,"Geotextil":2,"Force":-10e3},
-    "nppc_tet": 1,
-    "nppc_hex": 1
-  }
+  ]
 }

@@ -5,6 +5,7 @@
 
 #include <Body/Body.h>
 #include <Mesh/Mesh.h>
+#include <map>
 
 /// \class BodyGmsh
 /// \brief Is a type of Body representing a body defined by a Gmsh mesh file
@@ -14,8 +15,11 @@ class BodyGmsh : public Body
 {
     public:
         /// \brief Default constructor
-        ///
-        BodyGmsh();
+        BodyGmsh(
+                const std::string& mesh_file = "",
+                std::map<std::string,int> physical_to_material = {},
+                int nppc_tet = 8,
+                int nppc_hex = 8);
 
         /// \brief Default destructor
         ///
@@ -35,5 +39,9 @@ class BodyGmsh : public Body
         inline virtual int getMaterialId() const { return this->materialId; }
 
     private:
+        string meshFile; //!< Gmsh mesh file name
+        std::map<std::string,int> physicalToMaterial; //!< map from physical group name to material id
+        int nppcTet; //!< number of particles per cell in tetrahedra
+        int nppcHex; //!< number of particles per cell in hexahedra
         int materialId; //!< material identification
 };

@@ -13,6 +13,7 @@
 #include "TerrainContact.h"
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
+#include "GmshMeshReader.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -413,9 +414,6 @@ void MPM::createModel() {
 
 		// set time step
 		setTimeStep();
-		
-		// read gmsh mesh files for bodies
-		
 
 		// setup the body list
 		setupBodyList();

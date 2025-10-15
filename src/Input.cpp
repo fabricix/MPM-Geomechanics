@@ -11,11 +11,13 @@
 #include "Body/BodyPolygon.h"
 #include "Body/BodyParticle.h"
 #include "Body/BodySphere.h"
+#include "Body/BodyGmsh.h"
 #include "Particle/Particle.h"
 #include "Particle/ParticleMixture.h"
 #include "Warning.h"
 #include "Loads.h"
 #include "Seismic.h"
+#include "GmshMeshReader.h"
 
 #include <limits>
 using std::numeric_limits;
@@ -447,7 +449,6 @@ vector<Material*> Input::getMaterialList(){
 		throw;
 	}
 }
-
 vector<Body*> Input::getBodyList(){
 
 	vector<Body*> bodies;
@@ -845,6 +846,52 @@ vector<Body*> Input::getBodyList(){
 						iBody->insertParticles(particle_list);
 					}
 					bodies.push_back(iBody);
+				}
+			
+				// gmsh body type
+				if ((*it)["type"]=="gmsh")
+				{
+					// mesh file name
+					std::string mesh_file="";
+					if ((*it)["mesh_file"].is_string()) 
+					{
+					 	mesh_file = ((*it)["mesh_file"]);
+					}
+					else
+						throw(0);
+					// material to physical group
+					std::map<std::string,int> physical_to_material;
+					if ((*it)["physical_to_material"].is_object()) 
+					{
+					 	for (json::iterator itmat=(*it)["physical_to_material"].begin(); itmat!=(*it)["physical_to_material"].end(); itmat++)
+					 	{
+					 		// physical to material map
+					 		physical_to_material[itmat.key()]=(*it)["physical_to_material"][itmat.key()];
+					 	}
+					}
+					else
+						throw(0);
+
+					// number of particles per cell in tetrahedra
+					int nppc_tet=8;
+					if ((*it)["nppc_tet"].is_number()) 
+					{
+					 	nppc_tet = ((*it)["nppc_tet"]);
+					}
+
+					// number of particles per cell in hexahedra
+					int nppc_hex=8;
+					if ((*it)["nppc_hex"].is_number()) 
+					{
+					 	nppc_hex = ((*it)["nppc_hex"]);
+					}
+
+					// number of material
+					for (size_t i = 0; i < physical_to_material.size(); i++)
+					{
+						BodyGmsh* ibody = new BodyGmsh(mesh_file, physical_to_material, nppc_tet, nppc_hex);
+						bodies.push_back(ibody);
+					}
 				}
 			}
 		}
