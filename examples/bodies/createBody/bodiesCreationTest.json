@@ -99,7 +99,7 @@
       "type":"gmsh",
       "mesh_file": "geometry.msh",
       "physical_to_material": {"Soil":1,"Geotextil":2},
-      "nppc_tet": 1,
+      "nppc_tet":1,
       "nppc_hex": 1
     }
   ]

@@ -22,7 +22,7 @@ bool GmshMeshReader::load(const std::string &filename, GmshMesh &mesh) {
         if (line.rfind("$PhysicalNames", 0) == 0) {
             readPhysicalNames(in, mesh);
         } else if (line.rfind("$Entities", 0) == 0) {
-            readEntities(in);
+            readEntities(in, mesh);
         } else if (line.rfind("$Nodes", 0) == 0) {
             readNodes(in, mesh);
         } else if (line.rfind("$Elements", 0) == 0) {
@@ -54,12 +54,38 @@ void GmshMeshReader::readPhysicalNames(std::ifstream &in, GmshMesh &mesh) {
     std::getline(in, line); // $EndPhysicalNames
 }
 
-void GmshMeshReader::readEntities(std::ifstream &in) {
+void GmshMeshReader::readEntities(std::ifstream &in, GmshMesh &mesh)
+{
     std::string line;
-    while (std::getline(in, line)) {
-        if (line.rfind("$EndEntities", 0) == 0)
-            break;
-    }
+    std::getline(in, line); // first line: numPoints numCurves numSurfaces numVolumes
+    int np=0,nc=0,ns=0,nv=0;
+    { std::istringstream ss(line); ss>>np>>nc>>ns>>nv; }
+
+    auto readBlock = [&](int dim, int count) {
+        for (int i=0; i<count; ++i) {
+            std::getline(in, line);
+            std::istringstream ss(line);
+            int tag;
+            double bb[6];
+            int nPhys;
+            ss >> tag >> bb[0]>>bb[1]>>bb[2]>>bb[3]>>bb[4]>>bb[5] >> nPhys;
+            Entity E; E.dim = dim; E.tag = tag;
+            E.physicals.resize(nPhys);
+            for (int j=0;j<nPhys;++j) ss >> E.physicals[j];
+            // optional: skip partitions
+            int nPart=0; if (ss >> nPart) { for(int k=0;k<nPart;++k){ int tmp; ss>>tmp; } }
+            mesh.entities[entityKey(dim, tag)] = std::move(E);
+        }
+    };
+
+    readBlock(0, np);
+    readBlock(1, nc);
+    readBlock(2, ns);
+    readBlock(3, nv);
+
+    // skip to $EndEntities
+    while (std::getline(in, line))
+        if (line.rfind("$EndEntities",0)==0) break;
 }
 
 void GmshMeshReader::readNodes(std::ifstream &in, GmshMesh &mesh) {

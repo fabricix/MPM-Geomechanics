@@ -886,10 +886,12 @@ vector<Body*> Input::getBodyList(){
 					 	nppc_hex = ((*it)["nppc_hex"]);
 					}
 
-					// number of material
-					for (size_t i = 0; i < physical_to_material.size(); i++)
+					// create a new body gmsh
+					for (auto &kv : physical_to_material) 
 					{
+						if (kv.second <= 0) continue;
 						BodyGmsh* ibody = new BodyGmsh(mesh_file, physical_to_material, nppc_tet, nppc_hex);
+						ibody->setMaterialId(kv.second);   // si tu Body base guarda el id
 						bodies.push_back(ibody);
 					}
 				}

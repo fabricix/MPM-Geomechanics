@@ -7,6 +7,7 @@
 #include "Warning.h"
 #include "Materials/Elastic.h"
 #include "Body/BodyCuboid.h"
+#include "Body/BodyGmsh.h"
 #include "Shape/ShapeGimp.h"
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
@@ -247,6 +248,7 @@ void MPM::createBodies() {
 		}
 		bodies.at(i)->create(mesh,iMaterial);
 	}
+	BodyGmsh::resetSharedMesh(); 
 }
 
 void MPM::setupParticles() {

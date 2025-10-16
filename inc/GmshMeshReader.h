@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <fstream>
 
 namespace GMSH {
 
@@ -29,11 +30,24 @@ namespace GMSH {
         std::string name;
     };
 
+    // helper to encode (dim, tag) into a 64-bit key
+    inline long long entityKey(int dim, int tag) {
+        return ( (static_cast<long long>(dim) << 32) | (tag & 0xffffffff) );
+    }
+
+    // entity structure (defines relation between entities and physical groups)
+    struct Entity {
+        int dim = 0;                     // 0=point, 1=curve, 2=surface, 3=volume
+        int tag = 0;                     // entityTag (matches Element::entityTag)
+        std::vector<int> physicals;      // list of physical group IDs attached
+    };
+
     // complete Gmsh mesh structure
     struct GmshMesh {
         std::vector<Node> nodes;
         std::vector<Element> elements;
         std::unordered_map<int, PhysicalGroup> physicals; // key = physId
+        std::unordered_map<long long, Entity> entities;
     };
 
     // File reader .msh (ASCII)
@@ -42,7 +56,7 @@ namespace GMSH {
         static bool load(const std::string &filename, GmshMesh &mesh);
     private:
         static void readPhysicalNames(std::ifstream &in, GmshMesh &mesh);
-        static void readEntities(std::ifstream &in);
+        static void readEntities(std::ifstream &in, GmshMesh &mesh);
         static void readNodes(std::ifstream &in, GmshMesh &mesh);
         static void readElements(std::ifstream &in, GmshMesh &mesh);
     };

@@ -18,8 +18,8 @@ class BodyGmsh : public Body
         BodyGmsh(
                 const std::string& mesh_file = "",
                 std::map<std::string,int> physical_to_material = {},
-                int nppc_tet = 8,
-                int nppc_hex = 8);
+                int nppc_tet = 1,
+                int nppc_hex = 1);
 
         /// \brief Default destructor
         ///
@@ -37,6 +37,9 @@ class BodyGmsh : public Body
         /// \brief Return the material identification
         /// \return Material identification
         inline virtual int getMaterialId() const { return this->materialId; }
+
+        /// \brief Reset the shared Gmsh mesh to force reloading from file
+        static void resetSharedMesh();
 
     private:
         string meshFile; //!< Gmsh mesh file name
