@@ -57,35 +57,70 @@ void GmshMeshReader::readPhysicalNames(std::ifstream &in, GmshMesh &mesh) {
 void GmshMeshReader::readEntities(std::ifstream &in, GmshMesh &mesh)
 {
     std::string line;
-    std::getline(in, line); // first line: numPoints numCurves numSurfaces numVolumes
-    int np=0,nc=0,ns=0,nv=0;
-    { std::istringstream ss(line); ss>>np>>nc>>ns>>nv; }
 
-    auto readBlock = [&](int dim, int count) {
-        for (int i=0; i<count; ++i) {
-            std::getline(in, line);
+    //  header: numPoints numCurves numSurfaces numVolumes
+    if (!std::getline(in, line)) return;
+    int np=0, nc=0, ns=0, nv=0;
+    {
+        std::istringstream ss(line);
+        ss >> np >> nc >> ns >> nv;
+    }
+
+    auto parseBlock = [&](int dim, int count) {
+        for (int i = 0; i < count; ++i) {
+            if (!std::getline(in, line)) break;
             std::istringstream ss(line);
-            int tag;
-            double bb[6];
-            int nPhys;
-            ss >> tag >> bb[0]>>bb[1]>>bb[2]>>bb[3]>>bb[4]>>bb[5] >> nPhys;
-            Entity E; E.dim = dim; E.tag = tag;
+
+            Entity E; E.dim = dim;
+
+            // tag
+            if (!(ss >> E.tag)) continue;
+
+            // coords / bounding box
+            if (dim == 0) {
+                // points: x y z
+                double x=0,y=0,z=0;
+                if (!(ss >> x >> y >> z)) continue;
+            } else {
+                // curve/surface/volume: xmin ymin zmin xmax ymax zmax
+                double bbminmax[6]{};
+                if (!(ss >> bbminmax[0] >> bbminmax[1] >> bbminmax[2]
+                           >> bbminmax[3] >> bbminmax[4] >> bbminmax[5])) continue;
+            }
+
+            // nPhysicals and its ids
+            int nPhys = 0;
+            if (!(ss >> nPhys)) nPhys = 0;
+            if (nPhys < 0) nPhys = 0; // robustez
             E.physicals.resize(nPhys);
-            for (int j=0;j<nPhys;++j) ss >> E.physicals[j];
-            // optional: skip partitions
-            int nPart=0; if (ss >> nPart) { for(int k=0;k<nPart;++k){ int tmp; ss>>tmp; } }
-            mesh.entities[entityKey(dim, tag)] = std::move(E);
+            for (int j = 0; j < nPhys; ++j) {
+                int pid = 0; ss >> pid; E.physicals[j] = pid;
+            }
+
+            // nBoundary + boundary tags (depend on dim)
+            int nB = 0;
+            if (ss >> nB) { for (int k = 0; k < nB; ++k) { int tmp=0; ss >> tmp; } }
+
+            //nPartitions + partition tags + parent tag
+            int nPart = 0;
+            if (ss >> nPart) {
+                for (int k = 0; k < nPart; ++k) { int tmp=0; ss >> tmp; }
+                int parent = 0; ss >> parent;
+            }
+
+            mesh.entities[entityKey(dim, E.tag)] = std::move(E);
         }
     };
 
-    readBlock(0, np);
-    readBlock(1, nc);
-    readBlock(2, ns);
-    readBlock(3, nv);
+    parseBlock(0, np);
+    parseBlock(1, nc);
+    parseBlock(2, ns);
+    parseBlock(3, nv);
 
-    // skip to $EndEntities
-    while (std::getline(in, line))
-        if (line.rfind("$EndEntities",0)==0) break;
+    // jump to $EndEntities
+    while (std::getline(in, line)) {
+        if (line.rfind("$EndEntities", 0) == 0) break;
+    }
 }
 
 void GmshMeshReader::readNodes(std::ifstream &in, GmshMesh &mesh) {
