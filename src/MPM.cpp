@@ -7,12 +7,14 @@
 #include "Warning.h"
 #include "Materials/Elastic.h"
 #include "Body/BodyCuboid.h"
+#include "Body/BodyGmsh.h"
 #include "Shape/ShapeGimp.h"
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
+#include "GmshMeshReader.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -246,6 +248,10 @@ void MPM::createBodies() {
 		}
 		bodies.at(i)->create(mesh,iMaterial);
 	}
+	BodyGmsh::resetSharedMesh();
+	
+	// calculate the kinetic energy of bodies
+	
 }
 
 void MPM::setupParticles() {
@@ -413,7 +419,7 @@ void MPM::createModel() {
 
 		// set time step
 		setTimeStep();
-		
+
 		// setup the body list
 		setupBodyList();
 
