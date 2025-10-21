@@ -470,14 +470,6 @@ vector<Body*> Input::getBodyList(){
 					}
 					if(!active) continue;
 
-					// body id
-					int id = 0;
-					if ((*it)["id"].is_number()) {
-						id = ((*it)["id"]);
-					} else {
-						throw(0);
-					}
-
 					// center of the sphere
 					Vector3d center = Vector3d::Zero();
 					if ((*it)["center"].is_array()) {
@@ -485,6 +477,7 @@ vector<Body*> Input::getBodyList(){
 						center(1) = (*it)["center"][1];
 						center(2) = (*it)["center"][2];
 					} else {
+						Warning::printMessage("Sphere body center not defined");
 						throw(0);
 					}
 
@@ -493,6 +486,7 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["diameter"].is_number()) {
 						diameter = ((*it)["diameter"]);
 					} else {
+						Warning::printMessage("Sphere body diameter not defined");
 						throw(0);
 					}
 
@@ -501,6 +495,7 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) {
 						material_id = ((*it)["material_id"]);
 					} else {
+						Warning::printMessage("Sphere body material id not defined");
 						throw(0);
 					}
 
@@ -525,7 +520,7 @@ vector<Body*> Input::getBodyList(){
 					if (iBody == NULL) {
 						throw(0);
 					} else {
-						iBody->setId(id);
+						iBody->setId(static_cast<int> (bodies.size() + 1) );
 						iBody->setCenter(center);
 						iBody->setDiameter(diameter);
 						iBody->setMaterialId(material_id);
@@ -535,6 +530,7 @@ vector<Body*> Input::getBodyList(){
 
 					bodies.push_back(iBody);
 				}
+
 				// cuboid body
 				if ((*it)["type"] == "cuboid") {
 
@@ -545,14 +541,6 @@ vector<Body*> Input::getBodyList(){
 					}
 					if(!active) continue;
 
-					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
-						id = ((*it)["id"]);
-					}
-					else
-						throw(0);
-
 					// point P1
 					Vector3d pointP1=Vector3d::Zero();
 					if ((*it)["point_p1"].is_array())
@@ -562,7 +550,10 @@ vector<Body*> Input::getBodyList(){
 						pointP1(2)=(*it)["point_p1"][2];
 					}
 					else
+					{
+						Warning::printMessage("Cuboid body point P1 not defined");
 						throw(0);
+					}
 					
 					// point P2
 					Vector3d pointP2=Vector3d::Zero();
@@ -572,8 +563,10 @@ vector<Body*> Input::getBodyList(){
 						pointP2(1)=(*it)["point_p2"][1];
 						pointP2(2)=(*it)["point_p2"][2];
 					}
-					else
+					else{
+						Warning::printMessage("Cuboid body point P2 not defined");
 						throw(0);
+					}
 
 					// material id
 					int material_id=0; 
@@ -581,8 +574,10 @@ vector<Body*> Input::getBodyList(){
 					{
 						material_id = ((*it)["material_id"]);
 					}
-					else
+					else{
+						Warning::printMessage("Cuboid body material id not defined");
 						throw(0);
+					}
 
 					// initial velocity
 					Vector3d initial_velocity=Vector3d::Zero(); 
@@ -598,11 +593,12 @@ vector<Body*> Input::getBodyList(){
 
 					if (iBody==NULL)
 					{
+						Warning::printMessage("Could not create cuboid body");
 						throw(0);
 					}
 					else
 					{
-						iBody->setId(id);
+						iBody->setId(static_cast<int> (bodies.size() + 1));
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
 						iBody->setInitialVelocity(initial_velocity);
@@ -621,22 +617,16 @@ vector<Body*> Input::getBodyList(){
 					}
 					if(!active) continue;
 
-					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
-						id = ((*it)["id"]);
-					}
-					else
-						throw(0);
-
 					// material id
 					int material_id=0; 
 					if ((*it)["material_id"].is_number()) 
 					{
 						material_id = ((*it)["material_id"]);
 					}
-					else
+					else{
+						Warning::printMessage("Polygon body material id not defined");
 						throw(0);
+					}
 
 					// extrude direction
 					string extrude_direction=""; 
@@ -644,8 +634,10 @@ vector<Body*> Input::getBodyList(){
 					{
 						extrude_direction = ((*it)["extrude_direction"]);
 					}
-					else
+					else{
+						Warning::printMessage("Polygon body extrude direction not defined");
 						throw(0);
+					}
 
 					// extrude displacement
 					double extrude_displacement=0; 
@@ -653,17 +645,17 @@ vector<Body*> Input::getBodyList(){
 					{
 						extrude_displacement = ((*it)["extrude_displacement"]);
 					}
-					else
+					else{
+						Warning::printMessage("Polygon body extrude displacement not defined");
 						throw(0);
+					}
 
 					// discretization length
-					double discretization_length=0; 
+					double discretization_length=-1.0; 
 					if ((*it)["discretization_length"].is_number()) 
 					{
 						discretization_length = ((*it)["discretization_length"]);
 					}
-					else
-						throw(0);
 
 					// points
 					vector<Vector3d> polygon_points;
@@ -686,11 +678,12 @@ vector<Body*> Input::getBodyList(){
 
 							if (iBody==NULL)
 							{
+								Warning::printMessage("Could not create polygon body");
 								throw(0);
 							}
 							else
 							{
-								iBody->setId(id);
+								iBody->setId(static_cast<int> (bodies.size() + 1));
 								iBody->setPoints(polygon_points);
 								iBody->setMaterialId(material_id);
 								iBody->setExtrudeDirection(extrude_direction);
@@ -716,14 +709,6 @@ vector<Body*> Input::getBodyList(){
 						active = (*it)["active"];
 					}
 					if(!active) continue;
-
-					// body id
-					int id = 0;
-					if ((*it)["id"].is_number()) {
-						id = ((*it)["id"]);
-					} else {
-						throw(0);
-					}
 
 					// material id
 					int material_id = 0;
@@ -771,7 +756,7 @@ vector<Body*> Input::getBodyList(){
 					if (iBody == NULL) {
 						throw(0);
 					} else {
-						iBody->setId(id);
+						iBody->setId(static_cast<int> (bodies.size() + 1));
 						iBody->setMaterialId(material_id);
 						bool is_two_phase = ModelSetup::getTwoPhaseActive();
 						std::vector<Particle*> particle_list;
@@ -796,14 +781,6 @@ vector<Body*> Input::getBodyList(){
 						active = (*it)["active"];
 					}
 					if(!active) continue;
-
-					// body id
-					int id=0; 
-					if ((*it)["id"].is_number()){
-						id = ((*it)["id"]);
-					}
-					else
-						throw(0);
 
 					// material id
 					int material_id=0; 
@@ -868,7 +845,7 @@ vector<Body*> Input::getBodyList(){
 					}
 					else
 					{
-						iBody->setId(id);
+						iBody->setId(static_cast<int> (bodies.size() + 1));
 						iBody->setMaterialId(material_id);
 						unsigned n_particles = static_cast<unsigned int>((*it)["particles"]["id"].size());
 						std::vector<Particle*> particle_list;
@@ -941,6 +918,7 @@ vector<Body*> Input::getBodyList(){
 					if (kv.second <= 0) continue;
 					BodyGmsh* ibody = new BodyGmsh(mesh_file, physical_to_material, particles_in_cell_distribution);
 					ibody->setMaterialId(kv.second);
+					ibody->setId(static_cast<int> (bodies.size() + 1));
 					bodies.push_back(ibody);
 				}
 			}
@@ -1794,6 +1772,7 @@ std::string Input::getSTLMeshFile()
 			return inputFile["terrain_contact"]["stl_mesh"];
 		}
 
+		Warning::printMessage("No STL mesh file defined in terrain contact");
 		throw(0);
 	}
 	catch(...)
