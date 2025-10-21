@@ -56,7 +56,9 @@
 
   "body":
   [
-    {"type":"cuboid",
+    {
+      "type":"cuboid",
+      "active":false,
       "id":1,
       "point_p1":[3,0,0],
       "point_p2":[5,2,7],
@@ -64,6 +66,7 @@
     },
     {
       "type":"cuboid",
+      "active":false,
       "id":2,
       "point_p1":[3,3,0],
       "point_p2":[5,5,5],
@@ -71,6 +74,7 @@
     },
     {
       "type":"polygon_2d",
+      "active":false,
       "extrude_direction":"y",
       "extrude_displacement":2,
       "discretization_length":0.5,
@@ -80,6 +84,7 @@
     },
     {
       "type":"particles",
+      "active":false,
       "id":4,
       "material_id":2,    
       "particles":
@@ -91,6 +96,7 @@
     },
     {
       "type":"particles_from_file",
+      "active":false,
       "id":5,
       "material_id":2,
       "file":"particle_list.json"
@@ -98,9 +104,7 @@
     {
       "type":"gmsh",
       "mesh_file": "geometry.msh",
-      "physical_to_material": {"Soil":2,"Geotextil":1},
-      "nppc_tet":1,
-      "nppc_hex": 1
+      "physical_to_material": {"Soil":2,"Geotextil":1}
     }
   ]
 }

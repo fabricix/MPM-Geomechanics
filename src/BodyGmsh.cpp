@@ -20,13 +20,11 @@ namespace {
 BodyGmsh::BodyGmsh(
 					const std::string& mesh_file,
 					std::map<std::string, int> physical_to_material,
-                   	int nppc_tet,
-                   	int nppc_hex)
+                   	const std::string& particle_distribution)
 				   :
 				    meshFile(mesh_file),
 				    physicalToMaterial(std::move(physical_to_material)),
-					nppcTet(nppc_tet),
-					nppcHex(nppc_hex),
+					particleDistribution(particle_distribution),
 					materialId(-1) 
 {
     // empty
@@ -154,7 +152,7 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
     }
 
     // go through the elements and create particles in TET4 and HEX8 elements
-    // the particles are created in barycentric coordinates (1 particle per element) or Gauss points (4 points in TET4 or ).
+    // the particles are created in barycentric coordinates (1 particle per element) or Gauss points (4 points in TET4 or 8 in hexahedron).
     for (const auto& e : gm.elements) {
 
         if (!goodEntities.count(e.entityTag)) continue;
@@ -168,11 +166,11 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
             Vector3d a(A.x,A.y,A.z), b(B.x,B.y,B.z), c(C.x,C.y,C.z), d(D.x,D.y,D.z);
 
             double V = std::fabs((b-a).cross(c-a).dot(d-a)) / 6.0;
-            const int nppc = std::max(1,nppcTet);
+            const int nppc = particleDistribution == "barycentric" ? 1 : 4;
             const double Vp = V / nppc;
             const double Mp = rho * Vp;
 
-            if (nppcTet == 1) {
+            if (particleDistribution == "barycentric") {
                 // barycentric
                 Vector3d xc = 0.25*(a+b+c+d);
                 addParticle(xc, Mp, Vp);
@@ -210,11 +208,11 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
                 ) / 6.0;
             }
                
-            const int nppc = std::max(1,nppcHex);
+            const int nppc = particleDistribution == "barycentric" ? 1 : 8;
             const double Vp = V / nppc;
             const double Mp = rho * Vp;
 
-            if (nppcHex == 1) {
+            if (particleDistribution == "barycentric") {
                 // barycentric point
                 Vector3d xc(0,0,0);
                 for (int i=0;i<8;++i) xc += P[i];
@@ -249,7 +247,7 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
     }
 
     if (seeds == 0) {
-        Warning::printMessage("BodyGmsh::create: no se sembraron MPs para material id="
+        Warning::printMessage("BodyGmsh::create: can't create material points in material id="
                               + std::to_string(thisMatId));
     }
 }

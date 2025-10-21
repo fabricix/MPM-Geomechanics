@@ -458,78 +458,92 @@ vector<Body*> Input::getBodyList(){
 
 			// loop aver all bodies
 			json::iterator it;
-			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) {
-				
-			// sphere body
-			if ((*it)["type"] == "sphere") {
+			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) 
+			{	
+				// sphere body
+				if ((*it)["type"] == "sphere") {
 
-				// body id
-				int id = 0;
-				if ((*it)["id"].is_number()) {
-					id = ((*it)["id"]);
-				} else {
-					throw(0);
+					// active flag
+					bool active = true;
+					if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+						active = (*it)["active"];
+					}
+					if(!active) continue;
+
+					// body id
+					int id = 0;
+					if ((*it)["id"].is_number()) {
+						id = ((*it)["id"]);
+					} else {
+						throw(0);
+					}
+
+					// center of the sphere
+					Vector3d center = Vector3d::Zero();
+					if ((*it)["center"].is_array()) {
+						center(0) = (*it)["center"][0];
+						center(1) = (*it)["center"][1];
+						center(2) = (*it)["center"][2];
+					} else {
+						throw(0);
+					}
+
+					// diameter of the sphere
+					double diameter = 0.0;
+					if ((*it)["diameter"].is_number()) {
+						diameter = ((*it)["diameter"]);
+					} else {
+						throw(0);
+					}
+
+					// material id
+					int material_id = 0;
+					if ((*it)["material_id"].is_number()) {
+						material_id = ((*it)["material_id"]);
+					} else {
+						throw(0);
+					}
+
+					// initial velocity
+					Vector3d initial_velocity = Vector3d::Zero();
+					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array()) {
+						initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(1) = (*it)["initial_velocity"][1];
+						initial_velocity(2) = (*it)["initial_velocity"][2];
+					}
+
+					// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
+					Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
+					if ((*it)["particles_per_direction"].is_array()) {
+						particles_in_direction(0) = (*it)["particles_per_direction"][0];
+						particles_in_direction(1) = (*it)["particles_per_direction"][1];
+						particles_in_direction(2) = (*it)["particles_per_direction"][2];
+					}
+
+					// create a new sphere
+					BodySphere* iBody = new BodySphere();
+					if (iBody == NULL) {
+						throw(0);
+					} else {
+						iBody->setId(id);
+						iBody->setCenter(center);
+						iBody->setDiameter(diameter);
+						iBody->setMaterialId(material_id);
+						iBody->setInitialVelocity(initial_velocity);
+						iBody->setParticlesPerDirection(particles_in_direction);
+					}
+
+					bodies.push_back(iBody);
 				}
-
-				// center of the sphere
-				Vector3d center = Vector3d::Zero();
-				if ((*it)["center"].is_array()) {
-					center(0) = (*it)["center"][0];
-					center(1) = (*it)["center"][1];
-					center(2) = (*it)["center"][2];
-				} else {
-					throw(0);
-				}
-
-				// diameter of the sphere
-				double diameter = 0.0;
-				if ((*it)["diameter"].is_number()) {
-					diameter = ((*it)["diameter"]);
-				} else {
-					throw(0);
-				}
-
-				// material id
-				int material_id = 0;
-				if ((*it)["material_id"].is_number()) {
-					material_id = ((*it)["material_id"]);
-				} else {
-					throw(0);
-				}
-
-				// initial velocity
-				Vector3d initial_velocity = Vector3d::Zero();
-				if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array()) {
-					initial_velocity(0) = (*it)["initial_velocity"][0];
-					initial_velocity(1) = (*it)["initial_velocity"][1];
-					initial_velocity(2) = (*it)["initial_velocity"][2];
-				}
-
-				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
-				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
-				if ((*it)["particles_per_direction"].is_array()) {
-					particles_in_direction(0) = (*it)["particles_per_direction"][0];
-					particles_in_direction(1) = (*it)["particles_per_direction"][1];
-					particles_in_direction(2) = (*it)["particles_per_direction"][2];
-				}
-
-				// create a new sphere
-				BodySphere* iBody = new BodySphere();
-				if (iBody == NULL) {
-					throw(0);
-				} else {
-					iBody->setId(id);
-					iBody->setCenter(center);
-					iBody->setDiameter(diameter);
-					iBody->setMaterialId(material_id);
-					iBody->setInitialVelocity(initial_velocity);
-					iBody->setParticlesPerDirection(particles_in_direction);
-				}
-
-				bodies.push_back(iBody);
-}
 				// cuboid body
 				if ((*it)["type"] == "cuboid") {
+
+					// active flag
+					bool active = true;
+					if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+						active = (*it)["active"];
+					}
+					if(!active) continue;
 
 					// body id
 					int id=0; 
@@ -565,7 +579,7 @@ vector<Body*> Input::getBodyList(){
 					int material_id=0; 
 					if ((*it)["material_id"].is_number()) 
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
@@ -574,7 +588,7 @@ vector<Body*> Input::getBodyList(){
 					Vector3d initial_velocity=Vector3d::Zero(); 
 					if (!(*it)["initial_velocity"].is_null() && (*it)["initial_velocity"].is_array())
 					{
-					 	initial_velocity(0) = (*it)["initial_velocity"][0];
+						initial_velocity(0) = (*it)["initial_velocity"][0];
 						initial_velocity(1) = (*it)["initial_velocity"][1];
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
@@ -600,6 +614,13 @@ vector<Body*> Input::getBodyList(){
 				// 2d polygon type
 				if ((*it)["type"] == "polygon_2d") {
 
+					// active flag
+					bool active = true;
+					if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+						active = (*it)["active"];
+					}
+					if(!active) continue;
+
 					// body id
 					int id=0; 
 					if ((*it)["id"].is_number()){
@@ -612,7 +633,7 @@ vector<Body*> Input::getBodyList(){
 					int material_id=0; 
 					if ((*it)["material_id"].is_number()) 
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
@@ -621,7 +642,7 @@ vector<Body*> Input::getBodyList(){
 					string extrude_direction=""; 
 					if ((*it)["extrude_direction"].is_string()) 
 					{
-					 	extrude_direction = ((*it)["extrude_direction"]);
+						extrude_direction = ((*it)["extrude_direction"]);
 					}
 					else
 						throw(0);
@@ -630,7 +651,7 @@ vector<Body*> Input::getBodyList(){
 					double extrude_displacement=0; 
 					if ((*it)["extrude_displacement"].is_number()) 
 					{
-					 	extrude_displacement = ((*it)["extrude_displacement"]);
+						extrude_displacement = ((*it)["extrude_displacement"]);
 					}
 					else
 						throw(0);
@@ -639,7 +660,7 @@ vector<Body*> Input::getBodyList(){
 					double discretization_length=0; 
 					if ((*it)["discretization_length"].is_number()) 
 					{
-					 	discretization_length = ((*it)["discretization_length"]);
+						discretization_length = ((*it)["discretization_length"]);
 					}
 					else
 						throw(0);
@@ -648,20 +669,20 @@ vector<Body*> Input::getBodyList(){
 					vector<Vector3d> polygon_points;
 					if ((*it)["points"].is_array()) 
 					{
-					 	for (size_t i = 0; i < (*it)["points"].size(); ++i)
-					 	{
-					 		// point position
-					 		double px = (*it)["points"].at(i).at(0);
-					 		double py = (*it)["points"].at(i).at(1);
-					 		double pz = (*it)["points"].at(i).at(2);
+						for (size_t i = 0; i < (*it)["points"].size(); ++i)
+						{
+							// point position
+							double px = (*it)["points"].at(i).at(0);
+							double py = (*it)["points"].at(i).at(1);
+							double pz = (*it)["points"].at(i).at(2);
 
-					 		polygon_points.push_back(Vector3d(px,py,pz));
-					 	}
-					 	
-					 	if (polygon_points.size()!=0)
-					 	{
-					 		// create a new polygon body
-					 		BodyPolygon* iBody = new BodyPolygon();
+							polygon_points.push_back(Vector3d(px,py,pz));
+						}
+						
+						if (polygon_points.size()!=0)
+						{
+							// create a new polygon body
+							BodyPolygon* iBody = new BodyPolygon();
 
 							if (iBody==NULL)
 							{
@@ -678,9 +699,9 @@ vector<Body*> Input::getBodyList(){
 							}
 						
 							bodies.push_back(iBody);
-					 	}
-					 	else
-					 		throw(0);
+						}
+						else
+							throw(0);
 					}
 					else
 						throw(0);
@@ -688,6 +709,14 @@ vector<Body*> Input::getBodyList(){
 
 				// particle list from external file
 				if ((*it)["type"] == "particles_from_file") {
+
+					// active flag
+					bool active = true;
+					if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+						active = (*it)["active"];
+					}
+					if(!active) continue;
+
 					// body id
 					int id = 0;
 					if ((*it)["id"].is_number()) {
@@ -761,6 +790,13 @@ vector<Body*> Input::getBodyList(){
 				// particle list body type
 				if ((*it)["type"]=="particles")
 				{
+					// active flag
+					bool active = true;
+					if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+						active = (*it)["active"];
+					}
+					if(!active) continue;
+
 					// body id
 					int id=0; 
 					if ((*it)["id"].is_number()){
@@ -773,7 +809,7 @@ vector<Body*> Input::getBodyList(){
 					int material_id=0; 
 					if ((*it)["material_id"].is_number()) 
 					{
-					 	material_id = ((*it)["material_id"]);
+						material_id = ((*it)["material_id"]);
 					}
 					else
 						throw(0);
@@ -784,11 +820,11 @@ vector<Body*> Input::getBodyList(){
 					std::vector<unsigned> paricles_id;
 					if ((*it)["particles"]["id"].is_array()) 
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["id"].size(); ++i)
-					 	{
-					 		// particle id
-					 		paricles_id.push_back((*it)["particles"]["id"].at(i));
-					 	}
+						for (size_t i = 0; i < (*it)["particles"]["id"].size(); ++i)
+						{
+							// particle id
+							paricles_id.push_back((*it)["particles"]["id"].at(i));
+						}
 					}
 					else
 						throw(0);
@@ -797,15 +833,15 @@ vector<Body*> Input::getBodyList(){
 					std::vector<Vector3d> particles_position;
 					if ((*it)["particles"]["position"].is_array()) 
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["position"].size(); ++i)
-					 	{
-					 		// particle position
-					 		double px = (*it)["particles"]["position"].at(i).at(0);
-					 		double py = (*it)["particles"]["position"].at(i).at(1);
-					 		double pz = (*it)["particles"]["position"].at(i).at(2);
+						for (size_t i = 0; i < (*it)["particles"]["position"].size(); ++i)
+						{
+							// particle position
+							double px = (*it)["particles"]["position"].at(i).at(0);
+							double py = (*it)["particles"]["position"].at(i).at(1);
+							double pz = (*it)["particles"]["position"].at(i).at(2);
 
-					 		particles_position.push_back(Vector3d(px,py,pz));
-					 	}
+							particles_position.push_back(Vector3d(px,py,pz));
+						}
 					}
 					else
 						throw(0);
@@ -814,11 +850,11 @@ vector<Body*> Input::getBodyList(){
 					std::vector<double> particles_volume;
 					if ((*it)["particles"]["volume"].is_array()) 
 					{
-					 	for (size_t i = 0; i < (*it)["particles"]["volume"].size(); ++i)
-					 	{
-					 		// particle volume
-					 		particles_volume.push_back((*it)["particles"]["volume"].at(i));
-					 	}
+						for (size_t i = 0; i < (*it)["particles"]["volume"].size(); ++i)
+						{
+							// particle volume
+							particles_volume.push_back((*it)["particles"]["volume"].at(i));
+						}
 					}
 					else
 						throw(0);
@@ -847,54 +883,63 @@ vector<Body*> Input::getBodyList(){
 					}
 					bodies.push_back(iBody);
 				}
-			
+				
 				// gmsh body type
 				if ((*it)["type"]=="gmsh")
+			{
+
+				// active flag
+				bool active = true;
+				if ((*it).contains("active") && (*it)["active"].is_boolean()) {
+					active = (*it)["active"];
+				}
+				if(!active) continue;
+
+				// mesh file name
+				std::string mesh_file="";
+				if ((*it)["mesh_file"].is_string()) 
 				{
-					// mesh file name
-					std::string mesh_file="";
-					if ((*it)["mesh_file"].is_string()) 
+					mesh_file = ((*it)["mesh_file"]);
+				}
+				else
+					throw(0);
+				// material to physical group
+				std::map<std::string,int> physical_to_material;
+				if ((*it)["physical_to_material"].is_object()) 
+				{
+					for (json::iterator itmat=(*it)["physical_to_material"].begin(); itmat!=(*it)["physical_to_material"].end(); itmat++)
 					{
-					 	mesh_file = ((*it)["mesh_file"]);
-					}
-					else
-						throw(0);
-					// material to physical group
-					std::map<std::string,int> physical_to_material;
-					if ((*it)["physical_to_material"].is_object()) 
-					{
-					 	for (json::iterator itmat=(*it)["physical_to_material"].begin(); itmat!=(*it)["physical_to_material"].end(); itmat++)
-					 	{
-					 		// physical to material map
-					 		physical_to_material[itmat.key()]=(*it)["physical_to_material"][itmat.key()];
-					 	}
-					}
-					else
-						throw(0);
-
-					// number of particles per cell in tetrahedra
-					int nppc_tet=8;
-					if ((*it)["nppc_tet"].is_number()) 
-					{
-					 	nppc_tet = ((*it)["nppc_tet"]);
-					}
-
-					// number of particles per cell in hexahedra
-					int nppc_hex=8;
-					if ((*it)["nppc_hex"].is_number()) 
-					{
-					 	nppc_hex = ((*it)["nppc_hex"]);
-					}
-
-					// create a new body gmsh
-					for (auto &kv : physical_to_material) 
-					{
-						if (kv.second <= 0) continue;
-						BodyGmsh* ibody = new BodyGmsh(mesh_file, physical_to_material, nppc_tet, nppc_hex);
-						ibody->setMaterialId(kv.second);   // si tu Body base guarda el id
-						bodies.push_back(ibody);
+						// physical to material map
+						physical_to_material[itmat.key()]=(*it)["physical_to_material"][itmat.key()];
 					}
 				}
+				else
+					throw(0);
+
+				// particles in cell distribution
+				std::string particles_in_cell_distribution="barycentric";
+
+				if ((*it)["particle_distribution"].is_string()) 
+				{
+					particles_in_cell_distribution = ((*it)["particle_distribution"]);
+					
+					if (particles_in_cell_distribution!="barycentric" && particles_in_cell_distribution!="gaussian")
+					{	
+						Warning::printMessage("Unknown particle distribution type in gmsh body");
+						Warning::printMessage("Barycentric particle distribution assumed");
+						particles_in_cell_distribution="barycentric";
+					}
+				}
+				
+				// create a new gmsh body
+				for (auto &kv : physical_to_material) 
+				{
+					if (kv.second <= 0) continue;
+					BodyGmsh* ibody = new BodyGmsh(mesh_file, physical_to_material, particles_in_cell_distribution);
+					ibody->setMaterialId(kv.second);
+					bodies.push_back(ibody);
+				}
+			}
 			}
 		}
 

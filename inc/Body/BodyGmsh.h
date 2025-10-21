@@ -18,8 +18,7 @@ class BodyGmsh : public Body
         BodyGmsh(
                 const std::string& mesh_file = "",
                 std::map<std::string,int> physical_to_material = {},
-                int nppc_tet = 1,
-                int nppc_hex = 1);
+                const std::string& particle_distribution = "barycentric");
 
         /// \brief Default destructor
         ///
@@ -44,7 +43,6 @@ class BodyGmsh : public Body
     private:
         string meshFile; //!< Gmsh mesh file name
         std::map<std::string,int> physicalToMaterial; //!< map from physical group name to material id
-        int nppcTet; //!< number of particles per cell in tetrahedra
-        int nppcHex; //!< number of particles per cell in hexahedra
+        string particleDistribution; //!< particle distribution in mesh elements
         int materialId; //!< material identification
 };

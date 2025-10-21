@@ -248,7 +248,10 @@ void MPM::createBodies() {
 		}
 		bodies.at(i)->create(mesh,iMaterial);
 	}
-	BodyGmsh::resetSharedMesh(); 
+	BodyGmsh::resetSharedMesh();
+	
+	// calculate the kinetic energy of bodies
+	
 }
 
 void MPM::setupParticles() {
