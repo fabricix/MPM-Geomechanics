@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "Body", "classBody.html", [
       [ "BodyCuboid", "classBodyCuboid.html", null ],
+      [ "BodyGmsh", "classBodyGmsh.html", null ],
       [ "BodyParticle", "classBodyParticle.html", null ],
       [ "BodyPolygon", "classBodyPolygon.html", null ],
       [ "BodySphere", "classBodySphere.html", null ]
@@ -10,6 +11,10 @@ var hierarchy =
     [ "Cell", "classCell.html", null ],
     [ "Contact", "classContact.html", null ],
     [ "Contribution", "classContribution.html", null ],
+    [ "GMSH::Element", "structGMSH_1_1Element.html", null ],
+    [ "GMSH::Entity", "structGMSH_1_1Entity.html", null ],
+    [ "GMSH::GmshMesh", "structGMSH_1_1GmshMesh.html", null ],
+    [ "GMSH::GmshMeshReader", "classGMSH_1_1GmshMeshReader.html", null ],
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", null ],
     [ "Material", "classMaterial.html", [
       [ "Elastic", "classElastic.html", [
@@ -23,12 +28,14 @@ var hierarchy =
     [ "MPM", "classMPM.html", null ],
     [ "NodalPointLoad", "structNodalPointLoad.html", null ],
     [ "Loads::NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", null ],
+    [ "GMSH::Node", "structGMSH_1_1Node.html", null ],
     [ "Node", "classNode.html", [
       [ "NodeMixture", "classNodeMixture.html", null ]
     ] ],
     [ "Particle", "classParticle.html", [
       [ "ParticleMixture", "classParticleMixture.html", null ]
     ] ],
+    [ "GMSH::PhysicalGroup", "structGMSH_1_1PhysicalGroup.html", null ],
     [ "Boundary::planeBoundary", "structBoundary_1_1planeBoundary.html", null ],
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", null ],
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", null ],

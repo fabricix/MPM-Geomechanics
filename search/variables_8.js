@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id_0',['id',['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
+  ['id_0',['id',['../structGMSH_1_1PhysicalGroup.html#aaeddd46096ee7ed707f4aeb058e3fd4e',1,'GMSH::PhysicalGroup::id'],['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
   ['initial_5fvelocity_1',['initial_velocity',['../classBody.html#a6de1624a7d45c11479318ae05d1eb998',1,'Body']]],
   ['initialporositymixture_2',['initialPorosityMixture',['../classParticleMixture.html#ac8ff0b6d45ac55d1229ebaa4f709ba34',1,'ParticleMixture']]],
   ['initialposition_3',['initialPosition',['../classParticle.html#a940bb260057927113c3c754c3db8e33a',1,'Particle']]],

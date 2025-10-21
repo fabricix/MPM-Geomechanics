@@ -106,15 +106,17 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 </div><table border="0" cellspacing="10" cellpadding="0">
 <tr><td><img src="inherit_graph_0.png" border="0" usemap="#aBody" alt=""/>
 <map name="aBody" id="aBody">
-<area shape="rect" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="5,80,60,105"/>
+<area shape="rect" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="5,104,60,129"/>
 <area shape="rect" href="classBodyCuboid.html" title="A type of Body representing a cuboid in 3D." alt="" coords="111,5,211,31"/>
-<area shape="poly" title=" " alt="" coords="61,70,107,40,129,28,131,33,109,44,64,74"/>
-<area shape="rect" href="classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="110,55,213,80"/>
-<area shape="poly" title=" " alt="" coords="73,82,109,75,111,80,74,87"/>
-<area shape="rect" href="classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="108,104,215,129"/>
-<area shape="poly" title=" " alt="" coords="74,98,108,104,107,109,73,103"/>
-<area shape="rect" href="classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="111,153,211,179"/>
-<area shape="poly" title=" " alt="" coords="65,111,109,138,133,151,131,156,107,143,62,115"/>
+<area shape="poly" title=" " alt="" coords="51,91,76,65,106,40,126,28,129,33,110,44,80,69,55,95"/>
+<area shape="rect" href="classBodyGmsh.html" title="Is a type of Body representing a body defined by a Gmsh mesh file each physical group in the Gmsh mes..." alt="" coords="115,55,208,80"/>
+<area shape="poly" title=" " alt="" coords="72,99,126,78,128,83,74,104"/>
+<area shape="rect" href="classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="110,104,213,129"/>
+<area shape="poly" title=" " alt="" coords="73,114,110,114,110,119,73,119"/>
+<area shape="rect" href="classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="108,153,215,179"/>
+<area shape="poly" title=" " alt="" coords="74,129,128,151,126,156,72,134"/>
+<area shape="rect" href="classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="111,203,211,228"/>
+<area shape="poly" title=" " alt="" coords="55,138,80,163,110,188,131,200,128,205,106,192,77,167,52,142"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_1.png" border="0" usemap="#aBoundary" alt=""/>
@@ -142,37 +144,67 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="rect" href="classContribution.html" title="Represents the node that the particle contributes." alt="" coords="5,5,108,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_6.png" border="0" usemap="#aLoads_1_1LoadDistributedBox" alt=""/>
+<tr><td><img src="inherit_graph_6.png" border="0" usemap="#aGMSH_1_1Element" alt=""/>
+<map name="aGMSH_1_1Element" id="aGMSH_1_1Element">
+<area shape="rect" href="structGMSH_1_1Element.html" title=" " alt="" coords="5,5,129,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aGMSH_1_1Entity" alt=""/>
+<map name="aGMSH_1_1Entity" id="aGMSH_1_1Entity">
+<area shape="rect" href="structGMSH_1_1Entity.html" title=" " alt="" coords="5,5,113,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aGMSH_1_1GmshMesh" alt=""/>
+<map name="aGMSH_1_1GmshMesh" id="aGMSH_1_1GmshMesh">
+<area shape="rect" href="structGMSH_1_1GmshMesh.html" title=" " alt="" coords="5,5,148,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aGMSH_1_1GmshMeshReader" alt=""/>
+<map name="aGMSH_1_1GmshMeshReader" id="aGMSH_1_1GmshMeshReader">
+<area shape="rect" href="classGMSH_1_1GmshMeshReader.html" title=" " alt="" coords="5,5,195,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_10.png" border="0" usemap="#aGMSH_1_1Node" alt=""/>
+<map name="aGMSH_1_1Node" id="aGMSH_1_1Node">
+<area shape="rect" href="structGMSH_1_1Node.html" title=" " alt="" coords="5,5,109,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_11.png" border="0" usemap="#aGMSH_1_1PhysicalGroup" alt=""/>
+<map name="aGMSH_1_1PhysicalGroup" id="aGMSH_1_1PhysicalGroup">
+<area shape="rect" href="structGMSH_1_1PhysicalGroup.html" title=" " alt="" coords="5,5,168,31"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_12.png" border="0" usemap="#aLoads_1_1LoadDistributedBox" alt=""/>
 <map name="aLoads_1_1LoadDistributedBox" id="aLoads_1_1LoadDistributedBox">
 <area shape="rect" href="structLoads_1_1LoadDistributedBox.html" title="Structure to define a distributed load in particles inside the cuboid defined by point p1 and p2." alt="" coords="5,5,201,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aLoads_1_1NodalPointLoadData" alt=""/>
+<tr><td><img src="inherit_graph_13.png" border="0" usemap="#aLoads_1_1NodalPointLoadData" alt=""/>
 <map name="aLoads_1_1NodalPointLoadData" id="aLoads_1_1NodalPointLoadData">
 <area shape="rect" href="structLoads_1_1NodalPointLoadData.html" title=" " alt="" coords="5,5,207,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aLoads_1_1PrescribedPorePressure" alt=""/>
+<tr><td><img src="inherit_graph_14.png" border="0" usemap="#aLoads_1_1PrescribedPorePressure" alt=""/>
 <map name="aLoads_1_1PrescribedPorePressure" id="aLoads_1_1PrescribedPorePressure">
 <area shape="rect" href="structLoads_1_1PrescribedPorePressure.html" title="Structure to represent a particle with a pressure. Pressure is applied to particles with the specifie..." alt="" coords="5,5,227,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aLoads_1_1PressureBoundaryForceBox" alt=""/>
+<tr><td><img src="inherit_graph_15.png" border="0" usemap="#aLoads_1_1PressureBoundaryForceBox" alt=""/>
 <map name="aLoads_1_1PressureBoundaryForceBox" id="aLoads_1_1PressureBoundaryForceBox">
 <area shape="rect" href="structLoads_1_1PressureBoundaryForceBox.html" title="Structure to represent a boundary force in fluid due the action of the pressure." alt="" coords="5,5,252,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_10.png" border="0" usemap="#aLoads_1_1PressureBox" alt=""/>
+<tr><td><img src="inherit_graph_16.png" border="0" usemap="#aLoads_1_1PressureBox" alt=""/>
 <map name="aLoads_1_1PressureBox" id="aLoads_1_1PressureBox">
 <area shape="rect" href="structLoads_1_1PressureBox.html" title="Structure to represent a box with a pressure. Pressure in applied to particles inside the cuboid defi..." alt="" coords="5,5,155,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_11.png" border="0" usemap="#aLoads_1_1PressureMaterial" alt=""/>
+<tr><td><img src="inherit_graph_17.png" border="0" usemap="#aLoads_1_1PressureMaterial" alt=""/>
 <map name="aLoads_1_1PressureMaterial" id="aLoads_1_1PressureMaterial">
 <area shape="rect" href="structLoads_1_1PressureMaterial.html" title="Structure to represent a material with a pressure. Pressure is applied to particles with the specifie..." alt="" coords="5,5,184,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_12.png" border="0" usemap="#aMaterial" alt=""/>
+<tr><td><img src="inherit_graph_18.png" border="0" usemap="#aMaterial" alt=""/>
 <map name="aMaterial" id="aMaterial">
 <area shape="rect" href="classMaterial.html" title="Represents a material." alt="" coords="5,31,81,56"/>
 <area shape="rect" href="classElastic.html" title="Represents an elastic material." alt="" coords="143,5,208,31"/>
@@ -185,51 +217,51 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="poly" title=" " alt="" coords="406,15,440,15,440,21,406,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_13.png" border="0" usemap="#aMesh" alt=""/>
+<tr><td><img src="inherit_graph_19.png" border="0" usemap="#aMesh" alt=""/>
 <map name="aMesh" id="aMesh">
 <area shape="rect" href="classMesh.html" title="Class representing a rectangular grid mesh." alt="" coords="5,5,63,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_14.png" border="0" usemap="#aMohrCoulomb_1_1Softening" alt=""/>
+<tr><td><img src="inherit_graph_20.png" border="0" usemap="#aMohrCoulomb_1_1Softening" alt=""/>
 <map name="aMohrCoulomb_1_1Softening" id="aMohrCoulomb_1_1Softening">
 <area shape="rect" href="classMohrCoulomb_1_1Softening.html" title=" " alt="" coords="5,5,188,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_15.png" border="0" usemap="#aMPM" alt=""/>
+<tr><td><img src="inherit_graph_21.png" border="0" usemap="#aMPM" alt=""/>
 <map name="aMPM" id="aMPM">
 <area shape="rect" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,..." alt="" coords="5,5,60,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_16.png" border="0" usemap="#aNodalPointLoad" alt=""/>
+<tr><td><img src="inherit_graph_22.png" border="0" usemap="#aNodalPointLoad" alt=""/>
 <map name="aNodalPointLoad" id="aNodalPointLoad">
 <area shape="rect" href="structNodalPointLoad.html" title="Define a structure to store point loads." alt="" coords="5,5,129,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_17.png" border="0" usemap="#aNode" alt=""/>
+<tr><td><img src="inherit_graph_23.png" border="0" usemap="#aNode" alt=""/>
 <map name="aNode" id="aNode">
 <area shape="rect" href="classNode.html" title="Represents a mesh node." alt="" coords="5,5,61,31"/>
 <area shape="rect" href="classNodeMixture.html" title="Represents a mesh node for calculations using the mixture theory." alt="" coords="109,5,216,31"/>
 <area shape="poly" title=" " alt="" coords="75,15,109,15,109,21,75,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_18.png" border="0" usemap="#aParticle" alt=""/>
+<tr><td><img src="inherit_graph_24.png" border="0" usemap="#aParticle" alt=""/>
 <map name="aParticle" id="aParticle">
 <area shape="rect" href="classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="5,5,76,31"/>
 <area shape="rect" href="classParticleMixture.html" title="A material point for calculations using the mixture theory." alt="" coords="124,5,244,31"/>
 <area shape="poly" title=" " alt="" coords="89,15,124,15,124,21,89,21"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_19.png" border="0" usemap="#aSeismicAnalysis" alt=""/>
+<tr><td><img src="inherit_graph_25.png" border="0" usemap="#aSeismicAnalysis" alt=""/>
 <map name="aSeismicAnalysis" id="aSeismicAnalysis">
 <area shape="rect" href="structSeismicAnalysis.html" title="Structure to hold seismic analysis information." alt="" coords="5,5,133,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_20.png" border="0" usemap="#aSeismicData" alt=""/>
+<tr><td><img src="inherit_graph_26.png" border="0" usemap="#aSeismicData" alt=""/>
 <map name="aSeismicData" id="aSeismicData">
 <area shape="rect" href="structSeismicData.html" title="Stores seismic time series data." alt="" coords="5,5,109,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_21.png" border="0" usemap="#aShape" alt=""/>
+<tr><td><img src="inherit_graph_27.png" border="0" usemap="#aShape" alt=""/>
 <map name="aShape" id="aShape">
 <area shape="rect" href="classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="5,31,68,56"/>
 <area shape="rect" href="classShapeGimp.html" title="Represents the GIMP shape functions used in the interpolation process." alt="" coords="119,5,216,31"/>
@@ -238,7 +270,7 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="poly" title=" " alt="" coords="82,49,116,55,115,61,81,54"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_22.png" border="0" usemap="#aSolver" alt=""/>
+<tr><td><img src="inherit_graph_28.png" border="0" usemap="#aSolver" alt=""/>
 <map name="aSolver" id="aSolver">
 <area shape="rect" href="classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="5,55,68,80"/>
 <area shape="rect" href="classSolverExplicit.html" title="Represents the operations to solve explicitly the equations in time using the Update Stress Last (USL..." alt="" coords="161,5,271,31"/>
@@ -249,17 +281,17 @@ $(document).ready(function(){initNavTree('hierarchy.html',''); initResizable(); 
 <area shape="poly" title=" " alt="" coords="82,78,117,89,164,101,163,107,115,94,80,84"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_23.png" border="0" usemap="#aSTLReader" alt=""/>
+<tr><td><img src="inherit_graph_29.png" border="0" usemap="#aSTLReader" alt=""/>
 <map name="aSTLReader" id="aSTLReader">
 <area shape="rect" href="classSTLReader.html" title="Class to read STL files." alt="" coords="5,5,96,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_24.png" border="0" usemap="#aTerrainContact" alt=""/>
+<tr><td><img src="inherit_graph_30.png" border="0" usemap="#aTerrainContact" alt=""/>
 <map name="aTerrainContact" id="aTerrainContact">
 <area shape="rect" href="classTerrainContact.html" title="Class to compute terrain contact." alt="" coords="5,5,121,31"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_25.png" border="0" usemap="#aTriangle" alt=""/>
+<tr><td><img src="inherit_graph_31.png" border="0" usemap="#aTriangle" alt=""/>
 <map name="aTriangle" id="aTriangle">
 <area shape="rect" href="structTriangle.html" title="Struct representing a triangle." alt="" coords="5,5,79,31"/>
 </map>

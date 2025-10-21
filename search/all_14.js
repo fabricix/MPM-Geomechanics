@@ -7,7 +7,7 @@ var searchData=
   ['linear_20elastic_4',['Linear Elastic',['../namespaceInput.html#autotoc_md33',1,'']]],
   ['linux_5',['linux',['../index.html#autotoc_md73',1,'Compiling on Linux'],['../namespaceModelSetup.html#a840758c49dbf1762422cf753e2da09cba8bb92a43c19ed3454ea6c170960a1d22',1,'ModelSetup::LINUX'],['../required_programs.html#required_programs_linux',1,'Required Programs - Linux']]],
   ['list_6',['Keywords List',['../development_manual.html#autotoc_md48',1,'']]],
-  ['load_7',['load',['../structLoads_1_1LoadDistributedBox.html#a40c36d1273d64d21ce2a39a5044efe34',1,'Loads::LoadDistributedBox']]],
+  ['load_7',['load',['../structLoads_1_1LoadDistributedBox.html#a40c36d1273d64d21ce2a39a5044efe34',1,'Loads::LoadDistributedBox::load'],['../classGMSH_1_1GmshMeshReader.html#a2af327d2632c710a318e2641599fb1a9',1,'GMSH::GmshMeshReader::load()']]],
   ['load_20definition_20examples_8',['Load definition examples',['../namespaceInput.html#autotoc_md10',1,'']]],
   ['load_20example_9',['Gravity load Example',['../namespaceInput.html#autotoc_md11',1,'']]],
   ['load_20in_20box_20example_10',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],

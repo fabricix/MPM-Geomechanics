@@ -1,5 +1,13 @@
 var annotated_dup =
 [
+    [ "GMSH", "namespaceGMSH.html", [
+      [ "Element", "structGMSH_1_1Element.html", "structGMSH_1_1Element" ],
+      [ "Entity", "structGMSH_1_1Entity.html", "structGMSH_1_1Entity" ],
+      [ "GmshMesh", "structGMSH_1_1GmshMesh.html", "structGMSH_1_1GmshMesh" ],
+      [ "GmshMeshReader", "classGMSH_1_1GmshMeshReader.html", "classGMSH_1_1GmshMeshReader" ],
+      [ "Node", "structGMSH_1_1Node.html", "structGMSH_1_1Node" ],
+      [ "PhysicalGroup", "structGMSH_1_1PhysicalGroup.html", "structGMSH_1_1PhysicalGroup" ]
+    ] ],
     [ "Loads", "namespaceLoads.html", [
       [ "LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
       [ "NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
@@ -10,6 +18,7 @@ var annotated_dup =
     ] ],
     [ "Body", "classBody.html", "classBody" ],
     [ "BodyCuboid", "classBodyCuboid.html", "classBodyCuboid" ],
+    [ "BodyGmsh", "classBodyGmsh.html", "classBodyGmsh" ],
     [ "BodyParticle", "classBodyParticle.html", "classBodyParticle" ],
     [ "BodyPolygon", "classBodyPolygon.html", "classBodyPolygon" ],
     [ "BodySphere", "classBodySphere.html", "classBodySphere" ],

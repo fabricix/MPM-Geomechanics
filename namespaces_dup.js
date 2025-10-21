@@ -16,6 +16,7 @@ var namespaces_dup =
       [ "getInsideBox", "namespaceGeometry.html#a1c4b24da05cd6397cdf413095aaa8e09", null ],
       [ "getInsidePolygon", "namespaceGeometry.html#aee3f21b56e681e26dc13ff298064dafc", null ]
     ] ],
+    [ "GMSH", "namespaceGMSH.html", "namespaceGMSH" ],
     [ "HydroMechanicalCoupling", "namespaceHydroMechanicalCoupling.html", [
       [ "computeTotalStress", "namespaceHydroMechanicalCoupling.html#ab95eae22c8e5fb0a2344e840edd3a933", null ],
       [ "configureOneDirectionCoupling", "namespaceHydroMechanicalCoupling.html#a850651789b771f4a34bf40f69c038847", null ],

@@ -1,11 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="5,80,60,105"/>
+<area shape="rect" id="Node000000" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="5,104,60,129"/>
 <area shape="rect" id="Node000001" href="$classBodyCuboid.html" title="A type of Body representing a cuboid in 3D." alt="" coords="111,5,211,31"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="61,70,107,40,129,28,131,33,109,44,64,74"/>
-<area shape="rect" id="Node000002" href="$classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="110,55,213,80"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="73,82,109,75,111,80,74,87"/>
-<area shape="rect" id="Node000003" href="$classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="108,104,215,129"/>
-<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="74,98,108,104,107,109,73,103"/>
-<area shape="rect" id="Node000004" href="$classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="111,153,211,179"/>
-<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="65,111,109,138,133,151,131,156,107,143,62,115"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="51,91,76,65,106,40,126,28,129,33,110,44,80,69,55,95"/>
+<area shape="rect" id="Node000002" href="$classBodyGmsh.html" title="Is a type of Body representing a body defined by a Gmsh mesh file each physical group in the Gmsh mes..." alt="" coords="115,55,208,80"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="72,99,126,78,128,83,74,104"/>
+<area shape="rect" id="Node000003" href="$classBodyParticle.html" title="Is a Body created by a list of particles." alt="" coords="110,104,213,129"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="73,114,110,114,110,119,73,119"/>
+<area shape="rect" id="Node000004" href="$classBodyPolygon.html" title="Is a type of Body created by the extrusion of a 2D polygon." alt="" coords="108,153,215,179"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="74,129,128,151,126,156,72,134"/>
+<area shape="rect" id="Node000005" href="$classBodySphere.html" title="Is a type of Body representing a sphere in 3D." alt="" coords="111,203,211,228"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="55,138,80,163,110,188,131,200,128,205,106,192,77,167,52,142"/>
 </map>
