@@ -30,7 +30,7 @@ bool GmshMeshReader::load(const std::string &filename, GmshMesh &mesh) {
         }
     }
 
-    std::cout << "Read gmsh mesh: " 
+    std::cout << " Read gmsh : " 
               << mesh.nodes.size() << " nodes, "
               << mesh.elements.size() << " elements." << std::endl;
     return true;
