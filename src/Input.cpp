@@ -901,8 +901,10 @@ vector<Body*> Input::getBodyList(){
 				{
 					mesh_file = ((*it)["mesh_file"]);
 				}
-				else
+				else{
+					Warning::printMessage("No mesh file defined in gmsh body");
 					throw(0);
+				}
 				// material to physical group
 				std::map<std::string,int> physical_to_material;
 				if ((*it)["physical_to_material"].is_object()) 
@@ -913,8 +915,10 @@ vector<Body*> Input::getBodyList(){
 						physical_to_material[itmat.key()]=(*it)["physical_to_material"][itmat.key()];
 					}
 				}
-				else
+				else{
+					Warning::printMessage("No physical to material mapping defined in gmsh body");
 					throw(0);
+				}
 
 				// particles in cell distribution
 				std::string particles_in_cell_distribution="barycentric";
@@ -944,7 +948,7 @@ vector<Body*> Input::getBodyList(){
 		}
 
 		if (bodies.empty()){
-
+			Warning::printMessage("No bodies were created");
 			throw(0);
 		}
 
