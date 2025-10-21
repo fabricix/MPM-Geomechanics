@@ -253,7 +253,14 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
 }
 
 void BodyGmsh::resetSharedMesh() {
-    if (!s_mesh) return;
+
+    // warn if mesh is still referenced
+    if (s_mesh && s_mesh.use_count() > 1) {
+        Warning::printMessage("BodyGmsh::resetSharedMesh: mesh still referenced (" +
+                              std::to_string(s_mesh.use_count()) + " bodies)");
+    }
+
+    // reset shared mesh pointer
     s_mesh.reset();
     s_meshPath.clear();
 }
