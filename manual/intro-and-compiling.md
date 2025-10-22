@@ -6,15 +6,29 @@ The MPM-Geomechanics is a implementation of the Material Point Method (MPM) to s
 MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
 This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics:
 
-\f$ \frac{\partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i \f$
+$$ \frac{ \partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i $$
+
 that can be expressed discretely, using the nodes of an Eulerian mesh:
 
-\f$ \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} \f$
+$$ \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} $$
 
-where \f$ p_{i I}=\sum_p S_{I p} p_{i p}\f$ is the momentum, \f$ f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p\f$ is the internal force, and \f$ f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A\f$ is the external force at node \f$ I \f$.
-The function \f$ S_{I p} \f$ and its gradient \f$ S_{I p, j} \f$ are the weighting functions of node \f$ I \f$ evaluated at the position of particle \f$ p \f$, defined by \f$ S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV \f$ and \f$ S_{I p, j}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV \f$. 
+where 
+$$ p_{i I}=\sum_p S_{I p} p_{i p}$$
+is the momentum nodal field, 
+$$ f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p $$
+ is the internal force field, 
+ and 
+ $$ f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A $$
+is the external force at node $I$.
 
-The integration of the weight functions is performed analytically over the particle domain using linear functions for \f$ N_I\left(x_{ip}\right) \f$ and unit step functions for \f$ \chi_p\left(x_{ip}\right) \f$. 
+The function $ S_{I p} $ and its gradient $ S_{I p, j} $ are the weighting functions of node $ I $ evaluated at the position of particle $ p $, defined by 
+
+$$ S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV 
+$$ 
+and 
+$$ S_{I p, j}=rac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV $$
+
+The integration of the weight functions is performed analytically over the particle domain using linear functions for $ N_I\left(x_{ip}\right) $ and unit step functions for $ \chi_p\left(x_{ip}\right) $. 
 
 For more details on the formulation and integration process, refer to: \ref theory_and_numerical_formulation_
 

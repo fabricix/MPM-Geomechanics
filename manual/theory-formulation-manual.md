@@ -6,11 +6,11 @@ The Material Point Method, or MPM, is a hybrid Lagrangian-Eulerian method that a
 In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved.
 The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.
 
-!["MPM Discretization"](/manual/images/mpm_discretization.png) {width=600}
+!["MPM Discretization"](/manual/images/mpm_discretization.png)
 
 In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.
 
-!["MPM computational cycle"](/manual/images/mpm_cycle.png) {width=600}
+!["MPM computational cycle"](/manual/images/mpm_cycle.png)
 
 # MPM Formulation
 
@@ -18,9 +18,7 @@ MPM enables the numerical solution of the equation of motion in continuum mechan
 
 The equation of motion in continuum mechanics
 
-$$
-\frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i
-$$
+$$ \frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i $$
 
 where $\sigma_{ij} $ is the Cauchy stress tensor, $\rho$ is the density, $ b_i$ is the body force (regarding its mass), and $a_i$ is the acceleration of any point of the continuum.
 Note that all equations are in tensor notation. So $a_i$ is the acceleration vector with tree dimensions in the space $x,y,z$.
@@ -46,6 +44,12 @@ $$ \rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i)
 \\ \sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i) $$
 
 where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law. 
+
+Prueba inline: \f$ \sigma_{ij} = \frac{1}{J} P_{ik} F_{jk} \f$.
+
+\f[
+\nabla \cdot \boldsymbol{\sigma} + \rho\,\mathbf{b} = \rho\,\mathbf{a}
+\f]
 
 Replacing these fields in the weak form of the motion equation we have:
 
