@@ -361,7 +361,7 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodie
 		// impose force boundary conditions
 		Update::boundaryConditionsContactForce(mesh);
 
-		// update nodal momentum after contact
+		// correct nodal momentum after contact
 		nodalMomentumCorrection(mesh, dt);
 	}
 }

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operationalsystem_0',['OperationalSystem',['../namespaceModelSetup.html#a840758c49dbf1762422cf753e2da09cb',1,'ModelSetup']]]
+  ['materialtype_0',['MaterialType',['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439',1,'Material']]]
 ];

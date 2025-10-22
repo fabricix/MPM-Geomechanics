@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kinetic_5fdynamic_5frelaxation_0',['KINETIC_DYNAMIC_RELAXATION',['../namespaceModelSetup.html#a00e7195f09f9bd709ef76fce4eb77698a36b31c36195ef200c90074b1f1788dd5',1,'ModelSetup']]]
+  ['gimp_0',['GIMP',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051aba0fbe65f090e7fdeba305da536f255aa6',1,'ModelSetup']]]
 ];

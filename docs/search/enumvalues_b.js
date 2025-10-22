@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['windows_0',['WINDOWS',['../namespaceModelSetup.html#a840758c49dbf1762422cf753e2da09cbacb5bab293b2e292d8dc4a13d79e08fb3',1,'ModelSetup']]]
+  ['sliding_0',['SLIDING',['../classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5a1f81e650b6bdbb83746a32e61c8c18f7',1,'Boundary']]]
 ];

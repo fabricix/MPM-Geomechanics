@@ -9,6 +9,8 @@ var hierarchy =
     [ "Boundary", "classBoundary.html", null ],
     [ "Cell", "classCell.html", null ],
     [ "Contact", "classContact.html", null ],
+    [ "ContactManager", "classContactManager.html", null ],
+    [ "Mesh::ContactNodeData", "structMesh_1_1ContactNodeData.html", null ],
     [ "Contribution", "classContribution.html", null ],
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", null ],
     [ "Material", "classMaterial.html", [
@@ -16,7 +18,8 @@ var hierarchy =
         [ "ElasticJaumann", "classElasticJaumann.html", [
           [ "MohrCoulomb", "classMohrCoulomb.html", null ]
         ] ]
-      ] ]
+      ] ],
+      [ "Newtonian", "classNewtonian.html", null ]
     ] ],
     [ "Mesh", "classMesh.html", null ],
     [ "MPM", "classMPM.html", null ],
@@ -33,13 +36,15 @@ var hierarchy =
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", null ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", null ],
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", null ],
-    [ "Loads::SeismicData", "structLoads_1_1SeismicData.html", null ],
+    [ "SeismicAnalysis", "structSeismicAnalysis.html", null ],
+    [ "SeismicData", "structSeismicData.html", null ],
     [ "Shape", "classShape.html", [
       [ "ShapeGimp", "classShapeGimp.html", null ],
       [ "ShapeLinear", "classShapeLinear.html", null ]
     ] ],
     [ "MohrCoulomb::Softening", "classMohrCoulomb_1_1Softening.html", null ],
     [ "Solver", "classSolver.html", [
+      [ "SolverExplicit", "classSolverExplicit.html", null ],
       [ "SolverExplicitTwoPhaseUSL", "classSolverExplicitTwoPhaseUSL.html", null ],
       [ "SolverExplicitUSL", "classSolverExplicitUSL.html", null ]
     ] ],

@@ -3,13 +3,15 @@ var classMaterial =
     [ "MaterialType", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439", [
       [ "NONE", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da", null ],
       [ "ELASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42", null ],
-      [ "ELASTOPLASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae", null ]
+      [ "ELASTOPLASTIC", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae", null ],
+      [ "NEWTONIAN", "classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749", null ]
     ] ],
-    [ "Material", "classMaterial.html#a4fca8e76ddfb7e310071a258174de41d", null ],
+    [ "Material", "classMaterial.html#a0d829c5fea800076ba2220088f45e579", null ],
     [ "~Material", "classMaterial.html#a2c19452d71f54075df8f5405b03129f4", null ],
     [ "getBulkModulusFluid", "classMaterial.html#a770545ac2b3342d115c8a1bee74fca4b", null ],
     [ "getDensity", "classMaterial.html#a5790aca903dbc72bbc2d086fbc4b8e74", null ],
     [ "getDensityFluid", "classMaterial.html#abe51e783b7ae9729a2172d3f1ceaff2a", null ],
+    [ "getFrictionCoefficient", "classMaterial.html#aadd69cfac335688ddf9529f36c3a068b", null ],
     [ "getHydraulicConductivity", "classMaterial.html#aeae2939829b700ac4df23fc16f76782b", null ],
     [ "getId", "classMaterial.html#a92772816435ab97fda35860e1b16d1ef", null ],
     [ "getPorosity", "classMaterial.html#ae7982512dc24aec65afffc3f9269e869", null ],
@@ -18,6 +20,7 @@ var classMaterial =
     [ "setBulkModulusFluid", "classMaterial.html#a3ac2f8a6cb39f6782161f25ca19ad78a", null ],
     [ "setDensity", "classMaterial.html#a8bd4248851da08809db30a1d7007c745", null ],
     [ "setDensityFluid", "classMaterial.html#a07e309bc863399c5c3c36aae572a5ffc", null ],
+    [ "setFrictionCoefficient", "classMaterial.html#a7d12d1ab1c31ecd708282ceaef2bfbf5", null ],
     [ "setHydraulicConductivity", "classMaterial.html#afc3949394033e0133d1c60a925cbeb13", null ],
     [ "setId", "classMaterial.html#a006af31ffda9ddcf5e9c5b0da579e0d8", null ],
     [ "setPorosity", "classMaterial.html#a3db6fc9a1fc84b10dc5985a369794e6b", null ],
@@ -28,6 +31,7 @@ var classMaterial =
     [ "densityFluid", "classMaterial.html#a68c4ef8534dedd53c4999b2df3016049", null ],
     [ "hydraulicConductivity", "classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e", null ],
     [ "id", "classMaterial.html#a3c350361ffe39076a51722fff3346781", null ],
+    [ "mu", "classMaterial.html#a3c4d46bfeb461f0faebff61ca74029ee", null ],
     [ "porosity", "classMaterial.html#a1da7180771687fd58e2cf5e1778d8655", null ],
     [ "type", "classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592", null ]
 ];

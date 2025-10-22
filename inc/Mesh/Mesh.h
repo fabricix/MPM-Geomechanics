@@ -38,6 +38,7 @@ public:
     ///
     virtual ~Mesh();
 
+    /// \brief Create a data structure for contact nodes
     struct ContactNodeData 
     {
         int nodeId = -1;
@@ -46,12 +47,12 @@ public:
         double mu = 0.0;
         bool hasContact = true;
 
-        double massMaster = 0.0;
-        double massSlave = 0.0;
-        double closestParticleDistanceMaster = 999.0;
-        double closestParticleDistanceSlave = 999.0;
-        Vector3d momentumMaster = Vector3d::Zero();
-        Vector3d momentumSlave = Vector3d::Zero();
+        double massMaster = 0.0; //!< nodal mass of master body: \f$m_{I}^M\f$
+        double massSlave = 0.0; //!< nodal mass of slave body: \f$m_{I}^S\f$
+        double closestParticleDistanceMaster = 999.0; //!< closest master body particle distance to the contact node \f$X_I ^ M \cdot n_I ^ M\f$
+        double closestParticleDistanceSlave = 999.0;  //!< closest slave body particle distance to the contact node\f$X_I ^ S \cdot n_I ^ S\f$
+        Vector3d momentumMaster = Vector3d::Zero(); //!< nodal momentum of master body: \f$p_{iI}^M\f$
+        Vector3d momentumSlave = Vector3d::Zero(); //!< nodal momentum of slave body: \f$p_{iI}^S\f$
         Vector3d velocityMaster = Vector3d::Zero();
         Vector3d velocitySlave = Vector3d::Zero();
         Vector3d internalForceMaster = Vector3d::Zero();

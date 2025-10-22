@@ -5,6 +5,7 @@ var Update_8h =
       [ "Y", "Update_8h.html#a2cd2a66c096a164b7e316cb94eedf1aeaf586a43bc9aa05ba6e646db80890a10a", null ],
       [ "Z", "Update_8h.html#a2cd2a66c096a164b7e316cb94eedf1aea8f06b16af44f13f81760f24f090ba89e", null ]
     ] ],
+    [ "boundaryConditionsContactForce", "Update_8h.html#a5dc615002c4e43657f538a5e7bcc57b7", null ],
     [ "boundaryConditionsForce", "Update_8h.html#ad736c14ab7703c85030b4ddd9f162cdb", null ],
     [ "boundaryConditionsForceFluid", "Update_8h.html#a873457790d722f9a853a650d546697a5", null ],
     [ "boundaryConditionsMomentum", "Update_8h.html#a54c87240c5f6f32d82cb430f2d8dadd4", null ],
@@ -19,9 +20,12 @@ var Update_8h =
     [ "particleStress", "Update_8h.html#af604df8353a8a0e15d966e984ed43d6c", null ],
     [ "particleVelocity", "Update_8h.html#a2cc3c3a7f88f56f3ee69e95489485af8", null ],
     [ "particleVelocityFluid", "Update_8h.html#a1c8a39c6a5360d3b298bc939395c9889", null ],
+    [ "resetNodalMomentum", "Update_8h.html#ac360699f47d697b0aeb6fbc78a2ab456", null ],
     [ "resetNodalValues", "Update_8h.html#a783728339e39786e7f3d5cafd0433878", null ],
     [ "setPlaneForce", "Update_8h.html#a928ad605b25b17f71dda34c6c6b1fb6c", null ],
+    [ "setPlaneForceContact", "Update_8h.html#af510b18e9c7067a704cbebd03f854aa0", null ],
     [ "setPlaneForceFluid", "Update_8h.html#acb08a0bcaffd8a231edf932cdaa45014", null ],
     [ "setPlaneMomentum", "Update_8h.html#a7fd5c990916d1cbfd00c1ed3747cf4e8", null ],
+    [ "setPlaneMomentumContact", "Update_8h.html#a836e7ed3302dddce8a8879e5de05f51d", null ],
     [ "setPlaneMomentumFluid", "Update_8h.html#a9956550681717d8e93dd8fb626dbac8f", null ]
 ];

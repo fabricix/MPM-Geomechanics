@@ -22,7 +22,7 @@
 
  @licend  The above is the entire license notice for the JavaScript code in this file
  */
-function initMenu(relPath,searchEnabled,serverSide,searchPage,search,treeview) {
+function initMenu(relPath,searchEnabled,serverSide,searchPage,search) {
   function makeTree(data,relPath) {
     let result='';
     if ('children' in data) {
@@ -91,7 +91,7 @@ function initMenu(relPath,searchEnabled,serverSide,searchPage,search,treeview) {
   let prevWidth = 0;
   if ($mainMenuState.length) {
     const initResizableIfExists = function() {
-      if (typeof initResizable==='function') initResizable(treeview);
+      if (typeof initResizable==='function') initResizable();
     }
     // animate mobile menu
     $mainMenuState.change(function() {

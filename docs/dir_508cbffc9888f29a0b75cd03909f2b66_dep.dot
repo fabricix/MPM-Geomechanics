@@ -1,0 +1,14 @@
+digraph "Materials"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_bfccd401955b95cf8c75461437045ac0 {
+    graph [ bgcolor="#edf2f7", pencolor="grey25", label="inc", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_bfccd401955b95cf8c75461437045ac0.html",tooltip=""]
+  dir_94768b30a42d97981cb62acce7e6fa69 [label="Particle", fillcolor="#a2bcd6", color="grey25", style="filled", URL="dir_94768b30a42d97981cb62acce7e6fa69.html",tooltip=""];
+  dir_508cbffc9888f29a0b75cd03909f2b66 [label="Materials", fillcolor="#edf2f7", color="grey25", style="filled,bold", URL="dir_508cbffc9888f29a0b75cd03909f2b66.html",tooltip=""];
+  }
+  dir_508cbffc9888f29a0b75cd03909f2b66->dir_94768b30a42d97981cb62acce7e6fa69 [headlabel="2", labeldistance=1.5 headhref="dir_000003_000005.html" href="dir_000003_000005.html" color="steelblue1" fontcolor="steelblue1"];
+}

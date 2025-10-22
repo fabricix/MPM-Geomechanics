@@ -260,6 +260,33 @@ In the Modified USL scheme, the updated particle velocities are used to update t
 
 \f[ v_{iI}^{k+1/2} = \sum_p S_{Ip} m_p v_{ip}^{i+1/2} / m_I^k  \f]
 
+# Slave-Master Contact
+In the Slave-Master Contact method there are two velocity fields, one for the master body\f$ v_{iI}^{M} \f$ and  another for the slave body \f$ v_{iI}^{S} \f$. The contact between two bodies occurs when the following conditions are satisfied:
+
+- The momenta of both bodies are mapped to the same grid node 𝐼;
+- The normal velocities at the contact grid node 𝐼 of the two bodies satisfy \f$ \left( v^{M}{i𝐼} - v^{S}{i𝐼} \right)n^{M}_{i𝐼} > 0 \f$.
+
+The unit normal \f$ n^{M}_{i𝐼} \f$ to the surface of body M at grid node 𝐼 can be calculated from the mass gradient as \f$ n_I = \frac{\sum_p m_p N_{Ip}}{\left| \sum_p m_p N_{Ip} \right|} \f$. This unit normal does not satisfy the collinearity condition \f$ n^{M}_{i𝐼} = -n^{S}_{i𝐼} \f$, which leads to non-conservation of momentum, and even penetration.
+
+A collinear unit normal can be obtained by averaging the two unit normals, i.e., \f$ n^{MS}_{i𝐼} = -n^{SM}_{i𝐼} = \frac{n^{M}_{i𝐼}-n^{S}_{i𝐼}}{|n^{M}_{i𝐼}-n^{S}_{i𝐼}|} \f$
+
+If body M is stiffer than body S, or if the surface of body M is flat/convex but the surface of body S is concave, choose the unit normal of body M as the collinear unit normal, i.e., \f$ n^{MS}_{i𝐼} = -n^{SM}_{i𝐼} = n^{M}_{i𝐼} \f$
+
+## Contact force
+The contact force is obtained in a trial-correction approach. The momentum equation of each body is first integrated independently to obtain the trial solution as if both bodies were not in contact. If the trial solution satisfies the impenetrability condition, take the trial solution as the final true solution. If not, the contact force is applied at the contact grid nodes to prevent penetration. The normal and tangential components of this force at master body is defined by \f$ f^{M,nor,k}_{i𝐼} = f^{M,c,k}_{j𝐼} n^{M,k}_{j𝐼} n^{M,k}_{i𝐼} \f$ and \f$ \min \Big( \|f^{M,tan,k}_{i𝐼}\|, \mu \ \| f^{M,nor,k}_{i𝐼}\| \Big) \frac{f^{M,tan,k}_{i𝐼}}{ \|f^{M,tan,k}_{i𝐼}\|} \f$, respectivaly. In which, \f$ f^{M,c,k}_{i𝐼} = \frac{1} {\left(m^{M,k}_{𝐼} + m^{S,k}_{𝐼}  \right)\Delta \ t^k} \left( m^{M,k}_{𝐼} \bar{p}^{S,k+\frac{1}{2}}_{i𝐼} - m^{S,k}_{𝐼} \bar{p}^{M,k+\frac{1}{2}}_{i𝐼} \right)\f$, and represents the contact force for sticking contact
+
+## Distance Correction
+The previous contact condition, may result in a spurious contact. For example, when the space between two bodies approaching each other is less than 2 times the cell size, the previous conditions are satisfied at grid node 𝐼, and identifies it as a contacted grid node, but the two bodies are not actually in contact at this time. To avoid the spurious contact, the detection condition can be improved by calculating the real distance between two bodies.
+let \f$ X_𝐼 ^ M \f$ and \f$ X_𝐼 ^ S \f$ denote the position vector emanating from grid node I to its closest particle in body M and body S, respectively. The distance between the two bodies can be calculated as the sum of the projections of these two position vectors onto the normal vectors of the two bodies at the grid node I: \f$ D^{ MS }_𝐼 = -X_𝐼 ^ M \cdot n_𝐼 ^ M - X_𝐼 ^ S \cdot n_𝐼 ^ S \f$.
+
+Thus, the contact detection condition can be modified as:
+- The momenta of both bodies are mapped to the same grid node 𝐼;
+- \f$ \left( v^{M}{i𝐼} - v^{S}{i𝐼} \right)n^{M}_{i𝐼} > 0 \f$ and
+- \f$ D^{ MS }_𝐼  \leq \lambda \, d_c\f$
+
+in which  \f$ \lambda \ d_c \f$ is used to take the particle size into account, \f$ d_c \f$ is the cell size, and \f$ \lambda\ \f$ is set to 0.5 as default, because 2 particles are used initially in each direction of a cell.
+
+
 # References
 
 - Zhang, X., Chen, Z., & Liu, Y. (2017). The material point method : a continuum-based particle method for extreme loading cases (First edition). Elsevier. http://site.ebrary.com/id/11285709

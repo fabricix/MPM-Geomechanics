@@ -1,0 +1,37 @@
+digraph "SolverExplicit"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="SolverExplicit",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Represents the operations to solve explicitly the equations in time using the Update Stress Last (USL..."];
+  Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Solver",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classSolver.html",tooltip="Represents the operations to solve the equations in time."];
+  Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" mesh",fontcolor="grey" ];
+  Node3 [id="Node000003",label="Mesh",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classMesh.html",tooltip="Class representing a rectangular grid mesh."];
+  Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" nCells\nnRows",fontcolor="grey" ];
+  Node4 [id="Node000004",label="Vector3i",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node3 [id="edge4_Node000003_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" cellDim\nmaxLimit\nminLimit",fontcolor="grey" ];
+  Node5 [id="Node000005",label="Vector3d",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node6 -> Node3 [id="edge5_Node000003_Node000006",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" boundary",fontcolor="grey" ];
+  Node6 [id="Node000006",label="Boundary",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classBoundary.html",tooltip="Mesh boundary nodes."];
+  Node7 -> Node6 [id="edge6_Node000006_Node000007",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" planeX0\nplaneXn\nplaneY0\nplaneYn\nplaneZ0\nplaneZn",fontcolor="grey" ];
+  Node7 [id="Node000007",label="Boundary::planeBoundary",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structBoundary_1_1planeBoundary.html",tooltip="Represents the nodes and the type of restrictions."];
+  Node8 -> Node7 [id="edge7_Node000007_Node000008",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" nodes",fontcolor="grey" ];
+  Node8 [id="Node000008",label="vector\< int \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node3 [id="edge8_Node000003_Node000009",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" contactNodes",fontcolor="grey" ];
+  Node9 [id="Node000009",label="unordered_map\< int,\l Mesh::ContactNodeData \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node10 -> Node2 [id="edge9_Node000002_Node000010",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" bodies",fontcolor="grey" ];
+  Node10 [id="Node000010",label="vector\< Body * \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node11 -> Node2 [id="edge10_Node000002_Node000011",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" particles",fontcolor="grey" ];
+  Node11 [id="Node000011",label="vector\< Particle * \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node12 -> Node2 [id="edge11_Node000002_Node000012",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" terrainContact",fontcolor="grey" ];
+  Node12 [id="Node000012",label="TerrainContact",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classTerrainContact.html",tooltip="Class to compute terrain contact."];
+  Node13 -> Node12 [id="edge12_Node000012_Node000013",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" stlMesh",fontcolor="grey" ];
+  Node13 [id="Node000013",label="STLReader",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classSTLReader.html",tooltip="Class to read STL files."];
+  Node14 -> Node2 [id="edge13_Node000002_Node000014",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" contactManager",fontcolor="grey" ];
+  Node14 [id="Node000014",label="ContactManager",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classContactManager.html",tooltip="Manages Slave-Master contact method data and operations This class contain all variables and function..."];
+  Node15 -> Node14 [id="edge14_Node000014_Node000015",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" normalType",fontcolor="grey" ];
+  Node15 [id="Node000015",label="string",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+}
