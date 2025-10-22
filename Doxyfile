@@ -1872,7 +1872,7 @@ USE_MATHJAX            = YES
 # The default value is: MathJax_2.
 # This tag requires that the tag USE_MATHJAX is set to YES.
 
-MATHJAX_VERSION        = MathJax_2
+MATHJAX_VERSION        = MathJax_3
 
 # When MathJax is enabled you can set the default output format to be used for
 # the MathJax output. For more details about the output format see MathJax
@@ -1881,7 +1881,7 @@ MATHJAX_VERSION        = MathJax_2
 # (see:
 # http://docs.mathjax.org/en/latest/web/components/output.html).
 # Possible values are: HTML-CSS (which is slower, but has the best
-# compatibility. This is the name for Mathjax version 2, for MathJax version 3
+# compatibility. This is the name for MathjaxMATHJAX_RELPATH  version 2, for MathJax version 3
 # this will be translated into chtml), NativeMML (i.e. MathML. Only supported
 # for MathJax 2. For MathJax version 3 chtml will be used instead.), chtml (This
 # is the name for Mathjax version 3, for MathJax version 2 this will be
@@ -1903,7 +1903,7 @@ MATHJAX_FORMAT         = HTML-CSS
 # - in case of MathJax version 3: https://cdn.jsdelivr.net/npm/mathjax@3
 # This tag requires that the tag USE_MATHJAX is set to YES.
 
-MATHJAX_RELPATH        = https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/
+MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3
 
 # The MATHJAX_EXTENSIONS tag can be used to specify one or more MathJax
 # extension names that should be enabled during MathJax rendering. For example
