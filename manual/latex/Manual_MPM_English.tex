@@ -69,8 +69,9 @@ In an MPM computational cycle, all variables stored in the material points are c
   \includegraphics[width=.6\linewidth]{figures/mpm_cycle.png}
   \caption{MPM computational cycle.}
   \label{fig:mpm_cycle}
+\end{figure}
 
-MPM Formulation
+\section{MPM Formulation}
 
 MPM enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
 
@@ -118,7 +119,7 @@ $$ \delta u_i=\sum_I N_{I p} \delta u_{i I} $$
 
 The trial and test functions are such that:
 
-$$ \sum_I N_{I}(x_i) = 1 \\ \sum_p \chi_p(x_i) = 1 $$
+$$ \sum_I N_{I}(x_i) = 1 \sum_p \chi_p(x_i) = 1 $$
 
 The resulting discrete form of the motion equation then is:
 
@@ -235,14 +236,16 @@ $$ \ddot u ^{n} = f ^{n} / m $$
 
 and
 \section{Numerical implementation}
+\begin{itemize}
 
-1. Calculate force  $ f_n  $
-2. Calculate acceleration  $ \ddot u ^{n} = f ^{n} / m  $
-3. Impose essential boundary conditions in terms of  $ \ddot u ^{n}  $
-4. Update velocity  $ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t  $
-5. Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
-6. Let  $ n = n + 1  $
-5. Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
+\item Calculate force  $ f_n  $
+\item Calculate acceleration  $ \ddot u ^{n} = f ^{n} / m  $
+\item Impose essential boundary conditions in terms of  $ \ddot u ^{n}  $
+\item Update velocity  $ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t  $
+\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
+\item Let  $ n = n + 1  $
+\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
+\end{itemize}
 
 \section{Stability Requirement}
 The central difference method is conditionally stable, so the time step must be less that a certain value. For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
@@ -266,13 +269,11 @@ $$ \Delta t_{cr} = l^e / \text{max}_p ( c_p +  |v_p| ) $$
 
 In a structured regular mesh,  $ l^e  $ is the grid cell dimension.
 
-# Numerical damping
+\section{ Numerical damping }
 
 The damping of real material comes from internal friction and viscosities, and can be modelled using elasto-plastic and viscous materials.
 
-
-
-Local damping
+\section{ Local damping }
 
 The numerical damping is a technique for getting a stationary solution of the dynamic system. In this simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
 
@@ -287,6 +288,7 @@ $$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
 $$ f_{iI}^{unb} =  f_{iI}^{int} + f_{iI}^{ext} $$
 
 Therefore, the resulting discrete form of the motion equation with viscous nodal damping is:
+
 $$ \dot{p}_{iI} = f_{iI} $$
 
 in which
@@ -305,13 +307,11 @@ The stress field obtained from a local damping forced system, cam be used as ini
 
 In geostatic analysis, the quasi static analysis can be store in to a simulation state:
 
-
 \begin{lstlisting}[language={},caption={input JSON}]
 {
   "save_state":true,
 }
 \end{lstlisting}
-
 
 And for loading the salved state
 
@@ -320,7 +320,6 @@ And for loading the salved state
   "load_state":true,
 }
 \end{lstlisting}
-
 
 \section{Explicit MPM Scheme}
 
@@ -343,21 +342,21 @@ In the Modified USL scheme, the updated particle velocities are used to update t
 Modified Update Stress Last - MUSL - Scheme
 In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
 
-
 \section{Project structure}
 
-Keep your inputs and outputs organized:
+The project is organized such as:
 
 \begin{itemize}
-  \item \texttt{inputs/} JSON case files
-  \item \texttt{data/} meshes (e.g., STL), DEMs, etc.
-  \item \texttt{outputs/} simulation results
-  \item \texttt{figs/} figures exported from ParaView
+  \item \texttt{src/ and inc/} sources and headers C++ files
+  \item \texttt{manual/} program manual (e.g., STL), DEMs, etc.
+  \item \texttt{tests/} simulation results of analytical and numerical tests
+  \item \texttt{examples/} implementation verification and application examples
 \end{itemize}
 
+\section{Build commands}
 
-\section{Build \& run commands}
-\noindent Example commands (Linux/WSL):
+\noindent Instruction commands using Linux/WSL:
+
 \begin{lstlisting}[language=bash]
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
@@ -365,3 +364,125 @@ cmake --build build -j
 \end{lstlisting}
 
 \end{document}
+
+\section{ Introduction}
+
+The MPM-Geomechanics is a implementation of the Material Point Method (MPM) to simulate large strain geomechanical problems in 3D. The main objective of this program is to provide an open source platform suitable for the study and application of the MPM in various geomechanical problems were materials are subjected to extreme deformation conditions.
+MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
+This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics:
+
+$$ \frac{ \partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i $$
+
+that can be expressed discretely, using the nodes of an Eulerian mesh:
+
+$$ \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} $$
+
+where 
+$$ p_{i I}=\sum_p S_{I p} p_{i p}$$
+is the momentum nodal field, 
+$$ f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p $$
+ is the internal force field, 
+ and 
+ $$ f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A $$
+is the external force at node $I$.
+
+The function $ S_{I p} $ and its gradient $ S_{I p, j} $ are the weighting functions of node $ I $ evaluated at the position of particle $ p $, defined by 
+
+$$ S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV 
+$$ 
+and 
+$$ S_{I p, j}=rac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV $$
+
+The integration of the weight functions is performed analytically over the particle domain using linear functions for $ N_I\left(x_{ip}\right) $ and unit step functions for $ \chi_p\left(x_{ip}\right) $. 
+
+For more details on the formulation and integration process, refer to: \ref theory_and_numerical_formulation_
+
+\section{Program features}
+
+The main features of the program are:
+
+\begin{itemize}   
+\item Three-dimensional 3D formulation
+\item Dynamic formulation
+\item Shared memory parallelization using OpenMP
+\item Many ways to crate bodies (polygons, particle list, pre-defined bodies)
+\item Several constitutive models for soil and rock materials
+\item Softening/hardening models to represent weakness during large deformations 
+\item Coupled fluid-mechanical formulation (*under development*)
+\end{itemize}
+
+\section{Compiled binaries}
+For downloading the compiled binaries
+\begin{itemize}
+  \item Go to the [Actions page](https://github.com/fabricix/MPM-Geomechanics/actions).
+  \item Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
+  \item At the bottom, you will find the available artifacts under the **Artifacts** section.
+  \item Download the `compiled-binaries` artifact to get the compiled code.
+\end{itemize}
+
+
+\subsection{Compilation in Windows}
+
+Prior to proceeding with these instructions, please consult the windows required programs section in this manual.
+
+The simplest way to compile on windows is by using the `.bash` file at `/build/CMake` with `MSYS2 MINGW64` console line, just execute:
+
+\begin{lstlisting}
+  cd project-directory/build/CMake
+./cmake-build.bash
+\end{lstlisting}
+
+Alternatively, you can use the following commands:
+
+\begin{lstlisting}
+  cd project-directory/build/CMake
+  cmake -G "Unix Makefiles" -B build
+  cmake --build build
+\end{lstlisting}
+
+\subsection{ Compiling on Linux } 
+
+Prior to proceeding please consult the Linux Required Programs section in this manual.
+
+The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
+
+\begin{lstlisting}	
+ cd build/CMake
+ ./cmake-build.bash
+\end{lstlisting}
+
+
+Alternatively, you can use the following commands:
+
+\begin{lstlisting}	
+cd build/CMake
+cmake -G "Unix Makefiles" -B build
+cmake --build build
+\end{lstlisting}
+
+\section{Visual Studio Solution}
+
+For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
+Alternatively you can compile it by using command in a *Developer Command Prompt*: 
+
+\begin{lstlisting}
+msbuild MPM-Geomechanics.sln -p:Configuration=Release
+\end{lstlisting}
+
+\section{ Make Compilation }
+
+For compile the code in a linux environment, execute the makefile inside the make folder: \verb{MPM-Geomechanics\build\make\makefile}.
+ 
+\section{Documentation}
+
+The program documentation is generated using Doxygen documentation generator.
+
+\beging{lstlisting}
+doxygen Doxyfile
+\end{lstlisting}
+
+The HTML generated documentation is located in `/docs/index.html`.
+
+\section{Execution}
+
+In order to run simulations in several terminal, you can add the compiled code in the system `PATH`.
