@@ -8,11 +8,12 @@
 // Static variable for rapid contact detection
 static bool contactDetection = false;
 
-ContactManager::ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient):
-	frictionCoefficient(friction),
+ContactManager::ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient):
+	/*frictionCoefficient(friction),
     masterId(master_id > 0 ? master_id : 0),
 	slaveId(slave_id > 0 ? slave_id : 1),
-	normalType((normal_type != "collinear" && normal_type != "slave") ? "master" : normal_type),
+	normalType((normal_type != "collinear" && normal_type != "slave") ? "master" : normal_type),*/
+	contactList(std::move(contact_List)),
 	realDistanceCorrectionCoefficient(real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
 	{
 		// verify if real distance correction is active
@@ -70,11 +71,48 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	for (size_t i = 0; i < nNodes; i++) {
 
 		// check if more than one body contributed to node i
-		int soma = std::accumulate(contributionMatrix[i].begin(),
-			contributionMatrix[i].end(), 0);
+		int soma = std::accumulate(contributionMatrix[i].begin(), contributionMatrix[i].end(), 0);
+
 		if (soma > 1)
 		{
+			// get bodies in contact at node i
+			vector<int> contactBodies;
+			for (int j = 0; j < contributionMatrix[i].size(); ++j)
+			{
+				if (contributionMatrix[i][j] == 1)
+				{
+					contactBodies.push_back(j);
+				}
+			}
+			
+			// get contact id
+			int contactId ;
+			for (Contact* contact : contactList) {
+				if (contact->masterId == contactBodies[0] + 1)
+				{
+					if (contact->slaveId == contactBodies[1] + 1)
+					{
+						contactId = contact->id;
+					}
+				}
+				else if (contact->slaveId == contactBodies[0] + 1)
+				{
+					if (contact->masterId == contactBodies[1] + 1)
+					{
+						contactId = contact->id;
+					}
+				}
+			}
+
+			// get contact
+			Contact* contact = contactList[contactId - 1];
+
+			// get master and slave bodies id for the contact
+			int masterId = contact->masterId;
+			int slaveId = contact->slaveId;
+
 			Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
+			Contact.contactId = contactId;
 			Contact.nodeId = static_cast<int>(i);
 			Contact.bodySlaveId = slaveId;
 			Contact.bodyMasterId = masterId;
@@ -256,6 +294,12 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
+		// get contact
+		Contact* contact = contactList[contactNodesData.contactId - 1];
+
+		// get normal type
+		string normalType = contact->normalType;
+
 		// nodal normal vector master
 		Vector3d nM = contactNodesData.normalMaster.normalized();
 
@@ -286,6 +330,13 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 		Mesh::ContactNodeData& contactNodeData = it->second;
 
 		if (contactNodeData.hasContact) {
+			
+			// get contact
+			Contact* contact = contactList[contactNodeData.contactId - 1];
+			
+			// get friction coefficient
+			double frictionCoefficient = contact->frictionCoefficient;
+
 			// get nodal mass
 			double massA = contactNodeData.massMaster;
 			double massB = contactNodeData.massSlave;

@@ -553,6 +553,10 @@ namespace Input {
 	/// \brief Return the body list
 	/// \return A list containing Body pointers
 	vector<Body*> getBodyList();
+
+	/// \brief Return the contact list
+	/// \return A list containing Contact Manager pointers
+	vector<Contact*> getContactList();
 	
 	/// \brief Return the gravity force
 	/// \return Gravity force

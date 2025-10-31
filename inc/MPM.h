@@ -83,8 +83,8 @@ private:
 	///
 	void setupMesh();
 
-	/// \brief Configure contact
-	void setupContact();
+	/// \brief Configure contact list
+	void setupContac();
 	
 	/// \brief Configure Terrain contact
 	void setupTerrainContact();

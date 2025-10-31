@@ -56,18 +56,13 @@
         "material_id":2
       }
     ],
-    "contact_manager":{
-      "active": true,
-      "real_distance_correction_coefficient": 0.5
-    },
-    
-    "contact":[
-      {
-        "id": 1,
-        "friction": 0.5,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
-      }
-    ]
+    "contact":
+    {
+      "active":true,
+      "friction":0.5,
+      "master_id":1,
+      "slave_id":2,
+      "normal_type":"master",
+      "real_distance_correction_coefficient":0.5
+    }
   }

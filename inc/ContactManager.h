@@ -8,9 +8,11 @@
 #include "Mesh/Node.h"
 #include "Mesh/Mesh.h"
 #include "Body/Body.h"
+#include "Contact.h"
 
 #include <unordered_map>
 #include <vector>
+using std::vector;
 
 using Eigen::Vector3d;
 
@@ -21,12 +23,9 @@ using Eigen::Vector3d;
 class ContactManager {
 public:
     /// @brief  Constructor
-    /// @param friction Friction coefficient
-    /// @param master_id ID of the master body
-    /// @param slave_id ID of the slave body
-    /// @param normal_type Normal type: "master", "slave" or "collinear"
+    /// @param contact list
     /// @param real_distance_correction_coefficient Real distance correction coefficient (0 to disable)
-    ContactManager(double friction, int master_id, int slave_id, string normal_type, double real_distance_correction_coefficient);
+    ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient);
 
     /// \brief For all contact nodes, compute contact forces for sticking contact \f$ \left( f^{M,c,k}_{iI} = \frac{1} {\left(m^{M,k}_{I} + m^{S,k}_{I}  \right)\Delta \ t^k} \left( m^{M,k}_{I} \bar{p}^{S,k+\frac{1}{2}}_{iI} - m^{S,k}_{I} \bar{p}^{M,k+\frac{1}{2}}_{iI} \right) \right)\f$ 
     /// and, the normal \f$ \left( f^{M,nor,k}_{iI} = f^{M,c,k}_{jI} n^{M,k}_{jI} n^{M,k}_{iI} \right)\f$ and tangential \f$ \left( \min \Big( \|f^{M,tan,k}_{iI}\|, \mu \ \| f^{M,nor,k}_{iI}\| \Big) \frac{f^{M,tan,k}_{iI}}{ \|f^{M,tan,k}_{iI}\|} \right) \f$ componentes for non sticking contact
@@ -61,10 +60,11 @@ public:
     void nodalMomentumCorrection(Mesh* mesh, double time_step);
 
 private:
-    double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
-    int masterId = 0; //<! Master body id
-    int slaveId = 1; //<! Slave body id
-    string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
+    vector<Contact*> contactList; 
+    //double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
+    //int masterId = 0; //<! Master body id
+    //int slaveId = 1; //<! Slave body id
+    //string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
     double realDistanceCorrectionCoefficient = 0.0; //!< Real distance correction coefficient \f$\lambda\f$
     bool realDistanceCorrectionActive = false; //!< Real distance correction active
 };

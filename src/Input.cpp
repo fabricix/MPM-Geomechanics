@@ -865,6 +865,86 @@ vector<Body*> Input::getBodyList(){
 	}
 }
 
+vector<Contact*> Input::getContactList() {
+
+	vector<Contact*> contacts;
+	try
+	{
+		if (!inputFile["contact"].is_null()) {
+
+			// loop aver all contacts
+			json::iterator it;
+			for (it = inputFile["contact"].begin(); it != inputFile["contact"].end(); it++) {
+
+				// contact id
+				int id = 0;
+				if ((*it)["id"].is_number()) {
+					id = ((*it)["id"]);
+				}
+				else {
+					throw(0);
+				}
+
+				// contact friction
+				double friction = 0;
+				if ((*it)["friction"].is_number()) {
+					friction = ((*it)["friction"]);
+				}
+				else {
+					throw(0);
+				}
+
+				// master id
+				int master_id = 0;
+				if ((*it)["master_id"].is_number()) {
+					master_id = ((*it)["master_id"]);
+				}
+				else {
+					throw(0);
+				}
+
+				// slave id
+				int slave_id = 0;
+				if ((*it)["slave_id"].is_number()) {
+					slave_id = ((*it)["slave_id"]);
+				}
+				else {
+					throw(0);
+				}
+
+				// real distance correction coefficient
+				string normal_type = "";
+				if ((*it)["normal_type"].is_string()) {
+					normal_type = ((*it)["normal_type"]);
+				}
+				else {
+					throw(0);
+				}
+
+				// create a new contact manager
+				Contact* iContact = new Contact(id, friction, master_id, slave_id, normal_type);
+				if (iContact == NULL) {
+					throw(0);
+				}
+
+				contacts.push_back(iContact);
+			}
+		}
+
+		if (contacts.empty()) {
+
+			throw(0);
+		}
+
+		return contacts;
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error in contact definition in input file");
+		throw;
+	}
+}
+
 Vector3d Input::getGravity(){
 
 	try
@@ -1592,23 +1672,45 @@ double Input::getDistanceThreshold(){
 	}
 }
 
+//bool Input::getContactActive()
+//{
+//	try
+//	{
+//		string key = "contact_active";
+//
+//		if (!inputFile[key].is_null() && inputFile[key].is_boolean())
+//		{
+//			return inputFile[key];
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
+//	catch (...)
+//	{
+//		Warning::printMessage("Error during reading the contact active keyword");
+//		throw;
+//	}
+//}
+
 bool Input::getContactActive() 
 {
 	try
 	{
-		if (inputFile["contact"].is_null()) {
+		if (inputFile["contact_manager"].is_null()) {
 
 			return false;
 		}
 
-		if (inputFile["contact"]["active"].is_null()) {
+		if (inputFile["contact_manager"]["active"].is_null()) {
 
 			return false;
 		}
 
-		if (inputFile["contact"]["active"].is_boolean())
+		if (inputFile["contact_manager"]["active"].is_boolean())
 		{
-			return inputFile["contact"]["active"];
+			return inputFile["contact_manager"]["active"];
 		}
 
 		throw(0);
@@ -1708,19 +1810,19 @@ double Input::RealDistanceCorrectionCoefficient() {
 
 	try
 	{
-		if (inputFile["contact"].is_null()) {
+		if (inputFile["contact_manager"].is_null()) {
 
 			return -1;
 		}
 
-		if (inputFile["contact"]["real_distance_correction_coefficient"].is_null()) {
+		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_null()) {
 
 			return -1;
 		}
 
-		if (inputFile["contact"]["real_distance_correction_coefficient"].is_number())
+		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_number())
 		{
-			return inputFile["contact"]["real_distance_correction_coefficient"];
+			return inputFile["contact_manager"]["real_distance_correction_coefficient"];
 		}
 
 		throw(0);

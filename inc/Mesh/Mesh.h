@@ -41,6 +41,7 @@ public:
     /// \brief Create a data structure for contact nodes
     struct ContactNodeData 
     {
+        int contactId = -1;
         int nodeId = -1;
         int bodyMasterId = -1;
         int bodySlaveId = -1;

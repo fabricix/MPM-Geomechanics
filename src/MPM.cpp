@@ -14,6 +14,7 @@
 #include "ContactManager.h"
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
+#include "Contact.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -158,16 +159,17 @@ void MPM::setupMesh() {
 	}
 }
 
-void MPM::setupContact()
+void MPM::setupContac()
 {
 	// verity if contact active
 	bool contactActive = Input::getContactActive();
 	ModelSetup::setContactActive(contactActive);
 	if (!contactActive) { return; }
-	else {		
+	else {	
+
+		vector<Contact*> contactList = Input::getContactList();
 		// set contact manager
-		contactManager = new ContactManager(Input::getFrictionCoefficientContact(), Input::getMasterBodyId(), Input::getSlaveBodyId(), 
-			Input::getContactNormalType(), Input::RealDistanceCorrectionCoefficient());
+		contactManager = new ContactManager(contactList, Input::RealDistanceCorrectionCoefficient());
 	}
 }
 
@@ -416,8 +418,8 @@ void MPM::createModel() {
 		// configures the seismic analysis
 		setupSeismicAnalysis();
 
-		// setup master-slave contact
-		setupContact();
+		// setup master-slave contact list
+		setupContac();
 
 		// setup the background mesh
 		setupMesh();
