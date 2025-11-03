@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{article}
 
-% --- Minimal, VS Code friendly ---
+% --- Minimal
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
@@ -18,8 +18,11 @@
 
 % --- Figures & tables ---
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage{caption}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
 
 % --- Code listings ---
 \usepackage{listings}
@@ -39,54 +42,51 @@
   \author{Dr. Fabricio Fernández}
 \date{\today}
 
+
 \begin{document}
+
 \maketitle
 
-\section{Introduction}
-This is a minimal, VS Code--friendly LaTeX manual template.
-Inline math like \( \sigma' = \sigma - u \) and display math:
-$$
-\frac{\partial \sigma_{ij}}{\partial x_j} + \rho\,b_i = \rho\,a_i.
-$$
+\section{Introduction to the Material Point Method (MPM) }
 
-\section{ Introduction to the Material Point Method (MPM) }
+The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic. In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded. This method, enables the numerical solution of the motion equation in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
 
-The Material Point Method, or MPM, is a hybrid Lagrangian-Eulerian method that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion.
-In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved.
-The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\linewidth]{figures/mpm_discretization.png}
-  \caption{MPM discretization: material points within a computational mesh.}
-  \label{fig:mpm_discretization}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{figures/mpm_discretization}
+	\caption[Discretization]{Eulerian and Lagrangian discretization}
+	\label{fig:mpm-discretization}
 \end{figure}
 
-In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.6\linewidth]{figures/mpm_cycle.png}
-  \caption{MPM computational cycle.}
-  \label{fig:mpm_cycle}
-\end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{figures/mpm_cycle.png}
+%	\caption{Computational cycle}
+%	\label{fig:mpmcycle}
+%\end{figure}
 
 \section{MPM Formulation}
 
-MPM enables the numerical solution of the equation of motion in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
-
-The equation of motion in continuum mechanics
+In continuum mechanics, the 3D motion equation of movement is
 
 $$ \frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i $$
 
-where $\sigma_{ij} $ is the Cauchy stress tensor, $\rho$ is the density, $ b_i$ is the body force (regarding its mass), and $a_i$ is the acceleration of any point of the continuum.
-Note that all equations are in tensor notation. So $a_i$ is the acceleration vector with tree dimensions in the space $x,y,z$.
+or 
 
-The MPM formulation is obtained from the weak form of the motion equation and using a Petrov–Galerkin discretization scheme. The weak form of motion equation is obtained by multiplying the equation by arbitrary weighting functions, integrating this product over the domain, using integration by parts to reduce the order of the stress term and introducing the boundary conditions:
+$$ \frac{\partial \sigma_{ij}}{\rho \partial x_j} + b_i = a_i $$
+
+The internal forces are related with the $\sigma_{ij} $, the Cauchy stress tensor, and $\rho$ is the density of the material, $b_i$ is a mass field force and $a_i$ is the acceleration.
+
+This equations are presented in tensor notation, but, vector and matrix can be used as notation in the formulation.
+
+The discrete form of the motion equation, can be obtained using finite difference methods or by using a weak form, such as used by the finite element method, or the material point method.
+
+The weak form is obtained multiplyng the motion equation by arbitrary weighting functions and integrating this product over the domain.
+In this procedure the integration by parts reduces the order the stress tensor and introduces the natural boundary conditions.
 
 $$ -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV $$
 
-here $\delta u_i$ are virtual displacements, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
+Here $\delta u_i$ are arbitrary displacements functions, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
 
 In the MPM context any field or space property $f(x_i)$ can approximated using the value stored in the particle $f_p$:
 
@@ -96,17 +96,11 @@ where $\chi_p$ is the particle characteristic function that defines the volume o
 
 $$ V_p = \int_{\Omega_p \cap \Omega} \chi_p(x_i) dV $$
 
-consequently, in the MPM context, the density, the acceleration and the stress fields can be approximated by the values stored in particles:
-
+In consequent, density, acceleration and stress fields can be approximated by the values stored in particles:
+ 
 $$ \rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i) \rho(x_i) a_i(x_i) = \sum_p \frac{\dot{p_{ip}}}{V_p} \chi_p(x_i) \sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i) $$
 
 where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law. 
-
-Prueba inline: $ \sigma_{ij} = \frac{1}{J} P_{ik} F_{jk} $.
-
-$$
-\nabla \cdot \boldsymbol{\sigma} + \rho\,\mathbf{b} = \rho\,\mathbf{a}
-$$
 
 Replacing these fields in the weak form of the motion equation we have:
 
@@ -128,6 +122,7 @@ $$ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} $$
 where 
 
 $$p_{iI} = \sum_p S_{Ip} p_{Ip}  $$
+
 is the nodal momentum, 
 
 $$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p  $$
@@ -135,15 +130,17 @@ $$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p  $$
 is the nodal internal force, and
 
 $$ f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA  $$
+ 
 is the external force at node  $I$.
 
-The function $S_{Ip}$ and its gradients  $S_{Ip,j}$ are the weighting functions of node  $I$ evaluated at the position of particle $p$.
+The function $S_{Ip}$ and its gradients  $S_{Ip,j}$ are the weighting functions of node  $I$ evaluated at the position of particle $p$. 
 
 The GIMP shape functions are defined by 
 
 $$ S_{Ip} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_I(x_i) dV $$
 
 and 
+
 $$ S_{Ip,j} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV $$ 
 
 These two functions are also a partition of the unity $\sum_I S_{Ip} = 1 $.
@@ -200,13 +197,11 @@ $$ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta) $$
 
 where $ \xi=x_p-x_I, \eta=y_p-y_I  $ and  $ \zeta=z_p-z $.
 
-Explicit MPM integration
+\section{Explicit MPM integration}
 
 The discrete form of the motion equation
 
-\section{Central difference Method}
-
-The displacement, the velocity and the acceleration at time  $ t = 0, t^1, t^2, ... , t^n  $ are knows, and the values at time  $ t^{n+1}  $ are required, namely the solution of the problem.
+\subsection{Central difference Method}
 
 The displacement, the velocity and the acceleration at time  $ t = 0, t^1, t^2, ... , t^n  $ are knows, and the values at time  $ t^{n+1}  $ are required, namely the solution of the problem.
 
@@ -235,51 +230,60 @@ So,
 $$ \ddot u ^{n} = f ^{n} / m $$
 
 and
+$$
+\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
+$$
+
 \section{Numerical implementation}
+
+For one $\Delta t$, the updated position can be obtained as:
+
 \begin{itemize}
 
-\item Calculate force  $ f_n  $
-\item Calculate acceleration  $ \ddot u ^{n} = f ^{n} / m  $
-\item Impose essential boundary conditions in terms of  $ \ddot u ^{n}  $
-\item Update velocity  $ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t  $
-\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
-\item Let  $ n = n + 1  $
-\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t  $
+\item Calculate force  $ f_n $
+\item Calculate acceleration  $ \ddot u ^{n} = f ^{n} / m $
+\item Impose essential boundary conditions in terms of  $ \ddot u ^{n} $
+\item Update velocity  $ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t $
+\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t $
+\item Let  $ n = n + 1 $
+\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t $
 \end{itemize}
 
 \section{Stability Requirement}
-The central difference method is conditionally stable, so the time step must be less that a certain value. For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
 
-Stability Requirement
-The central difference method is conditionally stable, so the time step must be less that a certain value. For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
+The central difference method is explicit here and conditionally stable, so the time step must be less that a certain value for avoiding error amplification.
+
+For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
 
 $$ \Delta t_{cr} = T_n $$
 
- $ T_n  $ is the smallest natural period of the system. For finite element method the critical time step of the central difference method can be expressed as:
+$ T_n  $ is the smallest natural period of the system. For finite element method the critical time step of the central difference method can be expressed as:
 
 $$ \Delta t_{cr} = \text{min}_e (l^e / c )  $$
 
-, where  $ l^e  $ is the characteristic length of the element and  $ c  $ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance can travel across the smallest characteristic element length withing a single time step. This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed is:
+Where $l^e $ is the characteristic length of the element and $c$ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance can travel across the smallest characteristic element length withing a single time step. 
+
+This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed is:
 
 $$ c = \sqrt{  rac {E (1-\nu)} {(1+\nu)(1-2\nu)\rho}} $$
 
-In the MPM context the particles can has velocities in the begin ing of any time step, so the critical time speed can be written as:
+In the MPM, the particles can has velocities in any time step, so the critical time speed can be written with this velocity plus:
 
 $$ \Delta t_{cr} = l^e / \text{max}_p ( c_p +  |v_p| ) $$
 
-In a structured regular mesh,  $ l^e  $ is the grid cell dimension.
+In a structured regular mesh, $l^e$ is the grid cell dimension.
 
 \section{ Numerical damping }
 
-The damping of real material comes from internal friction and viscosities, and can be modelled using elasto-plastic and viscous materials.
+Real materials dissipates energy during movement. Temperature is another source of dissipation. In numerical analysis numerical damping can be used.
 
 \section{ Local damping }
 
 The numerical damping is a technique for getting a stationary solution of the dynamic system. In this simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
 
-The local damping is used to get a quasi-static solution of the dynamic system using a viscous nodal force.
+\subsection{Quasi-static solution with local damping}
 
-In each time step, a viscous force is applied in each node, whose magnitude is proportional and opposite to the nodal velocity.
+The local damping is used to get a quasi-static solution of the dynamic system using a viscous nodal force. In each time step, a viscous force is applied in each node, whose magnitude is proportional and opposite to the nodal velocity.
 
 $$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
 
@@ -295,51 +299,57 @@ in which
  
 $$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$
 
+\subsection{Using local damping}
+
 For activate local damping force with  $ \alpha = 0.145  $:
 
-\begin{lstlisting}[language={},caption={input JSON}]
-{
-  "damping":{"type"=":"local", "value":0.145}
-}
+\begin{lstlisting}[language={}, caption={Defining local damping in json file.}]
+"damping":{"type"=":"local", "value":0.145}
 \end{lstlisting}
 
-The stress field obtained from a local damping forced system, cam be used as initial stress field value.
+The stress field obtained from a local damping forced system, cam be used as initial stress field value. 
 
 In geostatic analysis, the quasi static analysis can be store in to a simulation state:
 
 \begin{lstlisting}[language={},caption={input JSON}]
-{
-  "save_state":true,
-}
+"save_state":true,
 \end{lstlisting}
 
 And for loading the salved state
 
 \begin{lstlisting}[language={},caption={input JSON}]
-{
   "load_state":true,
-}
 \end{lstlisting}
 
 \section{Explicit MPM Scheme}
 
-In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation $ \dot{p} = m \frac{dv}{dt} = f $. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.
+\begin{enumerate}
+	\item 
+	Calculate nodal mass and momentum $$
+	\begin{aligned}
+		m_I^k & =\sum_{p=1}^{n_p} m_p N_{I p}^k \\
+		p_{i I}^{k-1 / 2} & = \sum_{p=1}^{n_p} m_p v_{i p}^{k-1 / 2} N_{I p}^k
+	\end{aligned}
+	$$
+	\item Impose boundary conditions in terms of $p_{i I}^{k-1 / 2}$.
+	\item The stress can be updated using the vorticity tensor at beginning or at the end of the time step. For USL scheme calculate the particle strain increment and the vorticity increment using the current nodal velocity:
+	$$
+	\begin{aligned}
+		& \Delta \varepsilon_{i j p}^{k-1 / 2}=\frac{1}{2}\left(N_{I p, j}^k v_{i I}^{k-1 / 2}+N_{I p, i}^k v_{j I}^{k-1 / 2}\right) \Delta t \\
+		& \Delta \Omega_{i j p}^{k-1 / 2}=\frac{1}{2}\left(N_{I p, j}^k v_{i I}^{k-1 / 2}-N_{I p, i}^k v_{j I}^{k-1 / 2}\right) \Delta t
+	\end{aligned}
+	$$
+	Where the nodal velocity is calculated with the nodal momentum:
+	
+\end{enumerate}
 
-In the MPM the particles stores all the material information and the mesh is used to integrate the motion equation $ \dot{p} = m \frac{dv}{dt} = f $. Therefore, the nodal values of mass, velocity, force, stress, ..., etc., needs no tb interpolated from particles using interpolation functions. After solving the motion equation, the acceleration and velocity are interpolated back to the particles to update their velocities and their positions.
-
-\section{Update Stress First - USF - Scheme}
+\subsection{Update Stress First - USF - Scheme}
 In the USF scheme the velocities in  $ n-1/2  $ are used to update the stress state:
-Update Stress First - USF - Scheme
-In the USF scheme the velocities in  $ n-1/2  $ are used to update the stress state:
 
-\section{Update Stress Last - USL - Scheme}
-In the USL scheme the updated velocities in nodes  $ n+1/2  $ are used to update the stress state:
-Update Stress Last - USL - Scheme
+\subsection{Update Stress Last - USL - Scheme}
 In the USL scheme the updated velocities in nodes  $ n+1/2  $ are used to update the stress state:
 
-\section{Modified Update Stress Last - MUSL - Scheme}
-In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
-Modified Update Stress Last - MUSL - Scheme
+\subsection{Modified Update Stress Last - MUSL - Scheme}
 In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
 
 \section{Project structure}
@@ -363,40 +373,6 @@ cmake --build build -j
 ./build/MPM-Geomechanics --input inputs/base_case.json
 \end{lstlisting}
 
-\end{document}
-
-\section{ Introduction}
-
-The MPM-Geomechanics is a implementation of the Material Point Method (MPM) to simulate large strain geomechanical problems in 3D. The main objective of this program is to provide an open source platform suitable for the study and application of the MPM in various geomechanical problems were materials are subjected to extreme deformation conditions.
-MPM-Geomechanics is a program that allows us to model the behavior of geo-materials, like soil and rock, when these materials are subjected to different initial and boundary conditions. Currently, the geo-materials are present in several areas of the society, like for example, in the slopes and excavation process in mining industry activities, or in the study of risk associated to naturals disasters.
-This program uses the Material Point Method (MPM) to integrate the motion equation of continuum mechanics:
-
-$$ \frac{ \partial \sigma_{i j}}{\partial x_j}+\rho b_i=\rho \ddot{u}_i $$
-
-that can be expressed discretely, using the nodes of an Eulerian mesh:
-
-$$ \dot{p}_{i I}=f_{i I}^{i n t}+f_{i I}^{e x t} $$
-
-where 
-$$ p_{i I}=\sum_p S_{I p} p_{i p}$$
-is the momentum nodal field, 
-$$ f_{i I}^{int}=-\sum_p \sigma_{i j p} S_{I p, j} V_p $$
- is the internal force field, 
- and 
- $$ f_{i I}^{e x t}=\sum_p m_p S_{I p} b_{i p}+\int_{\Gamma} \mathrm{t}_i N_I\left(x_i\right) d A $$
-is the external force at node $I$.
-
-The function $ S_{I p} $ and its gradient $ S_{I p, j} $ are the weighting functions of node $ I $ evaluated at the position of particle $ p $, defined by 
-
-$$ S_{I p}=\frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_I\left(x_{ip}\right) dV 
-$$ 
-and 
-$$ S_{I p, j}=rac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p\left(x_{ip}\right) N_{I, j}\left(x_{ip}\right) dV $$
-
-The integration of the weight functions is performed analytically over the particle domain using linear functions for $ N_I\left(x_{ip}\right) $ and unit step functions for $ \chi_p\left(x_{ip}\right) $. 
-
-For more details on the formulation and integration process, refer to: \ref theory_and_numerical_formulation_
-
 \section{Program features}
 
 The main features of the program are:
@@ -419,6 +395,115 @@ For downloading the compiled binaries
   \item At the bottom, you will find the available artifacts under the **Artifacts** section.
   \item Download the `compiled-binaries` artifact to get the compiled code.
 \end{itemize}
+
+\section{Required Programs}
+
+\label{sec:required_programs}
+
+The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
+
+\subsection{Required Programs - Windows}
+
+\label{sec:required_programs_windows}
+\begin{table}[h!]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
+		\hline
+		\textbf{Winget} & \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website} & Native of Windows \\
+		\textbf{Git} & via Winget & \texttt{winget install -e --id Git.Git -e --source winget} \\
+		\textbf{MSYS2} & via Winget & \texttt{winget install -e --id MSYS2.MSYS2 --source winget} \\
+		\textbf{GitHub CLI} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-github-cli} \\
+		\textbf{Python} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-python} \\
+		\textbf{CMake} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-cmake} \\
+		\textbf{GCC} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
+		\textbf{G++} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
+		\textbf{Make} & via MSYS2 MINGW64 & \texttt{pacman -S make} \\
+		\hline
+	\end{tabularx}
+	\caption{Programs required for Windows installation.}
+\end{table}
+
+
+\noindent
+\textbf{Make sure you have Winget installed.} You can verify this by running \texttt{winget --version}.  
+If you don't have Winget installed, you can get it from \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website}.
+
+\subsubsection*{Step 1: Install Git, GitHub, and MSYS2}
+Run the following commands:
+
+\begin{verbatim}
+winget install -e --id Git.Git -e --source winget
+winget install -e --id MSYS2.MSYS2 --source winget
+\end{verbatim}
+
+\subsubsection*{Step 2: Install required packages in MSYS2 MINGW64}
+
+\begin{verbatim}
+pacman -S mingw-w64-x86_64-github-cli
+pacman -S mingw-w64-x86_64-python
+pacman -S mingw-w64-x86_64-cmake
+pacman -S mingw-w64-x86_64-gcc
+pacman -S make
+\end{verbatim}
+
+\subsubsection*{Step 3: Verify the installations}
+
+\begin{verbatim}
+git --version
+gh --version
+python --version
+cmake --version
+make --version
+gcc --version
+g++ --version
+\end{verbatim}
+
+\clearpage
+
+\subsection{Required Programs - Linux}
+\label{sec:required_programs_linux}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
+\hline
+\textbf{Git} & via apt & \texttt{sudo apt install git} \\
+\textbf{GitHub CLI} & via apt & \texttt{sudo apt install gh} \\
+\textbf{Python} & via apt & \texttt{sudo apt install python3 python3-pip} \\
+\textbf{CMake} & via apt & \texttt{sudo apt install cmake} \\
+\textbf{GCC} & via apt & \texttt{sudo apt install build-essential} \\
+\textbf{G++} & via apt & \texttt{sudo apt install build-essential} \\
+\textbf{Make} & via apt & \texttt{sudo apt install build-essential} \\
+\hline
+\end{tabularx}
+\caption{Programs required for Linux installation.}
+\end{table}
+
+\subsubsection*{Step 1: Install all packages via apt}
+
+\begin{verbatim}
+sudo apt install git
+sudo apt install gh
+sudo apt install python3 python3-pip
+sudo apt install cmake
+sudo apt install build-essential
+\end{verbatim}
+
+\subsubsection*{Step 2: Verify the installations}
+
+\begin{verbatim}
+git --version
+gh --version
+python3 --version
+cmake --version
+make --version
+gcc --version
+g++ --version
+\end{verbatim}
 
 
 \subsection{Compilation in Windows}
@@ -451,7 +536,6 @@ The simplest way to compile on Linux is by using the `.bash` file at `/build/CMa
  ./cmake-build.bash
 \end{lstlisting}
 
-
 Alternatively, you can use the following commands:
 
 \begin{lstlisting}	
@@ -471,13 +555,13 @@ msbuild MPM-Geomechanics.sln -p:Configuration=Release
 
 \section{ Make Compilation }
 
-For compile the code in a linux environment, execute the makefile inside the make folder: \verb{MPM-Geomechanics\build\make\makefile}.
+For compile the code in a linux environment, execute the makefile inside the make folder: \verb| MPM-Geomechanics\build\make\makefile|.
  
 \section{Documentation}
 
 The program documentation is generated using Doxygen documentation generator.
 
-\beging{lstlisting}
+\begin{lstlisting}
 doxygen Doxyfile
 \end{lstlisting}
 
@@ -486,3 +570,343 @@ The HTML generated documentation is located in `/docs/index.html`.
 \section{Execution}
 
 In order to run simulations in several terminal, you can add the compiled code in the system `PATH`.
+
+\section{Testing Compilation and Benchmarking} 
+
+\label{sec:testing_manual_howto_compile}
+
+\section{How to Compile} 
+
+Prior to proceeding with these instructions, please consult required programs in manual.
+
+The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+
+```
+cd external
+git clone https://github.com/google/googletest.git
+```
+
+The simplest way to compile on Windows and Linux is by using the `.bash` file at `/build/qa` with `MSYS2 MINGW64` console line, simply execute the following command in the directory `MPM-Geomechanics/build/qa`:
+```
+./cmake-build.bash
+```
+
+Alternatively, you can use the following commands:
+```
+cmake -G "Unix Makefiles" -B build
+```
+
+```
+cmake --build build
+```
+
+These commands will generate two executables: `MPM-Geomechanics-tests` and `MPM-Geomechanics-benchmark`.
+
+- `MPM-Geomechanics-tests`: Run testing using GoogleTest. All files ending with `.test.cpp` are testing files, you can find them in the directory `qa/tests`.
+
+- `MPM-Geomechanics-benchmark`: Run benchmark using GoogleTest. All files ending with `.benchmark.cpp` are performance files. You can find them in the directory `qa/benchmark`.
+
+\section {How does benchmarking work?}
+
+If you are using Windows OS, make sure to use the MINGW64 command-line console.
+
+\subsection {Executable MPM-Geomechanics-benchmark}
+
+To run the benchmark correctly, a JSON file named \texttt{benchmark-configuration.json} is required. This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.
+
+The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line arguments:
+
+\texttt{<directory>}: Specifies which file should be used to run the benchmark. If no file is specified, the program will use \texttt{benchmark-configuration.json} located in the same directory as the executable. Example: \texttt{MPM-Geomechanics-benchmark configuration-file.json}
+
+The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line flags:
+
+\texttt{--log}: Shows more information about missing keys in the \texttt{benchmark-configuration.json} file
+
+\subsection {Script (executable): start-multi-benchmark.py}
+
+The performance test can also be executed using the `start-multi-benchmark.py` script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in \texttt{start-multi-benchmark-configuration.json}. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file. 
+
+Example of a \texttt{start-multi-benchmark-configuration.json} file:
+
+\begin{lstlisting}
+{
+	"executables": {
+		"win_benchmark_executable": "MPM-Geomechanics-benchmark.exe",  -> An executable located at build/qa/MPM-Geomechanics-benchmark.exe
+    	"win_github_id": "17847226555"  -> An artifact ID that represent it. can check out if it exists via gh run view <ID>
+ 	},
+	"parameters": {
+		"particles": [ 15000, 25000, 50000],  -> material point to test
+		"threads": [1, 5, 10]  -> number of threads to test
+	}
+}
+\end{lstlisting}
+
+This setup will run 3x3 (particles x threads) totaling 18 tests (3x3x2)
+
+The executable \texttt{start-multi-benchmark.py} allows the following command-line flags:
+
+\texttt{--clear}: Removes the **benchmark folder** (if it exists) before executing the performance tests.
+\texttt{--cache}: Uses the previously created cache instead of the \texttt{start-multi-benchmark-configuration.json} file.
+
+\clearpage
+\section{Verification Problems}
+\label{sec:verification_problems}
+
+\subsection{Boussinesq's Problem}
+\label{sec:boussinesq_problem}
+
+\subsubsection*{Introduction}
+
+In Geomechanics, the Boussinesq's problem refers to the point load acting on a surface of an elastic half-space.  
+The boundary conditions for this problem are:
+
+\begin{itemize}
+    \item The load \( P \) is applied only at one point, at the origin.
+    \item The load is zero at any other point.
+    \item For any point infinitely distant from the origin, the displacements must all vanish.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures//boussinesq-problem.png}
+    \caption{Boussinesq's problem.}
+    \label{fig:boussinesq_problem}
+\end{figure}
+
+\subsubsection*{Analytical Solution}
+
+The analytical solution of the vertical displacement field is:
+\[
+    u_z(x,y,z) = \frac{P}{4 \pi G d} \left( 2 (1-\nu) + \frac{z^2}{d^2} \right)
+\]
+where \( G = \frac{E}{2(1+\nu)} \) is the shear modulus of the elastic material,  
+\( \nu \) is the Poisson ratio, and \( d = \sqrt{ x^2 + y^2 + z^2 } \) is the total distance from the load to the point.
+
+\subsubsection*{MPM Model and Result Comparison}
+
+To model the displacement field generated by the point load, we create an elastic body with dimensions  
+\( l_x = l_y = l_z = 1\,\text{m} \), using the keyword \texttt{"cuboid"} with Point 1 at (0,0,0) and Point 2 at (1,1,1).
+
+For the elastic parameters:
+\[
+E = 200 \times 10^6\,\text{Pa}, \quad \rho = 1500\,\text{kg/m}^3, \quad \nu = 0.25
+\]
+
+The computational mesh has cell dimensions \( \Delta x = \Delta y = \Delta z = 0.1\,\text{m} \).  
+A nodal load of magnitude 1 is applied in the vertical direction at the midpoint of the upper surface.  
+The plane \( Z_n \) is free, while all other planes are sliding (only tangential displacements allowed).  
+Dynamic relaxation is used to reach a static solution, through the keyword \texttt{"damping"} with type \texttt{"kinetic"}.
+
+\subsubsection*{Input File}
+
+\begin{verbatim}
+{
+    "body": {
+        "elastic-cuboid-body": {
+            "type":"cuboid",
+            "id":1,
+            "point_p1":[0.0,0.0,0],
+            "point_p2":[1,1,1],
+            "material_id":1
+        }
+    },
+    "materials": {
+        "material-1": {
+            "type":"elastic",
+            "id":1,
+            "young":200e6,
+            "density":1500,
+            "poisson":0.25
+        }
+    },
+    "mesh": { 
+        "cells_dimension":[0.1,0.1,0.1],
+        "cells_number":[10,10,10],
+        "origin":[0.0,0.0,0.0],
+        "boundary_conditions": {
+            "plane_X0":"sliding",
+            "plane_Y0":"sliding",
+            "plane_Z0":"sliding",
+            "plane_Xn":"sliding",
+            "plane_Yn":"sliding",
+            "plane_Zn":"free"
+        }
+    },
+    "time":0.025,
+    "time_step_multiplier":0.3,
+    "results": {
+        "print":50,
+        "fields":["all"]
+    },
+    "nodal_point_load": [[[0.5, 0.5, 1.0], [0.0, 0.0, -1.0]]],
+    "damping": {
+        "type":"kinetic"
+    }
+}
+\end{verbatim}
+
+The MPM numerical results show good agreement with the analytical solution,  
+with small deviations due to discretization and the representation of the domain by particles with finite volume.  
+Errors decrease with mesh refinement.
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/boussinesq-problem-verification.png}
+    \caption{Comparison between analytical and MPM results.}
+    \label{fig:boussinesq_verification}
+\end{figure}
+
+\clearpage
+\subsection{Base Acceleration Example}
+\label{sec:base_acceleration_example}
+
+\subsubsection*{Introduction}
+
+In this example we model the motion of an elastic body subjected to a dynamic boundary condition.  
+The body is a cuboid with dimensions \( l_x = l_y = 0.3\,\text{m} \) and \( l_z = 0.8\,\text{m} \),  
+with lower coordinate point \( p_{min} = (0.4, 0.4, 0.0)\,\text{m} \).
+
+The base acceleration is defined as:
+\[
+\ddot{u} = A\,2\pi f \cos(2\pi f t + \alpha)
+\]
+
+The total simulation time is \( T = 2\,\text{s} \), with a time step \( \Delta t = 10^{-4}\,\text{s} \).  
+Material properties:
+\[
+\rho = 2500\,\text{kg/m}^3, \quad E = 100 \times 10^6\,\text{Pa}, \quad \nu = 0.25
+\]
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/geometry-body.png}
+    \caption{Geometry of the elastic body.}
+    \label{fig:geometry_body}
+\end{figure}
+
+\subsubsection*{MPM Model}
+
+The MPM model consists of uniformly distributed particles inside the body, created with the keywords  
+\texttt{"body"} and \texttt{"cuboid"}. The mesh dimensions are \( \Delta x = \Delta y = \Delta z = 0.1\,\text{m} \),  
+and it covers the full expected displacement range of the body.  
+The mesh uses \( n_x = 12, n_y = 12, n_z = 15 \).
+
+\subsubsection*{Input File}
+
+\begin{verbatim}
+{
+  "stress_scheme_update":"USL",
+  "shape_function":"GIMP",
+  "time":10,
+  "time_step":0.0005,
+  "gravity":[0.0,0.0,0.0],
+  "n_threads":1,
+  "damping": {
+    "type":"local",
+    "value":0.0
+  },
+  "results": {
+    "print":100,
+    "fields":["id","displacement","velocity","material","active","body"]
+  },
+  "n_phases":1,
+  "mesh": { 
+    "cells_dimension":[0.1,0.1,0.1],
+    "cells_number":[10,10,15],
+    "origin":[0,0,0]
+  },
+  "earthquake": {
+    "active": true,
+    "file": "base_acceleration.csv",
+    "header": true
+  },
+  "material": {
+    "elastic_1": {
+      "type":"elastic",
+      "id":1,
+      "young":10e6,
+      "density":2500,
+      "poisson":0.25
+    }
+  },
+  "body": {
+    "columns_1": {
+      "type":"cuboid",
+      "id":1,
+      "point_p1":[0.2,0.2,0],
+      "point_p2":[0.5,0.5,1.0],
+      "material_id":1
+    }
+  }
+}
+\end{verbatim}
+
+\subsubsection*{Earthquake Block Parameters}
+
+\begin{verbatim}
+"earthquake": {
+  "active": true,
+  "file": "base_acceleration.csv",
+  "header": true
+}
+\end{verbatim}
+
+Where:
+\begin{itemize}
+    \item \textbf{active}: Enables or disables seismic loading.
+    \item \textbf{file}: Path to the CSV file containing time, acceleration\_x, acceleration\_y, and acceleration\_z.
+    \item \textbf{header}: True if the CSV has a header row.
+\end{itemize}
+
+Example of the first lines of the record:
+
+\begin{verbatim}
+t,ax,ay,az
+0.0,-1.8849555921538759,-0.9424777960769379,-0.0
+5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
+0.0001,-1.884955220078568,-0.9424777495675233,-0.0
+0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
+...
+\end{verbatim}
+
+\subsubsection*{Results and Visualization}
+
+After simulation, particle results are found in the \texttt{/particle} directory,  
+and grid results in the \texttt{/grid} directory.  
+Particle results (\texttt{particle\_1.vtu}, \texttt{particle\_2.vtu}, ..., \texttt{particle\_41.vtu})  
+are referenced in \texttt{particleTimeSerie.pvd}, which can be opened in ParaView:
+
+\begin{verbatim}
+File → Open → particleTimeSerie.pvd
+\end{verbatim}
+
+The mesh can be loaded with:
+
+\begin{verbatim}
+File → Open → eulerianGrid.vtu
+\end{verbatim}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/mpm-model-particles-and-mesh.png}
+    \caption{Particles and mesh of the analyzed case.}
+    \label{fig:mpm_particles_mesh}
+\end{figure}
+
+\subsubsection*{Verification of Dynamic Boundary Condition}
+
+The velocity from the analytical input function
+\[
+\dot{u} = A \sin(2 \pi f t + \alpha)
+\]
+was compared with the particle velocity at the base of the model.  
+The results show excellent agreement between analytical and MPM-calculated velocities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures//velocity-base-verification.png}
+    \caption{Verification of velocities obtained with MPM simulation.}
+    \label{fig:velocity_base_verification}
+\end{figure}
+
+\end{document}
