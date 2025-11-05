@@ -13,10 +13,10 @@
 #include "Solver/Solver.h"
 #include "TerrainContact.h"
 
-/// \class MPM
-/// \brief Components and algorithms of the MPM
+/// @brief Components and algorithms of the MPM 
 /// This class contain the basic objects of a MPM model,
-/// and the operations between them.
+/// and the operations between them. See the [Manual](Manual_MPM_English.pdf)
+
 class MPM {
 
 public:
