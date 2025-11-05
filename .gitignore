@@ -34,7 +34,8 @@ particle_stress_data.json
 /build/qa/benchmark/*
 docs/*
 !/docs/.gitkeep
-/manual/*
+/manual/latex/*
 /doxygen/latex*
-!/manual/Manual_MPMEnglish.tex
-!/manual/Manual_MPMEnglish.pdf
+!/manual/latex/Manual_MPM_English.tex
+!/manual/latex/Manual_MPM_English.pdf
+!/manual/figures/*
