@@ -1,22 +1,24 @@
+% SPDX-License-Identifier: MIT
+% Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 \documentclass[11pt,a4paper]{article}
 
-% --- Minimal
+% Minimal
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
-\usepackage{geometry}
+\usepackage{geometry} 
 \geometry{margin=2.5cm}
-
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
 
-% --- Math & units ---
+% Math and units
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{siunitx}
 \sisetup{detect-all, per-mode=symbol}
 
-% --- Figures & tables ---
+% Figures and tables
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{caption}
@@ -24,7 +26,7 @@
 \usepackage{tabularx}
 \usepackage{float}
 
-% --- Code listings ---
+% Code listings
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily\small,
@@ -36,55 +38,57 @@
   showstringspaces=false
 }
 
-% --- Metadata ---
-\title{\textbf{MPM-Geomechanics Manual (v0.1)} \\
-  \large MPM-Geomechanics: An open-source Material Point Method code for geomechanics.}
-  \author{Dr. Fabricio Fernández}
-\date{\today}
+% Metadata
+\title{
+  \textbf{MPM-Geomechanics Manual} \\
+  \large MPM-Geomechanics: An open-source Material Point Method code for geomechanics.
+}
 
+\author{Prof. Dr. Fabricio Fernández \\ MPM-Geomechanics Development Team}
+
+\date{\today}
 
 \begin{document}
 
 \maketitle
 
-\section{Introduction to the Material Point Method (MPM) }
+\section{Introduction to the Material Point Method (MPM)}
 
-The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic. In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded. This method, enables the numerical solution of the motion equation in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
+The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/mpm_discretization}
-	\caption[Discretization]{Eulerian and Lagrangian discretization}
+	\includegraphics[width=0.65\linewidth]{figures/mpm_discretization}
+	\caption {MPM discretization}
 	\label{fig:mpm-discretization}
 \end{figure}
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.6\linewidth]{figures/mpm_cycle.png}
-%	\caption{Computational cycle}
-%	\label{fig:mpmcycle}
-%\end{figure}
+In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded. This method, enables the numerical solution of the motion equation in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{figures/mpm_cycle.png}
+	\caption{MPM computational cycle}
+	\label{fig:mpmcycle}
+\end{figure}
 
 \section{MPM Formulation}
 
-In continuum mechanics, the 3D motion equation of movement is
+The material point method formulation is based on the continuum mechanics motion equation in 3D:
 
-$$ \frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i $$
+\begin{equation}
+\frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i
+\label{eq-motion}
+\end{equation}
 
-or 
+The internal forces are related with the $\sigma_{ij} $, the Cauchy stress tensor, $\rho$ is the mass density, $b_i$ is a body force and $a_i$ is the acceleration.
 
-$$ \frac{\partial \sigma_{ij}}{\rho \partial x_j} + b_i = a_i $$
+The equation \ref{eq-motion} is presented here in tensor notation, but, vector and matrix can be equally used. The discrete form of the motion equation can be obtained using the weak form of this partial differential equation. The weak form is obtained by multiplying the motion equation by arbitrary weighting functions and integrating this product over the domain. In this procedure, the integration by parts reduces the order the stress tensor and introduces the natural boundary conditions:
 
-The internal forces are related with the $\sigma_{ij} $, the Cauchy stress tensor, and $\rho$ is the density of the material, $b_i$ is a mass field force and $a_i$ is the acceleration.
-
-This equations are presented in tensor notation, but, vector and matrix can be used as notation in the formulation.
-
-The discrete form of the motion equation, can be obtained using finite difference methods or by using a weak form, such as used by the finite element method, or the material point method.
-
-The weak form is obtained multiplyng the motion equation by arbitrary weighting functions and integrating this product over the domain.
-In this procedure the integration by parts reduces the order the stress tensor and introduces the natural boundary conditions.
-
-$$ -\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV $$
+\begin{equation}
+-\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
+\label{eq-weak-form-motion}
+\end{equation}
 
 Here $\delta u_i$ are arbitrary displacements functions, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
 
