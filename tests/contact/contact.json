@@ -1,42 +1,57 @@
 {
-    "time": 2.0,
-    "critical_time_step_multiplier": 0.15,
-    "gravity":[7.07,0.0,-7.07],
+    "time": 0.1,
+    "n_threads": 12,
+    "critical_time_step_multiplier": 0.75,
+    "gravity":[0,0.0,0.0],
     "results":
     {
       "print": 25,
-      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity", "plastic_strain"]
     },
     "mesh":
     {
-      "cells_dimension":[ 1, 1, 1 ],
-      "cells_number":[ 32, 14, 14 ],
+      "cells_dimension":[ 0.2, 0.2, 0.2 ],
+      "cells_number":[ 10, 1, 100 ],
       "origin":[ 0, 0, 0 ],
       "boundary_conditions":
       {
         "plane_X0": "sliding",
         "plane_Y0": "sliding",
         "plane_Z0": "sliding",
-        "plane_Xn": "sliding",
+        "plane_Xn": "fixed",
         "plane_Yn": "sliding",
         "plane_Zn": "sliding"
       }
     },
     "material":
-    [ 
+    [
       {
-        "type":"elastic",
-        "id":1,
-        "young":100e6,
-        "density":2500,
-        "poisson":0.3
+        "id": 1,
+        "type": "mohr-coulomb",
+        "young": 100e6,
+        "density": 2300,
+        "poisson": 0.25,
+        "friction": 30.0,
+        "cohesion": 6e6,
+        "tensile": 3e6,
+        "softening": "exponential",
+        "softening.exponential.eta": 200,
+        "softening.tensile.residual": 1e-6,
+        "softening.tensile.active": true
       },
       {
         "type":"elastic",
         "id":2,
-        "young":150e6,
+        "young":20e9,
         "density":2500,
-        "poisson":0.3
+        "poisson":0.2
+      },
+      {
+        "type":"elastic",
+        "id":3,
+        "young":200e9,
+        "density":8000,
+        "poisson":0.2
       }
     ],
     "body":
@@ -44,30 +59,46 @@
       {
         "type":"cuboid",
         "id": 1,
-        "point_p1":[ 0, 0, 0 ],
-        "point_p2":[ 32, 14, 2 ],
+        "point_p1":[ 0, 0.0, 0 ],
+        "point_p2":[ 2, 0.1, 5 ],
         "material_id":1
       },
       {
         "type":"cuboid",
         "id": 2,
-        "point_p1":[ 2, 2, 2 ],
-        "point_p2":[ 12, 12, 12 ],
+        "point_p1":[ 0.0, 0.0, 5 ],
+        "point_p2":[ 0.2, 0.1, 5.2 ],
         "material_id":2
+      },
+      {
+        "type":"cuboid",
+        "id": 3,
+        "point_p1":[ 0.0, 0.0, 7 ],
+        "point_p2":[ 0.4, 0.1, 8 ],
+        "material_id":3,
+			  "initial_velocity":[0,0,-10]
       }
     ],
     "contact_manager":{
       "active": true,
       "real_distance_correction_coefficient": 0.5
     },
-    
-    "contact":[
-      {
-        "id": 1,
-        "friction": 0.5,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
-      }
-    ]
-  }
+
+  "contact": 
+  [ 
+    {
+      "id": 1,
+      "friction": 0.5,
+      "master_id": 1,
+      "slave_id": 2,
+      "normal_type": "master"
+    },
+    {
+      "id": 2,
+      "friction": 0.0,
+      "master_id": 3,
+      "slave_id": 2,
+      "normal_type": "master"
+    }
+  ]
+}

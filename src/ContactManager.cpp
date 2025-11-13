@@ -77,7 +77,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		{
 			// get bodies in contact at node i
 			vector<int> contactBodies;
-			for (int j = 0; j < contributionMatrix[i].size(); ++j)
+			for (std::size_t j = 0; j < contributionMatrix[i].size(); ++j)
 			{
 				if (contributionMatrix[i][j] == 1)
 				{
@@ -86,7 +86,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 			}
 			
 			// get contact id
-			int contactId ;
+			int contactId = -1 ;
 			for (Contact* contact : contactList) {
 				if (contact->masterId == contactBodies[0] + 1)
 				{
@@ -104,12 +104,9 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 				}
 			}
 
-			// get contact
-			Contact* contact = contactList[contactId - 1];
-
 			// get master and slave bodies id for the contact
-			int masterId = contact->masterId;
-			int slaveId = contact->slaveId;
+			int masterId = contactList[contactId - 1]->masterId;
+			int slaveId = contactList[contactId - 1]->slaveId;
 
 			Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
 			Contact.contactId = contactId;
