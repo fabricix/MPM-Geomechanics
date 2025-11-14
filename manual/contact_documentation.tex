@@ -134,7 +134,7 @@ because two particles are used initially in each direction of a cell.
 \section{Verification Problems}
 \label{sec:verification_problems}
 
-\subsection{Block sliding - Slave-Master contact example}
+\subsection{Block sliding - Slave-Master single contact example}
 \label{sec:block_sliding_Slave-Master_contact_example}
 
 \subsubsection*{Introduction}
@@ -251,9 +251,143 @@ The MPM numerical results show good agreement with the analytical solution, with
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{images//contact_verification.png}
+    \includegraphics[width=0.75\textwidth]{images//single_contact_verification.png}
     \caption{Verification of displacements obtained with MPM simulation.}
-    \label{fig:contact_verification}
+    \label{fig:single_contact_verification}
+\end{figure}
+
+\subsection{Block sliding - Slave-Master multi contact example}
+\label{sec:block_sliding_Slave-Master_multi_contact_example}
+
+\subsubsection*{Introduction}
+
+This example models the sliding of two blocks on an inclined plane.  
+
+The results obtained were compared with the analytical solution of the problem, demonstrating convergence between the results.  
+The purpose of this model is to verify the implementation of multi contact, as well as to demonstrate how to build a model for this type of analysis.
+
+\subsubsection*{Analytical Solution}
+
+The analytical solution for the displacement of each block in the direction of the inclined plane with slope $\theta$ as a function of time, considering a coefficient of friction $\mu$ and the acceleration due to gravity $g$, was shown the the singles contact verification examples.
+
+\subsubsection*{MPM Model}
+
+The model was simulated keeping the inclination $\theta$ of the plane fixed at $45^{\circ}$ and gravity $g$ at $10 \, \text{m/s}^2$.  
+
+The MPM model consists of three bodies created using the keyword \texttt{cuboid}, one representing the inclined plane and the others representing two blocks. 
+The first has dimensions $l_x = 32$, $l_y = 14$, and $l_z = 2$ m, with point 1 at $(0,0,0)$ and point 2 at $(32, 14, 2)$, 
+while the second and the third have dimensions $l_x = l_z = 5$ and $l_y = 10$ m, with point 1 at $(2,2,2)$ and point 2 at $(7, 12, 7)$ for block one (wich body id equal to 2),
+and with point 1 at $(12,2,2)$ and point 2 at $(17, 12, 7)$, for block two (wich body id equal to 2). The friction coefficient $\mu$ was set as 0.2 for block one and as 0.0 for block two.
+
+For the elastic parameters:
+\[
+E = 100 \times 10^6\,\text{Pa}, \quad \rho = 2500\,\text{kg/m}^3, \quad \nu = 0.3
+\]
+
+The computational mesh has a cell size of $\Delta x = \Delta y = \Delta z = 1$ m. The inclination of the plane fixed at $45^{\circ}$ and gravity $g =10 \, \text{m/s}^2$ is simulated 
+by tilting the gravitational acceleration, which, in the input file, is given by $(7.07, 0.0, -7.07)$ m/s$^2$. 
+The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, i.e., only tangential displacements are allowed.
+
+\subsubsection*{Input File}
+
+\begin{verbatim}
+  {
+    "time": 2.0,
+    "critical_time_step_multiplier": 0.15,
+    "gravity":[7.07,0.0,-7.07],
+    "results":
+    {
+      "print": 25,
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+    },
+    "mesh":
+    {
+      "cells_dimension":[ 1, 1, 1 ],
+      "cells_number":[ 32, 14, 14 ],
+      "origin":[ 0, 0, 0 ],
+      "boundary_conditions":
+      {
+        "plane_X0": "sliding",
+        "plane_Y0": "sliding",
+        "plane_Z0": "sliding",
+        "plane_Xn": "sliding",
+        "plane_Yn": "sliding",
+        "plane_Zn": "sliding"
+      }
+    },
+    "material":
+    [ 
+      {
+        "type":"elastic",
+        "id":1,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      },
+      {
+        "type":"elastic",
+        "id":2,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      }
+    ],
+    "body":
+    [
+      {
+        "type":"cuboid",
+        "id": 1,
+        "point_p1":[ 0, 0, 0 ],
+        "point_p2":[ 32, 14, 2 ],
+        "material_id":1
+      },
+      {
+        "type":"cuboid",
+        "id": 2,
+        "point_p1":[ 2, 2, 2 ],
+        "point_p2":[ 7, 12, 7 ],
+        "material_id":2
+      },
+      {
+        "type": "cuboid",
+        "id": 3,
+        "point_p1": [ 12, 2, 2 ],
+        "point_p2": [ 17, 12, 7 ],
+        "material_id": 2
+      }
+    ],
+    "contact_manager":{
+      "active": true
+    },
+    
+    "contact":[
+      {
+        "id": 1,
+        "friction": 0.2,
+        "master_id": 1,
+        "slave_id": 2,
+        "normal_type": "master"
+      },
+      {
+        "id": 2,
+        "friction": 0.0,
+        "master_id": 1,
+        "slave_id": 3,
+        "normal_type": "master"
+      }
+    ]
+  }
+\end{verbatim}
+
+\subsubsection*{MPM Result Comparison}
+
+The MPM numerical results show good agreement with the analytical solution for the displacement of both blocks. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images//multi_contact_verification.png}
+    \caption{Verification of displacements obtained with MPM simulation.}
+    \label{fig:multi_contact_verification}
 \end{figure}
 
 \end{document}
