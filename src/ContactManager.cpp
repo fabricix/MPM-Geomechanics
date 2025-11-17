@@ -5,14 +5,10 @@
 #include <numeric>
 #include "Update.h"
 
-// Static variable for rapid contact detection
+// static variable for rapid contact detection
 static bool contactDetection = false;
 
 ContactManager::ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient):
-	/*frictionCoefficient(friction),
-    masterId(master_id > 0 ? master_id : 0),
-	slaveId(slave_id > 0 ? slave_id : 1),
-	normalType((normal_type != "collinear" && normal_type != "slave") ? "master" : normal_type),*/
 	contactList(std::move(contact_List)),
 	realDistanceCorrectionCoefficient(real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
 	{
@@ -64,7 +60,7 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 
-	//get contact nodes
+	// get contact nodes
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 	
 	// for each node
@@ -182,7 +178,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 							contactNodeData.closestParticleDistanceMaster = dPN;
 						}
 					}
-					//add mass at node of the slave body 
+					// add mass at node of the slave body 
 					else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 						// get closest distance to slave body
 						double d = contactNodeData.closestParticleDistanceSlave;

@@ -5,6 +5,8 @@
 #define CONTACT_MANAGER_H_
 
 #include "Eigen/Core"
+using Eigen::Vector3d;
+
 #include "Mesh/Node.h"
 #include "Mesh/Mesh.h"
 #include "Body/Body.h"
@@ -14,12 +16,8 @@
 #include <vector>
 using std::vector;
 
-using Eigen::Vector3d;
-
 /// \class ContactManager
-/// \brief Manages Slave-Master contact method data and operations
-/// This class contain all variables and functions to manage
-/// the Slave-Master contact method using two velocity fields.
+/// \brief Manages Slave-Master contact method data and operations using two velocity fields.
 class ContactManager {
 public:
     /// @brief  Constructor
@@ -27,23 +25,22 @@ public:
     /// @param real_distance_correction_coefficient Real distance correction coefficient (0 to disable)
     ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient);
 
-    /// \brief For all contact nodes, compute contact forces for sticking contact \f$ \left( f^{M,c,k}_{iI} = \frac{1} {\left(m^{M,k}_{I} + m^{S,k}_{I}  \right)\Delta \ t^k} \left( m^{M,k}_{I} \bar{p}^{S,k+\frac{1}{2}}_{iI} - m^{S,k}_{I} \bar{p}^{M,k+\frac{1}{2}}_{iI} \right) \right)\f$ 
-    /// and, the normal \f$ \left( f^{M,nor,k}_{iI} = f^{M,c,k}_{jI} n^{M,k}_{jI} n^{M,k}_{iI} \right)\f$ and tangential \f$ \left( \min \Big( \|f^{M,tan,k}_{iI}\|, \mu \ \| f^{M,nor,k}_{iI}\| \Big) \frac{f^{M,tan,k}_{iI}}{ \|f^{M,tan,k}_{iI}\|} \right) \f$ componentes for non sticking contact
+    /// \brief Compute nodal contact for sticking and for non sticking contact.
 	/// \param[in] time_step Time step
     void computeContactForces(Mesh* mesh, double time_step);
 
-    /// \brief Calculate the normal vector to the node \f$ n_I = \frac{\sum_p m_p N_{Ip}}{\left| \sum_p m_p N_{Ip} \right|} \f$
-    ///
+    /// \brief Calculate the nodal normal mass vector \f$ n_I = \frac{\sum_p m_p N_{Ip}}{\left| \sum_p m_p N_{Ip} \right|} \f$
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
     void nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies);
 
-    /// \brief Check nodes in contact
+    /// \brief Check if nodes are in contact
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
     void contactCheck(Mesh* mesh, vector<Body*>* bodies);
 
-    /// \brief Applies real distance correction \f$ D^{ MS }_I = -X_I ^ M \cdot n_I ^ M - X_I ^ S \cdot n_I ^ S \leq \lambda \, d_c\f$ to verify contact between bodies
+    /// \brief Applies the "real distance correction" method for contact detection.
+    ///  \f$ D^{ MS }_I = - X_I ^ M n_I ^ M - X_I ^ S n_I ^ S \leq \lambda \, d_c\f$
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
     void realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies);
