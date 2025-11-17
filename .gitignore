@@ -36,3 +36,9 @@ particle_stress_data.json
 !cmake-compilation-manual.md
 !cmake-build-linux.bash
 !cmake-build-win.bat
+manual/*.out
+manual/*.aux
+manual/*.log
+manual/*.fls
+manual/*.fdb_latexmk
+manual/*.synctex.gz

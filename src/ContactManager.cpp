@@ -67,9 +67,9 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 	for (size_t i = 0; i < nNodes; i++) {
 
 		// check if more than one body contributed to node i
-		int soma = std::accumulate(contributionMatrix[i].begin(), contributionMatrix[i].end(), 0);
+		int sum = std::accumulate(contributionMatrix[i].begin(), contributionMatrix[i].end(), 0);
 
-		if (soma > 1)
+		if (sum > 1)
 		{
 			// get bodies in contact at node i
 			vector<int> contactBodies;
