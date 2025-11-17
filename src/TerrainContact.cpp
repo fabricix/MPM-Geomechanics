@@ -167,7 +167,7 @@ void TerrainContact::nodalDensityLevelSet(Mesh* mesh, vector<Particle*>* particl
 		// get nodes and weights that the particle contributes
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-		// get the particle mass
+		// get the particle volume
 		const double pVolume = particles->at(i)->getInitialVolume();
 
 		// for each node in the contribution list 
