@@ -5,9 +5,6 @@
 #include <numeric>
 #include "Update.h"
 
-// static variable for rapid contact detection
-static bool contactDetection = false;
-
 ContactManager::ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient):
 	contactList(std::move(contact_List)),
 	realDistanceCorrectionCoefficient(real_distance_correction_coefficient > 0 ? real_distance_correction_coefficient : 0.0)
@@ -100,16 +97,19 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 				}
 			}
 
-			// get master and slave bodies id for the contact
-			int masterId = contactList[contactId - 1]->masterId;
-			int slaveId = contactList[contactId - 1]->slaveId;
 
-			Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
-			Contact.contactId = contactId;
-			Contact.nodeId = static_cast<int>(i);
-			Contact.bodySlaveId = slaveId;
-			Contact.bodyMasterId = masterId;
-			contactNodes[static_cast<int>(i)] = Contact;
+			if (contactId > 0) {
+				// get master and slave bodies id for the contact
+				int masterId = contactList[contactId - 1]->masterId;
+				int slaveId = contactList[contactId - 1]->slaveId;
+
+				Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
+				Contact.contactId = contactId;
+				Contact.nodeId = static_cast<int>(i);
+				Contact.bodySlaveId = slaveId;
+				Contact.bodyMasterId = masterId;
+				contactNodes[static_cast<int>(i)] = Contact;
+			}
 		}
 	}
 	if (contactNodes.size() > 0) {
@@ -118,6 +118,8 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 }
 
 void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
+
+	contactDetection = false;
 
 	// get number of nodes and bodies 
 	size_t nBodies = (int)bodies->size();
@@ -372,7 +374,7 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 	}
 }
 
-void ContactManager::nodalMomentumCorrection(Mesh* mesh, double dt) {
+void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
@@ -384,28 +386,5 @@ void ContactManager::nodalMomentumCorrection(Mesh* mesh, double dt) {
 
 		// slave body
 		contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
-	}
-}
-
-void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double dt) {
-	
-	// calculate nodal unit normal
-	nodalUnitNormal(mesh, bodies);
-
-	// verify real distance correction
-	if (realDistanceCorrectionActive) {
-		contactDetection = false;
-		realDistanceCorrection(mesh, bodies);
-	}
-
-	if (contactDetection) {
-		// compute contact force
-		computeContactForces(mesh, dt);
-
-		// impose force boundary conditions
-		Update::boundaryConditionsContactForce(mesh);
-
-		// correct nodal momentum after contact
-		nodalMomentumCorrection(mesh, dt);
 	}
 }

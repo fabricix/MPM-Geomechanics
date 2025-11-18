@@ -55,6 +55,10 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
 
+		// 1.2: Calculate nodal unit normal for contact analysis
+		if (contactActive) {
+			contactManager->nodalUnitNormal(mesh, bodies);
+		}
 
 		// Update seismic velocity and acceleration from record
 		if(isSeismicAnalysis){
@@ -84,9 +88,28 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		//4.1: Nodal moment contact update
+		// 4.1: Verify real distance correction if active
 		if (contactActive) {
-			contactManager->nodalMomentumContactUpdate(mesh, bodies, dt);
+			//Verify if real distance correction is active
+			if (contactManager->getRealDistanceCorrectionFlag()) {
+				//Apply real distance correction
+				contactManager->realDistanceCorrection(mesh, bodies);
+			}
+		}
+
+		// 4.2: Compute contact force and impose force boundary conditions 
+		if (contactActive) {
+			if (contactManager->contactDetection) {
+				// contact force
+				contactManager->computeContactForces(mesh, dt);
+				// boundary conditions
+				Update::boundaryConditionsContactForce(mesh);
+			}
+		}
+
+		// 4.3: Nodal momentum contact update
+		if (contactActive) {
+			contactManager->nodalMomentumContactUpdate(mesh, dt);
 		}
 
 		// Step 5: Particle updates
@@ -112,7 +135,7 @@ void SolverExplicit::Solve()
 			// 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
 			if (contactActive) {
-				contactManager->nodalMomentumCorrection(mesh, dt);
+				contactManager->nodalMomentumContactUpdate(mesh, dt);
 			}
 
 			Interpolation::nodalMomentum(mesh, bodies);

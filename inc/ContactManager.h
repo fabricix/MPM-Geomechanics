@@ -45,23 +45,19 @@ public:
     /// \param[in] bodies A list of Bodies
     void realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies);
 
-    /// \brief Call nodalUnitNormal, computeContactForces and nodalMomentumCorrection to Update the nodal momentum if contact detected
+    /// \brief Update the nodal momentum after contact forces calculation  \f$ p^{ b,k + \frac{1}{2}}_{\, iI} = \bar{ p } ^ { b,k + \frac{1}{2} }_{\, iI} + \Delta t^k f^{ b,c,k }_{\, iI}\f$
     /// \param[in] mesh Mesh reference
-    /// \param[in] bodies List of Body pointers
     /// \param[in] time_step Time step
-    void nodalMomentumContactUpdate(Mesh* mesh, vector<Body*>* bodies, double time_step);
+    void nodalMomentumContactUpdate(Mesh* mesh, double time_step);
 
-    /// \brief Correct the nodal momentum after contact forces calculation  \f$ p^{ b,k + \frac{1}{2}}_{\, iI} = \bar{ p } ^ { b,k + \frac{1}{2} }_{\, iI} + \Delta t^k f^{ b,c,k }_{\, iI}\f$
-    /// \param[in] mesh Mesh reference
-    /// \param[in] time_step Time step
-    void nodalMomentumCorrection(Mesh* mesh, double time_step);
+    /// \brief Return if the real distance correction is active
+    /// \return real distance correction active
+    inline bool getRealDistanceCorrectionFlag() const { return this->realDistanceCorrectionActive; }
+
+    bool contactDetection = false; //!<variable for contact detection
 
 private:
     vector<Contact*> contactList; 
-    //double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
-    //int masterId = 0; //<! Master body id
-    //int slaveId = 1; //<! Slave body id
-    //string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
     double realDistanceCorrectionCoefficient = 0.0; //!< Real distance correction coefficient \f$\lambda\f$
     bool realDistanceCorrectionActive = false; //!< Real distance correction active
 };
