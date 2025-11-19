@@ -18,19 +18,21 @@ public:
 	/// @param master_id ID of the master body
 	/// @param slave_id ID of the slave body
 	/// @param normal_type Normal type: "master", "slave" or "collinear"
+
 	Contact(int id, double friction, int master_id, int slave_id, string normal_type);
 	
 	/// \brief Default destructor
 	///
 	virtual ~Contact();
-
+	
+	
 	int id = 0;
 	double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
 	int masterId = 0; //<! Master body id
 	int slaveId = 1; //<! Slave body id
-	string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
-
-private:
+	string normalType = "master"; //!< Normal type: "master", "slave" or "collinear"
+	
+	private:
 };
 
 #endif /* CONTACT_H_ */

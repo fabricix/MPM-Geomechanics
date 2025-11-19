@@ -210,8 +210,6 @@ struct ContactNodeData
 	int bodyMasterId = -1; 	//!< master body id
 	int bodySlaveId = -1; //!< slave body id
 	
-	double mu = 0.0; //!< friction coefficient at the contact node: \f$\mu\f$
-	
 	bool hasContact = true; //!< does the contact node have contact?
 
 	double massMaster = 0.0; //!< nodal mass of master body: \f$m_{I}^M\f$
