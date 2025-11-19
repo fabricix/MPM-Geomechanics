@@ -104,11 +104,11 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Body*>* bodies) {
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes= mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes= mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 					
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 						
 						//add mass at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -212,11 +212,11 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 
 						//add momentum at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -353,11 +353,11 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 
 						//add mass at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -472,11 +472,11 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -643,11 +643,11 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Body*>* bodies, d
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -789,11 +789,11 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Body*>* bodies
 				if (ModelSetup::getContactActive()) {
 
 					//check contact at this node
-					unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 					if (it != contactNodes.end()) {
-						Mesh::ContactNodeData& contactNodeData = it->second;
+						Node::ContactNodeData& contactNodeData = it->second;
 
 						//add external force at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {

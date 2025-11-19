@@ -38,40 +38,6 @@ public:
     ///
     virtual ~Mesh();
 
-    /// \brief Create a data structure for contact nodes
-    struct ContactNodeData 
-    {
-        int contactId = -1;
-        int nodeId = -1;
-        int bodyMasterId = -1;
-        int bodySlaveId = -1;
-        double mu = 0.0;
-        bool hasContact = true;
-
-        double massMaster = 0.0; //!< nodal mass of master body: \f$m_{I}^M\f$
-        double massSlave = 0.0; //!< nodal mass of slave body: \f$m_{I}^S\f$
-        double closestParticleDistanceMaster = 999.0; //!< closest master body particle distance to the contact node \f$X_I ^ M \cdot n_I ^ M\f$
-        double closestParticleDistanceSlave = 999.0;  //!< closest slave body particle distance to the contact node\f$X_I ^ S \cdot n_I ^ S\f$
-        Vector3d momentumMaster = Vector3d::Zero(); //!< nodal momentum of master body: \f$p_{iI}^M\f$
-        Vector3d momentumSlave = Vector3d::Zero(); //!< nodal momentum of slave body: \f$p_{iI}^S\f$
-        Vector3d velocityMaster = Vector3d::Zero();
-        Vector3d velocitySlave = Vector3d::Zero();
-        Vector3d internalForceMaster = Vector3d::Zero();
-        Vector3d internalForceSlave = Vector3d::Zero();
-        Vector3d externalForceMaster = Vector3d::Zero();
-        Vector3d externalForceSlave = Vector3d::Zero();
-        Vector3d dampingForceMaster = Vector3d::Zero();
-        Vector3d dampingForceSlave = Vector3d::Zero();
-        Vector3d totalForceMaster = Vector3d::Zero();
-        Vector3d totalForceSlave = Vector3d::Zero();
-        Vector3d contactForce = Vector3d::Zero();
-        Vector3d normalContactForce = Vector3d::Zero();
-        Vector3d tangentialContactForce = Vector3d::Zero();
-        Vector3d normalMaster = Vector3d::Zero();
-        Vector3d normalSlave = Vector3d::Zero();
-        Vector3d normal = Vector3d::Zero();
-    };
-
     /// \brief Create a structured mesh grid
     /// \param[in] is_two_phase_simulation True if two phase simulation is required
     void createGrid( bool is_two_phase_simulation );
@@ -188,7 +154,7 @@ public:
 
     /// \brief return nodes where there is contact between two bodies
     /// \return an unordered_map of the nodes where there is contact between two bodies
-    unordered_map<int, ContactNodeData>& getContactNodes() { return contactNodes; }
+    unordered_map<int, Node::ContactNodeData>& getContactNodes() { return contactNodes; }
 
     /// \brief Configures the restriction of the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes
@@ -238,7 +204,7 @@ private:
 
     Boundary boundary; //!< mesh boundary
 
-    unordered_map<int, ContactNodeData> contactNodes; //!< nodes in contact
+    unordered_map<int, Node::ContactNodeData> contactNodes; //!< nodes in contact
     
     /// \brief Return the cell id in a position coordinates
     /// \param[in] point A vector containing the 

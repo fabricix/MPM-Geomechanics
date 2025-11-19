@@ -198,6 +198,58 @@ protected:
 	Vector3d internalForce; //!< nodal internal force: \f$f_{iI}^{int}\f$, or internal force in solid in two-phase calculations: \f$f_{iI}^{int,s}\f$
 	Vector3d dampingForce; //!< nodal damping force: \f$f_{iI}^{dmp}\f$, or damping force in solid in two-phase calculations: \f$f_{iI}^{dmp,s}\f$
 	Vector3d totalForce; //!< nodal total force: \f$f_{iI}\f$, or total force in solid in two-phase calculations: \f$f_{iI}^{s}\f$
+
+public:
+
+/// \brief Create a data structure for contact nodes
+struct ContactNodeData 
+{
+	int contactId = -1; //!< contact node identification
+	int nodeId = -1; //!< mesh node identification
+	
+	int bodyMasterId = -1; 	//!< master body id
+	int bodySlaveId = -1; //!< slave body id
+	
+	double mu = 0.0; //!< friction coefficient at the contact node: \f$\mu\f$
+	
+	bool hasContact = true; //!< does the contact node have contact?
+
+	double massMaster = 0.0; //!< nodal mass of master body: \f$m_{I}^M\f$
+	double massSlave = 0.0; //!< nodal mass of slave body: \f$m_{I}^S\f$
+	
+	double closestParticleDistanceMaster = 999.0; //!< closest master body particle distance to the contact node \f$X_I ^ M \cdot n_I ^ M\f$
+	double closestParticleDistanceSlave = 999.0;  //!< closest slave body particle distance to the contact node\f$X_I ^ S \cdot n_I ^ S\f$
+	
+	Vector3d momentumMaster = Vector3d::Zero(); //!< nodal momentum of master body: \f$p_{iI}^M\f$
+	Vector3d momentumSlave = Vector3d::Zero(); //!< nodal momentum of slave body: \f$p_{iI}^S\f$
+	
+	Vector3d velocityMaster = Vector3d::Zero(); //!< nodal velocity of master body: \f$v_{iI}^M\f$
+	Vector3d velocitySlave = Vector3d::Zero(); //!< nodal velocity of slave body: \f$v_{iI}^S\f$
+	
+	Vector3d internalForceMaster = Vector3d::Zero(); //!< internal force of master body: \f$f_{iI}^{int,M}\f$
+	Vector3d internalForceSlave = Vector3d::Zero(); //!< internal force of slave body: \f$f_{iI}^{int,S}\f$
+	
+	Vector3d externalForceMaster = Vector3d::Zero(); //!< external force of master body: \f$f_{iI}^{ext,M}\f$
+	Vector3d externalForceSlave = Vector3d::Zero(); //!< external force of slave body: \f$f_{iI}^{ext,S}\f$
+	
+	Vector3d dampingForceMaster = Vector3d::Zero(); //!< damping force of master body: \f$f_{iI}^{dmp,M}\f$
+	Vector3d dampingForceSlave = Vector3d::Zero(); //!< damping force of slave body: \f$f_{iI}^{dmp,S}\f$
+	
+	Vector3d totalForceMaster = Vector3d::Zero(); //!< total force of master body: \f$f_{iI}^{M}\f$
+	Vector3d totalForceSlave = Vector3d::Zero(); //!< total force of slave body: \f$f_{iI}^{S}\f$
+	
+	Vector3d contactForce = Vector3d::Zero(); //!< contact force at the contact node: \f$f_{iI}^{c}\f$
+	Vector3d normalContactForce = Vector3d::Zero(); //!< normal contact force at the contact node: \f$f_{iI}^{c,n}\f$
+	Vector3d tangentialContactForce = Vector3d::Zero(); //!< tangential contact force at the contact node: \f$f_{iI}^{c,t}\f$
+	
+	Vector3d normalMaster = Vector3d::Zero(); //!< normal vector at the contact node of the master body: \f$n_{iI}^M\f$
+	Vector3d normalSlave = Vector3d::Zero(); //!< normal vector at the contact node of the slave body: \f$n_{iI}^S\f$
+
+	Vector3d normal = Vector3d::Zero(); //!< contact normal vector at the contact node: \f$n_{iI}\f$
+
+	ContactNodeData() = default;
+};
+
 };
 
 inline Node::Node() {

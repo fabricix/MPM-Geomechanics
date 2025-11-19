@@ -58,7 +58,7 @@ void ContactManager::contactNodalDetection(Mesh* mesh, vector<Body*>* bodies) {
 	}
 
 	// get contact nodes
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 	
 	// for each node
 	for (size_t i = 0; i < nNodes; i++) {
@@ -102,7 +102,7 @@ void ContactManager::contactNodalDetection(Mesh* mesh, vector<Body*>* bodies) {
 				int masterId = contactList[contactId - 1]->masterId;
 				int slaveId = contactList[contactId - 1]->slaveId;
 
-				Mesh::ContactNodeData Contact = Mesh::ContactNodeData();
+				struct Node::ContactNodeData Contact = Node::ContactNodeData();
 				Contact.contactId = contactId;
 				Contact.nodeId = static_cast<int>(i);
 				Contact.bodySlaveId = slaveId;
@@ -126,7 +126,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 	size_t nBodies = (int)bodies->size();
 
 	//get contact nodes
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	//Calculation of the distance between bodies
 	//for each body
@@ -163,7 +163,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 				auto it = contactNodes.find(contributions->at(j).getNodeId());
 
 				if (it != contactNodes.end()) {
-					Mesh::ContactNodeData& contactNodeData = it->second; 
+					Node::ContactNodeData& contactNodeData = it->second; 
 
 					//add mass at node of the master body 
 					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -205,7 +205,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 	//for each contact node
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		Mesh::ContactNodeData& contactNodesData = it->second;
+		Node::ContactNodeData& contactNodesData = it->second;
 
 		// get nodal momentum
 		Vector3d momentumA = contactNodesData.momentumMaster;
@@ -241,7 +241,7 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	// for each body
 	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
@@ -271,7 +271,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 				if (it != contactNodes.end()) {
-					Mesh::ContactNodeData& contactNodeData = it->second;
+					Node::ContactNodeData& contactNodeData = it->second;
 
 					//add mass at node of the master body 
 					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -288,7 +288,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 	// for each contact node set the nodal unit normal
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		Mesh::ContactNodeData& contactNodesData = it->second;
+		Node::ContactNodeData& contactNodesData = it->second;
 
 		// get contact
 		Contact* contact = contactList[contactNodesData.contactId - 1];
@@ -319,11 +319,11 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 
 void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 	//get contact nodes
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 
-		Mesh::ContactNodeData& contactNodeData = it->second;
+		Node::ContactNodeData& contactNodeData = it->second;
 
 		if (contactNodeData.hasContact) {
 			
@@ -377,11 +377,11 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 
 void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 
-		Mesh::ContactNodeData& contactNodesData = it->second;
+		Node::ContactNodeData& contactNodesData = it->second;
 
 		// master body
 		contactNodesData.momentumMaster += dt * contactNodesData.contactForce;

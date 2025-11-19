@@ -24,11 +24,11 @@ void Update::nodalVelocity(Mesh* mesh) {
 		if (ModelSetup::getContactActive()) {
 
 			//check contact at this node
-			unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+			unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 			auto it = contactNodes.find(i);
 
 			if (it != contactNodes.end()) {
-				Mesh::ContactNodeData& contactNodeData = it->second;
+				Node::ContactNodeData& contactNodeData = it->second;
 
 				contactNodeData.velocityMaster = contactNodeData.momentumMaster / contactNodeData.massMaster;
 				contactNodeData.velocitySlave = contactNodeData.momentumSlave / contactNodeData.massSlave;
@@ -58,11 +58,11 @@ void Update::nodalTotalForce(Mesh* mesh) {
 		if (ModelSetup::getContactActive()) {
 
 			//check contact at this node
-			unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+			unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 			auto it = contactNodes.find(i);
 
 			if (it != contactNodes.end()) {
-				Mesh::ContactNodeData& contactNodeData = it->second;
+				Node::ContactNodeData& contactNodeData = it->second;
 
 				contactNodeData.totalForceMaster = contactNodeData.internalForceMaster + contactNodeData.externalForceMaster;
 				contactNodeData.totalForceSlave = contactNodeData.internalForceSlave + contactNodeData.externalForceSlave;
@@ -229,11 +229,11 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 					if (ModelSetup::getContactActive()) {
 
 						//check contact at this node
-						unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+						unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 						auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 						if (it != contactNodes.end()) {
-							Mesh::ContactNodeData& contactNodeData = it->second;
+							Node::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
 							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -353,11 +353,11 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 					if (ModelSetup::getContactActive()) {
 
 						//check contact at this node
-						unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+						unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 						auto it = contactNodes.find(contribution->at(j).getNodeId());
 
 						if (it != contactNodes.end()) {
-							Mesh::ContactNodeData& contactNodeData = it->second;
+							Node::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
 							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
@@ -535,7 +535,7 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 
 void Update::setPlaneMomentumContact(const Boundary::planeBoundary* plane, Mesh* mesh, unsigned dir) {
 
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
@@ -550,7 +550,7 @@ void Update::setPlaneMomentumContact(const Boundary::planeBoundary* plane, Mesh*
 		auto it = contactNodes.find(nodes->at(plane->nodes.at(i))->getId());
 
 		if (it != contactNodes.end()) {
-			Mesh::ContactNodeData& contactNodeData = it->second;
+			Node::ContactNodeData& contactNodeData = it->second;
 
 			// check if the node is active
 			// and apply the boundary condition based on the restriction type
@@ -752,7 +752,7 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 /// @details This function applies boundary conditions to the nodal forces based on the specified plane for contact analysis
 void Update::setPlaneForceContact(const Boundary::planeBoundary* plane, Mesh* mesh, unsigned dir)
 {
-	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
@@ -763,11 +763,12 @@ void Update::setPlaneForceContact(const Boundary::planeBoundary* plane, Mesh* me
 		// get node handle 
 		Node* nodeI = nodes->at(plane->nodes.at(i));
 
-		//check contact at this node
+		// check contact at this node
 		auto it = contactNodes.find(nodes->at(plane->nodes.at(i))->getId());
 
 		if (it != contactNodes.end()) {
-			Mesh::ContactNodeData& contactNodeData = it->second;
+
+			Node::ContactNodeData& contactNodeData = it->second;
 
 			// check if the node is active
 			// and apply the boundary condition based on the restriction type
