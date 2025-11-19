@@ -74,33 +74,33 @@ void ContactManager::contactNodalDetection(Mesh* mesh, vector<Body*>* bodies) {
 			{
 				if (contributionMatrix[i][j] == 1)
 				{
-					contactBodies.push_back(j);
+					contactBodies.push_back(int(j));
 				}
 			}
 			
 			// get contact id
 			int contactId = -1 ;
 			for (Contact* contact : contactList) {
-				if (contact->masterId == contactBodies[0] + 1)
+				if (contact->getMasterId() == contactBodies[0] + 1)
 				{
-					if (contact->slaveId == contactBodies[1] + 1)
+					if (contact->getSlaveId() == contactBodies[1] + 1)
 					{
-						contactId = contact->id;
+						contactId = contact->getId();
 					}
 				}
-				else if (contact->slaveId == contactBodies[0] + 1)
+				else if (contact->getSlaveId() == contactBodies[0] + 1)
 				{
-					if (contact->masterId == contactBodies[1] + 1)
+					if (contact->getMasterId() == contactBodies[1] + 1)
 					{
-						contactId = contact->id;
+						contactId = contact->getId();
 					}
 				}
 			}
 
 			if (contactId > 0) {
 				// get master and slave bodies id for the contact
-				int masterId = contactList[contactId - 1]->masterId;
-				int slaveId = contactList[contactId - 1]->slaveId;
+				int masterId = contactList[contactId - 1]->getMasterId();
+				int slaveId = contactList[contactId - 1]->getSlaveId();
 
 				struct Node::ContactNodeData Contact = Node::ContactNodeData();
 				Contact.contactId = contactId;
@@ -294,7 +294,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		Contact* contact = contactList[contactNodesData.contactId - 1];
 
 		// get normal type
-		string normalType = contact->normalType;
+		string normalType = contact->getNormalType();
 
 		// nodal normal vector master
 		Vector3d nM = contactNodesData.normalMaster.normalized();
@@ -331,7 +331,7 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 			Contact* contact = contactList[contactNodeData.contactId - 1];
 			
 			// get friction coefficient
-			double frictionCoefficient = contact->frictionCoefficient;
+			double frictionCoefficient = contact->getFrictionCoefficient();
 
 			// get nodal mass
 			double massA = contactNodeData.massMaster;

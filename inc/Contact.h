@@ -25,14 +25,27 @@ public:
 	///
 	virtual ~Contact();
 	
+	// getters
+    int getId() const { return id; }
+    double getFrictionCoefficient() const { return frictionCoefficient; }
+    int getMasterId() const { return masterId; }
+    int getSlaveId() const { return slaveId; }
+    const string& getNormalType() const { return normalType; }
+
+    // setters
+    void setId(int new_id) { id = new_id; }
+    void setFrictionCoefficient(double mu) { frictionCoefficient = mu; }
+    void setMasterId(int new_master_id) { masterId = new_master_id; }
+    void setSlaveId(int new_slave_id) { slaveId = new_slave_id; }
+    void setNormalType(const string& type) { normalType = type; }
 	
+	private:
+
 	int id = 0;
 	double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
 	int masterId = 0; //<! Master body id
 	int slaveId = 1; //<! Slave body id
 	string normalType = "master"; //!< Normal type: "master", "slave" or "collinear"
-	
-	private:
 };
 
 #endif /* CONTACT_H_ */
