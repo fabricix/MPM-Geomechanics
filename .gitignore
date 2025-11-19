@@ -42,3 +42,4 @@ manual/*.log
 manual/*.fls
 manual/*.fdb_latexmk
 manual/*.synctex.gz
+manual/*.contact_documentation.pdf
