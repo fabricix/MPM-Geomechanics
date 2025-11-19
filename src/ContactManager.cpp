@@ -119,6 +119,8 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 
 void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
+	if( this->getRealDistanceCorrectionFlag() == false ) return;
+
 	contactDetection = false;
 
 	// get number of nodes and bodies 
@@ -379,6 +381,7 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 	unordered_map<int, Mesh::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
+
 		Mesh::ContactNodeData& contactNodesData = it->second;
 
 		// master body

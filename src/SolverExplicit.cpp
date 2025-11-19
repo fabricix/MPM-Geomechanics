@@ -41,22 +41,18 @@ void SolverExplicit::Solve()
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
 
-		// 1.1: Check contact active
-		if (contactActive) {
-			contactManager->contactCheck(mesh, bodies);
-		}
-
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
 			Interpolation::nodalMass(mesh, bodies);
-
+			
 			#pragma omp section
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
-
-		// 1.2: Calculate nodal unit normal for contact analysis
+		
+		// Contact check and compute nodal unit normal vector
 		if (contactActive) {
+			contactManager->contactCheck(mesh, bodies);
 			contactManager->nodalUnitNormal(mesh, bodies);
 		}
 
@@ -88,28 +84,24 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// 4.1: Verify real distance correction if active
+		// Apply multi field velocity contact correction
 		if (contactActive) {
-			//Verify if real distance correction is active
-			if (contactManager->getRealDistanceCorrectionFlag()) {
-				//Apply real distance correction
-				contactManager->realDistanceCorrection(mesh, bodies);
-			}
-		}
 
-		// 4.2: Compute contact force and impose force boundary conditions 
-		if (contactActive) {
+			// Verify if real distance correction method is active
+			contactManager->realDistanceCorrection(mesh, bodies);
+			
+			// Update contact forces and apply boundary conditions 
 			if (contactManager->contactDetection) {
-				// contact force
+
+				// contact forces
 				contactManager->computeContactForces(mesh, dt);
+
 				// boundary conditions
 				Update::boundaryConditionsContactForce(mesh);
-			}
-		}
 
-		// 4.3: Nodal momentum contact update
-		if (contactActive) {
-			contactManager->nodalMomentumContactUpdate(mesh, dt);
+				// Correct nodal momentum using contact forces
+				contactManager->nodalMomentumContactUpdate(mesh, dt);
+			}
 		}
 
 		// Step 5: Particle updates
