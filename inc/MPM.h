@@ -59,9 +59,9 @@ private:
 	
 	Mesh mesh; //!< background grid mesh
 
-	TerrainContact* terrainContact; //!< terrain contact object
+	TerrainContact* terrainContact; //!< terrain contact pointer
 
-	ContactManager* contactManager; //!< terrain contact object
+	ContactManager* contactManager; //!< contact pointer
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 

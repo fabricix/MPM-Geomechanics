@@ -37,7 +37,7 @@ public:
     /// \brief Check if nodes are in contact
     /// \param[in] mesh Mesh reference
     /// \param[in] bodies A list of Bodies
-    void contactCheck(Mesh* mesh, vector<Body*>* bodies);
+    void contactNodalDetection(Mesh* mesh, vector<Body*>* bodies);
 
     /// \brief Applies the "real distance correction" method for contact detection.
     ///  \f$ D^{ MS }_I = - X_I ^ M n_I ^ M - X_I ^ S n_I ^ S \leq \lambda \, d_c\f$
@@ -54,9 +54,13 @@ public:
     /// \return real distance correction active
     inline bool getRealDistanceCorrectionFlag() const { return this->realDistanceCorrectionActive; }
 
-    bool contactDetection = false; //!<variable for contact detection
+    /// \brief Return if contact detection has occurred
+    /// \return contact detection flag
+    inline bool getContactDetectionFlag() const { return this->contactDetection; };
 
-private:
+    private:
+
+    bool contactDetection = false; //!<variable for contact detection
     vector<Contact*> contactList; 
     double realDistanceCorrectionCoefficient = 0.0; //!< Real distance correction coefficient \f$\lambda\f$
     bool realDistanceCorrectionActive = false; //!< Real distance correction active

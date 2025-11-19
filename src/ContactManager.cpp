@@ -13,7 +13,7 @@ ContactManager::ContactManager(vector<Contact*> contact_List, double real_distan
 		realDistanceCorrectionActive = real_distance_correction_coefficient > 0 ? true : false;
 	}
 
-void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
+void ContactManager::contactNodalDetection(Mesh* mesh, vector<Body*>* bodies) {
 
 	mesh->clearContactNodes();
 
@@ -96,7 +96,6 @@ void ContactManager::contactCheck(Mesh* mesh, vector<Body*>* bodies) {
 					}
 				}
 			}
-
 
 			if (contactId > 0) {
 				// get master and slave bodies id for the contact

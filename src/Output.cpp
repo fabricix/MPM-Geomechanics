@@ -492,6 +492,20 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
+		// TODO: Write option for Normal slave -  Normal master and for Contact force
+		if (isGridFieldRequired("mass_gradient_vector")) {
+			
+			// nodal mass unit vector
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"mass gradient vector (norm)\" Format=\"ascii\">\n";
+	
+			const auto contactNodes = mesh->getContactNodes();
+			for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {	
+				gridFile << scientific << it->second.normal << "\n";
+			}
+
+			gridFile << "</DataArray>\n";
+		}
+
 		if (isGridFieldRequired("distance_stl")) {
 			// nodal distance level set function value
 			gridFile << "<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";

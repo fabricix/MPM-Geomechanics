@@ -24,12 +24,12 @@ public:
 	///
 	virtual ~Contact();
 
-
 	int id = 0;
 	double frictionCoefficient = 0.0; //!< Friction coefficient \f$\mu\f$
 	int masterId = 0; //<! Master body id
 	int slaveId = 1; //<! Slave body id
 	string normalType = ""; //!< Normal type: "master", "slave" or "collinear"
+
 private:
 };
 
