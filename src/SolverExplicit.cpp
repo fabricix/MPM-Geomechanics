@@ -41,6 +41,11 @@ void SolverExplicit::Solve()
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, bodies);
 
+		// First contact detection
+		if (contactActive) {
+			contactManager->contactNodalDetection(mesh, bodies);
+		}
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
@@ -50,9 +55,8 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentum(mesh, bodies);
 		}
 		
-		// Contact check and compute nodal unit normal vector
+		// Compute nodal unit normal vector for contact forces calculation
 		if (contactActive) {
-			contactManager->contactCheck(mesh, bodies);
 			contactManager->nodalUnitNormal(mesh, bodies);
 		}
 
@@ -91,7 +95,7 @@ void SolverExplicit::Solve()
 			contactManager->realDistanceCorrection(mesh, bodies);
 			
 			// Update contact forces and apply boundary conditions 
-			if (contactManager->contactDetection) {
+			if (contactManager->getContactDetectionFlag()) {
 
 				// contact forces
 				contactManager->computeContactForces(mesh, dt);
