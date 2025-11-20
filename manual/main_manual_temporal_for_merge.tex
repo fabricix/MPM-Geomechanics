@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Minimal
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+% --- Math & units ---
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{detect-all, per-mode=symbol}
+
+% --- Figures & tables ---
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+% --- Code listings ---
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny,
+  tabsize=2,
+  showstringspaces=false
+}
+
+% --- Metadata ---
+\title{\textbf{MPM-Geomechanics Manual (v0.1)} \\
+  \large MPM-Geomechanics: An open-source Material Point Method code for geomechanics.}
+  \author{MPM-Geomechanics development team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% contact documentation
+\include{contact_documentation.tex}
+
+\end{document}

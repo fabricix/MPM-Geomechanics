@@ -1,55 +1,12 @@
-\documentclass[11pt,a4paper]{article}
+\section{Contact Documentation}
+In this section, we provide documentation and examples related to the contact algorithms based on the multi nodal velocity field implemented in MPM-Geomechanics.
 
-% --- Minimal
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+\section{Slave-master velocity contact approach}
 
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
+In the Slave-Master Contact method, there are two velocity fields, one for the master body $v_{iI}^{M}$ and another for the slave body $v_{iI}^{S}$.
 
-% --- Math & units ---
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{siunitx}
-\sisetup{detect-all, per-mode=symbol}
+\subsection {Contact detection}
 
-% --- Figures & tables ---
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{caption}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{float}
-
-% --- Code listings ---
-\usepackage{listings}
-\lstset{
-  basicstyle=\ttfamily\small,
-  frame=single,
-  breaklines=true,
-  numbers=left,
-  numberstyle=\tiny,
-  tabsize=2,
-  showstringspaces=false
-}
-
-% --- Metadata ---
-\title{\textbf{MPM-Geomechanics Manual (v0.1)} \\
-  \large MPM-Geomechanics: An open-source Material Point Method code for geomechanics.}
-  \author{Dr. Fabricio Fernández}
-\date{\today}
-
-
-\begin{document}
-
-\maketitle
-
-\section{Slave-Master Contact}
-
-In the Slave-Master Contact method, there are two velocity fields, one for the master body $v_{iI}^{M}$ and another for the slave body $v_{iI}^{S}$.  
 The contact between two bodies occurs when the following conditions are satisfied:
 
 \begin{itemize}
@@ -59,6 +16,8 @@ The contact between two bodies occurs when the following conditions are satisfie
         \left( v^{M}_{iI} - v^{S}_{iI} \right)n^{M}_{iI} > 0.
     \end{equation}
 \end{itemize}
+
+\subsection {Contact normal vector}
 
 The unit normal $n^{M}_{iI}$ to the surface of body $M$ at grid node $I$ can be calculated from the mass gradient as
 \begin{equation}
@@ -130,11 +89,31 @@ In which $\lambda \, d_c$ is used to take the particle size into account,
 $d_c$ is the cell size, and $\lambda$ is set to $0.5$ by default,  
 because two particles are used initially in each direction of a cell.
 
-\clearpage
+\subsection{Implementation and Input File }
+
+Describe here the numerical implementation of the Slave-Master contact algorithm in MPM-Geomechanics.
+
+\begin{lstlisting}
+Step:1: For each grid node, identify the bodies that have material points mapped to this node.
+Step:2: For each pair of bodies mapped to the same grid node, check the ...
+...
+\end{lstlisting}
+
+The Slave-Master contact algorithm is implemented in the MPM-Geomechanics code and can be activated by including the following lines in the input file:
+
+\begin{lstlisting}
+  Explain here how to include the contact in the input file, e.g.,
+  
+  "contact_manager": {
+    "active": true,
+    "real_distance_correction_coefficient": 0.5
+  },
+\end{lstlisting}
+
 \section{Verification Problems}
 \label{sec:verification_problems}
 
-\subsection{Block sliding - Slave-Master single contact example}
+\subsection{Block sliding problem - Single contact example}
 \label{sec:block_sliding_Slave-Master_contact_example}
 
 \subsubsection*{Introduction}
@@ -169,7 +148,7 @@ which is given by $(7.07, 0.0, -7.07)$ m/s$^2$. The planes $X_0$, $Y_0$, $Z_0$, 
 
 \subsubsection*{Input File}
 
-\begin{verbatim}
+\begin{lstlisting}
  {
     "time": 2.0,
     "critical_time_step_multiplier": 0.15,
@@ -194,8 +173,7 @@ which is given by $(7.07, 0.0, -7.07)$ m/s$^2$. The planes $X_0$, $Y_0$, $Z_0$, 
         "plane_Zn": "sliding"
       }
     },
-    "material":
-    [ 
+    "material":[ 
       {
         "type":"elastic",
         "id":1,
@@ -228,21 +206,20 @@ which is given by $(7.07, 0.0, -7.07)$ m/s$^2$. The planes $X_0$, $Y_0$, $Z_0$, 
         "material_id":2
       }
     ],
-    "contact_manager":{
-      "active": true,
-    },
+
+    "contact_manager":{ "active": true },
     
     "contact":[
       {
-        "id": 1,
-        "friction": 0.5,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
+        "id":1,
+        "friction":0.5,
+        "master_id":1,
+        "slave_id":2,
+        "normal_type":"master"
       }
     ]
   }
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{MPM Result Comparison}
 
@@ -289,7 +266,7 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
 
 \subsubsection*{Input File}
 
-\begin{verbatim}
+\begin{lstlisting}
   {
     "time": 2.0,
     "critical_time_step_multiplier": 0.15,
@@ -376,7 +353,7 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
       }
     ]
   }
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{MPM Result Comparison}
 
@@ -412,7 +389,7 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
 
 \subsubsection*{Input File}
 
-\begin{verbatim}
+\begin{lstlisting}
   {
     "time": 3.0,
     "critical_time_step_multiplier": 0.5,
@@ -502,7 +479,7 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
       }
     ]
   }
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{MPM Result Comparison}
 
@@ -521,5 +498,3 @@ the simulation indicates contact even when there is a separation equal to the di
     \caption{Velocity comparison.}
     \label{fig:Velocity comparison}
 \end{figure}
-
-\end{document}

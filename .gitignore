@@ -43,3 +43,5 @@ manual/*.fls
 manual/*.fdb_latexmk
 manual/*.synctex.gz
 manual/*.contact_documentation.pdf
+manual/*.main_manual_temporal_for_merge.pdf
+manual/*.pdf
