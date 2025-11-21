@@ -378,18 +378,6 @@ void TerrainContact::computeContactForces(double dt) {
         // calculate the normal force f_n = -m_p * vn_p / dt * e_n
         Vector3d fn = - (mass * vn_magnitude / dt) * normal;
         
-        // if penalty contact is enabled, apply the penalty force
-        if (usePenaltyContact) {
-            double penetration = -particle->getDistanceLevelSet();
-            if (penetration > 0.0)
-            {
-                // calculate the penalty force f_penalty = k * penetration * e_n
-                Vector3d f_penalty = penaltyStiffness * penetration * normal;
-                // apply the penalty force to the normal force
-                fn += f_penalty;
-            }
-        }
-        
         // calculate tangential force f_t = -m_p (v_p - vn) / dt
         Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
 
@@ -401,6 +389,18 @@ void TerrainContact::computeContactForces(double dt) {
         if (ft_mag > mu * fn_mag) {
             // scale the tangential force to satisfy the Coulomb friction condition
             ft = (mu * fn_mag / ft_mag) * ft;
+        }
+
+        // if penalty contact is enabled, apply the penalty force
+        if (usePenaltyContact) {
+            double penetration = -particle->getDistanceLevelSet();
+            if (penetration > 0.0)
+            {
+                // calculate the penalty force f_penalty = k * penetration * e_n
+                Vector3d f_penalty = penaltyStiffness * penetration * normal;
+                // apply the penalty force to the normal force
+                fn += f_penalty;
+            }
         }
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
