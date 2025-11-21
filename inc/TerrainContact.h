@@ -60,6 +60,11 @@ public:
     // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
     void computeContactForces(double dt);
 
+    // \brief Project particles that have penetrated the STL mesh
+    // If a particle is inside the STL mesh, move it to the surface
+    // \f$ x_projected = x_p - d * e_n \f$
+    void projectParticles(Mesh *mesh, std::vector<Particle *> *particles);
+
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 
     void setDistanceThreshold(double threshold) { scalingFactor = threshold > 0.0 ? threshold : 2.0; };

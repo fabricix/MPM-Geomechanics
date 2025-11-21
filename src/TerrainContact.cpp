@@ -416,6 +416,26 @@ void TerrainContact::computeContactForces(double dt) {
     }
 }
 
+void TerrainContact::projectParticles(Mesh* mesh,
+                                      std::vector<Particle*> *particles)
+{
+    for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
+    {
+        // get the particle and the triangle in contact
+        Particle* p = contactPairs[i].first;
+        Triangle* triangle = contactPairs[i].second;
+
+        // distance signed, =0 over the STL
+        double d = p->getDistanceLevelSet();
+
+        if (d < 0.0 /*inside the STL*/) {
+            // move particle to STL
+            p->setPosition(p->getPosition() - d * triangle->getNormal().normalized());
+            p->setDistanceLevelSet(0.0); // or +eps
+        }
+    }
+}
+
 void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double dt)
 {
     // calculate the distance level set function to particles
@@ -432,6 +452,8 @@ void TerrainContact::apply(Mesh* mesh, std::vector<Particle*>* particles, double
 
     // compute the contact forces and correct velocities
     computeContactForces(dt);
+
+    // reset distance 
 }
 
 void TerrainContact::enablePenaltyContact(bool enable) {

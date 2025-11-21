@@ -80,6 +80,9 @@ void SolverExplicit::Solve()
 
 		// Step 5.3: Update particle position
 		Update::particlePosition(mesh, particles, dt);
+ 
+		// Step 5.4: Project particle position if any penetrations
+		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
 
 		// Step 6 (MUSL): Momentum recalculation 
 		if (useMUSL)
