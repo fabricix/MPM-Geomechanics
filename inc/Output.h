@@ -7,6 +7,7 @@
 #include "Mesh/Mesh.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
+#include "TerrainContact.h"
 
 /// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.
@@ -43,6 +44,9 @@ namespace Output {
 	///
 	void writeResultsSeries();
 	
+	/// \brief Write the STL contact results
+	void writeSTLContactResults(TerrainContact* tc, double time);
+
 	/// \brief Write the particles forming bodies
 	/// \param[in] bodies Body list
 	/// \param[in] time Time

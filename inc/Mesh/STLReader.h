@@ -76,8 +76,14 @@ public:
     /// @brief Write the STL file
     /// @param output_filename The name of the output STL file
     bool writeSTL(const std::string& output_filename) const;
+    
+    /// \brief Set flag to write STL results with normals
+    inline void STLResultsFlagSet(bool flag) { write_stl_results = flag; }
 
-private:
+    /// \brief Get flag to write STL results with normals
+    inline bool STLResultsFlagGet() { return write_stl_results; }
+
+    private:
     
     /// @brief Vector containing the triangles
     std::vector<Triangle> triangles;
@@ -87,6 +93,9 @@ private:
     
     /// @brief Read the binary STL file
     bool readBinary(std::ifstream& file);
+
+    /// \brief Flag to write STL results with normals
+    bool write_stl_results = false;
 };
 
 #endif

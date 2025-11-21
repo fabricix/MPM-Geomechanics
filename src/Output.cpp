@@ -95,10 +95,16 @@ namespace Output{
 		string particleFileName="particles";
 		string particleFileTimeSerie = "particleTimeSerie";
 		vector<double> particlesFilesTime;
+
+		// stl mesh
+		bool stlContactFolderExist = false;
+		std::string stlContactFolderName = "stl_contact";
+		std::string stlContactFileName   = "stl_contact";
+		std::string stlContactFileTimeSerie = "stlContactTimeSerie";
+		std::vector<double> stlContactFilesTime;
 	}
 
 	void defineEdian(){
-
 		int16_t i = 1;
 		int8_t *p = (int8_t*) &i;
 		Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
@@ -142,9 +148,27 @@ namespace Output{
 			Folders::particleFolderExist=true;
 	}
 	
+	void createSTLContactFolder() {
+
+		if (Folders::stlContactFolderExist)
+		return;
+
+		int status = 0;
+
+		#if defined (linux) || defined(__linux__)
+		status = mkdir(Folders::stlContactFolderName.c_str(), 0777);
+		#endif
+
+		#if defined (_WIN64) || defined(_WIN32)
+		status = _mkdir(Folders::stlContactFolderName.c_str());
+		#endif
+
+		if (status == -1)
+			Folders::stlContactFolderExist = true;
+	}
+
 	void writeParticles(vector<Particle*>* particles, double time)
 	{
-
 		if (isFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
@@ -598,6 +622,107 @@ namespace Output{
 
 		// close file
 		gridFile.close();
+	}
+
+	void writeSTLContactResults(TerrainContact* tc, double time)
+	{
+		if ( tc->getSTLMesh()->STLResultsFlagGet() && ModelSetup::getLoopCounter() != 0) {
+			return;
+		}
+
+		if (Folders::edian == "") {
+			defineEdian();
+		}
+
+		// create stl folder
+		if (!Folders::stlContactFolderExist) {
+			createSTLContactFolder();
+		}
+
+		// register time
+		Folders::stlContactFilesTime.push_back(time);
+
+		// get triangles and densities
+		const auto& triangles = tc->getSTLMesh()->getTriangles();
+		const auto& densities = tc->getTriangleDensityLevelSet();
+
+		const int nPoints = static_cast<int>(triangles.size());
+
+		std::ofstream file;
+		file.open(Folders::stlContactFolderName + "/" +
+				Folders::stlContactFileName + "_" +
+				std::to_string(Folders::stlContactFilesTime.size()) + ".vtu");
+		file.precision(4);
+
+		file << "<?xml version=\"1.0\"?>\n";
+		file << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""
+			<< Folders::edian.c_str() << "\">\n";
+		file << "<UnstructuredGrid>\n";
+
+		// centroid points as VTK_VERTEX cells
+		file << "<Piece NumberOfPoints=\"" << nPoints
+			<< "\" NumberOfCells=\"" << nPoints << "\">\n";
+
+		// centroid points
+		file << "<Points>\n";
+		file << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			Vector3d c = triangles[i].getCentroid();
+			file << std::scientific << c.x() << " " << c.y() << " " << c.z() << "\n";
+		}
+		file << "</DataArray>\n";
+		file << "</Points>\n";
+
+		// density level-set at centroids
+		file << "<PointData>\n";
+
+		file << "<DataArray type=\"Float64\" Name=\"stl_density_levelset_centroid\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << std::scientific << densities[i] << "\n";
+		}
+		file << "</DataArray>\n";
+		
+		// normal vectors at centroids
+		file << "<DataArray type=\"Float64\" Name=\"stl_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			Vector3d n = triangles[i].getNormal().normalized();
+			file << std::scientific << n.x() << " " << n.y() << " " << n.z() << "\n";
+		}
+		file << "</DataArray>\n";
+
+		file << "</PointData>\n";
+
+		// one VTK_VERTEX per centroid
+		file << "<Cells>\n";
+
+		// connectivity
+		file << "<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << i << "\n";
+		}
+		file << "</DataArray>\n";
+
+		// offsets
+		file << "<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << i + 1 << "\n";
+		}
+		file << "</DataArray>\n";
+
+		// types: 1 = VTK_VERTEX
+		file << "<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << 1 << "\n";
+		}
+		file << "</DataArray>\n";
+
+		file << "</Cells>\n";
+
+		file << "</Piece>\n";
+		file << "</UnstructuredGrid>\n";
+		file << "</VTKFile>\n";
+
+		file.close();
 	}
 
 	void writeBody(Body* body, double time){

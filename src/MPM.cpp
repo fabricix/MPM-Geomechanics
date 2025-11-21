@@ -182,6 +182,7 @@ void MPM::setupTerrainContact()
 		}
 		// write STL mesh file
 		if (Input::getWriteSTLMeshFile()){
+			stlMesh->STLResultsFlagSet(true);
 			stlMesh->writeSTL(stlMeshFile+"_with_normals.stl");
 		}
 		// filtrate outside triangles

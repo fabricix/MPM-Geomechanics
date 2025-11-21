@@ -113,6 +113,10 @@ void SolverExplicit::Solve()
 		// write particles and grid results in step
 		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
+		
+		if (ModelSetup::getTerrainContactActive()) {
+			Output::writeSTLContactResults(terrainContact, iTime);
+		}
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
