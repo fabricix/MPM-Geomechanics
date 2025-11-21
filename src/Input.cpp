@@ -75,8 +75,8 @@ bool Input::getLoadState() { return Input::get_boolean(Input::getJson(), "load_s
 
 bool Input::getSaveState() { return Input::get_boolean(Input::getJson(), "save_state", false); };
 
-void Input::readInputFile(string filename) {
-
+void Input::readInputFile(string filename) 
+{
 	try{
 		// configures the input file	
 		inputFileName = filename;

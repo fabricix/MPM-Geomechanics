@@ -492,11 +492,20 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
-		if (isGridFieldRequired("distance_stl")) {
+		if (isGridFieldRequired("distance_levelset")) {
 			// nodal distance level set function value
-			gridFile << "<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+			gridFile << "<DataArray type=\"Float64\" Name=\"distance level set\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
 				gridFile << scientific << (inodes->at(i)->getDistanceLevelSet()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
+
+		if (isGridFieldRequired("density_levelset")) {
+			// nodal density levelset value
+			gridFile << "<DataArray type=\"Float64\" Name=\"density levelset\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getDensityLevelSet()) << "\n";
 			}
 			gridFile << "</DataArray>\n";
 		}
