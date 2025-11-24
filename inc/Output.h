@@ -80,6 +80,10 @@ namespace Output {
 	/// 
 	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime);
 
+	/// \brief Write the STL contact results if the step is the step result
+	/// 
+	void writeSTLContactInStep(int resultSteps, TerrainContact* tc, double iTime);
+
 	/// \brief Write the initial state of the simulation
 	/// 
 	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh);

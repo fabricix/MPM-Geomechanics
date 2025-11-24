@@ -40,6 +40,47 @@ namespace Output{
 	vector<string> printFields;
 	vector<string> printGridFields;
 
+	namespace OutputTolerance {
+		
+		double deltaValue=1.0e-38;
+	}
+	
+	namespace Folders
+	{
+		string edian="";
+		
+		// grid
+		bool gridFolderExist=false;
+		string gridFolderName="grid";
+		string gridFileName="eulerianGrid";
+		string gridFileTimeSerie = "gridTimeSerie";
+		vector<double> gridFilesTime;
+		
+		// particles
+		bool particleFolderExist=false;
+		string particleFolderName="particles";
+		string particleFileName="particles";
+		string particleFileTimeSerie = "particleTimeSerie";
+		vector<double> particlesFilesTime;
+		
+		// stl mesh
+		bool stlContactFolderExist = false;
+		std::string stlContactFolderName = "contact_stl_mesh";
+		std::string stlContactFileName   = "contact_stl_mesh";
+		std::string stlContactFileTimeSerie = "stlContactTimeSerie";
+		std::vector<double> stlContactFilesTime;
+	}
+	
+	bool isGridFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printGridFields.size(); ++i) {
+			
+			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
+				return true;
+			}
+		}
+		return false;
+	}
 	void configureResultFiels(vector<string> fields)
 	{
 		printFields=fields;
@@ -61,49 +102,6 @@ namespace Output{
 		}
 		return false;
 	}
-
-	bool isGridFieldRequired(string ifield)
-	{
-		for (size_t i = 0; i < printGridFields.size(); ++i) {
-
-			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	namespace OutputTolerance
-	{
-		double deltaValue=1.0e-38;
-	}
-
-	namespace Folders
-	{
-		string edian="";
-
-		// grid
-		bool gridFolderExist=false;
-		string gridFolderName="grid";
-		string gridFileName="eulerianGrid";
-		string gridFileTimeSerie = "gridTimeSerie";
-		vector<double> gridFilesTime;
-
-		// particles
-		bool particleFolderExist=false;
-		string particleFolderName="particles";
-		string particleFileName="particles";
-		string particleFileTimeSerie = "particleTimeSerie";
-		vector<double> particlesFilesTime;
-
-		// stl mesh
-		bool stlContactFolderExist = false;
-		std::string stlContactFolderName = "stl_contact";
-		std::string stlContactFileName   = "stl_contact";
-		std::string stlContactFileTimeSerie = "stlContactTimeSerie";
-		std::vector<double> stlContactFilesTime;
-	}
-
 	void defineEdian(){
 		int16_t i = 1;
 		int8_t *p = (int8_t*) &i;
@@ -428,7 +426,6 @@ namespace Output{
 
 	void writeGrid(Mesh* mesh, CellType gridType, double time)
 	{
-
 		if (isGridFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
@@ -626,7 +623,7 @@ namespace Output{
 
 	void writeSTLContactResults(TerrainContact* tc, double time)
 	{
-		if ( tc->getSTLMesh()->STLResultsFlagGet() && ModelSetup::getLoopCounter() != 0) {
+		if ( !tc->getSTLMesh()->STLResultsFlagGet() && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
 
@@ -743,57 +740,61 @@ namespace Output{
 
 	void writeResultsSeries() {
 
-		// Particle serie file
+		// Write results time series files for particles, grid and stl mesh
+		
 		// define edian
-		if(Folders::edian=="") {
-			defineEdian();
-		}
+		if(Folders::edian=="") { defineEdian(); }
 
-		// create particle folder
-		if(!Folders::particleFolderExist) {
-			createParticleFolder();
-		}
-
-		// open particle serie file
-		ofstream serieFile;
+		// create folders if not exist
+		if(!Folders::particleFolderExist) { createParticleFolder(); }
+		if(!Folders::gridFolderExist) { createGridFolder(); }
+		if(!Folders::stlContactFolderExist) { createSTLContactFolder(); }
+		
+		// create streams for series files
+		ofstream serieFile, gridSerieFile, stlContactSerieFile;
+		
+		// open series files
 		serieFile.open(Folders::particleFolderName+"/"+Folders::particleFileTimeSerie+".pvd");
-
-		// write the file
-		serieFile <<"<?xml version=\"1.0\"?>\n";
-		serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
-		serieFile <<"\t<Collection>\n";
-		for (size_t i = 0; i < Folders::particlesFilesTime.size(); ++i)
-		{
-			serieFile << "\t\t<DataSet timestep=\"" << Folders::particlesFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
-		}
-		serieFile <<"\t</Collection>\n";
-		serieFile << "</VTKFile>\n";
-
-		// Grid serie file
-		// define edian
-		if (Folders::edian == "") {
-			defineEdian();
-		}
-
-		// create grid folder
-		if (!Folders::gridFolderExist) {
-			createGridFolder();
-		}
-
-		// open grid serie file
-		ofstream gridSerieFile;
 		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
+		stlContactSerieFile.open(Folders::stlContactFolderName + "/" + Folders::stlContactFileTimeSerie + ".pvd");
 
-		// write the file
-		gridSerieFile << "<?xml version=\"1.0\"?>\n";
-		gridSerieFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
-		gridSerieFile << "\t<Collection>\n";
-		for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i)
-		{
+		// vector of file pointers
+		std::vector<std::ofstream*> openFiles = { &serieFile, &gridSerieFile, &stlContactSerieFile };
+		
+		// Header for all files
+		for (auto filePtr : openFiles) {
+			
+			if (!filePtr->is_open()) {
+				throw std::runtime_error("Error: Unable to create series result file.");
+			}
+			
+			// write the file header
+			*filePtr <<"<?xml version=\"1.0\"?>\n";
+			*filePtr <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+			*filePtr <<"\t<Collection>\n";
+		}
+
+		// particle series
+		for (size_t i = 0; i < Folders::particlesFilesTime.size(); ++i){
+			serieFile << "\t\t<DataSet timestep=\"" << Folders::particlesFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}	
+		
+		// grid series
+		for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i){
 			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::gridFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
 		}
-		gridSerieFile << "\t</Collection>\n";
-		gridSerieFile << "</VTKFile>\n";
+
+		// stl contact series
+		for (size_t i = 0; i < Folders::stlContactFilesTime.size(); ++i) {
+			stlContactSerieFile << "\t\t<DataSet timestep=\"" << Folders::stlContactFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::stlContactFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}
+
+		// Write end collection in all files
+		for (auto filePtr : openFiles) {
+			*filePtr << "\t</Collection>\n";
+			*filePtr << "</VTKFile>\n";
+			filePtr->close();
+		}		
 	}
 
 	void clearScreen() {
@@ -949,10 +950,13 @@ namespace Output{
 
 	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
 	{
-		if (ModelSetup::getLoopCounter()%resultSteps == 0)
-		{
-			writeGrid(mesh, Output::CELLS, iTime);
-		}
+		if (ModelSetup::getLoopCounter()%resultSteps == 0) writeGrid(mesh, Output::CELLS, iTime);
+	}
+
+	void writeSTLContactInStep(int resultSteps, TerrainContact* tc, double iTime)
+	{
+		if (!ModelSetup::getTerrainContactActive()) return;
+		if (ModelSetup::getLoopCounter() % resultSteps == 0) writeSTLContactResults(tc, iTime);
 	}
 
 	void printElapsedTime() {
