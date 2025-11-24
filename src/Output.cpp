@@ -485,9 +485,29 @@ namespace Output{
 
 		if (isGridFieldRequired("velocity")) {
 			// nodal velocity
-			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"Velocity\" Format=\"ascii\">\n";
+			gridFile << "<DataArray type=\"Float64\" Name=\"Velocity\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
 				gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
+		
+		if (isGridFieldRequired("velocity_Slave")) {
+			// nodal velocity
+			gridFile << "<DataArray type=\"Float64\" Name=\"velocity_Slave\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			
+			const auto contactNodes = mesh->getContactNodes();
+			
+			for (int i = 0; i < nPoints; ++i) {
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << (it->second.velocitySlave) << "\n";
+				}
+				else {
+					gridFile << scientific << (inodes->at(i)->getVelocity()) << "\n";
+				}
 			}
 			gridFile << "</DataArray>\n";
 		}
@@ -499,10 +519,89 @@ namespace Output{
 			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"mass gradient vector (norm)\" Format=\"ascii\">\n";
 	
 			const auto contactNodes = mesh->getContactNodes();
-			for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {	
-				gridFile << scientific << it->second.normal << "\n";
-			}
 
+			for (int i = 0; i < nPoints; ++i) {
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << (it->second.normal) << "\n";
+				}
+				else {
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+				}
+			}
+			gridFile << "</DataArray>\n";
+		}
+
+		if (isGridFieldRequired("mass_gradient_vectorL_slave")) {
+
+			// nodal mass unit vector
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"slave mass gradient vector (norm)\" Format=\"ascii\">\n";
+
+			const auto contactNodes = mesh->getContactNodes();
+
+			for (int i = 0; i < nPoints; ++i) {
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << (it->second.normalSlave) << "\n";
+				}
+				else {
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+				}
+			}
+			gridFile << "</DataArray>\n";
+		}
+
+		if (isGridFieldRequired("mass_gradient_vectorL_master")) {
+
+			// nodal mass unit vector
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"master mass gradient vector (norm)\" Format=\"ascii\">\n";
+
+			const auto contactNodes = mesh->getContactNodes();
+
+			for (int i = 0; i < nPoints; ++i) {
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << (it->second.normalMaster) << "\n";
+				}
+				else {
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+				}
+			}
+			gridFile << "</DataArray>\n";
+		}
+
+		if (isGridFieldRequired("contact_force")) {
+
+			// nodal mass unit vector
+			gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"contact force\" Format=\"ascii\">\n";
+
+			const auto contactNodes = mesh->getContactNodes();
+
+			for (int i = 0; i < nPoints; ++i) {
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << (it->second.contactForce) << "\n";
+				}
+				else {
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+					gridFile << scientific << 0 << "\n";
+				}
+			}
 			gridFile << "</DataArray>\n";
 		}
 
