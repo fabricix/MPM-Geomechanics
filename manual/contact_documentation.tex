@@ -91,24 +91,53 @@ because two particles are used initially in each direction of a cell.
 
 \subsection{Implementation and Input File }
 
-Describe here the numerical implementation of the Slave-Master contact algorithm in MPM-Geomechanics.
+The numerical implementation of the Slave-Master contact algorithm in MPM-Geomechanics follows the algorithm below:
 
 \begin{lstlisting}
-Step:1: For each grid node, identify the bodies that have material points mapped to this node.
-Step:2: For each pair of bodies mapped to the same grid node, check the ...
-...
+Step:1: For each grid node, identify the bodies that have material points mapped to this node, namely, grid contact nodes
+Step:2: For each grid node, reconstruct the nodal mass and momentum, distinguishing the grid contact nodes from regular grid nodes
+Step:3: For each contact node compute the external normal relative to each body. 
+Step:4: For each grid node, distinguishing the grid contact nodes, impose essential boundary conditions on the grid nodal momentum.
+Step:4: For each grid node, distinguishing the grid contact nodes, compute the grid nodal internal, external and total forces
+Step:6: For each grid node, distinguishing the grid contact nodes, 
+integrate the trial momentum of each body independently as if two bodies were not in contact
+Step:7: For each grid contact node, detect the bodies penetration
+Step:7.1: For the penetrated grid contact node, calculate the normal and tangential contact forces
+Step:7.2: For the penetrated grid contact node, Correct the contact grid nodal momentum
+Step:8: Update the position and velocity of each body
 \end{lstlisting}
 
-The Slave-Master contact algorithm is implemented in the MPM-Geomechanics code and can be activated by including the following lines in the input file:
+The Slave-Master contact algorithm is implemented in the MPM-Geomechanics code and can be activated 
+by including the following lines in the input file:
 
-\begin{lstlisting}
-  Explain here how to include the contact in the input file, e.g.,
-  
+\begin{lstlisting}    
   "contact_manager": {
     "active": true,
     "real_distance_correction_coefficient": 0.5
-  },
+  }
 \end{lstlisting}
+The Slave-Master contact analysis settings are defined using the \verb|"contact_manager"| keyword. In this context,
+the "active" keyword enables contact analysis, and \verb|"real_distance_correction_coefficient"| defines the factor applied 
+for contact correction, according to the theoretical documentation. If the value associated with  is set to 0, 
+\verb|"real_distance_correction_coefficient"| the correction is deactivated.
+
+The properties associated with each Slave-Master contact pair can be specified by including the following lines in the input file:
+
+\begin{lstlisting}
+  "contact":[
+  {
+    "id": 1,
+    "friction": 0.2,
+    "master_id": 1,
+    "slave_id": 2,
+    "normal_type": "master"
+  }
+]
+\end{lstlisting}
+
+The definition of Slave-Master contact properties for each body pair is made using the "contact" keyword. In this context, the "id"
+keyword defines the contact identifier, "friction" specifies the contact friction coefficient, \verb|"master_id"| defines the master body 
+identifier, \verb|"slave_id"| defines the slave body identifier, and \verb|"normal_type"| specifies which normal will be used in the contact analysis.
 
 \section{Verification Problems}
 \label{sec:verification_problems}
