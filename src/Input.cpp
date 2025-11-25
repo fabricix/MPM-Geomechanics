@@ -993,6 +993,39 @@ int Input::getResultNum(){
 	}
 }
 
+vector<string> Input::getWriteSTLMeshFields()
+{
+	try
+	{
+		vector<string> stl_files;
+
+		// verify if STL files are defined
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("stl_contact_mesh") &&
+			inputFile["results"]["stl_contact_mesh"].is_array())
+		{
+			for (const auto& file : inputFile["results"]["stl_contact_mesh"])
+			{
+				if (file.is_string()) {
+					stl_files.push_back(file);
+				}
+			}
+		}
+		else
+		{
+			stl_files.push_back("none");
+			return stl_files;
+		}
+
+		return stl_files;
+	}
+	catch (...)
+	{
+		Warning::printMessage("Error during the STL mesh results field reading");
+		throw;
+	}
+}
+
 vector<string> Input::getGridResultFields()
 {
 	try
@@ -1609,34 +1642,6 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 		throw;
 	}
 };
-
-bool Input::getWriteSTLMeshFile(){
-
-	try
-	{
-		if (inputFile["terrain_contact"].is_null()){
-
-			return false;
-		}
-
-		if (inputFile["terrain_contact"]["write_stl"].is_null()){
-
-			return false;
-		}
-
-		if (inputFile["terrain_contact"]["write_stl"].is_boolean())
-		{
-			return inputFile["terrain_contact"]["write_stl"];
-		}
-
-		throw(0);
-	}
-	catch(...)
-	{
-		Warning::printMessage("Error during reading the write STL file keyword in terrain contact");
-		throw;
-	}
-}
 
 double Input::getDistanceThreshold(){
 

@@ -284,21 +284,22 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
     // distance threshold for contact detection
     const double d_threshold = this->scalingFactor*(mesh->getCellDimension()).mean();
-
+    const double density_threshold = 0.1; // threshold to consider that a triangle is in contact with the body
+    
     // get the triangles and the density values
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
     const std::vector<double>& densityValues = this->densityLevelSet;
-
+    
     // verify that the number of density values is equal to the number of triangles
     if (densityValues.size() != triangles.size()) {
         return;
     }
-
+    
     // clear the contact pairs
     contactPairs.clear();
-
+    
     // loop over the particles to determine the contact potential pairs
-#ifdef _OPENMP
+    #ifdef _OPENMP
     #pragma omp parallel for shared(particles, triangles, densityValues)
 #endif
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
@@ -331,7 +332,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
             if (closestTriangleIndex == -1) continue;
 
             // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
-            if (densityValues[closestTriangleIndex] > 0.0) {
+            if (densityValues[closestTriangleIndex] > density_threshold) {
 #ifdef _OPENMP
                 #pragma omp critical
 #endif

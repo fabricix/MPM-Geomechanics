@@ -27,7 +27,7 @@ void SolverExplicit::Solve()
 	ModelSetup::setLoopCounter(loopCounter);
 
 	// write initial particles and grid states
-	Output::writeInitialState(bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
 
 	// Time integration loop
 	while (iTime < time)

@@ -39,6 +39,7 @@ namespace Output{
 
 	vector<string> printFields;
 	vector<string> printGridFields;
+	vector<string> printSTLContactFields;
 
 	namespace OutputTolerance {
 		
@@ -71,6 +72,18 @@ namespace Output{
 		std::vector<double> stlContactFilesTime;
 	}
 	
+	bool isSTLFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printSTLContactFields.size(); ++i) {
+			
+			if (printSTLContactFields.at(i) == ifield || (printSTLContactFields.at(i) == "all" && ifield != "none")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
 	bool isGridFieldRequired(string ifield)
 	{
 		for (size_t i = 0; i < printGridFields.size(); ++i) {
@@ -81,14 +94,20 @@ namespace Output{
 		}
 		return false;
 	}
-	void configureResultFiels(vector<string> fields)
+	
+	void configureResultFields(vector<string> fields)
 	{
 		printFields=fields;
 	}
 
-	void configureGridResultFiels(vector<string> fields)
+	void configureGridResultFields(vector<string> fields)
 	{
 		printGridFields=fields;
+	}
+
+	void configureSTLContactFields(vector<string> fields)
+	{
+		printSTLContactFields=fields;
 	}
 
 	bool isFieldRequired(string ifield) {
@@ -465,7 +484,6 @@ namespace Output{
 		
 		// points
 		gridFile<<"<Points>\n";
-		// node position
 		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			Vector3d pos=inodes->at(i)->getCoordinates();
@@ -621,9 +639,13 @@ namespace Output{
 		gridFile.close();
 	}
 
-	void writeSTLContactResults(TerrainContact* tc, double time)
-	{
-		if ( !tc->getSTLMesh()->STLResultsFlagGet() && ModelSetup::getLoopCounter() != 0) {
+	void writeSTLContact(TerrainContact* tc, double time)
+	{	
+		if(tc==nullptr){
+			return;
+		}
+		
+		if (isSTLFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
 
@@ -646,46 +668,46 @@ namespace Output{
 		const int nPoints = static_cast<int>(triangles.size());
 
 		std::ofstream file;
-		file.open(Folders::stlContactFolderName + "/" +
-				Folders::stlContactFileName + "_" +
-				std::to_string(Folders::stlContactFilesTime.size()) + ".vtu");
+		file.open(Folders::stlContactFolderName + "/" + Folders::stlContactFileName + "_" + std::to_string(Folders::stlContactFilesTime.size()) + ".vtu");
 		file.precision(4);
-
 		file << "<?xml version=\"1.0\"?>\n";
-		file << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""
-			<< Folders::edian.c_str() << "\">\n";
+		file << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<< Folders::edian.c_str() <<"\">\n";
 		file << "<UnstructuredGrid>\n";
 
 		// centroid points as VTK_VERTEX cells
-		file << "<Piece NumberOfPoints=\"" << nPoints
-			<< "\" NumberOfCells=\"" << nPoints << "\">\n";
+		file << "<Piece NumberOfPoints=\"" << nPoints << "\" NumberOfCells=\"" << nPoints << "\">\n";
 
 		// centroid points
 		file << "<Points>\n";
 		file << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
-			Vector3d c = triangles[i].getCentroid();
-			file << std::scientific << c.x() << " " << c.y() << " " << c.z() << "\n";
+			Vector3d pos = triangles[i].getCentroid();
+			file << std::scientific << pos.x() << " " << pos.y() << " " << pos.z() << "\n";
 		}
 		file << "</DataArray>\n";
 		file << "</Points>\n";
-
-		// density level-set at centroids
+	
+		// point data
 		file << "<PointData>\n";
 
-		file << "<DataArray type=\"Float64\" Name=\"stl_density_levelset_centroid\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			file << std::scientific << densities[i] << "\n";
+		if(isSTLFieldRequired("stl_density_levelset")){
+			// density level-set at centroids
+			file << "<DataArray type=\"Float64\" Name=\"stl_density_levelset\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				file << std::scientific << densities[i] << "\n";
+			}
+			file << "</DataArray>\n";
 		}
-		file << "</DataArray>\n";
 		
-		// normal vectors at centroids
-		file << "<DataArray type=\"Float64\" Name=\"stl_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
-		for (int i = 0; i < nPoints; ++i) {
-			Vector3d n = triangles[i].getNormal().normalized();
-			file << std::scientific << n.x() << " " << n.y() << " " << n.z() << "\n";
+		if(isSTLFieldRequired("stl_normal")){
+			// normal vectors at centroids
+			file << "<DataArray type=\"Float64\" Name=\"stl_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				Vector3d n = triangles[i].getNormal().normalized();
+				file << std::scientific << n.x() << " " << n.y() << " " << n.z() << "\n";
+			}
+			file << "</DataArray>\n";
 		}
-		file << "</DataArray>\n";
 
 		file << "</PointData>\n";
 
@@ -714,11 +736,10 @@ namespace Output{
 		file << "</DataArray>\n";
 
 		file << "</Cells>\n";
-
 		file << "</Piece>\n";
 		file << "</UnstructuredGrid>\n";
 		file << "</VTKFile>\n";
-
+		
 		file.close();
 	}
 
@@ -927,7 +948,7 @@ namespace Output{
 		}
 	}
 
-	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc)
 	{
 		// write initial state 
 		printModelInfo(bodies, iTime);
@@ -946,17 +967,23 @@ namespace Output{
 
 		// write grid as a .vtu files
 		writeGrid(mesh, Output::CELLS);
+
+		// write STL contact results as a .vtu files
+		writeSTLContact(tc, iTime);
 	}
 
 	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
 	{
-		if (ModelSetup::getLoopCounter()%resultSteps == 0) writeGrid(mesh, Output::CELLS, iTime);
+		if (ModelSetup::getLoopCounter()%resultSteps == 0) 
+			writeGrid(mesh, Output::CELLS, iTime);
 	}
 
 	void writeSTLContactInStep(int resultSteps, TerrainContact* tc, double iTime)
 	{
 		if (!ModelSetup::getTerrainContactActive()) return;
-		if (ModelSetup::getLoopCounter() % resultSteps == 0) writeSTLContactResults(tc, iTime);
+		
+		if (ModelSetup::getLoopCounter()%resultSteps == 0) 
+			writeSTLContact(tc, iTime);
 	}
 
 	void printElapsedTime() {

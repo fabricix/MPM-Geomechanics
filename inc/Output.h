@@ -45,7 +45,7 @@ namespace Output {
 	void writeResultsSeries();
 	
 	/// \brief Write the STL contact results
-	void writeSTLContactResults(TerrainContact* tc, double time);
+	void writeSTLContact(TerrainContact* tc, double time);
 
 	/// \brief Write the particles forming bodies
 	/// \param[in] bodies Body list
@@ -54,11 +54,15 @@ namespace Output {
 
 	/// \brief Configures the fields to be written
 	/// \param[in] fields List of fields
-	void configureResultFiels(vector<string> fields);
+	void configureResultFields(vector<string> fields);
 
 	/// \brief Configures the grid fields to be written
 	/// \param[in] fields List of fields
-	void configureGridResultFiels(vector<string> fields);
+	void configureGridResultFields(vector<string> fields);
+	
+	/// \brief Configures the stlContact fields to be written
+	/// \param[in] fields List of fields
+	void configureSTLContactFields(vector<string> fields);
 
 	/// \brief Verify is the grid field must be written
 	/// \param[in] field Grid field to verify
@@ -86,7 +90,7 @@ namespace Output {
 
 	/// \brief Write the initial state of the simulation
 	/// 
-	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh);
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc);
 
 	/// \brief Print initial program screen
 	///

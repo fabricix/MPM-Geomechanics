@@ -29,7 +29,11 @@ private:
 public:
 
     TerrainContact(STLReader* mesh, double friction)
-        : stlMesh(mesh), frictionCoefficient(friction) {}
+        : stlMesh(mesh), frictionCoefficient(friction) {
+            // initialize density level set
+            size_t npoints = mesh->getTriangles().size();
+            densityLevelSet.resize(npoints, 0.0);
+        }
 
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i) e_n \f$
     /// It is the distance from the node to the STL mesh

@@ -170,21 +170,17 @@ void MPM::setupTerrainContact()
 	
 	if (stlMeshFile!=""){
 	
-		// create mesh pointer
+		// create a mesh reader and red the STL mesh
 		STLReader* stlMesh = new STLReader;
-		// read STL mesh file
 		bool success = stlMesh->read(stlMeshFile);
-		// calculate normals
-		if (success) stlMesh->recalculateNormals();
+
+		if (success) 
+			stlMesh->recalculateNormals();
 		else {
 			Warning::printMessage("Error reading STL mesh file: "+stlMeshFile);
 			throw (0);
 		}
-		// write STL mesh file
-		if (Input::getWriteSTLMeshFile()){
-			stlMesh->STLResultsFlagSet(true);
-			stlMesh->writeSTL(stlMeshFile+"_with_normals.stl");
-		}
+		
 		// filtrate outside triangles
 		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
 
@@ -350,8 +346,9 @@ void MPM::setupResults() {
 	ModelSetup::setResultNum(Input::getResultNum());
 	
 	// configures the fields
-	Output::configureResultFiels(Input::getResultFields());
-	Output::configureGridResultFiels(Input::getGridResultFields());
+	Output::configureResultFields(Input::getResultFields());
+	Output::configureGridResultFields(Input::getGridResultFields());
+	Output::configureSTLContactFields(Input::getWriteSTLMeshFields());
 }
 
 void MPM::setThreads() {
