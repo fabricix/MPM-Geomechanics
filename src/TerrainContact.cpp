@@ -311,7 +311,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
         double d_p = particle->getDistanceLevelSet();
 
         // check if the particle is near the terrain contact (first condition for contact detection)
-        if (std::abs(d_p) < d_threshold)
+        if (d_p > 0.0 && d_p < d_threshold)
         {
             // find the closest triangle to the particle
             double minDistance = 1e+10;
@@ -329,6 +329,9 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
             for (size_t j = 0; j < triangles.size(); ++j) 
             {
+                   if (densityValues[j] <= density_threshold)
+                    continue;
+
                 const Triangle& tri = triangles[j];
                 double distance = pointTriangleDistance(
                     xp,
