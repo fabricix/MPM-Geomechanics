@@ -28,6 +28,8 @@ private:
 
 public:
 
+    inline std::vector<std::pair<Particle*, Triangle*>> getContactPairs() const { return contactPairs; }
+
     TerrainContact(STLReader* mesh, double friction)
         : stlMesh(mesh), frictionCoefficient(friction) {
             // initialize density level set

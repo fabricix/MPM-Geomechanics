@@ -334,6 +334,28 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("particle_contact_force"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactNormalForce() + p->getContactTangentialForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+/* 		if (isFieldRequired("particle_contact_flag"))
+		{
+			partFile << "<DataArray type=\"UInt8\" Name=\"particle_contact_flag\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				partFile << (particles->at(i)->getIfSTLContact() ? 1 : 0) << "\n";
+			}
+			partFile << "</DataArray>\n";
+		} */
+
 		if (isFieldRequired("velocity")) {
 
 			// particle velocity

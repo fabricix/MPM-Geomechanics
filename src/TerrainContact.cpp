@@ -311,7 +311,8 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
         double d_p = particle->getDistanceLevelSet();
 
         // check if the particle is near the terrain contact (first condition for contact detection)
-        if (d_p > 0.0 && d_p < d_threshold)
+        //if (d_p > 0.0 && d_p < d_threshold)
+        if (std::abs(d_p) < d_threshold)
         {
             // find the closest triangle to the particle
             double minDistance = 1e+10;
@@ -329,8 +330,8 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
             for (size_t j = 0; j < triangles.size(); ++j) 
             {
-                   if (densityValues[j] <= density_threshold)
-                    continue;
+                //   if (densityValues[j] <= density_threshold)
+                //    continue;
 
                 const Triangle& tri = triangles[j];
                 double distance = pointTriangleDistance(
@@ -339,6 +340,9 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
                     tri.v2,
                     tri.v3
                 );
+
+                if (distance > d_threshold)
+                    continue;
 
                 if (distance < minDistance) {
                     minDistance = distance;
@@ -350,7 +354,8 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
             if (closestTriangleIndex == -1) continue;
 
             // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
-            if (densityValues[closestTriangleIndex] > density_threshold) {
+            //if (densityValues[closestTriangleIndex] > density_threshold) {
+            if (minDistance < d_threshold) {
 #ifdef _OPENMP
                 #pragma omp critical
 #endif
@@ -400,6 +405,12 @@ void TerrainContact::computeContactForces(double dt) {
         // calculate tangential force f_t = -m_p (v_p - vn) / dt
         Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
 
+        #if(0)
+        Vector3d vt = velocityPredictor - vn;
+        Vector3d tangent = vt - (vt.dot(normal)) * normal;
+        Vector3d ft = -(mass/dt) * tangent;
+        #endif
+        
         // apply Coulomb friction ||f_t|| <= mu ||f_n||
         double fn_mag = fn.norm();
         double ft_mag = ft.norm();
@@ -421,6 +432,10 @@ void TerrainContact::computeContactForces(double dt) {
                 fn += f_penalty;
             }
         }
+
+        // set the contact forces to the particle
+        particle->setContactNormalForce(fn);
+        particle->setContactTangentialForce(ft);
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
         Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
