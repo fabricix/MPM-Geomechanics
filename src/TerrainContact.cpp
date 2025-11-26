@@ -301,7 +301,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
     // loop over the particles to determine the contact potential pairs
     #ifdef _OPENMP
     #pragma omp parallel for shared(particles, triangles, densityValues)
-#endif
+    #endif
     for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
     
         // get the particle
@@ -317,11 +317,26 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
             double minDistance = 1e+10;
             int closestTriangleIndex = -1;
 
-            for (size_t j = 0; j < triangles.size(); ++j) {
+#if (0)
+        // Centroid distance (less accurate)
+        for (size_t j = 0; j < triangles.size(); ++j) {
 
-                Vector3d centroid = triangles[j].getCentroid();
-                double distance = (centroid - particle->getPosition()).norm();
-                
+                        Vector3d centroid = triangles[j].getCentroid();
+                        double distance = (centroid - particle->getPosition()).norm();
+#endif
+
+            const Vector3d& xp = particle->getPosition();
+
+            for (size_t j = 0; j < triangles.size(); ++j) 
+            {
+                const Triangle& tri = triangles[j];
+                double distance = pointTriangleDistance(
+                    xp,
+                    tri.v1,
+                    tri.v2,
+                    tri.v3
+                );
+
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestTriangleIndex = static_cast<int>(j);
