@@ -302,9 +302,18 @@ public:
 	/// \brief Returns the contact tangential force
 	inline const Vector3d& getContactTangentialForce() const { return this->contactTangentialForce; }
 
+	/// \brief Returns whether the particle is in contact with STL terrain
+	inline bool getIfSTLContact() const { return this->stl_contact; }
+
+	/// \brief Configures whether the particle is in contact with STL terrain
+	inline void setInSTLContact(bool in_contact) { this->stl_contact = in_contact; }
+
 	protected:
 
 	bool active; //!< is particle active
+	
+	bool stl_contact = false; //!< is particle in contact with STL terrain
+
 	int id;	//!< particle id
 	int bodyId; //!< body id
 

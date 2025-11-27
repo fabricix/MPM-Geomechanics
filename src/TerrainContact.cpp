@@ -307,6 +307,9 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
         // get the particle
         Particle* particle = particles->at(i);
 
+        // reset STL contact flag
+        particle->setInSTLContact(false); 
+
         // get the distance level set value of the particle
         double d_p = particle->getDistanceLevelSet();
 
@@ -356,6 +359,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
             // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
             //if (densityValues[closestTriangleIndex] > density_threshold) {
             if (minDistance < d_threshold) {
+                particle->setInSTLContact(true);
 #ifdef _OPENMP
                 #pragma omp critical
 #endif

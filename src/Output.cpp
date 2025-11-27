@@ -346,7 +346,31 @@ namespace Output{
 			partFile << "</DataArray>\n";
 		}
 
-/* 		if (isFieldRequired("particle_contact_flag"))
+		if (isFieldRequired("particle_contact_force_tangential"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force_tangential\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactTangentialForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+		if (isFieldRequired("particle_contact_force_normal"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactNormalForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+		if (isFieldRequired("particle_contact_flag"))
 		{
 			partFile << "<DataArray type=\"UInt8\" Name=\"particle_contact_flag\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i)
@@ -354,7 +378,7 @@ namespace Output{
 				partFile << (particles->at(i)->getIfSTLContact() ? 1 : 0) << "\n";
 			}
 			partFile << "</DataArray>\n";
-		} */
+		}
 
 		if (isFieldRequired("velocity")) {
 
