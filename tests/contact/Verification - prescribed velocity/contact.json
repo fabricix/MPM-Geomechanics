@@ -1,17 +1,17 @@
 {
-    "time": 1e-2,
-    "time_step":1e-4,
+    "time": 1.0,
+    "time_step":5e-5,
     "gravity":[0.0,0.0,0.0],
 	  "n_threads":12,
     "results":
     {
-      "print": 50,
+      "print": 25,
       "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
     },
     "mesh":
     {
       "cells_dimension":[ 1.0, 1.0, 1.0 ],
-      "cells_number":[ 18.0, 7, 7 ],
+      "cells_number":[ 20.0, 7, 7 ],
       "origin":[ 0.0, 0.0, 0.0 ],
       "boundary_conditions":
       {
@@ -44,16 +44,16 @@
     {
       "type": "cuboid",
       "id": 1,
-      "point_p1": [ 3.0, 1.0, 1.0 ],
-      "point_p2": [ 5.0, 6.0, 6.0 ],
-      "prescribed_velocity": [ 250.0, 0.0, 0.0 ],
+      "point_p1": [ 3.0, 2.0, 2.0 ],
+      "point_p2": [ 5.0, 5.0, 5.0 ],
+      "prescribed_velocity": [ 2.0, 0.0, 0.0 ],
       "material_id": 1
     },
     {
       "type": "cuboid",
       "id": 2,
       "point_p1": [ 5.0, 2.0, 2.0 ],
-      "point_p2": [ 18.0, 5.0, 5.0 ],
+      "point_p2": [ 7.0, 5.0, 5.0 ],
       "initial_velocity": [ 0.0, 0.0, 0.0 ],
       "material_id": 2
     }
@@ -69,7 +69,7 @@
         "friction": 0.1,
         "master_id": 1,
         "slave_id": 2,
-        "normal_type": "master"
+        "normal_type": "collinear"
       }
     ]
   }

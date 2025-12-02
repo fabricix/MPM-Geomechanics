@@ -46,6 +46,8 @@ void SolverExplicit::Solve()
 			contactManager->contactNodalDetection(mesh, bodies);
 		}
 
+		Interpolation::nodalPrescribedVelocityStatus(mesh, bodies);
+
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section

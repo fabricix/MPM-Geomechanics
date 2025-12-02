@@ -321,10 +321,15 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 	//get contact nodes
 	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
 
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
 	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
 
 		Node::ContactNodeData& contactNodeData = it->second;
 
+		// get node
+		Node* nodeI = nodes->at(contactNodeData.nodeId);
+		
 		if (contactNodeData.hasContact) {
 			
 			// get contact
@@ -357,6 +362,38 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 			double ft_norm = ft.norm();
 			double fn_norm = fn.norm();
 
+			//check if master or slave body has prescribed velocity
+			if (nodeI->getPrescribedVelocityStatus()) {
+
+				// calculate nodal velocity 
+				Vector3d velocityA = momentumA / massA;
+				Vector3d velocityB = momentumB / massB;
+
+				// calculate normal velocity
+				Vector3d vAn = velocityA.dot(n) * n;
+				Vector3d vBn = velocityB.dot(n) * n;
+
+				// initialize minimum normal contact force
+				Vector3d fn_min = Vector3d::Zero();
+
+				//If master body has prescribed velocity
+				if (contactNodeData.prescribedVelocityStatus == 0) {
+					// compute minimum normal contact force based on the prescribed velocity
+					fn_min = (vBn - vAn) * massB / dt;
+				}
+
+				//If slave body has prescribed velocity
+				else if (contactNodeData.prescribedVelocityStatus == 1) {
+					// compute minimum normal contact force based on the prescribed velocity
+					Vector3d fn_min = (vAn - vBn) * massA / dt;
+				}
+
+				if (fn_min.norm() > fn_norm) {
+					fn = fn_min;
+					fn_norm = fn.norm();
+				}
+			}
+
 			// apply friction limit
 			if (ft_norm > 0) {
 				ft = std::min(ft_norm, frictionCoefficient * fn_norm) * ft / ft_norm;
@@ -369,8 +406,22 @@ void ContactManager::computeContactForces(Mesh* mesh, double dt) {
 			contactNodeData.tangentialContactForce = ft;
 
 			//add the contact force to the total force
-			contactNodeData.totalForceMaster += f;
-			contactNodeData.totalForceSlave -= f;
+			//If master body has prescribed velocity
+			if (contactNodeData.prescribedVelocityStatus == 0) {
+				// slave body total force
+				contactNodeData.totalForceSlave -= contactNodeData.contactForce;
+			}
+			//If slave body has prescribed velocity
+			else if (contactNodeData.prescribedVelocityStatus == 1) {
+				// master body total force
+				contactNodeData.totalForceMaster += contactNodeData.contactForce;
+			}
+			else {
+				// master body total force
+				contactNodeData.totalForceMaster += contactNodeData.contactForce;
+				// slave body total force
+				contactNodeData.totalForceSlave -= contactNodeData.contactForce;
+			}
 		}
 	}
 }
@@ -383,10 +434,19 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 
 		Node::ContactNodeData& contactNodesData = it->second;
 
-		// master body
-		contactNodesData.momentumMaster += dt * contactNodesData.contactForce;
-
-		// slave body
-		contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
+		if (contactNodesData.prescribedVelocityStatus == 0) {
+			// slave body momentum update
+			contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
+		}
+		else if (contactNodesData.prescribedVelocityStatus == 1){
+			// master body momentum update
+			contactNodesData.momentumMaster += dt * contactNodesData.contactForce;
+		}
+		else {
+			// master body momentum update
+			contactNodesData.momentumMaster += dt * contactNodesData.contactForce;
+			// slave body momentum update
+			contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
+		}
 	}
 }
