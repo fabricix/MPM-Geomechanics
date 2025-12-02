@@ -63,6 +63,12 @@ namespace Interpolation
 	/// \param[in] bodies A list o Body pointers
 	void nodalMomentumFluid(Mesh *mesh, vector<Body *> *bodies);
 
+	/// \brief Propagate prescribed velocity status from particles to nodes
+	///
+	/// \param[in] mesh Mesh reference
+	/// \param[in] bodies A list o Body pointers
+	void nodalPrescribedVelocityStatus(Mesh* mesh, vector<Body*>* bodies);
+
 	/// \brief Interpolate internal force of solid from particles to nodes
 	///
 	/// In one phase calculation:

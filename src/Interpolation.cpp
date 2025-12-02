@@ -236,6 +236,70 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
+void Interpolation::nodalPrescribedVelocityStatus(Mesh* mesh, vector<Body*>* bodies) {
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// for each body
+	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	
+		// check if the body has prescribed velocity
+		if (!bodies->at(ibody)->getPrescribedVelocityStatus()) { continue; }
+
+		// get particles
+		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+
+		// for each particle
+		for (size_t i = 0; i < particles->size(); ++i) {
+
+			// only active particle can contribute
+			if (!particles->at(i)->getActive()) { continue; }
+
+			// get nodes and weights that the particle contributes
+			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+			// get particle velocity
+			const Vector3d pVelocity = particles->at(i)->getVelocity();
+
+			// get particle mass
+			const double pMass = particles->at(i)->getMass();
+
+			// for each node in the contribution list
+			for (size_t j = 0; j < contribution->size(); ++j) {
+
+				// get the contributing node
+				Node* nodeI = nodes->at(contribution->at(j).getNodeId());
+
+				if (!nodeI->getPrescribedVelocityStatus()) {
+					nodeI->setPrescribedVelocityStatus(true);
+
+					//check if it is a contact problem
+					if (ModelSetup::getContactActive()) {
+
+						//check contact at this node
+						unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+						auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+						if (it != contactNodes.end()) {
+							Node::ContactNodeData& contactNodeData = it->second;
+
+							//set nodal prescribed velocity status of the master body 
+							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
+								contactNodeData.prescribedVelocityStatus = 0;
+							}
+							//add mass at node of the slave body 
+							else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
+								contactNodeData.prescribedVelocityStatus = 1;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 void Interpolation::nodalMomentumFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 	// check if is two-phase calculations
@@ -361,13 +425,23 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 						//add mass at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
+
+							if (contactNodeData.prescribedVelocityStatus == 0) { continue; }
+
 							contactNodeData.internalForceMaster += internalForce;
 						}
 						//add mass at node of the slave body 
 						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
+
+							if (contactNodeData.prescribedVelocityStatus == 1) { continue; }
+
 							contactNodeData.internalForceSlave += internalForce;
 						}
 					}
+				}
+
+				if (nodeI->getPrescribedVelocityStatus()) {
+					continue;
 				}
 
 				// add the internal force contribution in node
@@ -480,13 +554,23 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Body*>* bodies) {
 
 						//add external force at node of the master body 
 						if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
+
+							if (contactNodeData.prescribedVelocityStatus == 0) { continue; }
+
 							contactNodeData.externalForceMaster += pExtForce * contribution->at(j).getWeight();
 						}
 						//add external force at node of the slave body 
 						else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
+
+							if (contactNodeData.prescribedVelocityStatus == 1) { continue; }
+
 							contactNodeData.externalForceSlave += pExtForce * contribution->at(j).getWeight();
 						}
 					}
+				}
+
+				if (nodeI->getPrescribedVelocityStatus()) {
+					continue;
 				}
 
 				// add weighted force in node
