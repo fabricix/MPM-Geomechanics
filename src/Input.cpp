@@ -506,6 +506,13 @@ vector<Body*> Input::getBodyList(){
 					initial_velocity(2) = (*it)["initial_velocity"][2];
 				}
 
+				// initial prescribed velocity
+				if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+					initial_velocity(0) = (*it)["prescribed_velocity"][0];
+					initial_velocity(1) = (*it)["prescribed_velocity"][1];
+					initial_velocity(2) = (*it)["prescribed_velocity"][2];
+				}
+
 				// particles per direction (e.g., Vector3i(2, 2, 2) for 8 particles per cell)
 				Vector3d particles_in_direction(2, 2, 2);  // Default to 2 particles in each direction (8 per cell)
 				if ((*it)["particles_per_direction"].is_array()) {
@@ -525,6 +532,13 @@ vector<Body*> Input::getBodyList(){
 					iBody->setMaterialId(material_id);
 					iBody->setInitialVelocity(initial_velocity);
 					iBody->setParticlesPerDirection(particles_in_direction);
+
+					if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+						iBody->setPrescribedVelocityStatus(true);
+					}
+					else {
+						iBody->setPrescribedVelocityStatus(false);
+					}
 				}
 
 				bodies.push_back(iBody);
@@ -580,6 +594,13 @@ vector<Body*> Input::getBodyList(){
 						initial_velocity(2) = (*it)["initial_velocity"][2];
 					}
 
+					// initial prescribed velocity
+					if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+						initial_velocity(0) = (*it)["prescribed_velocity"][0];
+						initial_velocity(1) = (*it)["prescribed_velocity"][1];
+						initial_velocity(2) = (*it)["prescribed_velocity"][2];
+					}
+
 					// create a new cuboid
 					BodyCuboid* iBody = new BodyCuboid();
 
@@ -593,6 +614,13 @@ vector<Body*> Input::getBodyList(){
 						iBody->setPoints(pointP1,pointP2);
 						iBody->setMaterialId(material_id);
 						iBody->setInitialVelocity(initial_velocity);
+
+						if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+							iBody->setPrescribedVelocityStatus(true);
+						}
+						else {
+							iBody->setPrescribedVelocityStatus(false);
+						}
 					}
 
 					bodies.push_back(iBody);
