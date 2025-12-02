@@ -28,6 +28,10 @@ public:
 	/// \brief Configure the active state on the node
 	/// \param[in] node_activate Node active value
 	inline void setActive(bool node_activate) { this->active=node_activate; }
+
+	/// \brief Configure the prescribed velocity status
+	/// \param[in] node_prescribed_velocity_status 
+	inline void setPrescribedVelocityStatus(bool node_prescribed_velocity_status) { this->prescribedVelocityStatus = node_prescribed_velocity_status; }
 	
 	/// \brief Configure the nodal coordinates
 	/// \param[in] nodal_coordinates Vector containing the nodal coordinates
@@ -62,6 +66,10 @@ public:
 	/// \brief Return the activate state of the node
 	/// \return Nodal activate state
 	inline bool getActive() const { return this->active; }
+
+	/// \brief Return the prescribed velocity status of the node
+	/// \return Nodal prescribed velocity status
+	inline bool getPrescribedVelocityStatus() const { return this->prescribedVelocityStatus; }
 	
 	/// \brief Return the nodal mass
 	/// \return Nodal mass
@@ -183,6 +191,7 @@ public:
 protected:
 
 	bool active; //!< is active node
+	bool prescribedVelocityStatus = false; //!< is prescribed velocity node
 
 	int id; //!< nodal identification
 
@@ -209,6 +218,7 @@ struct ContactNodeData
 	
 	int bodyMasterId = -1; 	//!< master body id
 	int bodySlaveId = -1; //!< slave body id
+	int prescribedVelocityStatus = -1; //!< prescribed velocity status
 	
 	bool hasContact = true; //!< does the contact node have contact?
 
@@ -239,7 +249,7 @@ struct ContactNodeData
 	Vector3d contactForce = Vector3d::Zero(); //!< contact force at the contact node: \f$f_{iI}^{c}\f$
 	Vector3d normalContactForce = Vector3d::Zero(); //!< normal contact force at the contact node: \f$f_{iI}^{c,n}\f$
 	Vector3d tangentialContactForce = Vector3d::Zero(); //!< tangential contact force at the contact node: \f$f_{iI}^{c,t}\f$
-	
+		
 	Vector3d normalMaster = Vector3d::Zero(); //!< normal vector at the contact node of the master body: \f$n_{iI}^M\f$
 	Vector3d normalSlave = Vector3d::Zero(); //!< normal vector at the contact node of the slave body: \f$n_{iI}^S\f$
 
@@ -270,6 +280,7 @@ inline Node::Node() {
 inline void Node::resetValues()
 {
     active=false;
+	prescribedVelocityStatus = false;
     mass=0.0;
     momentum.setZero();
     externalForce.setZero();

@@ -45,6 +45,10 @@ public:
 	/// \return Initial body velocity
 	inline Vector3d getInitialVelocity() const { return this->initial_velocity; }
 
+	/// \brief Returns the body prescribed velocity status
+	/// \return Body prescribed velocity status
+	inline bool getPrescribedVelocityStatus() const { return this->prescribedVelocityStatus; }
+
 	/// \brief Return the particles forming the body
 	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
@@ -60,6 +64,10 @@ public:
 	/// \brief Configure the initial velocity of the body
 	/// \param[in] initial_velocity Body identification 
 	inline void setInitialVelocity(Vector3d initial_velocity) { this->initial_velocity=initial_velocity; }
+
+	/// \brief Configure the body prescribed velocity status
+	/// \param[in] Body prescribed_velocity_status  
+	inline void setPrescribedVelocityStatus(bool prescribed_velocity_status) { this->prescribedVelocityStatus = prescribed_velocity_status; }
 
 	/// \brief Configure the particles in the body
 	/// \param[in] particle_list A vector containing pointers to the particle
@@ -77,6 +85,7 @@ protected:
 	
 	int id; //!< body identification
 	Vector3d initial_velocity; //!< initial velocity of the body
+	bool prescribedVelocityStatus; //!< is particle velocity prescribed
 	vector<Particle*> particles; //!< material points forming the body
 };
 
