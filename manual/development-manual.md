@@ -6,84 +6,84 @@ This section provides a list of keywords to include in commits comments. These k
 
 ## Keywords List
 
-### **1. `doc:`
+### **1.** `doc:`
 - **Purpose**: For documentation-related comments or detailed explanations.
 - **Example**:
   ```cpp
   // doc: General algorithm description for terrain contact
   ```
 
-### **2. `feat:`
+### **2.** `feat:`
 - **Purpose**: To mark features or specific functionalities.
 - **Example**:
   ```cpp
   // feat: Added support for binary STL mesh files
   ```
 
-### **3. `fix:`
+### **3.** `fix:`
 - **Purpose**: To identify bug fixes or adjustments.
 - **Example**:
   ```cpp
   // fix: Corrected input parameter validation
   ```
 
-### **4. `refactor:`
+### **4.** `refactor:`
 - **Purpose**: For restructuring code without changing its functionality.
 - **Example**:
   ```cpp
   // refactor: Separated normal calculation module
   ```
 
-### **5. `test:`
+### **5.** `test:`
 - **Purpose**: For comments related to tests or test cases.
 - **Example**:
   ```cpp
   // test: Validated force calculations in impact problem
   ```
 
-### **6. `perf:`
+### **6.** `perf:`
 - **Purpose**: To highlight performance improvements or optimizations.
 - **Example**:
   ```cpp
   // perf: Reduced memory usage in explicit solver
   ```
 
-### **7. `todo:`
+### **7.** `todo:`
 - **Purpose**: To indicate pending tasks or features.
 - **Example**:
   ```cpp
   // todo: Implement error handling for input keywords
   ```
 
-### **8. `hack:`
+### **8.** `hack:`
 - **Purpose**: To identify temporary or workaround solutions.
 - **Example**:
   ```cpp
   // hack: Using fixed values to bypass null mass in the mesh nodes
   ```
 
-### **9. `warn:`
+### **9.** `warn:`
 - **Purpose**: For warnings about potential issues or limitations.
 - **Example**:
   ```cpp
   // warn: Current update particle density method does not support particle shear changes
   ```
 
-### **10. `debug:`
+### **10.** `debug:`
 - **Purpose**: For debugging or test-specific comments.
 - **Example**:
   ```cpp
   // debug: Prints the result of calculated normals
   ```
 
-### **11. `chore:`
+### **11.** `chore:`
 - **Purpose**: For minor maintenance or cleaning tasks.
 - **Example**:
   ```cpp
   // chore: Removed unused code in mesh reading module
   ```
 
-### **12. `deprecated:`
+### **12.** `deprecated:`
 - **Purpose**: To mark features or methods that are no longer in use.
 - **Example**:
   ```cpp

@@ -33,6 +33,7 @@ a {
 
 .item {
   margin: 5px !important;
+  background-color: transparent !important;
 }
 
 .label a {
@@ -53,10 +54,6 @@ a {
 
 .selected a {
   font-weight: 600 !important;
-}
-
-.title {
-  display: none;
 }
 
 .note {
@@ -140,4 +137,26 @@ hr {
   border: none !important;
   border-top: 1px solid #eee !important;
   margin: 20px 0 !important;
+}
+
+#titlearea tbody{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+#titlearea table{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+#titlearea tbody tr{
+  height: auto !important;
+}
+
+#titlearea #projectname, #projectbrief{
+  background-color: transparent !important;
+}
+
+#nav-tree-contents{
+  background-color: transparent !important;
 }
