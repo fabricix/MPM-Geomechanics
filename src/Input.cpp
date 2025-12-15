@@ -692,6 +692,14 @@ vector<Body*> Input::getBodyList(){
 					 		// create a new polygon body
 					 		BodyPolygon* iBody = new BodyPolygon();
 
+							// initial prescribed velocity
+							Vector3d initial_velocity = Vector3d::Zero();
+							if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+								initial_velocity(0) = (*it)["prescribed_velocity"][0];
+								initial_velocity(1) = (*it)["prescribed_velocity"][1];
+								initial_velocity(2) = (*it)["prescribed_velocity"][2];
+							}
+
 							if (iBody==NULL)
 							{
 								throw(0);
@@ -704,6 +712,14 @@ vector<Body*> Input::getBodyList(){
 								iBody->setExtrudeDirection(extrude_direction);
 								iBody->setExtrudeDisplacement(extrude_displacement);
 								iBody->setDiscretizationLength(discretization_length);
+								iBody->setInitialVelocity(initial_velocity);
+
+								if (!(*it)["prescribed_velocity"].is_null() && (*it)["prescribed_velocity"].is_array()) {
+									iBody->setPrescribedVelocityStatus(true);
+								}
+								else {
+									iBody->setPrescribedVelocityStatus(false);
+								}
 							}
 						
 							bodies.push_back(iBody);

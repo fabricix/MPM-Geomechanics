@@ -474,6 +474,26 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
+		if (isGridFieldRequired("contact")) {
+			// active nodes
+			gridFile << "<DataArray type=\"UInt8\" Name=\"Contact\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+
+				const auto contactNodes = mesh->getContactNodes();
+
+				//check contact at this node
+				auto it = contactNodes.find(i);
+
+				if (it != contactNodes.end()) {
+					gridFile << scientific << 1 << "\n";
+				}
+				else {
+					gridFile << scientific << 0 << "\n";
+				}
+			}
+			gridFile << "</DataArray>\n";
+		}
+
 		if (isGridFieldRequired("mass")) {
 			// nodal mass
 			gridFile << "<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
