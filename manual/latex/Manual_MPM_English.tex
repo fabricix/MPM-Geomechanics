@@ -28,6 +28,7 @@
 
 % Code listings
 \usepackage{listings}
+
 \lstset{
   basicstyle=\ttfamily\small,
   frame=single,
@@ -38,10 +39,15 @@
   showstringspaces=false
 }
 
+% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 % Metadata
+
 \title{
   \textbf{MPM-Geomechanics Manual} \\
-  \large MPM-Geomechanics: An open-source Material Point Method code for geomechanics.
+  \large An open-source Material Point Method code for geomechanics.
 }
 
 \author{Prof. Dr. Fabricio Fernández \\ MPM-Geomechanics Development Team}
@@ -59,7 +65,7 @@ The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, tha
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.65\linewidth]{figures/mpm_discretization}
-	\caption {MPM discretization}
+	\caption {General MPM approach. Solid and space discretization with Lagrangian material points and structured Eulerian mesh.}
 	\label{fig:mpm-discretization}
 \end{figure}
 
@@ -93,18 +99,14 @@ The equation \ref{eq-motion} is presented here in tensor notation, but, vector a
 Here $\delta u_i$ are arbitrary displacements functions, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
 
 In the MPM context any field or space property $f(x_i)$ can approximated using the value stored in the particle $f_p$:
-
 $$ f(x_i) = \sum f_p \chi_p (x_i) $$
-
 where $\chi_p$ is the particle characteristic function that defines the volume occupied by the material point:
-
 $$ V_p = \int_{\Omega_p \cap \Omega} \chi_p(x_i) dV $$
 
-In consequent, density, acceleration and stress fields can be approximated by the values stored in particles:
- 
+In consequent, density, acceleration and stress fields can be approximated by the values stored in particles: 
 $$ \rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i) \rho(x_i) a_i(x_i) = \sum_p \frac{\dot{p_{ip}}}{V_p} \chi_p(x_i) \sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i) $$
 
-where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law. 
+where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_S{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law.
 
 Replacing these fields in the weak form of the motion equation we have:
 
@@ -149,10 +151,7 @@ $$ S_{Ip,j} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i
 
 These two functions are also a partition of the unity $\sum_I S_{Ip} = 1 $.
 
-The the weighting function need to be integrated over
-the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme.
-
-In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:
+The weighting function need to be integrated over the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme. In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:
 
 $$ \chi_p(x) =
 \begin{cases}
@@ -193,97 +192,77 @@ $$
 \\ -\frac{1}{L} & l_p<x_p-x_I \leqslant L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leqslant L+l_p .\end{cases}
 $$
 
-In which  $ 2lp  $ is the particle domain,  $ L  $ is the mesh size in 1D, and  is the relative particle position to node.
-
-Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:
+In which $2lp$ is the particle domain, $L$ is the mesh size in 1D, and $\xi$ is the relative particle position to node. Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:
 
 $$ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta) $$
 
-where $ \xi=x_p-x_I, \eta=y_p-y_I  $ and  $ \zeta=z_p-z $.
+where $ \xi=x_p-x_I, \eta=y_p-y_I  $ and  $ \zeta=z_p-z_I $.
 
 \section{Explicit MPM integration}
 
-The discrete form of the motion equation
+The discrete form of the motion equation needs to be integrated in time for obtaining the solution in time $t^{n+1}$. The displacement, the velocity and the acceleration at time $t^0, t^1, t^2, ... , t^n$ are knows, and the values at time $t^{n+1}$ are required, namely the solution of the problem. 
+The time integration can be done by explicit and implicit methods. In explicit method, the solution $t^{n+1}$ is obtained only with the current information f($t^{n},..., t^{0}$). In implicit method the solution needs to solve a system due the solution is in function of the form f($t^{n+1},...,t^{0}$).
 
 \subsection{Central difference Method}
 
-The displacement, the velocity and the acceleration at time  $ t = 0, t^1, t^2, ... , t^n  $ are knows, and the values at time  $ t^{n+1}  $ are required, namely the solution of the problem.
+In central difference method, the velocity at $t^{n+1/2}$ can be approximated as:
 
-In central difference method, the velocity at  $ t^{n+1/2}  $ can be approximated as:
+$$ \dot{u}^{n+1/2} = (u^{n+1} - u^{n}) \Delta t $$
 
-$$ \dot{u}^{n+1/2} = ( u^{n+1} - u^{n} ) \Delta t $$
-
-and, the acceleration in  $ t^{n}  $ can be approximated as:
+and, the acceleration in $t^{n}$ can be approximated as:
 
 $$ \ddot{u}^{n} =  (\dot{u}^{n+1/2} - \dot u ^ {n-1/2})\Delta t $$
 
-and therefore, the required displacement at  $ t^{n+1}  $ can be calculated as:
-
-$$ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \Delta t $$
-
-, where
+and therefore, the required displacement at $t^{n+1}$ can be calculated as: $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \Delta t $, where the velocity is
 
 $$ \dot u^{n+1/2} = \dot{ u } ^ {n-1/2} + \ddot u ^ {n}  \Delta t $$.
 
-The motion equation in time $ t^{n} $ is:
+The motion equation in time $ t^{n} $ is $ m \, \ddot u ^{n} = f ^{n} $, therefore the acceleration in time $t^{n}$ is $ \ddot u ^{n} = f ^{n} / m $. Using this acceleration equation in the $\dot u^{n+1/2}$ we have the velocity $\dot u ^ {n+1/2}$:
 
-$$ m \, \ddot u ^{n} = f ^{n} $$
-
-So,
-
-$$ \ddot u ^{n} = f ^{n} / m $$
-
-and
 $$
 \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
 $$
-
-\section{Numerical implementation}
+ 
+\section{Numerical implementation of central difference method}
 
 For one $\Delta t$, the updated position can be obtained as:
 
-\begin{itemize}
-
-\item Calculate force  $ f_n $
-\item Calculate acceleration  $ \ddot u ^{n} = f ^{n} / m $
-\item Impose essential boundary conditions in terms of  $ \ddot u ^{n} $
-\item Update velocity  $ \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + \ddot u ^{n} \, \Delta t $
-\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t $
-\item Let  $ n = n + 1 $
-\item Update position  $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \, \Delta t $
-\end{itemize}
+\begin{algorithm}
+	\caption{Explicit time integration}
+	\begin{algorithmic}[1]
+		\State Compute forces $f^n$
+		\State Compute acceleration $\ddot{u}^n = f^n/m$
+		\State Update velocity $\dot{u}^{n+1/2} = \dot{u}^{n-1/2} + \ddot{u}^n \Delta t$
+		\State Update position $u^{n+1} = u^n + \dot{u}^{n+1/2}\Delta t$
+		\State $n \leftarrow n + 1$
+	\end{algorithmic}
+\end{algorithm}
 
 \section{Stability Requirement}
 
-The central difference method is explicit here and conditionally stable, so the time step must be less that a certain value for avoiding error amplification.
+The central difference method is explicit here and conditionally stable, so the time step must be less that a certain value for avoiding error amplification. For linear systems this critical time step value depends on the natural period of the system. For undamped linear systems the critical time step is: $ \Delta t_{cr} = T_n / \pi$, where $ T_n  $ is the smallest natural period of the system. For finite element method, the critical time step of the central difference method can be expressed as:
 
-For linear systems this critical time step value depends on the natural period of the system, in particular for undamped linear systems the critical time step is:
+$$ \Delta t_{cr} = \text{min}_e (l^e/c)$$
 
-$$ \Delta t_{cr} = T_n $$
+Where $l^e $ is the characteristic length of the element and $c$ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance, a mechanical wave, can travel across the smallest characteristic element length withing a single time step. 
 
-$ T_n  $ is the smallest natural period of the system. For finite element method the critical time step of the central difference method can be expressed as:
+This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed (compression P wave) is:
 
-$$ \Delta t_{cr} = \text{min}_e (l^e / c )  $$
-
-Where $l^e $ is the characteristic length of the element and $c$ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance can travel across the smallest characteristic element length withing a single time step. 
-
-This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed is:
-
-$$ c = \sqrt{  rac {E (1-\nu)} {(1+\nu)(1-2\nu)\rho}} $$
+$$ c = \sqrt{\frac {E (1-\nu)} {(1+\nu)(1-2\nu) \rho} }$$
 
 In the MPM, the particles can has velocities in any time step, so the critical time speed can be written with this velocity plus:
 
-$$ \Delta t_{cr} = l^e / \text{max}_p ( c_p +  |v_p| ) $$
+$$ \Delta t_{cr} = l^e / \text{max}_p ( c_p + |v_p| )$$
 
-In a structured regular mesh, $l^e$ is the grid cell dimension.
+In a structured regular mesh, $l^e$ is the grid cell dimension. And $c_p$ is the sound speed calculated with the material parameters stored in particles.
 
 \section{ Numerical damping }
 
-Real materials dissipates energy during movement. Temperature is another source of dissipation. In numerical analysis numerical damping can be used.
+Real materials dissipates energy during movement. Temperature ans plastic deformation are common sources of energy dissipation. In numerical analysis numerical damping can be used for obtaining the quasi-static condition of the dynamic system.
 
 \section{ Local damping }
 
-The numerical damping is a technique for getting a stationary solution of the dynamic system. In this simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
+The numerical damping is a technique for getting a stationary solution of the dynamic system. In the MPM-Geomechanics simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
 
 \subsection{Quasi-static solution with local damping}
 
@@ -297,55 +276,45 @@ $$ f_{iI}^{unb} =  f_{iI}^{int} + f_{iI}^{ext} $$
 
 Therefore, the resulting discrete form of the motion equation with viscous nodal damping is:
 
-$$ \dot{p}_{iI} = f_{iI} $$
-
-in which
- 
 $$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$
-
-\subsection{Using local damping}
-
-For activate local damping force with  $ \alpha = 0.145  $:
-
-\begin{lstlisting}[language={}, caption={Defining local damping in json file.}]
-"damping":{"type"=":"local", "value":0.145}
-\end{lstlisting}
-
-The stress field obtained from a local damping forced system, cam be used as initial stress field value. 
-
-In geostatic analysis, the quasi static analysis can be store in to a simulation state:
-
-\begin{lstlisting}[language={},caption={input JSON}]
-"save_state":true,
-\end{lstlisting}
-
-And for loading the salved state
-
-\begin{lstlisting}[language={},caption={input JSON}]
-  "load_state":true,
-\end{lstlisting}
 
 \section{Explicit MPM Scheme}
 
-\begin{enumerate}
-	\item 
-	Calculate nodal mass and momentum $$
-	\begin{aligned}
-		m_I^k & =\sum_{p=1}^{n_p} m_p N_{I p}^k \\
-		p_{i I}^{k-1 / 2} & = \sum_{p=1}^{n_p} m_p v_{i p}^{k-1 / 2} N_{I p}^k
-	\end{aligned}
-	$$
-	\item Impose boundary conditions in terms of $p_{i I}^{k-1 / 2}$.
-	\item The stress can be updated using the vorticity tensor at beginning or at the end of the time step. For USL scheme calculate the particle strain increment and the vorticity increment using the current nodal velocity:
-	$$
-	\begin{aligned}
-		& \Delta \varepsilon_{i j p}^{k-1 / 2}=\frac{1}{2}\left(N_{I p, j}^k v_{i I}^{k-1 / 2}+N_{I p, i}^k v_{j I}^{k-1 / 2}\right) \Delta t \\
-		& \Delta \Omega_{i j p}^{k-1 / 2}=\frac{1}{2}\left(N_{I p, j}^k v_{i I}^{k-1 / 2}-N_{I p, i}^k v_{j I}^{k-1 / 2}\right) \Delta t
-	\end{aligned}
-	$$
-	Where the nodal velocity is calculated with the nodal momentum:
-	
-\end{enumerate}
+
+\begin{algorithm}
+	\caption{Explicit MPM integration scheme}
+	\begin{algorithmic}[1]
+		\State Compute nodal mass:
+		$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $
+		\State Compute nodal momentum:
+		$ p_{iI}^{k-1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k-1/2} N_{Ip}^k $
+		\State Impose boundary conditions on $p_{iI}^{k-1/2}$		
+		
+    \State Calculate nodal velocities:
+    $ v_{iI}^{k-1/2} = p_{iI}^{k-1/2} / m_I^k $
+
+    \State Compute particle strain increment:
+		$ \Delta \varepsilon_{ij}^p{}^{k-1/2}
+		= \frac{1}{2}\left(
+		N_{p,j}^k v_i^{k-1/2}
+		+ N_{p,i}^k v_j^{k-1/2}
+		\right)\Delta t $
+		
+		\State Compute vorticity increment: 
+		$ \Delta \omega_{ij}^p{}^{k-1/2}
+		= \frac{1}{2}\left(
+		N_{p,j}^k v_i^{k-1/2}
+		- N_{p,i}^k v_j^{k-1/2}
+		\right)\Delta t $
+
+    \State Update particle density:
+    $ \rho_p^{k+1} = \rho_p^{k} / (1 + \text{tr}(\Delta \varepsilon_{ijp}^{k-1/2})) $
+		
+    \State Update particle stress:
+    $ \sigma_{ij}^{p}{}^{k+1} = \text{StressUpdate}(\sigma_{ij}^{p}{}^{k}, \Delta \varepsilon_{ij}^p{}^{k-1/2}, \Delta \omega_{ij}^p{}^{k-1/2} ) $
+
+	\end{algorithmic}
+\end{algorithm}
 
 \subsection{Update Stress First - USF - Scheme}
 In the USF scheme the velocities in  $ n-1/2  $ are used to update the stress state:
@@ -444,17 +413,17 @@ winget install -e --id MSYS2.MSYS2 --source winget
 
 \subsubsection*{Step 2: Install required packages in MSYS2 MINGW64}
 
-\begin{verbatim}
+\begin{lstlisting}
 pacman -S mingw-w64-x86_64-github-cli
 pacman -S mingw-w64-x86_64-python
 pacman -S mingw-w64-x86_64-cmake
 pacman -S mingw-w64-x86_64-gcc
 pacman -S make
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{Step 3: Verify the installations}
 
-\begin{verbatim}
+\begin{lstlisting}
 git --version
 gh --version
 python --version
@@ -462,7 +431,7 @@ cmake --version
 make --version
 gcc --version
 g++ --version
-\end{verbatim}
+\end{lstlisting}
 
 \clearpage
 
@@ -471,7 +440,7 @@ g++ --version
 
 \begin{table}[h!]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|}
+\begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{Program} & \textbf{Installation} & \textbf{Command} \\
 \hline
@@ -489,13 +458,13 @@ g++ --version
 
 \subsubsection*{Step 1: Install all packages via apt}
 
-\begin{verbatim}
+\begin{lstlisting} [language=bash, caption={Installing required packages using \textit{apt}}]
 sudo apt install git
 sudo apt install gh
 sudo apt install python3 python3-pip
 sudo apt install cmake
 sudo apt install build-essential
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{Step 2: Verify the installations}
 
@@ -653,8 +622,33 @@ The executable \texttt{start-multi-benchmark.py} allows the following command-li
 \texttt{--cache}: Uses the previously created cache instead of the \texttt{start-multi-benchmark-configuration.json} file.
 
 \clearpage
+
 \section{Verification Problems}
 \label{sec:verification_problems}
+
+\subsection{Local damping}
+
+For using the local damping force with $ \alpha = 0.145  $:
+
+\begin{lstlisting}[language={}, caption={Defining local damping in json file.}]
+	"damping":{"type"=":"local", "value":0.145}
+\end{lstlisting}
+
+The stress field obtained from a local damping forced system, cam be used as initial stress field value.
+
+\subsection{Load and save states}
+
+In static analysis, the quasi static analysis can be store in to a simulation state:
+
+\begin{lstlisting}[language={},caption={input JSON}]
+	"save_state":true,
+\end{lstlisting}
+
+And for loading the salved state
+
+\begin{lstlisting}[language={},caption={input JSON}]
+	"load_state":true,
+\end{lstlisting}
 
 \subsection{Boussinesq's Problem}
 \label{sec:boussinesq_problem}
@@ -703,7 +697,7 @@ Dynamic relaxation is used to reach a static solution, through the keyword \text
 
 \subsubsection*{Input File}
 
-\begin{verbatim}
+\begin{lstlisting}
 {
     "body": {
         "elastic-cuboid-body": {
@@ -727,27 +721,14 @@ Dynamic relaxation is used to reach a static solution, through the keyword \text
         "cells_dimension":[0.1,0.1,0.1],
         "cells_number":[10,10,10],
         "origin":[0.0,0.0,0.0],
-        "boundary_conditions": {
-            "plane_X0":"sliding",
-            "plane_Y0":"sliding",
-            "plane_Z0":"sliding",
-            "plane_Xn":"sliding",
-            "plane_Yn":"sliding",
-            "plane_Zn":"free"
-        }
+        "boundary_conditions": {"plane_Zn":"free"}
     },
     "time":0.025,
     "time_step_multiplier":0.3,
-    "results": {
-        "print":50,
-        "fields":["all"]
-    },
     "nodal_point_load": [[[0.5, 0.5, 1.0], [0.0, 0.0, -1.0]]],
-    "damping": {
-        "type":"kinetic"
-    }
+    "damping": {"type":"kinetic" }
 }
-\end{verbatim}
+\end{lstlisting}
 
 The MPM numerical results show good agreement with the analytical solution,  
 with small deviations due to discretization and the representation of the domain by particles with finite volume.  
