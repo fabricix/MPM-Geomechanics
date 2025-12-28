@@ -31,13 +31,12 @@
 
 \lstset{
   basicstyle=\ttfamily\small,
-  frame=,
+  frame=single,
   breaklines=true,
   numbers=left,
   numberstyle=\tiny,
   tabsize=2,
-  showstringspaces=false,
-  backgroundcolor=blue
+  showstringspaces=false
 }
 
 % algorithm
@@ -659,12 +658,18 @@ The executable \texttt{start-multi-benchmark.py} allows the following command-li
 \section{Verification Problems}
 \label{sec:verification_problems}
 
+Verification problems are designed to verify and to show some new  program functionality.   
+
 \subsection{Local damping}
 
-For using the local damping force with $ \alpha = 0.145  $:
+Local damping is an external force acting in opposite direction of the unbalanced total nodal forces:
+
+$$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
+
+For a damping force proportional to the $14.5\%$ of unbalanced forces we need to specify the type of damping and the value of $\alpha$:
 
 \begin{lstlisting}[language={}, caption={Defining local damping in json file.}]
-	"damping":{"type"=":"local", "value":0.145}
+	"damping":{"type"=":"local", "alpha":0.145}
 \end{lstlisting}
 
 The stress field obtained from a local damping forced system, cam be used as initial stress field value.
