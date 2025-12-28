@@ -31,12 +31,13 @@
 
 \lstset{
   basicstyle=\ttfamily\small,
-  frame=single,
+  frame=,
   breaklines=true,
   numbers=left,
   numberstyle=\tiny,
   tabsize=2,
-  showstringspaces=false
+  showstringspaces=false,
+  backgroundcolor=blue
 }
 
 % algorithm
@@ -278,52 +279,85 @@ Therefore, the resulting discrete form of the motion equation with viscous nodal
 
 $$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$
 
-\section{Explicit MPM Scheme}
-
+\section{Explicit algorithm}
 
 \begin{algorithm}
 	\caption{Explicit MPM integration scheme}
 	\begin{algorithmic}[1]
-		\State Compute nodal mass:
-		$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $
-		\State Compute nodal momentum:
-		$ p_{iI}^{k-1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k-1/2} N_{Ip}^k $
-		\State Impose boundary conditions on $p_{iI}^{k-1/2}$		
 		
-    \State Calculate nodal velocities:
-    $ v_{iI}^{k-1/2} = p_{iI}^{k-1/2} / m_I^k $
+	\State Compute nodal mass:
+	$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $
+		
+	\State Compute nodal momentum:
+	$ p_{iI}^{k-1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k-1/2} N_{Ip}^k $
+		
+    \State Update seismic velocities from record (if required):
 
-    \State Compute particle strain increment:
-		$ \Delta \varepsilon_{ij}^p{}^{k-1/2}
-		= \frac{1}{2}\left(
-		N_{p,j}^k v_i^{k-1/2}
-		+ N_{p,i}^k v_j^{k-1/2}
-		\right)\Delta t $
+    $a_{i}^{s,\,k-\frac12} = a_{i}^{s,\,\text{record}}$
+
+    $ v_i^{s,\,k+\frac12} = \sum_{l=0}^{l=1-\frac12} v_i^{s,\,l} + a_{i}^{s,\,\text{record}}\, \Delta t $
+
+	\State Impose nodal momentum boundary conditions:
+	$p_{iI}^{k-1/2} = 0 $ (fixed condition) 
 		
-		\State Compute vorticity increment: 
-		$ \Delta \omega_{ij}^p{}^{k-1/2}
-		= \frac{1}{2}\left(
-		N_{p,j}^k v_i^{k-1/2}
-		- N_{p,i}^k v_j^{k-1/2}
-		\right)\Delta t $
+    \State Compute internal forces:
+    $ f_{iI}^{int}{}^{k} = - \sum_{p=1}^{n_p} \sigma_{ij}^{p}{}^{k} S_{Ip,j}^{k} V_p $
+
+    \State Compute external forces:
+    $ f_{iI}^{ext}{}^{k} = \sum_{p=1}^{n_p} m_p b_{i} S_{Ip}^{k} + \int_{\Gamma} t_i N_I(x_i) dA $
+   
+    \State Compute nodal unbalanced forces:
+    $ f_{iI}^{unb}{}^{k} = f_{iI}^{int}{}^{k} + f_{iI}^{ext}{}^{k} $
+
+    \State Compute damping forces (if required):
+    $ f_{iI}^{dnp}{}^{k} = - \alpha |f_{iI}^{unb}{}^{k}| \hat{v}_{iI}^{k-1/2} $
+    
+    \State Compute total nodal forces:
+    $ f_{iI}^{tot}{}^{k} = f_{iI}^{unb}{}^{k} + f_{iI}^{dnp}{}^{k} $
+
+    \State Impose nodal force boundary conditions:
+    $ f_{iI}^{tot}{}^{k} = 0 $ (fixed condition)
+
+    \State Update nodal momenta:
+    $ p_{iI}^{k+\frac12} = p_{iI}^{k-1/2} + f_{iI}^{tot}{}^{k} \Delta t $
+
+    \State Update particle velocities:
+    $ v_{ip}^{k+\frac12} = v_{ip}^{k-1/2} + \sum_{I=1}^{n_n} \frac {f_{iI}^{tot}{}^{k}}{m_I^k} N_{Ip}^k \Delta t $
+
+    \State Seismic nodal velocity:
+    $ v_{iI}^{k+\frac12} = v_i^{s,\,k+\frac12}$
+
+    \State Contact correction (if required):
+    $ v_{ip}^{k+\frac12} = \textit{STLContactCorrection}(v_{ip}^{k+\frac12}) $
+
+    \State Update particle positions:
+    $ x_{ip}^{k+1} = x_{ip}^{k} + \sum_{I=1}^{n_n} v_{iI}^{k+\frac12} N_{Ip}^k \Delta t $
+
+    \State For MUSL scheme, recalculate nodal momentum:
+    $ p_{iI}^{k+1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k+1/2} N_{Ip}^k $
+
+    \State Impose nodal momentum boundary conditions:
+    $p_{iI}^{k+1/2} = 0 $ (fixed condition)
+
+	\State Calculate nodal velocities:
+    $ v_{iI}^{k+1/2} = p_{iI}^{k+1/2} / m_I^k $
+		
+	\State Compute particle strain increment:
+	$ \Delta \varepsilon_{ij}^p{}^{k+1/2} = \frac{1}{2}\left( N_{p,j}^k v_i^{k-1/2} + N_{p,i}^k v_j^{k+1/2}\right)\Delta t $
+		
+	\State Compute vorticity increment: 
+	$ \Delta \omega_{ij}^p{}^{k+1/2} = \frac{1}{2}\left(N_{p,j}^k v_i^{k+1/2}- N_{p,i}^k v_j^{k+1/2} \right) \Delta t $
 
     \State Update particle density:
     $ \rho_p^{k+1} = \rho_p^{k} / (1 + \text{tr}(\Delta \varepsilon_{ijp}^{k-1/2})) $
 		
     \State Update particle stress:
-    $ \sigma_{ij}^{p}{}^{k+1} = \text{StressUpdate}(\sigma_{ij}^{p}{}^{k}, \Delta \varepsilon_{ij}^p{}^{k-1/2}, \Delta \omega_{ij}^p{}^{k-1/2} ) $
+    $ \sigma_{ij}^{p}{}^{k+1} = \textit{StressUpdate}(\sigma_{ij}^{p}{}^{k}, \Delta \varepsilon_{ij}^p{}^{k-1/2}, \Delta \omega_{ij}^p{}^{k-1/2} ) $
+
+    \State $k \leftarrow k + 1$
 
 	\end{algorithmic}
 \end{algorithm}
-
-\subsection{Update Stress First - USF - Scheme}
-In the USF scheme the velocities in  $ n-1/2  $ are used to update the stress state:
-
-\subsection{Update Stress Last - USL - Scheme}
-In the USL scheme the updated velocities in nodes  $ n+1/2  $ are used to update the stress state:
-
-\subsection{Modified Update Stress Last - MUSL - Scheme}
-In the Modified USL scheme, the updated particle velocities are used to update the stress state: 
 
 \section{Project structure}
 
@@ -406,10 +440,10 @@ If you don't have Winget installed, you can get it from \href{https://learn.micr
 \subsubsection*{Step 1: Install Git, GitHub, and MSYS2}
 Run the following commands:
 
-\begin{verbatim}
-winget install -e --id Git.Git -e --source winget
-winget install -e --id MSYS2.MSYS2 --source winget
-\end{verbatim}
+\begin{lstlisting}
+	winget install -e --id Git.Git -e --source winget
+	winget install -e --id MSYS2.MSYS2 --source winget
+\end{lstlisting}
 
 \subsubsection*{Step 2: Install required packages in MSYS2 MINGW64}
 
@@ -468,16 +502,15 @@ sudo apt install build-essential
 
 \subsubsection*{Step 2: Verify the installations}
 
-\begin{verbatim}
-git --version
-gh --version
-python3 --version
-cmake --version
-make --version
-gcc --version
-g++ --version
-\end{verbatim}
-
+\begin{lstlisting}
+	git --version
+	gh --version
+	python3 --version
+	cmake --version
+	make --version
+	gcc --version
+	g++ --version
+\end{lstlisting}
 
 \subsection{Compilation in Windows}
 
@@ -778,7 +811,7 @@ The mesh uses \( n_x = 12, n_y = 12, n_z = 15 \).
 
 \subsubsection*{Input File}
 
-\begin{verbatim}
+\begin{lstlisting}
 {
   "stress_scheme_update":"USL",
   "shape_function":"GIMP",
@@ -824,17 +857,17 @@ The mesh uses \( n_x = 12, n_y = 12, n_z = 15 \).
     }
   }
 }
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection*{Earthquake Block Parameters}
 
-\begin{verbatim}
+\begin{lstlisting}
 "earthquake": {
   "active": true,
   "file": "base_acceleration.csv",
   "header": true
 }
-\end{verbatim}
+\end{lstlisting}
 
 Where:
 \begin{itemize}
@@ -845,31 +878,19 @@ Where:
 
 Example of the first lines of the record:
 
-\begin{verbatim}
+\begin{lstlisting}
 t,ax,ay,az
 0.0,-1.8849555921538759,-0.9424777960769379,-0.0
 5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
 0.0001,-1.884955220078568,-0.9424777495675233,-0.0
 0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
 ...
-\end{verbatim}
+\end{lstlisting}
 
-\subsubsection*{Results and Visualization}
+\subsubsection*{Post-processing (results and visualizations) }
 
-After simulation, particle results are found in the \texttt{/particle} directory,  
-and grid results in the \texttt{/grid} directory.  
-Particle results (\texttt{particle\_1.vtu}, \texttt{particle\_2.vtu}, ..., \texttt{particle\_41.vtu})  
-are referenced in \texttt{particleTimeSerie.pvd}, which can be opened in ParaView:
-
-\begin{verbatim}
-File → Open → particleTimeSerie.pvd
-\end{verbatim}
-
-The mesh can be loaded with:
-
-\begin{verbatim}
-File → Open → eulerianGrid.vtu
-\end{verbatim}
+Particle results are found in the \texttt{/particle} folder and grid results in the \texttt{/grid} folder located inside the current working directory. Particle results(\texttt{particle\_1.vtu}, \texttt{particle\_2.vtu}, ..., \texttt{particle\_41.vtu})  
+are referenced in \texttt{particleTimeSerie.pvd}, which can be opened in ParaView: \verb|File - Open - particleTimeSerie.pvd|The mesh can be loaded with  \verb|File - Open - eulerianGrid.vtu |
 
 \begin{figure}[h!]
     \centering
