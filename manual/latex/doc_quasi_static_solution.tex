@@ -1,0 +1,14 @@
+
+\section{Quasi-static solution with local damping}
+
+The local damping is used to get a quasi-static solution of the dynamic system using a viscous nodal force. In each time step, a viscous force is applied in each node, whose magnitude is proportional and opposite to the nodal velocity.
+
+$$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
+
+, where the unbalanced nodal force is:
+
+$$ f_{iI}^{unb} =  f_{iI}^{int} + f_{iI}^{ext} $$
+
+Therefore, the resulting discrete form of the motion equation with viscous nodal damping is:
+
+$$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$

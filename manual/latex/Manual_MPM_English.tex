@@ -58,341 +58,48 @@
 
 \maketitle
 
-\section{Introduction to the Material Point Method (MPM)}
-
-The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, that allows for simulating continuum mechanics processes involving large deformations and displacements without issues related to computational mesh distortion. In MPM, the material domain to be simulated is discretized into a set of material points that can move freely within a computational mesh, where the equations of motion are solved. The material points store all variables of interest during the simulation, such as stress, pore pressure, temperature, etc., giving the method its Lagrangian characteristic. 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.65\linewidth]{figures/mpm_discretization.png}
-	\caption {General MPM approach. Solid and space discretization with Lagrangian material points and structured Eulerian mesh.}
-	\label{fig:mpm-discretization}
-\end{figure}
-
-In an MPM computational cycle, all variables stored in the material points are computed at the computational mesh nodes using interpolation functions, and then the equation of motion is solved at the nodes. The nodal solution obtained is interpolated back to the particles, whose positions are updated, and all nodal variables are discarded. This method, enables the numerical solution of the motion equation in continuum mechanics by using the nodes of an Eulerian mesh for integration and Lagrangian material points to transfer and store the properties of the medium.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\linewidth]{figures/mpm_cycle.png}
-	\caption{MPM computational cycle}
-	\label{fig:mpmcycle}
-\end{figure}
-
-\section{MPM Formulation}
-
-The material point method formulation is based on the continuum mechanics motion equation in 3D:
-
-\begin{equation}
-\frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i
-\label{eq-motion}
-\end{equation}
-
-The internal forces are related with the $\sigma_{ij} $, the Cauchy stress tensor, $\rho$ is the mass density, $b_i$ is a body force and $a_i$ is the acceleration.
-
-The equation \ref{eq-motion} is presented here in tensor notation, but, vector and matrix can be equally used. The discrete form of the motion equation can be obtained using the weak form of this partial differential equation. The weak form is obtained by multiplying the motion equation by arbitrary weighting functions and integrating this product over the domain. In this procedure, the integration by parts reduces the order the stress tensor and introduces the natural boundary conditions:
-
-\begin{equation}
--\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
-\label{eq-weak-form-motion}
-\end{equation}
-
-Here $\delta u_i$ are arbitrary displacements functions, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
-
-In the MPM context any field or space property $f(x_i)$ can approximated using the value stored in the particle $f_p$:
-$$ f(x_i) = \sum f_p \chi_p (x_i) $$
-where $\chi_p$ is the particle characteristic function that defines the volume occupied by the material point:
-$$ V_p = \int_{\Omega_p \cap \Omega} \chi_p(x_i) dV $$
-
-In consequent, density, acceleration and stress fields can be approximated by the values stored in particles: 
-$$ \rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i) \rho(x_i) a_i(x_i) = \sum_p \frac{\dot{p_{ip}}}{V_p} \chi_p(x_i) \sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i) $$
-
-where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_S{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law.
-
-Replacing these fields in the weak form of the motion equation we have:
-
-$$ -\sum_p \int_{\Omega_p \cap \Omega} \sigma_{i j p} \chi_p \delta u_{i, j} dV  + \int_{\Gamma} t_i \delta u_i dA+ \sum_p \int_{\Omega_p \cap \Omega} \frac{m_p}{V_p} b_{i p} \chi_p \delta u_i dV 
-= \sum_p \int_{\Omega_p \cap \Omega} \frac{\dot{p}_p}{V_p} \chi_p a_i dV $$
-
-In the generalized interpolation material point method (GIMP), the resolution of this equation is carried out using a Petrov–Galerkin scheme where the characteristic functions $\chi_p(x_i)$ are the trial functions and the nodal interpolation functions $N_I(x_i)$ are the test functions.To arrive at this scheme, the virtual displacements are expressed using nodal interpolation functions:
-
-$$ \delta u_i=\sum_I N_{I p} \delta u_{i I} $$
-
-The trial and test functions are such that:
-
-$$ \sum_I N_{I}(x_i) = 1 \sum_p \chi_p(x_i) = 1 $$
-
-The resulting discrete form of the motion equation then is:
-
-$$ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} $$
-
-where 
-
-$$p_{iI} = \sum_p S_{Ip} p_{Ip}  $$
-
-is the nodal momentum, 
-
-$$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p  $$
-
-is the nodal internal force, and
-
-$$ f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA  $$
- 
-is the external force at node  $I$.
-
-The function $S_{Ip}$ and its gradients  $S_{Ip,j}$ are the weighting functions of node  $I$ evaluated at the position of particle $p$. 
-
-The GIMP shape functions are defined by 
-
-$$ S_{Ip} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_I(x_i) dV $$
-
-and 
-
-$$ S_{Ip,j} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV $$ 
-
-These two functions are also a partition of the unity $\sum_I S_{Ip} = 1 $.
-
-The weighting function need to be integrated over the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme. In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:
-
-$$ \chi_p(x) =
-\begin{cases}
-1, & x \in \Omega_p, \\
-0, & x \notin \Omega_p.
-\end{cases} $$
-$$
-N_I(x)=
-\begin{cases}
-0, & |x-x_I| \ge L, \\
-1+\dfrac{x-x_I}{L}, & -L < x-x_I \le 0, \\
-1-\dfrac{x-x_I}{L}, & 0 < x-x_I < L.
-\end{cases}
-$$
-
-Where the integration is performed analytically within the particle domain.
-
-$$ S_{I p}=\left\{\begin{array}{ll}0 & |\xi| \geq L+l_p 
-\\ 
-\left(L+l_p+\xi\right)^2 / 4 L l_p & -L-l_p<\xi \leq-L+l_p 
-\\ 
-1+\xi / L & -L+l_p<\xi \leq-l_p 
-\\ 
-1-\left(\xi^2+l_p^2\right) / 2 L l_p & \quad-l_p<\xi \leq l_p 
-\\ 
-1-\xi / L & l_p<\xi \leq L-l_p 
-\\ 
-\left(L+l_p-\xi\right)^2 / 4 L l_p & L-l_p<\xi \leq L+l_p\end{array}\right.
-$$
-
-and
-
-$$
-\nabla S_{I p}= \begin{cases}0 & \left|x_p-x_I\right| \geqslant L+l_p, 
-\\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} & -L-l_p<x_p-x_I \leqslant-L+l_p, 
-\\ \frac{1}{L} & -L+l_p<x_p-x_I \leqslant-l_p, 
-\\ -\frac{x_p-x_I}{L l_p} & -l_p<x_p-x_I \leqslant l_p, 
-\\ -\frac{1}{L} & l_p<x_p-x_I \leqslant L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leqslant L+l_p .\end{cases}
-$$
-
-In which $2lp$ is the particle domain, $L$ is the mesh size in 1D, and $\xi$ is the relative particle position to node. Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:
-
-$$ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta) $$
-
-where $ \xi=x_p-x_I, \eta=y_p-y_I  $ and  $ \zeta=z_p-z_I $.
-
-\section{Explicit MPM integration}
-
-The discrete form of the motion equation needs to be integrated in time for obtaining the solution in time $t^{n+1}$. The displacement, the velocity and the acceleration at time $t^0, t^1, t^2, ... , t^n$ are knows, and the values at time $t^{n+1}$ are required, namely the solution of the problem. 
-The time integration can be done by explicit and implicit methods. In explicit method, the solution $t^{n+1}$ is obtained only with the current information f($t^{n},..., t^{0}$). In implicit method the solution needs to solve a system due the solution is in function of the form f($t^{n+1},...,t^{0}$).
-
-\subsection{Central difference Method}
-
-In central difference method, the velocity at $t^{n+1/2}$ can be approximated as:
-
-$$ \dot{u}^{n+1/2} = (u^{n+1} - u^{n}) \Delta t $$
-
-and, the acceleration in $t^{n}$ can be approximated as:
-
-$$ \ddot{u}^{n} =  (\dot{u}^{n+1/2} - \dot u ^ {n-1/2})\Delta t $$
-
-and therefore, the required displacement at $t^{n+1}$ can be calculated as: $ u^{n+1} = u^{n} + \dot u ^ {n+1/2} \Delta t $, where the velocity is
-
-$$ \dot u^{n+1/2} = \dot{ u } ^ {n-1/2} + \ddot u ^ {n}  \Delta t $$.
-
-The motion equation in time $ t^{n} $ is $ m \, \ddot u ^{n} = f ^{n} $, therefore the acceleration in time $t^{n}$ is $ \ddot u ^{n} = f ^{n} / m $. Using this acceleration equation in the $\dot u^{n+1/2}$ we have the velocity $\dot u ^ {n+1/2}$:
-
-$$
-\dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
-$$
- 
-\section{Numerical implementation of central difference method}
-
-For one $\Delta t$, the updated position can be obtained as:
-
-\begin{algorithm}
-	\caption{Explicit time integration}
-	\begin{algorithmic}[1]
-		\State Compute forces $f^n$
-		\State Compute acceleration $\ddot{u}^n = f^n/m$
-		\State Update velocity $\dot{u}^{n+1/2} = \dot{u}^{n-1/2} + \ddot{u}^n \Delta t$
-		\State Update position $u^{n+1} = u^n + \dot{u}^{n+1/2}\Delta t$
-		\State $n \leftarrow n + 1$
-	\end{algorithmic}
-\end{algorithm}
-
-\section{Stability Requirement}
-
-The central difference method is explicit here and conditionally stable, so the time step must be less that a certain value for avoiding error amplification. For linear systems this critical time step value depends on the natural period of the system. For undamped linear systems the critical time step is: $ \Delta t_{cr} = T_n / \pi$, where $ T_n  $ is the smallest natural period of the system. For finite element method, the critical time step of the central difference method can be expressed as:
-
-$$ \Delta t_{cr} = \text{min}_e (l^e/c)$$
-
-Where $l^e $ is the characteristic length of the element and $c$ is the sound speed. This time step restriction implies that time step has to be limited such that a disturbance, a mechanical wave, can travel across the smallest characteristic element length withing a single time step. 
-
-This condition is known as CFL condition, or Courant-Friedrichs-Lewy condition. For linear elastic material the sound speed (compression P wave) is:
-
-$$ c = \sqrt{\frac {E (1-\nu)} {(1+\nu)(1-2\nu) \rho} }$$
-
-In the MPM, the particles can has velocities in any time step, so the critical time speed can be written with this velocity plus:
-
-$$ \Delta t_{cr} = l^e / \text{max}_p ( c_p + |v_p| )$$
-
-In a structured regular mesh, $l^e$ is the grid cell dimension. And $c_p$ is the sound speed calculated with the material parameters stored in particles.
-
-\section{ Numerical damping }
-
-Real materials dissipates energy during movement. Temperature ans plastic deformation are common sources of energy dissipation. In numerical analysis numerical damping can be used for obtaining the quasi-static condition of the dynamic system.
-
-\section{ Local damping }
-
-The numerical damping is a technique for getting a stationary solution of the dynamic system. In the MPM-Geomechanics simulator we have two type of numerical damping: the local (viscous) and the kinetic (dynamic relaxation) damping.
-
-\subsection{Quasi-static solution with local damping}
-
-The local damping is used to get a quasi-static solution of the dynamic system using a viscous nodal force. In each time step, a viscous force is applied in each node, whose magnitude is proportional and opposite to the nodal velocity.
-
-$$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
-
-, where the unbalanced nodal force is:
-
-$$ f_{iI}^{unb} =  f_{iI}^{int} + f_{iI}^{ext} $$
-
-Therefore, the resulting discrete form of the motion equation with viscous nodal damping is:
-
-$$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$
-
-\section{Explicit algorithm}
-
-\begin{algorithm}
-	\caption{Explicit MPM integration scheme}
-	\begin{algorithmic}[1]
-		
-	\State Compute nodal mass:
-	$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $
-		
-	\State Compute nodal momentum:
-	$ p_{iI}^{k-1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k-1/2} N_{Ip}^k $
-		
-    \State Update seismic velocities from record (if required):
-
-    $a_{i}^{s,\,k-\frac12} = a_{i}^{s,\,\text{record}}$
-
-    $ v_i^{s,\,k+\frac12} = \sum_{l=0}^{l=1-\frac12} v_i^{s,\,l} + a_{i}^{s,\,\text{record}}\, \Delta t $
-
-	\State Impose nodal momentum boundary conditions:
-	$p_{iI}^{k-1/2} = 0 $ (fixed condition) 
-		
-    \State Compute internal forces:
-    $ f_{iI}^{int}{}^{k} = - \sum_{p=1}^{n_p} \sigma_{ij}^{p}{}^{k} S_{Ip,j}^{k} V_p $
-
-    \State Compute external forces:
-    $ f_{iI}^{ext}{}^{k} = \sum_{p=1}^{n_p} m_p b_{i} S_{Ip}^{k} + \int_{\Gamma} t_i N_I(x_i) dA $
-   
-    \State Compute nodal unbalanced forces:
-    $ f_{iI}^{unb}{}^{k} = f_{iI}^{int}{}^{k} + f_{iI}^{ext}{}^{k} $
-
-    \State Compute damping forces (if required):
-    $ f_{iI}^{dnp}{}^{k} = - \alpha |f_{iI}^{unb}{}^{k}| \hat{v}_{iI}^{k-1/2} $
-    
-    \State Compute total nodal forces:
-    $ f_{iI}^{tot}{}^{k} = f_{iI}^{unb}{}^{k} + f_{iI}^{dnp}{}^{k} $
-
-    \State Impose nodal force boundary conditions:
-    $ f_{iI}^{tot}{}^{k} = 0 $ (fixed condition)
-
-    \State Update nodal momenta:
-    $ p_{iI}^{k+\frac12} = p_{iI}^{k-1/2} + f_{iI}^{tot}{}^{k} \Delta t $
-
-    \State Update particle velocities:
-    $ v_{ip}^{k+\frac12} = v_{ip}^{k-1/2} + \sum_{I=1}^{n_n} \frac {f_{iI}^{tot}{}^{k}}{m_I^k} N_{Ip}^k \Delta t $
-
-    \State Seismic nodal velocity:
-    $ v_{iI}^{k+\frac12} = v_i^{s,\,k+\frac12}$
-
-    \State Contact correction (if required):
-    $ v_{ip}^{k+\frac12} = \textit{STLContactCorrection}(v_{ip}^{k+\frac12}) $
-
-    \State Update particle positions:
-    $ x_{ip}^{k+1} = x_{ip}^{k} + \sum_{I=1}^{n_n} v_{iI}^{k+\frac12} N_{Ip}^k \Delta t $
-
-    \State For MUSL scheme, recalculate nodal momentum:
-    $ p_{iI}^{k+1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k+1/2} N_{Ip}^k $
-
-    \State Impose nodal momentum boundary conditions:
-    $p_{iI}^{k+1/2} = 0 $ (fixed condition)
-
-	\State Calculate nodal velocities:
-    $ v_{iI}^{k+1/2} = p_{iI}^{k+1/2} / m_I^k $
-		
-	\State Compute particle strain increment:
-	$ \Delta \varepsilon_{ij}^p{}^{k+1/2} = \frac{1}{2}\left( N_{p,j}^k v_i^{k-1/2} + N_{p,i}^k v_j^{k+1/2}\right)\Delta t $
-		
-	\State Compute vorticity increment: 
-	$ \Delta \omega_{ij}^p{}^{k+1/2} = \frac{1}{2}\left(N_{p,j}^k v_i^{k+1/2}- N_{p,i}^k v_j^{k+1/2} \right) \Delta t $
-
-    \State Update particle density:
-    $ \rho_p^{k+1} = \rho_p^{k} / (1 + \text{tr}(\Delta \varepsilon_{ijp}^{k-1/2})) $
-		
-    \State Update particle stress:
-    $ \sigma_{ij}^{p}{}^{k+1} = \textit{StressUpdate}(\sigma_{ij}^{p}{}^{k}, \Delta \varepsilon_{ij}^p{}^{k-1/2}, \Delta \omega_{ij}^p{}^{k-1/2} ) $
-
-    \State $k \leftarrow k + 1$
-
-	\end{algorithmic}
-\end{algorithm}
-
+% MPM formulation
+\input{doc_introduction_mpm.tex}
+\input{doc_mpm_formulation.tex}
+\input{doc_mpm_integration.tex}
+\input{doc_damping.tex}
+\input{doc_quasi_static_solution.tex}
+\clearpage
+\input{doc_explicit_algorithm.tex}
 \clearpage
 
+% Code documentation
 \input{doc_project_data_structure.tex}
-
 \input{doc_build_commands.tex}
-
 \input{doc_program_features.tex}
-
 \input{doc_compiled_binaries.tex}
-
 \input{doc_required_programs.tex}
-
 \input{doc_code_documentation.tex}
-
 \input{doc_excecution.tex}
-
-\input{doc_testing_benchmarking.tex}
-
 \clearpage
 
+% Code testing and bechmarking
+\input{doc_testing_benchmarking.tex}
+\clearpage
+
+% Verificacion problems
 \section{Verification Problems}
 \label{sec:verification_problems}
 
 Verification problems are designed to verify and to show some new  program functionality.   
-
-\input{doc_local_damping.tex}
-\clearpage
-
-\input{doc_states.tex}
-\clearpage
 
 \input{doc_boussinesq.tex}
 \clearpage
 
 \input{doc_base_acceleration.tex}
 \clearpage
+
+% TODO: complete the documentation of local damping usage
+%\input{doc_local_damping.tex}
+%\clearpage
+
+% TODO: complete the documentation of states 
+%\input{doc_states.tex}
+%\clearpage
 
 \end{document}
