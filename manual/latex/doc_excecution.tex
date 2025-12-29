@@ -1,0 +1,20 @@
+\section{Execution}
+
+In order to run simulations in several terminal, you can add the compiled code in the system `PATH`.
+
+For Windows, you can follow these steps:
+\begin{itemize}
+	\item Open the Start Search, type in "env", and select "Edit the system environment variables"
+	\item In the System Properties window, click on the "Environment Variables..." button.
+	\item In the Environment Variables window, under the "System variables" section, find and select the "Path" variable, then click on the "Edit..." button.
+	\item In the Edit Environment Variable window, click on the "New" button and add the path to the folder where the compiled binary is located (e.g., \verb|C:\path\to\MPM-Geomechanics\build\CMake\build\Release|).
+	\item Click "OK" to close all windows.
+\end{itemize}
+
+For Linux, you can add the following line to your \verb|~/.bashrc| or \verb|~/.bash_profile| file:
+
+\begin{lstlisting}
+	export PATH=$PATH:/path/to/MPM-Geomechanics/build/CMake/build
+\end{lstlisting}
+
+For both Windows and Linux, after adding the path, you can open a new terminal and run the program from any location by simply typing `MPM-Geomechanics` followed by the input file name.

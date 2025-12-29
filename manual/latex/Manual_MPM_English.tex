@@ -64,7 +64,7 @@ The Material Point Method is an hybrid Lagrangian-Eulerian numerical method, tha
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.65\linewidth]{figures/mpm_discretization}
+	\includegraphics[width=0.65\linewidth]{figures/mpm_discretization.png}
 	\caption {General MPM approach. Solid and space discretization with Lagrangian material points and structured Eulerian mesh.}
 	\label{fig:mpm-discretization}
 \end{figure}
@@ -358,300 +358,23 @@ $$ \dot{p}_{iI} = f_{iI}^{int} + f_{iI}^{ext} + f_{iI}^{dnplocal} $$
 	\end{algorithmic}
 \end{algorithm}
 
-\section{Project structure}
-
-The project is organized such as:
-
-\begin{itemize}
-  \item \texttt{src/ and inc/} sources and headers C++ files
-  \item \texttt{manual/} program manual (e.g., STL), DEMs, etc.
-  \item \texttt{tests/} simulation results of analytical and numerical tests
-  \item \texttt{examples/} implementation verification and application examples
-\end{itemize}
-
-\section{Build commands}
-
-\noindent Instruction commands using Linux/WSL:
-
-\begin{lstlisting}[language=bash]
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j
-./build/MPM-Geomechanics --input inputs/base_case.json
-\end{lstlisting}
-
-\section{Program features}
-
-The main features of the program are:
-
-\begin{itemize}   
-\item Three-dimensional 3D formulation
-\item Dynamic formulation
-\item Shared memory parallelization using OpenMP
-\item Many ways to crate bodies (polygons, particle list, pre-defined bodies)
-\item Several constitutive models for soil and rock materials
-\item Softening/hardening models to represent weakness during large deformations 
-\item Coupled fluid-mechanical formulation (*under development*)
-\end{itemize}
-
-\section{Compiled binaries}
-For downloading the compiled binaries
-\begin{itemize}
-  \item Go to the [Actions page](https://github.com/fabricix/MPM-Geomechanics/actions).
-  \item Select the latest run of the **MSBuild** workflow for Window, or **CI** for Linux.
-  \item At the bottom, you will find the available artifacts under the **Artifacts** section.
-  \item Download the `compiled-binaries` artifact to get the compiled code.
-\end{itemize}
-
-\section{Required Programs}
-
-\label{sec:required_programs}
-
-The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
-
-\subsection{Required Programs - Windows}
-
-\label{sec:required_programs_windows}
-\begin{table}[h!]
-	\centering
-	\begin{tabularx}{\textwidth}{|l|X|X|}
-		\hline
-		\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
-		\hline
-		\textbf{Winget} & \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website} & Native of Windows \\
-		\textbf{Git} & via Winget & \texttt{winget install -e --id Git.Git -e --source winget} \\
-		\textbf{MSYS2} & via Winget & \texttt{winget install -e --id MSYS2.MSYS2 --source winget} \\
-		\textbf{GitHub CLI} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-github-cli} \\
-		\textbf{Python} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-python} \\
-		\textbf{CMake} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-cmake} \\
-		\textbf{GCC} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
-		\textbf{G++} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
-		\textbf{Make} & via MSYS2 MINGW64 & \texttt{pacman -S make} \\
-		\hline
-	\end{tabularx}
-	\caption{Programs required for Windows installation.}
-\end{table}
-
-
-\noindent
-\textbf{Make sure you have Winget installed.} You can verify this by running \texttt{winget --version}.  
-If you don't have Winget installed, you can get it from \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website}.
-
-\subsubsection*{Step 1: Install Git, GitHub, and MSYS2}
-Run the following commands:
-
-\begin{lstlisting}
-	winget install -e --id Git.Git -e --source winget
-	winget install -e --id MSYS2.MSYS2 --source winget
-\end{lstlisting}
-
-\subsubsection*{Step 2: Install required packages in MSYS2 MINGW64}
-
-\begin{lstlisting}
-pacman -S mingw-w64-x86_64-github-cli
-pacman -S mingw-w64-x86_64-python
-pacman -S mingw-w64-x86_64-cmake
-pacman -S mingw-w64-x86_64-gcc
-pacman -S make
-\end{lstlisting}
-
-\subsubsection*{Step 3: Verify the installations}
-
-\begin{lstlisting}
-git --version
-gh --version
-python --version
-cmake --version
-make --version
-gcc --version
-g++ --version
-\end{lstlisting}
-
 \clearpage
 
-\subsection{Required Programs - Linux}
-\label{sec:required_programs_linux}
+\input{doc_project_data_structure.tex}
 
-\begin{table}[h!]
-\centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
-\hline
-\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
-\hline
-\textbf{Git} & via apt & \texttt{sudo apt install git} \\
-\textbf{GitHub CLI} & via apt & \texttt{sudo apt install gh} \\
-\textbf{Python} & via apt & \texttt{sudo apt install python3 python3-pip} \\
-\textbf{CMake} & via apt & \texttt{sudo apt install cmake} \\
-\textbf{GCC} & via apt & \texttt{sudo apt install build-essential} \\
-\textbf{G++} & via apt & \texttt{sudo apt install build-essential} \\
-\textbf{Make} & via apt & \texttt{sudo apt install build-essential} \\
-\hline
-\end{tabularx}
-\caption{Programs required for Linux installation.}
-\end{table}
+\input{doc_build_commands.tex}
 
-\subsubsection*{Step 1: Install all packages via apt}
+\input{doc_program_features.tex}
 
-\begin{lstlisting} [language=bash, caption={Installing required packages using \textit{apt}}]
-sudo apt install git
-sudo apt install gh
-sudo apt install python3 python3-pip
-sudo apt install cmake
-sudo apt install build-essential
-\end{lstlisting}
+\input{doc_compiled_binaries.tex}
 
-\subsubsection*{Step 2: Verify the installations}
+\input{doc_required_programs.tex}
 
-\begin{lstlisting}
-	git --version
-	gh --version
-	python3 --version
-	cmake --version
-	make --version
-	gcc --version
-	g++ --version
-\end{lstlisting}
+\input{doc_code_documentation.tex}
 
-\subsection{Compilation in Windows}
+\input{doc_excecution.tex}
 
-Prior to proceeding with these instructions, please consult the windows required programs section in this manual.
-
-The simplest way to compile on windows is by using the `.bash` file at `/build/CMake` with `MSYS2 MINGW64` console line, just execute:
-
-\begin{lstlisting}
-  cd project-directory/build/CMake
-./cmake-build.bash
-\end{lstlisting}
-
-Alternatively, you can use the following commands:
-
-\begin{lstlisting}
-  cd project-directory/build/CMake
-  cmake -G "Unix Makefiles" -B build
-  cmake --build build
-\end{lstlisting}
-
-\subsection{ Compiling on Linux } 
-
-Prior to proceeding please consult the Linux Required Programs section in this manual.
-
-The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
-
-\begin{lstlisting}	
- cd build/CMake
- ./cmake-build.bash
-\end{lstlisting}
-
-Alternatively, you can use the following commands:
-
-\begin{lstlisting}	
-cd build/CMake
-cmake -G "Unix Makefiles" -B build
-cmake --build build
-\end{lstlisting}
-
-\section{Visual Studio Solution}
-
-For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
-Alternatively you can compile it by using command in a *Developer Command Prompt*: 
-
-\begin{lstlisting}
-msbuild MPM-Geomechanics.sln -p:Configuration=Release
-\end{lstlisting}
-
-\section{ Make Compilation }
-
-For compile the code in a linux environment, execute the makefile inside the make folder: \verb| MPM-Geomechanics\build\make\makefile|.
- 
-\section{Documentation}
-
-The program documentation is generated using Doxygen documentation generator.
-
-\begin{lstlisting}
-doxygen Doxyfile
-\end{lstlisting}
-
-The HTML generated documentation is located in `/docs/index.html`.
-
-\section{Execution}
-
-In order to run simulations in several terminal, you can add the compiled code in the system `PATH`.
-
-\section{Testing Compilation and Benchmarking} 
-
-\label{sec:testing_manual_howto_compile}
-
-\section{How to Compile} 
-
-Prior to proceeding with these instructions, please consult required programs in manual.
-
-The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
-
-```
-cd external
-git clone https://github.com/google/googletest.git
-```
-
-The simplest way to compile on Windows and Linux is by using the `.bash` file at `/build/qa` with `MSYS2 MINGW64` console line, simply execute the following command in the directory `MPM-Geomechanics/build/qa`:
-```
-./cmake-build.bash
-```
-
-Alternatively, you can use the following commands:
-```
-cmake -G "Unix Makefiles" -B build
-```
-
-```
-cmake --build build
-```
-
-These commands will generate two executables: `MPM-Geomechanics-tests` and `MPM-Geomechanics-benchmark`.
-
-- `MPM-Geomechanics-tests`: Run testing using GoogleTest. All files ending with `.test.cpp` are testing files, you can find them in the directory `qa/tests`.
-
-- `MPM-Geomechanics-benchmark`: Run benchmark using GoogleTest. All files ending with `.benchmark.cpp` are performance files. You can find them in the directory `qa/benchmark`.
-
-\section {How does benchmarking work?}
-
-If you are using Windows OS, make sure to use the MINGW64 command-line console.
-
-\subsection {Executable MPM-Geomechanics-benchmark}
-
-To run the benchmark correctly, a JSON file named \texttt{benchmark-configuration.json} is required. This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.
-
-The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line arguments:
-
-\texttt{<directory>}: Specifies which file should be used to run the benchmark. If no file is specified, the program will use \texttt{benchmark-configuration.json} located in the same directory as the executable. Example: \texttt{MPM-Geomechanics-benchmark configuration-file.json}
-
-The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line flags:
-
-\texttt{--log}: Shows more information about missing keys in the \texttt{benchmark-configuration.json} file
-
-\subsection {Script (executable): start-multi-benchmark.py}
-
-The performance test can also be executed using the `start-multi-benchmark.py` script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in \texttt{start-multi-benchmark-configuration.json}. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file. 
-
-Example of a \texttt{start-multi-benchmark-configuration.json} file:
-
-\begin{lstlisting}
-{
-	"executables": {
-		"win_benchmark_executable": "MPM-Geomechanics-benchmark.exe",  -> An executable located at build/qa/MPM-Geomechanics-benchmark.exe
-    	"win_github_id": "17847226555"  -> An artifact ID that represent it. can check out if it exists via gh run view <ID>
- 	},
-	"parameters": {
-		"particles": [ 15000, 25000, 50000],  -> material point to test
-		"threads": [1, 5, 10]  -> number of threads to test
-	}
-}
-\end{lstlisting}
-
-This setup will run 3x3 (particles x threads) totaling 18 tests (3x3x2)
-
-The executable \texttt{start-multi-benchmark.py} allows the following command-line flags:
-
-\texttt{--clear}: Removes the **benchmark folder** (if it exists) before executing the performance tests.
-\texttt{--cache}: Uses the previously created cache instead of the \texttt{start-multi-benchmark-configuration.json} file.
+\input{doc_testing_benchmarking.tex}
 
 \clearpage
 
@@ -662,10 +385,13 @@ Verification problems are designed to verify and to show some new  program funct
 
 \input{doc_local_damping.tex}
 \clearpage
+
 \input{doc_states.tex}
 \clearpage
+
 \input{doc_boussinesq.tex}
 \clearpage
+
 \input{doc_base_acceleration.tex}
 \clearpage
 
