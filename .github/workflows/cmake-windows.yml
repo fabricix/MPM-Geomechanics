@@ -69,7 +69,7 @@ jobs:
 
       - name: (tests) Clone GoogleTest into external directory
         shell: msys2 {0}
-        run: git clone https://github.com/google/googletest.git external/googletest
+        run: git clone --branch v1.17.0 https://github.com/google/googletest.git external/googletest
 
       - name: (tests) Configure with CMake using Ninja
         shell: msys2 {0}
