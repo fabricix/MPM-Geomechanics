@@ -73,7 +73,7 @@ jobs:
 
       - name: (tests) Configure with CMake using Ninja
         shell: msys2 {0}
-        run: cmake -G "Ninja" -S build/qa -B build/qa
+        run: cmake -G "Ninja" -S build/qa -B build/qa -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON -DCMAKE_CXX_EXTENSIONS=OFF
 
       - name: (tests) Build with CMake
         shell: msys2 {0}
