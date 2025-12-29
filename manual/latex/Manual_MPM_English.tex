@@ -1,56 +1,12 @@
 % SPDX-License-Identifier: MIT
 % Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
+% Preamble
 \documentclass[11pt,a4paper]{article}
+\input{doc_load_packages.tex}
 
-% Minimal
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{geometry} 
-\geometry{margin=2.5cm}
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
-
-% Math and units
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{siunitx}
-\sisetup{detect-all, per-mode=symbol}
-
-% Figures and tables
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{caption}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{float}
-
-% Code listings
-\usepackage{listings}
-
-\lstset{
-  basicstyle=\ttfamily\small,
-  frame=single,
-  breaklines=true,
-  numbers=left,
-  numberstyle=\tiny,
-  tabsize=2,
-  showstringspaces=false
-}
-
-% algorithm
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-% Metadata
-
-\title{
-  \textbf{MPM-Geomechanics Manual} \\
-  \large An open-source Material Point Method code for geomechanics.
-}
-
-\author{Prof. Dr. Fabricio Fernández \\ MPM-Geomechanics Development Team}
+% Metadata (title and authors)
+\input{doc_metadata.tex}
 
 \date{\today}
 
