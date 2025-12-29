@@ -16,15 +16,24 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  loader: {
+    load: ['[tex]/mathtools']
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','mathtools']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -107,7 +116,7 @@ $(document).ready(function(){initNavTree('classMPM.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 
-<p>Components and algorithms of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> This class contain the basic objects of a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model, and the operations between them.  
+<p>Components and algorithms of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> This class contain the basic objects of a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model, and the operations between them. See the <a href="Manual_MPM_English.pdf">Manual</a>  
  <a href="classMPM.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="MPM_8h_source.html">MPM.h</a>&gt;</code></p>
@@ -254,7 +263,7 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a1cc099fec2f55ef6182fa80ff72c4138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Components and algorithms of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> This class contain the basic objects of a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model, and the operations between them. </p>
+<div class="textblock"><p>Components and algorithms of the <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> This class contain the basic objects of a <a class="el" href="classMPM.html" title="Components and algorithms of the MPM This class contain the basic objects of a MPM model,...">MPM</a> model, and the operations between them. See the <a href="Manual_MPM_English.pdf">Manual</a> </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a46564d917454933a67269f4aa7cb65e1" name="a46564d917454933a67269f4aa7cb65e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a46564d917454933a67269f4aa7cb65e1">&#9670;&#160;</a></span>MPM()</h2>

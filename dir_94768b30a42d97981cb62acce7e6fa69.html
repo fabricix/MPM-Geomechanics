@@ -16,15 +16,24 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  loader: {
+    load: ['[tex]/mathtools']
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','mathtools']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -110,12 +119,12 @@ Directory dependency graph for Particle:</div>
 <area shape="rect" href="dir_545203c151dc83403fa84dd67015f62f.html" title="Mesh" alt="" coords="134,125,191,151"/>
 <area shape="rect" href="dir_8b6501f8d61e93aadc81d298febe161a.html" title="Shape" alt="" coords="215,125,278,151"/>
 <area shape="rect" href="dir_94768b30a42d97981cb62acce7e6fa69.html" title="Particle" alt="" coords="127,52,198,77"/>
-<area shape="poly" href="dir_000005_000003.html" alt="" coords="149,79,96,119,93,115,146,75"/>
-<area shape="rect" href="dir_000005_000003.html" title="1" alt="" coords="98,114,108,128"/>
-<area shape="poly" href="dir_000005_000004.html" alt="" coords="165,78,165,112,160,112,160,78"/>
-<area shape="rect" href="dir_000005_000004.html" title="1" alt="" coords="166,100,176,114"/>
-<area shape="poly" href="dir_000005_000006.html" alt="" coords="178,75,224,114,221,118,174,79"/>
-<area shape="rect" href="dir_000005_000006.html" title="1" alt="" coords="220,100,229,114"/>
+<area shape="poly" href="dir_000004_000002.html" alt="" coords="149,79,96,119,93,115,146,75"/>
+<area shape="rect" href="dir_000004_000002.html" title="1" alt="" coords="98,114,108,128"/>
+<area shape="poly" href="dir_000004_000003.html" alt="" coords="165,78,165,112,160,112,160,78"/>
+<area shape="rect" href="dir_000004_000003.html" title="1" alt="" coords="166,100,176,114"/>
+<area shape="poly" href="dir_000004_000005.html" alt="" coords="178,75,224,114,221,118,174,79"/>
+<area shape="rect" href="dir_000004_000005.html" title="1" alt="" coords="220,100,229,114"/>
 <area shape="rect" href="dir_bfccd401955b95cf8c75461437045ac0.html" title="inc" alt="" coords="16,16,289,161"/>
 </map>
 </div>

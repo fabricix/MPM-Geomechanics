@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MPM-Geomechanics: inc -&gt; Particle Relation</title>
+<title>MPM-Geomechanics: Body -&gt; Materials Relation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,15 +16,24 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  loader: {
+    load: ['[tex]/mathtools']
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','mathtools']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="custom-html-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -72,7 +81,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dir_bfccd401955b95cf8c75461437045ac0.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('dir_f1270302287848fabb3590603b4a7bf4.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,12 +107,12 @@ $(document).ready(function(){initNavTree('dir_bfccd401955b95cf8c75461437045ac0.h
 </div>
 
 <div class="contents">
-<h3>inc &rarr; Particle Relation</h3><table class="dirtab"><tr class="dirtab"><th class="dirtab">File in inc</th><th class="dirtab">Includes file in inc/Particle</th></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a>&#160;/&#160;<a class="el" href="Body_8h.html">Body.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="DynamicRelaxation_8h.html">DynamicRelaxation.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="HydroMechanicalCoupling_8h.html">HydroMechanicalCoupling.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="Interpolation_8h.html">Interpolation.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="Output_8h.html">Output.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="States_8h.html">States.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="dir_508cbffc9888f29a0b75cd03909f2b66.html">Materials</a>&#160;/&#160;<a class="el" href="Elastic_8h.html">Elastic.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="dir_508cbffc9888f29a0b75cd03909f2b66.html">Materials</a>&#160;/&#160;<a class="el" href="Newtonian_8h.html">Newtonian.h</a></td><td class="dirtab"><a class="el" href="Particle_8h.html">Particle.h</a></td></tr></table></div><!-- contents -->
+<h3>Body &rarr; Materials Relation</h3><table class="dirtab"><tr class="dirtab"><th class="dirtab">File in inc/Body</th><th class="dirtab">Includes file in inc/Materials</th></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="Body_8h.html">Body.h</a></td><td class="dirtab"><a class="el" href="Material_8h.html">Material.h</a></td></tr></table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>
+    <li class="navelem"><a class="el" href="dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li><li class="navelem"><a class="el" href="dir_f1270302287848fabb3590603b4a7bf4.html">Body</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
