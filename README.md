@@ -72,7 +72,7 @@ For the **online documentation**, visit: [MPM-Geomechanics](https://fabricix.git
 
 In this example an soil slope failure is simulated using an elastoplastic material:
 
-![](/tests/slope-failure/slope-failure-test.gif)
+![](/examples/slope-failure/slope-failure-test.gif)
 
 For more details of this simulation see the input file [slope-failure.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/slope-failure/slope-failure.json)
 
@@ -84,7 +84,7 @@ In this example an elastoplastic body impacts over an elastic body. The fracturi
 
 Fracturing induced by exponential softening over the tensile strength. The yellow body is subjected to an initial velocity. The withe body is elastic.
 
-![](/tests/exponential-softening/exponential-softening-test.gif)
+![](/examples/exponential-softening/exponential-softening-test.gif)
 An elasto-plastic body impacts over an elastic body. The exponential softening used over the tensile strength, in order to reproduce the fracturing process in the body.
 
 See [exponential-softening.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/exponential-softening/exponential-softening.json) input file for simulation details.
@@ -93,9 +93,9 @@ See [exponential-softening.json](https://github.com/fabricix/MPM-Geomechanics/bl
 
 In this example is tested the refinement mesh behavior. The fixed (left-bottom) and free boundary (right-up) conditions are tested too.
 
-![](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
+![](/examples/exponential-softening/refined%20mesh%20test/exponential-softening-refined.gif)
 
-See [exponential-softening-refined.json](/tests/exponential-softening/refined%20mesh%20test/exponential-softening-refined.json) input file for simulation details.
+See [exponential-softening-refined.json](/examples/exponential-softening/refined%20mesh%20test/exponential-softening-refined.json) input file for simulation details.
 
 ## Contributing
 
