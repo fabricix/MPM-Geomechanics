@@ -268,6 +268,33 @@ void MpmInterpreter::interpretKey(json &jsonFile, std::string key, std::string v
       return;
     }
 
+    if (key == "earthquake.file")
+    {
+      MpmInterpreter::createJsonObjectIfNotExists(jsonFile, "earthquake");
+      jsonFile["earthquake"]["file"] = removeQuotes(value);
+      return;
+    }
+
+    if (key == "earthquake.header")
+    {
+      MpmInterpreter::createJsonObjectIfNotExists(jsonFile, "earthquake");
+      jsonFile["earthquake"]["header"] = (MpmInterpreter::toLower(value) == "true");
+      return;
+    }
+
+    if (key == "earthquake.active")
+    {
+      MpmInterpreter::createJsonObjectIfNotExists(jsonFile, "earthquake");
+      jsonFile["earthquake"]["active"] = (MpmInterpreter::toLower(value) == "true");
+      return;
+    }
+
+    if (key == "n_phases")
+    {
+      jsonFile["n_phases"] = std::stoi(value);
+      return;
+    }
+
     // Unknown key
     linesToCheck.push_back(key + "=" + value);
   }

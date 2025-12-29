@@ -1,0 +1,49 @@
+# comment...
+stress_scheme_update = "USL"
+
+# comment...
+shape_function = "GIMP"
+
+# comment...
+time = 10
+
+# comment...
+time_step = 0.0005
+
+# comment...
+n_threads = 1
+
+# comment...
+gravity = [0.0, 0.0, 0.0]
+
+# comment...
+results.print = 100
+results.particles.fields = ["id","displacement","velocity","material","active","body"]
+results.grid.fields = ["none"]
+
+n_phases = 1
+
+earthquake.active = true
+earthquake.file = "base_acceleration_space.csv"
+earthquake.header = true
+
+# comment...
+mesh.cells.dimension = [0.1,0.1,0.1]
+mesh.cells.number = [10,10,15]
+mesh.origin = [0, 0, 0]
+
+# comment...
+materials.names = ["elastic_1"]
+material.elastic_1.type = "elastic"
+material.elastic_1.young = 10e6
+material.elastic_1.density = 2500
+material.elastic_1.poisson = 0.25
+
+# comment...
+bodies.names = ["columns_1"]
+body.columns_1.type = "cuboid"
+body.columns_1.material = "elastic_1"
+body.columns_1.point_p1 = [0.2,0.2,0]
+body.columns_1.point_p2 = [0.5,0.5,1.0]
+
+
