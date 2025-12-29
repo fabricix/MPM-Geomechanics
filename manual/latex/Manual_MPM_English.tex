@@ -1,0 +1,61 @@
+% SPDX-License-Identifier: MIT
+% Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
+% Preamble
+\documentclass[11pt,a4paper]{article}
+\input{doc_load_packages.tex}
+
+% Metadata (title and authors)
+\input{doc_metadata.tex}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% MPM formulation
+\input{doc_introduction_mpm.tex}
+\input{doc_mpm_formulation.tex}
+\input{doc_mpm_integration.tex}
+\input{doc_damping.tex}
+\input{doc_quasi_static_solution.tex}
+\clearpage
+\input{doc_explicit_algorithm.tex}
+\clearpage
+
+% Code documentation
+\input{doc_project_data_structure.tex}
+\input{doc_build_commands.tex}
+\input{doc_program_features.tex}
+\input{doc_compiled_binaries.tex}
+\input{doc_required_programs.tex}
+\input{doc_code_documentation.tex}
+\input{doc_excecution.tex}
+\clearpage
+
+% Code testing and bechmarking
+\input{doc_testing_benchmarking.tex}
+\clearpage
+
+% Verificacion problems
+\section{Verification Problems}
+\label{sec:verification_problems}
+
+Verification problems are designed to verify and to show some new  program functionality.   
+
+\input{doc_boussinesq.tex}
+\clearpage
+
+\input{doc_base_acceleration.tex}
+\clearpage
+
+% TODO: complete the documentation of local damping usage
+%\input{doc_local_damping.tex}
+%\clearpage
+
+% TODO: complete the documentation of states 
+%\input{doc_states.tex}
+%\clearpage
+
+\end{document}

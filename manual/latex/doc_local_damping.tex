@@ -1,0 +1,13 @@
+\subsection{Local damping}
+
+Local damping is an external force acting in opposite direction of the unbalanced total nodal forces:
+
+$$ f_{iI}^{dnplocal} = - \alpha |f_{iI}^{unb}| \hat{v}_{iI} $$
+
+For a damping force proportional to the $14.5\%$ of unbalanced forces we need to specify the type of damping and the value of $\alpha$:
+
+\begin{lstlisting}[language={}, caption={Defining local damping in json file.}]
+	"damping":{"type"=":"local", "alpha":0.145}
+\end{lstlisting}
+
+The stress field obtained from a local damping forced system, cam be used as initial stress field value.

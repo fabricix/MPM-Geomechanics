@@ -1,0 +1,139 @@
+\subsection{Base Acceleration Example}
+\label{sec:base_acceleration_example}
+
+\subsubsection*{Introduction}
+
+In this example we model the motion of an elastic body subjected to a dynamic boundary condition.  
+The body is a cuboid with dimensions \( l_x = l_y = 0.3\,\text{m} \) and \( l_z = 0.8\,\text{m} \),  
+with lower coordinate point \( p_{min} = (0.4, 0.4, 0.0)\,\text{m} \).
+
+The base acceleration is defined as:
+\[
+\ddot{u} = A\,2\pi f \cos(2\pi f t + \alpha)
+\]
+
+The total simulation time is \( T = 2\,\text{s} \), with a time step \( \Delta t = 10^{-4}\,\text{s} \).  
+Material properties:
+\[
+\rho = 2500\,\text{kg/m}^3, \quad E = 100 \times 10^6\,\text{Pa}, \quad \nu = 0.25
+\]
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/geometry-body.png}
+	\caption{Geometry of the elastic body.}
+	\label{fig:geometry_body}
+\end{figure}
+
+\subsubsection*{MPM Model}
+
+The MPM model consists of uniformly distributed particles inside the body, created with the keywords  
+\texttt{"body"} and \texttt{"cuboid"}. The mesh dimensions are \( \Delta x = \Delta y = \Delta z = 0.1\,\text{m} \),  
+and it covers the full expected displacement range of the body.  
+The mesh uses \( n_x = 12, n_y = 12, n_z = 15 \).
+
+\subsubsection*{Input File}
+
+\begin{lstlisting}
+	{
+		"stress_scheme_update":"USL",
+		"shape_function":"GIMP",
+		"time":10,
+		"time_step":0.0005,
+		"gravity":[0.0,0.0,0.0],
+		"n_threads":1,
+		"damping": {
+			"type":"local",
+			"value":0.0
+		},
+		"results": {
+			"print":100,
+			"fields":["id","displacement","velocity","material","active","body"]
+		},
+		"n_phases":1,
+		"mesh": { 
+			"cells_dimension":[0.1,0.1,0.1],
+			"cells_number":[10,10,15],
+			"origin":[0,0,0]
+		},
+		"earthquake": {
+			"active": true,
+			"file": "base_acceleration.csv",
+			"header": true
+		},
+		"material": {
+			"elastic_1": {
+				"type":"elastic",
+				"id":1,
+				"young":10e6,
+				"density":2500,
+				"poisson":0.25
+			}
+		},
+		"body": {
+			"columns_1": {
+				"type":"cuboid",
+				"id":1,
+				"point_p1":[0.2,0.2,0],
+				"point_p2":[0.5,0.5,1.0],
+				"material_id":1
+			}
+		}
+	}
+\end{lstlisting}
+
+\subsubsection*{Earthquake Block Parameters}
+
+\begin{lstlisting}
+	"earthquake": {
+		"active": true,
+		"file": "base_acceleration.csv",
+		"header": true
+	}
+\end{lstlisting}
+
+Where:
+\begin{itemize}
+	\item \textbf{active}: Enables or disables seismic loading.
+	\item \textbf{file}: Path to the CSV file containing time, acceleration\_x, acceleration\_y, and acceleration\_z.
+	\item \textbf{header}: True if the CSV has a header row.
+\end{itemize}
+
+Example of the first lines of the record:
+
+\begin{lstlisting}
+	t,ax,ay,az
+	0.0,-1.8849555921538759,-0.9424777960769379,-0.0
+	5e-05,-1.8849554991350466,-0.9424777844495842,-0.0
+	0.0001,-1.884955220078568,-0.9424777495675233,-0.0
+	0.00015000000000000001,-1.8849547549844674,-0.9424776914307561,-0.0
+	...
+\end{lstlisting}
+
+\subsubsection*{Post-processing (results and visualizations) }
+
+Particle results are found in the \texttt{/particle} folder and grid results in the \texttt{/grid} folder located inside the current working directory. Particle results(\texttt{particle\_1.vtu}, \texttt{particle\_2.vtu}, ..., \texttt{particle\_41.vtu})  
+are referenced in \texttt{particleTimeSerie.pvd}, which can be opened in ParaView: \verb|File - Open - particleTimeSerie.pvd|The mesh can be loaded with  \verb|File - Open - eulerianGrid.vtu |
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.75\textwidth]{figures/mpm-model-particles-and-mesh.png}
+	\caption{Particles and mesh of the analyzed case.}
+	\label{fig:mpm_particles_mesh}
+\end{figure}
+
+\subsubsection*{Verification of Dynamic Boundary Condition}
+
+The velocity from the analytical input function
+\[
+\dot{u} = A \sin(2 \pi f t + \alpha)
+\]
+was compared with the particle velocity at the base of the model.  
+The results show excellent agreement between analytical and MPM-calculated velocities.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{figures//velocity-base-verification.png}
+	\caption{Verification of velocities obtained with MPM simulation.}
+	\label{fig:velocity_base_verification}
+\end{figure}

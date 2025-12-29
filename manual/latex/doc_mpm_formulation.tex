@@ -1,0 +1,120 @@
+
+\section{MPM Formulation}
+
+The material point method formulation is based on the continuum mechanics motion equation in 3D:
+
+\begin{equation}
+	\frac{\partial \sigma_{ij}}{\partial x_j} + \rho b_i = \rho a_i
+	\label{eq-motion}
+\end{equation}
+
+The internal forces are related with the $\sigma_{ij} $, the Cauchy stress tensor, $\rho$ is the mass density, $b_i$ is a body force and $a_i$ is the acceleration.
+
+The equation \ref{eq-motion} is presented here in tensor notation, but, vector and matrix can be equally used. The discrete form of the motion equation can be obtained using the weak form of this partial differential equation. The weak form is obtained by multiplying the motion equation by arbitrary weighting functions and integrating this product over the domain. In this procedure, the integration by parts reduces the order the stress tensor and introduces the natural boundary conditions:
+
+\begin{equation}
+	-\int_{\Omega} \sigma_{i j} \delta u_{i, j} dV + \int_{\Gamma} t_i \delta u_i dA + \int_{\Omega} \rho b_i \delta u_i dV = \int_{\Omega} \rho a_i \delta u_i dV
+	\label{eq-weak-form-motion}
+\end{equation}
+
+Here $\delta u_i$ are arbitrary displacements functions, whose value in the boundary are $\delta u_i |_{\Gamma} = 0$ and $t_i$ is an external traction acting on the boundary $\Gamma$.
+
+In the MPM context any field or space property $f(x_i)$ can approximated using the value stored in the particle $f_p$:
+$$ f(x_i) = \sum f_p \chi_p (x_i) $$
+where $\chi_p$ is the particle characteristic function that defines the volume occupied by the material point:
+$$ V_p = \int_{\Omega_p \cap \Omega} \chi_p(x_i) dV $$
+
+In consequent, density, acceleration and stress fields can be approximated by the values stored in particles: 
+$$ \rho(x_i) = \sum_p \frac{m_p}{V_{ip}} \chi_p(x_i) \rho(x_i) a_i(x_i) = \sum_p \frac{\dot{p_{ip}}}{V_p} \chi_p(x_i) \sigma_{i j}(x_i) = \sum_p \sigma_{i j p} \chi_p(x_i) $$
+
+where $\dot{p_{ip}} = m_p \dot{v}_{ip} = m_p a_S{ip} = f_{ip}$ is the momentum variation in time that is equal to the total force, regarding the second Newton's law.
+
+Replacing these fields in the weak form of the motion equation we have:
+
+$$ -\sum_p \int_{\Omega_p \cap \Omega} \sigma_{i j p} \chi_p \delta u_{i, j} dV  + \int_{\Gamma} t_i \delta u_i dA+ \sum_p \int_{\Omega_p \cap \Omega} \frac{m_p}{V_p} b_{i p} \chi_p \delta u_i dV 
+= \sum_p \int_{\Omega_p \cap \Omega} \frac{\dot{p}_p}{V_p} \chi_p a_i dV $$
+
+In the generalized interpolation material point method (GIMP), the resolution of this equation is carried out using a Petrov–Galerkin scheme where the characteristic functions $\chi_p(x_i)$ are the trial functions and the nodal interpolation functions $N_I(x_i)$ are the test functions.To arrive at this scheme, the virtual displacements are expressed using nodal interpolation functions:
+
+$$ \delta u_i=\sum_I N_{I p} \delta u_{i I} $$
+
+The trial and test functions are such that:
+
+$$ \sum_I N_{I}(x_i) = 1 \sum_p \chi_p(x_i) = 1 $$
+
+The resulting discrete form of the motion equation then is:
+
+$$ f_{iI}^{int} + f_{iI}^{ext} = \dot{p}_{iI} $$
+
+where 
+
+$$p_{iI} = \sum_p S_{Ip} p_{Ip}  $$
+
+is the nodal momentum, 
+
+$$ f_{iI}^{int} = -\sum_p \sigma_{ijp} S_{Ip,j} V_p  $$
+
+is the nodal internal force, and
+
+$$ f_{iI}^{ext} = \sum_p m_p S_{Ip} b_{ip} + \int_{\Gamma} t_i N_I(x_i) dA  $$
+
+is the external force at node  $I$.
+
+The function $S_{Ip}$ and its gradients  $S_{Ip,j}$ are the weighting functions of node  $I$ evaluated at the position of particle $p$. 
+
+The GIMP shape functions are defined by 
+
+$$ S_{Ip} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_I(x_i) dV $$
+
+and 
+
+$$ S_{Ip,j} =  \frac{1}{V_p} \int_{\Omega_p \cap \Omega} \chi_p(x_i) N_{I,j}(x_i) dV $$ 
+
+These two functions are also a partition of the unity $\sum_I S_{Ip} = 1 $.
+
+The weighting function need to be integrated over the particle domain by choosing different characteristic functions and interpolation functions in a Petrov–Galerkin scheme. In the contiguous particle GIMP (cpGIMP) the characteristic function in defined as step function and the interpolation function is defined as linear function:
+
+$$ \chi_p(x) =
+\begin{cases}
+	1, & x \in \Omega_p, \\
+	0, & x \notin \Omega_p.
+\end{cases} $$
+$$
+N_I(x)=
+\begin{cases}
+	0, & |x-x_I| \ge L, \\
+	1+\dfrac{x-x_I}{L}, & -L < x-x_I \le 0, \\
+	1-\dfrac{x-x_I}{L}, & 0 < x-x_I < L.
+\end{cases}
+$$
+
+Where the integration is performed analytically within the particle domain.
+
+$$ S_{I p}=\left\{\begin{array}{ll}0 & |\xi| \geq L+l_p 
+	\\ 
+	\left(L+l_p+\xi\right)^2 / 4 L l_p & -L-l_p<\xi \leq-L+l_p 
+	\\ 
+	1+\xi / L & -L+l_p<\xi \leq-l_p 
+	\\ 
+	1-\left(\xi^2+l_p^2\right) / 2 L l_p & \quad-l_p<\xi \leq l_p 
+	\\ 
+	1-\xi / L & l_p<\xi \leq L-l_p 
+	\\ 
+	\left(L+l_p-\xi\right)^2 / 4 L l_p & L-l_p<\xi \leq L+l_p\end{array}\right.
+$$
+
+and
+
+$$
+\nabla S_{I p}= \begin{cases}0 & \left|x_p-x_I\right| \geqslant L+l_p, 
+	\\ \frac{L+l_p+\left(x_p-x_I\right)}{2 L l_p} & -L-l_p<x_p-x_I \leqslant-L+l_p, 
+	\\ \frac{1}{L} & -L+l_p<x_p-x_I \leqslant-l_p, 
+	\\ -\frac{x_p-x_I}{L l_p} & -l_p<x_p-x_I \leqslant l_p, 
+	\\ -\frac{1}{L} & l_p<x_p-x_I \leqslant L-l_p, \\ -\frac{L+l_p-\left(x_p-x_I\right)}{2 L l_p} & L-l_p<x_p-x_I \leqslant L+l_p .\end{cases}
+$$
+
+In which $2lp$ is the particle domain, $L$ is the mesh size in 1D, and $\xi$ is the relative particle position to node. Weighting functions in 3D are obtained by the product of three one-dimensional weighting functions:
+
+$$ S_{I p}(x_{i p}) = S_{I p}(\xi) S_{I p} (\eta) S_{I p} (\zeta) $$
+
+where $ \xi=x_p-x_I, \eta=y_p-y_I  $ and  $ \zeta=z_p-z_I $.

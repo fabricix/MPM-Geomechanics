@@ -1169,9 +1169,15 @@ double Input::getDampingValue() {
 
 		if (inputFile["damping"]["type"].is_string())
 		{
+			// LEGACY (value)
 			if (inputFile["damping"]["type"]=="local" && inputFile["damping"]["value"].is_number())
 			{
 				return inputFile["damping"]["value"];
+			}
+
+			if (inputFile["damping"]["type"]=="local" && inputFile["damping"]["alpha"].is_number())
+			{
+				return inputFile["damping"]["alpha"];
 			}
 
 			throw (0);

@@ -1,0 +1,65 @@
+\section{Build commands}
+
+The following instructions outline the steps required to build the MPM-Geomechanics project.
+
+\subsection {Instruction commands using Linux/WSL or MSYS2 MINGW64 console line}
+
+After cloning the repository, navigate to the project directory and execute the following commands:
+
+\begin{lstlisting}[language=bash]
+	cd build/CMake
+	cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+	cmake --build build -j
+\end{lstlisting}
+
+
+\subsection{Compilation in Windows}
+
+Prior to proceeding with these instructions, please consult the windows required programs section in this manual.
+
+The simplest way to compile on windows is by using the `.bash` file at `/build/CMake` with `MSYS2 MINGW64` console line, just execute:
+
+\begin{lstlisting}
+	cd project-directory/build/CMake
+	./cmake-build.bash
+\end{lstlisting}
+
+Alternatively, you can use the following commands:
+
+\begin{lstlisting}
+	cd project-directory/build/CMake
+	cmake -G "Unix Makefiles" -B build
+	cmake --build build
+\end{lstlisting}
+
+\subsection{ Compiling on Linux } 
+
+Prior to proceeding please consult the Linux Required Programs section in this manual.
+
+The simplest way to compile on Linux is by using the `.bash` file at `/build/CMake`, just execute:
+
+\begin{lstlisting}	
+	cd build/CMake
+	./cmake-build.bash
+\end{lstlisting}
+
+Alternatively, you can use the following commands:
+
+\begin{lstlisting}	
+	cd build/CMake
+	cmake -G "Unix Makefiles" -B build
+	cmake --build build
+\end{lstlisting}
+
+\section{Visual Studio Solution}
+
+For compiling the code in windows you can use the Visual Studio solution file `/build/MPM-Geomechanics.sln`, and build it by pressing `Ctr+B`.
+Alternatively you can compile it by using command in a *Developer Command Prompt*: 
+
+\begin{lstlisting}
+	msbuild MPM-Geomechanics.sln -p:Configuration=Release
+\end{lstlisting}
+
+\section{ Make Compilation }
+
+For compile the code in a linux environment, execute the makefile inside the make folder: \verb| MPM-Geomechanics\build\make\makefile|.

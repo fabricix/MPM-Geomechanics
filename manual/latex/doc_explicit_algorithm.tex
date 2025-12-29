@@ -1,0 +1,79 @@
+\section{Explicit algorithm}
+
+\begin{algorithm}
+	\caption{Explicit MPM integration scheme}
+	\begin{algorithmic}[1]
+		
+		\State Compute nodal mass:
+		$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $
+		
+		\State Compute nodal momentum:
+		$ p_{iI}^{k-1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k-1/2} N_{Ip}^k $
+		
+		\State Update seismic velocities from record (if required):
+		
+		$a_{i}^{s,\,k-\frac12} = a_{i}^{s,\,\text{record}}$
+		
+		$ v_i^{s,\,k+\frac12} = \sum_{l=0}^{l=1-\frac12} v_i^{s,\,l} + a_{i}^{s,\,\text{record}}\, \Delta t $
+		
+		\State Impose nodal momentum boundary conditions:
+		$p_{iI}^{k-1/2} = 0 $ (fixed condition) 
+		
+		\State Compute internal forces:
+		$ f_{iI}^{int}{}^{k} = - \sum_{p=1}^{n_p} \sigma_{ij}^{p}{}^{k} S_{Ip,j}^{k} V_p $
+		
+		\State Compute external forces:
+		$ f_{iI}^{ext}{}^{k} = \sum_{p=1}^{n_p} m_p b_{i} S_{Ip}^{k} + \int_{\Gamma} t_i N_I(x_i) dA $
+		
+		\State Compute nodal unbalanced forces:
+		$ f_{iI}^{unb}{}^{k} = f_{iI}^{int}{}^{k} + f_{iI}^{ext}{}^{k} $
+		
+		\State Compute damping forces (if required):
+		$ f_{iI}^{dnp}{}^{k} = - \alpha |f_{iI}^{unb}{}^{k}| \hat{v}_{iI}^{k-1/2} $
+		
+		\State Compute total nodal forces:
+		$ f_{iI}^{tot}{}^{k} = f_{iI}^{unb}{}^{k} + f_{iI}^{dnp}{}^{k} $
+		
+		\State Impose nodal force boundary conditions:
+		$ f_{iI}^{tot}{}^{k} = 0 $ (fixed condition)
+		
+		\State Update nodal momenta:
+		$ p_{iI}^{k+\frac12} = p_{iI}^{k-1/2} + f_{iI}^{tot}{}^{k} \Delta t $
+		
+		\State Update particle velocities:
+		$ v_{ip}^{k+\frac12} = v_{ip}^{k-1/2} + \sum_{I=1}^{n_n} \frac {f_{iI}^{tot}{}^{k}}{m_I^k} N_{Ip}^k \Delta t $
+		
+		\State Seismic nodal velocity:
+		$ v_{iI}^{k+\frac12} = v_i^{s,\,k+\frac12}$
+		
+		\State Contact correction (if required):
+		$ v_{ip}^{k+\frac12} = \textit{STLContactCorrection}(v_{ip}^{k+\frac12}) $
+		
+		\State Update particle positions:
+		$ x_{ip}^{k+1} = x_{ip}^{k} + \sum_{I=1}^{n_n} v_{iI}^{k+\frac12} N_{Ip}^k \Delta t $
+		
+		\State For MUSL scheme, recalculate nodal momentum:
+		$ p_{iI}^{k+1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k+1/2} N_{Ip}^k $
+		
+		\State Impose nodal momentum boundary conditions:
+		$p_{iI}^{k+1/2} = 0 $ (fixed condition)
+		
+		\State Calculate nodal velocities:
+		$ v_{iI}^{k+1/2} = p_{iI}^{k+1/2} / m_I^k $
+		
+		\State Compute particle strain increment:
+		$ \Delta \varepsilon_{ij}^p{}^{k+1/2} = \frac{1}{2}\left( N_{p,j}^k v_i^{k-1/2} + N_{p,i}^k v_j^{k+1/2}\right)\Delta t $
+		
+		\State Compute vorticity increment: 
+		$ \Delta \omega_{ij}^p{}^{k+1/2} = \frac{1}{2}\left(N_{p,j}^k v_i^{k+1/2}- N_{p,i}^k v_j^{k+1/2} \right) \Delta t $
+		
+		\State Update particle density:
+		$ \rho_p^{k+1} = \rho_p^{k} / (1 + \text{tr}(\Delta \varepsilon_{ijp}^{k-1/2})) $
+		
+		\State Update particle stress:
+		$ \sigma_{ij}^{p}{}^{k+1} = \textit{StressUpdate}(\sigma_{ij}^{p}{}^{k}, \Delta \varepsilon_{ij}^p{}^{k-1/2}, \Delta \omega_{ij}^p{}^{k-1/2} ) $
+		
+		\State $k \leftarrow k + 1$
+		
+	\end{algorithmic}
+\end{algorithm}
