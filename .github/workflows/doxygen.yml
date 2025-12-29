@@ -21,6 +21,11 @@ jobs:
       - name: Install Graphviz (if needed for diagrams)
         run: sudo apt-get install graphviz -y
 
+      - name: Prepare output directories
+        run: |
+          mkdir -p doxygen/latex
+          mkdir -p docs
+          
       - name: Generate Documentation
         run:
           doxygen Doxyfile
