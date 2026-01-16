@@ -1,4 +1,4 @@
-\section{Explicit MPM integration}
+\section{Explicit MPM integration}\label{sec:explicit-mpm-integration}
 
 The discrete form of the motion equation needs to be integrated in time for obtaining the solution in time $t^{n+1}$. The displacement, the velocity and the acceleration at time $t^0, t^1, t^2, ... , t^n$ are knows, and the values at time $t^{n+1}$ are required, namely the solution of the problem. 
 The time integration can be done by explicit and implicit methods. In explicit method, the solution $t^{n+1}$ is obtained only with the current information f($t^{n},..., t^{0}$). In implicit method the solution needs to solve a system due the solution is in function of the form f($t^{n+1},...,t^{0}$).
@@ -23,7 +23,7 @@ $$
 \dot u ^ {n+1/2} = \dot u ^ {n-1/2} + f ^{n} / m \, \Delta t
 $$
 
-\section{Numerical implementation of central difference method}
+\section{Numerical implementation of central difference method}\label{sec:numerical-implementation-of-central-difference-method}
 
 For one $\Delta t$, the updated position can be obtained as:
 
@@ -38,7 +38,7 @@ For one $\Delta t$, the updated position can be obtained as:
 	\end{algorithmic}
 \end{algorithm}
 
-\section{Stability Requirement}
+\section{Stability Requirement}\label{sec:stability-requirement}
 
 The central difference method is explicit here and conditionally stable, so the time step must be less that a certain value for avoiding error amplification. For linear systems this critical time step value depends on the natural period of the system. For undamped linear systems the critical time step is: $ \Delta t_{cr} = T_n / \pi$, where $ T_n  $ is the smallest natural period of the system. For finite element method, the critical time step of the central difference method can be expressed as:
 

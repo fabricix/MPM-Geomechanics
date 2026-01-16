@@ -1,12 +1,55 @@
 % SPDX-License-Identifier: MIT
 % Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
-% Preamble
+% ---- Preamble ---- 
 \documentclass[11pt,a4paper]{article}
-\input{doc_load_packages.tex}
 
-% Metadata (title and authors)
-\input{doc_metadata.tex}
+% ---- Minimal ---- 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry} 
+\geometry{margin=2.5cm}
+
+% ---- Math and units ---- 
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{detect-all, per-mode=symbol}
+
+% ----  Figures and tables ---- 
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+% ---- Code listings ---- 
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	tabsize=2,
+	showstringspaces=false
+}
+
+% ---- Algorithm ---- 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% ---- Title and authors ----
+\title{
+	\textbf{MPM-Geomechanics Manual} \\
+	\large An open-source Material Point Method code for geomechanics.
+}
+
+\author{Prof. Dr. Fabricio Fernández \\ MPM-Geomechanics Development Team}
 
 \date{\today}
 
@@ -14,7 +57,7 @@
 
 \maketitle
 
-% MPM formulation
+% ---- MPM formulation ---- 
 \input{doc_introduction_mpm.tex}
 \input{doc_mpm_formulation.tex}
 \input{doc_mpm_integration.tex}
@@ -24,7 +67,7 @@
 \input{doc_explicit_algorithm.tex}
 \clearpage
 
-% Code documentation
+% ---- Code documentation ---- 
 \input{doc_project_data_structure.tex}
 \input{doc_build_commands.tex}
 \input{doc_program_features.tex}
@@ -34,28 +77,12 @@
 \input{doc_excecution.tex}
 \clearpage
 
-% Code testing and bechmarking
+%  ---- Code testing and bechmarking ---- 
 \input{doc_testing_benchmarking.tex}
 \clearpage
 
-% Verificacion problems
-\section{Verification Problems}
-\label{sec:verification_problems}
-
-Verification problems are designed to verify and to show some new  program functionality.   
-
-\input{doc_boussinesq.tex}
+\input{doc_verification_problems.tex}
 \clearpage
 
-\input{doc_base_acceleration.tex}
-\clearpage
-
-% TODO: complete the documentation of local damping usage
-%\input{doc_local_damping.tex}
-%\clearpage
-
-% TODO: complete the documentation of states 
-%\input{doc_states.tex}
-%\clearpage
-
+% ---- Appendices ----
 \end{document}
