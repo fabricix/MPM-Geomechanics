@@ -1,5 +1,7 @@
+% !TeX spellcheck = en_US
 % SPDX-License-Identifier: MIT
 % Copyright (c) 2021-2025 MPM-Geomechanics Development Team
+
 
 % ---- Preamble ---- 
 \documentclass[11pt,a4paper]{article}
@@ -43,19 +45,29 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
-% ---- Title and authors ----
-\title{
-	\textbf{MPM-Geomechanics Manual} \\
-	\large An open-source Material Point Method code for geomechanics.
-}
-
-\author{Prof. Dr. Fabricio Fernández \\ MPM-Geomechanics Development Team}
-
-\date{\today}
 
 \begin{document}
 
-\maketitle
+\begin{titlepage}
+	
+	\centering
+	
+	\vspace*{4.5cm}
+	
+	\includegraphics[width=0.65\textwidth]{figures/mpm-geomechanics-logo.pdf}
+	
+	\vspace{1.25cm}
+	
+	{\LARGE\bfseries Technical Manual\par}
+	
+	\vspace{1.15cm}
+	
+	Prof. Dr. Fabricio Fern\'andez\\
+	MPM-Geomechanics Development Team
+	
+	\vfill
+	\today
+\end{titlepage}
 
 % ---- MPM formulation ---- 
 \input{doc_introduction_mpm.tex}
@@ -63,7 +75,6 @@
 \input{doc_mpm_integration.tex}
 \input{doc_damping.tex}
 \input{doc_quasi_static_solution.tex}
-\clearpage
 \input{doc_explicit_algorithm.tex}
 \clearpage
 
@@ -79,10 +90,11 @@
 
 %  ---- Code testing and bechmarking ---- 
 \input{doc_testing_benchmarking.tex}
-\clearpage
-
 \input{doc_verification_problems.tex}
 \clearpage
 
 % ---- Appendices ----
+
+
+
 \end{document}
