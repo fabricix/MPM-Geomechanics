@@ -38,7 +38,6 @@ docs/*
 /doxygen/latex*
 !/manual/latex/Manual_MPM_English.tex
 !/manual/latex/Manual_MPM_English.pdf
-!/manual/figures/*
+!/manual/latex/doc_*.pdf
 !/manual/latex/doc_*.tex
-!/manual/latex/figures/branding/*
-!/manual/latex/branding
+!/manual/latex/figures/
