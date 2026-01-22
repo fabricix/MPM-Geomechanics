@@ -1,4 +1,11 @@
-![](/manual/latex/branding/mpm-geomechanics-banner.png)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-logo-light.svg">
+    <img src="manual/latex/figures/mpm-geomechanics-logo-light.svg" alt="MPM-Geomechanics logo" width="600">
+  </picture>
+</p>
+#MPM-Geomechanics
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
