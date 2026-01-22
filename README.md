@@ -1,9 +1,8 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-logo-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-logo-light.png">
-    <img src="manual/latex/figures/mpm-geomechanics-logo-light.png" alt="MPM-Geomechanics logo" width="600">
-  </picture>
+  <img src="manual/latex/figures/mpm-geomechanics-logo-light.png#gh-light-mode-only"
+       alt="MPM-Geomechanics logo" width="600">
+  <img src="manual/latex/figures/mpm-geomechanics-logo-dark.png#gh-dark-mode-only"
+       alt="MPM-Geomechanics logo" width="600">
 </p>
 #MPM-Geomechanics
 
