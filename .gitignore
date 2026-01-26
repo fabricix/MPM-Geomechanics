@@ -1,10 +1,6 @@
 Debug/
 Release/
 sublime/
-doxygen/html
-doxygen/docs
-doxygen/latex
-doxygen/output.txt 
 .settings/
 .tracecompass/
 .cproject
@@ -28,3 +24,13 @@ MPM-Geomechanics
 time-energy.csv
 simulation-data.csv
 particle_stress_data.json
+/external/*
+!.gitkeep
+/build/CMake/*
+!CMakeLists.txt
+!cmake-compilation-manual.md
+!cmake-build.bash
+/build/qa/build/*
+/build/qa/benchmark/*
+docs/*
+!/docs/.gitkeep
