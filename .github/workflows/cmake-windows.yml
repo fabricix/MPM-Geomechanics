@@ -2,9 +2,9 @@ name: CMake-Windows
 
 on:
   push:
-    branches: [old_version_reference]
+    branches: [old-version-reference]
   pull_request:
-    branches: [old_version_reference]
+    branches: [old-version-reference]
 
 jobs:
   build-and-test:

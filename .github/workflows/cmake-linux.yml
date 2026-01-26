@@ -2,9 +2,9 @@ name: CMake-Linux
 
 on:
   push:
-    branches: [old_version_reference]
+    branches: [old-version-reference]
   pull_request:
-    branches: [old_version_reference]
+    branches: [old-version-reference]
 
 permissions:
   contents: read
