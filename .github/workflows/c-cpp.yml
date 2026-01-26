@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - actual_version_reference
   pull_request:
     branches:
-      - main
+      - actual_version_reference
 
 jobs:
   build:
