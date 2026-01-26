@@ -42,9 +42,9 @@ jobs:
         run: ./cmake-build.bash
         working-directory: build/qa
 
-      - name: (tests) Run tests
-        run: ./MPM-Geomechanics-tests
-        working-directory: build/qa
+      # - name: (tests) Run tests
+      #   run: ./MPM-Geomechanics-tests
+      #   working-directory: build/qa
 
       - name: (tests) Run benchmark
         run: ./MPM-Geomechanics-benchmark

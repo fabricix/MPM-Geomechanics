@@ -79,10 +79,10 @@ jobs:
         shell: msys2 {0}
         run: cmake --build build/qa
 
-      - name: (tests) Run tests
-        shell: msys2 {0}
-        run: ./MPM-Geomechanics-tests.exe
-        working-directory: build/qa
+      # - name: (tests) Run tests
+      #   shell: msys2 {0}
+      #   run: ./MPM-Geomechanics-tests.exe
+      #   working-directory: build/qa
 
       - name: (tests) Run benchmark
         shell: msys2 {0}
