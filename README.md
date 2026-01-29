@@ -21,6 +21,7 @@ The objective of this repository is to provide a platform for developing the MPM
 
 If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl. There are several topics for developing in this project, here there are a few of them:
 
+- advanced unsaturated constitutive model for clay and sand (CASM-X) [(Bui et al.,2008)](https://doi.org/10.1002/nag.688)
 - contact method for large terrain models using STL meshes [(Zhang et al., 2023)](https://www.sciencedirect.com/science/article/abs/pii/S0266352X23001684) :white_check_mark:
 - penalty method for avoiding any penetration in STL meshes :white_check_mark:
 - one direction hydro-mechanical coupling :white_check_mark:
