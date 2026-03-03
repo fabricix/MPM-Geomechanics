@@ -1356,6 +1356,7 @@ unsigned Input::getNumberPhases(){
 
 	catch(unsigned nPhases)
 	{
+		(void)nPhases;
 		Warning::printMessage("Error: phases must be 1 or 2");
 		throw;
 	}
