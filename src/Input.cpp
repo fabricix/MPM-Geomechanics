@@ -94,7 +94,7 @@ void Input::readInputFile(string filename)
 	}
 	catch(...)
 	{
-		Warning::printMessage("Was not possible read the file,\nplease check the input file name...");
+		Warning::printMessage("Error: input file reading");
 		throw;
 	}
 }
@@ -113,7 +113,7 @@ double Input::getSimulationTime(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Simulation time must be greater than zero");
+		Warning::printMessage("Error: simulation time negative");
 		throw;
 	}
 }
@@ -155,13 +155,13 @@ Solver* Input::getSolver() {
 
 	catch(std::string& key)
 	{
-		Warning::printMessage("Error in keyword: " + key);
+		Warning::printMessage("Error: invalid keyword. " + key);
 		throw;
 	}
 
 	catch(...)
 	{
-		Warning::printMessage("Error in solver definition in input file");
+		Warning::printMessage("Error: solver definition");
 		throw;
 	}
 }
@@ -197,7 +197,7 @@ ModelSetup::InterpolationFunctionType Input::getInterpolationFunction() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of shape function in input file");
+		Warning::printMessage("Error: shape function definition");
 		throw;
 	}
 }
@@ -218,7 +218,7 @@ double Input::getTimeStep(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of time step in input file");
+		Warning::printMessage("Error: time step definition");
 		throw;
 	}
 }
@@ -240,7 +240,7 @@ double Input::getCriticalTimeStepMultiplier()
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of time step multiplier");
+		Warning::printMessage("Error: critical time step multiplier");
 		throw;
 	}	
 }
@@ -264,7 +264,7 @@ Vector3i Input::getCellsNum()
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of cell number in input file");
+		Warning::printMessage("Error: cell number definition");
 		throw;
 	}
 }
@@ -287,7 +287,7 @@ Vector3d Input::getCellDimension() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of cell dimension in input file");
+		Warning::printMessage("Error: cell dimension definition");
 		throw;
 	}
 }
@@ -315,7 +315,7 @@ Vector3d Input::getOrigin() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error reading mesh origin");
+		Warning::printMessage("Error: reading mesh origin");
 		throw;
 	}
 }
@@ -445,7 +445,7 @@ vector<Material*> Input::getMaterialList(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in materials definition in input file");
+		Warning::printMessage("Error: materials definition");
 		throw;
 	}
 }
@@ -477,7 +477,7 @@ vector<Body*> Input::getBodyList(){
 						center(1) = (*it)["center"][1];
 						center(2) = (*it)["center"][2];
 					} else {
-						Warning::printMessage("Sphere body center not defined");
+						Warning::printMessage("Error: sphere center not defined");
 						throw(0);
 					}
 
@@ -486,7 +486,7 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["diameter"].is_number()) {
 						diameter = ((*it)["diameter"]);
 					} else {
-						Warning::printMessage("Sphere body diameter not defined");
+						Warning::printMessage("Error: sphere diameter not defined");
 						throw(0);
 					}
 
@@ -495,7 +495,7 @@ vector<Body*> Input::getBodyList(){
 					if ((*it)["material_id"].is_number()) {
 						material_id = ((*it)["material_id"]);
 					} else {
-						Warning::printMessage("Sphere body material id not defined");
+						Warning::printMessage("Error: sphere material not defined");
 						throw(0);
 					}
 
@@ -551,7 +551,7 @@ vector<Body*> Input::getBodyList(){
 					}
 					else
 					{
-						Warning::printMessage("Cuboid body point P1 not defined");
+						Warning::printMessage("Error: cuboid point P1 not defined");
 						throw(0);
 					}
 					
@@ -564,7 +564,7 @@ vector<Body*> Input::getBodyList(){
 						pointP2(2)=(*it)["point_p2"][2];
 					}
 					else{
-						Warning::printMessage("Cuboid body point P2 not defined");
+						Warning::printMessage("Error: cuboid point P2 not defined");
 						throw(0);
 					}
 
@@ -575,7 +575,7 @@ vector<Body*> Input::getBodyList(){
 						material_id = ((*it)["material_id"]);
 					}
 					else{
-						Warning::printMessage("Cuboid body material id not defined");
+						Warning::printMessage("Error: cuboid material not defined");
 						throw(0);
 					}
 
@@ -593,7 +593,7 @@ vector<Body*> Input::getBodyList(){
 
 					if (iBody==NULL)
 					{
-						Warning::printMessage("Could not create cuboid body");
+						Warning::printMessage("Error: cuboid body creaation");
 						throw(0);
 					}
 					else
@@ -624,7 +624,7 @@ vector<Body*> Input::getBodyList(){
 						material_id = ((*it)["material_id"]);
 					}
 					else{
-						Warning::printMessage("Polygon body material id not defined");
+						Warning::printMessage("Error: polygon material not defined");
 						throw(0);
 					}
 
@@ -635,7 +635,7 @@ vector<Body*> Input::getBodyList(){
 						extrude_direction = ((*it)["extrude_direction"]);
 					}
 					else{
-						Warning::printMessage("Polygon body extrude direction not defined");
+						Warning::printMessage("Error: polygon extrude direction not defined");
 						throw(0);
 					}
 
@@ -646,7 +646,7 @@ vector<Body*> Input::getBodyList(){
 						extrude_displacement = ((*it)["extrude_displacement"]);
 					}
 					else{
-						Warning::printMessage("Polygon body extrude displacement not defined");
+						Warning::printMessage("Error: extrude displacement not defined");
 						throw(0);
 					}
 
@@ -678,7 +678,7 @@ vector<Body*> Input::getBodyList(){
 
 							if (iBody==NULL)
 							{
-								Warning::printMessage("Could not create polygon body");
+								Warning::printMessage("Error: could not create polygon body");
 								throw(0);
 							}
 							else
@@ -729,7 +729,7 @@ vector<Body*> Input::getBodyList(){
 					// open the file
 					std::ifstream file_stream(filename);
 					if (!file_stream.is_open()) {
-						Warning::printMessage("Cannot open particle JSON file: " + filename);
+						Warning::printMessage("Error: cannot open file " + filename);
 						throw(0);
 					}
 
@@ -742,7 +742,7 @@ vector<Body*> Input::getBodyList(){
 
 					for (const auto& p : json_particles) {
 						if (!p.contains("position") || !p.contains("volume")) {
-							Warning::printMessage("Invalid particle format in: " + filename);
+							Warning::printMessage("Error: invalid particle format");
 							throw(0);
 						}
 						Vector3d pos(p["position"][0], p["position"][1], p["position"][2]);
@@ -879,7 +879,7 @@ vector<Body*> Input::getBodyList(){
 					mesh_file = ((*it)["mesh_file"]);
 				}
 				else{
-					Warning::printMessage("No mesh file defined in gmsh body");
+					Warning::printMessage("Error: no mesh file in gmsh body");
 					throw(0);
 				}
 				// material to physical group
@@ -893,7 +893,7 @@ vector<Body*> Input::getBodyList(){
 					}
 				}
 				else{
-					Warning::printMessage("No physical to material mapping defined in gmsh body");
+					Warning::printMessage("Error: no material in gmsh body");
 					throw(0);
 				}
 
@@ -906,8 +906,8 @@ vector<Body*> Input::getBodyList(){
 					
 					if (particles_in_cell_distribution!="barycentric" && particles_in_cell_distribution!="gaussian")
 					{	
-						Warning::printMessage("Unknown particle distribution type in gmsh body");
-						Warning::printMessage("Barycentric particle distribution assumed");
+						Warning::printMessage("Error: particle distribution in gmsh body");
+						Warning::printMessage("assuming barycentric distribution");
 						particles_in_cell_distribution="barycentric";
 					}
 				}
@@ -926,7 +926,7 @@ vector<Body*> Input::getBodyList(){
 		}
 
 		if (bodies.empty()){
-			Warning::printMessage("No bodies were created");
+			Warning::printMessage("Error: no bodies were created");
 			throw(0);
 		}
 
@@ -934,7 +934,7 @@ vector<Body*> Input::getBodyList(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in body definition in input file");
+		Warning::printMessage("Error: in body definition in input file");
 		throw;
 	}
 }
@@ -963,7 +963,7 @@ Vector3d Input::getGravity(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading gravity");
+		Warning::printMessage("Error: reading gravity");
 		throw;
 	}
 }
@@ -988,7 +988,7 @@ int Input::getResultNum(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the number of results");
+		Warning::printMessage("Error: reading number of results");
 		throw;
 	}
 }
@@ -1021,7 +1021,7 @@ vector<string> Input::getWriteSTLMeshFields()
 	}
 	catch (...)
 	{
-		Warning::printMessage("Error during the STL mesh results field reading");
+		Warning::printMessage("Error: reading STL mesh results");
 		throw;
 	}
 }
@@ -1089,7 +1089,7 @@ vector<string> Input::getGridResultFields()
 	}
 	catch (...)
 	{
-		Warning::printMessage("Error during the grid field results creation");
+		Warning::printMessage("Error: reading grid field results");
 		throw;
 	}
 }
@@ -1106,7 +1106,7 @@ vector<string> Input::getResultFields()
 		{
 			fields.push_back("id");
 			fields.push_back("displacement");
-			Warning::printMessage("Bad definition of material points results");
+			Warning::printMessage("assuming default results fields");
 			return fields;
 		}
 
@@ -1157,7 +1157,7 @@ vector<string> Input::getResultFields()
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during the field results creation");
+		Warning::printMessage("Error: during the field results creation");
 		throw;
 	}
 }
@@ -1186,7 +1186,7 @@ ModelSetup::DampingType Input::getDampingType() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in damping keyword");
+		Warning::printMessage("Error: in damping keyword");
 		throw;
 	}
 }
@@ -1214,7 +1214,7 @@ double Input::getDampingValue() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Bad definition of damping value");
+		Warning::printMessage("Error: damping value definition");
 		throw;
 	}
 }
@@ -1263,7 +1263,7 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
 		return restrictions;
 	}
 	catch (...) {
-		Warning::printMessage("Error during reading the boundary conditions");
+		Warning::printMessage("Error: reading boundary conditions");
 		throw;
 	}
 }
@@ -1292,7 +1292,7 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditionsFluid() {
 		return restrictions;
 	}
 	catch (...) {
-		Warning::printMessage("Error during reading the boundary conditions in fluid");
+		Warning::printMessage("Error: reading boundary conditions in fluid");
 		throw;
 	}
 }
@@ -1316,7 +1316,7 @@ unsigned Input::getNumThreads() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the number of threads");
+		Warning::printMessage("Error: reading number of threads");
 		throw;
 	}
 }
@@ -1350,13 +1350,13 @@ unsigned Input::getNumberPhases(){
 
 	catch(std::string& keyword)
 	{
-		Warning::printMessage("The keyword: \""+string(keyword)+"\" must be a number");
+		Warning::printMessage("Error:\""+string(keyword)+"\" not number");
 		throw;
 	}
 
 	catch(unsigned nPhases)
 	{
-		Warning::printMessage("The number of phases must be 1 or 2 (input = "+to_string(nPhases)+")");
+		Warning::printMessage("Error: phases must be 1 or 2");
 		throw;
 	}
 }
@@ -1442,7 +1442,7 @@ vector<Loads::LoadDistributedBox> Input::getLoadDistributedBox() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in load box definition");
+		Warning::printMessage("Error: load box definition");
 		throw;
 	}
 }
@@ -1495,7 +1495,7 @@ vector<Loads::PressureBox> Input::getPrescribedPressureBox() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in prescribed pressure box definition");
+		Warning::printMessage("Error: prescribed pressure definition");
 		throw;
 	}
 }
@@ -1548,7 +1548,7 @@ vector<Loads::PressureBox> Input::getInitialPressureBox() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in initial pressure box definition");
+		Warning::printMessage("Error: initial pressure box definition");
 		throw;
 	}
 }
@@ -1585,7 +1585,7 @@ vector<Loads::PressureMaterial> Input::getInitialPressureMaterial() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error in initial pressure by material definition");
+		Warning::printMessage("Error: initial pressure by material definition");
 		throw;
 	}
 }
@@ -1638,7 +1638,7 @@ vector<Loads::PressureBoundaryForceBox> Input::getPressureBoundaryForceBox() {
 	}
 	catch (...)
 	{
-		Warning::printMessage("Error in pressure force box definition");
+		Warning::printMessage("Error: pressure force box definition");
 		throw;
 	}
 };
@@ -1666,7 +1666,7 @@ double Input::getDistanceThreshold(){
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the distance threshold in terrain contact");
+		Warning::printMessage("Error: reading distance threshold");
 		throw;
 	}
 }
@@ -1694,7 +1694,7 @@ double Input::getFrictionCoefficient() {
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the friction coefficient in terrain contact");
+		Warning::printMessage("Error: reading friction coefficient");
 		throw;
 	}
 }
@@ -1722,7 +1722,7 @@ bool Input::getTerrainContactActive()
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the terrain contact active keyword");
+		Warning::printMessage("Error: reading terrain flag");
 		throw;
 	}
 }
@@ -1740,7 +1740,7 @@ bool Input::getPenaltyContactActive()
     }
     catch (...)
     {
-        Warning::printMessage("Error during reading the penalty_contact keyword in terrain_contact");
+        Warning::printMessage("Error: reading penalty contact");
         throw;
     }
 }
@@ -1758,7 +1758,7 @@ double Input::getPenaltyStiffness()
     }
     catch (...)
     {
-        Warning::printMessage("Error during reading the penalty_stiffness keyword in terrain_contact");
+        Warning::printMessage("Error: reading penalty stiffness");
         throw;
     }
 }
@@ -1777,12 +1777,12 @@ std::string Input::getSTLMeshFile()
 			return inputFile["terrain_contact"]["stl_mesh"];
 		}
 
-		Warning::printMessage("No STL mesh file defined in terrain contact");
+		Warning::printMessage("Error: no STL mesh file defined");
 		throw(0);
 	}
 	catch(...)
 	{
-		Warning::printMessage("Error during reading the STL file name in terrain contact");
+		Warning::printMessage("Error: reading STL file");
 		throw;
 	}
 }
@@ -1809,7 +1809,7 @@ SeismicAnalysis Input::getSeismicAnalysisInfo()
 
 		// If active, ensure file name exists
 		if (!eq.contains("file") || !eq["file"].is_string()) {
-			Warning::printMessage("Earthquake entry is active, but missing 'file' field.");
+			Warning::printMessage("Error: Earthquake field missing");
 			throw(0);
 		}
 		info.filename = eq["file"];
@@ -1822,7 +1822,7 @@ SeismicAnalysis Input::getSeismicAnalysisInfo()
 		return info;
 	}
 	catch (...) {
-		Warning::printMessage("Error reading 'earthquake' section in input file.");
+		Warning::printMessage("Error: reading earthquake information");
 		throw;
 	}
 }

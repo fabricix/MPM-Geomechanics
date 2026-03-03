@@ -66,9 +66,9 @@ namespace Output{
 		
 		// stl mesh
 		bool stlContactFolderExist = false;
-		std::string stlContactFolderName = "contact_stl_mesh";
-		std::string stlContactFileName   = "contact_stl_mesh";
-		std::string stlContactFileTimeSerie = "stlContactTimeSerie";
+		std::string stlContactFolderName = "centroid_points_stl_contact";
+		std::string stlContactFileName   = "centroid_points_stl_contact";
+		std::string stlContactFileTimeSerie = "centroid_points_stl_contactTimeSerie";
 		std::vector<double> stlContactFilesTime;
 	}
 	
