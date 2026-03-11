@@ -58,7 +58,7 @@ private:
 	
 	Mesh mesh; //!< background grid mesh
 
-	TerrainContact* terrainContact; //!< terrain contact object
+	TerrainContact* terrainContact = nullptr; //!< terrain contact object
 
 	vector<Body*> bodies; //!< bodies discretized by material points
 
@@ -66,7 +66,7 @@ private:
 
 	vector<Material*> materials; //!< bodies discretized by material points
 	
-	Solver* solver; //!< operation for solve the equations in time
+	Solver* solver = nullptr; //!< operation for solve the equations in time
 
 	/// \brief Configure the simulation time
 	///
