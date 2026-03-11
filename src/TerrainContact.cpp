@@ -284,19 +284,20 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
     // distance threshold for contact detection
     const double d_threshold = this->scalingFactor*(mesh->getCellDimension()).mean();
-
+    const double density_threshold = 0.0; // threshold to consider that a triangle is in contact with the body
+    
     // get the triangles and the density values
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
     const std::vector<double>& densityValues = this->densityLevelSet;
-
+    
     // verify that the number of density values is equal to the number of triangles
     if (densityValues.size() != triangles.size()) {
         return;
     }
-
+    
     // clear the contact pairs
     contactPairs.clear();
-
+    
     // loop over the particles to determine the contact potential pairs
 #ifdef _OPENMP
     #pragma omp parallel for shared(particles, triangles, densityValues)
@@ -306,21 +307,35 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
         // get the particle
         Particle* particle = particles->at(i);
 
+        // reset STL contact flag
+        particle->setInSTLContact(false); 
+
         // get the distance level set value of the particle
         double d_p = particle->getDistanceLevelSet();
 
         // check if the particle is near the terrain contact (first condition for contact detection)
+        //if (d_p > 0.0 && d_p < d_threshold)
         if (std::abs(d_p) < d_threshold)
         {
             // find the closest triangle to the particle
             double minDistance = 1e+10;
             int closestTriangleIndex = -1;
 
-            for (size_t j = 0; j < triangles.size(); ++j) {
+            const Vector3d& xp = particle->getPosition();
 
-                Vector3d centroid = triangles[j].getCentroid();
-                double distance = (centroid - particle->getPosition()).norm();
-                
+            for (size_t j = 0; j < triangles.size(); ++j) 
+            {
+                const Triangle& tri = triangles[j];
+                double distance = pointTriangleDistance(
+                    xp,
+                    tri.v1,
+                    tri.v2,
+                    tri.v3
+                );
+
+                if (distance > d_threshold)
+                    continue;
+
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestTriangleIndex = static_cast<int>(j);
@@ -331,7 +346,8 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
             if (closestTriangleIndex == -1) continue;
 
             // if the density value of the closest triangle is positive, add the pair to the contact pairs (second condition for contact detection)
-            if (densityValues[closestTriangleIndex] > 0.0) {
+            if (minDistance < d_threshold) {
+                particle->setInSTLContact(true);
 #ifdef _OPENMP
                 #pragma omp critical
 #endif
@@ -378,21 +394,9 @@ void TerrainContact::computeContactForces(double dt) {
         // calculate the normal force f_n = -m_p * vn_p / dt * e_n
         Vector3d fn = - (mass * vn_magnitude / dt) * normal;
         
-        // if penalty contact is enabled, apply the penalty force
-        if (usePenaltyContact) {
-            double penetration = -particle->getDistanceLevelSet();
-            if (penetration > 0.0)
-            {
-                // calculate the penalty force f_penalty = k * penetration * e_n
-                Vector3d f_penalty = penaltyStiffness * penetration * normal;
-                // apply the penalty force to the normal force
-                fn += f_penalty;
-            }
-        }
-        
         // calculate tangential force f_t = -m_p (v_p - vn) / dt
         Vector3d ft = - (mass / dt) * (velocityPredictor - vn);
-
+        
         // apply Coulomb friction ||f_t|| <= mu ||f_n||
         double fn_mag = fn.norm();
         double ft_mag = ft.norm();
@@ -402,6 +406,23 @@ void TerrainContact::computeContactForces(double dt) {
             // scale the tangential force to satisfy the Coulomb friction condition
             ft = (mu * fn_mag / ft_mag) * ft;
         }
+
+        // if penalty contact is enabled, apply the penalty force
+        if (usePenaltyContact) {
+            double penetration = -particle->getDistanceLevelSet();
+            if (penetration > 0.0)
+            {
+                // calculate the penalty force f_penalty = k * penetration * e_n
+                Vector3d f_penalty = penaltyStiffness * penetration * normal;
+
+                // apply the penalty force to the normal force
+                fn += f_penalty;
+            }
+        }
+
+        // set the contact forces to the particle
+        particle->setContactNormalForce(fn);
+        particle->setContactTangentialForce(ft);
 
         // calculate the corrected velocity v_p^* = v_p + dt (f_n + f_t) / m_p
         Vector3d velocityCorrected = velocityPredictor + (dt / mass) * (fn + ft);
@@ -413,6 +434,25 @@ void TerrainContact::computeContactForces(double dt) {
 
         // update the velocity of the particle
         particle->setVelocity(velocityCorrected);
+    }
+}
+
+void TerrainContact::projectParticles(Mesh* mesh,std::vector<Particle*> *particles)
+{
+    for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
+    {
+        // get the particle and the triangle in contact
+        Particle* p = contactPairs[i].first;
+        Triangle* triangle = contactPairs[i].second;
+
+        // distance signed, =0 over the STL
+        double d = p->getDistanceLevelSet();
+
+        if (d < 0.0 /*inside the STL*/) {
+            // move particle to STL
+            p->setPosition(p->getPosition() - d * triangle->getNormal().normalized());
+            p->setDistanceLevelSet(0.0); // or +eps
+        }
     }
 }
 

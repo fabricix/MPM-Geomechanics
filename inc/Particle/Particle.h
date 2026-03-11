@@ -290,9 +290,30 @@ public:
 	/// \brief Get pore pressure of the particle
 	double getPorePressure() const { return porePressure; }
 
-protected:
+	/// \brief Configures the contact normal force
+	inline void setContactNormalForce(const Vector3d& normalForce) { this->contactNormalForce = normalForce; }
+	
+	/// \brief Returns the contact normal force
+	inline const Vector3d& getContactNormalForce() const { return this->contactNormalForce; }
+
+	/// \brief Configures the contact tangential force
+	inline void setContactTangentialForce(const Vector3d& tangentialForce) { this->contactTangentialForce = tangentialForce; }	
+
+	/// \brief Returns the contact tangential force
+	inline const Vector3d& getContactTangentialForce() const { return this->contactTangentialForce; }
+
+	/// \brief Returns whether the particle is in contact with STL terrain
+	inline bool getIfSTLContact() const { return this->stl_contact; }
+
+	/// \brief Configures whether the particle is in contact with STL terrain
+	inline void setInSTLContact(bool in_contact) { this->stl_contact = in_contact; }
+
+	protected:
 
 	bool active; //!< is particle active
+	
+	bool stl_contact = false; //!< is particle in contact with STL terrain
+
 	int id;	//!< particle id
 	int bodyId; //!< body id
 
@@ -306,6 +327,9 @@ protected:
 	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
 	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^ext\f$
 	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
+
+	Vector3d contactNormalForce; //!< particle contact normal force: \f$f_{ip}^{c,n}\f$
+	Vector3d contactTangentialForce; //!< particle contact tangential force: \f$f_{ip}^{c,t}\f$
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$

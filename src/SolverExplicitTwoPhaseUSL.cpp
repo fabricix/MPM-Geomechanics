@@ -33,7 +33,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 	ModelSetup::setLoopCounter(loopCounter);
 
 	// write initial particles and grid states
-	Output::writeInitialState(bodies, iTime, mesh);
+	// Output::writeInitialState(bodies, iTime, mesh);
 
 	// solve in time
 	while (iTime < time)

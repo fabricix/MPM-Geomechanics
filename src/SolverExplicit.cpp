@@ -27,7 +27,7 @@ void SolverExplicit::Solve()
 	ModelSetup::setLoopCounter(loopCounter);
 
 	// write initial particles and grid states
-	Output::writeInitialState(bodies, iTime, mesh);
+	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
 
 	// Time integration loop
 	while (iTime < time)
@@ -80,6 +80,9 @@ void SolverExplicit::Solve()
 
 		// Step 5.3: Update particle position
 		Update::particlePosition(mesh, particles, dt);
+ 
+		// Step 5.4: Project particle position if any penetrations
+		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
 
 		// Step 6 (MUSL): Momentum recalculation 
 		if (useMUSL)
@@ -110,6 +113,7 @@ void SolverExplicit::Solve()
 		// write particles and grid results in step
 		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
+		Output::writeSTLContactInStep(resultSteps, terrainContact, iTime);
 
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);

@@ -28,8 +28,14 @@ private:
 
 public:
 
+    inline std::vector<std::pair<Particle*, Triangle*>> getContactPairs() const { return contactPairs; }
+
     TerrainContact(STLReader* mesh, double friction)
-        : stlMesh(mesh), frictionCoefficient(friction) {}
+        : stlMesh(mesh), frictionCoefficient(friction) {
+            // initialize density level set
+            size_t npoints = mesh->getTriangles().size();
+            densityLevelSet.resize(npoints, 0.0);
+        }
 
     /// @brief compute the distance level set function in nodes \f$ d_{I}=(X_I-X_i) e_n \f$
     /// It is the distance from the node to the STL mesh
@@ -55,10 +61,18 @@ public:
     /// @brief Get the triangular mesh
     STLReader* getSTLMesh() { return stlMesh; }
 
+    /// @brief Get the density level set values at triangle centroids
+    const std::vector<double>& getTriangleDensityLevelSet() const { return densityLevelSet; }
+
     // \brief Compute the contact forces
     // \f$ f_n = -m_p \frac{v_p^n}{dt} e_n \f$
     // \f$ f_t = -m_p \frac{v_p - v_p^n e_n}{dt} \f$
     void computeContactForces(double dt);
+
+    // \brief Project particles that have penetrated the STL mesh
+    // If a particle is inside the STL mesh, move it to the surface
+    // \f$ x_projected = x_p - d * e_n \f$
+    void projectParticles(Mesh *mesh, std::vector<Particle *> *particles);
 
     /// @brief  Set  the distance threshold for contact detection
     /// @param threshold 

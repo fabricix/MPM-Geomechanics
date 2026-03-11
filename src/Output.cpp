@@ -39,15 +39,75 @@ namespace Output{
 
 	vector<string> printFields;
 	vector<string> printGridFields;
+	vector<string> printSTLContactFields;
 
-	void configureResultFiels(vector<string> fields)
+	namespace OutputTolerance {
+		
+		double deltaValue=1.0e-38;
+	}
+	
+	namespace Folders
+	{
+		string edian="";
+		
+		// grid
+		bool gridFolderExist=false;
+		string gridFolderName="grid";
+		string gridFileName="eulerianGrid";
+		string gridFileTimeSerie = "gridTimeSerie";
+		vector<double> gridFilesTime;
+		
+		// particles
+		bool particleFolderExist=false;
+		string particleFolderName="particles";
+		string particleFileName="particles";
+		string particleFileTimeSerie = "particleTimeSerie";
+		vector<double> particlesFilesTime;
+		
+		// stl mesh
+		bool stlContactFolderExist = false;
+		std::string stlContactFolderName = "centroid_points_stl_contact";
+		std::string stlContactFileName   = "centroid_points_stl_contact";
+		std::string stlContactFileTimeSerie = "centroid_points_stl_contactTimeSerie";
+		std::vector<double> stlContactFilesTime;
+	}
+	
+	bool isSTLFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printSTLContactFields.size(); ++i) {
+			
+			if (printSTLContactFields.at(i) == ifield || (printSTLContactFields.at(i) == "all" && ifield != "none")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	bool isGridFieldRequired(string ifield)
+	{
+		for (size_t i = 0; i < printGridFields.size(); ++i) {
+			
+			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	void configureResultFields(vector<string> fields)
 	{
 		printFields=fields;
 	}
 
-	void configureGridResultFiels(vector<string> fields)
+	void configureGridResultFields(vector<string> fields)
 	{
 		printGridFields=fields;
+	}
+
+	void configureSTLContactFields(vector<string> fields)
+	{
+		printSTLContactFields=fields;
 	}
 
 	bool isFieldRequired(string ifield) {
@@ -61,44 +121,7 @@ namespace Output{
 		}
 		return false;
 	}
-
-	bool isGridFieldRequired(string ifield)
-	{
-		for (size_t i = 0; i < printGridFields.size(); ++i) {
-
-			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	namespace OutputTolerance
-	{
-		double deltaValue=1.0e-38;
-	}
-
-	namespace Folders
-	{
-		string edian="";
-
-		// grid
-		bool gridFolderExist=false;
-		string gridFolderName="grid";
-		string gridFileName="eulerianGrid";
-		string gridFileTimeSerie = "gridTimeSerie";
-		vector<double> gridFilesTime;
-
-		// particles
-		bool particleFolderExist=false;
-		string particleFolderName="particles";
-		string particleFileName="particles";
-		string particleFileTimeSerie = "particleTimeSerie";
-		vector<double> particlesFilesTime;
-	}
-
 	void defineEdian(){
-
 		int16_t i = 1;
 		int8_t *p = (int8_t*) &i;
 		Folders::edian=(p[0]==1)?"LittleEndian":"BigEndian";
@@ -142,9 +165,27 @@ namespace Output{
 			Folders::particleFolderExist=true;
 	}
 	
+	void createSTLContactFolder() {
+
+		if (Folders::stlContactFolderExist)
+		return;
+
+		int status = 0;
+
+		#if defined (linux) || defined(__linux__)
+		status = mkdir(Folders::stlContactFolderName.c_str(), 0777);
+		#endif
+
+		#if defined (_WIN64) || defined(_WIN32)
+		status = _mkdir(Folders::stlContactFolderName.c_str());
+		#endif
+
+		if (status == -1)
+			Folders::stlContactFolderExist = true;
+	}
+
 	void writeParticles(vector<Particle*>* particles, double time)
 	{
-
 		if (isFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
@@ -293,6 +334,52 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("particle_contact_force"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactNormalForce() + p->getContactTangentialForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+		if (isFieldRequired("particle_contact_force_tangential"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force_tangential\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactTangentialForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+		if (isFieldRequired("particle_contact_force_normal"))
+		{
+			partFile << "<DataArray type=\"Float64\" Name=\"particle_contact_force_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				auto* p = particles->at(i);
+				Vector3d f = p->getContactNormalForce();
+				partFile << std::scientific << f.x() << " " << f.y() << " " << f.z() << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
+		if (isFieldRequired("particle_contact_flag"))
+		{
+			partFile << "<DataArray type=\"UInt8\" Name=\"particle_contact_flag\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i)
+			{
+				partFile << (particles->at(i)->getIfSTLContact() ? 1 : 0) << "\n";
+			}
+			partFile << "</DataArray>\n";
+		}
+
 		if (isFieldRequired("velocity")) {
 
 			// particle velocity
@@ -404,7 +491,6 @@ namespace Output{
 
 	void writeGrid(Mesh* mesh, CellType gridType, double time)
 	{
-
 		if (isGridFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
 			return;
 		}
@@ -444,7 +530,6 @@ namespace Output{
 		
 		// points
 		gridFile<<"<Points>\n";
-		// node position
 		gridFile<<"<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
 		for (int i = 0; i < nPoints; ++i) {
 			Vector3d pos=inodes->at(i)->getCoordinates();
@@ -492,11 +577,20 @@ namespace Output{
 			gridFile << "</DataArray>\n";
 		}
 
-		if (isGridFieldRequired("distance_stl")) {
+		if (isGridFieldRequired("distance_levelset")) {
 			// nodal distance level set function value
-			gridFile << "<DataArray type=\"Float64\" Name=\"Distance STL\" Format=\"ascii\">\n";
+			gridFile << "<DataArray type=\"Float64\" Name=\"distance level set\" Format=\"ascii\">\n";
 			for (int i = 0; i < nPoints; ++i) {
 				gridFile << scientific << (inodes->at(i)->getDistanceLevelSet()) << "\n";
+			}
+			gridFile << "</DataArray>\n";
+		}
+
+		if (isGridFieldRequired("density_levelset")) {
+			// nodal density levelset value
+			gridFile << "<DataArray type=\"Float64\" Name=\"density levelset\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				gridFile << scientific << (inodes->at(i)->getDensityLevelSet()) << "\n";
 			}
 			gridFile << "</DataArray>\n";
 		}
@@ -591,6 +685,110 @@ namespace Output{
 		gridFile.close();
 	}
 
+	void writeSTLContact(TerrainContact* tc, double time)
+	{	
+		if(tc==nullptr){
+			return;
+		}
+		
+		if (isSTLFieldRequired("none") && ModelSetup::getLoopCounter() != 0) {
+			return;
+		}
+
+		if (Folders::edian == "") {
+			defineEdian();
+		}
+
+		// create stl folder
+		if (!Folders::stlContactFolderExist) {
+			createSTLContactFolder();
+		}
+
+		// register time
+		Folders::stlContactFilesTime.push_back(time);
+
+		// get triangles and densities
+		const auto& triangles = tc->getSTLMesh()->getTriangles();
+		const auto& densities = tc->getTriangleDensityLevelSet();
+
+		const int nPoints = static_cast<int>(triangles.size());
+
+		std::ofstream file;
+		file.open(Folders::stlContactFolderName + "/" + Folders::stlContactFileName + "_" + std::to_string(Folders::stlContactFilesTime.size()) + ".vtu");
+		file.precision(4);
+		file << "<?xml version=\"1.0\"?>\n";
+		file << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\""<< Folders::edian.c_str() <<"\">\n";
+		file << "<UnstructuredGrid>\n";
+
+		// centroid points as VTK_VERTEX cells
+		file << "<Piece NumberOfPoints=\"" << nPoints << "\" NumberOfCells=\"" << nPoints << "\">\n";
+
+		// centroid points
+		file << "<Points>\n";
+		file << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			Vector3d pos = triangles[i].getCentroid();
+			file << std::scientific << pos.x() << " " << pos.y() << " " << pos.z() << "\n";
+		}
+		file << "</DataArray>\n";
+		file << "</Points>\n";
+	
+		// point data
+		file << "<PointData>\n";
+
+		if(isSTLFieldRequired("stl_density_levelset")){
+			// density level-set at centroids
+			file << "<DataArray type=\"Float64\" Name=\"stl_density_levelset\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				file << std::scientific << densities[i] << "\n";
+			}
+			file << "</DataArray>\n";
+		}
+		
+		if(isSTLFieldRequired("stl_normal")){
+			// normal vectors at centroids
+			file << "<DataArray type=\"Float64\" Name=\"stl_normal\" NumberOfComponents=\"3\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				Vector3d n = triangles[i].getNormal().normalized();
+				file << std::scientific << n.x() << " " << n.y() << " " << n.z() << "\n";
+			}
+			file << "</DataArray>\n";
+		}
+
+		file << "</PointData>\n";
+
+		// one VTK_VERTEX per centroid
+		file << "<Cells>\n";
+
+		// connectivity
+		file << "<DataArray type=\"UInt64\" Name=\"connectivity\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << i << "\n";
+		}
+		file << "</DataArray>\n";
+
+		// offsets
+		file << "<DataArray type=\"UInt64\" Name=\"offsets\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << i + 1 << "\n";
+		}
+		file << "</DataArray>\n";
+
+		// types: 1 = VTK_VERTEX
+		file << "<DataArray type=\"UInt8\" Name=\"types\" Format=\"ascii\">\n";
+		for (int i = 0; i < nPoints; ++i) {
+			file << 1 << "\n";
+		}
+		file << "</DataArray>\n";
+
+		file << "</Cells>\n";
+		file << "</Piece>\n";
+		file << "</UnstructuredGrid>\n";
+		file << "</VTKFile>\n";
+		
+		file.close();
+	}
+
 	void writeBody(Body* body, double time){
 
 		writeParticles(body->getParticles(),time);
@@ -609,57 +807,61 @@ namespace Output{
 
 	void writeResultsSeries() {
 
-		// Particle serie file
+		// Write results time series files for particles, grid and stl mesh
+		
 		// define edian
-		if(Folders::edian=="") {
-			defineEdian();
-		}
+		if(Folders::edian=="") { defineEdian(); }
 
-		// create particle folder
-		if(!Folders::particleFolderExist) {
-			createParticleFolder();
-		}
-
-		// open particle serie file
-		ofstream serieFile;
+		// create folders if not exist
+		if(!Folders::particleFolderExist) { createParticleFolder(); }
+		if(!Folders::gridFolderExist) { createGridFolder(); }
+		if(!Folders::stlContactFolderExist) { createSTLContactFolder(); }
+		
+		// create streams for series files
+		ofstream serieFile, gridSerieFile, stlContactSerieFile;
+		
+		// open series files
 		serieFile.open(Folders::particleFolderName+"/"+Folders::particleFileTimeSerie+".pvd");
-
-		// write the file
-		serieFile <<"<?xml version=\"1.0\"?>\n";
-		serieFile <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
-		serieFile <<"\t<Collection>\n";
-		for (size_t i = 0; i < Folders::particlesFilesTime.size(); ++i)
-		{
-			serieFile << "\t\t<DataSet timestep=\"" << Folders::particlesFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
-		}
-		serieFile <<"\t</Collection>\n";
-		serieFile << "</VTKFile>\n";
-
-		// Grid serie file
-		// define edian
-		if (Folders::edian == "") {
-			defineEdian();
-		}
-
-		// create grid folder
-		if (!Folders::gridFolderExist) {
-			createGridFolder();
-		}
-
-		// open grid serie file
-		ofstream gridSerieFile;
 		gridSerieFile.open(Folders::gridFolderName + "/" + Folders::gridFileTimeSerie + ".pvd");
+		stlContactSerieFile.open(Folders::stlContactFolderName + "/" + Folders::stlContactFileTimeSerie + ".pvd");
 
-		// write the file
-		gridSerieFile << "<?xml version=\"1.0\"?>\n";
-		gridSerieFile << "<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
-		gridSerieFile << "\t<Collection>\n";
-		for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i)
-		{
+		// vector of file pointers
+		std::vector<std::ofstream*> openFiles = { &serieFile, &gridSerieFile, &stlContactSerieFile };
+		
+		// Header for all files
+		for (auto filePtr : openFiles) {
+			
+			if (!filePtr->is_open()) {
+				throw std::runtime_error("Error: Unable to create series result file.");
+			}
+			
+			// write the file header
+			*filePtr <<"<?xml version=\"1.0\"?>\n";
+			*filePtr <<"<VTKFile type=\"Collection\" version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n";
+			*filePtr <<"\t<Collection>\n";
+		}
+
+		// particle series
+		for (size_t i = 0; i < Folders::particlesFilesTime.size(); ++i){
+			serieFile << "\t\t<DataSet timestep=\"" << Folders::particlesFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::particleFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}	
+		
+		// grid series
+		for (size_t i = 0; i < Folders::gridFilesTime.size(); ++i){
 			gridSerieFile << "\t\t<DataSet timestep=\"" << Folders::gridFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::gridFileName << "_" << i + 1 << ".vtu\"/>\n";
 		}
-		gridSerieFile << "\t</Collection>\n";
-		gridSerieFile << "</VTKFile>\n";
+
+		// stl contact series
+		for (size_t i = 0; i < Folders::stlContactFilesTime.size(); ++i) {
+			stlContactSerieFile << "\t\t<DataSet timestep=\"" << Folders::stlContactFilesTime.at(i) << "\" group=\"\" part=\"0\" file=\"" << Folders::stlContactFileName << "_" << i + 1 << ".vtu\"/>\n";
+		}
+
+		// Write end collection in all files
+		for (auto filePtr : openFiles) {
+			*filePtr << "\t</Collection>\n";
+			*filePtr << "</VTKFile>\n";
+			filePtr->close();
+		}		
 	}
 
 	void clearScreen() {
@@ -792,7 +994,7 @@ namespace Output{
 		}
 	}
 
-	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh)
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc)
 	{
 		// write initial state 
 		printModelInfo(bodies, iTime);
@@ -811,14 +1013,23 @@ namespace Output{
 
 		// write grid as a .vtu files
 		writeGrid(mesh, Output::CELLS);
+
+		// write STL contact results as a .vtu files
+		writeSTLContact(tc, iTime);
 	}
 
 	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime)
 	{
-		if (ModelSetup::getLoopCounter()%resultSteps == 0)
-		{
+		if (ModelSetup::getLoopCounter()%resultSteps == 0) 
 			writeGrid(mesh, Output::CELLS, iTime);
-		}
+	}
+
+	void writeSTLContactInStep(int resultSteps, TerrainContact* tc, double iTime)
+	{
+		if (!ModelSetup::getTerrainContactActive()) return;
+		
+		if (ModelSetup::getLoopCounter()%resultSteps == 0) 
+			writeSTLContact(tc, iTime);
 	}
 
 	void printElapsedTime() {

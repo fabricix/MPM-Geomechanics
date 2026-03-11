@@ -566,7 +566,11 @@ namespace Input {
 	///
 	vector<string> getResultFields();
 
+	/// \brief Return the grid result fields to be written
 	vector<string> getGridResultFields();
+
+	/// \brief Return the STL mesh files to be written
+	vector<string> getWriteSTLMeshFields();
 
 	/// \brief Read the damping definition in the input file
 	/// \return ModelSetup::DampingType The damping type
@@ -645,9 +649,6 @@ namespace Input {
 	/// \brief Return the penalty stiffness
 	/// \return penalty_stiffness Penalty stiffness
     double getPenaltyStiffness();	
-
-    /// \brief Return if the STL mesh file should be written
-	bool getWriteSTLMeshFile();
 
 	/// \brief Return the distance threshold for contact detection
 	double getDistanceThreshold();

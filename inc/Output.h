@@ -7,6 +7,7 @@
 #include "Mesh/Mesh.h"
 #include "Particle/Particle.h"
 #include "Body/Body.h"
+#include "TerrainContact.h"
 
 /// \namespace Output
 /// \brief Operations to write the results and the mesh for its visualization.
@@ -43,6 +44,9 @@ namespace Output {
 	///
 	void writeResultsSeries();
 	
+	/// \brief Write the STL contact results
+	void writeSTLContact(TerrainContact* tc, double time);
+
 	/// \brief Write the particles forming bodies
 	/// \param[in] bodies Body list
 	/// \param[in] time Time
@@ -50,11 +54,15 @@ namespace Output {
 
 	/// \brief Configures the fields to be written
 	/// \param[in] fields List of fields
-	void configureResultFiels(vector<string> fields);
+	void configureResultFields(vector<string> fields);
 
 	/// \brief Configures the grid fields to be written
 	/// \param[in] fields List of fields
-	void configureGridResultFiels(vector<string> fields);
+	void configureGridResultFields(vector<string> fields);
+	
+	/// \brief Configures the stlContact fields to be written
+	/// \param[in] fields List of fields
+	void configureSTLContactFields(vector<string> fields);
 
 	/// \brief Verify is the grid field must be written
 	/// \param[in] field Grid field to verify
@@ -76,9 +84,13 @@ namespace Output {
 	/// 
 	void writeGridInStep(int resultSteps, Mesh* mesh, double iTime);
 
+	/// \brief Write the STL contact results if the step is the step result
+	/// 
+	void writeSTLContactInStep(int resultSteps, TerrainContact* tc, double iTime);
+
 	/// \brief Write the initial state of the simulation
 	/// 
-	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh);
+	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc);
 
 	/// \brief Print initial program screen
 	///
