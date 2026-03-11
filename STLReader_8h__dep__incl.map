@@ -1,21 +1,24 @@
 <map id="STLReader.h" name="STLReader.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="109,5,211,31"/>
-<area shape="rect" id="Node000002" href="$TerrainContact_8h.html" title=" " alt="" coords="96,79,224,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,44,163,79,157,79,157,44"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="147,5,250,31"/>
+<area shape="rect" id="Node000002" href="$TerrainContact_8h.html" title=" " alt="" coords="135,79,263,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,44,201,79,196,79,196,44"/>
 <area shape="rect" id="Node000003" href="$Interpolation_8h.html" title=" " alt="" coords="5,152,123,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,114,81,154,78,150,132,110"/>
-<area shape="rect" id="Node000004" href="$MPM_8h.html" title=" " alt="" coords="177,299,244,324"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="168,117,211,298,205,299,163,118"/>
-<area shape="rect" id="Node000005" href="$Solver_8h.html" title=" " alt="" coords="303,152,377,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="202,106,312,149,310,154,200,111"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="295,185,265,203,238,227,227,245,220,264,214,299,209,298,215,263,223,242,234,224,261,198,293,181"/>
-<area shape="rect" id="Node000006" href="$Input_8h.html" title=" " alt="" coords="248,225,315,251"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="324,190,293,227,289,224,320,186"/>
-<area shape="rect" id="Node000007" href="$SolverExplicit_8h.html" title=" " alt="" coords="339,225,461,251"/>
-<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="361,186,392,223,388,227,357,190"/>
-<area shape="rect" id="Node000008" href="$SolverExplicitTwoPhaseUSL_8h.html" title=" " alt="" coords="486,225,698,251"/>
-<area shape="poly" id="edge9_Node000005_Node000008" title=" " alt="" coords="392,178,552,223,551,228,390,183"/>
-<area shape="rect" id="Node000009" href="$SolverExplicitUSL_8h.html" title=" " alt="" coords="722,225,870,251"/>
-<area shape="poly" id="edge10_Node000005_Node000009" title=" " alt="" coords="391,171,723,223,722,228,391,177"/>
-<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="262,263,224,300,220,297,258,259"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="166,113,87,154,85,149,164,108"/>
+<area shape="rect" id="Node000004" href="$MPM_8h.html" title=" " alt="" coords="203,299,269,324"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="193,118,187,146,188,177,197,212,209,246,232,297,227,299,204,248,192,214,183,178,182,146,188,117"/>
+<area shape="rect" id="Node000005" href="$Output_8h.html" title=" " alt="" coords="198,152,277,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="214,115,233,151,229,153,209,118"/>
+<area shape="rect" id="Node000006" href="$Solver_8h.html" title=" " alt="" coords="357,152,432,177"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="244,106,364,149,362,154,242,111"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="240,191,239,298,233,298,234,191"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="353,185,320,204,289,227,260,265,243,299,238,297,256,262,285,223,317,199,350,181"/>
+<area shape="rect" id="Node000007" href="$Input_8h.html" title=" " alt="" coords="299,225,365,251"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="377,189,344,227,340,223,373,186"/>
+<area shape="rect" id="Node000008" href="$SolverExplicit_8h.html" title=" " alt="" coords="389,225,512,251"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="415,187,444,224,440,227,410,190"/>
+<area shape="rect" id="Node000009" href="$SolverExplicitTwoPhaseUSL_8h.html" title=" " alt="" coords="537,225,749,251"/>
+<area shape="poly" id="edge11_Node000006_Node000009" title=" " alt="" coords="446,178,603,223,602,228,445,183"/>
+<area shape="rect" id="Node000010" href="$SolverExplicitUSL_8h.html" title=" " alt="" coords="773,225,921,251"/>
+<area shape="poly" id="edge12_Node000006_Node000010" title=" " alt="" coords="446,171,774,223,774,228,445,177"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="307,261,253,301,250,296,304,257"/>
 </map>

@@ -138,6 +138,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a191deaeb194a838a3401816a688dc21f" id="r_a191deaeb194a838a3401816a688dc21f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a191deaeb194a838a3401816a688dc21f">writeSTL</a> (const std::string &amp;output_filename) const</td></tr>
 <tr class="memdesc:a191deaeb194a838a3401816a688dc21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the STL file.  <br /></td></tr>
 <tr class="separator:a191deaeb194a838a3401816a688dc21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88f50a09dbbc76d8f7a740f122efbb20" id="r_a88f50a09dbbc76d8f7a740f122efbb20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a88f50a09dbbc76d8f7a740f122efbb20">STLResultsFlagSet</a> (bool flag)</td></tr>
+<tr class="memdesc:a88f50a09dbbc76d8f7a740f122efbb20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set flag to write STL results with normals.  <br /></td></tr>
+<tr class="separator:a88f50a09dbbc76d8f7a740f122efbb20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a0edd84740a111e13a273b20a59a7f2" id="r_a6a0edd84740a111e13a273b20a59a7f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#a6a0edd84740a111e13a273b20a59a7f2">STLResultsFlagGet</a> ()</td></tr>
+<tr class="memdesc:a6a0edd84740a111e13a273b20a59a7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get flag to write STL results with normals.  <br /></td></tr>
+<tr class="separator:a6a0edd84740a111e13a273b20a59a7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -153,6 +159,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ae4021a756f7ddecaf37e15ab246a653a" id="r_ae4021a756f7ddecaf37e15ab246a653a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structTriangle.html">Triangle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#ae4021a756f7ddecaf37e15ab246a653a">triangles</a></td></tr>
 <tr class="memdesc:ae4021a756f7ddecaf37e15ab246a653a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector containing the triangles.  <br /></td></tr>
 <tr class="separator:ae4021a756f7ddecaf37e15ab246a653a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac2957fa2b384e3ee18e5481688ca47" id="r_abac2957fa2b384e3ee18e5481688ca47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSTLReader.html#abac2957fa2b384e3ee18e5481688ca47">write_stl_results</a> = false</td></tr>
+<tr class="memdesc:abac2957fa2b384e3ee18e5481688ca47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to write STL results with normals.  <br /></td></tr>
+<tr class="separator:abac2957fa2b384e3ee18e5481688ca47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to read STL files. </p>
@@ -310,6 +319,61 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6a0edd84740a111e13a273b20a59a7f2" name="a6a0edd84740a111e13a273b20a59a7f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a0edd84740a111e13a273b20a59a7f2">&#9670;&#160;</a></span>STLResultsFlagGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool STLReader::STLResultsFlagGet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get flag to write STL results with normals. </p>
+
+</div>
+</div>
+<a id="a88f50a09dbbc76d8f7a740f122efbb20" name="a88f50a09dbbc76d8f7a740f122efbb20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88f50a09dbbc76d8f7a740f122efbb20">&#9670;&#160;</a></span>STLResultsFlagSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void STLReader::STLResultsFlagSet </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set flag to write STL results with normals. </p>
+
+</div>
+</div>
 <a id="a191deaeb194a838a3401816a688dc21f" name="a191deaeb194a838a3401816a688dc21f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a191deaeb194a838a3401816a688dc21f">&#9670;&#160;</a></span>writeSTL()</h2>
 
@@ -358,6 +422,30 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Vector containing the triangles. </p>
+
+</div>
+</div>
+<a id="abac2957fa2b384e3ee18e5481688ca47" name="abac2957fa2b384e3ee18e5481688ca47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abac2957fa2b384e3ee18e5481688ca47">&#9670;&#160;</a></span>write_stl_results</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool STLReader::write_stl_results = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flag to write STL results with normals. </p>
 
 </div>
 </div>

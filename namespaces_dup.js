@@ -62,7 +62,7 @@ var namespaces_dup =
       [ "getSTLMeshFile", "namespaceInput.html#a8207d83ed286e00540c9618987e89d7d", null ],
       [ "getTerrainContactActive", "namespaceInput.html#a3bca44ba8d9b5497b0403694dd7ea6a6", null ],
       [ "getTimeStep", "namespaceInput.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
-      [ "getWriteSTLMeshFile", "namespaceInput.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
+      [ "getWriteSTLMeshFields", "namespaceInput.html#aac71eb15d5c2c5ef168a7d4022568d77", null ],
       [ "readInputFile", "namespaceInput.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
       [ "readNodalPointLoads", "namespaceInput.html#a4af9571f7842a96471572cd550d598a9", null ],
       [ "readSeismicData", "namespaceInput.html#aec95c042d839e3ae12de0b73ee08279d", null ]
@@ -173,8 +173,9 @@ var namespaces_dup =
         [ "POINTS", "namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dace7a9247762e2a3fcd206c2cf670f53a", null ],
         [ "CELLS", "namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab", null ]
       ] ],
-      [ "configureGridResultFiels", "namespaceOutput.html#a7a4a6354cb022de0914a5c395c9d0c28", null ],
-      [ "configureResultFiels", "namespaceOutput.html#a53978f5e750be3407e4386574952b099", null ],
+      [ "configureGridResultFields", "namespaceOutput.html#a7849a9cb53015e958a744f6907fc53b2", null ],
+      [ "configureResultFields", "namespaceOutput.html#afd79cf7fe4926c3945b2f8f6067f82fe", null ],
+      [ "configureSTLContactFields", "namespaceOutput.html#a480e299af053dffd44af11b3d6e679c6", null ],
       [ "farewellScreen", "namespaceOutput.html#a4a665354e2a7494ee4e419fa9fb09f67", null ],
       [ "initFieldsKeyWords", "namespaceOutput.html#a18bf51a63ec8982f003850dc841f6798", null ],
       [ "isFieldRequired", "namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a", null ],
@@ -185,10 +186,12 @@ var namespaces_dup =
       [ "writeBody", "namespaceOutput.html#a0105765d71a194fa7b37c102184df47d", null ],
       [ "writeGrid", "namespaceOutput.html#aa77b7373bace33c4609fbf496cff05fb", null ],
       [ "writeGridInStep", "namespaceOutput.html#ab0fe49d1f2fd614ecb2c1eab5421845e", null ],
-      [ "writeInitialState", "namespaceOutput.html#a2abec973b9c55ff76a1dd8aee7e3fe61", null ],
+      [ "writeInitialState", "namespaceOutput.html#a61eed870a8dfe28e32cd04a31faa2cbf", null ],
       [ "writeParticles", "namespaceOutput.html#ac55623efce54f379b6357f973ec20736", null ],
       [ "writeResultInStep", "namespaceOutput.html#a36983e00c0d61d77b07ffc2390a54ddd", null ],
-      [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ]
+      [ "writeResultsSeries", "namespaceOutput.html#ad5461f5ab587538f96486f9c49194b89", null ],
+      [ "writeSTLContact", "namespaceOutput.html#a29231684f963477b950d84a4fb63b836", null ],
+      [ "writeSTLContactInStep", "namespaceOutput.html#a43cb382fafdfa725055eba4e04765683", null ]
     ] ],
     [ "Seismic", "namespaceSeismic.html", [
       [ "applySeismicVelocityMarkedSTLNodes", "namespaceSeismic.html#a4aed6a906097df08e741f79131f86f12", null ],

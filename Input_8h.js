@@ -40,7 +40,7 @@ var Input_8h =
     [ "getSTLMeshFile", "Input_8h.html#a8207d83ed286e00540c9618987e89d7d", null ],
     [ "getTerrainContactActive", "Input_8h.html#a3bca44ba8d9b5497b0403694dd7ea6a6", null ],
     [ "getTimeStep", "Input_8h.html#a62b6f277358d9dd6b95f39001e12bae4", null ],
-    [ "getWriteSTLMeshFile", "Input_8h.html#a68d947d7f2ea441b27ccc2f50b174df9", null ],
+    [ "getWriteSTLMeshFields", "Input_8h.html#aac71eb15d5c2c5ef168a7d4022568d77", null ],
     [ "readInputFile", "Input_8h.html#abb1fa3d31849a7acf80a9796da0242b0", null ],
     [ "readNodalPointLoads", "Input_8h.html#a4af9571f7842a96471572cd550d598a9", null ],
     [ "readSeismicData", "Input_8h.html#aec95c042d839e3ae12de0b73ee08279d", null ]

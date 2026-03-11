@@ -246,7 +246,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a3eccc5a6205228f1487de39592553fb3" id="r_a3eccc5a6205228f1487de39592553fb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMesh.html">Mesh</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#a3eccc5a6205228f1487de39592553fb3">mesh</a></td></tr>
 <tr class="memdesc:a3eccc5a6205228f1487de39592553fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">background grid mesh  <br /></td></tr>
 <tr class="separator:a3eccc5a6205228f1487de39592553fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afca4dd542ad25137b58650b69737b361" id="r_afca4dd542ad25137b58650b69737b361"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTerrainContact.html">TerrainContact</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#afca4dd542ad25137b58650b69737b361">terrainContact</a></td></tr>
+<tr class="memitem:afca4dd542ad25137b58650b69737b361" id="r_afca4dd542ad25137b58650b69737b361"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTerrainContact.html">TerrainContact</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#afca4dd542ad25137b58650b69737b361">terrainContact</a> = nullptr</td></tr>
 <tr class="memdesc:afca4dd542ad25137b58650b69737b361"><td class="mdescLeft">&#160;</td><td class="mdescRight">terrain contact object  <br /></td></tr>
 <tr class="separator:afca4dd542ad25137b58650b69737b361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6a0e2948d663892851627f0cc52f2dd" id="r_aa6a0e2948d663892851627f0cc52f2dd"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#aa6a0e2948d663892851627f0cc52f2dd">bodies</a></td></tr>
@@ -258,7 +258,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a85be5f9823bccdb2b9a3616ce46b57cf" id="r_a85be5f9823bccdb2b9a3616ce46b57cf"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classMaterial.html">Material</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#a85be5f9823bccdb2b9a3616ce46b57cf">materials</a></td></tr>
 <tr class="memdesc:a85be5f9823bccdb2b9a3616ce46b57cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">bodies discretized by material points  <br /></td></tr>
 <tr class="separator:a85be5f9823bccdb2b9a3616ce46b57cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cc099fec2f55ef6182fa80ff72c4138" id="r_a1cc099fec2f55ef6182fa80ff72c4138"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSolver.html">Solver</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#a1cc099fec2f55ef6182fa80ff72c4138">solver</a></td></tr>
+<tr class="memitem:a1cc099fec2f55ef6182fa80ff72c4138" id="r_a1cc099fec2f55ef6182fa80ff72c4138"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSolver.html">Solver</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPM.html#a1cc099fec2f55ef6182fa80ff72c4138">solver</a> = nullptr</td></tr>
 <tr class="memdesc:a1cc099fec2f55ef6182fa80ff72c4138"><td class="mdescLeft">&#160;</td><td class="mdescRight">operation for solve the equations in time  <br /></td></tr>
 <tr class="separator:a1cc099fec2f55ef6182fa80ff72c4138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1037,7 +1037,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classSolver.html">Solver</a>* MPM::solver</td>
+          <td class="memname"><a class="el" href="classSolver.html">Solver</a>* MPM::solver = nullptr</td>
         </tr>
       </table>
   </td>
@@ -1061,7 +1061,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classTerrainContact.html">TerrainContact</a>* MPM::terrainContact</td>
+          <td class="memname"><a class="el" href="classTerrainContact.html">TerrainContact</a>* MPM::terrainContact = nullptr</td>
         </tr>
       </table>
   </td>

@@ -132,6 +132,8 @@ Collaboration diagram for TerrainContact:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:abc39d270de13345d19ee1faa80bbea5f" id="r_abc39d270de13345d19ee1faa80bbea5f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="classParticle.html">Particle</a> *, <a class="el" href="structTriangle.html">Triangle</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#abc39d270de13345d19ee1faa80bbea5f">getContactPairs</a> () const</td></tr>
+<tr class="separator:abc39d270de13345d19ee1faa80bbea5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab05e8b3ab5a560ae041e99a23de84a6f" id="r_ab05e8b3ab5a560ae041e99a23de84a6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#ab05e8b3ab5a560ae041e99a23de84a6f">TerrainContact</a> (<a class="el" href="classSTLReader.html">STLReader</a> *mesh, double friction)</td></tr>
 <tr class="separator:ab05e8b3ab5a560ae041e99a23de84a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1629583d8c75c02c2e9864deb59960ca" id="r_a1629583d8c75c02c2e9864deb59960ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#a1629583d8c75c02c2e9864deb59960ca">computeDistanceLevelSetFunction</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
@@ -152,8 +154,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e2023696040cddd054d4c52f6000cee" id="r_a5e2023696040cddd054d4c52f6000cee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSTLReader.html">STLReader</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#a5e2023696040cddd054d4c52f6000cee">getSTLMesh</a> ()</td></tr>
 <tr class="memdesc:a5e2023696040cddd054d4c52f6000cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the triangular mesh.  <br /></td></tr>
 <tr class="separator:a5e2023696040cddd054d4c52f6000cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5653c6a91a4f0447b2bfbd7e6d8d2e46" id="r_a5653c6a91a4f0447b2bfbd7e6d8d2e46"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#a5653c6a91a4f0447b2bfbd7e6d8d2e46">getTriangleDensityLevelSet</a> () const</td></tr>
+<tr class="memdesc:a5653c6a91a4f0447b2bfbd7e6d8d2e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the density level set values at triangle centroids.  <br /></td></tr>
+<tr class="separator:a5653c6a91a4f0447b2bfbd7e6d8d2e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9437ff0e8e57e990b2ab72b5cd7d496e" id="r_a9437ff0e8e57e990b2ab72b5cd7d496e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#a9437ff0e8e57e990b2ab72b5cd7d496e">computeContactForces</a> (double dt)</td></tr>
 <tr class="separator:a9437ff0e8e57e990b2ab72b5cd7d496e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa87e8d9cdbad0c6525f791f98065e1d" id="r_afa87e8d9cdbad0c6525f791f98065e1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#afa87e8d9cdbad0c6525f791f98065e1d">projectParticles</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *particles)</td></tr>
+<tr class="separator:afa87e8d9cdbad0c6525f791f98065e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c1d6e460075c91a21e08806da17b8a5" id="r_a1c1d6e460075c91a21e08806da17b8a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTerrainContact.html#a1c1d6e460075c91a21e08806da17b8a5">setDistanceThreshold</a> (double threshold)</td></tr>
 <tr class="memdesc:a1c1d6e460075c91a21e08806da17b8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the distance threshold for contact detection.  <br /></td></tr>
 <tr class="separator:a1c1d6e460075c91a21e08806da17b8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -355,6 +362,31 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="abc39d270de13345d19ee1faa80bbea5f" name="abc39d270de13345d19ee1faa80bbea5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc39d270de13345d19ee1faa80bbea5f">&#9670;&#160;</a></span>getContactPairs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::pair&lt; <a class="el" href="classParticle.html">Particle</a> *, <a class="el" href="structTriangle.html">Triangle</a> * &gt; &gt; TerrainContact::getContactPairs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a5e2023696040cddd054d4c52f6000cee" name="a5e2023696040cddd054d4c52f6000cee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e2023696040cddd054d4c52f6000cee">&#9670;&#160;</a></span>getSTLMesh()</h2>
 
@@ -379,6 +411,33 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the triangular mesh. </p>
+
+</div>
+</div>
+<a id="a5653c6a91a4f0447b2bfbd7e6d8d2e46" name="a5653c6a91a4f0447b2bfbd7e6d8d2e46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5653c6a91a4f0447b2bfbd7e6d8d2e46">&#9670;&#160;</a></span>getTriangleDensityLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; double &gt; &amp; TerrainContact::getTriangleDensityLevelSet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the density level set values at triangle centroids. </p>
 
 </div>
 </div>
@@ -439,6 +498,34 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Interpolate distance level set function value of particle \( d_p = \sum_I d_I N_{Ip} \). </p>
+
+</div>
+</div>
+<a id="afa87e8d9cdbad0c6525f791f98065e1d" name="afa87e8d9cdbad0c6525f791f98065e1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa87e8d9cdbad0c6525f791f98065e1d">&#9670;&#160;</a></span>projectParticles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TerrainContact::projectParticles </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; *&#160;</td>
+          <td class="paramname"><em>particles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
