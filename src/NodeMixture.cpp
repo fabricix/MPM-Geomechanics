@@ -54,7 +54,7 @@ void NodeMixture::updateDampingForce() {
 
 void NodeMixture::integrateMomentum(double dt) { 
 
-    // intetrate momentum of solid phase
+    // integrate momentum of solid phase
     Node::integrateMomentum(dt);
 
     // integrate momentum of fluid phase

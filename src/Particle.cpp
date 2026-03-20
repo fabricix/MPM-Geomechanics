@@ -46,7 +46,7 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 	this->contributionNodes.clear();
 	this->contributionNodes.resize(ModelSetup::getContributionNodesNum());
 	
-	this->shape=0;
+	this->shape=nullptr;
 	this->material=material;
 
 	totalParticles++;
@@ -102,7 +102,6 @@ void Particle::updateDensity() {
 	
 	// update particle density
 	if ((1.0+volStrainInc)!=0.0){
-
 		density = density / (1.0+volStrainInc);
 	}
 }

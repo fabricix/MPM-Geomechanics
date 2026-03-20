@@ -39,7 +39,7 @@ public:
 
     /// \brief Returns the drag force of fluid in skeleton
     /// \return Particle drag force of fluid
-    virtual Vector3d getDragForceFluid() const;
+    virtual Vector3d getDragForceFluid(Vector3d gravity) const;
 
     /// \brief Returns pressure of fluid
     /// \return Current pore pressure of fluid

@@ -268,7 +268,7 @@ public:
 
     /// \brief Returns the drag force of fluid in particle
     /// \return Particle drag force of fluid
-    virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }
+    virtual inline Vector3d getDragForceFluid(Vector3d gravity) const { return Vector3d::Zero(); }
 
 	/// \brief Configures deformation gradient
     /// \param[in] deformation_gradient Particle deformation gradient

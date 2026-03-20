@@ -26,7 +26,7 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
 
-	// write initial particles and grid states
+	// Write initial particles and grid state
 	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
 
 	// Time integration loop
@@ -41,7 +41,7 @@ void SolverExplicit::Solve()
 		// Step 1.a: Interpolate nodal mass
 		Interpolation::nodalMass(mesh, particles);
 
-		// Step 1.a: Interpolate nodal momentum
+		// Step 1.b: Interpolate nodal momentum
 		Interpolation::nodalMomentum(mesh, particles);
 
 		// Step 1.c: Update seismic velocity and acceleration from record
@@ -56,10 +56,10 @@ void SolverExplicit::Solve()
 		// Step 3.2: External nodal force
 		Interpolation::nodalExternalForce(mesh, particles);
 
-		// Step 3.3: Total force nodal force
+		// Step 3.3: Total nodal force
 		Update::nodalTotalForce(mesh);
 
-		// Step 3.3: Impose boundary conditions on total force
+		// Step 3.4: Impose boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
 
 		// Step 4: Integrate nodal momentum

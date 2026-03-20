@@ -148,18 +148,17 @@ void Loads::setPrescribedPorePressureBoundaryForceBox(vector<Body*>& bodies, vec
 	}
 }
 
-void Loads::updatePrescribedPorePressure(vector<Body*>* bodies) {
+void Loads::updatePrescribedPorePressure(vector<Particle*>* particles) {
 
 	// for each particle in prescribed pressure list
 	for (size_t i = 0; i < Loads::prescribedPorePressureParticlesList.size(); ++i)
 	{	
 		// get bodies and particles indexes and pressure value
-		const int ibody = Loads::prescribedPorePressureParticlesList.at(i).bodyIndex;
 		const int ipart = Loads::prescribedPorePressureParticlesList.at(i).particleIndex;
 		const double ipressure = Loads::prescribedPorePressureParticlesList.at(i).pressure;
 
 		// setup pressure at particle
-		bodies->at(ibody)->getParticles()->at(ipart)->setPressureFluid(ipressure);
+		particles->at(ipart)->setPressureFluid(ipressure);
 	}
 }
 

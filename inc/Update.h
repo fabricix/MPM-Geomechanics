@@ -75,9 +75,9 @@ namespace Update {
 	///
 	/// \f$ p_p^{t+1,f} = p_p^{t,f} - \Delta t K_w / n^{t+1} ((1-n^{t+1}) v_{i,i}^{t+1/2,s}+ n^{t+1} v_{i,i}^{t+1/2,f} ) \f$
 	///
-	/// \param[in] bodies List of Body pointers
+	/// \param[in] particles List of Particle pointers
 	/// \param[in] dt Time step
-	void particlePressure(vector<Body*>* bodies, double dt);
+	void particlePressure(vector<Particle*>* particles, double dt);
 
 	/// \brief Update the particle velocity
 	///

@@ -1,28 +1,25 @@
 {
-	"stress_scheme_update":"USL",
+	"time":5,
 
-	"shape_function":"GIMP",
+	"critical_time_step_multiplier":0.05,
 
-	"time":2.0,
+	"gravity":[0.0,0.0,-10],
 
-	"time_step":1e-4,
-
-	"gravity":[0.0,0.0,-9.81],
-
-	"n_threads":1,
+	"n_threads":16,
 
 	"n_phases":2,
 
 	"results":
 	{
-		"print":10,
-		"material_point_results":["id","displacement","material","active","pressure"]
+		"print":50,
+		"material_point_results":["all"],
+		"grid_nodal_results":["all"]
 	},
 
 	"mesh":
 	{	
-		"cells_dimension":[0.25,0.25,0.25],
-		"cells_number":[4,1,40],
+		"cells_dimension":[0.5,0.5,0.5],
+		"cells_number":[2,2,25],
 		"origin":[0,0,0],
 		
 		"boundary_conditions":
@@ -32,7 +29,7 @@
 			"plane_Z0":"fixed",
 			"plane_Xn":"sliding",
 			"plane_Yn":"sliding",
-			"plane_Zn":"sliding"
+			"plane_Zn":"free"
 		},
 
 		"boundary_conditions_fluid":
@@ -42,45 +39,35 @@
 			"plane_Z0":"fixed",
 			"plane_Xn":"sliding",
 			"plane_Yn":"sliding",
-			"plane_Zn":"sliding"
+			"plane_Zn":"free"
 		}
 	},
 
-	"material":
-	{
-		"elastic":
-		{
-			"type":"elastic",
-			"id":1,
-			"young":30e6,
-			"density":2500,
-			"poisson":0.2,
-			"density_fluid":1000,
-			"porosity":0.3,
-			"bulk_fluid":50e6,
-			"hydraulic_conductivity":[1e-3,1e-3,1e-3]
-		}
-	},
-
+	"material":[{
+		"type":"elastic",
+		"id":1,
+		"young":20e6,
+		"density":2500,
+		"poisson":0.3,
+		"density_fluid":1000,
+		"porosity":0.2,
+		"bulk_fluid":20e6,
+		"hydraulic_conductivity":[1e-3,1e-3,1e-3]
+	}],
+	
 	"body":
-	{
-		"cuboid":
-		{
-			"type":"cuboid",
-			"id":1,
-			"point_p1":[0,0,0],
-			"point_p2":[1,0.25,9],
-			"material_id":1
-		}
-	},
+	[{
+		"type":"cuboid",
+		"id":1,
+		"point_p1":[0,0,0],
+		"point_p2":[1,1,10],
+		"material_id":1
+	}],
 
 	"prescribed_pressure_box":
-	{
-		"pressure_prescibed_1":
-		{
-			"point_p1":[0,0,8.85],
-			"point_p2":[1,0.25,10],
-			"pressure":0
-		}
-	}
+	[{
+		"point_p1":[0,0,9.8],
+		"point_p2":[1,1,10],
+		"pressure":0
+	}]
 }

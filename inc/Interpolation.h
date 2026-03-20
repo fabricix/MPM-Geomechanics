@@ -37,8 +37,8 @@ namespace Interpolation
 	/// \f$ m_I^f = \sum_p m_p^f N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list of Bodies
-	void nodalMassFuid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list of Particles pointers
+	void nodalMassFluid(Mesh* mesh, vector<Particle*>* particles);
 
 	/// \brief Interpolate solid momentum from particles to nodes
 	///
@@ -53,8 +53,8 @@ namespace Interpolation
 	/// \f$ p_{iI}^f = \sum_p p_{ip}^f N_{Ip}\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalMomentumFluid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list o particles pointers
+	void nodalMomentumFluid(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate internal force of solid from particles to nodes
 	///
@@ -73,8 +73,8 @@ namespace Interpolation
 	/// \f$ f_{iI}^{int,f}= \sum_p n p^f N_{Ip,i} V_p\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalInternalForceFluid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] bodies A list of particle pointers
+	void nodalInternalForceFluid(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate external force of solid from particles to nodes
 	///
@@ -97,8 +97,8 @@ namespace Interpolation
 	/// \f$ f_{iI}^{ext,f}=\sum_p b_{ip} m_p^w N_{Ip} - \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalExternalForceFluid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] bodies A list of Particle pointers
+	void nodalExternalForceFluid(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate drag force of fluid from particles to nodes
 	///
@@ -109,8 +109,9 @@ namespace Interpolation
 	/// \f$ f_{iI}^{drag,f}= \sum_p \frac{m_p^f n g}{k_{ip}}(v^w_{ip}-v^s_{ip})N_{Ip} \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalDragForceFluid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list o Particle pointers
+	/// \param[in] gravity vector acceleration
+	void nodalDragForceFluid(Mesh *mesh, vector<Particle *> *particles, Vector3d gravity);
 
 	/// \brief Interpolate the strain increment of solid at particle
 	///
@@ -126,9 +127,9 @@ namespace Interpolation
 	/// \f$ \Delta \epsilon_{ijp}^f = \frac{1}{2}(N_{Ip,j} v_{iI}^f + N_{Ip,i} v_{jI}^f) \f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
+	/// \param[in] particles A list o Particle pointers
 	/// \param[in] time_step Time step
-	void particleStrainIncrementFluid(Mesh *mesh, vector<Body *> *bodies, double time_step);
+	void particleStrainIncrementFluid(Mesh *mesh, vector<Particle *> *particles, double time_step);
 
 	/// \brief Interpolate vorticity increment of solid at particle
 	///

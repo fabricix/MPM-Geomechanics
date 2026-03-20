@@ -10,135 +10,115 @@
 #include "DynamicRelaxation.h"
 #include "Energy.h"
 
-#include <vector>
-using std::vector;
-
-#include <iostream>
-using std::cout;
-
 SolverExplicitTwoPhaseUSL::SolverExplicitTwoPhaseUSL() : Solver() {}
 
+// TODO: Merge this function with SolverExplicit::Solve() and use the same function for both solvers. The differences between the two solvers can be handled by if conditions inside the function.
 void SolverExplicitTwoPhaseUSL::Solve()
 {
-
-	// check if is two-phase calculations
+	// Check for two-phase calculations
 	if (!ModelSetup::getTwoPhaseActive()) return;
 
-	// simulation variables
+	// Initialization of simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
 	double iTime = 0.0;
 	int loopCounter = 0;
+	Vector3d gravity = ModelSetup::getGravity();
 	ModelSetup::setLoopCounter(loopCounter);
 
-	// write initial particles and grid states
-	// Output::writeInitialState(bodies, iTime, mesh);
+	// Write initial particles and grid state
+	Output::writeInitialState(bodies, iTime, mesh, nullptr);
 
-	// solve in time
+	// Time integration loop
 	while (iTime < time)
 	{
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
 
-		// advance in time
-		ModelSetup::setCurrentTime(iTime += dt);
-
-		// update contribution nodes
+		// Step 0: Update contribution nodes
 		Update::contributionNodes(mesh, particles);
 
-		// nodal mass of solid
+		// Step 1.a: Interpolate nodal mass of solid and fluid phases
 		Interpolation::nodalMass(mesh, particles);
+		Interpolation::nodalMassFluid(mesh, particles);
+	
+		// Step 1.b: Interpolate nodal momentum
+		Interpolation::nodalMomentum(mesh, particles);
+		Interpolation::nodalMomentumFluid(mesh, particles);
 
-		// nodal mass of fluid
-		Interpolation::nodalMassFuid(mesh, bodies);
-
-		// impose momentum boundary condition in solid phase
+		// Step 2: Impose momentum boundary conditions
 		Update::boundaryConditionsMomentum(mesh);
-
-		// impose momentum boundary condition in fluid phase
 		Update::boundaryConditionsMomentumFluid(mesh);
 		
-		// nodal internal force of mixture
+		// Step 3.1: Internal nodal force
 		Interpolation::nodalInternalForce(mesh, particles);
+		Interpolation::nodalInternalForceFluid(mesh, particles);
 
-		// nodal internal force of fluid phase
-		Interpolation::nodalInternalForceFluid(mesh, bodies);
-
-		// nodal external force of mixture	
+		// Step 3.2: External nodal force
 		Interpolation::nodalExternalForce(mesh, particles);
+		Interpolation::nodalExternalForceFluid(mesh, particles);
 
-		// nodal external force of fluid phase
-		Interpolation::nodalExternalForceFluid(mesh, bodies);
+		// Step 3.3: nodal drag force
+		Interpolation::nodalDragForceFluid(mesh, particles, gravity);
 
-		// nodal drag force of fluid
-		Interpolation::nodalDragForceFluid(mesh, bodies);
-
-		// nodal total force in mixture
+		// Step 3.4: Total nodal force
 		Update::nodalTotalForce(mesh);
 
-		// impose force boundary conditions
+		// Step 3.5: Impose boundary conditions on forces
 		Update::boundaryConditionsForce(mesh);
-
-		// impose force boundary conditions
 		Update::boundaryConditionsForceFluid(mesh);
 
-		// integrate the grid nodal momentum equation in mixture
+		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// update particle velocity of solid phase
+		// Step 5.1: Update velocity
 		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
-
-		// update particle velocity of fluid phase
 		Update::particleVelocityFluid(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// update particle position of solid phase
+		// Step 5.3: Update particle position
 		Update::particlePosition(mesh, particles, dt);
 
-		// nodal velocity
+		// Step 6: Nodal velocity
 		Update::nodalVelocity(mesh);
 
-		// calculate particle strain increment
+		// Step 7.1: Update strain increments
 		Interpolation::particleStrainIncrement(mesh, particles, dt);
+		Interpolation::particleStrainIncrementFluid(mesh, particles, dt);
 
-		// calculate particle strain increment of fluid phase
-		Interpolation::particleStrainIncrementFluid(mesh, bodies, dt);
-
-		// calculate particle vorticity increment	
+		// Step 7.2: Update vorticity increments
 		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
-		// calculate particle deformation gradient
+		// Step 7.3: Update deformation gradient
 		Interpolation::particleDeformationGradient(mesh, particles, dt);
 
-		// update particle density
-		Update::particleDensity(particles);
-
-		// update particle porosity
+		// Step 7.4 Update porosity
 		Update::particlePorosity(particles);
 
-		// update particle pressure
-		Update::particlePressure(bodies, dt);
+		// Step 8.1: Update pressure
+		Update::particlePressure(particles, dt);
 
-		// update particle stress
+		// Step 8.2: Update stress
 		Update::particleStress(particles);
 
-		// write particles and grid in step
+		// Step 9.0: Write results
 		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
 
-		// reset all nodal values
+		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Compute current kinetic energy
+		// Step 11: Compute current kinetic energy
 		Energy::computeKineticEnergy(particles);
 
-		// verify the static solution requirements
+		// Step 12: Verify the static solution requirements
 		DynamicRelaxation::setStaticSolution(particles);
 
-		// advance in time
+		// Step 13: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
 	}
 
 	// write results series
+	Output::writeGrid(mesh, Output::CELLS);
 	Output::writeResultsSeries();
 }

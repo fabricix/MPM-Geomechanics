@@ -126,29 +126,22 @@ void Update::particleStress(vector<Particle*>* particles) {
 	}
 }
 
-void Update::particlePressure(vector<Body*>* bodies, double dt) {
+void Update::particlePressure(vector<Particle*>* particles, double dt) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle
+	// for each particle
 #ifdef _OPENMP
 		#pragma omp parallel for shared(particles)
 #endif
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-			// update particle stress
-			particles->at(i)->updatePressure(dt);
-		}
+		// update particle stress
+		particles->at(i)->updatePressure(dt);
 	}
 	// set up prescribed pore pressure
-	Loads::updatePrescribedPorePressure(bodies);
+	Loads::updatePrescribedPorePressure(particles);
 }
 
 void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double dt) {
@@ -181,7 +174,6 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 			Node* nodeI = nodes->at(contribI.getNodeId());
 
 			if (nodeI->getMass()!=0.0) {
-
 				// compute the velocity rate contribution
 				velocityRate+=nodeI->getTotalForce()*contribI.getWeight()/nodeI->getMass();
 			}
@@ -269,7 +261,6 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 			Node* nodeI = nodes->at(contribI.getNodeId());
 
 			if (nodeI->getMass()!=0.0){
-
 				// compute the position rate contribution
 				positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
 			}
@@ -361,6 +352,7 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 	}
 }
 
+// TODO: Merge this function with setPlaneMomentum() and use the same function for both solid and fluid momentum. The differences between the two can be handled by if conditions inside the function.
 void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 #ifdef _OPENMP

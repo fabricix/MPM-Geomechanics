@@ -110,8 +110,8 @@ namespace Loads {
     void setInitialPorePressureMaterial(vector<Body*>& bodies, vector<Loads::PressureMaterial> pressures);
 
     /// \brief Set prescribed pore pressure in particles
-    /// \param[in] bodies A list containing Body pointers 
-    void updatePrescribedPorePressure(vector<Body*>* bodies);
+    /// \param[in] particles A list containing Particle pointers 
+    void updatePrescribedPorePressure(vector<Particle*>* particles);
     
     /// \brief Set external boundary force in fluid phase due the prescribed pore pressure in particles
     ///
