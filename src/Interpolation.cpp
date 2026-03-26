@@ -9,6 +9,7 @@
 #include "TerrainContact.h"
 #include "Seismic.h"
 #include "BishopChi.h"
+#include <Eigen/Eigenvalues>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -247,18 +248,6 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 
 		// get effective stress of solid
 		Matrix3d pStress = particles->at(i)->getStress();
-
-		// use total stress if hydro-mechanical coupling is enabled
-		if (isOneDirectionHydromechanicalCoupling) {
-
-			if (isUnsaturatedAnalysis){
-				double chi = BishopChi::getChiFromSr(particles->at(i)->getSaturation());
-				pStress -= chi * particles->at(i)->getPorePressure() * Matrix3d::Identity();
-			}
-			else{
-				pStress -= particles->at(i)->getPorePressure() * Matrix3d::Identity();
-			}
-		}
 
 		// get the particle volume
 		double pVolume = particles->at(i)->getCurrentVolume();

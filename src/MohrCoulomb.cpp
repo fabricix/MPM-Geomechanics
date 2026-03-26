@@ -10,6 +10,9 @@ using namespace Eigen;
 #include <Materials/MohrCoulomb.h>
 #include "Warning.h"
 
+#include "BishopChi.h"
+#include "Model.h"
+
 #ifndef PI
 #define PI 3.141592653589793
 #endif
@@ -43,26 +46,59 @@ void MohrCoulomb::updateStress(Particle *particle) const
     // get trial elastic stress
     Matrix3d trialStress = particle->getStress();
 
-    // compute principal values and directions
-    Eigen::SelfAdjointEigenSolver<Matrix3d> eigensolver(trialStress);
+    Matrix3d trialStressEff = trialStress;
 
-    // principal stresses
-    double s1 = eigensolver.eigenvalues()[0];
-    double s2 = eigensolver.eigenvalues()[1];
-    double s3 = eigensolver.eigenvalues()[2];
-    
+    double uw_used= 0.0;
+    bool use_uw_positive = false;
+
+  
     // current parameters of strength
     double cohesion_curr = this->softening.cohesion_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->cohesion,this->softening.cohesion_residual) : this->cohesion;
     double friction_curr = this->softening.friction_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->friction,this->softening.friction_residual) : this->friction;
     double tensile_curr  = this->softening.tensile_softening_active  ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->tensile, this->softening.tensile_residual)  : this->tensile ;
     double dilation_curr = this->softening.dilation_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->dilation,this->softening.dilation_residual) : this->dilation;
     
+    double cohesion_used = cohesion_curr;
+
+    bool isHM= ModelSetup::getHydroMechOneWayEnabled();
+    
+    if (isHM) {
+
+    const double uw = particle->getPorePressure();
+    const double chi = BishopChi::getChiFromSr(particle->getSaturation());
+
+    if (uw < 0.0) {
+
+    const double suction = -uw;
+    const double phi_rad = friction_curr * PI / 180.0;
+    const double c_app = chi * suction * std::tan(phi_rad);
+
+    cohesion_used += c_app;
+    }
+    else if (uw > 0.0) {
+
+    use_uw_positive = true;
+    uw_used = uw;
+
+    trialStressEff += uw * Matrix3d::Identity();
+    
+        }
+    }
+
+    Eigen::SelfAdjointEigenSolver<Matrix3d> eigensolver(trialStressEff);
+
+    double s1 = eigensolver.eigenvalues()[0];
+    double s2 = eigensolver.eigenvalues()[1];
+    double s3 = eigensolver.eigenvalues()[2];
+
+
     // model definition variables
     double Nfi  = (1.0+sin(friction_curr*PI/180.0))/(1.0-sin(friction_curr*PI/180.0));
     double Npsi = (1.0+sin(dilation_curr*PI/180.0))/(1.0-sin(dilation_curr*PI/180.0));
 
     // shear failure criteria
-    double fs = s1 - s3*Nfi + 2.0*cohesion_curr*sqrt(Nfi);
+    //double fs = s1 - s3*Nfi + 2.0*cohesion_curr*sqrt(Nfi);
+    double fs = s1 - s3*Nfi + 2.0*cohesion_used*sqrt(Nfi);
 
     // tensile failure criteria
     double ft = tensile_curr - s3;
@@ -79,7 +115,8 @@ void MohrCoulomb::updateStress(Particle *particle) const
         
         // straight line dividing shear and tensile failure type
         double ap = sqrt(1.0+(Nfi*Nfi))+Nfi;
-        double sp = tensile_curr*Nfi-2.0*cohesion_curr*sqrt(Nfi);
+        //double sp = tensile_curr*Nfi-2.0*cohesion_curr*sqrt(Nfi);
+        double sp = tensile_curr*Nfi-2.0*cohesion_used*sqrt(Nfi);
         double hy = s3 - tensile_curr + ap*(s1-sp);
         
         // plastic strain matrix
@@ -127,8 +164,15 @@ void MohrCoulomb::updateStress(Particle *particle) const
         // stress tensor in general form
         Matrix3d sres = (D*spal)*D.transpose();
 
+        Matrix3d sres_total = sres;
+
+        if (isHM && use_uw_positive) {
+        sres_total -= uw_used * Matrix3d::Identity();
+        }
+
         // sets the new stress
-        particle->setStress(sres);
+        //particle->setStress(sres);
+        particle->setStress(sres_total);
 
         // update the effective plastic strain
         particle->addPlasticStrain(sqrt(2.0/3.0*(dep*dep.transpose()).trace()));

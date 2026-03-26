@@ -1,0 +1,2081 @@
+[
+  {
+    "position": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65102.450907964,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65220.647829541791,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65429.171548990111,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65675.141422198372,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65886.722972672607,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65980.3140529058,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65872.016129485564,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 65483.361725759212,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 64751.513146309022,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 63630.209387574854,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 62095.74044530074,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 60144.194045766504,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 57797.839257714892,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 55103.334143131753,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 52145.128706797484,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 49040.579766680981,
+    "saturation": 1
+  },
+  {
+    "position": [
+      16.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 45960.801814491038,
+    "saturation": 1
+  },
+  {
+    "position": [
+      17.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 43110.780367226747,
+    "saturation": 1
+  },
+  {
+    "position": [
+      18.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 40686.31940674776,
+    "saturation": 1
+  },
+  {
+    "position": [
+      19.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 38788.2148883746,
+    "saturation": 1
+  },
+  {
+    "position": [
+      20.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 37396.501937999659,
+    "saturation": 1
+  },
+  {
+    "position": [
+      21.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 36418.644854874437,
+    "saturation": 1
+  },
+  {
+    "position": [
+      22.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 35747.284083538587,
+    "saturation": 1
+  },
+  {
+    "position": [
+      23.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 35291.801018745777,
+    "saturation": 1
+  },
+  {
+    "position": [
+      24.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34985.080052435842,
+    "saturation": 1
+  },
+  {
+    "position": [
+      25.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34780.188622475347,
+    "saturation": 1
+  },
+  {
+    "position": [
+      26.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34645.256685646636,
+    "saturation": 1
+  },
+  {
+    "position": [
+      27.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34559.13876304702,
+    "saturation": 1
+  },
+  {
+    "position": [
+      28.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34508.299667994339,
+    "saturation": 1
+  },
+  {
+    "position": [
+      29.5,
+      0.5,
+      0.5
+    ],
+    "pressure": 34484.737622129287,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 55207.214561104767,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 55353.81703142936,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 55616.2874773374,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 55935.788696133168,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 56233.16876206638,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 56410.135426755573,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 56374.677279581665,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 56041.932793226435,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 55345.6964221218,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 54250.857092362363,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 52725.28302087068,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 50755.309805964411,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 48358.221630848166,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 45579.227255666512,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 42495.392309839939,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 39215.463646841883,
+    "saturation": 1
+  },
+  {
+    "position": [
+      16.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 35919.177392239813,
+    "saturation": 1
+  },
+  {
+    "position": [
+      17.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 32859.510450545604,
+    "saturation": 1
+  },
+  {
+    "position": [
+      18.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 30324.496860164123,
+    "saturation": 1
+  },
+  {
+    "position": [
+      19.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 28457.221384642264,
+    "saturation": 1
+  },
+  {
+    "position": [
+      20.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 27171.829299008521,
+    "saturation": 1
+  },
+  {
+    "position": [
+      21.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 26306.996570466803,
+    "saturation": 1
+  },
+  {
+    "position": [
+      22.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 25726.661338764694,
+    "saturation": 1
+  },
+  {
+    "position": [
+      23.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 25337.139400761313,
+    "saturation": 1
+  },
+  {
+    "position": [
+      24.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 25076.097024148512,
+    "saturation": 1
+  },
+  {
+    "position": [
+      25.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 24902.094271302627,
+    "saturation": 1
+  },
+  {
+    "position": [
+      26.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 24787.61249179603,
+    "saturation": 1
+  },
+  {
+    "position": [
+      27.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 24714.577424065516,
+    "saturation": 1
+  },
+  {
+    "position": [
+      28.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 24671.470945810346,
+    "saturation": 1
+  },
+  {
+    "position": [
+      29.5,
+      0.5,
+      1.5
+    ],
+    "pressure": 24651.491867312994,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 45198.100226062976,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 45404.131862200215,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 45780.768878872579,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 46256.970844360505,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 46736.742191897079,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 47089.793458107422,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 47205.666469617019,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 46998.118077372281,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 46408.60507638647,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 45358.568396772025,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 43820.086219716606,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 41795.492778867032,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 39313.871094248912,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 36380.152147451467,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 33058.521667125504,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 29426.387996438094,
+    "saturation": 1
+  },
+  {
+    "position": [
+      16.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 25643.26899814064,
+    "saturation": 1
+  },
+  {
+    "position": [
+      17.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 22049.414213827145,
+    "saturation": 1
+  },
+  {
+    "position": [
+      18.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 19247.611365167661,
+    "saturation": 1
+  },
+  {
+    "position": [
+      19.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 17534.595171357534,
+    "saturation": 1
+  },
+  {
+    "position": [
+      20.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 16538.137647555417,
+    "saturation": 1
+  },
+  {
+    "position": [
+      21.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 15921.800786102393,
+    "saturation": 1
+  },
+  {
+    "position": [
+      22.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 15522.928886033686,
+    "saturation": 1
+  },
+  {
+    "position": [
+      23.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 15259.415623312942,
+    "saturation": 1
+  },
+  {
+    "position": [
+      24.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 15084.036958757531,
+    "saturation": 1
+  },
+  {
+    "position": [
+      25.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 14967.490174065482,
+    "saturation": 1
+  },
+  {
+    "position": [
+      26.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 14890.912720338185,
+    "saturation": 1
+  },
+  {
+    "position": [
+      27.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 14842.088662019685,
+    "saturation": 1
+  },
+  {
+    "position": [
+      28.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 14813.278081406053,
+    "saturation": 1
+  },
+  {
+    "position": [
+      29.5,
+      0.5,
+      2.5
+    ],
+    "pressure": 14799.927364315055,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 35014.9093334033,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 35315.377842760994,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 35877.516224246756,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 36614.219001050173,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 37400.209644362345,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 38040.477025803812,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 38403.169441762773,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 38419.199437939853,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 37950.273239517395,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 36946.426916179444,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 35419.092043424767,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 33342.629819442343,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 30723.182184864931,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 27586.962800134923,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 23951.033707041177,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 19830.112072358068,
+    "saturation": 1
+  },
+  {
+    "position": [
+      16.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 15241.122959402346,
+    "saturation": 1
+  },
+  {
+    "position": [
+      17.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 10356.314662986586,
+    "saturation": 1
+  },
+  {
+    "position": [
+      18.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 6891.8736454071795,
+    "saturation": 1
+  },
+  {
+    "position": [
+      19.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5956.0076815529483,
+    "saturation": 1
+  },
+  {
+    "position": [
+      20.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5559.7143722917917,
+    "saturation": 1
+  },
+  {
+    "position": [
+      21.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5332.531865075036,
+    "saturation": 1
+  },
+  {
+    "position": [
+      22.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5189.56873446256,
+    "saturation": 1
+  },
+  {
+    "position": [
+      23.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5096.1974553800883,
+    "saturation": 1
+  },
+  {
+    "position": [
+      24.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 5034.3678954143152,
+    "saturation": 1
+  },
+  {
+    "position": [
+      25.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 4993.3679333543087,
+    "saturation": 1
+  },
+  {
+    "position": [
+      26.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 4966.4545874987516,
+    "saturation": 1
+  },
+  {
+    "position": [
+      27.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 4949.3021749639438,
+    "saturation": 1
+  },
+  {
+    "position": [
+      28.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 4939.18298360237,
+    "saturation": 1
+  },
+  {
+    "position": [
+      29.5,
+      0.5,
+      3.5
+    ],
+    "pressure": 4934.4940966475324,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 24564.39468215291,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 24990.397356714187,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 25826.962784322408,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 26973.650125746546,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 28235.043272010556,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 29307.663543535258,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 30060.259872896848,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 30339.489371957443,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 30021.019353462176,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 29117.180511212035,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 27586.965754493343,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 25434.203246377641,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 22666.041414857995,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 19303.920492471741,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 15330.53666249362,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 10707.419351985289,
+    "saturation": 1
+  },
+  {
+    "position": [
+      16.5,
+      0.5,
+      4.5
+    ],
+    "pressure": 5312.2842723623326,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 13732.782240876786,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 14272.618239888778,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 15464.579340821276,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 17236.588406241859,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 19284.060048371768,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 20981.373408845382,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 22250.999646822882,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 22850.619121573422,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 22739.824249924419,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 21932.84763394398,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 20390.080552384137,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 18146.538198344344,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 15226.408049487416,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 11627.998324563607,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 7344.1467060259793,
+    "saturation": 1
+  },
+  {
+    "position": [
+      15.5,
+      0.5,
+      5.5
+    ],
+    "pressure": 2337.0133681262541,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 2364.1018752897007,
+    "saturation": 1
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 2940.5338443113628,
+    "saturation": 1
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 4245.8057844309269,
+    "saturation": 1
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 7456.0805925497643,
+    "saturation": 1
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 10791.966866539409,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 13215.526547725829,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 15125.64775097012,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 16084.152653791452,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 16226.4478343184,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 15467.24089919092,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 13914.586110395076,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 11563.846320762854,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 8460.26981559933,
+    "saturation": 1
+  },
+  {
+    "position": [
+      13.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 4630.925333223774,
+    "saturation": 1
+  },
+  {
+    "position": [
+      14.5,
+      0.5,
+      6.5
+    ],
+    "pressure": 72.785901829500517,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      7.5
+    ],
+    "pressure": -4719.8859598115087,
+    "saturation": 0.96137864233243731
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      7.5
+    ],
+    "pressure": -4281.0941188338275,
+    "saturation": 0.9649607307508925
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      7.5
+    ],
+    "pressure": -3326.4804688396935,
+    "saturation": 0.97296394874088454
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      7.5
+    ],
+    "pressure": -541.06388899855915,
+    "saturation": 0.99654242687242744
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 2236.308750587642,
+    "saturation": 1
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 6323.412298509792,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 8884.0879627167742,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 10249.536824067918,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 10578.134952892207,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 9876.9999041737628,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 8230.7821264244812,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 5722.4986014144606,
+    "saturation": 1
+  },
+  {
+    "position": [
+      12.5,
+      0.5,
+      7.5
+    ],
+    "pressure": 2414.2623580840987,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      8.5
+    ],
+    "pressure": -5686.3194779421256,
+    "saturation": 0.95372941522126253
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      8.5
+    ],
+    "pressure": -5432.1590105845371,
+    "saturation": 0.95570815928452
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      8.5
+    ],
+    "pressure": -4883.13252949084,
+    "saturation": 0.96006296810600578
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      8.5
+    ],
+    "pressure": -3904.4475877858117,
+    "saturation": 0.968086154305416
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      8.5
+    ],
+    "pressure": -2493.9698822327559,
+    "saturation": 0.98012211240515468
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 701.308672739367,
+    "saturation": 1
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 3797.38141975788,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 5544.5513681455368,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 5949.7787084205011,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 5212.0420036775886,
+    "saturation": 1
+  },
+  {
+    "position": [
+      10.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 3422.1558770607539,
+    "saturation": 1
+  },
+  {
+    "position": [
+      11.5,
+      0.5,
+      8.5
+    ],
+    "pressure": 695.09968336398481,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -4775.2271403802133,
+    "saturation": 0.96093157253626527
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -4602.5252603510235,
+    "saturation": 0.96233026794949161
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -4247.905079624973,
+    "saturation": 0.96523430516406306
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -3692.8156234323969,
+    "saturation": 0.96986142477123338
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -2922.3633377581091,
+    "saturation": 0.97642368836969706
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      9.5
+    ],
+    "pressure": -1758.2910542897832,
+    "saturation": 0.98648985655687715
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      9.5
+    ],
+    "pressure": 92.9110237589994,
+    "saturation": 1
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      9.5
+    ],
+    "pressure": 2180.3277667875936,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      9.5
+    ],
+    "pressure": 2536.250984480766,
+    "saturation": 1
+  },
+  {
+    "position": [
+      9.5,
+      0.5,
+      9.5
+    ],
+    "pressure": 1594.440760293533,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -3470.9664986970338,
+    "saturation": 0.97173606135967683
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -3344.9987202854109,
+    "saturation": 0.97280628386527246
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -3090.7820746789757,
+    "saturation": 0.974977643773643
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -2703.7690360844126,
+    "saturation": 0.978307868830609
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -2188.0858632047252,
+    "saturation": 0.98277250055809784
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -1521.5636112197778,
+    "saturation": 0.988522166754793
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      10.5
+    ],
+    "pressure": -665.95614948947855,
+    "saturation": 0.99558523309692615
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      10.5
+    ],
+    "pressure": 358.491214466829,
+    "saturation": 1
+  },
+  {
+    "position": [
+      8.5,
+      0.5,
+      10.5
+    ],
+    "pressure": 394.20309902638468,
+    "saturation": 1
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -2218.7647438378858,
+    "saturation": 0.98250660637379306
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -2132.7247281100313,
+    "saturation": 0.9832522559787682
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -1956.6981381278192,
+    "saturation": 0.984776466512665
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -1683.6161476839329,
+    "saturation": 0.98713268385306674
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -1304.5842732838746,
+    "saturation": 0.99036624719080391
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -856.84117584440992,
+    "saturation": 0.99407180973144382
+  },
+  {
+    "position": [
+      6.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -359.82679633869469,
+    "saturation": 0.99786655339235453
+  },
+  {
+    "position": [
+      7.5,
+      0.5,
+      11.5
+    ],
+    "pressure": -0.38406650670754711,
+    "saturation": 0.999999414264263
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -1169.9492006827716,
+    "saturation": 0.99149752884549791
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -1121.4770310794788,
+    "saturation": 0.99190176506407046
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -1019.2784956312524,
+    "saturation": 0.992747829836965
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -847.47983156022815,
+    "saturation": 0.99414720573517279
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -570.821578829894,
+    "saturation": 0.99631718532160773
+  },
+  {
+    "position": [
+      5.5,
+      0.5,
+      12.5
+    ],
+    "pressure": -233.68419361311393,
+    "saturation": 0.99872357846456561
+  },
+  {
+    "position": [
+      0.5,
+      0.5,
+      13.5
+    ],
+    "pressure": -352.72911036315446,
+    "saturation": 0.9979164302380612
+  },
+  {
+    "position": [
+      1.5,
+      0.5,
+      13.5
+    ],
+    "pressure": -337.54399532667139,
+    "saturation": 0.99802254503534926
+  },
+  {
+    "position": [
+      2.5,
+      0.5,
+      13.5
+    ],
+    "pressure": -304.63458023105682,
+    "saturation": 0.99824958668929842
+  },
+  {
+    "position": [
+      3.5,
+      0.5,
+      13.5
+    ],
+    "pressure": -243.87062896652,
+    "saturation": 0.99865697164012168
+  },
+  {
+    "position": [
+      4.5,
+      0.5,
+      13.5
+    ],
+    "pressure": -59.140962603985727,
+    "saturation": 0.99975331343806784
+  }
+]

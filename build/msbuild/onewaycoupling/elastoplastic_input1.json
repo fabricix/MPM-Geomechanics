@@ -1,0 +1,79 @@
+{
+  "time": 40,
+  "critical_time_step_multiplier": 0.25,
+  "shape_function": "GIMP",
+  "stress_scheme_update": "USL",
+  "gravity": [
+    0,
+    0,
+    -9.81
+  ],
+  "mesh": {
+    "cells_dimension": [
+      2,
+      1,
+      2
+    ],
+    "cells_number": [
+      15,
+      1,
+      7
+    ],
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "boundary_conditions": {
+      "plane_X0": "sliding",
+      "plane_Y0": "sliding",
+      "plane_Z0": "fixed",
+      "plane_Xn": "sliding",
+      "plane_Yn": "sliding",
+      "plane_Zn": "free"
+    }
+  },
+  "material": {
+    "plastic": {
+      "type": "mohr-coulomb",
+      "id": 1,
+      "young": 1.0E+8,
+      "density": 2650,
+      "poisson": 0.3,
+      "friction": 35.3,
+      "cohesion": 0
+    }
+  },
+  "body": {
+    "layer_1": {
+      "type": "particles_from_file",
+      "id": 1,
+      "material_id": 1,
+      "file": "mpm_points\\mp1.json"
+    }
+  },
+  "hydro_mechanical_coupling": {
+    "enabled": true,
+    "type": "one_way",
+    "pore_pressure_field": "uw_fields\\uw_1.json",
+    "unsaturated_analysis": true,
+    "bishop_chi": {
+      "model": "sr",
+      "sr_res": 0.1,
+      "constant": 1
+    }
+  },
+  "results": {
+    "print": 50,
+    "material_point_results": [
+      "displacement",
+      "material",
+      "active",
+      "plastic_strain",
+      "stress",
+      "pore_pressure",
+      "saturation"
+    ]
+  },
+	"load_state": true
+}
