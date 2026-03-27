@@ -59,28 +59,34 @@ void MohrCoulomb::updateStress(Particle *particle) const
     double dilation_curr = this->softening.dilation_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->dilation,this->softening.dilation_residual) : this->dilation;
     
     double cohesion_used = cohesion_curr;
+    double tensile_used  = tensile_curr;
+
 
     bool isHM= ModelSetup::getHydroMechOneWayEnabled();
     
     if (isHM) {
 
     const double uw = particle->getPorePressure();
-    const double chi = BishopChi::getChiFromSr(particle->getSaturation());
 
     if (uw < 0.0) {
+        const double chi = BishopChi::getChiFromSr(particle->getSaturation());
+        const double suction = -uw;
+        const double phi_rad = friction_curr * PI / 180.0;
+        const double tan_phi = std::tan(phi_rad);
+        const double c_app = chi * suction * tan_phi;
 
-    const double suction = -uw;
-    const double phi_rad = friction_curr * PI / 180.0;
-    const double c_app = chi * suction * std::tan(phi_rad);
+        cohesion_used += c_app;
 
-    cohesion_used += c_app;
+        if (std::abs(tan_phi) > 1.0e-12) {
+            tensile_used += c_app / tan_phi;
+        }
     }
     else if (uw > 0.0) {
 
     use_uw_positive = true;
     uw_used = uw;
 
-    trialStressEff += uw * Matrix3d::Identity();
+    trialStressEff += uw_used * Matrix3d::Identity();
     
         }
     }
@@ -101,7 +107,9 @@ void MohrCoulomb::updateStress(Particle *particle) const
     double fs = s1 - s3*Nfi + 2.0*cohesion_used*sqrt(Nfi);
 
     // tensile failure criteria
-    double ft = tensile_curr - s3;
+    //double ft = tensile_curr - s3;
+    double ft = tensile_used - s3;
+
 
     // composite yield criteria
     if (ft<0.0 || fs<0.0)
@@ -116,8 +124,8 @@ void MohrCoulomb::updateStress(Particle *particle) const
         // straight line dividing shear and tensile failure type
         double ap = sqrt(1.0+(Nfi*Nfi))+Nfi;
         //double sp = tensile_curr*Nfi-2.0*cohesion_curr*sqrt(Nfi);
-        double sp = tensile_curr*Nfi-2.0*cohesion_used*sqrt(Nfi);
-        double hy = s3 - tensile_curr + ap*(s1-sp);
+        double sp = tensile_used*Nfi-2.0*cohesion_used*sqrt(Nfi);
+        double hy = s3 - tensile_used + ap*(s1-sp);
         
         // plastic strain matrix
         Matrix3d dep = Matrix3d::Zero();
@@ -140,7 +148,7 @@ void MohrCoulomb::updateStress(Particle *particle) const
         else if (ft<0.0 && hy>0.0)
         {
             // tensile failure correction
-            double lt  = (tensile_curr-s3)/a1;
+            double lt  = (tensile_used-s3)/a1;
             s1N = s1 + lt*a2;
             s2N = s2 + lt*a2;
             s3N = s3 + lt*a1;

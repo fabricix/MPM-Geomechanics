@@ -1793,6 +1793,19 @@ bool Input::getHydroMechCouplingEnabled() {
 	return false;
 }
 
+double Input::getHydroMechPorosity() {
+    if (inputFile.contains("hydro_mechanical_coupling") &&
+        inputFile["hydro_mechanical_coupling"].contains("porosity") &&
+        inputFile["hydro_mechanical_coupling"]["porosity"].is_number())
+    {
+        return std::clamp(
+            inputFile["hydro_mechanical_coupling"]["porosity"].get<double>(),
+            0.0, 0.99
+        );
+    }
+    return 0.0;
+}
+
 bool Input::getHydroMechCouplingOneWay() {
 	if (inputFile.contains("hydro_mechanical_coupling") &&
 		inputFile["hydro_mechanical_coupling"].contains("type") &&

@@ -661,6 +661,9 @@ namespace Input {
 	/// \return hydro_mech_coupling_type Hydro-mechanical coupling type
 	bool getHydroMechCouplingOneWay();
 
+	/// \brief Return the porosity in one way hydromechanical coupling
+	double getHydroMechPorosity();
+
     /// \brief Return the pore pressure filename
 	/// \return pore_pressure_filename Pore pressure filename
 	std::string getPorePressureFilename();

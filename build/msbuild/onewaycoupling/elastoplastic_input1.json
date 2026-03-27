@@ -1,5 +1,5 @@
 {
-  "time": 40,
+  "time": 50,
   "critical_time_step_multiplier": 0.25,
   "shape_function": "GIMP",
   "stress_scheme_update": "USL",
@@ -40,8 +40,9 @@
       "young": 1.0E+8,
       "density": 2650,
       "poisson": 0.3,
-      "friction": 35.3,
-      "cohesion": 0
+      "friction": 25,
+      "cohesion": 0,
+      "porosity": 0.3
     }
   },
   "body": {
@@ -57,9 +58,10 @@
     "type": "one_way",
     "pore_pressure_field": "uw_fields\\uw_1.json",
     "unsaturated_analysis": true,
+    "porosity": 0.3,
     "bishop_chi": {
       "model": "sr",
-      "sr_res": 0.1,
+      "sr_res": 0.01,
       "constant": 1
     }
   },
@@ -75,5 +77,5 @@
       "saturation"
     ]
   },
-	"load_state": true
+  "load_state": true
 }

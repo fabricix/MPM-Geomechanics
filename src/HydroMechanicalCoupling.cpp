@@ -72,8 +72,9 @@ namespace HydroMechanicalCoupling {
 
             bool assigned = false;
 
+            
             for (auto* particle : particles) {
-                if ((particle->getPosition() - pos).norm() < tolerance) {
+               /* if ((particle->getPosition() - pos).norm() < tolerance) {
                     particle->setPorePressure(pressure);
                     assigned = true;
 
@@ -81,8 +82,34 @@ namespace HydroMechanicalCoupling {
                     if (unsat) {
                         particle->setSaturation(Sr_val);
                     }
-                }
+                }*/
+            if ((particle->getPosition() - pos).norm() < tolerance) {
+            particle->setPorePressure(pressure);
+            assigned = true;
+
+            double Sr_used = 1.0;
+
+            // For unsaturated analysis, set saturation
+            if (unsat) {
+            particle->setSaturation(Sr_val);
+            Sr_used = Sr_val;
             }
+           
+            // Update particle bulk density and mass for one-way coupling
+            if (HydroMechanicalCoupling::isOneWayEnabled()) {
+        
+                double n_val = std::clamp(Input::getHydroMechPorosity(), 0.0, 0.99);
+                Material* mat = particle->getMaterial();
+                const double rho_s = mat != nullptr ? mat->getDensity() : 0.0;
+                const double rho_w = 1000.0;
+                const double rho_bulk = (1.0 - n_val) * rho_s + n_val * Sr_used * rho_w;
+                const double volume0 = particle->getInitialVolume();
+                particle->setDensity(rho_bulk);
+                particle->setMass(rho_bulk * volume0);
+            }
+            }
+        }
+                  
 
             if (!assigned) {
                 std::cerr << "[Warning] No particle found near position ("

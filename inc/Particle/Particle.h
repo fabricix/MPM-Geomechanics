@@ -43,6 +43,8 @@ public:
 	///  
 	inline void updateStress() { material->updateStress(this); }
 
+	inline Material* getMaterial() const { return this->material; }
+
 	/// \brief Update the particle pressure
 	/// \param[in] dt time step
 	virtual inline void updatePressure(double dt) 
@@ -265,6 +267,7 @@ public:
     /// \brief Returns the drag force of fluid in particle
     /// \return Particle drag force of fluid
     virtual inline Vector3d getDragForceFluid() const { return Vector3d::Zero(); }
+	
 
 	/// \brief Configures deformation gradient
     /// \param[in] deformation_gradient Particle deformation gradient
