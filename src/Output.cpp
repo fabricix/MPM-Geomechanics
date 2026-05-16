@@ -918,7 +918,7 @@ namespace Output{
 	{
 		std::cout <<"Time: "<< std::setw(8) << std::scientific << std::setprecision(4) << itime << " s, ";
 		std::cout << "Energy: " << std::setw(8) << std::scientific << std::setprecision(4) << Energy::getCurrentKineticEnergy() << " J - ";
-		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%) \n";
+		std::cout << std::setw(1) << std::fixed << std::setprecision(0) <<"(" << int(100 * itime / ModelSetup::getTime()) << "%)" << std::endl;;
 	} 
 
 	void printModelInfo(vector<Body*>* bodies, double itime)

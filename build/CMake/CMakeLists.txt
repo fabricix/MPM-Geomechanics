@@ -18,7 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -O0 -fopenmp")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3 -march=native -flto=auto -ffast-math -funroll-loops -DNDEBUG -fopenmp -std=c++17")
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -ffast-math -funroll-loops -DNDEBUG -fopenmp -std=c++17")
-
+set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
 # Set parallel level
 set(CMAKE_BUILD_PARALLEL_LEVEL 4)
 
@@ -35,3 +35,5 @@ file(GLOB EXECUTABLES "../../src/*.cpp")
 
 add_executable(MPM-Geomechanics ${EXECUTABLES})
 target_compile_definitions(MPM-Geomechanics PRIVATE USE_PARALLEL_COMPUTATION)
+
+target_link_options(MPM-Geomechanics PRIVATE -static -static-libgcc -static-libstdc++)
