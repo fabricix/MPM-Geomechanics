@@ -1,11 +1,11 @@
 {
-	"stress_scheme_update":"USL",
+	"stress_scheme_update":"MUSL",
 
 	"shape_function":"GIMP",
 
-	"time":1,
+	"time":15,
 
-	"time_step":0.001,
+	"critical_time_step_multiplier":0.15,
 
 	"gravity":[0.0,0.0,-9.81],
 
@@ -16,20 +16,10 @@
 		"type":"local",
 		"value":0.0
 	},
-
 	"results":
 	{
-		"print":50,
-
-		"material-point-results":
-		{
-			"fields":["all"]
-		},
-		
-		"grid-nodal-results":
-		{
-			"fields":["none"]
-		}
+		"print":100,
+		"material_point_results":["displacement","material","active","plastic_strain","pressure","stress"]
 	},
 
 	"mesh":

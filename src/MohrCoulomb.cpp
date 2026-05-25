@@ -127,6 +127,9 @@ void MohrCoulomb::updateStress(Particle *particle) const
         // stress tensor in general form
         Matrix3d sres = (D*spal)*D.transpose();
 
+        // set plastic work increment
+        particle->setPlasticWorkIncrement(Vector3d(s1N,s2N,s3N).dot(Vector3d(dep(0,0),dep(1,1),dep(2,2))));
+
         // sets the new stress
         particle->setStress(sres);
 

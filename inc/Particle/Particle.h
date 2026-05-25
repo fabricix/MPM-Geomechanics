@@ -308,6 +308,12 @@ public:
 	/// \brief Configures whether the particle is in contact with STL terrain
 	inline void setInSTLContact(bool in_contact) { this->stl_contact = in_contact; }
 
+	/// \brief Set plastic work increment in particle
+	inline void setPlasticWorkIncrement(double dw) { this->plasticWorkIncrement = dw; }
+
+	/// \brief Get plastic work increment
+	inline const double getPlasticWorkIncrement() { return  this->plasticWorkIncrement; }
+
 	protected:
 
 	bool active; //!< is particle active
@@ -321,6 +327,7 @@ public:
 	double density;	//!< current particle density: \f$\rho_p\f$
 	double plasticStrain; //!< current effective plastic strain: \f$\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\f$
 	double distanceLevelSet; //!< distance level set function value: \f$d_p\f$
+	double plasticWorkIncrement; //!< plastic work increment: \f$ \Delta W_p = \sigma_p : \Delta \epsilon_p^p \f$
 
 	Vector3d position; //!< current particle position: \f$x_{ip}\f$
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$

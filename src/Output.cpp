@@ -12,6 +12,7 @@
 
 #include "Output.h"
 #include "Energy.h"
+#include "PlasticWork.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
 
@@ -957,6 +958,27 @@ namespace Output{
 		}
 	}
 
+	void writeCSVPlasticWorkFile (double iTime) 
+	{
+		double ipwork = PlasticWork::getPlasticWork();
+
+		// Open the simulation CSV file in append mode
+		std::ofstream csv_file("time-plastic-work.csv", std::ios::app);
+		if (!csv_file.is_open()) {
+			std::cerr << "Error opening the CSV file" << std::endl;
+		}
+		
+		// Write time and energy to the file
+		if(iTime==0){
+			csv_file << "time,plastic-work" << "\n";
+		}
+		
+		csv_file << iTime << "," << std::scientific << std::setprecision(5) << ipwork << "\n";
+		
+		// Close the file
+		csv_file.close();
+	}
+
 	void writeCSVEnergyFile(double iTime) 
 	{
 		// Get total kinetic energy
@@ -989,8 +1011,9 @@ namespace Output{
 			// update terminal
 			updateTerminal(iTime);
 
-			// write energy in the CSV file
-			writeCSVEnergyFile( iTime);
+			// write CSV files
+			writeCSVEnergyFile(iTime);
+			writeCSVPlasticWorkFile(iTime);
 		}
 	}
 
@@ -999,14 +1022,16 @@ namespace Output{
 		// write initial state 
 		printModelInfo(bodies, iTime);
 
-		// initialize CSV file
+		// initialize CSV files
 		initializeCSVFile("time-energy.csv");
+		initializeCSVFile("time-plastic-work.csv");
 
 		// write time and energy in the terminal
 		updateTerminal(iTime);
 
 		// write energy in the CSV file
 		writeCSVEnergyFile(iTime);
+		writeCSVPlasticWorkFile(iTime);
 
 		// write particles as a .vtu files
 		writeBodies(bodies, iTime);

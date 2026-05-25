@@ -11,6 +11,7 @@
 #include "Energy.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
+#include "PlasticWork.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
 
@@ -118,8 +119,10 @@ void SolverExplicit::Solve()
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Step 11: Compute current kinetic energy
+		// Step 11: Compute current kinetic energy and plastic work
 		Energy::computeKineticEnergy(particles);
+		PlasticWork::computePlasticWork(particles);
+		//if(ModelSetup::getPlasticWorkCriteriaStop(PlasticWork::getPlasticWorkIncrement())) break;
 
 		// Step 12: Static solution check (Dynamic Relaxation)
 		DynamicRelaxation::setStaticSolution(particles);
