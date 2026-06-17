@@ -18,6 +18,7 @@
 #include "Loads.h"
 #include "Seismic.h"
 #include "GmshMeshReader.h"
+#include "MPM.h"
 
 #include <limits>
 using std::numeric_limits;
@@ -449,7 +450,8 @@ vector<Material*> Input::getMaterialList(){
 		throw;
 	}
 }
-vector<Body*> Input::getBodyList(){
+
+vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 
 	vector<Body*> bodies;
 	try
@@ -701,7 +703,7 @@ vector<Body*> Input::getBodyList(){
 				}
 
 				// particle list from external file
-				if ((*it)["type"] == "particles_from_file") {
+				if ((*it)["type"] == "particles_list") {
 
 					// active flag
 					bool active = true;
@@ -709,14 +711,6 @@ vector<Body*> Input::getBodyList(){
 						active = (*it)["active"];
 					}
 					if(!active) continue;
-
-					// material id
-					int material_id = 0;
-					if ((*it)["material_id"].is_number()) {
-						material_id = ((*it)["material_id"]);
-					} else {
-						throw(0);
-					}
 
 					// external file name
 					std::string filename;
@@ -739,16 +733,30 @@ vector<Body*> Input::getBodyList(){
 					// particle list
 					std::vector<Vector3d> particles_position;
 					std::vector<double> particles_volume;
+					std::vector<unsigned> particles_material;
 
-					for (const auto& p : json_particles) {
-						if (!p.contains("position") || !p.contains("volume")) {
-							Warning::printMessage("Error: invalid particle format");
+					for (const auto& p : json_particles) 
+					{
+						if (!p.contains("position") ) {
+							Warning::printMessage("Error: position keyword not found");
 							throw(0);
 						}
+						if (!p.contains("volume")) {
+							Warning::printMessage("Error: volume keyword not found");
+							throw(0);
+						}
+						if (!p.contains("material_id")) {
+							Warning::printMessage("Error: material_id keyword not found");
+							throw(0);
+						}
+
 						Vector3d pos(p["position"][0], p["position"][1], p["position"][2]);
 						double vol = p["volume"];
+						unsigned material_id = p["material_id"];
+						
 						particles_position.push_back(pos);
 						particles_volume.push_back(vol);
+						particles_material.push_back(material_id);
 					}
 
 					// create the body
@@ -757,15 +765,41 @@ vector<Body*> Input::getBodyList(){
 						throw(0);
 					} else {
 						iBody->setId(static_cast<int> (bodies.size() + 1));
-						iBody->setMaterialId(material_id);
+						
+						// iBody->setMaterialId(material_id);
 						bool is_two_phase = ModelSetup::getTwoPhaseActive();
+						
 						std::vector<Particle*> particle_list;
+
 						for (size_t i = 0; i < particles_position.size(); ++i) {
+							
+							// position
 							Vector3d pt1 = particles_position[i];
+
+							// volume
 							double particleSize = std::pow(particles_volume[i], 1.0 / 3.0);
+							
+							// material
+							Material* imat=nullptr;
+							unsigned int target_material_id = particles_material[i];
+
+							// search material in material list
+							for (auto* p : *materials) {
+								if(target_material_id == p->getId())
+								imat = p;
+							}
+
+							// verify in material is defined
+							if (imat == nullptr) 
+							{
+								Warning::printMessage("Error: material_id not found in material list");
+								throw(0);
+							}
+
+							// create the list
 							particle_list.push_back(is_two_phase ?
-								new ParticleMixture(pt1, NULL, Vector3d(particleSize, particleSize, particleSize)) :
-								new Particle(pt1, NULL, Vector3d(particleSize, particleSize, particleSize)));
+								new ParticleMixture(pt1, imat, Vector3d(particleSize, particleSize, particleSize)) :
+								new Particle(pt1, imat, Vector3d(particleSize, particleSize, particleSize)));
 						}
 						iBody->insertParticles(particle_list);
 					}

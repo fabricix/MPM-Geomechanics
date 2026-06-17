@@ -64,7 +64,7 @@ private:
 
 	vector<Particle*> particles; //!< material points list
 
-	vector<Material*> materials; //!< bodies discretized by material points
+	vector<Material*> materials; //!< material list
 	
 	Solver* solver = nullptr; //!< operation for solve the equations in time
 
