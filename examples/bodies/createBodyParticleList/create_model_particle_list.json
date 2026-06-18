@@ -1,15 +1,7 @@
 {
-  "stress_scheme_update":"USL",
-
-  "shape_function":"GIMP",
-
   "time":0.15,
 
   "time_step":0.01,
-
-  "gravity":[0.0,0.0,-9.81],
-
-  "n_threads":1,
 
   "results":
   {
@@ -35,27 +27,28 @@
       "plane_Zn":"sliding"
     }
   },
-
   "material":
-  {
-    "elastic":
-    {
-      "type":"elastic",
-      "id":1,
-      "young":10e1,
-      "density":2600,
-      "poisson":0.3
-    }
+  [{
+    "type":"elastic",
+    "id":1,
+    "young":10e1,
+    "density":2600,
+    "poisson":0.3
   },
-
-  "body":
   {
-    "body_particles_from_file":
+    "type":"elastic",
+    "id":2,
+    "young":10e1,
+    "density":2600,
+    "poisson":0.3
+  }
+  ],
+  "body":
+  [
     {
-      "type": "particles_from_file",
       "id": 1,
-      "material_id": 1,
+      "type": "particles_list",
       "file": "particle_list.json"
     }
-  }
+  ]
 }

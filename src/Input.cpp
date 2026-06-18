@@ -815,19 +815,8 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 						active = (*it)["active"];
 					}
 					if(!active) continue;
-
-					// material id
-					int material_id=0; 
-					if ((*it)["material_id"].is_number()) 
-					{
-						material_id = ((*it)["material_id"]);
-					}
-					else
-						throw(0);
-
-					// particle list
 					
-					// particle's material id
+					// particle's id
 					std::vector<unsigned> paricles_id;
 					if ((*it)["particles"]["id"].is_array()) 
 					{
@@ -870,6 +859,19 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 					else
 						throw(0);
 
+					// particle material id
+					std::vector<double> particles_material_id;
+					if ((*it)["particles"]["material_id"].is_array()) 
+					{
+						for (size_t i = 0; i < (*it)["particles"]["material_id"].size(); ++i)
+						{
+							particles_material_id.push_back((*it)["particles"]["material_id"].at(i));
+						}
+					}
+					else
+						throw(0);
+
+
 					// create the body
 					BodyParticle* iBody = new BodyParticle();
 
@@ -880,15 +882,32 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 					else
 					{
 						iBody->setId(static_cast<int> (bodies.size() + 1));
-						iBody->setMaterialId(material_id);
 						unsigned n_particles = static_cast<unsigned int>((*it)["particles"]["id"].size());
 						std::vector<Particle*> particle_list;
 						bool is_two_phase = ModelSetup::getTwoPhaseActive();
+
 						for (size_t i = 0; i < n_particles; ++i)
 						{
 							Vector3d pt1 = particles_position.at(i);
 							double particleSize = std::pow(particles_volume.at(i), 1.0/3.0);
-							particle_list.push_back( is_two_phase ? (new ParticleMixture(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))) : (new Particle(pt1,NULL,Vector3d(particleSize,particleSize,particleSize))));
+						
+							// material
+							Material* imat=nullptr;
+							unsigned int target_material_id = static_cast<unsigned int>(particles_material_id[i]);
+
+							// search material in material list
+							for (auto* p : *materials) {
+								if(target_material_id == p->getId())
+								imat = p;
+							}
+
+							// verify in material is defined
+							if (imat == nullptr) {
+								Warning::printMessage("Error: material_id not found in material list");
+								throw(0);
+							}
+						
+							particle_list.push_back( is_two_phase ? (new ParticleMixture(pt1,imat,Vector3d(particleSize,particleSize,particleSize))) : (new Particle(pt1,imat,Vector3d(particleSize,particleSize,particleSize))));
 						}
 						iBody->insertParticles(particle_list);
 					}
@@ -897,7 +916,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 				
 				// gmsh body type
 				if ((*it)["type"]=="gmsh")
-			{
+				{
 
 				// active flag
 				bool active = true;
