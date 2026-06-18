@@ -20,12 +20,16 @@ x, y, z = np.meshgrid(
 positions = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
 volume = spacing/2**3  # volumen por partícula
 
+# Crear identificador de materiales
+z_limite= origin[2]+0.5
+
 # Crear estructura JSON
 particles = [
     {
         "id": i+1,
         "position": pos.tolist(),
-        "volume": volume
+        "volume": volume,
+        "material_id": 1 if pos[2] < z_limite else 2
     }
     for i, pos in enumerate(positions)
 ]

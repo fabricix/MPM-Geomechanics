@@ -1,39 +1,18 @@
 {
-  "stress_scheme_update":"USL",
-
-  "shape_function":"GIMP",
-
   "time":0.1,
-
   "time_step":0.01,
-
   "gravity":[0.0,0.0,0],
-
   "n_threads":1,
-
   "results":
   {
     "print":10,
     "material_point_results":["id","displacement","material","active","body"]
   },
-
-  "n_phases":1,
-
   "mesh":
   { 
     "cells_dimension":[1,1,1],
     "cells_number":[10,10,10],
-    "origin":[0,0,0],
-    
-    "boundary_conditions":
-    {
-      "plane_X0":"sliding",
-      "plane_Y0":"sliding",
-      "plane_Z0":"sliding",
-      "plane_Xn":"sliding",
-      "plane_Yn":"sliding",
-      "plane_Zn":"free"
-    }
+    "origin":[0,0,0]
   },
 
   "material":
@@ -51,49 +30,67 @@
       "young":10e1,
       "density":2600,
       "poisson":0.3
+    },
+    {
+      "type":"elastic",
+      "id":3,
+      "young":10e1,
+      "density":2600,
+      "poisson":0.3
+    },
+    {
+      "type":"elastic",
+      "id":4,
+      "young":10e1,
+      "density":2600,
+      "poisson":0.3
     }
   ],
-
   "body":
   [
     {
+      "id":1,
       "type":"cuboid",
       "point_p1":[3,0,0],
       "point_p2":[5,2,7],
       "material_id":1
     },
     {
+      "id":2,
       "type":"cuboid",
       "point_p1":[3,3,0],
       "point_p2":[5,5,5],
-      "material_id":1
+      "material_id":2
     },
     {
+      "id":3,
       "type":"polygon_2d",
       "extrude_direction":"y",
       "extrude_displacement":2,
       "points":[[0,6,0],[5,6,0],[5,6,2],[3,6,2]],
-      "material_id":1
+      "material_id":3
     },
     {
-      "type":"particles",
-      "material_id":2,    
+      "id":4,
+      "type":"particles",    
       "particles":
       {
           "id":[1,2,3],
           "position":[[7.5,7.5,7.5],[8.0,7.5,7.5],[8.5,7.5,7.5]],
-          "volume":[1,1,1]
+          "volume":[1,1,1],
+          "material_id":[1,4,3]
       }
     },
     {
-      "type":"particles_from_file",
-      "material_id":2,
+      "id":5,
+      "type":"particles_list",
       "file":"particle_list.json"
     }, 
     {
+      "id":6,
       "type":"gmsh",
       "mesh_file": "geometry.msh",
-      "physical_to_material": {"Soil":2,"Geotextil":1}
+      "physical_to_material": {"Soil":4,"Geotextil":1}
     }
   ]
 }

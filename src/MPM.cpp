@@ -226,7 +226,7 @@ void MPM::setupMaterialList() {
 
 void MPM::setupBodyList() {
 
-	bodies=Input::getBodyList();
+	bodies=Input::getBodyList(&materials);
 }
 
 void MPM::createBodies() {
@@ -246,9 +246,6 @@ void MPM::createBodies() {
 		bodies.at(i)->create(mesh,iMaterial);
 	}
 	BodyGmsh::resetSharedMesh();
-	
-	// calculate the kinetic energy of bodies
-	
 }
 
 void MPM::setupParticles() {

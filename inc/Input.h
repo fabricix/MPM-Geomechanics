@@ -552,7 +552,7 @@ namespace Input {
 	
 	/// \brief Return the body list
 	/// \return A list containing Body pointers
-	vector<Body*> getBodyList();
+	vector<Body*> getBodyList(const vector<Material*>* );
 	
 	/// \brief Return the gravity force
 	/// \return Gravity force
