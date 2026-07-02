@@ -24,6 +24,9 @@ public:
         // exponential softening
         double exponential_shape_factor;
 
+        // undrained strength ratio
+        double su_sigmav_factor=0.0;
+
         // residual values
         double friction_residual;
         double cohesion_residual;
@@ -66,7 +69,7 @@ public:
             this->dilation_softening_active = false;
         }
 
-    } ;
+    };
 
     /// \brief Create a Mohr-Coulomb elasto-plastic material
     /// \param[in] id Material identification
@@ -84,6 +87,21 @@ public:
     /// \param[in] particle Particle
     virtual void updateStress(Particle* particle) const;
 
+    /// \brief set peak cohesion
+    void setCohesion(double c){this->cohesion=c;}
+    
+    /// \brief get cohesion
+    double getCohesion() { return this->cohesion; }
+    
+    /// \brief set peak friction angle
+    void setFriction(double f){this->friction=f;}
+
+    /// \brief set vertical undrained strength factor
+    void setSuVerticalStressFactor(double su){this->su_factor=su;}
+
+    /// \brief get vertical undrained strength factor
+    double getSuVerticalStressFactor(){ return this->su_factor;}
+
     /// \brief Default destructor
     /// 
 	virtual ~MohrCoulomb();
@@ -94,6 +112,7 @@ protected:
     double cohesion; //!< cohesion parameter, \f$c\f$
     double dilation; //!< dilation angle in degree, \f$\psi\f$
     double tensile; //!< tensile strength, \f$\sigma_t\f$
+    double su_factor; //!< undrained strength factor, \f$ S_u / \sigma_v$\f
     MohrCoulomb::Softening softening; 
 };
 

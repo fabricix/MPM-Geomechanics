@@ -136,6 +136,10 @@ private:
 
 	/// \brief Configure one direction hydro-mechanical coupling
 	void setOneDirectionHydromechanicalCoupling();
+	
+	/// \brief Configures undrained strength - vertical stress factor
+	void setUndrainedStrengthVerticalStress();
+
 };
 
 #endif /* MPM_H_ */

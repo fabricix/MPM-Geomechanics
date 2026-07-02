@@ -33,12 +33,13 @@ using std::scientific;
 using std::setw;
 
 #include <vector>
+#include <Materials/MohrCoulomb.h>
 using std::vector;
 
 namespace Output{
 
-	vector<string> printFields;
-	vector<string> printGridFields;
+	vector<string> printParticleFields;
+	vector<string> printNodeFields;
 	vector<string> printSTLContactFields;
 
 	namespace OutputTolerance {
@@ -86,9 +87,9 @@ namespace Output{
 	
 	bool isGridFieldRequired(string ifield)
 	{
-		for (size_t i = 0; i < printGridFields.size(); ++i) {
+		for (size_t i = 0; i < printNodeFields.size(); ++i) {
 			
-			if (printGridFields.at(i) == ifield || (printGridFields.at(i) == "all" && ifield != "none")) {
+			if (printNodeFields.at(i) == ifield || (printNodeFields.at(i) == "all" && ifield != "none")) {
 				return true;
 			}
 		}
@@ -97,12 +98,12 @@ namespace Output{
 	
 	void configureResultFields(vector<string> fields)
 	{
-		printFields=fields;
+		printParticleFields=fields;
 	}
 
 	void configureGridResultFields(vector<string> fields)
 	{
-		printGridFields=fields;
+		printNodeFields=fields;
 	}
 
 	void configureSTLContactFields(vector<string> fields)
@@ -112,9 +113,9 @@ namespace Output{
 
 	bool isFieldRequired(string ifield) {
 
-		for (size_t i = 0; i < printFields.size(); ++i) {
+		for (size_t i = 0; i < printParticleFields.size(); ++i) {
 
-			if (printFields.at(i)==ifield || (printFields.at(i)=="all"  && ifield != "none")) {
+			if (printParticleFields.at(i)==ifield || (printParticleFields.at(i)=="all"  && ifield != "none")) {
 
 				return true;
 			}
@@ -254,6 +255,21 @@ namespace Output{
 				partFile<<scientific<<particles->at(i)->getMaterialId()<<"\n";
 			}
 			partFile<<"</DataArray>\n";
+		}
+
+		if (isFieldRequired("Su")) {
+			partFile << "<DataArray type=\"Float64\" Name=\"Su\" Format=\"ascii\">\n";
+			
+			for (int i = 0; i < nPoints; ++i) {
+				double su = 0.0;
+				if (particles->at(i)->getMaterialPntr()->getType() == Material::MaterialType::MOHRCOULOMB)
+				{
+					MohrCoulomb* mcmat = static_cast<MohrCoulomb*>(particles->at(i)->getMaterialPntr());
+					su = mcmat->getCohesion();
+				}
+				partFile << scientific << su << "\n";
+			}
+			partFile << "</DataArray>\n";
 		}
 
 		if (isFieldRequired("active")){

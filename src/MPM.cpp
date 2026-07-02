@@ -15,6 +15,8 @@
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
 #include "GmshMeshReader.h"
+#include "Materials/MohrCoulomb.h"
+#include "Model.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -385,6 +387,38 @@ void MPM::setOneDirectionHydromechanicalCoupling()
 	HydroMechanicalCoupling::configureOneDirectionCoupling(particles);
 }
 
+void MPM::setUndrainedStrengthVerticalStress()
+{
+	for (auto* p : particles)
+	{
+		if (!p || !p->getMaterialPntr()) continue;
+
+		if (p->getMaterialPntr()->getType()==Material::MaterialType::MOHRCOULOMB)
+		{
+			MohrCoulomb* mcmat = static_cast<MohrCoulomb*>(p->getMaterialPntr());
+
+			// get vertical stress norm
+			const Vector3d vertical_dir = ModelSetup::getGravity().normalized();
+
+			// compute vertical stress vector
+			Vector3d sigma_v = p->getStress().transpose()*vertical_dir;
+
+			// compute undrained strength and set it up
+			double su = sigma_v.norm()*mcmat->getSuVerticalStressFactor();
+
+			if (su>0.0){
+				// active undrained configuration in model setup
+				if (!ModelSetup::getUndrainedStrengthFactorActive()){
+					ModelSetup::setUndrainedStrengthFactorActive(true);
+				}
+				// set friction and cohesion for undrained behavior
+				mcmat->setCohesion(su);
+				mcmat->setFriction(0.0);
+			}
+		}
+	}
+}
+
 void MPM::createModel() {
 
 	try{
@@ -433,7 +467,10 @@ void MPM::createModel() {
 		// configures the loads
 		setupLoads();
 
-		// configures the hydro-mechanical coupling type
+		// configures undrained Su - Vertical Stress resistance
+		setUndrainedStrengthVerticalStress();
+
+		// configures hydro-mechanical coupling
 		setOneDirectionHydromechanicalCoupling();
 
 		// configures the damping

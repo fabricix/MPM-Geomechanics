@@ -388,6 +388,10 @@ vector<Material*> Input::getMaterialList(){
 						double dilation=0.0; if ((*it)["dilation"].is_number()) { dilation = ((*it)["dilation"]); }
 						double tensile = 0.0; if ((*it)["tensile"].is_number()) { tensile = ((*it)["tensile"]); }
 
+						// strength vertical stress factor Su/SigmaV
+						double su_factor = 0.0; if ((*it)["su_vertical_stress_factor"].is_number()) { su_factor = ((*it)["su_vertical_stress_factor"]); }
+						su_factor = (*it).value("su_stress_vertical", su_factor);
+
 						// create a new softening object and configure it
 						MohrCoulomb::Softening softening;
 						if ((*it).contains("softening") && (*it)["softening"]=="exponential")
@@ -404,7 +408,8 @@ vector<Material*> Input::getMaterialList(){
 						}
 						
 						// create a new material
-						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);	
+						material = new MohrCoulomb(id, density, young, poisson, friction, cohesion, dilation, tensile, softening);
+						static_cast<MohrCoulomb*>(material)->setSuVerticalStressFactor(su_factor);
 					}
 
 					// set up the two phases parameters

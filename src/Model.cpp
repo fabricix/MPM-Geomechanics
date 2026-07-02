@@ -87,6 +87,11 @@ namespace ModelSetup {
 	// hydro-mechanical coupling type
 	HydroMechanicalCouplingType hydroCouplingType = HydroMechanicalCouplingType::NONE;
 
+	// Undrained strength factor method
+	bool su_factor_active = false;
+	void setUndrainedStrengthFactorActive(bool a) { su_factor_active = a; };
+	bool getUndrainedStrengthFactorActive(){return su_factor_active;};
+	
 	///
 	/// Function members
 	///
@@ -96,7 +101,7 @@ namespace ModelSetup {
 	void setLoopCounter(int a) { loopCounter = a; }
 	int incrementLoopCounter() { loopCounter++; return loopCounter; }
 
-		// states 
+	// states 
 	bool getLoadState() { return loadState; }
 	void setLoadState(bool st) { loadState = st; }
 	bool getSaveState() { return saveState; }
@@ -225,7 +230,6 @@ namespace ModelSetup {
 	bool getHydroMechOneWayEnabled() {
 		return hydroCouplingType == HydroMechanicalCouplingType::ONE_WAY;
 	}
-
 }
 
 

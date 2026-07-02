@@ -30,7 +30,7 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
     this->softening=softening;
     
     // configure material type
-    type=Material::MaterialType::ELASTOPLASTIC;
+    type=Material::MaterialType::MOHRCOULOMB;
 }
 
 MohrCoulomb::~MohrCoulomb() { }
