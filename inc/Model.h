@@ -293,13 +293,6 @@ namespace ModelSetup {
 	/// \brief Increment the loop counter by one
 	/// \return The current loop counter value
 	int incrementLoopCounter();
-
-	/// \brief set undrained strength factor method active
-	void setUndrainedStrengthFactorActive(bool active=false);
-	
-	/// \brief get undrained strength factor method active
-	/// \param [out] bool su method active
-	bool getUndrainedStrengthFactorActive();
 };
 
 #endif /* MODEL_H_ */
