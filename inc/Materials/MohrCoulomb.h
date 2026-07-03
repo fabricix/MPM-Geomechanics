@@ -24,9 +24,6 @@ public:
         // exponential softening
         double exponential_shape_factor;
 
-        // undrained strength ratio
-        double su_sigmav_factor=0.0;
-
         // residual values
         double friction_residual;
         double cohesion_residual;
@@ -68,7 +65,6 @@ public:
             this->tensile_softening_active = false;
             this->dilation_softening_active = false;
         }
-
     };
 
     /// \brief Create a Mohr-Coulomb elasto-plastic material
