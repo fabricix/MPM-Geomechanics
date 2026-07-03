@@ -259,13 +259,13 @@ namespace Output{
 
 		if (isFieldRequired("Su")) {
 			partFile << "<DataArray type=\"Float64\" Name=\"Su\" Format=\"ascii\">\n";
-			
 			for (int i = 0; i < nPoints; ++i) {
 				double su = 0.0;
 				if (particles->at(i)->getMaterialPntr()->getType() == Material::MaterialType::MOHRCOULOMB)
 				{
 					MohrCoulomb* mcmat = static_cast<MohrCoulomb*>(particles->at(i)->getMaterialPntr());
-					su = mcmat->getCohesion();
+					double stress_zz = particles->at(i)->getStress()(2,2);
+					su = stress_zz>0 ? 0.0 : -mcmat->getSuVerticalStressFactor()*stress_zz;
 				}
 				partFile << scientific << su << "\n";
 			}

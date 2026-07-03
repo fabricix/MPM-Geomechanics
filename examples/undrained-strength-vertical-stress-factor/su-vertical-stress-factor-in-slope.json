@@ -1,0 +1,77 @@
+{
+	"stress_scheme_update":"USL",
+	"shape_function":"GIMP",
+	"time":1,
+	"time_step":0.001,
+	"gravity":[0.0,0.0,-9.81],
+	"n_threads":10,
+	"damping":
+	{
+		"type":"kinetic"
+	},
+	"results":
+	{
+		"print":50,
+		"material_point_results":["all"],
+		"grid_nodal_results":["none"]
+	},
+	"mesh":
+	{	
+		"cells_dimension":[1,1,1],
+		"cells_number":[110,1,36],
+		"origin":[0,0,0],	
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"fixed"
+		}
+	},
+	"material":
+	[
+			{
+				"type":"elastic",
+				"id":2,
+				"density":2100,
+				"young":70e6,
+				"poisson":0.3
+			},
+			{
+				"type":"mohr-coulomb",
+				"id":1,
+				"young":70e6,
+				"density":2100,
+				"poisson":0.3,
+				"friction":35.0,
+				"cohesion":5e3,
+				"su_vertical_stress":0.001
+			}
+	],
+
+	"save_state":false,
+	"load_state":true,
+
+	"body":
+	[
+		{
+			"type":"polygon_2d",
+			"extrude_direction":"y",
+			"extrude_displacement":1,
+			"discretization_length":1,
+			"id":1,
+			"points":
+			[
+				[  0, 0, 0 ],
+				[110, 0, 0 ],
+				[110, 0, 15],
+				[ 50, 0, 15],
+				[ 30, 0, 35],
+				[  0, 0, 35]
+			],
+			"material_id":1
+		}
+	]
+}
