@@ -15,8 +15,6 @@
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
 #include "GmshMeshReader.h"
-#include "Materials/MohrCoulomb.h"
-#include "Model.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;

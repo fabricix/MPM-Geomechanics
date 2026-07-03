@@ -86,11 +86,6 @@ namespace ModelSetup {
 
 	// hydro-mechanical coupling type
 	HydroMechanicalCouplingType hydroCouplingType = HydroMechanicalCouplingType::NONE;
-
-	// Undrained strength factor method
-	bool su_factor_active = false;
-	void setUndrainedStrengthFactorActive(bool a) { su_factor_active = a; };
-	bool getUndrainedStrengthFactorActive(){return su_factor_active;};
 	
 	///
 	/// Function members
