@@ -61,9 +61,9 @@ var NAVTREEINDEX =
 "BodyCuboid_8h.html",
 "Seismic_8h.html#a805c3b1846fa1a0597aea59aa4ec3cc4",
 "classMPM.html#aaef55a9b211eb9068eb9a9c47f3d7471",
-"classParticle.html#a8725dff539b4b24b0a1bfa24c47d4b65",
-"namespaceInput.html#a5180c88a040e1ade2d2522400eb4919e",
-"structGMSH_1_1GmshMesh.html"
+"classParticle.html#a73a4154dfbae2e2787ef72c1bee83413",
+"namespaceInput.html#a2a0fb410bea4619ff93d984cba00d316",
+"structGMSH_1_1Entity.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

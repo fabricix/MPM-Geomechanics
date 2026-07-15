@@ -166,6 +166,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a80720b3595d8ddc144ee58cf78e7ff83" id="r_a80720b3595d8ddc144ee58cf78e7ff83"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a80720b3595d8ddc144ee58cf78e7ff83">updateStress</a> (<a class="el" href="classParticle.html">Particle</a> *particle) const</td></tr>
 <tr class="memdesc:a80720b3595d8ddc144ee58cf78e7ff83"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> the stress in the particle.  <br /></td></tr>
 <tr class="separator:a80720b3595d8ddc144ee58cf78e7ff83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95bcef8e5a57ee60e33a32c2266d588c" id="r_a95bcef8e5a57ee60e33a32c2266d588c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a95bcef8e5a57ee60e33a32c2266d588c">setCohesion</a> (double c)</td></tr>
+<tr class="memdesc:a95bcef8e5a57ee60e33a32c2266d588c"><td class="mdescLeft">&#160;</td><td class="mdescRight">set peak cohesion  <br /></td></tr>
+<tr class="separator:a95bcef8e5a57ee60e33a32c2266d588c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3000c291463a1ec9d271452a7a0e6ba3" id="r_a3000c291463a1ec9d271452a7a0e6ba3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a3000c291463a1ec9d271452a7a0e6ba3">getCohesion</a> ()</td></tr>
+<tr class="memdesc:a3000c291463a1ec9d271452a7a0e6ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">get cohesion  <br /></td></tr>
+<tr class="separator:a3000c291463a1ec9d271452a7a0e6ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a021143c21d72f56afd2dd87b8a0f4787" id="r_a021143c21d72f56afd2dd87b8a0f4787"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a021143c21d72f56afd2dd87b8a0f4787">setFriction</a> (double f)</td></tr>
+<tr class="memdesc:a021143c21d72f56afd2dd87b8a0f4787"><td class="mdescLeft">&#160;</td><td class="mdescRight">set peak friction angle  <br /></td></tr>
+<tr class="separator:a021143c21d72f56afd2dd87b8a0f4787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a468b92e0f555d482339fc519e53c322b" id="r_a468b92e0f555d482339fc519e53c322b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a468b92e0f555d482339fc519e53c322b">setSuVerticalStressFactor</a> (double su)</td></tr>
+<tr class="memdesc:a468b92e0f555d482339fc519e53c322b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set vertical undrained strength factor  <br /></td></tr>
+<tr class="separator:a468b92e0f555d482339fc519e53c322b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a433a65803e7cfbf353caea2c02d94f94" id="r_a433a65803e7cfbf353caea2c02d94f94"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a433a65803e7cfbf353caea2c02d94f94">getSuVerticalStressFactor</a> ()</td></tr>
+<tr class="memdesc:a433a65803e7cfbf353caea2c02d94f94"><td class="mdescLeft">&#160;</td><td class="mdescRight">get vertical undrained strength factor  <br /></td></tr>
+<tr class="separator:a433a65803e7cfbf353caea2c02d94f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea6b900413c60d229349cd4705782ce5" id="r_aea6b900413c60d229349cd4705782ce5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#aea6b900413c60d229349cd4705782ce5">~MohrCoulomb</a> ()</td></tr>
 <tr class="memdesc:aea6b900413c60d229349cd4705782ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:aea6b900413c60d229349cd4705782ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,6 +277,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aba4be56e48b23dee2a7ea6f92031efd5" id="r_aba4be56e48b23dee2a7ea6f92031efd5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#aba4be56e48b23dee2a7ea6f92031efd5">tensile</a></td></tr>
 <tr class="memdesc:aba4be56e48b23dee2a7ea6f92031efd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">tensile strength, \(\sigma_t\)  <br /></td></tr>
 <tr class="separator:aba4be56e48b23dee2a7ea6f92031efd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8a8d82ec3d82ac469a857956a71438a" id="r_ae8a8d82ec3d82ac469a857956a71438a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#ae8a8d82ec3d82ac469a857956a71438a">su_factor</a></td></tr>
+<tr class="memdesc:ae8a8d82ec3d82ac469a857956a71438a"><td class="mdescLeft">&#160;</td><td class="mdescRight">undrained strength factor,  <br /></td></tr>
+<tr class="separator:ae8a8d82ec3d82ac469a857956a71438a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a2521dcfb9581a0582e964a1ed02969" id="r_a4a2521dcfb9581a0582e964a1ed02969"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMohrCoulomb_1_1Softening.html">MohrCoulomb::Softening</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMohrCoulomb.html#a4a2521dcfb9581a0582e964a1ed02969">softening</a></td></tr>
 <tr class="separator:a4a2521dcfb9581a0582e964a1ed02969"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classElastic"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classElastic')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classElastic.html">Elastic</a></td></tr>
@@ -297,10 +315,14 @@ Protected Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classMaterial"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classMaterial')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classMaterial.html">Material</a></td></tr>
-<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial" id="r_aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">NONE</a>
+<tr class="memitem:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial" id="r_aaaec00187d5d2d1827eb7b7a684cf439"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> { <br />
+&#160;&#160;<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">NONE</a>
 , <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af4ac20ded28c5db3618483568937df42">ELASTIC</a>
+, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a51f0ac3c61090042e09f662190782d73">MOHRCOULOMB</a>
 , <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439af7c1716da84b9d2f9db676ba13ba17ae">ELASTOPLASTIC</a>
-, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749">NEWTONIAN</a>
+, <br />
+&#160;&#160;<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749">NEWTONIAN</a>
+<br />
  }</td></tr>
 <tr class="separator:aaaec00187d5d2d1827eb7b7a684cf439 inherit pub_types_classMaterial"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -422,6 +444,144 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3000c291463a1ec9d271452a7a0e6ba3" name="a3000c291463a1ec9d271452a7a0e6ba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3000c291463a1ec9d271452a7a0e6ba3">&#9670;&#160;</a></span>getCohesion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MohrCoulomb::getCohesion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get cohesion </p>
+
+</div>
+</div>
+<a id="a433a65803e7cfbf353caea2c02d94f94" name="a433a65803e7cfbf353caea2c02d94f94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a433a65803e7cfbf353caea2c02d94f94">&#9670;&#160;</a></span>getSuVerticalStressFactor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MohrCoulomb::getSuVerticalStressFactor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get vertical undrained strength factor </p>
+
+</div>
+</div>
+<a id="a95bcef8e5a57ee60e33a32c2266d588c" name="a95bcef8e5a57ee60e33a32c2266d588c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95bcef8e5a57ee60e33a32c2266d588c">&#9670;&#160;</a></span>setCohesion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MohrCoulomb::setCohesion </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>set peak cohesion </p>
+
+</div>
+</div>
+<a id="a021143c21d72f56afd2dd87b8a0f4787" name="a021143c21d72f56afd2dd87b8a0f4787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a021143c21d72f56afd2dd87b8a0f4787">&#9670;&#160;</a></span>setFriction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MohrCoulomb::setFriction </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>set peak friction angle </p>
+
+</div>
+</div>
+<a id="a468b92e0f555d482339fc519e53c322b" name="a468b92e0f555d482339fc519e53c322b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a468b92e0f555d482339fc519e53c322b">&#9670;&#160;</a></span>setSuVerticalStressFactor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MohrCoulomb::setSuVerticalStressFactor </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>su</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>set vertical undrained strength factor </p>
+
+</div>
+</div>
 <a id="a80720b3595d8ddc144ee58cf78e7ff83" name="a80720b3595d8ddc144ee58cf78e7ff83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80720b3595d8ddc144ee58cf78e7ff83">&#9670;&#160;</a></span>updateStress()</h2>
 
@@ -550,6 +710,30 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae8a8d82ec3d82ac469a857956a71438a" name="ae8a8d82ec3d82ac469a857956a71438a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a8d82ec3d82ac469a857956a71438a">&#9670;&#160;</a></span>su_factor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double MohrCoulomb::su_factor</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>undrained strength factor, </p>
 
 </div>
 </div>

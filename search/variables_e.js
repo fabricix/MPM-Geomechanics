@@ -11,5 +11,6 @@ var searchData=
   ['strain_8',['strain',['../classParticle.html#af14ff528876e9d128baf6bc16eb92947',1,'Particle']]],
   ['strainincrement_9',['strainIncrement',['../classParticle.html#a03b4af101a14e8c5a6bf67619c986fc8',1,'Particle']]],
   ['strainincrementfluid_10',['strainIncrementFluid',['../classParticleMixture.html#a340869f830ea205ef01c6dcebc1a5a8b',1,'ParticleMixture']]],
-  ['stress_11',['stress',['../classParticle.html#a04d1aea466feff57336a438cfae71231',1,'Particle']]]
+  ['stress_11',['stress',['../classParticle.html#a04d1aea466feff57336a438cfae71231',1,'Particle']]],
+  ['su_5ffactor_12',['su_factor',['../classMohrCoulomb.html#ae8a8d82ec3d82ac469a857956a71438a',1,'MohrCoulomb']]]
 ];
