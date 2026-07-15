@@ -433,7 +433,7 @@ void MPM::createModel() {
 		// configures the loads
 		setupLoads();
 
-		// configures the hydro-mechanical coupling type
+		// configures hydro-mechanical coupling
 		setOneDirectionHydromechanicalCoupling();
 
 		// configures the damping
@@ -441,7 +441,6 @@ void MPM::createModel() {
 
 		// configures the results
 		setupResults();
-
 	}
 	catch(...)
 	{

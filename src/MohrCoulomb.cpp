@@ -30,7 +30,7 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
     this->softening=softening;
     
     // configure material type
-    type=Material::MaterialType::ELASTOPLASTIC;
+    type=Material::MaterialType::MOHRCOULOMB;
 }
 
 MohrCoulomb::~MohrCoulomb() { }
@@ -57,6 +57,13 @@ void MohrCoulomb::updateStress(Particle *particle) const
     double tensile_curr  = this->softening.tensile_softening_active  ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->tensile, this->softening.tensile_residual)  : this->tensile ;
     double dilation_curr = this->softening.dilation_softening_active ? this->softening.exponentialSoftening(particle->getPlasticStrain(),this->softening.exponential_shape_factor,this->dilation,this->softening.dilation_residual) : this->dilation;
     
+    // verify undrained strength behavior
+    double stress_zz = particle->getStress()(2, 2);
+    if (this->su_factor > 0.0) {
+        cohesion_curr = stress_zz > 0.0 ? 1e-5 : -su_factor * stress_zz;
+        friction_curr = 0.0;
+    }
+
     // model definition variables
     double Nfi  = (1.0+sin(friction_curr*PI/180.0))/(1.0-sin(friction_curr*PI/180.0));
     double Npsi = (1.0+sin(dilation_curr*PI/180.0))/(1.0-sin(dilation_curr*PI/180.0));
