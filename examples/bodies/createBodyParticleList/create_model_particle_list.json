@@ -47,8 +47,9 @@
   [
     {
       "id": 1,
-      "type": "particles_list",
-      "file": "particle_list.json"
+      "type": "particles_from_file",
+      "material_id":2,
+      "file": "particle_list_old.json"
     }
   ]
 }

@@ -708,7 +708,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 				}
 
 				// particle list from external file
-				if ((*it)["type"] == "particles_list") {
+				if ((*it)["type"] == "particles_list" || (*it)["type"] =="particles_from_file") {
 
 					// active flag
 					bool active = true;
@@ -716,6 +716,13 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 						active = (*it)["active"];
 					}
 					if(!active) continue;
+
+					bool homogeneous_flag = false;
+					int mat_id_homogeneous = 0;
+					if ((*it).contains("material_id") && (*it)["material_id"].is_number_integer()) {
+						homogeneous_flag = true;
+						mat_id_homogeneous = (*it)["material_id"];
+					}
 
 					// external file name
 					std::string filename;
@@ -750,14 +757,19 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 							Warning::printMessage("Error: volume keyword not found");
 							throw(0);
 						}
-						if (!p.contains("material_id")) {
+						if (!p.contains("material_id") && homogeneous_flag == false) {
 							Warning::printMessage("Error: material_id keyword not found");
 							throw(0);
 						}
 
 						Vector3d pos(p["position"][0], p["position"][1], p["position"][2]);
 						double vol = p["volume"];
-						unsigned material_id = p["material_id"];
+
+						unsigned material_id = 0.0;
+						if(homogeneous_flag)
+							material_id = mat_id_homogeneous;
+						else
+							material_id = p["material_id"];
 						
 						particles_position.push_back(pos);
 						particles_volume.push_back(vol);
