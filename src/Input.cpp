@@ -765,7 +765,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 						Vector3d pos(p["position"][0], p["position"][1], p["position"][2]);
 						double vol = p["volume"];
 
-						unsigned material_id = 0.0;
+						unsigned material_id = 0;
 						if(homogeneous_flag)
 							material_id = mat_id_homogeneous;
 						else
@@ -1252,6 +1252,10 @@ ModelSetup::DampingType Input::getDampingType() {
 			return ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION;
 		}
 
+		if(inputFile["damping"]["type"]=="none"){
+			return ModelSetup::DampingType::UNDAMPED;
+		}
+
 		throw(0);
 	}
 	catch(...)
@@ -1266,7 +1270,6 @@ double Input::getDampingValue() {
 	try
 	{
 		if (inputFile["damping"].is_null()){
-
 			return 0.0;
 		}
 
@@ -1282,8 +1285,9 @@ double Input::getDampingValue() {
 			{
 				return inputFile["damping"]["alpha"];
 			}
-
-			throw (0);
+				
+			std::cout<<"   Warning : Assuming alpha=0 (undaped)\n";
+			return 0.0;
 		}
 
 		throw (0);

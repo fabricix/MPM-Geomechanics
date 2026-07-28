@@ -956,8 +956,10 @@ namespace Output{
 			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;
 		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION)
 			std::cout << "   Damping : Kinetic" << std::endl;
-
-		if (ModelSetup::getSaveState()) {
+		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::UNDAMPED)
+			std::cout << "   Damping : Undamped" << std::endl;
+		
+			if (ModelSetup::getSaveState()) {
 			std::cout << "Save state : Enabled" << std::endl;
 		}
 		if (ModelSetup::getLoadState()) {
