@@ -17,6 +17,7 @@
     <ClCompile Include="..\..\src\Mesh.cpp" />
     <ClCompile Include="..\..\src\Model.cpp" />
     <ClCompile Include="..\..\src\MohrCoulomb.cpp" />
+    <ClCompile Include="..\..\src\CamClay.cpp" />
     <ClCompile Include="..\..\src\MPM.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
     <ClCompile Include="..\..\src\NodeMixture.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="..\..\inc\Materials\ElasticJaumann.h" />
     <ClInclude Include="..\..\inc\Materials\Material.h" />
     <ClInclude Include="..\..\inc\Materials\MohrCoulomb.h" />
+    <ClInclude Include="..\..\inc\Materials\CamClay.h" />
     <ClInclude Include="..\..\inc\Mesh\Mesh.h" />
     <ClInclude Include="..\..\inc\Mesh\Node.h" />
     <ClInclude Include="..\..\inc\Mesh\NodeMixture.h" />
