@@ -78,7 +78,7 @@ namespace Warning
 		if (enable_virtual_terminal_processing) {
 			string color_set_1 = esc + bold + ";" + red + "m";
 			string color_set_2 = esc + currentFormat + ";" + currentColor + "m";
-			cout << color_set_1 << "Warning: " << color_set_2 << what << reset << endl;
+			cout << color_set_1 << "   Warning : " << color_set_2 << what << reset << endl;
 		}
     }
 }

@@ -1,7 +1,0 @@
-<map id="Loads::NodalPointLoadData" name="Loads::NodalPointLoadData">
-<area shape="rect" id="Node000001" title=" " alt="" coords="47,112,232,139"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,138,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,43,134,110,129,113,85,46"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="161,5,256,32"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,46,150,113,145,110,190,43"/>
-</map>

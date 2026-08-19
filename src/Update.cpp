@@ -12,7 +12,9 @@ void Update::nodalVelocity(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i)
 	{	
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -43,7 +45,9 @@ void Update::nodalTotalForce(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared (gNodes)
+#ifdef _OPENMP
+	#pragma omp parallel for shared(gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -77,7 +81,9 @@ void Update::resetNodalValues(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared (gNodes)
+#ifdef _OPENMP
+	#pragma omp parallel for shared(gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -93,7 +99,9 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	vector<Node*>* gNodes = mesh->getNodes();
 
 	// for each node
-	#pragma omp parallel for shared (gNodes)
+#ifdef _OPENMP
+	#pragma omp parallel for shared(gNodes)
+#endif
 	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
 
 		if(!gNodes->at(i)->getActive()){ continue; }
@@ -103,67 +111,48 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	}
 }
 
+void Update::particleDensity(vector<Particle*>* particles) {
+	
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-void Update::particleDensity(vector<Body*>* bodies) {
-
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle
-		#pragma omp parallel for shared (particles)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update density
-			particles->at(i)->updateDensity();
-		}
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+		
+		// update density
+		particles->at(i)->updateDensity();
 	}
 }
 
-void Update::particlePorosity(vector<Body*>* bodies) {
+void Update::particlePorosity(vector<Particle*>* particles) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle
-		#pragma omp parallel for shared (particles)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update density
-			particles->at(i)->updatePorosity();
-		}
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+		
+		// update density
+		particles->at(i)->updatePorosity();
 	}
 }
 
-void Update::particleStress(vector<Body*>* bodies) {
+void Update::particleStress(vector<Particle*>* particles) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		#pragma omp parallel for shared (particles)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-
-			// update particle stress
-			particles->at(i)->updateStress();
-		}
+		// update particle stress
+		particles->at(i)->updateStress();
 	}
 }
 
@@ -176,7 +165,9 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
 
 		// for each particle
-		#pragma omp parallel for shared (particles)
+#ifdef _OPENMP
+		#pragma omp parallel for shared(particles)
+#endif
 		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
 			// only active particle can contribute
@@ -190,63 +181,58 @@ void Update::particlePressure(vector<Body*>* bodies, double dt) {
 	Loads::updatePrescribedPorePressure(bodies);
 }
 
-void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles, nodes, dt)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle 
-		#pragma omp parallel for shared (particles, nodes, dt)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// initialize the velocity rate vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get the contributing node structure
+			const Contribution contribI = contribution->at(j);
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+			// get the contributing node handle
+			Node* nodeI = nodes->at(contribI.getNodeId());
 
-			// initialize the velocity rate vector
-			Vector3d velocityRate = Vector3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j)
-			{	
-				// get the contributing node structure
-				const Contribution contribI = contribution->at(j);
+			if (nodeI->getMass()!=0.0) {
 
-				// get the contributing node handle
-				Node* nodeI = nodes->at(contribI.getNodeId());
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
 
-				if (nodeI->getMass()!=0.0) {
+					//check contact at this node
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
 
-					//check if it is a contact problem
-					if (ModelSetup::getContactActive()) {
+					if (it != contactNodes.end()) {
+						Node::ContactNodeData& contactNodeData = it->second;
 
-						//check contact at this node
-						unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
-						auto it = contactNodes.find(contribution->at(j).getNodeId());
-
-						if (it != contactNodes.end()) {
-							Node::ContactNodeData& contactNodeData = it->second;
-
-							//compute the velocity rate contribution of the master body 
-							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
+						//compute the velocity rate contribution of the master body 
+						if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+							if (contactNodeData.massMaster > 0.0){
 								velocityRate += contactNodeData.totalForceMaster * contribI.getWeight() / contactNodeData.massMaster;
 							}
-							// compute the velocity rate contribution of the slave body 
-							else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
+						}
+						// compute the velocity rate contribution of the slave body 
+						else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+							if (contactNodeData.massSlave > 0.0){
 								velocityRate += contactNodeData.totalForceSlave * contribI.getWeight() / contactNodeData.massSlave;
 							}
-						}
-						else {
-							// compute the velocity rate contribution
-							velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 						}
 					}
 					else {
@@ -254,100 +240,95 @@ void Update::particleVelocity(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 					}
 				}
-			}
-
-			// get particle handle
-			Particle* particleP = particles->at(i);
-
-			// update particle velocity
-			particleP->setVelocity(particleP->getVelocity()+velocityRate*dt);
-		}
-	}
-}
-
-void Update::particleVelocityFluid(Mesh* mesh, vector<Body*>* bodies, double dt) {
-
-	// get nodes
-	vector<Node*>* nodes = mesh->getNodes();
-
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
-		// for each particle 
-		#pragma omp parallel for shared (particles, nodes, dt)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
-
-			// initialize the velocity rate vector
-			Vector3d velocityRate = Vector3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j)
-			{	
-				// get the contributing node structure
-				const Contribution contribI = contribution->at(j);
-
-				// get the contributing node handle
-				Node* nodeI = nodes->at(contribI.getNodeId());
-
-				if (nodeI->getMassFluid()!=0.0) {
-
-					// compute the velocity rate contribution
-					velocityRate+= (*(nodeI->getTotalForceFluid()))*contribI.getWeight()/nodeI->getMassFluid();
+				else {
+				// compute the velocity rate contribution
+				velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
 				}
 			}
-
-			// get particle handle
-			Particle* particleP = particles->at(i);
-
-			// update particle velocity
-			particleP->setVelocityFluid((*particleP->getVelocityFluid())+velocityRate*dt);
 		}
+
+		// get particle handle
+		Particle* particleP = particles->at(i);
+
+		// update particle velocity
+		particleP->setVelocity(particleP->getVelocity()+velocityRate*dt);
 	}
 }
 
-void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
+void Update::particleVelocityFluid(Mesh* mesh, vector<Particle*>* particles, double dt) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
-
 		// for each particle
-		#pragma omp parallel for shared(particles, nodes, dt)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+#ifdef _OPENMP 
+	#pragma omp parallel for shared(particles, nodes, dt)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// initialize the position rate vector
-			Vector3d positionRate = Vector3d::Zero();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j)
-			{	
-				// get the contributing structure
-				const Contribution contribI = contribution->at(j);
+		// initialize the velocity rate vector
+		Vector3d velocityRate = Vector3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get the contributing node structure
+			const Contribution contribI = contribution->at(j);
 
-				// get the contributing node
-				Node* nodeI = nodes->at(contribI.getNodeId());
+			// get the contributing node handle
+			Node* nodeI = nodes->at(contribI.getNodeId());
 
-				if (nodeI->getMass()!=0.0){
+			if (nodeI->getMassFluid()!=0.0) {
+
+				// compute the velocity rate contribution
+				velocityRate+= (*(nodeI->getTotalForceFluid()))*contribI.getWeight()/nodeI->getMassFluid();
+			}
+		}
+
+		// get particle handle
+		Particle* particleP = particles->at(i);
+
+		// update particle velocity
+		particleP->setVelocityFluid((*particleP->getVelocityFluid())+velocityRate*dt);
+	}
+}
+
+void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double dt) {
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// for each particle
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles, nodes, dt)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
+
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
+
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+
+		// initialize the position rate vector
+		Vector3d positionRate = Vector3d::Zero();
+		
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j)
+		{	
+			// get the contributing structure
+			const Contribution contribI = contribution->at(j);
+
+			// get the contributing node
+			Node* nodeI = nodes->at(contribI.getNodeId());
+
+			if (nodeI->getMass()!=0.0){
 
 					//check if it is a contact problem
 					if (ModelSetup::getContactActive()) {
@@ -360,12 +341,18 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 							Node::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
-							if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
-								positionRate += contactNodeData.momentumMaster * contribI.getWeight() / contactNodeData.massMaster;
+							if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+								if (contactNodeData.massMaster>0.0){
+									positionRate += contactNodeData.momentumMaster * contribI.getWeight() / contactNodeData.massMaster;
+								}
+								
 							}
 							// compute the velocity rate contribution of the slave body 
-							else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
-								positionRate += contactNodeData.momentumSlave * contribI.getWeight() / contactNodeData.massSlave;
+							else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+								if (contactNodeData.massSlave>0.0){
+									positionRate += contactNodeData.momentumSlave * contribI.getWeight() / contactNodeData.massSlave;
+								}
+								
 							}
 						}
 						else {
@@ -374,25 +361,25 @@ void Update::particlePosition(Mesh* mesh, vector<Body*>* bodies, double dt) {
 						}
 					}
 					else {
-						// compute the position rate contribution
-						positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+					// compute the position rate contribution
+					positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
 					}
-				}
 			}
-
-			// get particle handle
-			Particle* particleP = particles->at(i);
-
-			// update particle position
-			particleP->setPosition(particleP->getPosition()+positionRate*dt);
 		}
+
+		// get particle handle
+		Particle* particleP = particles->at(i);
+
+		// update particle position
+		particleP->setPosition(particleP->getPosition()+positionRate*dt);
 	}
 }
 
 void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	// for each boundary node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i){
 
 		// get node handle
@@ -468,8 +455,9 @@ void Update::setPlaneMomentum(const Boundary::planeBoundary* plane, vector<Node*
 
 void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
-	// for each boundary node
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i){
 
 		// get node handle
@@ -675,7 +663,9 @@ void Update::boundaryConditionsMomentum(Mesh* mesh)
 void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) 
 {
 	// get boundary nodes
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
 
 		// get node handle 
@@ -871,7 +861,9 @@ void Update::boundaryConditionsContactForce(Mesh* mesh)
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {
 
 	// get boundary nodes
+#ifdef _OPENMP
 	#pragma omp parallel for shared(plane, nodes, dir)
+#endif
 	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
 
 		// get node handle 
@@ -952,23 +944,18 @@ void Update::boundaryConditionsForceFluid(Mesh* mesh) {
 	setPlaneForceFluid(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 }
 
-void Update::contributionNodes(Mesh* mesh, vector<Body*>* bodies) {
+void Update::contributionNodes(Mesh* mesh, vector<Particle*>* particles) 
+{
+	// for each particle
+#ifdef _OPENMP
+	#pragma omp parallel for shared(particles, mesh)
+#endif
+	for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
-
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 		
-		// for each particle
-		#pragma omp parallel for shared(particles, mesh)
-		for (int i = 0; i < static_cast<int>(particles->size()); ++i) {
-
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
-			
-			// update the contribution nodes
-			particles->at(i)->updateContributionNodes(mesh);
-		}
+		// update the contribution nodes
+		particles->at(i)->updateContributionNodes(mesh);
 	}
 }

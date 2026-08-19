@@ -14,10 +14,10 @@
 #include "TerrainContact.h"
 #include "ContactManager.h"
 
-/// \class MPM
-/// \brief Components and algorithms of the MPM
+/// @brief Components and algorithms of the MPM 
 /// This class contain the basic objects of a MPM model,
-/// and the operations between them.
+/// and the operations between them. See the [Manual](Manual_MPM_English.pdf)
+
 class MPM {
 
 public:
@@ -59,7 +59,7 @@ private:
 	
 	Mesh mesh; //!< background grid mesh
 
-	TerrainContact* terrainContact; //!< terrain contact pointer
+	TerrainContact* terrainContact = nullptr; //!< terrain contact pointer
 
 	ContactManager* contactManager; //!< contact pointer
 
@@ -67,9 +67,9 @@ private:
 
 	vector<Particle*> particles; //!< material points list
 
-	vector<Material*> materials; //!< bodies discretized by material points
+	vector<Material*> materials; //!< material list
 	
-	Solver* solver; //!< operation for solve the equations in time
+	Solver* solver = nullptr; //!< operation for solve the equations in time
 
 	/// \brief Configure the simulation time
 	///

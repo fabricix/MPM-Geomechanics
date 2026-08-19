@@ -1,0 +1,86 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":2.0,
+
+	"time_step":1e-4,
+
+	"gravity":[0.0,0.0,-9.81],
+
+	"n_threads":1,
+
+	"n_phases":2,
+
+	"results":
+	{
+		"print":10,
+		"material_point_results":["id","displacement","material","active","pressure"]
+	},
+
+	"mesh":
+	{	
+		"cells_dimension":[0.25,0.25,0.25],
+		"cells_number":[4,1,40],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		},
+
+		"boundary_conditions_fluid":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"fixed",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"elastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":30e6,
+			"density":2500,
+			"poisson":0.2,
+			"density_fluid":1000,
+			"porosity":0.3,
+			"bulk_fluid":50e6,
+			"hydraulic_conductivity":[1e-3,1e-3,1e-3]
+		}
+	},
+
+	"body":
+	{
+		"cuboid":
+		{
+			"type":"cuboid",
+			"id":1,
+			"point_p1":[0,0,0],
+			"point_p2":[1,0.25,9],
+			"material_id":1
+		}
+	},
+
+	"prescribed_pressure_box":
+	{
+		"pressure_prescibed_1":
+		{
+			"point_p1":[0,0,8.85],
+			"point_p2":[1,0.25,10],
+			"pressure":0
+		}
+	}
+}

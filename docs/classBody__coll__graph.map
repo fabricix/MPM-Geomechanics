@@ -1,7 +1,0 @@
-<map id="Body" name="Body">
-<area shape="rect" id="Node000001" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="80,96,131,123"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,78,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="47,47,56,71,68,83,82,93,79,98,64,87,52,73,42,48"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="102,5,237,32"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,47,142,74,121,97,117,94,138,70,154,44"/>
-</map>

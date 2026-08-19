@@ -1,0 +1,106 @@
+{
+	"stress_scheme_update":"USL",
+
+	"shape_function":"GIMP",
+
+	"time":0.001,
+
+	"time_step":0.00001,
+
+	"gravity":[0.0,0.0,0],
+
+	"n_threads":1,
+
+	"results":
+	{
+		"print":100,
+		"material_point_results":["id","displacement","material","active","pressure","external_force","stress"]
+	},
+
+	"n_phases":2,
+
+	"mesh":
+	{	
+		"cells_dimension":[0.25,0.25,0.25],
+		"cells_number":[4,4,50],
+		"origin":[0,0,0],
+		
+		"boundary_conditions":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"free"
+		},
+		
+		"boundary_conditions_fluid":
+		{
+			"plane_X0":"sliding",
+			"plane_Y0":"sliding",
+			"plane_Z0":"sliding",
+			"plane_Xn":"sliding",
+			"plane_Yn":"sliding",
+			"plane_Zn":"free"
+		}
+	},
+
+	"material":
+	{
+		"elastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":50e6,
+			"density":2600,
+			"poisson":0.3,
+			"density_fluid":1000,
+			"porosity":0.3,
+			"bulk_fluid":500e6,
+			"hydraulic_conductivity":[0.001,0.001,0.001]
+		}
+	},
+
+	"body":
+	{
+		"soil":
+		{
+			"type":"cuboid",
+			"id":1,
+			"point_p1":[0,0,0],
+			"point_p2":[1,1,10],
+			"material_id":1
+		}
+	},
+
+	"initial_pressure_box":
+	{
+		"pressure_initial_1":
+		{
+			"point_p1":[0,0,0],
+			"point_p2":[1,1,10],
+			"pressure":1e3
+		}
+	},
+
+	"prescribed_pressure_box":
+	{
+		"pressure_prescibed_1":
+		{
+			"point_p1":[0,0,9.9],
+			"point_p2":[1,1,10],
+			"pressure":0
+		}
+	},
+
+	"NO_load_distributed_box":
+	{
+		"load_1":
+		{
+			"point_p1":[0,0,9.9],
+			"point_p2":[1,1,10],
+			"load":[0,0,-1e3]
+		}
+	}
+}

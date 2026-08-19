@@ -21,7 +21,9 @@ void DynamicRelaxation::setStaticSolution(vector<Particle*>* particles)
     if (deltaKineticEnergy < 0.0)
     {   
         // set the particles velocity to zero because the static solution was reached or passed
+#ifdef _OPENMP
         #pragma omp parallel for shared(particles)
+#endif
         for (int i = 0; i < static_cast<int> (particles->size()); ++i) {
 
             // verify active particle

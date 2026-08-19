@@ -69,6 +69,8 @@ bool STLReader::readASCII(std::ifstream& file)
 
 bool STLReader::readBinary(std::ifstream& file) {
     
+    std::cout<<"   Warning : Binary stl reader is under development\n";
+
     // clear triangles
     triangles.clear();
 
@@ -78,11 +80,11 @@ bool STLReader::readBinary(std::ifstream& file) {
 
     for (uint32_t i = 0; i < numTriangles; ++i) {
         Triangle triangle;
-        file.read(reinterpret_cast<char*>(&triangle.normal), sizeof(Vector2d));
-        file.read(reinterpret_cast<char*>(&triangle.v1), sizeof(Vector2d));
-        file.read(reinterpret_cast<char*>(&triangle.v2), sizeof(Vector2d));
-        file.read(reinterpret_cast<char*>(&triangle.v3), sizeof(Vector2d));
-        file.ignore(2); // Ignore attributes for now
+        file.read(reinterpret_cast<char*>(&triangle.normal), sizeof(float)*3);
+        file.read(reinterpret_cast<char*>(&triangle.v1), sizeof(float)*3);
+        file.read(reinterpret_cast<char*>(&triangle.v2), sizeof(float)*3);
+        file.read(reinterpret_cast<char*>(&triangle.v3), sizeof(float)*3);
+        file.ignore(2); // Ignore 2 bytes attributes. Byte count.
         triangles.push_back(triangle);
     }
     return true;

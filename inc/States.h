@@ -7,6 +7,8 @@
 #ifndef STATES_H_
 #define STATES_H_
 
+/// \namespace States
+/// \brief Functions to save and load states of the simulation
 namespace States {
 
 	/// \brief Save the particles stress into a json file

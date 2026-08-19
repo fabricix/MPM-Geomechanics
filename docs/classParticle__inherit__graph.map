@@ -1,5 +1,0 @@
-<map id="Particle" name="Particle">
-<area shape="rect" id="Node000001" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="27,5,92,32"/>
-<area shape="rect" id="Node000002" href="$classParticleMixture.html" title="A material point for calculations using the mixture theory." alt="" coords="5,80,114,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,48,62,80,57,80,57,48"/>
-</map>

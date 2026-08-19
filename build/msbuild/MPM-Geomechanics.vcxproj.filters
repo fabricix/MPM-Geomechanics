@@ -50,6 +50,8 @@
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
     <ClCompile Include="..\..\src\Newtonian.cpp" />
     <ClCompile Include="..\..\src\ContactManager.cpp" />
+    <ClCompile Include="..\..\src\BodyGmsh.cpp" />
+    <ClCompile Include="..\..\src\GmshMeshReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
@@ -94,6 +96,8 @@
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
     <ClInclude Include="..\..\inc\Materials\Newtonian.h" />
     <ClInclude Include="..\..\inc\ContactManager.h" />
+    <ClInclude Include="..\..\inc\GmshMeshReader.h" />
+    <ClInclude Include="..\..\inc\Body\BodyGmsh.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tests">

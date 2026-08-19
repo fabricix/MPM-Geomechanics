@@ -1,5 +1,0 @@
-<map id="SolverExplicitUSL" name="SolverExplicitUSL">
-<area shape="rect" id="Node000001" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="5,80,133,107"/>
-<area shape="rect" id="Node000002" href="$classSolver.html" title="Represents the operations to solve the equations in time." alt="" coords="40,5,98,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,48,72,80,66,80,66,48"/>
-</map>

@@ -7,6 +7,7 @@
 #include "Warning.h"
 #include "Materials/Elastic.h"
 #include "Body/BodyCuboid.h"
+#include "Body/BodyGmsh.h"
 #include "Shape/ShapeGimp.h"
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
@@ -15,6 +16,7 @@
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
 #include "Contact.h"
+#include "GmshMeshReader.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -185,20 +187,17 @@ void MPM::setupTerrainContact()
 	
 	if (stlMeshFile!=""){
 	
-		// create mesh pointer
+		// create a mesh reader and red the STL mesh
 		STLReader* stlMesh = new STLReader;
-		// read STL mesh file
 		bool success = stlMesh->read(stlMeshFile);
-		// calculate normals
-		if (success) stlMesh->recalculateNormals();
+
+		if (success) 
+			stlMesh->recalculateNormals();
 		else {
 			Warning::printMessage("Error reading STL mesh file: "+stlMeshFile);
 			throw (0);
 		}
-		// write STL mesh file
-		if (Input::getWriteSTLMeshFile()){
-			stlMesh->writeSTL(stlMeshFile+"_with_normals.stl");
-		}
+		
 		// filtrate outside triangles
 		stlMesh->removeTrianglesOutsideLimits(mesh.getMinLimits(), mesh.getMaxLimits());
 
@@ -243,7 +242,7 @@ void MPM::setupMaterialList() {
 
 void MPM::setupBodyList() {
 
-	bodies=Input::getBodyList();
+	bodies=Input::getBodyList(&materials);
 }
 
 void MPM::createBodies() {
@@ -262,6 +261,7 @@ void MPM::createBodies() {
 		}
 		bodies.at(i)->create(mesh,iMaterial);
 	}
+	BodyGmsh::resetSharedMesh();
 }
 
 void MPM::setupParticles() {
@@ -359,8 +359,9 @@ void MPM::setupResults() {
 	ModelSetup::setResultNum(Input::getResultNum());
 	
 	// configures the fields
-	Output::configureResultFiels(Input::getResultFields());
-	Output::configureGridResultFiels(Input::getGridResultFields());
+	Output::configureResultFields(Input::getResultFields());
+	Output::configureGridResultFields(Input::getGridResultFields());
+	Output::configureSTLContactFields(Input::getWriteSTLMeshFields());
 }
 
 void MPM::setThreads() {
@@ -432,7 +433,7 @@ void MPM::createModel() {
 
 		// set time step
 		setTimeStep();
-		
+
 		// setup the body list
 		setupBodyList();
 
@@ -451,7 +452,7 @@ void MPM::createModel() {
 		// configures the loads
 		setupLoads();
 
-		// configures the hydro-mechanical coupling type
+		// configures hydro-mechanical coupling
 		setOneDirectionHydromechanicalCoupling();
 
 		// configures the damping
@@ -459,7 +460,6 @@ void MPM::createModel() {
 
 		// configures the results
 		setupResults();
-
 	}
 	catch(...)
 	{

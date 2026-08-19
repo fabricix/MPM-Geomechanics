@@ -123,10 +123,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions); _CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions); _CRT_SECURE_NO_WARNINGS; USE_PARALLEL_COMPUTATION</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)../../inc</AdditionalIncludeDirectories>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>No</OpenMPSupport>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/openmp:llvm %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\BodyCuboid.cpp" />
+    <ClCompile Include="..\..\src\BodyGmsh.cpp" />
     <ClCompile Include="..\..\src\BodyParticle.cpp" />
     <ClCompile Include="..\..\src\BodyPolygon.cpp" />
     <ClCompile Include="..\..\src\BodySphere.cpp" />
@@ -147,6 +151,7 @@
     <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
     <ClCompile Include="..\..\src\Energy.cpp" />
     <ClCompile Include="..\..\src\Geometry.cpp" />
+    <ClCompile Include="..\..\src\GmshMeshReader.cpp" />
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\Integration.cpp" />
@@ -196,6 +201,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\inc\Body\Body.h" />
     <ClInclude Include="..\..\inc\Body\BodyCuboid.h" />
+    <ClInclude Include="..\..\inc\Body\BodyGmsh.h" />
     <ClInclude Include="..\..\inc\Body\BodyParticle.h" />
     <ClInclude Include="..\..\inc\Body\BodyPolygon.h" />
     <ClInclude Include="..\..\inc\Body\BodySphere.h" />
@@ -206,6 +212,7 @@
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
     <ClInclude Include="..\..\inc\Energy.h" />
     <ClInclude Include="..\..\inc\Geometry.h" />
+    <ClInclude Include="..\..\inc\GmshMeshReader.h" />
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />
     <ClInclude Include="..\..\inc\Input.h" />
     <ClInclude Include="..\..\inc\Integration.h" />

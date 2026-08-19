@@ -45,7 +45,11 @@ public:
 
 	/// \brief Update the particle pressure
 	/// \param[in] dt time step
-	virtual inline void updatePressure(double) { return; }
+	virtual inline void updatePressure(double dt) 
+	{	
+		(void)dt; 
+		return;
+	}
 
 	/// \brief Update the particle density
 	///  
@@ -70,6 +74,8 @@ public:
 	/// \brief Returns the particle's material
 	/// \return particle's material
 	inline Material* getMaterial() { return this->material; }
+
+	inline Material* getMaterialPntr() {return this->material;}
 
 	/// \brief Returns the particle's body Id
 	/// \return Body identification
@@ -189,15 +195,23 @@ public:
 
 	/// \brief Configures particle velocity of fluid phase
 	/// \param[in] particle_velocity_fluid Current particle velocity of fluid phase
-	virtual inline void setVelocityFluid(const Vector3d&) { return; }
+	virtual inline void setVelocityFluid(const Vector3d& particle_velocity_fluid) 
+	{ 
+		(void)particle_velocity_fluid;
+		return;
+	}
 
 	/// \brief Configures the strain increment
 	/// \param[in] strain_increment Particle strain increment
 	inline void setStrainIncrement(const Matrix3d& strain_increment) { this->strainIncrement=strain_increment; this->strain+=strain_increment; }
 
 	/// \brief Configures the strain increment of fluid phase
-	/// \param[in] strain_increment Particle strain increment of fluid phase
-	virtual inline void setStrainIncrementFluid(const Matrix3d&) { return; }
+	/// \param[in] strain_increment_fluid Particle strain increment of fluid phase
+	virtual inline void setStrainIncrementFluid(const Matrix3d& strain_increment_fluid) 
+	{	
+		(void)strain_increment_fluid; 
+		return;
+	}
 
 	/// \brief Configures the vorticity increment
 	/// \param[in] vorticity_increment Particle vorticity (spin) increment 
@@ -221,7 +235,11 @@ public:
 
 	/// \brief Adds a external fluid force increment
 	/// \param[in] delta_external_fluid_force External fluid force increment
-	virtual inline void addExternalForceFluid(const Vector3d&) { return; }
+	virtual inline void addExternalForceFluid(const Vector3d& delta_external_fluid_force) 
+	{ 
+		(void)delta_external_fluid_force;
+		return;
+	}
 
 	/// \brief Returns o number of particles created
 	/// \return Total created particles
@@ -241,7 +259,10 @@ public:
 
 	/// \brief Configure the pressure of fluid
     /// \param[in] pressure Pressure of the fluid
-    virtual inline void setPressureFluid(double) { return; }
+    virtual inline void setPressureFluid(double pressure) { 
+		(void)pressure;
+		return; 
+	}
 
     /// \brief Returns current porosity
     /// \return Current porosity of mixture
@@ -275,9 +296,30 @@ public:
 	/// \brief Get pore pressure of the particle
 	double getPorePressure() const { return porePressure; }
 
-protected:
+	/// \brief Configures the contact normal force
+	inline void setContactNormalForce(const Vector3d& normalForce) { this->contactNormalForce = normalForce; }
+	
+	/// \brief Returns the contact normal force
+	inline const Vector3d& getContactNormalForce() const { return this->contactNormalForce; }
+
+	/// \brief Configures the contact tangential force
+	inline void setContactTangentialForce(const Vector3d& tangentialForce) { this->contactTangentialForce = tangentialForce; }	
+
+	/// \brief Returns the contact tangential force
+	inline const Vector3d& getContactTangentialForce() const { return this->contactTangentialForce; }
+
+	/// \brief Returns whether the particle is in contact with STL terrain
+	inline bool getIfSTLContact() const { return this->stl_contact; }
+
+	/// \brief Configures whether the particle is in contact with STL terrain
+	inline void setInSTLContact(bool in_contact) { this->stl_contact = in_contact; }
+
+	protected:
 
 	bool active; //!< is particle active
+	
+	bool stl_contact = false; //!< is particle in contact with STL terrain
+
 	int id;	//!< particle id
 	int bodyId; //!< body id
 
@@ -291,6 +333,9 @@ protected:
 	Vector3d velocity; //!< current particle velocity: \f$v_{ip}\f$
 	Vector3d externalForce;	//!< particle external force: \f$f_{ip}^ext\f$
 	Vector3d size; //!< current size in each direction: \f$\Omega_{ip}\f$
+
+	Vector3d contactNormalForce; //!< particle contact normal force: \f$f_{ip}^{c,n}\f$
+	Vector3d contactTangentialForce; //!< particle contact tangential force: \f$f_{ip}^{c,t}\f$
 	
 	Matrix3d stress; //!< current particle stress: \f$\sigma_{ijp}\f$
 	Matrix3d strain; //!< current particle strain: \f$\epsilon_{ijp}\f$

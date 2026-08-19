@@ -1,0 +1,88 @@
+{
+	"stressSchemeUpdate;":"USL",
+
+	"dtFraction":0.25,
+	
+	"nThreads":4,
+	
+	"damping":{
+
+		"type":"local",
+		"alpha":0.05
+	},
+
+	"results":
+	{
+		"print":10,
+		"material_point_results":["displacement","stress"]
+	},
+
+	"mesh":{
+
+		"type":"structured",
+		
+		"cellDimension":[1,2,3],
+
+		"origin":[1,2,3],
+
+		"nCells":[10,10,10],
+
+		"boundaryConditons":
+		{
+			"paneX0":"fixed",
+			"paneY0":"fixed",
+			"paneZ0":"free",
+			"paneXn":"free",
+			"paneYn":"sliding",
+			"paneZn":"sliding"
+		}
+	},
+
+	"material":
+	{
+		"elastic":
+		{
+			"type":"elastic",
+			"id":1,
+			"young":50,
+			"poisson":0.1
+		},
+
+		"plastic":
+		{
+			"type":"plastic",
+			"id":2,
+			"young":50,
+			"poisson":0.1,
+			"friction":20,
+			"cohesion":2
+		}
+	},
+
+	"body":
+	{
+		"cuboid":
+		{
+			"id":[1],
+			"pointP1":[[1,2,3]],
+			"pointP2":[[2,3,4]],
+			"materialId":[1]
+		},
+
+		"rectangle":
+		{
+			"id":[1],
+			"pointP1":[[1,2,3]],
+			"pointP2":[[2,3,4]],
+			"materialId":[1]
+		}
+	},
+
+	"particles":
+	{
+		"id":[1,2,3,4],
+		"position":[[1,2,3],[2,2,4],[2,2,4],[2,2,4]],
+		"mass":[0.1,0.1,0.1,0.1],
+		"materialId":[1,1,1,1]
+	}
+}

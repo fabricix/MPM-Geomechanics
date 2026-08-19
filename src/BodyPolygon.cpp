@@ -19,7 +19,7 @@ void BodyPolygon::create(Mesh& mesh, Material* material) {
 	(void)mesh;
 	
 	// cell dimension
-	double cellDimension = this->distretizationLength;
+	double cellDimension = this->distretizationLength <= 0 ? mesh.getCellDimension().mean() : this->distretizationLength;
 
 	// particles in each direction
 	Vector3i particlesInDirection(2,2,2);

@@ -29,7 +29,12 @@ Particle::Particle(const Vector3d& position, Material* material, const Vector3d&
 	this->initialPosition=position;
 	this->position=position;
 	this->velocity.setZero();
+	
 	this->externalForce.setZero();
+	
+	this->contactNormalForce.setZero();
+	this->contactTangentialForce.setZero();
+
 	this->size=size;
 
 	this->stress.setZero();

@@ -1,0 +1,107 @@
+\section{Required Programs}
+\label{sec:required_programs}
+
+The following instructions outline the steps required to install all necessary programs to build the MPM-Geomechanics project and execute its test suite.
+
+\subsection{Required Programs - Windows}
+
+For Windows installation, the required programs can be installed using Winget and MSYS2. The following table summarizes the required programs, their installation methods, and the corresponding commands.
+
+\label{sec:required_programs_windows}
+\begin{table}[h!]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
+		\hline
+		\textbf{Winget} & \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website} & Native of Windows \\
+		\textbf{Git} & via Winget & \texttt{winget install -e --id Git.Git -e --source winget} \\
+		\textbf{MSYS2} & via Winget & \texttt{winget install -e --id MSYS2.MSYS2 --source winget} \\
+		\textbf{GitHub CLI} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-github-cli} \\
+		\textbf{Python} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-python} \\
+		\textbf{CMake} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-cmake} \\
+		\textbf{GCC} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
+		\textbf{G++} & via MSYS2 MINGW64 & \texttt{pacman -S mingw-w64-x86\_64-gcc} \\
+		\textbf{Make} & via MSYS2 MINGW64 & \texttt{pacman -S make} \\
+		\hline
+	\end{tabularx}
+	\caption{Programs required for Windows installation.}
+\end{table}
+
+\subsubsection*{Pre-requisite: Verify Winget installation}
+
+\textbf{Make sure you have Winget installed.} You can verify this by running \texttt{winget --version}.
+
+If you don't have Winget installed, you can get it from \href{https://learn.microsoft.com/en-us/windows/package-manager/winget/}{Microsoft's official website}.
+
+\subsubsection*{Step 1: Install Git, GitHub, and MSYS2}
+Run the following commands:
+\begin{lstlisting}
+	winget install -e --id Git.Git -e --source winget
+	winget install -e --id MSYS2.MSYS2 --source winget
+\end{lstlisting}
+
+\subsubsection*{Step 2: Install required packages in MSYS2 MINGW64}
+\begin{lstlisting}
+	pacman -S mingw-w64-x86_64-github-cli
+	pacman -S mingw-w64-x86_64-python
+	pacman -S mingw-w64-x86_64-cmake
+	pacman -S mingw-w64-x86_64-gcc
+	pacman -S make
+\end{lstlisting}
+
+\subsubsection*{Step 3: Verify the installations}
+\begin{lstlisting}
+	git --version
+	gh --version
+	python --version
+	cmake --version
+	make --version
+	gcc --version
+	g++ --version
+\end{lstlisting}
+
+\subsection{Required Programs - Linux}
+\label{sec:required_programs_linux}
+
+For Linux installation, the required programs can be installed using the apt package manager. The following table summarizes the required programs, their installation methods, and the corresponding commands.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\textbf{Program} & \textbf{Installation} & \textbf{Command} \\
+		\hline
+		\textbf{Git} & via apt & \texttt{sudo apt install git} \\
+		\textbf{GitHub CLI} & via apt & \texttt{sudo apt install gh} \\
+		\textbf{Python} & via apt & \texttt{sudo apt install python3 python3-pip} \\
+		\textbf{CMake} & via apt & \texttt{sudo apt install cmake} \\
+		\textbf{GCC} & via apt & \texttt{sudo apt install build-essential} \\
+		\textbf{G++} & via apt & \texttt{sudo apt install build-essential} \\
+		\textbf{Make} & via apt & \texttt{sudo apt install build-essential} \\
+		\hline
+	\end{tabularx}
+	\caption{Programs required for Linux installation.}
+\end{table}
+
+\subsubsection*{Step 1: Install all packages via apt}
+
+\begin{lstlisting} [language=bash, caption={Installing required packages using \textit{apt}}]
+	sudo apt install git
+	sudo apt install gh
+	sudo apt install python3 python3-pip
+	sudo apt install cmake
+	sudo apt install build-essential
+\end{lstlisting}
+
+\subsubsection*{Step 2: Verify the installations}
+
+\begin{lstlisting}
+	git --version
+	gh --version
+	python3 --version
+	cmake --version
+	make --version
+	gcc --version
+	g++ --version
+\end{lstlisting}

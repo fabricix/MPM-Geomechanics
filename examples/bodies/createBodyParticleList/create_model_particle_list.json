@@ -1,0 +1,55 @@
+{
+  "time":0.15,
+
+  "time_step":0.01,
+
+  "results":
+  {
+    "print":10,
+    "material_point_results":["id","displacement","material","active","body"]
+  },
+
+  "n_phases":1,
+
+  "mesh":
+  { 
+    "cells_dimension":[1,1,1],
+    "cells_number":[10,10,10],
+    "origin":[0,0,0],
+    
+    "boundary_conditions":
+    {
+      "plane_X0":"sliding",
+      "plane_Y0":"sliding",
+      "plane_Z0":"sliding",
+      "plane_Xn":"sliding",
+      "plane_Yn":"sliding",
+      "plane_Zn":"sliding"
+    }
+  },
+  "material":
+  [{
+    "type":"elastic",
+    "id":1,
+    "young":10e1,
+    "density":2600,
+    "poisson":0.3
+  },
+  {
+    "type":"elastic",
+    "id":2,
+    "young":10e1,
+    "density":2600,
+    "poisson":0.3
+  }
+  ],
+  "body":
+  [
+    {
+      "id": 1,
+      "type": "particles_from_file",
+      "material_id":2,
+      "file": "particle_list_old.json"
+    }
+  ]
+}
