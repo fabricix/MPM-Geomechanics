@@ -93,19 +93,35 @@ because two particles are used initially in each direction of a cell.
 
 The numerical implementation of the Slave-Master contact algorithm in MPM-Geomechanics follows the algorithm below:
 
-\begin{lstlisting}
-Step:1: For each grid node, identify the bodies that have material points mapped to this node, namely, grid contact nodes
-Step:2: For each grid node, reconstruct the nodal mass and momentum, distinguishing the grid contact nodes from regular grid nodes
-Step:3: For each contact node compute the external normal relative to each body. 
-Step:4: For each grid node, distinguishing the grid contact nodes, impose essential boundary conditions on the grid nodal momentum.
-Step:4: For each grid node, distinguishing the grid contact nodes, compute the grid nodal internal, external and total forces
-Step:6: For each grid node, distinguishing the grid contact nodes, 
-integrate the trial momentum of each body independently as if two bodies were not in contact
-Step:7: For each grid contact node, detect the bodies penetration
-Step:7.1: For the penetrated grid contact node, calculate the normal and tangential contact forces
-Step:7.2: For the penetrated grid contact node, Correct the contact grid nodal momentum
-Step:8: Update the position and velocity of each body
-\end{lstlisting}
+
+\begin{algorithm}[H]
+	\caption{MPM Multi-body Contact Algorithm}
+	\label{alg:mpm_contact}
+	\begin{algorithmic}[1]
+		
+		\For{each grid node $i$}
+		\State Identify the bodies that have material points mapped to node $i$
+		\State Reconstruct nodal mass $m_i$ and momentum $p_i$, distinguishing contact nodes from regular nodes
+		
+		\If{node $i$ is a grid contact node}
+		\State Compute the external normal relative to each body
+		\EndIf
+		
+		\State Impose essential boundary conditions on grid nodal momentum
+		\State Compute grid nodal internal, external, and total forces ($f^{\text{int}}, f^{\text{ext}}, f^{\text{tot}}$)
+		\State Integrate the trial momentum of each body independently (without contact)
+		\EndFor
+		
+		\For{each grid contact node $i$}
+		\If{body penetration is detected}
+		\State Calculate the normal and tangential contact forces
+		\State Correct the contact grid nodal momentum
+		\EndIf
+		\EndFor
+		
+		\State Update the position $x_{ip}$ and velocity $v_{ip}$ of each body material point
+	\end{algorithmic}
+\end{algorithm}
 
 The Slave-Master contact algorithm is implemented in the MPM-Geomechanics code and can be activated 
 by including the following lines in the input file:
