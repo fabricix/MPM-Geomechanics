@@ -15,6 +15,7 @@ using Eigen::Vector3d;
 #include "Materials/Material.h"
 
 #include <vector>
+#include <cstddef>
 
 class Mesh;
 
@@ -249,6 +250,24 @@ public:
 	/// \return plasticStrain Effective plastic strain
 	inline double getPlasticStrain() const { return this->plasticStrain; }
 
+	/// \brief Initializes constitutive internal variables
+	/// \param[in] numberOfVariables Number of internal variables
+	inline void initializeInternalVariables(std::size_t numberOfVariables) {this->internalVariables.assign(numberOfVariables, 0.0);}
+
+	/// \brief Returns one constitutive internal variable
+	/// \param[in] index Internal variable index
+	/// \return Internal variable value
+	inline double getInternalVariable(std::size_t index) const {return this->internalVariables.at(index);}
+
+	/// \brief Configures one constitutive internal variable
+	/// \param[in] index Internal variable index
+	/// \param[in] value Internal variable value
+	inline void setInternalVariable(std::size_t index, double value) {this->internalVariables.at(index)=value;}
+
+	/// \brief Returns the number of constitutive internal variables
+	/// \return Number of internal variables
+	inline std::size_t getNumberOfInternalVariables() const {return this->internalVariables.size();}
+
 	/// \brief Returns pressure of fluid
     /// \return Current pore pressure of fluid
     virtual inline double getPressureFluid() const { return 0.0; }
@@ -323,6 +342,8 @@ public:
 	double density;	//!< current particle density: \f$\rho_p\f$
 	double plasticStrain; //!< current effective plastic strain: \f$\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}\f$
 	double distanceLevelSet; //!< distance level set function value: \f$d_p\f$
+
+	std::vector<double> internalVariables; //!< constitutive internal variables
 
 	Vector3d position; //!< current particle position: \f$x_{ip}\f$
 	Vector3d initialPosition; //!< particle initial position: \f$x_{ip}^{0}\f$
