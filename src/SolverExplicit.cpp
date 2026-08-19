@@ -90,22 +90,7 @@ void SolverExplicit::Solve()
 
 		// Apply multi field velocity contact correction
 		if (contactActive) {
-
-			// Verify if real distance correction method is active
-			contactManager->realDistanceCorrection(mesh, bodies);
-			
-			// Update contact forces and apply boundary conditions 
-			if (contactManager->getContactDetectionFlag()) {
-
-				// contact forces
-				contactManager->computeContactForces(mesh, dt);
-
-				// boundary conditions
-				Update::boundaryConditionsContactForce(mesh);
-
-				// Correct nodal momentum using contact forces
-				contactManager->nodalMomentumContactUpdate(mesh, dt);
-			}
+			contactManager->applyVelocityContactCorrection(mesh,bodies,dt);
 		}
 
 		// Step 5: Particle updates

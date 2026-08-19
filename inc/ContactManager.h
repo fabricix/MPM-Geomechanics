@@ -58,6 +58,12 @@ public:
     /// \return contact detection flag
     inline bool getContactDetectionFlag() const { return this->contactDetection; };
 
+    /// @brief Apply multi field velocity contact correction
+    /// @param mesh 
+    /// @param bodies 
+    /// @param dt 
+    void applyVelocityContactCorrection(Mesh* mesh, vector<Body*>* bodies, double dt);
+
     private:
 
     bool contactDetection = false; //!<variable for contact detection

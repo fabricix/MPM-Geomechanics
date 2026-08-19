@@ -390,3 +390,24 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 		contactNodesData.momentumSlave -= dt * contactNodesData.contactForce;
 	}
 }
+
+
+
+void ContactManager::applyVelocityContactCorrection(Mesh* mesh, vector<Body*>* bodies, double dt)
+{
+	// Verify if real distance correction method is active
+	this->realDistanceCorrection(mesh, bodies);
+	
+	// Update contact forces and apply boundary conditions 
+	if (this->getContactDetectionFlag()) {
+
+		// contact forces
+		this->computeContactForces(mesh, dt);
+
+		// boundary conditions
+		Update::boundaryConditionsContactForce(mesh);
+
+		// Correct nodal momentum using contact forces
+		this->nodalMomentumContactUpdate(mesh, dt);
+	}		
+}
