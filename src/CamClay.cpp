@@ -44,6 +44,8 @@ CamClay::CamClay(int id, double density, double poisson_, double lambda_, double
     this->Gbar0 = 3.0*(1.0-2.0*this->poisson)*this->Kbar0/(2.0*(1.0+this->poisson));
     this->C1 = this->nu0/(this->lambda-this->kappa);
     this->n=this->Me / this->Mc;
+
+    this->zeroTolerance = 1.0e-12;
 }
 
 CamClay::~CamClay() { }
@@ -62,8 +64,7 @@ CamClay::StressState CamClay::computeStressState(const Matrix3d& stress) const
     const Matrix3d sSquared = state.stressDev * state.stressDev;
     state.S = std::cbrt((sSquared * state.stressDev).trace()/ 3.0);
     // state.S = state.stressDev.determinant();
-    const double invariantTolerance = 1.0e-12;
-    if (state.J <= invariantTolerance) {state.alpha = 0.0;}
+    if (state.J <= zeroTolerance) {state.alpha = 0.0;}
     else{
         const double ratioSJ = state.S/state.J;
         double argumentAlpha = 3.0 * std::sqrt(3.0) / 2.0 * ratioSJ * ratioSJ * ratioSJ;
@@ -71,12 +72,31 @@ CamClay::StressState CamClay::computeStressState(const Matrix3d& stress) const
         state.alpha = std::asin(argumentAlpha) / 3.0;
     }
     const double denominator_g = 1.0 + n - (1.0 - n) * std::sin(3.0 * state.alpha);
-    if (std::abs(denominator_g) <= invariantTolerance) {throw std::runtime_error("Singular critical state surface denominator of g.");}
+    if (std::abs(denominator_g) <= zeroTolerance) {throw std::runtime_error("Singular critical state surface denominator of g.");}
     const double g = 2.0 * n / denominator_g;
     state.N = g * Mc / (3.0 * std::sqrt(3.0));
     state.gbar = -3.0 * (1.0 - n) * std::cos(3.0 * state.alpha) / denominator_g;
 
     return state;    
+}
+
+//=====================================================
+// Exact elastic properties
+//=====================================================
+
+Matrix3d CamClay::computeElasticTrialStress(const StressState& oldState, const Matrix3d& de) const
+{
+    // strain increment and its deviator
+    const Matrix3d deDev = de - Matrix3d::Identity()*de.trace()/3.0;
+    const double deVol = de.trace();
+
+    // current stress and deviate
+    const double pOld = oldState.I / 3.0;
+    if (pOld <= 0.0) {throw std::runtime_error("Cam-Clay requires a positive compressive mean pressure");}
+    const double x = Kbar0 * deVol;
+    const double Gave = (std::abs(x) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(x) / x;
+    const double pTrial = pOld * std::exp(x);
+    return oldState.stressDev + 2.0 * Gave * deDev + pTrial * Matrix3d::Identity();
 }
 
 // =========================================================
@@ -115,7 +135,12 @@ void CamClay::updateStress(Particle *particle) const
     // Preconsolidation pressure at time n from Particle
     double p0Old = particle->getInternalVariable(index(InternalVariable::p0));
 	
-	
+    // =====================================================
+    // Exact elastic trial state
+    // =====================================================
 
+    // get trial elastic stress
+    Matrix3d trialStress = computeElasticTrialStress(oldState, de);
+    StressState trialState = computeStressState(trialStress);
    
 }

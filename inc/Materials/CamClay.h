@@ -69,7 +69,7 @@ protected:
     // Numerical tolerances
     // =====================================================
 
-    double invariantTolerance_;
+    double zeroTolerance; //!< Numerical tolerance for values close to zero
 
     // =====================================================
     // Stress state
@@ -87,6 +87,11 @@ protected:
 
     StressState computeStressState(const Matrix3d& stress) const;
 
+    //=====================================================
+    // Exact elastic properties
+    //=====================================================
+
+    Matrix3d computeElasticTrialStress(const StressState& oldState, const Matrix3d& de) const;
 };
 
 #endif /* INC_MATERIALS_CAMCLAY_H_ */
