@@ -76,14 +76,14 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 					Node::ContactNodeData& contactNodeData = it->second;
 					
 					//add mass at node of the master body 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 #ifdef _OPENMP
 						#pragma omp atomic update
 #endif
 						contactNodeData.massMaster += nodalMass;
 					}
 					//add mass at node of the slave body 
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 #ifdef _OPENMP
 						#pragma omp atomic update
 #endif
@@ -212,7 +212,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 					Vector3d deltaMomentum = pMass * pVelocity * contribution->at(j).getWeight();
 					
 					// add momentum at node of the master body 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 #ifdef _OPENMP
 #pragma omp atomic update
 						contactNodeData.momentumMaster.x() += deltaMomentum.x();
@@ -226,7 +226,7 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 					}
 
 					// add momentum at node of the slave body 
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 #ifdef _OPENMP
 #pragma omp atomic update
 						contactNodeData.momentumSlave.x() += deltaMomentum.x();
@@ -365,7 +365,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 					Vector3d deltaForce = internalForce;
 					
 					//add mass at node of the master body 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 #ifdef _OPENMP
 #pragma omp atomic update
 						contactNodeData.internalForceMaster.x() += deltaForce.x();
@@ -378,7 +378,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 #endif
 					}
 					//add mass at node of the slave body 
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 
 #ifdef _OPENMP
 #pragma omp atomic update
@@ -513,7 +513,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 					Vector3d deltaExtForce = pExtForce * contribution->at(j).getWeight();
 
 					//add external force at node of the master body 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 #ifdef _OPENMP
 #pragma omp atomic update
 						contactNodeData.externalForceMaster.x() += deltaExtForce.x();
@@ -526,7 +526,7 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 #endif
 					}
 					//add external force at node of the slave body 
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 #ifdef _OPENMP
 #pragma omp atomic update
 						contactNodeData.externalForceSlave.x() += deltaExtForce.x();
@@ -712,11 +712,11 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 					Node::ContactNodeData& contactNodeData = it->second;
 
 					// master body velocity 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 						v = contactNodeData.velocityMaster;
 					}
 					// slave body velocity
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 						v = contactNodeData.velocitySlave;
 					}
 				}
@@ -852,11 +852,11 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 					Node::ContactNodeData& contactNodeData = it->second;
 
 					//add external force at node of the master body 
-					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 						v = contactNodeData.velocityMaster;
 					}
 					//add external force at node of the slave body 
-					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 						v = contactNodeData.velocitySlave;
 					}
 				}

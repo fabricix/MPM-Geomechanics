@@ -223,13 +223,13 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 						Node::ContactNodeData& contactNodeData = it->second;
 
 						//compute the velocity rate contribution of the master body 
-						if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+						if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 							if (contactNodeData.massMaster > 0.0){
 								velocityRate += contactNodeData.totalForceMaster * contribI.getWeight() / contactNodeData.massMaster;
 							}
 						}
 						// compute the velocity rate contribution of the slave body 
-						else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+						else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 							if (contactNodeData.massSlave > 0.0){
 								velocityRate += contactNodeData.totalForceSlave * contribI.getWeight() / contactNodeData.massSlave;
 							}
@@ -341,14 +341,14 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 							Node::ContactNodeData& contactNodeData = it->second;
 
 							//compute the velocity rate contribution of the master body 
-							if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId - 1) {
+							if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
 								if (contactNodeData.massMaster>0.0){
 									positionRate += contactNodeData.momentumMaster * contribI.getWeight() / contactNodeData.massMaster;
 								}
 								
 							}
 							// compute the velocity rate contribution of the slave body 
-							else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId - 1) {
+							else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
 								if (contactNodeData.massSlave>0.0){
 									positionRate += contactNodeData.momentumSlave * contribI.getWeight() / contactNodeData.massSlave;
 								}
