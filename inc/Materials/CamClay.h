@@ -100,18 +100,38 @@ protected:
     
     double computeYieldFunction(const StressState& state, double p0) const;
 
-    //=====================================================
-    // First derivative / flow direction
-    //=====================================================
-
-    // double computePhiDerivativeI(const StressState& state, double p0) const;
-    // double computePhiDerivativeJ(const StressState& state) const;
-    // double computePhiDerivativeAlpha(const StressState& state) const;
-
     // =========================================================
-    // Yield gradient
+    // Yield gradient / flow direction
     // =========================================================
     Matrix3d computeYieldGradient(const StressState& state, double p0) const;
+
+    // =========================================================
+    // Exact hardening 
+    // =========================================================
+
+    double computeUpdatedPreconsolidationPressure(double p0Old, double plasticMultiplier, double rkk) const;
+
+    // =========================================================
+    // CPPM constitutive equations and residuals
+    // =========================================================
+    Matrix3d computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double plasticMultiplier) const;
+
+    Matrix3d computeStressResidual(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double plasticMultiplier) const;
+    double computeHardeningResidual(double p0Old, double p0Current, double plasticMultiplier, double rkk) const;
+
+    // =========================================================
+    // Second derivatives required by CPPM
+    // =========================================================
+
+    Matrix3d computeAlphaStressDerivative(const StressState& state) const;
+    Matrix3d computeYieldDerivativeJStressDerivative(const StressState& state) const;
+    Matrix3d computeGbarStressDerivative(const StressState& state) const;
+    Matrix3d computeYieldDerivativeAlphaStressDerivative(const StressState& state) const;
+    Matrix3d computerijStressDerivativeAlphaBoundary(double alpha) const;
+
+    Matrix3d computerijStressDerivative(const StressState& state) const;
+    
+    
 };
 
 #endif /* INC_MATERIALS_CAMCLAY_H_ */

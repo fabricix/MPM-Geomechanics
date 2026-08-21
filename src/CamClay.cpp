@@ -119,26 +119,68 @@ Matrix3d CamClay::computeYieldGradient(const StressState& state, double p0) cons
     const Matrix3d identity = Matrix3d::Identity();
     // Contribution through I
     const double dPhi_dI = 2.0 * state.I - 3.0 * p0;
-    Matrix3d r = dPhi_dI * identity;
+    Matrix3d rij = dPhi_dI * identity;
     // J = 0: only volumetric contribution remains; the J and alpha contributions are neglected.
-    if (state.J <= zeroTolerance) {return r;}
+    if (state.J <= zeroTolerance) {return rij;}
     // Contribution through J
     const double dPhi_dJ = 2.0 * state.J / (state.N * state.N);
-    r += dPhi_dJ * state.stressDev / (2.0 * state.J);
+    rij += dPhi_dJ * state.stressDev / (2.0 * state.J);
     // alpha = +/- pi/6: cos (3 alpha) = 0.0; the alpha contribution is neglected.
     const double cos3Alpha = std::cos(3.0 * state.alpha);
-    if (std::abs(cos3Alpha) <= zeroTolerance) {return r;}
+    if (std::abs(cos3Alpha) <= zeroTolerance) {return rij;}
     // Contribution through alpha
     const double dPhi_dAlpha = state.J * state.gbar * dPhi_dJ;
     const double SOverJ = state.S / state.J;
     const Matrix3d bracket = (state.stressDev * state.stressDev) / (state.J * state.J)
     - (2.0 / 3.0) * identity
     - 1.5 * SOverJ * SOverJ * SOverJ * state.stressDev / state.J;
-    r += dPhi_dAlpha * std::sqrt(3.0) / (2.0 * state.J * cos3Alpha) * bracket;
+    rij += dPhi_dAlpha * std::sqrt(3.0) / (2.0 * state.J * cos3Alpha) * bracket;
 
-    return r;
+    return rij;
 }
 
+// =========================================================
+// Exact hardening 
+// =========================================================
+
+double CamClay::computeUpdatedPreconsolidationPressure(double p0Old, double plasticMultiplier, double rkk) const
+{
+    return p0Old * std::exp(C1 * plasticMultiplier * rkk);
+}
+
+// =========================================================
+// CPPM constitutive equations and residuals
+// =========================================================
+
+Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double plasticMultiplier) const
+{
+    Matrix3d identity = Matrix3d::Identity();
+    // State at n
+    const double pOld = oldState.I / 3.0;
+    if (pOld <= zeroTolerance) {throw std::runtime_error("The old mean pressure must be positive.");}
+    // Strain decomposition
+    const double deVol = de.trace();
+    const Matrix3d deDev = de - deVol / 3.0 * identity;
+    // Flow direction evaluated at current Newton estimate
+    const double rkk = rij.trace();
+    const Matrix3d dij = rij - rkk / 3.0 * identity;
+    const double barX0 = Kbar0 * (deVol - plasticMultiplier * rkk);
+    const Matrix3d DeltaY = deDev - plasticMultiplier * dij;
+    const double Gave = (std::abs(barX0) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(barX0) / barX0;
+
+    return oldState.stressDev + 2.0 * Gave * DeltaY + pOld * std::exp(barX0) * identity;
+
+}
+Matrix3d CamClay::computeStressResidual(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double plasticMultiplier) const
+{
+    const Matrix3d stressNew = computeElastoplasticStress(oldState, de, rij, plasticMultiplier);
+    return currentState.stress - stressNew;
+    }
+double CamClay::computeHardeningResidual(double p0Old, double p0Current, double plasticMultiplier, double rkk) const
+{
+    const double p0New = computeUpdatedPreconsolidationPressure(p0Old,plasticMultiplier,rkk);
+    return p0Current - p0New;
+}
 
 // =========================================================
 // Initialization
