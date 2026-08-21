@@ -70,6 +70,7 @@ protected:
     // =====================================================
 
     double zeroTolerance; //!< Numerical tolerance for values close to zero
+    double TolPhi; //!< Numerical tolerance for yield function
 
     // =====================================================
     // Stress state
@@ -92,6 +93,13 @@ protected:
     //=====================================================
 
     Matrix3d computeElasticTrialStress(const StressState& oldState, const Matrix3d& de) const;
+
+    //=====================================================
+    // Yield function
+    //=====================================================
+    
+    double computeYieldFunction(const StressState& state, double p0) const;
+
 };
 
 #endif /* INC_MATERIALS_CAMCLAY_H_ */

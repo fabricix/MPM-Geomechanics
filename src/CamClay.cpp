@@ -46,6 +46,7 @@ CamClay::CamClay(int id, double density, double poisson_, double lambda_, double
     this->n=this->Me / this->Mc;
 
     this->zeroTolerance = 1.0e-12;
+    this->TolPhi = 1.0e-10;
 }
 
 CamClay::~CamClay() { }
@@ -75,6 +76,7 @@ CamClay::StressState CamClay::computeStressState(const Matrix3d& stress) const
     if (std::abs(denominator_g) <= zeroTolerance) {throw std::runtime_error("Singular critical state surface denominator of g.");}
     const double g = 2.0 * n / denominator_g;
     state.N = g * Mc / (3.0 * std::sqrt(3.0));
+    if(std::abs(state.N) <= zeroTolerance) {throw std::runtime_error("Singular ratio N");}
     state.gbar = -3.0 * (1.0 - n) * std::cos(3.0 * state.alpha) / denominator_g;
 
     return state;    
@@ -97,6 +99,15 @@ Matrix3d CamClay::computeElasticTrialStress(const StressState& oldState, const M
     const double Gave = (std::abs(x) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(x) / x;
     const double pTrial = pOld * std::exp(x);
     return oldState.stressDev + 2.0 * Gave * deDev + pTrial * Matrix3d::Identity();
+}
+
+//=====================================================
+// Yield function
+//=====================================================
+   
+double CamClay::computeYieldFunction(const StressState& state, double p0) const
+{
+    return state.I * state.I + state.J * state.J /(state.N * state.N) - 3.0 * p0 * state.I;
 }
 
 // =========================================================
@@ -142,5 +153,14 @@ void CamClay::updateStress(Particle *particle) const
     // get trial elastic stress
     Matrix3d trialStress = computeElasticTrialStress(oldState, de);
     StressState trialState = computeStressState(trialStress);
+
+    // Evaluate yield function at trial state
+    double phiTrial = computeYieldFunction(trialState, p0Old);
+    const double phiScale = std::max({1.0, trialState.I * trialState.I, trialState.J * trialState.J, p0Old * p0Old});
+
+    // Elastic step
+    if (phiTrial <= TolPhi * phiScale) {particle->setStress(-trialStress); return;}
+    
+
    
 }
