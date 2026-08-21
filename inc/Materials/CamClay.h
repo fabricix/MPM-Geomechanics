@@ -100,6 +100,18 @@ protected:
     
     double computeYieldFunction(const StressState& state, double p0) const;
 
+    //=====================================================
+    // First derivative / flow direction
+    //=====================================================
+
+    // double computePhiDerivativeI(const StressState& state, double p0) const;
+    // double computePhiDerivativeJ(const StressState& state) const;
+    // double computePhiDerivativeAlpha(const StressState& state) const;
+
+    // =========================================================
+    // Yield gradient
+    // =========================================================
+    Matrix3d computeYieldGradient(const StressState& state, double p0) const;
 };
 
 #endif /* INC_MATERIALS_CAMCLAY_H_ */

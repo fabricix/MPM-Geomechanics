@@ -111,6 +111,36 @@ double CamClay::computeYieldFunction(const StressState& state, double p0) const
 }
 
 // =========================================================
+// Yield gradient (r_ij)
+// =========================================================
+
+Matrix3d CamClay::computeYieldGradient(const StressState& state, double p0) const
+{   
+    const Matrix3d identity = Matrix3d::Identity();
+    // Contribution through I
+    const double dPhi_dI = 2.0 * state.I - 3.0 * p0;
+    Matrix3d r = dPhi_dI * identity;
+    // J = 0: only volumetric contribution remains; the J and alpha contributions are neglected.
+    if (state.J <= zeroTolerance) {return r;}
+    // Contribution through J
+    const double dPhi_dJ = 2.0 * state.J / (state.N * state.N);
+    r += dPhi_dJ * state.stressDev / (2.0 * state.J);
+    // alpha = +/- pi/6: cos (3 alpha) = 0.0; the alpha contribution is neglected.
+    const double cos3Alpha = std::cos(3.0 * state.alpha);
+    if (std::abs(cos3Alpha) <= zeroTolerance) {return r;}
+    // Contribution through alpha
+    const double dPhi_dAlpha = state.J * state.gbar * dPhi_dJ;
+    const double SOverJ = state.S / state.J;
+    const Matrix3d bracket = (state.stressDev * state.stressDev) / (state.J * state.J)
+    - (2.0 / 3.0) * identity
+    - 1.5 * SOverJ * SOverJ * SOverJ * state.stressDev / state.J;
+    r += dPhi_dAlpha * std::sqrt(3.0) / (2.0 * state.J * cos3Alpha) * bracket;
+
+    return r;
+}
+
+
+// =========================================================
 // Initialization
 // =========================================================
 
