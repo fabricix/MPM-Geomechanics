@@ -63,6 +63,10 @@ protected:
     double zeroTolerance; //!< Numerical tolerance for values close to zero
     double TolPhi; //!< Numerical tolerance for yield function
 
+    using Matrix6d = Matrix<double, 6, 6>;
+    using Vector6d = Matrix<double, 6, 1>;
+    using RowVector6d = Matrix<double, 1, 6>;
+
     // Stress state
     struct StressState {
         Matrix3d stress;
@@ -101,11 +105,24 @@ protected:
     Matrix3d computeGbarStressDerivative(const StressState& state) const;
     Matrix3d computeYieldDerivativeAlphaStressDerivative(const StressState& state) const;
     
-    using Matrix6d = Eigen::Matrix<double, 6, 6>;
     Matrix6d computeRStressDerivativeAlphaBoundary(double alpha) const;
     Matrix6d computeRStressDerivative(const StressState& state) const;
+
+    struct CPPMCoefficients
+    {
+        Matrix6d A;
+        Vector6d B;
+        Vector6d F;
+        RowVector6d H;
+        double omega;
+        double beta;
+        RowVector6d E;
+        double gamma;
+    };
+
+    CPPMCoefficients computeCPPMCoefficients(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double p0Old, double plasticMultiplier) const;
     
-    
+        
 };
 
 #endif /* INC_MATERIALS_CAMCLAY_H_ */

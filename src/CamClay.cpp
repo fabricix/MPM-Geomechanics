@@ -237,15 +237,17 @@ CamClay::Matrix6d CamClay::computeRStressDerivativeAlphaBoundary(double alpha) c
     // d_rij/dsigma_pq = 2 delta_ij delta_pq + 1/N^2 * (ds_ij/dsigma_pq)
     for (int column = 0; column < 6; ++column)
     {
-        Matrix3d E = Matrix3d::Zero();
-        if (column==0) {E(0, 0) = 1.0;}
-        else if (column==1) {E(1, 1) = 1.0;}
-        else if (column==2) {E(2, 2) = 1.0;}
-        else if (column==3) {E(0, 1) = 1.0; E(1, 0) = 1.0;}
-        else if (column==4) {E(1, 2) = 1.0; E(2, 1) = 1.0;}
-        else {E(0, 2) = 1.0; E(2, 0) = 1.0;}
-        const double dI = E.trace();
-        const Matrix3d ds = E - dI / 3.0 * Matrix3d::Identity();
+        // Unit direction associated with one independent
+        // component of the symmetric stress tensor
+        Matrix3d stressDirection  = Matrix3d::Zero();
+        if (column==0) {stressDirection(0, 0) = 1.0;}
+        else if (column==1) {stressDirection(1, 1) = 1.0;}
+        else if (column==2) {stressDirection(2, 2) = 1.0;}
+        else if (column==3) {stressDirection(0, 1) = 1.0; stressDirection(1, 0) = 1.0;}
+        else if (column==4) {stressDirection(1, 2) = 1.0; stressDirection(2, 1) = 1.0;}
+        else {stressDirection(0, 2) = 1.0; stressDirection(2, 0) = 1.0;}
+        const double dI = stressDirection.trace();
+        const Matrix3d ds = stressDirection  - dI / 3.0 * Matrix3d::Identity();
         const Matrix3d dr = 2.0 * dI * Matrix3d::Identity() + inverseN2 * ds;
         // Reduced gradient convetion used [r11 r22 r33 2r12 2r23 2r13]
         drij_dStress(0, column) = dr(0,0);
@@ -291,7 +293,9 @@ CamClay::Matrix6d CamClay::computeRStressDerivative(const StressState& state) co
     // Six independent stress directions
     for (int column = 0; column < 6; ++column)
     {
-        Matrix3d E = Matrix3d::Zero();
+        // Unit direction associated with one independent
+        // component of the symmetric stress tensor  
+        Matrix3d stressDirection = Matrix3d::Zero();
         // Reduced ordering:
         // 0 -> sigma11
         // 1 -> sigma22
@@ -299,31 +303,31 @@ CamClay::Matrix6d CamClay::computeRStressDerivative(const StressState& state) co
         // 3 -> sigma12 = sigma21
         // 4 -> sigma23 = sigma32
         // 5 -> sigma13 = sigma31
-        if (column == 0) {E(0, 0) = 1.0;}
-        else if (column == 1) {E(1, 1) = 1.0;}
-        else if (column == 2) {E(2, 2) = 1.0;}
-        else if (column == 3) {E(0, 1) = 1.0; E(1, 0) = 1.0;}
-        else if (column == 4) {E(1, 2) = 1.0; E(2, 1) = 1.0;}
-        else {E(0, 2) = 1.0; E(2, 0) = 1.0;}
+        if (column == 0) {stressDirection(0, 0) = 1.0;}
+        else if (column == 1) {stressDirection(1, 1) = 1.0;}
+        else if (column == 2) {stressDirection(2, 2) = 1.0;}
+        else if (column == 3) {stressDirection(0, 1) = 1.0; stressDirection(1, 0) = 1.0;}
+        else if (column == 4) {stressDirection(1, 2) = 1.0; stressDirection(2, 1) = 1.0;}
+        else {stressDirection(0, 2) = 1.0; stressDirection(2, 0) = 1.0;}
 
         //A8.14: ds_ij/dsigma_pq
         //ds_ij = ds_ij/dsigma_pq * E_pq
-        const Matrix3d ds = E - E.trace() / 3.0 * identity;
+        const Matrix3d ds = stressDirection  - stressDirection.trace() / 3.0 * identity;
         //A8.15: dJ/dsigma_pq
         //dJ = dJ/dsigma_pq * ds_pq = dJ/dsigma_pq E_pq
         const double dJ = (s.array() * ds.array()).sum() / (2.0 * J);
         //A8.17: dalpha/dsigma_pq
         //dalpha = dalpha/dsigma_pq E_pq
-        const double dAlpha = (cij.array() * E.array()).sum();
+        const double dAlpha = (cij.array() * stressDirection.array()).sum();
         //A8.22: d(dphi/dI)/dsimga_pq
         //d(dphi/dI) = d(dphi/dI)/dsimga_pq E_pq
-        const double dPhiI = 2.0 * E.trace();
+        const double dPhiI = 2.0 * stressDirection.trace();
         //A8.23: d(dPhi/dJ)/dsigma_pq
         //d(dPhi/dJ) = d(dPhi/dJ)/dsigma_pq E_pq
-        const double dPhiJ = (dPhi_dJ_dStress.array() * E.array()).sum();
+        const double dPhiJ = (dPhi_dJ_dStress.array() * stressDirection.array()).sum();
         //A8.24: d(dPhi/dalpha)/dsigma_pq
         //d(dPhi/dalpha) = d(dPhi/dalpha)/dsigma_pq E_pq
-        const double dPhiAlpha = (dPhi_dAlpha_dStress.array() * E.array()).sum();
+        const double dPhiAlpha = (dPhi_dAlpha_dStress.array() * stressDirection.array()).sum();
 
         //A8.25b: L_ijpq^10 = 0
         //A8.26: L_ijpq^20 = db_ij/dsigma_pq 
@@ -384,8 +388,115 @@ CamClay::Matrix6d CamClay::computeRStressDerivative(const StressState& state) co
     }  
     return drij_dStress;
 }
-    
 
+CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double p0Old, double plasticMultiplier) const
+{
+    CPPMCoefficients coefficients;
+    const Matrix3d identity = Matrix3d::Identity();
+    //State at n
+    const double pOld = oldState.I / 3.0;
+    if (pOld <= zeroTolerance) {throw std::runtime_error("The old mean pressure must be positive.");}
+    //Strain decomposition
+    const double deVol = de.trace();
+    const Matrix3d deDev = de - deVol / 3.0 * identity;
+    //Current flow direction r_ij
+    const double rkk = rij.trace();
+    const Matrix3d dij = rij - rkk / 3.0 * identity;
+    //12.55a barx0 
+    const double barX0 = Kbar0 * (deVol - plasticMultiplier * rkk);
+    //12.55b Delta y_ij
+    const Matrix3d DeltaY = deDev - plasticMultiplier * dij;
+    //12.56b Gave
+    const double Gave = (std::abs(barX0) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(barX0) / barX0;
+    const double seriesTolerance = 1.0e-8;
+    const double dGave_dX0 = (std::abs(barX0) <= seriesTolerance) ? Gbar0 * pOld * (0.5 + barX0 / 3.0 + barX0 * barX0 / 8.0) :
+    Gbar0 * pOld * std::exp(barX0) / barX0 - Gave / barX0 ;
+    //12.61 Z_ij = 2 DeltaY Gbar0 pOld e^barX0 / barX0 - 2 DeltaY Gave / barX0 + pOld e^barX0 delta_ij
+    const Matrix3d Zij = 2.0 * DeltaY * dGave_dX0 + pOld * std::exp(barX0) * identity;
+    //Second derivatives of the surface
+    // Reduced gradient convetion used [r11 r22 r33 2r12 2r23 2r13]
+    const Matrix6d drij_dstress = computeRStressDerivative(currentState);
+    
+    //12.63a: A_ijpq
+    for (int column = 0; column < 6; ++column)
+    {
+        // Unit direction associated with one independent
+        // component of the symmetric stress tensor  
+        Matrix3d stressDirection = Matrix3d::Zero();
+        // Reduced ordering:
+        // 0 -> sigma11
+        // 1 -> sigma22
+        // 2 -> sigma33
+        // 3 -> sigma12 = sigma21
+        // 4 -> sigma23 = sigma32
+        // 5 -> sigma13 = sigma31
+        if (column == 0) {stressDirection(0, 0) = 1.0;}
+        else if (column == 1) {stressDirection(1, 1) = 1.0;}
+        else if (column == 2) {stressDirection(2, 2) = 1.0;}
+        else if (column == 3) {stressDirection(0, 1) = 1.0; stressDirection(1, 0) = 1.0;}
+        else if (column == 4) {stressDirection(1, 2) = 1.0; stressDirection(2, 1) = 1.0;}
+        else {stressDirection(0, 2) = 1.0; stressDirection(2, 0) = 1.0;}
+        //Recover tensorial components from the reduced drij_dstress
+        Matrix3d dR_dS = Matrix3d::Zero();
+        dR_dS(0, 0) = drij_dstress(0, column);
+        dR_dS(1, 1) = drij_dstress(1, column);
+        dR_dS(2, 2) = drij_dstress(2, column);
+        dR_dS(0, 1) = 0.5 * drij_dstress(3, column);
+        dR_dS(1, 0) = dR_dS(0, 1);
+        dR_dS(1, 2) = 0.5 * drij_dstress(4, column);
+        dR_dS(2, 1) = dR_dS(1, 2);
+        dR_dS(0, 2) = 0.5 * drij_dstress(5, column);
+        dR_dS(2, 0) = dR_dS(0, 2);
+        //dr_kk/dsigma_pq
+        const double drkk_dstress = dR_dS.trace();
+        //A8.29: dd_ij/dsigma_pq
+        const Matrix3d ddij_dstress = dR_dS - drkk_dstress / 3.0 * identity;
+        //12.63a: A_ijpq =  delta_ip delta_jq + Kbar0 DeltaLambda Z_ij dr_kk/dsigma_pq + 2 DeltaLambda Gave dd_ij/dsigma_pq
+        const Matrix3d Aijpq = stressDirection + Kbar0 * plasticMultiplier * Zij * drkk_dstress + 2.0 * plasticMultiplier * Gave * ddij_dstress;
+        coefficients.A(0,column) = Aijpq(0, 0);
+        coefficients.A(1,column) = Aijpq(1, 1);
+        coefficients.A(2,column) = Aijpq(2, 2);
+        coefficients.A(3,column) = Aijpq(0, 1);
+        coefficients.A(4,column) = Aijpq(1, 2);
+        coefficients.A(5,column) = Aijpq(0, 2);
+    }
+
+    //12.63b: B_ij
+    //A8.29: dr_ij/dp0 = -3 delta_ij -> drkk/dp0 = - 9
+    const double drkk_dp0 = -9.0;
+    ////A8.29f: dd_ij / dp0 = 0;
+    const Matrix3d ddij_dp0 = Matrix3d::Zero();
+    //12.63b: B_ij = Kbar0 DeltaLambda Zij drkk/dp0 + 2 DeltaLambda Gave ddij/dp0 = = -9 Kbar0 DeltaLambda  Zij
+    const Matrix3d Bij = Kbar0 * plasticMultiplier * drkk_dp0 * Zij + 2.0 * plasticMultiplier * Gave * ddij_dp0;
+    coefficients.B << Bij(0, 0), Bij(1, 1), Bij(2, 2), Bij(0, 1), Bij(1, 2), Bij(0, 2);
+
+    //12.63c: F_ij = Kbar0 rkk Zij + 2 Gave dij
+    const Matrix3d Fij = Kbar0 * rkk * Zij + 2.0 * Gave * dij;
+    coefficients.F << Fij(0, 0), Fij(1, 1), Fij(2, 2), Fij(0, 1), Fij(1, 2), Fij(0, 2);
+
+    const double hardening_p0 = p0Old * std::exp(C1 * plasticMultiplier * rkk);
+    //12.63d: H_pq
+    //Since rkk = 6 I - 9 p0: drkk/dsigma_pq = 6 delta_pq  
+    RowVector6d drkk_dstresReduced;
+    drkk_dstresReduced << 6.0, 6.0, 6.0, 0.0, 0.0, 0.0;
+    //12.63d: H_pq = -C1 DeltaLabda p0 e^(C1 DeltaLambda rkk) dr_kk/dsigma_pq
+    coefficients.H = -C1* plasticMultiplier * hardening_p0 * drkk_dstresReduced;
+
+    //12.63e: omega = 1 - C1  DeltaLambda  p0 e^(C1 DeltaLambda rkk) dr_kk/dp0
+    coefficients.omega = 1 - C1 * plasticMultiplier * hardening_p0 * drkk_dp0;
+
+    //12.63f: beta = -C1 rkk p0  e^(C1 DeltaLambda rkk)
+    coefficients.beta = -C1 * rkk * hardening_p0;
+
+    //12.63g: E_pq = dPhi/dsigma_pq = n_pq = r_pq 
+    coefficients.E << rij(0, 0), rij(1, 1), rij(2, 2), 2.0 * rij(0, 1), 2.0 * rij(1, 2), 2.0 * rij(0, 2);
+
+    //12.63h: gamma = dPhi/dp0 = - 3 I
+    coefficients.gamma = -3.0 * currentState.I;
+
+    return coefficients;
+}
+    
 // Initialization
 void CamClay::initializePoint(Particle* particle) const
 {
