@@ -39,9 +39,7 @@ public:
     virtual void updateStress(Particle* particle) const;
 
 protected:
-    // =====================================================
     // Material parameters
-    // =====================================================
     double poisson; //!< Poisson's ratio \f$\nu\f$
     double lambda; //!< Compresion slope index
     double kappa; //!< Sweelling slope index
@@ -50,31 +48,22 @@ protected:
     double nu0; //!< Initial specific volume \f$\nu_0\f$
     double initialp0; //!< Initial preconsolidation pressure \f$p_0\f$
 
-    // =====================================================
     // Internal variables
-    // =====================================================
     enum class InternalVariable : std::size_t{p0 = 0, count}; //!< Preconsolidation pressure \f$ p_0\f$
 
     static constexpr std::size_t index(InternalVariable variable) { return static_cast<std::size_t>(variable);}
 
-    // =====================================================
     // Precomputed constants
-    // =====================================================
     double Kbar0; //!< \f$\bar{K}_0=\nu_0/\kappa\f$
     double Gbar0; //!< \f$\bar{G}_0= 3(1-2\nu)\bar{K}_0/[2(1+\nu)]\f$
     double C1; //!< \f$ C1=nu0/(lambda-kappa)\f$
     double n; //!< Ratio between slope of critical line for extension and compression \f$n=Me/Mc\f$
 
-    // =====================================================
     // Numerical tolerances
-    // =====================================================
-
     double zeroTolerance; //!< Numerical tolerance for values close to zero
     double TolPhi; //!< Numerical tolerance for yield function
 
-    // =====================================================
     // Stress state
-    // =====================================================
     struct StressState {
         Matrix3d stress;
         Matrix3d stressDev;
@@ -88,48 +77,33 @@ protected:
 
     StressState computeStressState(const Matrix3d& stress) const;
 
-    //=====================================================
     // Exact elastic properties
-    //=====================================================
-
     Matrix3d computeElasticTrialStress(const StressState& oldState, const Matrix3d& de) const;
 
-    //=====================================================
     // Yield function
-    //=====================================================
-    
     double computeYieldFunction(const StressState& state, double p0) const;
 
-    // =========================================================
     // Yield gradient / flow direction
-    // =========================================================
     Matrix3d computeYieldGradient(const StressState& state, double p0) const;
 
-    // =========================================================
     // Exact hardening 
-    // =========================================================
-
     double computeUpdatedPreconsolidationPressure(double p0Old, double plasticMultiplier, double rkk) const;
 
-    // =========================================================
     // CPPM constitutive equations and residuals
-    // =========================================================
     Matrix3d computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double plasticMultiplier) const;
 
     Matrix3d computeStressResidual(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double plasticMultiplier) const;
     double computeHardeningResidual(double p0Old, double p0Current, double plasticMultiplier, double rkk) const;
 
-    // =========================================================
-    // Second derivatives required by CPPM
-    // =========================================================
-
+    // Second derivatives of the yield function required by CPPM
     Matrix3d computeAlphaStressDerivative(const StressState& state) const;
     Matrix3d computeYieldDerivativeJStressDerivative(const StressState& state) const;
     Matrix3d computeGbarStressDerivative(const StressState& state) const;
     Matrix3d computeYieldDerivativeAlphaStressDerivative(const StressState& state) const;
-    Matrix3d computerijStressDerivativeAlphaBoundary(double alpha) const;
-
-    Matrix3d computerijStressDerivative(const StressState& state) const;
+    
+    using Matrix6d = Eigen::Matrix<double, 6, 6>;
+    Matrix6d computeRStressDerivativeAlphaBoundary(double alpha) const;
+    Matrix6d computeRStressDerivative(const StressState& state) const;
     
     
 };
