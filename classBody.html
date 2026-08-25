@@ -176,7 +176,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3bbb2bf9a87abb437d979a3999647ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the particles forming the body.  <br /></td></tr>
 <tr class="separator:a3bbb2bf9a87abb437d979a3999647ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a610a132e5529972efa516e159acdb0bd" id="r_a610a132e5529972efa516e159acdb0bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBody.html#a610a132e5529972efa516e159acdb0bd">setId</a> (int body_id)</td></tr>
-<tr class="memdesc:a610a132e5529972efa516e159acdb0bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the id of the body.  <br /></td></tr>
+<tr class="memdesc:a610a132e5529972efa516e159acdb0bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the body friction Coefficient.  <br /></td></tr>
 <tr class="separator:a610a132e5529972efa516e159acdb0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa063e3828f4cfad904a361bce338e6fd" id="r_aa063e3828f4cfad904a361bce338e6fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBody.html#aa063e3828f4cfad904a361bce338e6fd">setInitialVelocity</a> (Vector3d <a class="el" href="classBody.html#a6de1624a7d45c11479318ae05d1eb998">initial_velocity</a>)</td></tr>
 <tr class="memdesc:aa063e3828f4cfad904a361bce338e6fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the initial velocity of the body.  <br /></td></tr>
@@ -185,7 +185,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa71e9b9b576b1ae73e2baebd86bf71ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the particles in the body.  <br /></td></tr>
 <tr class="separator:aa71e9b9b576b1ae73e2baebd86bf71ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae40538ae00bb501c58729ee35c762b1" id="r_aae40538ae00bb501c58729ee35c762b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBody.html#aae40538ae00bb501c58729ee35c762b1">insertParticles</a> (const vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; &amp;particle_list)</td></tr>
-<tr class="memdesc:aae40538ae00bb501c58729ee35c762b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particles to the current particle list.  <br /></td></tr>
+<tr class="memdesc:aae40538ae00bb501c58729ee35c762b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the friction coefficient of the body.  <br /></td></tr>
 <tr class="separator:aae40538ae00bb501c58729ee35c762b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
@@ -197,8 +197,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a6de1624a7d45c11479318ae05d1eb998"><td class="mdescLeft">&#160;</td><td class="mdescRight">initial velocity of the body  <br /></td></tr>
 <tr class="separator:a6de1624a7d45c11479318ae05d1eb998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8aaa282121a6e26fdd9826514cc1098" id="r_af8aaa282121a6e26fdd9826514cc1098"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBody.html#af8aaa282121a6e26fdd9826514cc1098">particles</a></td></tr>
-<tr class="memdesc:af8aaa282121a6e26fdd9826514cc1098"><td class="mdescLeft">&#160;</td><td class="mdescRight">material points forming the body <br  />
-  <br /></td></tr>
+<tr class="memdesc:af8aaa282121a6e26fdd9826514cc1098"><td class="mdescLeft">&#160;</td><td class="mdescRight">material points forming the body  <br /></td></tr>
 <tr class="separator:af8aaa282121a6e26fdd9826514cc1098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -444,8 +443,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Add particles to the current particle list. </p>
+<p>Configure the friction coefficient of the body. </p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">body_mu</td><td><a class="el" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number.">Body</a> friction coefficient <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Add particles to the current particle list </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">particle_list</td><td>A vector containing pointers to particles </td></tr>
   </table>
@@ -478,8 +484,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Configure the id of the body. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Return the body friction Coefficient. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number.">Body</a> friction Coefficient</dd></dl>
+<p>Configure the id of the body </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">body_id</td><td><a class="el" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number.">Body</a> identification <br  />
  </td></tr>
@@ -663,8 +670,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>material points forming the body <br  />
- </p>
+<p>material points forming the body </p>
 
 </div>
 </div>

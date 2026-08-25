@@ -124,17 +124,19 @@ Collaboration diagram for Mesh:</div>
 <div class="dyncontent">
 <div class="center"><img src="classMesh__coll__graph.png" border="0" usemap="#aMesh_coll__map" alt="Collaboration graph"/></div>
 <map name="aMesh_coll__map" id="aMesh_coll__map">
-<area shape="rect" title="Class representing a rectangular grid mesh." alt="" coords="115,372,173,397"/>
-<area shape="rect" title=" " alt="" coords="5,255,80,280"/>
-<area shape="poly" title=" " alt="" coords="57,291,74,319,95,346,125,370,122,374,91,350,69,322,52,294"/>
-<area shape="rect" title=" " alt="" coords="105,255,183,280"/>
-<area shape="poly" title=" " alt="" coords="147,293,147,372,141,372,141,293"/>
-<area shape="rect" href="classBoundary.html" title="Mesh boundary nodes." alt="" coords="207,255,291,280"/>
-<area shape="poly" title=" " alt="" coords="245,294,233,322,214,350,195,365,174,376,172,371,192,360,210,346,228,320,240,292"/>
+<area shape="rect" title="Class representing a rectangular grid mesh." alt="" coords="165,387,222,412"/>
+<area shape="rect" title=" " alt="" coords="5,262,80,287"/>
+<area shape="poly" title=" " alt="" coords="53,299,69,331,94,361,129,380,165,391,164,396,127,385,90,365,65,334,49,302"/>
+<area shape="rect" title=" " alt="" coords="105,262,183,287"/>
+<area shape="poly" title=" " alt="" coords="144,301,145,331,154,361,164,374,176,385,173,389,160,378,150,364,140,332,139,301"/>
+<area shape="rect" href="classBoundary.html" title="Mesh boundary nodes." alt="" coords="207,262,291,287"/>
+<area shape="poly" title=" " alt="" coords="243,302,217,364,203,388,199,385,212,361,238,299"/>
 <area shape="rect" href="structBoundary_1_1planeBoundary.html" title="Represents the nodes and the type of restrictions." alt="" coords="155,93,344,119"/>
-<area shape="poly" title=" " alt="" coords="252,132,252,254,247,254,247,132"/>
+<area shape="poly" title=" " alt="" coords="252,132,252,262,247,262,247,132"/>
 <area shape="rect" title=" " alt="" coords="194,5,305,31"/>
 <area shape="poly" title=" " alt="" coords="252,45,252,93,247,93,247,45"/>
+<area shape="rect" title=" " alt="" coords="315,255,514,295"/>
+<area shape="poly" title=" " alt="" coords="386,306,348,337,304,365,262,383,223,394,222,389,260,378,301,360,345,332,383,302"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -214,6 +216,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acef57e3f674f83a2808b14807582ffd0" id="r_acef57e3f674f83a2808b14807582ffd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBoundary.html">Boundary</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#acef57e3f674f83a2808b14807582ffd0">getBoundary</a> ()</td></tr>
 <tr class="memdesc:acef57e3f674f83a2808b14807582ffd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">return mesh boundaries  <br /></td></tr>
 <tr class="separator:acef57e3f674f83a2808b14807582ffd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d28052ea446800e29480104a42c09b" id="r_ae0d28052ea446800e29480104a42c09b"><td class="memItemLeft" align="right" valign="top">unordered_map&lt; int, <a class="el" href="structNode_1_1ContactNodeData.html">Node::ContactNodeData</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ae0d28052ea446800e29480104a42c09b">getContactNodes</a> ()</td></tr>
+<tr class="memdesc:ae0d28052ea446800e29480104a42c09b"><td class="mdescLeft">&#160;</td><td class="mdescRight">return nodes where there is contact between two bodies  <br /></td></tr>
+<tr class="separator:ae0d28052ea446800e29480104a42c09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a519a3b16bcc0c6ef3b3791b3ed7423" id="r_a9a519a3b16bcc0c6ef3b3791b3ed7423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a9a519a3b16bcc0c6ef3b3791b3ed7423">setBoundaryRestrictions</a> (vector&lt; <a class="el" href="classBoundary.html#aba71309d646c3f90a59be7e8d8cefef5">Boundary::BoundaryType</a> &gt; restrictions)</td></tr>
 <tr class="memdesc:a9a519a3b16bcc0c6ef3b3791b3ed7423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the restriction of the boundary nodes.  <br /></td></tr>
 <tr class="separator:a9a519a3b16bcc0c6ef3b3791b3ed7423"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,6 +234,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab215e9dfa14b5e1b15e11c461b857990" id="r_ab215e9dfa14b5e1b15e11c461b857990"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ab215e9dfa14b5e1b15e11c461b857990">computeNodeVolumes</a> ()</td></tr>
 <tr class="memdesc:ab215e9dfa14b5e1b15e11c461b857990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return compute the nodal volumes.  <br /></td></tr>
 <tr class="separator:ab215e9dfa14b5e1b15e11c461b857990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a936b4664bee7ecc9e006020569cc72ef" id="r_a936b4664bee7ecc9e006020569cc72ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a936b4664bee7ecc9e006020569cc72ef">clearContactNodes</a> ()</td></tr>
+<tr class="memdesc:a936b4664bee7ecc9e006020569cc72ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">\Clear <a class="el" href="classContact.html" title="Represents a frictional contact between bodies.">Contact</a> Nodes  <br /></td></tr>
+<tr class="separator:a936b4664bee7ecc9e006020569cc72ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -277,6 +285,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ae856f697db9b5c61445e64cff311c46a" id="r_ae856f697db9b5c61445e64cff311c46a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBoundary.html">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#ae856f697db9b5c61445e64cff311c46a">boundary</a></td></tr>
 <tr class="memdesc:ae856f697db9b5c61445e64cff311c46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">mesh boundary  <br /></td></tr>
 <tr class="separator:ae856f697db9b5c61445e64cff311c46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4931ce7c346e2b23096f8b2f22867371" id="r_a4931ce7c346e2b23096f8b2f22867371"><td class="memItemLeft" align="right" valign="top">unordered_map&lt; int, <a class="el" href="structNode_1_1ContactNodeData.html">Node::ContactNodeData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a4931ce7c346e2b23096f8b2f22867371">contactNodes</a></td></tr>
+<tr class="memdesc:a4931ce7c346e2b23096f8b2f22867371"><td class="mdescLeft">&#160;</td><td class="mdescRight">nodes in contact  <br /></td></tr>
+<tr class="separator:a4931ce7c346e2b23096f8b2f22867371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing a rectangular grid mesh. </p>
@@ -408,6 +419,33 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a936b4664bee7ecc9e006020569cc72ef" name="a936b4664bee7ecc9e006020569cc72ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a936b4664bee7ecc9e006020569cc72ef">&#9670;&#160;</a></span>clearContactNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mesh::clearContactNodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>\Clear <a class="el" href="classContact.html" title="Represents a frictional contact between bodies.">Contact</a> Nodes </p>
 
 </div>
 </div>
@@ -599,6 +637,34 @@ Private Attributes</h2></td></tr>
 
 <p>Return cells in mesh. </p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the mesh cells </dd></dl>
+
+</div>
+</div>
+<a id="ae0d28052ea446800e29480104a42c09b" name="ae0d28052ea446800e29480104a42c09b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d28052ea446800e29480104a42c09b">&#9670;&#160;</a></span>getContactNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unordered_map&lt; int, <a class="el" href="structNode_1_1ContactNodeData.html">Node::ContactNodeData</a> &gt; &amp; Mesh::getContactNodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>return nodes where there is contact between two bodies </p>
+<dl class="section return"><dt>Returns</dt><dd>an unordered_map of the nodes where there is contact between two bodies </dd></dl>
 
 </div>
 </div>
@@ -1390,6 +1456,30 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>cell dimension in each direction </p>
+
+</div>
+</div>
+<a id="a4931ce7c346e2b23096f8b2f22867371" name="a4931ce7c346e2b23096f8b2f22867371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4931ce7c346e2b23096f8b2f22867371">&#9670;&#160;</a></span>contactNodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unordered_map&lt;int, <a class="el" href="structNode_1_1ContactNodeData.html">Node::ContactNodeData</a>&gt; Mesh::contactNodes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nodes in contact </p>
 
 </div>
 </div>

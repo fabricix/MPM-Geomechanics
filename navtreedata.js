@@ -29,7 +29,7 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", "namespacemembers_dup" ],
-        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ],
         [ "Enumerations", "namespacemembers_enum.html", null ],
         [ "Enumerator", "namespacemembers_eval.html", null ]
       ] ]
@@ -41,7 +41,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ],
+        [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Enumerator", "functions_eval.html", null ]
       ] ]
@@ -59,11 +59,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BodyCuboid_8h.html",
-"Seismic_8h.html#a805c3b1846fa1a0597aea59aa4ec3cc4",
-"classMPM.html#aaef55a9b211eb9068eb9a9c47f3d7471",
-"classParticle.html#a73a4154dfbae2e2787ef72c1bee83413",
-"namespaceInput.html#a2a0fb410bea4619ff93d984cba00d316",
-"structGMSH_1_1Entity.html"
+"Output_8h.html#afd79cf7fe4926c3945b2f8f6067f82fe",
+"classElastic.html#a750dfe1959b8c50d7d9da463e02409f8",
+"classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8",
+"functions_func_m.html",
+"namespaceOutput.html#ad655a53d67a6ef825633d31329cff727"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

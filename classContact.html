@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classContact.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classContact-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Contact Class Reference</div></div>
 </div><!--header-->
@@ -117,21 +118,66 @@ $(document).ready(function(){initNavTree('classContact.html',''); initResizable(
  <a href="classContact.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Contact_8h_source.html">Contact.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for Contact:</div>
+<div class="dyncontent">
+<div class="center"><img src="classContact__coll__graph.png" border="0" usemap="#aContact_coll__map" alt="Collaboration graph"/></div>
+<map name="aContact_coll__map" id="aContact_coll__map">
+<area shape="rect" title="Represents a frictional contact between bodies." alt="" coords="5,93,77,119"/>
+<area shape="rect" title=" " alt="" coords="12,5,71,31"/>
+<area shape="poly" title=" " alt="" coords="44,45,44,93,39,93,39,45"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae39444f378e6de7fd6c3e60981949af5" id="r_ae39444f378e6de7fd6c3e60981949af5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ae39444f378e6de7fd6c3e60981949af5">Contact</a> ()</td></tr>
-<tr class="memdesc:ae39444f378e6de7fd6c3e60981949af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
-<tr class="separator:ae39444f378e6de7fd6c3e60981949af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac43474837c16f2626b426f6fc57d3c94" id="r_ac43474837c16f2626b426f6fc57d3c94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ac43474837c16f2626b426f6fc57d3c94">Contact</a> (int <a class="el" href="classContact.html#aa31847b281001bb11f2e8e50c039c3b2">id</a>, double friction, int master_id, int slave_id, string normal_type)</td></tr>
+<tr class="memdesc:ac43474837c16f2626b426f6fc57d3c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <br /></td></tr>
+<tr class="separator:ac43474837c16f2626b426f6fc57d3c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11d908db352f83ad63bebbd8e790fdc1" id="r_a11d908db352f83ad63bebbd8e790fdc1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a11d908db352f83ad63bebbd8e790fdc1">~Contact</a> ()</td></tr>
 <tr class="memdesc:a11d908db352f83ad63bebbd8e790fdc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a11d908db352f83ad63bebbd8e790fdc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a943305c1862ca8e586556fc5c237a41c" id="r_a943305c1862ca8e586556fc5c237a41c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a943305c1862ca8e586556fc5c237a41c">getId</a> () const</td></tr>
+<tr class="separator:a943305c1862ca8e586556fc5c237a41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb9309493785a4454b0e0cf1e93f5b7d" id="r_afb9309493785a4454b0e0cf1e93f5b7d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#afb9309493785a4454b0e0cf1e93f5b7d">getFrictionCoefficient</a> () const</td></tr>
+<tr class="separator:afb9309493785a4454b0e0cf1e93f5b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad27d2129811bc87211a6072393b20970" id="r_ad27d2129811bc87211a6072393b20970"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ad27d2129811bc87211a6072393b20970">getMasterId</a> () const</td></tr>
+<tr class="separator:ad27d2129811bc87211a6072393b20970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c239cb39ee852a6578362f6aad9d865" id="r_a1c239cb39ee852a6578362f6aad9d865"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a1c239cb39ee852a6578362f6aad9d865">getSlaveId</a> () const</td></tr>
+<tr class="separator:a1c239cb39ee852a6578362f6aad9d865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf9f40cc281689652418cbf97cd83ab2" id="r_aaf9f40cc281689652418cbf97cd83ab2"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#aaf9f40cc281689652418cbf97cd83ab2">getNormalType</a> () const</td></tr>
+<tr class="separator:aaf9f40cc281689652418cbf97cd83ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874132c47c459ea2b53044e2202e912b" id="r_a874132c47c459ea2b53044e2202e912b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a874132c47c459ea2b53044e2202e912b">setId</a> (int new_id)</td></tr>
+<tr class="separator:a874132c47c459ea2b53044e2202e912b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40192c3bc0c3eefd3014c692006e87b9" id="r_a40192c3bc0c3eefd3014c692006e87b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a40192c3bc0c3eefd3014c692006e87b9">setFrictionCoefficient</a> (double mu)</td></tr>
+<tr class="separator:a40192c3bc0c3eefd3014c692006e87b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6b07691cc644aa87ae48e0b2a6ca13f" id="r_ac6b07691cc644aa87ae48e0b2a6ca13f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ac6b07691cc644aa87ae48e0b2a6ca13f">setMasterId</a> (int new_master_id)</td></tr>
+<tr class="separator:ac6b07691cc644aa87ae48e0b2a6ca13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45cfb89a5765ccaee2d90916f5844ce2" id="r_a45cfb89a5765ccaee2d90916f5844ce2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a45cfb89a5765ccaee2d90916f5844ce2">setSlaveId</a> (int new_slave_id)</td></tr>
+<tr class="separator:a45cfb89a5765ccaee2d90916f5844ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00143b709622e0aed063f3cc3c5c73d" id="r_ac00143b709622e0aed063f3cc3c5c73d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ac00143b709622e0aed063f3cc3c5c73d">setNormalType</a> (const string &amp;type)</td></tr>
+<tr class="separator:ac00143b709622e0aed063f3cc3c5c73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa31847b281001bb11f2e8e50c039c3b2" id="r_aa31847b281001bb11f2e8e50c039c3b2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#aa31847b281001bb11f2e8e50c039c3b2">id</a> = 0</td></tr>
+<tr class="separator:aa31847b281001bb11f2e8e50c039c3b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee11507efcb751d73e67b5448e43b9a" id="r_a8ee11507efcb751d73e67b5448e43b9a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a8ee11507efcb751d73e67b5448e43b9a">frictionCoefficient</a> = 0.0</td></tr>
+<tr class="memdesc:a8ee11507efcb751d73e67b5448e43b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friction coefficient \(\mu\).  <br /></td></tr>
+<tr class="separator:a8ee11507efcb751d73e67b5448e43b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ffaa6b59e182e4a3a6a7923e34570f5" id="r_a2ffaa6b59e182e4a3a6a7923e34570f5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a2ffaa6b59e182e4a3a6a7923e34570f5">masterId</a> = 0</td></tr>
+<tr class="separator:a2ffaa6b59e182e4a3a6a7923e34570f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae075c1f9b0c1bccb6b4d28bcf99155fb" id="r_ae075c1f9b0c1bccb6b4d28bcf99155fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ae075c1f9b0c1bccb6b4d28bcf99155fb">slaveId</a> = 1</td></tr>
+<tr class="separator:ae075c1f9b0c1bccb6b4d28bcf99155fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a845e4f0386b70e28b21600059198bda7" id="r_a845e4f0386b70e28b21600059198bda7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a845e4f0386b70e28b21600059198bda7">normalType</a> = &quot;master&quot;</td></tr>
+<tr class="memdesc:a845e4f0386b70e28b21600059198bda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal type: "master", "slave" or "collinear".  <br /></td></tr>
+<tr class="separator:a845e4f0386b70e28b21600059198bda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a frictional contact between bodies. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae39444f378e6de7fd6c3e60981949af5" name="ae39444f378e6de7fd6c3e60981949af5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae39444f378e6de7fd6c3e60981949af5">&#9670;&#160;</a></span>Contact()</h2>
+<a id="ac43474837c16f2626b426f6fc57d3c94" name="ac43474837c16f2626b426f6fc57d3c94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac43474837c16f2626b426f6fc57d3c94">&#9670;&#160;</a></span>Contact()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,13 +185,52 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Contact::Contact </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>friction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>master_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>slave_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>normal_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Default constructor. </p>
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contact</td><td>id </td></tr>
+    <tr><td class="paramname">friction</td><td>Friction coefficient </td></tr>
+    <tr><td class="paramname">master_id</td><td>ID of the master body </td></tr>
+    <tr><td class="paramname">slave_id</td><td>ID of the slave body </td></tr>
+    <tr><td class="paramname">normal_type</td><td>Normal type: "master", "slave" or "collinear" </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -173,6 +258,377 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afb9309493785a4454b0e0cf1e93f5b7d" name="afb9309493785a4454b0e0cf1e93f5b7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb9309493785a4454b0e0cf1e93f5b7d">&#9670;&#160;</a></span>getFrictionCoefficient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Contact::getFrictionCoefficient </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a943305c1862ca8e586556fc5c237a41c" name="a943305c1862ca8e586556fc5c237a41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a943305c1862ca8e586556fc5c237a41c">&#9670;&#160;</a></span>getId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::getId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad27d2129811bc87211a6072393b20970" name="ad27d2129811bc87211a6072393b20970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad27d2129811bc87211a6072393b20970">&#9670;&#160;</a></span>getMasterId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::getMasterId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf9f40cc281689652418cbf97cd83ab2" name="aaf9f40cc281689652418cbf97cd83ab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf9f40cc281689652418cbf97cd83ab2">&#9670;&#160;</a></span>getNormalType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string &amp; Contact::getNormalType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1c239cb39ee852a6578362f6aad9d865" name="a1c239cb39ee852a6578362f6aad9d865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c239cb39ee852a6578362f6aad9d865">&#9670;&#160;</a></span>getSlaveId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::getSlaveId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a40192c3bc0c3eefd3014c692006e87b9" name="a40192c3bc0c3eefd3014c692006e87b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40192c3bc0c3eefd3014c692006e87b9">&#9670;&#160;</a></span>setFrictionCoefficient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Contact::setFrictionCoefficient </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mu</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a874132c47c459ea2b53044e2202e912b" name="a874132c47c459ea2b53044e2202e912b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a874132c47c459ea2b53044e2202e912b">&#9670;&#160;</a></span>setId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Contact::setId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>new_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6b07691cc644aa87ae48e0b2a6ca13f" name="ac6b07691cc644aa87ae48e0b2a6ca13f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b07691cc644aa87ae48e0b2a6ca13f">&#9670;&#160;</a></span>setMasterId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Contact::setMasterId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>new_master_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac00143b709622e0aed063f3cc3c5c73d" name="ac00143b709622e0aed063f3cc3c5c73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac00143b709622e0aed063f3cc3c5c73d">&#9670;&#160;</a></span>setNormalType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Contact::setNormalType </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a45cfb89a5765ccaee2d90916f5844ce2" name="a45cfb89a5765ccaee2d90916f5844ce2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45cfb89a5765ccaee2d90916f5844ce2">&#9670;&#160;</a></span>setSlaveId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Contact::setSlaveId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>new_slave_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8ee11507efcb751d73e67b5448e43b9a" name="a8ee11507efcb751d73e67b5448e43b9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee11507efcb751d73e67b5448e43b9a">&#9670;&#160;</a></span>frictionCoefficient</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Contact::frictionCoefficient = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Friction coefficient \(\mu\). </p>
+
+</div>
+</div>
+<a id="aa31847b281001bb11f2e8e50c039c3b2" name="aa31847b281001bb11f2e8e50c039c3b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa31847b281001bb11f2e8e50c039c3b2">&#9670;&#160;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::id = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2ffaa6b59e182e4a3a6a7923e34570f5" name="a2ffaa6b59e182e4a3a6a7923e34570f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ffaa6b59e182e4a3a6a7923e34570f5">&#9670;&#160;</a></span>masterId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::masterId = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a845e4f0386b70e28b21600059198bda7" name="a845e4f0386b70e28b21600059198bda7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a845e4f0386b70e28b21600059198bda7">&#9670;&#160;</a></span>normalType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Contact::normalType = &quot;master&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Normal type: "master", "slave" or "collinear". </p>
+
+</div>
+</div>
+<a id="ae075c1f9b0c1bccb6b4d28bcf99155fb" name="ae075c1f9b0c1bccb6b4d28bcf99155fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae075c1f9b0c1bccb6b4d28bcf99155fb">&#9670;&#160;</a></span>slaveId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Contact::slaveId = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

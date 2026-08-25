@@ -18,5 +18,6 @@ var searchData=
   ['addplasticstrain_15',['addPlasticStrain',['../classParticle.html#a49b197c3a37ad792289581d13f99bf1c',1,'Particle']]],
   ['apply_16',['apply',['../classTerrainContact.html#a2e453e1e74221e486103e8df6aa66ef3',1,'TerrainContact']]],
   ['applyseismicvelocitymarkedstlnodes_17',['applySeismicVelocityMarkedSTLNodes',['../namespaceSeismic.html#a4aed6a906097df08e741f79131f86f12',1,'Seismic']]],
-  ['are_20placed_20in_20the_20body_18',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
+  ['applyvelocitycontactcorrection_18',['applyVelocityContactCorrection',['../classContactManager.html#a5275ee89623c1b260cf57551d862d6aa',1,'ContactManager']]],
+  ['are_20placed_20in_20the_20body_19',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]]
 ];

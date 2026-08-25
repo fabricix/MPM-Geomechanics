@@ -161,9 +161,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4fca8e76ddfb7e310071a258174de41d" id="r_a4fca8e76ddfb7e310071a258174de41d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a4fca8e76ddfb7e310071a258174de41d">Material</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">MaterialType::NONE</a>)</td></tr>
-<tr class="memdesc:a4fca8e76ddfb7e310071a258174de41d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
-<tr class="separator:a4fca8e76ddfb7e310071a258174de41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d829c5fea800076ba2220088f45e579" id="r_a0d829c5fea800076ba2220088f45e579"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a0d829c5fea800076ba2220088f45e579">Material</a> (int <a class="el" href="classMaterial.html#a3c350361ffe39076a51722fff3346781">id</a>=-1, double <a class="el" href="classMaterial.html#a450e3fe61d94b8fa58aac5a8f90507df">density</a>=0, double <a class="el" href="classMaterial.html#a3c4d46bfeb461f0faebff61ca74029ee">mu</a>=0, <a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439">MaterialType</a> <a class="el" href="classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592">type</a>=<a class="el" href="classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a475f621305a78332aabeda42414075da">MaterialType::NONE</a>)</td></tr>
+<tr class="memdesc:a0d829c5fea800076ba2220088f45e579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
+<tr class="separator:a0d829c5fea800076ba2220088f45e579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c19452d71f54075df8f5405b03129f4" id="r_a2c19452d71f54075df8f5405b03129f4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a2c19452d71f54075df8f5405b03129f4">~Material</a> ()</td></tr>
 <tr class="memdesc:a2c19452d71f54075df8f5405b03129f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a2c19452d71f54075df8f5405b03129f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,6 +185,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a770545ac2b3342d115c8a1bee74fca4b" id="r_a770545ac2b3342d115c8a1bee74fca4b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a770545ac2b3342d115c8a1bee74fca4b">getBulkModulusFluid</a> () const</td></tr>
 <tr class="memdesc:a770545ac2b3342d115c8a1bee74fca4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Bulk modulus of fluid in mixture.  <br /></td></tr>
 <tr class="separator:a770545ac2b3342d115c8a1bee74fca4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd69cfac335688ddf9529f36c3a068b" id="r_aadd69cfac335688ddf9529f36c3a068b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#aadd69cfac335688ddf9529f36c3a068b">getFrictionCoefficient</a> () const</td></tr>
+<tr class="memdesc:aadd69cfac335688ddf9529f36c3a068b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Friction coefficient.  <br /></td></tr>
+<tr class="separator:aadd69cfac335688ddf9529f36c3a068b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a006af31ffda9ddcf5e9c5b0da579e0d8" id="r_a006af31ffda9ddcf5e9c5b0da579e0d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a006af31ffda9ddcf5e9c5b0da579e0d8">setId</a> (int material_id)</td></tr>
 <tr class="memdesc:a006af31ffda9ddcf5e9c5b0da579e0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the material identification.  <br /></td></tr>
 <tr class="separator:a006af31ffda9ddcf5e9c5b0da579e0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +203,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3ac2f8a6cb39f6782161f25ca19ad78a" id="r_a3ac2f8a6cb39f6782161f25ca19ad78a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a3ac2f8a6cb39f6782161f25ca19ad78a">setBulkModulusFluid</a> (double bulk_fluid)</td></tr>
 <tr class="memdesc:a3ac2f8a6cb39f6782161f25ca19ad78a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the volumetric modulus of fluid.  <br /></td></tr>
 <tr class="separator:a3ac2f8a6cb39f6782161f25ca19ad78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d12d1ab1c31ecd708282ceaef2bfbf5" id="r_a7d12d1ab1c31ecd708282ceaef2bfbf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a7d12d1ab1c31ecd708282ceaef2bfbf5">setFrictionCoefficient</a> (double _mu)</td></tr>
+<tr class="memdesc:a7d12d1ab1c31ecd708282ceaef2bfbf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the friction coefficient.  <br /></td></tr>
+<tr class="separator:a7d12d1ab1c31ecd708282ceaef2bfbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc3949394033e0133d1c60a925cbeb13" id="r_afc3949394033e0133d1c60a925cbeb13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#afc3949394033e0133d1c60a925cbeb13">setHydraulicConductivity</a> (Vector3d hydraulic_conductivity)</td></tr>
 <tr class="memdesc:afc3949394033e0133d1c60a925cbeb13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the material hydraulic conductivity.  <br /></td></tr>
 <tr class="separator:afc3949394033e0133d1c60a925cbeb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,6 +239,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:af273c3103e5a1ff733b77edd3da8a5ff" id="r_af273c3103e5a1ff733b77edd3da8a5ff"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff">bulkModulusFluid</a></td></tr>
 <tr class="memdesc:af273c3103e5a1ff733b77edd3da8a5ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">elastic volumetric modulus of fluid in mixture \(K^f\)  <br /></td></tr>
 <tr class="separator:af273c3103e5a1ff733b77edd3da8a5ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c4d46bfeb461f0faebff61ca74029ee" id="r_a3c4d46bfeb461f0faebff61ca74029ee"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a3c4d46bfeb461f0faebff61ca74029ee">mu</a></td></tr>
+<tr class="memdesc:a3c4d46bfeb461f0faebff61ca74029ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">friction coefficient \(K^f\)  <br /></td></tr>
+<tr class="separator:a3c4d46bfeb461f0faebff61ca74029ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17720043f6a8d8fdfe2fd76d59ffd12e" id="r_a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMaterial.html#a17720043f6a8d8fdfe2fd76d59ffd12e">hydraulicConductivity</a></td></tr>
 <tr class="memdesc:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">hydraulic conductivity of the fluid in the material \(k_i\)  <br /></td></tr>
 <tr class="separator:a17720043f6a8d8fdfe2fd76d59ffd12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,8 +275,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4fca8e76ddfb7e310071a258174de41d" name="a4fca8e76ddfb7e310071a258174de41d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fca8e76ddfb7e310071a258174de41d">&#9670;&#160;</a></span>Material()</h2>
+<a id="a0d829c5fea800076ba2220088f45e579" name="a0d829c5fea800076ba2220088f45e579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d829c5fea800076ba2220088f45e579">&#9670;&#160;</a></span>Material()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,6 +295,12 @@ Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>density</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mu</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -419,6 +434,34 @@ Protected Attributes</h2></td></tr>
 
 <p>Returns fluid density on material. </p>
 <dl class="section return"><dt>Returns</dt><dd>Fluid density </dd></dl>
+
+</div>
+</div>
+<a id="aadd69cfac335688ddf9529f36c3a068b" name="aadd69cfac335688ddf9529f36c3a068b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd69cfac335688ddf9529f36c3a068b">&#9670;&#160;</a></span>getFrictionCoefficient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::getFrictionCoefficient </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns Friction coefficient. </p>
+<dl class="section return"><dt>Returns</dt><dd>Friction coefficient </dd></dl>
 
 </div>
 </div>
@@ -663,6 +706,40 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">fluid_density</td><td>Fluid density </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d12d1ab1c31ecd708282ceaef2bfbf5" name="a7d12d1ab1c31ecd708282ceaef2bfbf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d12d1ab1c31ecd708282ceaef2bfbf5">&#9670;&#160;</a></span>setFrictionCoefficient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Material::setFrictionCoefficient </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>_mu</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures the friction coefficient. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">_mu</td><td>- friction coefficient </td></tr>
   </table>
   </dd>
 </dl>
@@ -959,6 +1036,30 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>material identification </p>
+
+</div>
+</div>
+<a id="a3c4d46bfeb461f0faebff61ca74029ee" name="a3c4d46bfeb461f0faebff61ca74029ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c4d46bfeb461f0faebff61ca74029ee">&#9670;&#160;</a></span>mu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Material::mu</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>friction coefficient \(K^f\) </p>
 
 </div>
 </div>

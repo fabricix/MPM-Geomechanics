@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id_0',['id',['../structGMSH_1_1PhysicalGroup.html#aaeddd46096ee7ed707f4aeb058e3fd4e',1,'GMSH::PhysicalGroup::id'],['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
+  ['id_0',['id',['../classContact.html#aa31847b281001bb11f2e8e50c039c3b2',1,'Contact::id'],['../structGMSH_1_1PhysicalGroup.html#aaeddd46096ee7ed707f4aeb058e3fd4e',1,'GMSH::PhysicalGroup::id'],['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
   ['in_20box_20example_1',['Distributed load in box example',['../namespaceInput.html#autotoc_md12',1,'']]],
   ['in_20particles_20inside_20a_20box_20example_2',['in particles inside a box example',['../namespaceInput.html#autotoc_md16',1,'Initial pore pressure in particles inside a box example'],['../namespaceInput.html#autotoc_md15',1,'Prescribed pore pressure in particles inside a box example']]],
   ['in_20the_20body_3',['How the material points are placed in the body',['../classBodyPolygon.html#autotoc_md46',1,'']]],
@@ -19,15 +19,17 @@ var searchData=
   ['integration_16',['Integration',['../namespaceIntegration.html',1,'']]],
   ['integration_2eh_17',['Integration.h',['../Integration_8h.html',1,'']]],
   ['internalforce_18',['internalForce',['../classNode.html#ab1f099daeae52f3d36a9fe0f873ae760',1,'Node']]],
-  ['internalforcefluid_19',['internalforcefluid',['../classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8',1,'NodeMixture::internalForceFluid'],['../classParticleMixture.html#ac8423fea0174c71ac288e90e5e06b218',1,'ParticleMixture::internalForceFluid']]],
-  ['interpolatevector_20',['interpolateVector',['../namespaceInterpolation.html#acf4f657fde41c48336f1d5030cd63958',1,'Interpolation']]],
-  ['interpolation_21',['Interpolation',['../namespaceInterpolation.html',1,'']]],
-  ['interpolation_2eh_22',['Interpolation.h',['../Interpolation_8h.html',1,'']]],
-  ['interpolationfunctiontype_23',['InterpolationFunctionType',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab',1,'ModelSetup']]],
-  ['introduction_24',['introduction',['../classBodyParticle.html#autotoc_md41',1,'Introduction'],['../classBodyPolygon.html#autotoc_md42',1,'Introduction']]],
-  ['isactive_25',['isActive',['../structSeismicAnalysis.html#a581a46a283f58b47214526ef882fd441',1,'SeismicAnalysis']]],
-  ['isfieldrequired_26',['isFieldRequired',['../namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a',1,'Output']]],
-  ['isgridfieldrequired_27',['isGridFieldRequired',['../namespaceOutput.html#a6d58672a69289bb29ddb62a4be2147bd',1,'Output']]],
-  ['isonewayenabled_28',['isOneWayEnabled',['../namespaceHydroMechanicalCoupling.html#a0fbbb06aaab24e4a6d26d6efb7ec2c28',1,'HydroMechanicalCoupling']]],
-  ['isseismicnode_29',['isSeismicNode',['../namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862',1,'Seismic']]]
+  ['internalforcefluid_19',['internalforcefluid',['../classParticleMixture.html#ac8423fea0174c71ac288e90e5e06b218',1,'ParticleMixture::internalForceFluid'],['../classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8',1,'NodeMixture::internalForceFluid']]],
+  ['internalforcemaster_20',['internalForceMaster',['../structNode_1_1ContactNodeData.html#a8261c61b9d4d6a7b440eb2bae7e5cab4',1,'Node::ContactNodeData']]],
+  ['internalforceslave_21',['internalForceSlave',['../structNode_1_1ContactNodeData.html#ad414a822996ca28e6434c53a04db51f1',1,'Node::ContactNodeData']]],
+  ['interpolatevector_22',['interpolateVector',['../namespaceInterpolation.html#acf4f657fde41c48336f1d5030cd63958',1,'Interpolation']]],
+  ['interpolation_23',['Interpolation',['../namespaceInterpolation.html',1,'']]],
+  ['interpolation_2eh_24',['Interpolation.h',['../Interpolation_8h.html',1,'']]],
+  ['interpolationfunctiontype_25',['InterpolationFunctionType',['../namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab',1,'ModelSetup']]],
+  ['introduction_26',['introduction',['../classBodyParticle.html#autotoc_md41',1,'Introduction'],['../classBodyPolygon.html#autotoc_md42',1,'Introduction']]],
+  ['isactive_27',['isActive',['../structSeismicAnalysis.html#a581a46a283f58b47214526ef882fd441',1,'SeismicAnalysis']]],
+  ['isfieldrequired_28',['isFieldRequired',['../namespaceOutput.html#a7c32e402d419f0ff6bc3358ea83a4a5a',1,'Output']]],
+  ['isgridfieldrequired_29',['isGridFieldRequired',['../namespaceOutput.html#a6d58672a69289bb29ddb62a4be2147bd',1,'Output']]],
+  ['isonewayenabled_30',['isOneWayEnabled',['../namespaceHydroMechanicalCoupling.html#a0fbbb06aaab24e4a6d26d6efb7ec2c28',1,'HydroMechanicalCoupling']]],
+  ['isseismicnode_31',['isSeismicNode',['../namespaceSeismic.html#a8497529ebd0b9c8488dc8afa8574b862',1,'Seismic']]]
 ];

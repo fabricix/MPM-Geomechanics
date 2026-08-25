@@ -8,6 +8,7 @@ var dir_bfccd401955b95cf8c75461437045ac0 =
     [ "Solver", "dir_d51a0eb667c0c8e74878420a6ccc483d.html", "dir_d51a0eb667c0c8e74878420a6ccc483d" ],
     [ "Boundary.h", "Boundary_8h.html", "Boundary_8h" ],
     [ "Contact.h", "Contact_8h.html", "Contact_8h" ],
+    [ "ContactManager.h", "ContactManager_8h.html", "ContactManager_8h" ],
     [ "Contribution.h", "Contribution_8h.html", "Contribution_8h" ],
     [ "DynamicRelaxation.h", "DynamicRelaxation_8h.html", "DynamicRelaxation_8h" ],
     [ "Energy.h", "Energy_8h.html", "Energy_8h" ],

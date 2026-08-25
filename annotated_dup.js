@@ -25,6 +25,7 @@ var annotated_dup =
     [ "Boundary", "classBoundary.html", "classBoundary" ],
     [ "Cell", "classCell.html", "classCell" ],
     [ "Contact", "classContact.html", "classContact" ],
+    [ "ContactManager", "classContactManager.html", "classContactManager" ],
     [ "Contribution", "classContribution.html", "classContribution" ],
     [ "Elastic", "classElastic.html", "classElastic" ],
     [ "ElasticJaumann", "classElasticJaumann.html", "classElasticJaumann" ],

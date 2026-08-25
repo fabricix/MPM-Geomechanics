@@ -24,6 +24,7 @@ var classParticle =
     [ "getInitialVolume", "classParticle.html#a94c4c791c7fb18948032776f4738db1f", null ],
     [ "getMass", "classParticle.html#ad08e7b1d0cc7cb17bd0602caa4a22bc6", null ],
     [ "getMassFluid", "classParticle.html#a815c15877edeff99e6cc8fc2435c73b0", null ],
+    [ "getMaterial", "classParticle.html#a835f7f1df9c96a8db24ccbf8d6850fdd", null ],
     [ "getMaterialId", "classParticle.html#a3b836223594cf1e4dae5adbbe7337841", null ],
     [ "getMaterialPntr", "classParticle.html#af5fbfc9c56c9d488c6185c4186304f3e", null ],
     [ "getPlasticStrain", "classParticle.html#af890c2e192b2a0978e46b878b3d11c20", null ],

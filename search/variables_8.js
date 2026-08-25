@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['id_0',['id',['../structGMSH_1_1PhysicalGroup.html#aaeddd46096ee7ed707f4aeb058e3fd4e',1,'GMSH::PhysicalGroup::id'],['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
+  ['id_0',['id',['../classContact.html#aa31847b281001bb11f2e8e50c039c3b2',1,'Contact::id'],['../structGMSH_1_1PhysicalGroup.html#aaeddd46096ee7ed707f4aeb058e3fd4e',1,'GMSH::PhysicalGroup::id'],['../classMaterial.html#a3c350361ffe39076a51722fff3346781',1,'Material::id'],['../classBody.html#a8dea09ffc5c222b5d7bd623963dc6b26',1,'Body::id'],['../classParticle.html#a544b202775517f8ba05efcb9e0a21bee',1,'Particle::id'],['../classCell.html#a25f37241a10fa27bcdea7e939eea5efc',1,'Cell::id'],['../classNode.html#a59a543130a10c95f1e8642cf8c5645e8',1,'Node::id']]],
   ['initial_5fvelocity_1',['initial_velocity',['../classBody.html#a6de1624a7d45c11479318ae05d1eb998',1,'Body']]],
   ['initialporositymixture_2',['initialPorosityMixture',['../classParticleMixture.html#ac8ff0b6d45ac55d1229ebaa4f709ba34',1,'ParticleMixture']]],
   ['initialposition_3',['initialPosition',['../classParticle.html#a940bb260057927113c3c754c3db8e33a',1,'Particle']]],
   ['internalforce_4',['internalForce',['../classNode.html#ab1f099daeae52f3d36a9fe0f873ae760',1,'Node']]],
   ['internalforcefluid_5',['internalforcefluid',['../classParticleMixture.html#ac8423fea0174c71ac288e90e5e06b218',1,'ParticleMixture::internalForceFluid'],['../classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8',1,'NodeMixture::internalForceFluid']]],
-  ['isactive_6',['isActive',['../structSeismicAnalysis.html#a581a46a283f58b47214526ef882fd441',1,'SeismicAnalysis']]]
+  ['internalforcemaster_6',['internalForceMaster',['../structNode_1_1ContactNodeData.html#a8261c61b9d4d6a7b440eb2bae7e5cab4',1,'Node::ContactNodeData']]],
+  ['internalforceslave_7',['internalForceSlave',['../structNode_1_1ContactNodeData.html#ad414a822996ca28e6434c53a04db51f1',1,'Node::ContactNodeData']]],
+  ['isactive_8',['isActive',['../structSeismicAnalysis.html#a581a46a283f58b47214526ef882fd441',1,'SeismicAnalysis']]]
 ];

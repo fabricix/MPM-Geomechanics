@@ -9,10 +9,12 @@ var searchData=
   ['nodalinternalforcefluid_6',['nodalInternalForceFluid',['../namespaceInterpolation.html#a1364590284e7b40e5e7482a91078fa18',1,'Interpolation']]],
   ['nodalmass_7',['nodalMass',['../namespaceInterpolation.html#ae730bd220a63ca2c8d0842fd7da07791',1,'Interpolation']]],
   ['nodalmassfuid_8',['nodalMassFuid',['../namespaceInterpolation.html#ada191e99fa8bd78e8274a4316b8e24a4',1,'Interpolation']]],
-  ['nodalmomentum_9',['nodalmomentum',['../namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9',1,'Integration::nodalMomentum()'],['../namespaceInterpolation.html#a023309bb1189d8072610e1600e0819ed',1,'Interpolation::nodalMomentum(Mesh *mesh, vector&lt; Particle * &gt; *particles)']]],
-  ['nodalmomentumfluid_10',['nodalMomentumFluid',['../namespaceInterpolation.html#a135cfc683b9cffc0abb3e8542c0b17d6',1,'Interpolation']]],
-  ['nodaltotalforce_11',['nodalTotalForce',['../namespaceUpdate.html#ad27e963611658974a0b33f5a1e77fc3e',1,'Update']]],
-  ['nodalvelocity_12',['nodalVelocity',['../namespaceUpdate.html#a6d65ee56959a561441007d13172b647d',1,'Update']]],
-  ['node_13',['Node',['../classNode.html#ad7a34779cad45d997bfd6d3d8043c75f',1,'Node']]],
-  ['nodemixture_14',['NodeMixture',['../classNodeMixture.html#a23b1edb4bedd9aad69ae7e7a43cf66a9',1,'NodeMixture']]]
+  ['nodalmomentum_9',['nodalmomentum',['../namespaceIntegration.html#aafb00ee10cc8471da1bbbc1b05e481e9',1,'Integration::nodalMomentum()'],['../namespaceInterpolation.html#a023309bb1189d8072610e1600e0819ed',1,'Interpolation::nodalMomentum()']]],
+  ['nodalmomentumcontactupdate_10',['nodalMomentumContactUpdate',['../classContactManager.html#ab731260e0ad8476147415f465e7975b1',1,'ContactManager']]],
+  ['nodalmomentumfluid_11',['nodalMomentumFluid',['../namespaceInterpolation.html#a135cfc683b9cffc0abb3e8542c0b17d6',1,'Interpolation']]],
+  ['nodaltotalforce_12',['nodalTotalForce',['../namespaceUpdate.html#ad27e963611658974a0b33f5a1e77fc3e',1,'Update']]],
+  ['nodalunitnormal_13',['nodalUnitNormal',['../classContactManager.html#a0b61ac54c0f67a1f4d6a80005e38d7b1',1,'ContactManager']]],
+  ['nodalvelocity_14',['nodalVelocity',['../namespaceUpdate.html#a6d65ee56959a561441007d13172b647d',1,'Update']]],
+  ['node_15',['Node',['../classNode.html#ad7a34779cad45d997bfd6d3d8043c75f',1,'Node']]],
+  ['nodemixture_16',['NodeMixture',['../classNodeMixture.html#a23b1edb4bedd9aad69ae7e7a43cf66a9',1,'NodeMixture']]]
 ];

@@ -1,5 +1,6 @@
 var classNode =
 [
+    [ "ContactNodeData", "structNode_1_1ContactNodeData.html", "structNode_1_1ContactNodeData" ],
     [ "~Node", "classNode.html#aa0840c3cb5c7159be6d992adecd2097c", null ],
     [ "Node", "classNode.html#ad7a34779cad45d997bfd6d3d8043c75f", null ],
     [ "addDensityLevelSet", "classNode.html#a039b84e612b6f32a44363c0b1fd1eaea", null ],

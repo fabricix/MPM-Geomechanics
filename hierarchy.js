@@ -10,6 +10,8 @@ var hierarchy =
     [ "Boundary", "classBoundary.html", null ],
     [ "Cell", "classCell.html", null ],
     [ "Contact", "classContact.html", null ],
+    [ "ContactManager", "classContactManager.html", null ],
+    [ "Node::ContactNodeData", "structNode_1_1ContactNodeData.html", null ],
     [ "Contribution", "classContribution.html", null ],
     [ "GMSH::Element", "structGMSH_1_1Element.html", null ],
     [ "GMSH::Entity", "structGMSH_1_1Entity.html", null ],
