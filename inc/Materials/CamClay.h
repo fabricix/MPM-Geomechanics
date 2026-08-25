@@ -60,17 +60,22 @@ protected:
     double n; //!< Ratio between slope of critical line for extension and compression \f$n=Me/Mc\f$
 
     // Numerical tolerances
-    double zeroTolerance; //!< Numerical tolerance for values close to zero
-    double TolPhi; //!< Numerical tolerance for yield function
+    double zeroTolerance; //!< Numerical tolerance for values close to zero. Machine-level tolerance (TOL)
+    double TolStress; //!< Stress residual tolerance TOL_sigma
+    double Tolp0; //!< Hardening residual tolerance TOL_zeta
+    double TolPhi; //!< Yield residual tolerance TOL_phi
+    int NLMax; //!< Maximum number of Newton iterations
 
-    using Matrix6d = Matrix<double, 6, 6>;
-    using Vector6d = Matrix<double, 6, 1>;
-    using RowVector6d = Matrix<double, 1, 6>;
+    using Matrix6d = Eigen::Matrix<double, 6, 6>;
+    using Vector6d = Eigen::Matrix<double, 6, 1>;
+    using RowVector6d = Eigen::Matrix<double, 1, 6>;
+    using Matrix8d = Eigen::Matrix<double, 8, 8>;
+    using Vector8d = Eigen::Matrix<double, 8, 1>;
 
     // Stress state
     struct StressState {
-        Matrix3d stress;
-        Matrix3d stressDev;
+        Eigen::Matrix3d stress;
+        Eigen::Matrix3d stressDev;
         double I;
         double J;
         double S;
@@ -79,31 +84,22 @@ protected:
         double gbar;
     };
 
-    StressState computeStressState(const Matrix3d& stress) const;
+    StressState computeStressState(const Eigen::Matrix3d& stress) const;
 
     // Exact elastic properties
-    Matrix3d computeElasticTrialStress(const StressState& oldState, const Matrix3d& de) const;
-
-    // Yield function
-    double computeYieldFunction(const StressState& state, double p0) const;
+    Eigen::Matrix3d computeElasticTrialStress(const StressState& oldState, const Eigen::Matrix3d& de) const;
 
     // Yield gradient / flow direction
-    Matrix3d computeYieldGradient(const StressState& state, double p0) const;
+    Eigen::Matrix3d computeYieldGradient(const StressState& state, double p0) const;
 
-    // Exact hardening 
-    double computeUpdatedPreconsolidationPressure(double p0Old, double plasticMultiplier, double rkk) const;
-
-    // CPPM constitutive equations and residuals
-    Matrix3d computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double plasticMultiplier) const;
-
-    Matrix3d computeStressResidual(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double plasticMultiplier) const;
-    double computeHardeningResidual(double p0Old, double p0Current, double plasticMultiplier, double rkk) const;
+    // CPPM constitutive equations
+    Eigen::Matrix3d computeElastoplasticStress(const StressState& oldState, const Eigen::Matrix3d& de, const Eigen::Matrix3d& rij, double DeltaLambda) const;
 
     // Second derivatives of the yield function required by CPPM
-    Matrix3d computeAlphaStressDerivative(const StressState& state) const;
-    Matrix3d computeYieldDerivativeJStressDerivative(const StressState& state) const;
-    Matrix3d computeGbarStressDerivative(const StressState& state) const;
-    Matrix3d computeYieldDerivativeAlphaStressDerivative(const StressState& state) const;
+    Eigen::Matrix3d computeAlphaStressDerivative(const StressState& state) const;
+    Eigen::Matrix3d computeYieldDerivativeJStressDerivative(const StressState& state) const;
+    Eigen::Matrix3d computeGbarStressDerivative(const StressState& state) const;
+    Eigen::Matrix3d computeYieldDerivativeAlphaStressDerivative(const StressState& state) const;
     
     Matrix6d computeRStressDerivativeAlphaBoundary(double alpha) const;
     Matrix6d computeRStressDerivative(const StressState& state) const;
@@ -120,8 +116,22 @@ protected:
         double gamma;
     };
 
-    CPPMCoefficients computeCPPMCoefficients(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double p0Old, double plasticMultiplier) const;
-    
+    //Complete CPPM integration
+
+    CPPMCoefficients computeCPPMCoefficients(const StressState& oldState, const Eigen::Matrix3d& de, const StressState& currentState, const Eigen::Matrix3d& rij, double p0Old, double DeltaLambda) const;
+
+    struct CPPMResult
+    {
+        Eigen::Matrix3d stress;
+        double p0;
+        double DeltaLambda;
+        bool plastic;
+    };
+
+    double computeInitialPlasticMultiplier(const StressState& trialState, double phiTrial, const Eigen::Matrix3d& rTrial, double rkkTrial, double p0Old) const;
+
+    //Main constitutive integrator
+    CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const;  
         
 };
 

@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
-// #include <Eigen/LU>
-// using namespace Eigen;
+#include <Eigen/LU>
+using Eigen::Matrix3d;
 
 
 CamClay::CamClay(int id, double density, double poisson_, double lambda_, double kappa_, double Mc_, double Me_, double nu0_, double initialp0_) 
@@ -45,8 +45,12 @@ CamClay::CamClay(int id, double density, double poisson_, double lambda_, double
     this->C1 = this->nu0/(this->lambda-this->kappa);
     this->n=this->Me / this->Mc;
 
-    this->zeroTolerance = 1.0e-12;
-    this->TolPhi = 1.0e-10;
+    //Numerical parameters
+    this->zeroTolerance = 1.0e-10;
+    this->TolStress = 0.01;
+    this->Tolp0 = 0.01;
+    this->TolPhi = 1.0e-5;
+    this->NLMax = 100;
 }
 
 CamClay::~CamClay() { }
@@ -95,12 +99,6 @@ Matrix3d CamClay::computeElasticTrialStress(const StressState& oldState, const M
     return oldState.stressDev + 2.0 * Gave * deDev + pTrial * Matrix3d::Identity();
 }
 
-// Yield function
-double CamClay::computeYieldFunction(const StressState& state, double p0) const
-{
-    return state.I * state.I + state.J * state.J /(state.N * state.N) - 3.0 * p0 * state.I;
-}
-
 // Yield gradient (r_ij)
 Matrix3d CamClay::computeYieldGradient(const StressState& state, double p0) const
 {   
@@ -127,14 +125,8 @@ Matrix3d CamClay::computeYieldGradient(const StressState& state, double p0) cons
     return rij;
 }
 
-// Exact hardening 
-double CamClay::computeUpdatedPreconsolidationPressure(double p0Old, double plasticMultiplier, double rkk) const
-{
-    return p0Old * std::exp(C1 * plasticMultiplier * rkk);
-}
-
 // CPPM constitutive equations and residuals
-Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double plasticMultiplier) const
+Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const Matrix3d& de, const Matrix3d& rij, double DeltaLambda) const
 {
     Matrix3d identity = Matrix3d::Identity();
     // State at n
@@ -146,24 +138,12 @@ Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const 
     // Flow direction evaluated at current Newton estimate
     const double rkk = rij.trace();
     const Matrix3d dij = rij - rkk / 3.0 * identity;
-    const double barX0 = Kbar0 * (deVol - plasticMultiplier * rkk);
-    const Matrix3d DeltaY = deDev - plasticMultiplier * dij;
+    const double barX0 = Kbar0 * (deVol - DeltaLambda * rkk);
+    const Matrix3d DeltaY = deDev - DeltaLambda * dij;
     const double Gave = (std::abs(barX0) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(barX0) / barX0;
 
     return oldState.stressDev + 2.0 * Gave * DeltaY + pOld * std::exp(barX0) * identity;
 
-}
-
-Matrix3d CamClay::computeStressResidual(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double plasticMultiplier) const
-{
-    const Matrix3d stressNew = computeElastoplasticStress(oldState, de, rij, plasticMultiplier);
-    return currentState.stress - stressNew;
-}
-
-double CamClay::computeHardeningResidual(double p0Old, double p0Current, double plasticMultiplier, double rkk) const
-{
-    const double p0New = computeUpdatedPreconsolidationPressure(p0Old,plasticMultiplier,rkk);
-    return p0Current - p0New;
 }
 
 // Second derivatives of the yield function required by CPPM
@@ -389,7 +369,7 @@ CamClay::Matrix6d CamClay::computeRStressDerivative(const StressState& state) co
     return drij_dStress;
 }
 
-CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double p0Old, double plasticMultiplier) const
+CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& oldState, const Matrix3d& de, const StressState& currentState, const Matrix3d& rij, double p0Old, double DeltaLambda) const
 {
     CPPMCoefficients coefficients;
     const Matrix3d identity = Matrix3d::Identity();
@@ -403,9 +383,9 @@ CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& ol
     const double rkk = rij.trace();
     const Matrix3d dij = rij - rkk / 3.0 * identity;
     //12.55a barx0 
-    const double barX0 = Kbar0 * (deVol - plasticMultiplier * rkk);
+    const double barX0 = Kbar0 * (deVol - DeltaLambda * rkk);
     //12.55b Delta y_ij
-    const Matrix3d DeltaY = deDev - plasticMultiplier * dij;
+    const Matrix3d DeltaY = deDev - DeltaLambda * dij;
     //12.56b Gave
     const double Gave = (std::abs(barX0) <= zeroTolerance) ? Gbar0 * pOld : Gbar0 * pOld * std::expm1(barX0) / barX0;
     const double seriesTolerance = 1.0e-8;
@@ -452,7 +432,7 @@ CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& ol
         //A8.29: dd_ij/dsigma_pq
         const Matrix3d ddij_dstress = dR_dS - drkk_dstress / 3.0 * identity;
         //12.63a: A_ijpq =  delta_ip delta_jq + Kbar0 DeltaLambda Z_ij dr_kk/dsigma_pq + 2 DeltaLambda Gave dd_ij/dsigma_pq
-        const Matrix3d Aijpq = stressDirection + Kbar0 * plasticMultiplier * Zij * drkk_dstress + 2.0 * plasticMultiplier * Gave * ddij_dstress;
+        const Matrix3d Aijpq = stressDirection + Kbar0 * DeltaLambda * Zij * drkk_dstress + 2.0 * DeltaLambda * Gave * ddij_dstress;
         coefficients.A(0,column) = Aijpq(0, 0);
         coefficients.A(1,column) = Aijpq(1, 1);
         coefficients.A(2,column) = Aijpq(2, 2);
@@ -467,23 +447,23 @@ CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& ol
     ////A8.29f: dd_ij / dp0 = 0;
     const Matrix3d ddij_dp0 = Matrix3d::Zero();
     //12.63b: B_ij = Kbar0 DeltaLambda Zij drkk/dp0 + 2 DeltaLambda Gave ddij/dp0 = = -9 Kbar0 DeltaLambda  Zij
-    const Matrix3d Bij = Kbar0 * plasticMultiplier * drkk_dp0 * Zij + 2.0 * plasticMultiplier * Gave * ddij_dp0;
+    const Matrix3d Bij = Kbar0 * DeltaLambda * drkk_dp0 * Zij + 2.0 * DeltaLambda * Gave * ddij_dp0;
     coefficients.B << Bij(0, 0), Bij(1, 1), Bij(2, 2), Bij(0, 1), Bij(1, 2), Bij(0, 2);
 
     //12.63c: F_ij = Kbar0 rkk Zij + 2 Gave dij
     const Matrix3d Fij = Kbar0 * rkk * Zij + 2.0 * Gave * dij;
     coefficients.F << Fij(0, 0), Fij(1, 1), Fij(2, 2), Fij(0, 1), Fij(1, 2), Fij(0, 2);
 
-    const double hardening_p0 = p0Old * std::exp(C1 * plasticMultiplier * rkk);
+    const double hardening_p0 = p0Old * std::exp(C1 * DeltaLambda * rkk);
     //12.63d: H_pq
     //Since rkk = 6 I - 9 p0: drkk/dsigma_pq = 6 delta_pq  
     RowVector6d drkk_dstresReduced;
     drkk_dstresReduced << 6.0, 6.0, 6.0, 0.0, 0.0, 0.0;
     //12.63d: H_pq = -C1 DeltaLabda p0 e^(C1 DeltaLambda rkk) dr_kk/dsigma_pq
-    coefficients.H = -C1* plasticMultiplier * hardening_p0 * drkk_dstresReduced;
+    coefficients.H = -C1* DeltaLambda * hardening_p0 * drkk_dstresReduced;
 
     //12.63e: omega = 1 - C1  DeltaLambda  p0 e^(C1 DeltaLambda rkk) dr_kk/dp0
-    coefficients.omega = 1 - C1 * plasticMultiplier * hardening_p0 * drkk_dp0;
+    coefficients.omega = 1 - C1 * DeltaLambda * hardening_p0 * drkk_dp0;
 
     //12.63f: beta = -C1 rkk p0  e^(C1 DeltaLambda rkk)
     coefficients.beta = -C1 * rkk * hardening_p0;
@@ -495,6 +475,146 @@ CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& ol
     coefficients.gamma = -3.0 * currentState.I;
 
     return coefficients;
+}
+
+//12.49: DeltaLambda1 = phi^Trial / [n^T C n + K_p]^Trial
+double CamClay::computeInitialPlasticMultiplier(const StressState& trialState, double phiTrial, const Matrix3d& rTrial, double rkkTrial, double p0Old) const
+{
+    //Trial elastic moduli
+    const double pTrial = trialState.I / 3.0;
+    const double Ktrial = Kbar0 * pTrial;
+    const double GTrial = Gbar0 * pTrial;
+
+    // n^T : C : n = r^T : C : r
+    //12.46 (C : r)_ij = K r_kk delta_ij + 2 G (r_ij - 1/3 r_kk delta_ij) = K r_kk delta_ij + 2 G d_ij
+    const Matrix3d dTrial = rTrial - rkkTrial / 3.0 * Matrix3d::Identity();
+    const Matrix3d Cr = Ktrial * rkkTrial * Matrix3d::Identity() + 2.0 * GTrial * dTrial;
+    const double rCr = (rTrial.array() * Cr.array()).sum();
+
+    //Plastic modulus Kp
+    //12.23 Kp = -9 C_1 p p_0 r_kk
+    const double KpTrial = - 9 * C1 * pTrial * p0Old * rkkTrial;
+
+    //Initial plastic multiplier 
+    const double denominator = rCr + KpTrial;
+    if (std::abs(denominator) <= zeroTolerance) {throw std::runtime_error("Initial plastic multiplier denominator is too small.");}
+
+    return phiTrial / denominator;
+}
+
+CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d& de, double p0Old) const
+{
+    //Validation
+    if (p0Old <= 0.0) {throw std::invalid_argument("The old preconsolidation pressure must be positive");}
+
+    //Step 1: Exact elastic predictor 12.53
+    const StressState oldState = computeStressState(stressOld);
+    const Matrix3d stressTrial = computeElasticTrialStress(oldState, de);
+    const StressState trialState = computeStressState(stressTrial);
+    const double phiTrial = trialState.I * trialState.I + trialState.J * trialState.J 
+        /(trialState.N * trialState.N) - 3.0 * p0Old * trialState.I;
+    
+    //Elastic loading/unloading check
+    if (phiTrial <= zeroTolerance){ return {stressTrial, p0Old, 0.0, false};}
+
+    //Plastic trial: Initial Newton estimates
+    //Flow direction evaluated at the elastic trial state
+    const Matrix3d rijTrial = computeYieldGradient(trialState, p0Old);
+    const double rkkTrial = rijTrial.trace();
+
+    //Step 1: Initial estimate of DeltaLambda (12.49). Plastic multiplier
+    double DeltaLambdaNew = computeInitialPlasticMultiplier(trialState, phiTrial, rijTrial, rkkTrial, p0Old);
+
+    //Initial stress estimate
+    Matrix3d stressNew = computeElastoplasticStress(oldState, de, rijTrial, DeltaLambdaNew);
+
+    //Initial preconsolidation pressure estimate
+    //p0^(1) = p0^n e^(C1 DeltaLamda r_kk^Trial)
+    double p0New = p0Old * std::exp(C1 * DeltaLambdaNew * rkkTrial);
+
+    //Residuals errors
+    double stressResidualError = 0.0;
+    double hardeningResidualError = 0.0;
+    double phiResidualError = 0.0;
+
+    //Newton iterations
+    for (int iteration = 0; iteration < NLMax; ++iteration)
+    {
+        const StressState currentState = computeStressState(stressNew);
+        const Matrix3d rijNew = computeYieldGradient(currentState, p0New);
+        const double rkkNew = rijNew.trace();
+
+        
+        const Matrix3d stressNew_iteration = computeElastoplasticStress(oldState, de, rijNew, DeltaLambdaNew);
+        const double p0New_iteration = p0Old * std::exp(C1 * DeltaLambdaNew * rkkNew);     
+
+        //Residuals 12.59
+        const Matrix3d stressResidual = currentState.stress - stressNew_iteration;           
+        const double hardeningResidual = p0New - p0New_iteration;
+        const double phiResidual = currentState.I * currentState.I + currentState.J * currentState.J 
+        /(currentState.N * currentState.N) - 3.0 * p0New * currentState.I;
+
+        //Error measures
+        stressResidualError = stressResidual.norm() / stressNew.norm();
+        hardeningResidualError = std::abs(hardeningResidual) / std::abs(p0New);
+        phiResidualError = std::abs(phiResidual);
+
+        //Convergence check
+        if (stressResidualError <= TolStress && hardeningResidualError <= Tolp0 && phiResidualError <= TolPhi*p0New)
+        {return {stressNew, p0New, DeltaLambdaNew, true};}
+
+        //Coefficients 12.63a - 12.63h
+        const CPPMCoefficients coefficients = computeCPPMCoefficients(oldState, de, currentState, rijNew, p0Old, DeltaLambdaNew);
+
+        //Assemble Newton Jacobian 12.47
+        Matrix8d jacobian = Matrix8d::Zero();
+        jacobian.block<6, 6>(0, 0) = coefficients.A;
+        jacobian.block<6, 1>(0, 6) = coefficients.B;
+        jacobian.block<6, 1>(0, 7) = coefficients.F;
+        jacobian.block<1, 6>(6, 0) = coefficients.H;
+        jacobian(6, 6) = coefficients.omega;
+        jacobian(6, 7) = coefficients.beta;
+        jacobian.block<1, 6>(7, 0) = coefficients.E;
+        jacobian(7, 6) = coefficients.gamma;
+        jacobian(7, 7) = 0.0;
+        
+        //Assemble residual vector
+        Vector8d residualVector = Vector8d::Zero();
+        residualVector(0) = stressResidual(0, 0);
+        residualVector(1) = stressResidual(1, 1);
+        residualVector(2) = stressResidual(2, 2);
+        residualVector(3) = stressResidual(0, 1);
+        residualVector(4) = stressResidual(1, 2);
+        residualVector(5) = stressResidual(0, 2);
+        residualVector(6) = hardeningResidual;
+        residualVector(7) = phiResidual;
+
+        //Solve Jacobian *  Delta_X = -Residual
+        const Eigen::FullPivLU<Matrix8d> solver(jacobian);
+        if (!solver.isInvertible()) {throw std::runtime_error("CPPM Newton Jacobian is singular.");}
+        const Vector8d delta = solver.solve(-residualVector);
+        if (!delta.allFinite()) {throw std::runtime_error("CPPM Newton correction contains non-finite values.");}
+
+        //Recover tensor stress, preconsolidation pressure and plastic multiplier correction
+        // Matrix3d deltaStress = Matrix3d::Zero();
+        stressNew(0, 0) += delta(0);
+        stressNew(1, 1) += delta(1);
+        stressNew(2, 2) += delta(2);
+        stressNew(0, 1) += delta(3);
+        stressNew(1, 0) += delta(3);
+        stressNew(1, 2) += delta(4);
+        stressNew(2, 1) += delta(4);
+        stressNew(0, 2) += delta(5);
+        stressNew(2, 0) += delta(5);
+        p0New += delta(6);
+        DeltaLambdaNew += delta(7);
+
+        //Basic physical/numerical checks
+        if (!stressNew.allFinite()) {throw std::runtime_error("CPPM Newton stress new became non-finite.");}
+        if (!std::isfinite(p0New) || p0New <= 0.0) {throw std::runtime_error("CPPM Newton produces a non-positive preconsolidation pressure.");}
+        if (!std::isfinite(DeltaLambdaNew)) {throw std::runtime_error("CPPM Newton plastic multiplier new became non-finite.");}
+    }
+    throw std::runtime_error("Cam-Clay CPPM/Newton did not converge.");
 }
     
 // Initialization
@@ -520,27 +640,16 @@ void CamClay::updateStress(Particle *particle) const
     // Stress at time n from Particle
 	Matrix3d stressOld = -particle->getStress();
 
-    StressState oldState = computeStressState(stressOld);
-	
     // Strain increment 
 	Matrix3d de = -particle->getStrainIncrement();
 
     // Preconsolidation pressure at time n from Particle
     double p0Old = particle->getInternalVariable(index(InternalVariable::p0));
-	
-    // Exact elastic trial state
-    
-    // get trial elastic stress
-    Matrix3d trialStress = computeElasticTrialStress(oldState, de);
-    StressState trialState = computeStressState(trialStress);
 
-    // Evaluate yield function at trial state
-    double phiTrial = computeYieldFunction(trialState, p0Old);
-    const double phiScale = std::max({1.0, trialState.I * trialState.I, trialState.J * trialState.J, p0Old * p0Old});
+    const CPPMResult result = solveCPPM(stressOld, de, p0Old);
 
-    // Elastic step
-    if (phiTrial <= TolPhi * phiScale) {particle->setStress(-trialStress); return;}
-    
-
-   
+    //Return to MPM sign convention
+    particle->setStress(-result.stress);
+    particle->setInternalVariable(index(InternalVariable::p0), result.p0);
+	   
 }
