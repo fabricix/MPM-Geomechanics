@@ -12,8 +12,10 @@
 #include "Shape/ShapeLinear.h"
 #include "Loads.h"
 #include "TerrainContact.h"
+#include "ContactManager.h"
 #include "HydroMechanicalCoupling.h"
 #include "Seismic.h"
+#include "Contact.h"
 #include "GmshMeshReader.h"
 
 #include "Json/json.hpp"
@@ -76,6 +78,7 @@ void MPM::setSolver() {
 	solver->registerBodies(&bodies);
 	solver->registerParticles(&particles);
 	solver->registerTerrainContact(terrainContact);
+	solver->registerContactManager(contactManager);
 }
 
 void MPM::setInterpolationFunctions() {
@@ -158,6 +161,20 @@ void MPM::setupMesh() {
 	}
 }
 
+void MPM::setupContac()
+{
+	// verity if contact active
+	bool contactActive = Input::getContactActive();
+	ModelSetup::setContactActive(contactActive);
+	if (!contactActive) { return; }
+	else {	
+
+		vector<Contact*> contactList = Input::getContactList();
+		// set contact manager
+		contactManager = new ContactManager(contactList, Input::RealDistanceCorrectionCoefficient());
+	}
+}
+
 void MPM::setupTerrainContact()
 {
 	// verity if terrain contact active
@@ -215,7 +232,6 @@ void MPM::setupTerrainContact()
 		else {
 			terrainContact->enablePenaltyContact(false);
 		}	
-
 	}
 }
 
@@ -402,6 +418,9 @@ void MPM::createModel() {
 
 		// configures the seismic analysis
 		setupSeismicAnalysis();
+
+		// setup master-slave contact list
+		setupContac();
 
 		// setup the background mesh
 		setupMesh();

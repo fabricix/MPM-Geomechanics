@@ -21,6 +21,21 @@ void Update::nodalVelocity(Mesh* mesh) {
 		
 		// update the velocity
 		gNodes->at(i)->updateVelocity();
+
+		//check if it is a contact problem
+		if (ModelSetup::getContactActive()) {
+
+			//check contact at this node
+			unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+			auto it = contactNodes.find(i);
+
+			if (it != contactNodes.end()) {
+				Node::ContactNodeData& contactNodeData = it->second;
+
+				contactNodeData.velocityMaster = contactNodeData.momentumMaster / contactNodeData.massMaster;
+				contactNodeData.velocitySlave = contactNodeData.momentumSlave / contactNodeData.massSlave;
+			}
+		}
 	}
 }
 
@@ -42,6 +57,21 @@ void Update::nodalTotalForce(Mesh* mesh) {
 			
 		// update total forces
 		gNodes->at(i)->updateTotalForce();
+
+		//check if it is a contact problem
+		if (ModelSetup::getContactActive()) {
+
+			//check contact at this node
+			unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+			auto it = contactNodes.find(i);
+
+			if (it != contactNodes.end()) {
+				Node::ContactNodeData& contactNodeData = it->second;
+
+				contactNodeData.totalForceMaster = contactNodeData.internalForceMaster + contactNodeData.externalForceMaster;
+				contactNodeData.totalForceSlave = contactNodeData.internalForceSlave + contactNodeData.externalForceSlave;
+			}
+		}
 	}
 }
 
@@ -182,8 +212,38 @@ void Update::particleVelocity(Mesh* mesh, vector<Particle*>* particles, double d
 
 			if (nodeI->getMass()!=0.0) {
 
+				//check if it is a contact problem
+				if (ModelSetup::getContactActive()) {
+
+					//check contact at this node
+					unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+					auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+					if (it != contactNodes.end()) {
+						Node::ContactNodeData& contactNodeData = it->second;
+
+						//compute the velocity rate contribution of the master body 
+						if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+							if (contactNodeData.massMaster > 0.0){
+								velocityRate += contactNodeData.totalForceMaster * contribI.getWeight() / contactNodeData.massMaster;
+							}
+						}
+						// compute the velocity rate contribution of the slave body 
+						else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+							if (contactNodeData.massSlave > 0.0){
+								velocityRate += contactNodeData.totalForceSlave * contribI.getWeight() / contactNodeData.massSlave;
+							}
+						}
+					}
+					else {
+						// compute the velocity rate contribution
+						velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
+					}
+				}
+				else {
 				// compute the velocity rate contribution
-				velocityRate+=nodeI->getTotalForce()*contribI.getWeight()/nodeI->getMass();
+				velocityRate += nodeI->getTotalForce() * contribI.getWeight() / nodeI->getMass();
+				}
 			}
 		}
 
@@ -270,8 +330,40 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 
 			if (nodeI->getMass()!=0.0){
 
-				// compute the position rate contribution
-				positionRate+=nodeI->getMomentum()*contribI.getWeight()/nodeI->getMass();
+					//check if it is a contact problem
+					if (ModelSetup::getContactActive()) {
+
+						//check contact at this node
+						unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+						auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+						if (it != contactNodes.end()) {
+							Node::ContactNodeData& contactNodeData = it->second;
+
+							//compute the velocity rate contribution of the master body 
+							if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+								if (contactNodeData.massMaster>0.0){
+									positionRate += contactNodeData.momentumMaster * contribI.getWeight() / contactNodeData.massMaster;
+								}
+								
+							}
+							// compute the velocity rate contribution of the slave body 
+							else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+								if (contactNodeData.massSlave>0.0){
+									positionRate += contactNodeData.momentumSlave * contribI.getWeight() / contactNodeData.massSlave;
+								}
+								
+							}
+						}
+						else {
+							// compute the position rate contribution
+							positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+						}
+					}
+					else {
+					// compute the position rate contribution
+					positionRate += nodeI->getMomentum() * contribI.getWeight() / nodeI->getMass();
+					}
 			}
 		}
 
@@ -429,6 +521,94 @@ void Update::setPlaneMomentumFluid(const Boundary::planeBoundary* plane, vector<
 	}
 }
 
+void Update::setPlaneMomentumContact(const Boundary::planeBoundary* plane, Mesh* mesh, unsigned dir) {
+
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// get boundary nodes
+	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
+
+		// get node handle 
+		Node* nodeI = nodes->at(plane->nodes.at(i));
+
+		//check contact at this node
+		auto it = contactNodes.find(nodes->at(plane->nodes.at(i))->getId());
+
+		if (it != contactNodes.end()) {
+			Node::ContactNodeData& contactNodeData = it->second;
+
+			// check if the node is active
+			// and apply the boundary condition based on the restriction type
+			if (nodeI->getActive()) {
+
+				// witch type of restriction
+				switch (plane->restriction)
+				{
+					// free condition
+				case Boundary::BoundaryType::FREE: { break; }
+
+												 // fixed condition f_iI = 0
+				case Boundary::BoundaryType::FIXED:
+				{
+					// set all force component as zero 
+					contactNodeData.momentumMaster = Vector3d::Zero();
+					contactNodeData.momentumSlave = Vector3d::Zero();
+					break;
+				}
+
+				// absorbing condition
+				case Boundary::BoundaryType::ABSORBING:
+					// fall through: treat as SLIDING for now
+
+					// perpendicular restriction
+				case Boundary::BoundaryType::SLIDING:
+				{
+					// witch direction of the normal vector
+					switch (dir)
+					{
+						// normal pointed to x
+					case Update::Direction::X:
+					{
+						contactNodeData.momentumMaster.x() = 0.0;
+						contactNodeData.momentumSlave.x() = 0.0;
+						break;
+					}
+					// normal pointed to y
+					case Update::Direction::Y:
+					{
+						contactNodeData.momentumMaster.y() = 0.0;
+						contactNodeData.momentumSlave.y() = 0.0;
+						break;
+					}
+					// normal pointed to z
+					case Update::Direction::Z:
+					{
+						contactNodeData.momentumMaster.z() = 0.0;
+						contactNodeData.momentumSlave.z() = 0.0;
+						break;
+					}
+					}
+					break;
+				}
+				// Earthquake boundary condition in term of force
+				case Boundary::BoundaryType::EARTHQUAKE:
+				{
+					// set the seismic momentum
+					if (ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::MUSL) {
+						contactNodeData.momentumMaster = contactNodeData.massMaster * Seismic::getAccumulatedVelocity();
+						contactNodeData.momentumSlave = contactNodeData.massSlave * Seismic::getAccumulatedVelocity();
+					}
+					break;
+				}
+				}
+			}
+		}
+	}
+}
+
 void Update::boundaryConditionsMomentumFluid(Mesh* mesh) {
 
 	// get nodes
@@ -467,6 +647,15 @@ void Update::boundaryConditionsMomentum(Mesh* mesh)
 	setPlaneMomentum(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 	setPlaneMomentum(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 
+	if (ModelSetup::getContactActive()) {
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneX0(), mesh, Update::Direction::X);
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneY0(), mesh, Update::Direction::Y);
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneZ0(), mesh, Update::Direction::Z);
+
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneXn(), mesh, Update::Direction::X);
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneYn(), mesh, Update::Direction::Y);
+		setPlaneMomentumContact(mesh->getBoundary()->getPlaneZn(), mesh, Update::Direction::Z);
+	}
 } 
 
 /// @brief Set force boundary conditions in the specified plane
@@ -548,6 +737,95 @@ void Update::setPlaneForce( const Boundary::planeBoundary* plane, vector<Node*>*
 	}
 }
 
+
+/// @brief Set force boundary conditions in the specified plane for contact analysis
+/// @details This function applies boundary conditions to the nodal forces based on the specified plane for contact analysis
+void Update::setPlaneForceContact(const Boundary::planeBoundary* plane, Mesh* mesh, unsigned dir)
+{
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+
+	// get nodes
+	vector<Node*>* nodes = mesh->getNodes();
+
+	// get boundary nodes
+	for (int i = 0; i < static_cast<int>(plane->nodes.size()); ++i) {
+
+		// get node handle 
+		Node* nodeI = nodes->at(plane->nodes.at(i));
+
+		// check contact at this node
+		auto it = contactNodes.find(nodes->at(plane->nodes.at(i))->getId());
+
+		if (it != contactNodes.end()) {
+
+			Node::ContactNodeData& contactNodeData = it->second;
+
+			// check if the node is active
+			// and apply the boundary condition based on the restriction type
+			if (nodeI->getActive()) {
+
+				// witch type of restriction
+				switch (plane->restriction)
+				{
+					// free condition
+					case Boundary::BoundaryType::FREE: { break; }
+
+					 // fixed condition f_iI = 0
+					case Boundary::BoundaryType::FIXED:
+					{
+						// set all force component as zero 
+						contactNodeData.totalForceMaster = Vector3d::Zero();
+						contactNodeData.totalForceSlave = Vector3d::Zero();
+						break;
+					}
+					
+					// absorbing condition
+					case Boundary::BoundaryType::ABSORBING:
+					// fall through: treat as SLIDING for now
+
+					// perpendicular restriction
+					case Boundary::BoundaryType::SLIDING:
+					{
+						// witch direction of the normal vector
+						switch (dir)
+						{
+							// normal pointed to x
+							case Update::Direction::X:
+							{
+								contactNodeData.totalForceMaster.x() = 0.0;
+								contactNodeData.totalForceSlave.x() = 0.0;
+								break;
+							}
+							// normal pointed to y
+							case Update::Direction::Y:
+							{
+								contactNodeData.totalForceMaster.y() = 0.0;
+								contactNodeData.totalForceSlave.y() = 0.0;
+								break;
+							}
+							// normal pointed to z
+							case Update::Direction::Z:
+							{
+								contactNodeData.totalForceMaster.z() = 0.0;
+								contactNodeData.totalForceSlave.z() = 0.0;
+								break;
+							}
+						}
+						break;
+					}
+					// Earthquake boundary condition in term of force
+					case Boundary::BoundaryType::EARTHQUAKE:
+					{
+						contactNodeData.totalForceMaster = Seismic::getAcceleration() * contactNodeData.massMaster;
+						contactNodeData.totalForceSlave = Seismic::getAcceleration() * contactNodeData.massSlave;
+						break;
+					}
+				}
+			}
+		}		
+	}
+}
+
 /// @brief Set force boundary conditions
 /// @param mesh Pointer to the mesh object 
 void Update::boundaryConditionsForce(Mesh* mesh)
@@ -564,6 +842,20 @@ void Update::boundaryConditionsForce(Mesh* mesh)
 	setPlaneForce(mesh->getBoundary()->getPlaneYn(), nodes, Update::Direction::Y);
 	setPlaneForce(mesh->getBoundary()->getPlaneZn(), nodes, Update::Direction::Z);
 
+	boundaryConditionsContactForce(mesh);
+}
+
+/// @brief Set force boundary conditions for contact problems
+/// @param mesh Pointer to the mesh object 
+void Update::boundaryConditionsContactForce(Mesh* mesh)
+{
+	setPlaneForceContact(mesh->getBoundary()->getPlaneX0(), mesh, Update::Direction::X);
+	setPlaneForceContact(mesh->getBoundary()->getPlaneY0(), mesh, Update::Direction::Y);
+	setPlaneForceContact(mesh->getBoundary()->getPlaneZ0(), mesh, Update::Direction::Z);
+
+	setPlaneForceContact(mesh->getBoundary()->getPlaneXn(), mesh, Update::Direction::X);
+	setPlaneForceContact(mesh->getBoundary()->getPlaneYn(), mesh, Update::Direction::Y);
+	setPlaneForceContact(mesh->getBoundary()->getPlaneZn(), mesh, Update::Direction::Z);
 }
 
 void Update::setPlaneForceFluid(const Boundary::planeBoundary* plane, vector<Node*>* nodes, unsigned dir) {

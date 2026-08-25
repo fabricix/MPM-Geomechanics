@@ -1,0 +1,549 @@
+\section{Contact Documentation}
+In this section, we provide documentation and examples related to the contact algorithms based on the multi nodal velocity field implemented in MPM-Geomechanics.
+
+\section{Slave-master velocity contact approach}
+
+In the Slave-Master Contact method, there are two velocity fields, one for the master body $v_{iI}^{M}$ and another for the slave body $v_{iI}^{S}$.
+
+\subsection {Contact detection}
+
+The contact between two bodies occurs when the following conditions are satisfied:
+
+\begin{itemize}
+    \item The momenta of both bodies are mapped to the same grid node $I$;
+    \item The normal velocities at the contact grid node $I$ of the two bodies satisfy
+    \begin{equation}
+        \left( v^{M}_{iI} - v^{S}_{iI} \right)n^{M}_{iI} > 0.
+    \end{equation}
+\end{itemize}
+
+\subsection {Contact normal vector}
+
+The unit normal $n^{M}_{iI}$ to the surface of body $M$ at grid node $I$ can be calculated from the mass gradient as
+\begin{equation}
+    n_I = \frac{\sum_p m_p N_{Ip}}{\left| \sum_p m_p N_{Ip} \right|}.
+\end{equation}
+
+This unit normal does not satisfy the collinearity condition $n^{M}_{iI} = -n^{S}_{iI}$, which leads to non-conservation of momentum and even penetration.
+
+A collinear unit normal can be obtained by averaging the two unit normals, i.e.,
+\begin{equation}
+    n^{MS}_{iI} = -n^{SM}_{iI} = \frac{n^{M}_{iI}-n^{S}_{iI}}{|n^{M}_{iI}-n^{S}_{iI}|}.
+\end{equation}
+
+If body $M$ is stiffer than body $S$, or if the surface of body $M$ is flat/convex but the surface of body $S$ is concave, choose the unit normal of body $M$ as the collinear unit normal, i.e.,
+\begin{equation}
+    n^{MS}_{iI} = -n^{SM}_{iI} = n^{M}_{iI}.
+\end{equation}
+
+\subsection{Contact Force}
+
+The contact force is obtained in a trial-correction approach.  
+The momentum equation of each body is first integrated independently to obtain the trial solution as if both bodies were not in contact.  
+If the trial solution satisfies the impenetrability condition, take the trial solution as the final true solution.  
+If not, the contact force is applied at the contact grid nodes to prevent penetration.
+
+The normal and tangential components of this force at the master body are defined by:
+\begin{equation}
+    f^{M,nor,k}_{iI} = f^{M,c,k}_{jI} n^{M,k}_{jI} n^{M,k}_{iI},
+\end{equation}
+and
+\begin{equation}
+    \min \Big( \|f^{M,tan,k}_{iI}\|, \mu \, \| f^{M,nor,k}_{iI}\| \Big)
+    \frac{f^{M,tan,k}_{iI}}{ \|f^{M,tan,k}_{iI}\|},
+\end{equation}
+respectively.
+
+Here,
+\begin{equation}
+    f^{M,c,k}_{iI} = 
+    \frac{1}{\left(m^{M,k}_{I} + m^{S,k}_{I}  \right)\Delta t^k}
+    \left( m^{M,k}_{I} \bar{p}^{S,k+\frac{1}{2}}_{iI} - 
+    m^{S,k}_{I} \bar{p}^{M,k+\frac{1}{2}}_{iI} \right),
+\end{equation}
+represents the contact force for sticking contact.
+
+\subsection{Distance Correction}
+
+The previous contact condition may result in spurious contact.  
+For example, when the space between two bodies approaching each other is less than twice the cell size,  
+the previous conditions are satisfied at grid node $I$, identifying it as a contacted grid node,  
+but the two bodies are not actually in contact at this time.
+
+To avoid spurious contact, the detection condition can be improved by calculating the real distance between the two bodies.
+
+Let $X_I^M$ and $X_I^S$ denote the position vectors emanating from grid node $I$ to its closest particle in body $M$ and body $S$, respectively.  
+The distance between the two bodies can be calculated as the sum of the projections of these two position vectors onto the normal vectors of the two bodies at the grid node $I$:
+\begin{equation}
+    D^{MS}_I = -X_I^M \cdot n_I^M - X_I^S \cdot n_I^S.
+\end{equation}
+
+Thus, the contact detection condition can be modified as:
+\begin{itemize}
+    \item The momenta of both bodies are mapped to the same grid node $I$;
+    \item $\left( v^{M}_{iI} - v^{S}_{iI} \right)n^{M}_{iI} > 0$; and
+    \item $D^{MS}_I \leq \lambda \, d_c$.
+\end{itemize}
+
+In which $\lambda \, d_c$ is used to take the particle size into account,  
+$d_c$ is the cell size, and $\lambda$ is set to $0.5$ by default,  
+because two particles are used initially in each direction of a cell.
+
+\subsection{Implementation and Input File }
+
+The numerical implementation of the Slave-Master contact algorithm in MPM-Geomechanics follows the algorithm below:
+
+
+\begin{algorithm}[H]
+	\caption{MPM Multi-body Contact Algorithm}
+	\label{alg:mpm_contact}
+	\begin{algorithmic}[1]
+		
+		\For{each grid node $i$}
+		\State Identify the bodies that have material points mapped to node $i$
+		\State Reconstruct nodal mass $m_i$ and momentum $p_i$, distinguishing contact nodes from regular nodes
+		
+		\If{node $i$ is a grid contact node}
+		\State Compute the external normal relative to each body
+		\EndIf
+		
+		\State Impose essential boundary conditions on grid nodal momentum
+		\State Compute grid nodal internal, external, and total forces ($f^{\text{int}}, f^{\text{ext}}, f^{\text{tot}}$)
+		\State Integrate the trial momentum of each body independently (without contact)
+		\EndFor
+		
+		\For{each grid contact node $i$}
+		\If{body penetration is detected}
+		\State Calculate the normal and tangential contact forces
+		\State Correct the contact grid nodal momentum
+		\EndIf
+		\EndFor
+		
+		\State Update the position $x_{ip}$ and velocity $v_{ip}$ of each body material point
+	\end{algorithmic}
+\end{algorithm}
+
+The Slave-Master contact algorithm is implemented in the MPM-Geomechanics code and can be activated 
+by including the following lines in the input file:
+
+\begin{lstlisting}    
+  "contact_manager": {
+    "active": true,
+    "real_distance_correction_coefficient": 0.5
+  }
+\end{lstlisting}
+The Slave-Master contact analysis settings are defined using the \verb|"contact_manager"| keyword. In this context,
+the "active" keyword enables contact analysis, and \verb|"real_distance_correction_coefficient"| defines the factor applied 
+for contact correction, according to the theoretical documentation. If the value associated with  is set to 0, 
+\verb|"real_distance_correction_coefficient"| the correction is deactivated.
+
+The properties associated with each Slave-Master contact pair can be specified by including the following lines in the input file:
+
+\begin{lstlisting}
+  "contact":[
+  {
+    "id": 1,
+    "friction": 0.2,
+    "master_id": 1,
+    "slave_id": 2,
+    "normal_type": "master"
+  }
+]
+\end{lstlisting}
+
+The definition of Slave-Master contact properties for each body pair is made using the "contact" keyword. In this context, the "id"
+keyword defines the contact identifier, "friction" specifies the contact friction coefficient, \verb|"master_id"| defines the master body 
+identifier, \verb|"slave_id"| defines the slave body identifier, and \verb|"normal_type"| specifies which normal will be used in the contact analysis.
+
+\section{Verification Problems}
+\label{sec:verification_problems}
+
+\subsection{Block sliding problem - Single contact example}
+\label{sec:block_sliding_Slave-Master_contact_example}
+
+\subsubsection*{Introduction}
+
+This example models the sliding of a block on an inclined plane.  
+The model was simulated six times, varying the friction coefficient $\mu$ (0.0, 0.1, 0.2, 0.3, 0.4, and 0.5) while keeping the inclination $\theta$ of the plane fixed at $45^{\circ}$ and gravity $g$ at $10 \, \text{m/s}^2$.  
+
+The results obtained were compared with the analytical solution of the problem, demonstrating convergence between the results.  
+The purpose of this model is to verify the implementation of contact, as well as to demonstrate how to build a model for this type of analysis.
+
+\subsubsection*{Analytical Solution}
+
+The analytical solution for the displacement of the block in the direction of the inclined plane with slope $\theta$ as a function of time, considering a coefficient of friction $\mu$ and the acceleration due to gravity $g$, is given by:
+
+\begin{equation}
+    d = \frac{1}{2} \left( g \, \sin{\theta} - \mu \, g \, \cos{\theta} \right) t^2
+\end{equation}
+
+\subsubsection*{MPM Model}
+
+The MPM model consists of two bodies, one representing the inclined plane and the other the block, both created using the keyword \texttt{cuboid}. 
+The first has dimensions $l_x = 32$, $l_y = 14$, and $l_z = 2$ m, with point 1 at $(0,0,0)$ and point 2 at $(32, 14, 2)$, 
+while the second has dimensions $l_x = l_y = l_z = 10$ m, with point 1 at $(2,2,2)$ and point 2 at $(12, 12, 12)$.
+
+For the elastic parameters:
+\[
+E = 100 \times 10^6\,\text{Pa}, \quad \rho = 2500\,\text{kg/m}^3, \quad \nu = 0.3
+\]
+
+The computational mesh has a cell size of $\Delta x = \Delta y = \Delta z = 1$ m. The inclination is simulated by tilting the gravitational acceleration, 
+which is given by $(7.07, 0.0, -7.07)$ m/s$^2$. The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, i.e., only tangential displacements are allowed.
+
+\subsubsection*{Input File}
+
+\begin{lstlisting}
+ {
+    "time": 2.0,
+    "critical_time_step_multiplier": 0.15,
+    "gravity":[7.07,0.0,-7.07],
+    "results":
+    {
+      "print": 25,
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+    },
+    "mesh":
+    {
+      "cells_dimension":[ 1, 1, 1 ],
+      "cells_number":[ 32, 14, 14 ],
+      "origin":[ 0, 0, 0 ],
+      "boundary_conditions":
+      {
+        "plane_X0": "sliding",
+        "plane_Y0": "sliding",
+        "plane_Z0": "sliding",
+        "plane_Xn": "sliding",
+        "plane_Yn": "sliding",
+        "plane_Zn": "sliding"
+      }
+    },
+    "material":[ 
+      {
+        "type":"elastic",
+        "id":1,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      },
+      {
+        "type":"elastic",
+        "id":2,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      }
+    ],
+    "body":
+    [
+      {
+        "type":"cuboid",
+        "id": 1,
+        "point_p1":[ 0, 0, 0 ],
+        "point_p2":[ 32, 14, 2 ],
+        "material_id":1
+      },
+      {
+        "type":"cuboid",
+        "id": 2,
+        "point_p1":[ 2, 2, 2 ],
+        "point_p2":[ 12, 12, 12 ],
+        "material_id":2
+      }
+    ],
+
+    "contact_manager":{ "active": true },
+    
+    "contact":[
+      {
+        "id":1,
+        "friction":0.5,
+        "master_id":1,
+        "slave_id":2,
+        "normal_type":"master"
+      }
+    ]
+  }
+\end{lstlisting}
+
+\subsubsection*{MPM Result Comparison}
+
+The MPM numerical results show good agreement with the analytical solution, with small deviations for the smaller values of friction coefficient. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/single_contact_verification.png}
+    \caption{Verification of displacements obtained with MPM simulation.}
+    \label{fig:single_contact_verification}
+\end{figure}
+
+\subsection{Block sliding - Slave-Master multi contact example}
+\label{sec:block_sliding_Slave-Master_multi_contact_example}
+
+\subsubsection*{Introduction}
+
+This example models the sliding of two blocks on an inclined plane.  
+
+The results obtained were compared with the analytical solution of the problem, demonstrating convergence between the results.  
+The purpose of this model is to verify the implementation of multi contact, as well as to demonstrate how to build a model for this type of analysis.
+
+\subsubsection*{Analytical Solution}
+
+The analytical solution for the displacement of each block in the direction of the inclined plane with slope $\theta$ as a function of time, considering a coefficient of friction $\mu$ and the acceleration due to gravity $g$, was shown the the singles contact verification examples.
+
+\subsubsection*{MPM Model}
+
+The model was simulated keeping the inclination $\theta$ of the plane fixed at $45^{\circ}$ and gravity $g$ at $10 \, \text{m/s}^2$.  
+
+The MPM model consists of three bodies created using the keyword \texttt{cuboid}, one representing the inclined plane and the others representing two blocks. 
+The first has dimensions $l_x = 32$, $l_y = 14$, and $l_z = 2$ m, with point 1 at $(0,0,0)$ and point 2 at $(32, 14, 2)$, 
+while the second and the third have dimensions $l_x = l_z = 5$ and $l_y = 10$ m, with point 1 at $(2,2,2)$ and point 2 at $(7, 12, 7)$ for block one (wich body id equal to 2),
+and with point 1 at $(12,2,2)$ and point 2 at $(17, 12, 7)$, for block two (wich body id equal to 2). The friction coefficient $\mu$ was set as 0.2 for block one and as 0.0 for block two.
+
+For the elastic parameters:
+\[
+E = 100 \times 10^6\,\text{Pa}, \quad \rho = 2500\,\text{kg/m}^3, \quad \nu = 0.3
+\]
+
+The computational mesh has a cell size of $\Delta x = \Delta y = \Delta z = 1$ m. The inclination of the plane fixed at $45^{\circ}$ and gravity $g =10 \, \text{m/s}^2$ is simulated 
+by tilting the gravitational acceleration, which, in the input file, is given by $(7.07, 0.0, -7.07)$ m/s$^2$. 
+The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, i.e., only tangential displacements are allowed.
+
+\subsubsection*{Input File}
+
+\begin{lstlisting}
+  {
+    "time": 2.0,
+    "critical_time_step_multiplier": 0.15,
+    "gravity":[7.07,0.0,-7.07],
+    "results":
+    {
+      "print": 25,
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+    },
+    "mesh":
+    {
+      "cells_dimension":[ 1, 1, 1 ],
+      "cells_number":[ 32, 14, 14 ],
+      "origin":[ 0, 0, 0 ],
+      "boundary_conditions":
+      {
+        "plane_X0": "sliding",
+        "plane_Y0": "sliding",
+        "plane_Z0": "sliding",
+        "plane_Xn": "sliding",
+        "plane_Yn": "sliding",
+        "plane_Zn": "sliding"
+      }
+    },
+    "material":
+    [ 
+      {
+        "type":"elastic",
+        "id":1,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      },
+      {
+        "type":"elastic",
+        "id":2,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      }
+    ],
+    "body":
+    [
+      {
+        "type":"cuboid",
+        "id": 1,
+        "point_p1":[ 0, 0, 0 ],
+        "point_p2":[ 32, 14, 2 ],
+        "material_id":1
+      },
+      {
+        "type":"cuboid",
+        "id": 2,
+        "point_p1":[ 2, 2, 2 ],
+        "point_p2":[ 7, 12, 7 ],
+        "material_id":2
+      },
+      {
+        "type": "cuboid",
+        "id": 3,
+        "point_p1": [ 12, 2, 2 ],
+        "point_p2": [ 17, 12, 7 ],
+        "material_id": 2
+      }
+    ],
+    "contact_manager":{
+      "active": true
+    },
+    
+    "contact":[
+      {
+        "id": 1,
+        "friction": 0.2,
+        "master_id": 1,
+        "slave_id": 2,
+        "normal_type": "master"
+      },
+      {
+        "id": 2,
+        "friction": 0.0,
+        "master_id": 1,
+        "slave_id": 3,
+        "normal_type": "master"
+      }
+    ]
+  }
+\end{lstlisting}
+
+\subsubsection*{MPM Result Comparison}
+
+The MPM numerical results show good agreement with the analytical solution for the displacement of both blocks. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/multi_contact_verification.png}
+    \caption{Verification of displacements obtained with MPM simulation.}
+    \label{fig:multi_contact_verification}
+\end{figure}
+
+\subsection{Block falling - Contact real distance correction}
+\label{sec:block_falling_contact_example}
+
+\subsubsection*{Introduction}
+
+This example models two blocks falling with two different inicial velocities, on a fixed layer, and disregarding the effect of gravity. 
+The aim of this example is to demonstrate the impact of the real distance correction for contact analysis.
+
+\subsubsection*{MPM Model}
+
+The MPM model consists of three bodies created using the keyword \texttt{cuboid}, one representing a fixed layer and the others representing two blocks. 
+The first has dimensions $l_x = 32$, $l_y = 14$, and $l_z = 2$ m, with point 1 at $(0,0,0)$ and point 2 at $(32, 14, 2)$, 
+while the second and the third have dimensions $l_x = l_z = 5$ and $l_y = 10$ m, with point 1 at $(2,2,8)$ and point 2 at $(7, 12, 13)$, and initial velocity equal to four m/s, for block one (wich body id equal to 2),
+and with point 1 at $(12,2,4)$ and point 2 at $(17, 12, 9)$, for block two (wich body id equal to 2), and initial velocity equal to two m/s. 
+\[
+E = 100 \times 10^6\,\text{Pa}, \quad \rho = 2500\,\text{kg/m}^3, \quad \nu = 0.3
+\]
+
+The computational mesh has a cell size of $\Delta x = \Delta y = \Delta z = 1$ m. 
+The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, i.e., only tangential displacements are allowed.
+
+\subsubsection*{Input File}
+
+\begin{lstlisting}
+  {
+    "time": 3.0,
+    "critical_time_step_multiplier": 0.5,
+    "gravity":[0.0, 0.0, 0.0],
+    "results":
+    {
+      "print": 25,
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+    },
+    "mesh":
+    {
+      "cells_dimension":[ 1, 1, 1 ],
+      "cells_number":[ 32, 14, 14 ],
+      "origin":[ 0, 0, 0 ],
+      "boundary_conditions":
+      {
+        "plane_X0": "sliding",
+        "plane_Y0": "sliding",
+        "plane_Z0": "sliding",
+        "plane_Xn": "sliding",
+        "plane_Yn": "sliding",
+        "plane_Zn": "sliding"
+      }
+    },
+    "material":
+    [ 
+      {
+        "type":"elastic",
+        "id":1,
+        "young":150e6,
+        "density":2500,
+        "poisson":0.3
+      },
+      {
+        "type":"elastic",
+        "id":2,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      }
+    ],
+    "body":
+    [
+      {
+        "type":"cuboid",
+        "id": 1,
+        "point_p1":[ 0, 0, 0 ],
+        "point_p2":[ 32, 14, 2 ],
+        "material_id":1
+      },
+      {
+        "type": "cuboid",
+        "id": 2,
+        "point_p1": [ 2, 2, 8 ],
+        "point_p2": [ 7, 12, 13 ],
+        "material_id": 2,
+        "initial_velocity": [ 0, 0, -4 ]
+      },
+      {
+        "type": "cuboid",
+        "id": 3,
+        "point_p1": [ 12, 2, 4 ],
+        "point_p2": [ 17, 12, 9 ],
+        "material_id": 2,
+        "initial_velocity": [ 0, 0, -2 ]
+      }
+    ],
+    "contact_manager":{
+      "active": true,
+      "real_distance_correction_coefficient": 0.5
+    },
+    
+    "contact":[
+      {
+        "id": 1,
+        "friction": 0.2,
+        "master_id": 1,
+        "slave_id": 2,
+        "normal_type": "master"
+      },
+      {
+        "id": 2,
+        "friction": 0.0,
+        "master_id": 1,
+        "slave_id": 3,
+        "normal_type": "master"
+      }
+    ]
+  }
+\end{lstlisting}
+
+\subsubsection*{MPM Result Comparison}
+
+In this example, Bodies 2 and 3 are initially separated by 6 m and 2 m, respectively. In the absence of external forces, they move at constant velocities of 4 m/s and 2 m/s, making contact with Body 1 at t = 1.5 s and t = 1.0 s, respectively.
+
+In a displacement-time graph, Bodies 2 and 3 exhibit linear behavior until contacting Body 1, at which point a trend shift occurs. Graph analysis reveals that omitting the real-distance correction led to contact being detected earlier than predicted by the analytical solution. Conversely, applying the correction yielded contact times that align closely with analytical predictions.
+
+In a velocity-time graph, the bodies maintain a constant velocity until contact, after which their direction of motion reverses. Consistent with the displacement results, the velocity analysis when real-distance corretion is not applied indicates contact even when the gap between the bodies equals the mesh cell size.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/RealDistanceCorrection_Displacement.png}
+    \caption{Displacement comparison.}
+    \label{fig:Displacement comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/RealDistanceCorrection_Velocity.png}
+    \caption{Velocity comparison.}
+    \label{fig:Velocity comparison}
+\end{figure}

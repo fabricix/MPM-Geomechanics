@@ -29,8 +29,13 @@ namespace ModelSetup {
 	// coupled hydro-mechanical analysis 
 	bool twoPhaseCalculationActive=false; //!< is two-phase calculation active
 
-	// contact
-	bool contactActive=false; //!< is contact active
+	// master slave contact
+	bool contactActive = false; //!< is contact active
+	bool getContactActive() { return contactActive; }
+	void setContactActive(bool d) { contactActive = d; }
+	int contactNormalType = 0;
+	bool getContactNormal() { return contactNormalType; }
+	void setContactNormal(int d) { contactNormalType = d; }
 
 	// states
 	bool loadState = false; //!< if state need to be loaded
@@ -129,10 +134,6 @@ namespace ModelSetup {
 	// threads
 	unsigned getThreads() { return nThreads; }
 	void setThreads(unsigned d) { nThreads=d; }
-
-	// contact method
-	bool getContactActive() { return contactActive; }
-	void setContactActive(bool d) { contactActive=d; }
 
 	// gravity
 	bool getGravityActive() { return gravityActive; }

@@ -11,6 +11,7 @@
 #include "Energy.h"
 #include "TerrainContact.h"
 #include "Seismic.h"
+#include "ContactManager.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
 
@@ -23,6 +24,7 @@ void SolverExplicit::Solve()
 	double iTime = 0.0;
 	bool useMUSL = (ModelSetup::getUpdateStressScheme() == ModelSetup::MUSL);
 	bool useSTLContact = ModelSetup::getTerrainContactActive();
+	bool contactActive = ModelSetup::getContactActive();
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
 
@@ -35,14 +37,27 @@ void SolverExplicit::Solve()
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
 
-		// Step 0: Update contribution nodes
+		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, particles);
-		
-		// Step 1.a: Interpolate nodal mass
-		Interpolation::nodalMass(mesh, particles);
 
-		// Step 1.a: Interpolate nodal momentum
-		Interpolation::nodalMomentum(mesh, particles);
+		// First contact detection
+		if (contactActive) {
+			contactManager->contactNodalDetection(mesh, bodies);
+		}
+
+		#pragma omp parallel sections num_threads(2)
+		{
+			#pragma omp section
+			Interpolation::nodalMass(mesh, particles);
+			
+			#pragma omp section
+			Interpolation::nodalMomentum(mesh, particles);
+		}
+		
+		// Compute nodal unit normal vector for contact forces calculation
+		if (contactActive) {
+			contactManager->nodalUnitNormal(mesh, bodies);
+		}
 
 		// Step 1.c: Update seismic velocity and acceleration from record
 		Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
@@ -65,7 +80,13 @@ void SolverExplicit::Solve()
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 5.1: Update particle velocity
+		// Apply multi field velocity contact correction
+		if (contactActive) {
+			contactManager->applyVelocityContactCorrection(mesh,bodies,dt);
+		}
+
+		// Step 5: Particle updates
+		// 5.1: Update particle velocity
 		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Step 5.2: Apply contact correction in particle velocity
@@ -89,6 +110,10 @@ void SolverExplicit::Solve()
 		{	
 			// Step 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
+			if (contactActive) {
+				contactManager->nodalMomentumContactUpdate(mesh, dt);
+			}
+
 			Interpolation::nodalMomentum(mesh, particles);
 			
 			// Step 6.2: Reapply BCs on nodal momentum

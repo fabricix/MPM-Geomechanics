@@ -553,6 +553,10 @@ namespace Input {
 	/// \brief Return the body list
 	/// \return A list containing Body pointers
 	vector<Body*> getBodyList(const vector<Material*>* );
+
+	/// \brief Return the contact list
+	/// \return A list containing Contact Manager pointers
+	vector<Contact*> getContactList();
 	
 	/// \brief Return the gravity force
 	/// \return Gravity force
@@ -635,6 +639,9 @@ namespace Input {
 	/// \return seismic_analisys_info Seismic analysis information
 	SeismicAnalysis getSeismicAnalysisInfo();
 
+	/// \brief Return the contact active
+	bool getContactActive();
+
 	/// \brief Return the friction coefficient
 	/// \return friction_coefficient Friction coefficient
 	double getFrictionCoefficient ();
@@ -652,6 +659,23 @@ namespace Input {
 
 	/// \brief Return the distance threshold for contact detection
 	double getDistanceThreshold();
+
+	/// \brief Return the friction coefficient for contact analysis
+	/// \return friction_coefficient Friction coefficient
+	double getFrictionCoefficientContact();
+
+	/// \brief Return the distance threshold for contact detection
+	double RealDistanceCorrectionCoefficient();
+
+	/// \brief Return the master id for contact analysis
+	int getMasterBodyId();
+
+	/// \brief Return the slave id for contact analysis
+	int getSlaveBodyId();
+
+	/// \brief Return the contact normal type flag for the simulation
+	/// \return contact_normal_type Flag for the simulation
+	string getContactNormalType();
 
 	/// \brief Return the hydro-mechanical coupling enabled
 	/// \return hydro_mech_coupling_enabled Hydro-mechanical coupling enabled

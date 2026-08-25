@@ -54,8 +54,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 
 			// compute the weighted nodal mass
 			const double nodalMass = pMass*contribution->at(j).getWeight();
-			
-			
+
 			// check any mass in node
 			if (nodalMass<=0.0)  continue;
 
@@ -65,6 +64,33 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
 			#pragma omp atomic update
 #endif
 			massRef += nodalMass;
+			
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+				
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes= mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+				
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+					
+					//add mass at node of the master body 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+#ifdef _OPENMP
+						#pragma omp atomic update
+#endif
+						contactNodeData.massMaster += nodalMass;
+					}
+					//add mass at node of the slave body 
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+#ifdef _OPENMP
+						#pragma omp atomic update
+#endif
+						contactNodeData.massSlave += nodalMass;
+					}
+				}
+			}
 		}
 	}
 
@@ -172,6 +198,48 @@ void Interpolation::nodalMomentum(Mesh* mesh, vector<Particle*>* particles) {
 			#pragma omp atomic update
 #endif
 			p_z += nodalMomentum.z();
+
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+
+					Vector3d deltaMomentum = pMass * pVelocity * contribution->at(j).getWeight();
+					
+					// add momentum at node of the master body 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.momentumMaster.x() += deltaMomentum.x();
+#pragma omp atomic update
+						contactNodeData.momentumMaster.y() += deltaMomentum.y();
+#pragma omp atomic update
+						contactNodeData.momentumMaster.z() += deltaMomentum.z();
+#else
+						contactNodeData.momentumMaster += deltaMomentum;
+#endif
+					}
+
+					// add momentum at node of the slave body 
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.momentumSlave.x() += deltaMomentum.x();
+#pragma omp atomic update
+						contactNodeData.momentumSlave.y() += deltaMomentum.y();
+#pragma omp atomic update
+						contactNodeData.momentumSlave.z() += deltaMomentum.z();
+#else
+						contactNodeData.momentumSlave += deltaMomentum;
+#endif
+					}
+				}
+			}
 		}
 	}
 }
@@ -277,12 +345,53 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 			internalForce.x()=-(pStress(0,0)*gradient(0)+pStress(1,0)*gradient(1)+pStress(2,0)*gradient(2))*pVolume;
 			internalForce.y()=-(pStress(0,1)*gradient(0)+pStress(1,1)*gradient(1)+pStress(2,1)*gradient(2))*pVolume;
 			internalForce.z()=-(pStress(0,2)*gradient(0)+pStress(1,2)*gradient(1)+pStress(2,2)*gradient(2))*pVolume;
-
 			if (isTwoPhase && particles->at(i)->getSaturation()>0.0)
 			{
 				internalForce.x()+=pPressure*gradient(0)*pVolume;
 				internalForce.y()+=pPressure*gradient(1)*pVolume;
 				internalForce.z()+=pPressure*gradient(2)*pVolume;
+			}
+
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+
+					Vector3d deltaForce = internalForce;
+					
+					//add mass at node of the master body 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.internalForceMaster.x() += deltaForce.x();
+#pragma omp atomic update
+						contactNodeData.internalForceMaster.y() += deltaForce.y();
+#pragma omp atomic update
+						contactNodeData.internalForceMaster.z() += deltaForce.z();
+#else
+						contactNodeData.internalForceMaster += deltaForce;
+#endif
+					}
+					//add mass at node of the slave body 
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.internalForceSlave.x() += deltaForce.x();
+#pragma omp atomic update
+						contactNodeData.internalForceSlave.y() += deltaForce.y();
+#pragma omp atomic update
+						contactNodeData.internalForceSlave.z() += deltaForce.z();
+#else
+						contactNodeData.internalForceSlave += deltaForce;
+#endif
+					}
+				}
 			}
 
 			// get references for atomic updates
@@ -390,6 +499,47 @@ void Interpolation::nodalExternalForce(Mesh* mesh, vector<Particle*>* particles)
 
 			// get contributing node
 			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
+
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+
+					Vector3d deltaExtForce = pExtForce * contribution->at(j).getWeight();
+
+					//add external force at node of the master body 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.externalForceMaster.x() += deltaExtForce.x();
+#pragma omp atomic update
+						contactNodeData.externalForceMaster.y() += deltaExtForce.y();
+#pragma omp atomic update
+						contactNodeData.externalForceMaster.z() += deltaExtForce.z();
+#else
+						contactNodeData.externalForceMaster += deltaExtForce;
+#endif
+					}
+					//add external force at node of the slave body 
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+#ifdef _OPENMP
+#pragma omp atomic update
+						contactNodeData.externalForceSlave.x() += deltaExtForce.x();
+#pragma omp atomic update
+						contactNodeData.externalForceSlave.y() += deltaExtForce.y();
+#pragma omp atomic update
+						contactNodeData.externalForceSlave.z() += deltaExtForce.z();
+#else
+						contactNodeData.externalForceSlave += deltaExtForce;
+#endif
+					}
+				}
+			}
 
 			// add weighted force in node
 			const Vector3d externalForce = pExtForce*contribution->at(j).getWeight();
@@ -548,14 +698,44 @@ void Interpolation::particleStrainIncrement(Mesh* mesh, vector<Particle*>* parti
 			// get the contributing node
 			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
+			//initialize vector v
+			Vector3d v = Vector3d::Zero();
+
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+
+					// master body velocity 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+						v = contactNodeData.velocityMaster;
+					}
+					// slave body velocity
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+						v = contactNodeData.velocitySlave;
+					}
+				}
+				else
+				{
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
+			}
+			else
+			{
+				// get nodal velocity
+				v = nodeI->getVelocity();
+			}
+
 			// get the nodal gradient
 			const Vector3d dN = contribution->at(j).getGradients();
 
-			// get nodal velocity
-			const Vector3d v = nodeI->getVelocity();
-
 			// compute the nodal contribution to the particle strain increment
-
 			dstrain(0,0) += (dN(0)*v(0) + dN(0)*v(0)) * 0.5 * dt; // x,x
 			dstrain(0,1) += (dN(1)*v(0) + dN(0)*v(1)) * 0.5 * dt; // x,y
 			dstrain(0,2) += (dN(2)*v(0) + dN(0)*v(2)) * 0.5 * dt; // x,z
@@ -658,11 +838,41 @@ void Interpolation::particleVorticityIncrement(Mesh* mesh, vector<Particle*>* pa
 			// get contributing node
 			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
+			//initialize vector v
+			Vector3d v = Vector3d::Zero();
+
+			//check if it is a contact problem
+			if (ModelSetup::getContactActive()) {
+
+				//check contact at this node
+				unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+				auto it = contactNodes.find(contribution->at(j).getNodeId());
+
+				if (it != contactNodes.end()) {
+					Node::ContactNodeData& contactNodeData = it->second;
+
+					//add external force at node of the master body 
+					if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodyMasterId) {
+						v = contactNodeData.velocityMaster;
+					}
+					//add external force at node of the slave body 
+					else if (static_cast<int>(particles->at(i)->getBodyId()) == contactNodeData.bodySlaveId) {
+						v = contactNodeData.velocitySlave;
+					}
+				}
+				else {
+					// get nodal velocity
+					v = nodeI->getVelocity();
+				}
+			}
+			else
+			{
+			// get nodal velocity
+				v = nodeI->getVelocity();
+			}
+
 			// get nodal gradient
 			const Vector3d dN = contribution->at(j).getGradients();
-
-			// get nodal velocity
-			const Vector3d v = nodeI->getVelocity();
 
 			// compute the nodal contribution to the particle spin increment
             dvorticity(0,1) += (dN(1)*v(0) - dN(0)*v(1)) * 0.5 * dt; // x,y

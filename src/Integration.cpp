@@ -19,4 +19,16 @@ void Integration::nodalMomentum(Mesh* mesh, double dt) {
 		// integrate nodal momentum
 		nodes->at(i)->integrateMomentum(dt);
 	}
+
+	// get contactNodes
+	unordered_map<int, Node::ContactNodeData>& contactNodes = mesh->getContactNodes();
+
+	// for each contact node
+	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
+		Node::ContactNodeData& contactNodesData = it->second;
+
+		// integrate nodal momentum for each body at contact nodes
+		contactNodesData.momentumMaster += contactNodesData.totalForceMaster * dt;
+		contactNodesData.momentumSlave += contactNodesData.totalForceSlave * dt;
+	}
 }

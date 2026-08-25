@@ -11,6 +11,9 @@ using std::vector;
 using Eigen::Vector3d;
 using Eigen::Vector3i;
 
+#include <unordered_map>
+using std::unordered_map;
+
 #include "Node.h"
 #include "Boundary.h"
 #include "Cell.h"
@@ -149,6 +152,10 @@ public:
     /// \return boundary_pointer A pointer to the Boundary structure
     inline Boundary* getBoundary() { return &(this->boundary); }
 
+    /// \brief return nodes where there is contact between two bodies
+    /// \return an unordered_map of the nodes where there is contact between two bodies
+    unordered_map<int, Node::ContactNodeData>& getContactNodes() { return contactNodes; }
+
     /// \brief Configures the restriction of the boundary nodes
     /// \param[in] restrictions Vector containing the restriction to the planes
     /// X0, Y0, Z0, Xn, Yn and Zn
@@ -173,6 +180,10 @@ public:
     /// \brief Return compute the nodal volumes
     void computeNodeVolumes();
 
+    /// \Clear Contact Nodes
+    void clearContactNodes() { contactNodes.clear(); };
+
+
 private:
     
     int nGhosts; //!< number of ghost cells
@@ -192,6 +203,8 @@ private:
     std::vector<Cell*> gridCells; //!< all cells in mesh
 
     Boundary boundary; //!< mesh boundary
+
+    unordered_map<int, Node::ContactNodeData> contactNodes; //!< nodes in contact
     
     /// \brief Return the cell id in a position coordinates
     /// \param[in] point A vector containing the 
