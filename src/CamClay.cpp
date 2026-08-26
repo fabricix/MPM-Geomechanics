@@ -517,6 +517,19 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
     //Elastic loading/unloading check
     if (phiTrial <= zeroTolerance){ return {stressTrial, p0Old, 0.0, false};}
 
+    //J close to zero / isotropic path treatment
+    const Matrix3d deDev = de - de.trace() / 3.0 * Matrix3d::Identity();
+    const double pOld = oldState.I / 3.0;
+    const bool smallJOld = oldState.J <= zeroTolerance * std::max({1.0, std::abs(pOld), std::abs(p0Old)});
+    const bool isDeviatoricStrainIncrementSmall = deDev.norm() <= zeroTolerance;
+    const bool isotropicPath  = smallJOld && isDeviatoricStrainIncrementSmall;
+    const double pTrial = trialState.I / 3.0;
+    const bool smallJTrial = trialState.J <= zeroTolerance * std::max({1.0, std::abs(pTrial), std::abs(p0Old)});
+    
+    //Truly isotropic plastic path
+    if (smallJTrial && isotropicPath ) {return solveIsotropicPlasticStep(stressOld, de, p0Old);}
+
+
     //Plastic trial: Initial Newton estimates
     //Flow direction evaluated at the elastic trial state
     const Matrix3d rijTrial = computeYieldGradient(trialState, p0Old);
@@ -615,6 +628,26 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
         if (!std::isfinite(DeltaLambdaNew)) {throw std::runtime_error("CPPM Newton plastic multiplier new became non-finite.");}
     }
     throw std::runtime_error("Cam-Clay CPPM/Newton did not converge.");
+}
+
+CamClay::CPPMResult CamClay::solveIsotropicPlasticStep(const Matrix3d& stressOld, const Matrix3d& de, double p0Old) const
+{
+    const StressState oldState = computeStressState(stressOld);
+    const double pOld = oldState.I / 3.0;
+    if (pOld <= 0.0) {throw std::runtime_error("Isotropic plastic integration requires positive mean pressure.");}
+    const double deVol = de.trace();
+    //Delta eps_v^p = DeltaLambda r_kk = (ln(p^n/p0^n) + Kbar0 * deVol) / (Kbar0 + C1)
+    //Obtained by combining the exact elastic pressure relation with the exact hardening relation and imposing p^(n+1) = p0^(n+1)
+    const double deVolPlastic = (std::log(pOld/p0Old) + Kbar0 * deVol) / (Kbar0 + C1);
+    //p0^(n+1) = p0^n * e^(C1 DeltaLambda r_kk) = p0^n * e^(C1 Delta eps_v^p)
+    const double p0New = p0Old * std::exp(C1 * deVolPlastic);
+    //On the nonzero isotropic intersection of the Modified Cam-Clay yield surface: p^(n+1) = p0^(n+1) 
+    const double pNew = p0New;
+    const Matrix3d stressNew = pNew * Matrix3d::Identity();
+    //At the final isotropic yield state: r_kk = 9 p0^(n+1) 
+    const double rkk = 9.0 * p0New;
+    const double DeltaLambda = deVolPlastic / rkk;
+    return {stressNew, p0New, DeltaLambda, true};
 }
     
 // Initialization

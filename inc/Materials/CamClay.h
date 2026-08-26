@@ -131,7 +131,10 @@ protected:
     double computeInitialPlasticMultiplier(const StressState& trialState, double phiTrial, const Eigen::Matrix3d& rTrial, double rkkTrial, double p0Old) const;
 
     //Main constitutive integrator
-    CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const;  
+    CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const; 
+    
+    //Exact closed-form treatment for an isotropic plastic loading path J = 0
+    CPPMResult solveIsotropicPlasticStep(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const;
         
 };
 
