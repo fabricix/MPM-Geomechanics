@@ -74,10 +74,8 @@ CamClay::StressState CamClay::computeStressState(const Matrix3d& stress) const
         state.alpha = std::asin(argumentAlpha) / 3.0;
     }
     const double denominator_g = 1.0 + n - (1.0 - n) * std::sin(3.0 * state.alpha);
-    if (std::abs(denominator_g) <= zeroTolerance) {throw std::runtime_error("Singular critical state surface denominator of g.");}
     const double g = 2.0 * n / denominator_g;
     state.N = g * Mc / (3.0 * std::sqrt(3.0));
-    if(std::abs(state.N) <= zeroTolerance) {throw std::runtime_error("Singular ratio N");}
     state.gbar = -3.0 * (1.0 - n) * std::cos(3.0 * state.alpha) / denominator_g;
 
     return state;    
@@ -106,12 +104,14 @@ Matrix3d CamClay::computeYieldGradient(const StressState& state, double p0) cons
     // Contribution through I
     const double dPhi_dI = 2.0 * state.I - 3.0 * p0;
     Matrix3d rij = dPhi_dI * identity;
-    // J = 0: only volumetric contribution remains; the J and alpha contributions are neglected.
-    if (state.J <= zeroTolerance) {return rij;}
+    // // J = 0: only volumetric contribution remains; the J and alpha contributions are neglected.
+    // // A. Anandaraja: The 2nd and the 3rd term in (A8.8) is to be excluded for J = 0
+    // if (state.J <= zeroTolerance) {return rij;} 
     // Contribution through J
     const double dPhi_dJ = 2.0 * state.J / (state.N * state.N);
     rij += dPhi_dJ * state.stressDev / (2.0 * state.J);
     // alpha = +/- pi/6: cos (3 alpha) = 0.0; the alpha contribution is neglected.
+    // A. Anandaraja: The 3rd term in (A8.8) is to be excluded for alpha = +/- pi/6
     const double cos3Alpha = std::cos(3.0 * state.alpha);
     if (std::abs(cos3Alpha) <= zeroTolerance) {return rij;}
     // Contribution through alpha
@@ -131,7 +131,6 @@ Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const 
     Matrix3d identity = Matrix3d::Identity();
     // State at n
     const double pOld = oldState.I / 3.0;
-    if (pOld <= zeroTolerance) {throw std::runtime_error("The old mean pressure must be positive.");}
     // Strain decomposition
     const double deVol = de.trace();
     const Matrix3d deDev = de - deVol / 3.0 * identity;
@@ -152,9 +151,7 @@ Matrix3d CamClay::computeElastoplasticStress(const StressState& oldState, const 
 Matrix3d CamClay::computeAlphaStressDerivative(const StressState& state) const
 {       
     const Matrix3d identity = Matrix3d::Identity();
-    if (state.J <= zeroTolerance) {return Matrix3d::Zero();}
     const double cos3Alpha = std::cos(3.0 * state.alpha);
-    if (std::abs(cos3Alpha) <= zeroTolerance) {return Matrix3d::Zero();}
     const double SOverJ = state.S / state.J;
     const Matrix3d bracket = (state.stressDev * state.stressDev) / (state.J * state.J)
     - (2.0 / 3.0) * identity
@@ -167,7 +164,6 @@ Matrix3d CamClay::computeAlphaStressDerivative(const StressState& state) const
 //A8.23
 Matrix3d CamClay::computeYieldDerivativeJStressDerivative(const StressState& state) const
 {
-    if (state.J <= zeroTolerance) {return Matrix3d::Zero();}
     const double denominator_g = 1.0 + n - (1.0 - n) * std::sin(3.0 * state.alpha);
     const double g = 2.0 * n / denominator_g;
     const Matrix3d alphaStressDerivative = computeAlphaStressDerivative(state);
@@ -181,7 +177,6 @@ Matrix3d CamClay::computeYieldDerivativeJStressDerivative(const StressState& sta
 //A8.21
 Matrix3d CamClay::computeGbarStressDerivative(const StressState& state) const
 {
-    if (state.J <= zeroTolerance) {return Matrix3d::Zero();}
     const Matrix3d alphaStressDerivative = computeAlphaStressDerivative(state);
     const double sin3Alpha = std::sin(3.0 * state.alpha);
     const double cos3Alpha = std::cos(3.0 * state.alpha);
@@ -196,7 +191,6 @@ Matrix3d CamClay::computeGbarStressDerivative(const StressState& state) const
 //A8.24
 Matrix3d CamClay::computeYieldDerivativeAlphaStressDerivative(const StressState& state) const
 {
-    if (state.J <= zeroTolerance) {return Matrix3d::Zero();}
     const double dPhi_dJ = 2.0 * state.J / (state.N * state.N);
     const Matrix3d dPhi_dJ_StressDerivative = computeYieldDerivativeJStressDerivative(state);
     const Matrix3d JStressDerivative = state.stressDev / (2.0 * state.J);
@@ -375,7 +369,6 @@ CamClay::CPPMCoefficients CamClay::computeCPPMCoefficients(const StressState& ol
     const Matrix3d identity = Matrix3d::Identity();
     //State at n
     const double pOld = oldState.I / 3.0;
-    if (pOld <= zeroTolerance) {throw std::runtime_error("The old mean pressure must be positive.");}
     //Strain decomposition
     const double deVol = de.trace();
     const Matrix3d deDev = de - deVol / 3.0 * identity;
@@ -502,7 +495,7 @@ double CamClay::computeInitialPlasticMultiplier(const StressState& trialState, d
     return phiTrial / denominator;
 }
 
-CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d& de, double p0Old) const
+CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d& de, double p0Old, int subStepLevel) const
 {
     //Validation
     if (p0Old <= 0.0) {throw std::invalid_argument("The old preconsolidation pressure must be positive");}
@@ -526,9 +519,11 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
     const double pTrial = trialState.I / 3.0;
     const bool smallJTrial = trialState.J <= zeroTolerance * std::max({1.0, std::abs(pTrial), std::abs(p0Old)});
     
-    //Truly isotropic plastic path
+    //Case 1: Truly isotropic plastic path
     if (smallJTrial && isotropicPath ) {return solveIsotropicPlasticStep(stressOld, de, p0Old);}
 
+    //Case 2: Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+    if (smallJTrial) {return solveCPPMSubstepped(stressOld, de, p0Old, subStepLevel);}
 
     //Plastic trial: Initial Newton estimates
     //Flow direction evaluated at the elastic trial state
@@ -554,9 +549,13 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
     for (int iteration = 0; iteration < NLMax; ++iteration)
     {
         const StressState currentState = computeStressState(stressNew);
+        const double pNew = currentState.I / 3.0;
+        const bool smallJNew = currentState.J <= zeroTolerance * std::max({1.0, std::abs(pNew), std::abs(p0New)});
+        //Case 2: Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+        if (smallJNew) {return solveCPPMSubstepped(stressOld, de, p0Old, subStepLevel);}
+
         const Matrix3d rijNew = computeYieldGradient(currentState, p0New);
         const double rkkNew = rijNew.trace();
-
         
         const Matrix3d stressNew_iteration = computeElastoplasticStress(oldState, de, rijNew, DeltaLambdaNew);
         const double p0New_iteration = p0Old * std::exp(C1 * DeltaLambdaNew * rkkNew);     
@@ -634,7 +633,6 @@ CamClay::CPPMResult CamClay::solveIsotropicPlasticStep(const Matrix3d& stressOld
 {
     const StressState oldState = computeStressState(stressOld);
     const double pOld = oldState.I / 3.0;
-    if (pOld <= 0.0) {throw std::runtime_error("Isotropic plastic integration requires positive mean pressure.");}
     const double deVol = de.trace();
     //Delta eps_v^p = DeltaLambda r_kk = (ln(p^n/p0^n) + Kbar0 * deVol) / (Kbar0 + C1)
     //Obtained by combining the exact elastic pressure relation with the exact hardening relation and imposing p^(n+1) = p0^(n+1)
@@ -649,13 +647,41 @@ CamClay::CPPMResult CamClay::solveIsotropicPlasticStep(const Matrix3d& stressOld
     const double DeltaLambda = deVolPlastic / rkk;
     return {stressNew, p0New, DeltaLambda, true};
 }
+
+CamClay::CPPMResult CamClay::solveCPPMSubstepped(const Matrix3d& stressOld, const Matrix3d& de, double p0Old, int subStepLevel) const
+{
+    //Recursive bisection limit: 
+    //level 0: original increment
+    //level 1: 2 subincrements
+    //level 10: 1024 subincrements
+    const int maxSubStepLevel = 10;
+    if (subStepLevel >= maxSubStepLevel) {throw std::runtime_error("Maximum substepping level reached.");}
+    const Matrix3d halfIncrement = 0.5 * de;
+    //First half
+    const CPPMResult first = solveCPPM(stressOld, halfIncrement, p0Old, subStepLevel + 1);
+    //Second half
+    const CPPMResult second = solveCPPM(first.stress, halfIncrement, first.p0, subStepLevel + 1);
+
+    return {second.stress, second.p0, first.DeltaLambda + second.DeltaLambda, first.plastic || second.plastic};
+}
+
     
 // Initialization
-void CamClay::initializePoint(Particle* particle) const
+void CamClay::initializeParticle(Particle* particle) const
 {
     if (particle == nullptr){throw std::invalid_argument("The material-particle pointer is null.");}
     particle->initializeInternalVariables(index(InternalVariable::count));
     particle->setInternalVariable(index(InternalVariable::p0), initialp0);
+    // =====================================================
+    // Sign convention
+    // MPM-Geomechanics: compression = negative
+    // Anandarajah implementation: compression = positive
+    // =====================================================
+    const Matrix3d stress0 = -particle->getStress();
+    const StressState state0 = computeStressState(stress0);
+    const double phi0 = state0.I * state0.I + state0.J * state0.J 
+        /(state0.N * state0.N) - 3.0 * initialp0 * state0.I;
+    if (phi0>zeroTolerance) {throw std::invalid_argument("Initial Cam-Clay stress state lies outside the yield surface.");}
 
 }
 

@@ -30,9 +30,9 @@ public:
     /// \brief Default destructor 
 	virtual ~CamClay();
 
-    /// \brief Initializes Cam-Clay internal variables
+    /// \brief Initializes Cam-Clay internal variables and validates the initial stress state of a particle
     /// \param[in] particle Particle
-    void initializePoint(Particle* particle) const;
+    void initializeParticle(Particle* particle) const;
     
     /// \brief Update the stress in the particle
     /// \param[in] particle Particle
@@ -131,10 +131,16 @@ protected:
     double computeInitialPlasticMultiplier(const StressState& trialState, double phiTrial, const Eigen::Matrix3d& rTrial, double rkkTrial, double p0Old) const;
 
     //Main constitutive integrator
-    CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const; 
+    CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old, int subStepLevel = 0) const; 
+
+    //
     
     //Exact closed-form treatment for an isotropic plastic loading path J = 0
     CPPMResult solveIsotropicPlasticStep(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const;
+
+    //Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+    CPPMResult solveCPPMSubstepped(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old, int subStepLevel) const;
+
         
 };
 
