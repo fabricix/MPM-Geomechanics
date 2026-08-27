@@ -709,6 +709,13 @@ void CamClay::updateStress(Particle *particle) const
 
     //Return to MPM sign convention
     particle->setStress(-result.stress);
-    particle->setInternalVariable(index(InternalVariable::p0), result.p0);
-	   
+    particle->setInternalVariable(index(InternalVariable::p0), result.p0);   
+}
+
+double CamClay::getSoundSpeed() const
+{
+    const double KRef = Kbar0 * initialp0;
+    const double GRef = Gbar0 * initialp0;
+    // sound speed
+    return std::sqrt((KRef + 4.0 * GRef / 3.0) / density);
 }

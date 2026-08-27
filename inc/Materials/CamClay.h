@@ -38,6 +38,10 @@ public:
     /// \param[in] particle Particle
     virtual void updateStress(Particle* particle) const;
 
+    /// \brief Return a reference sound speed for Courant-Friedrichs-Lewy condition estimation
+	/// \return sound_speed Sound speed evaluated at the initial preconsolidation pressure
+    virtual double getSoundSpeed() const override;
+
 protected:
     // Material parameters
     double poisson; //!< Poisson's ratio \f$\nu\f$
