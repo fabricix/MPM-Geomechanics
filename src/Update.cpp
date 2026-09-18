@@ -313,6 +313,15 @@ void Update::particlePosition(Mesh* mesh, vector<Particle*>* particles, double d
 		// only active particle can contribute
 		if (!particles->at(i)->getActive()) { continue; }
 
+		// stl contact velocity is corrected without nodal momentum
+		// only using corrected stl particle velocity
+		if(particles->at(i)->getIfSTLContact())
+		{
+			Vector3d newPosition = particles->at(i)->getPosition() + particles->at(i)->getVelocity() * dt;
+			particles->at(i)->setPosition(newPosition);
+			continue;
+		}
+
 		// get nodes and weights that the particle contributes
 		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
