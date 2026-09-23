@@ -10,7 +10,7 @@
       "origin":[ 0, 0, 0 ],
       "boundary_conditions":{"plane_X0": "fixed","plane_Xn": "fixed","plane_Z0": "fixed"}
     },
-    
+
     "material":
     [
       {
@@ -23,8 +23,8 @@
       {
         "type":"elastic",
         "id":2,
-        "young":150e6,
-        "density":2500,
+        "young":200e6,
+        "density":1500,
         "poisson":0.3
       }
     ],
