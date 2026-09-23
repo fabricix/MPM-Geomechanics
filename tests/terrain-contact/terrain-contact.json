@@ -10,7 +10,7 @@
 	"results":
 	{
 		"print":25,
-		"material_point_results":["id","displacement","material","active","plastic_strain","distance_levelset"]
+		"material_point_results":["all"]
 	},
 
 	"mesh":
@@ -58,7 +58,7 @@
 	{
 		"active":true,
 		"stl_mesh":"STLmesh/slope-mesh.stl",
-		"friction":0.0,
-		"distance_threshold":2.0
+		"friction":0.3,
+		"distance_threshold":1.0
 	}
 }

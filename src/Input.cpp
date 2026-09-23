@@ -1411,14 +1411,30 @@ vector<Boundary::BoundaryType> Input::getMeshBoundaryConditions() {
 		}
 
 		// Planes X0, Y0 and Z0
-		setRestriction(0,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_X0"]);
-		setRestriction(1,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Y0"]);
-		setRestriction(2,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Z0"]);
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_X0")){
+			setRestriction(0,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_X0"]);
+		}
+		
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_Y0")){
+			setRestriction(1,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Y0"]);
+		}
+		
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_Z0")){
+			setRestriction(2,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Z0"]);
+		}
 
 		// Planes Xn, Yn and Zn
-		setRestriction(3,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Xn"]);
-		setRestriction(4,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Yn"]);
-		setRestriction(5,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Zn"]);
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_Xn")){
+			setRestriction(3,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Xn"]);
+		}
+		
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_Yn")){
+			setRestriction(4,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Yn"]);
+		}
+
+		if(inputFile["mesh"]["boundary_conditions"].contains("plane_Zn")){
+			setRestriction(5,restrictions,inputFile["mesh"]["boundary_conditions"]["plane_Zn"]);
+		}
 
 		return restrictions;
 	}
