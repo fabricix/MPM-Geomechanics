@@ -2,25 +2,12 @@
     "time": 3.0,
     "critical_time_step_multiplier": 0.5,
     "gravity":[0.0, 0.0, 0.0],
-    "results":
-    {
-      "print": 25,
-      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
-    },
+    "results":{"print": 25,"material_point_results": [ "all"]},
     "mesh":
     {
-      "cells_dimension":[ 1, 1, 1 ],
-      "cells_number":[ 32, 14, 14 ],
-      "origin":[ 0, 0, 0 ],
-      "boundary_conditions":
-      {
-        "plane_X0": "sliding",
-        "plane_Y0": "sliding",
-        "plane_Z0": "sliding",
-        "plane_Xn": "sliding",
-        "plane_Yn": "sliding",
-        "plane_Zn": "sliding"
-      }
+      "cells_dimension":[1,1,1],
+      "cells_number":[32,14,14],
+      "origin":[0,0,0]
     },
     "material":
     [ 
@@ -67,23 +54,22 @@
     ],
     "contact_manager":{
       "active": true,
-      "real_distance_correction_coefficient": 0.5
-    },
-    
-    "contact":[
-      {
-        "id": 1,
-        "friction": 0.2,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
-      },
-      {
-        "id": 2,
-        "friction": 0.0,
-        "master_id": 1,
-        "slave_id": 3,
-        "normal_type": "master"
-      }
-    ]
-  }
+      "real_distance_factor": 0.5,
+      "contact":[
+        {
+          "id": 1,
+          "friction": 0.2,
+          "master_id": 1,
+          "slave_id": 2,
+          "normal_type": "master"
+        },
+        {
+          "id": 2,
+          "friction": 0.0,
+          "master_id": 1,
+          "slave_id": 3,
+          "normal_type": "master"
+        }
+      ]
+    }
+    }

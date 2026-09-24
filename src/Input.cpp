@@ -1014,11 +1014,11 @@ vector<Contact*> Input::getContactList() {
 	vector<Contact*> contacts;
 	try
 	{
-		if (!inputFile["contact"].is_null()) {
+		if (!inputFile["material_contact"]["contact"].is_null()) {
 
 			// loop aver all contacts
 			json::iterator it;
-			for (it = inputFile["contact"].begin(); it != inputFile["contact"].end(); it++) {
+			for (it = inputFile["material_contact"]["contact"].begin(); it != inputFile["material_contact"]["contact"].end(); it++) {
 
 				// contact id
 				int id = 0;
@@ -1848,45 +1848,23 @@ double Input::getDistanceThreshold(){
 	}
 }
 
-//bool Input::getContactActive()
-//{
-//	try
-//	{
-//		string key = "contact_active";
-//
-//		if (!inputFile[key].is_null() && inputFile[key].is_boolean())
-//		{
-//			return inputFile[key];
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-//	catch (...)
-//	{
-//		Warning::printMessage("Error during reading the contact active keyword");
-//		throw;
-//	}
-//}
-
 bool Input::getContactActive() 
 {
 	try
 	{
-		if (inputFile["contact_manager"].is_null()) {
-
+		if (inputFile["material_contact"].is_null()) {
 			return false;
 		}
 
-		if (inputFile["contact_manager"]["active"].is_null()) {
-
-			return false;
+		if (inputFile["material_contact"]["active"].is_null()) {
+			// if material contact is defined then is active
+			// use active keyword for dissable contact mainly
+			return true;
 		}
 
-		if (inputFile["contact_manager"]["active"].is_boolean())
+		if (inputFile["material_contact"]["active"].is_boolean())
 		{
-			return inputFile["contact_manager"]["active"];
+			return inputFile["material_contact"]["active"];
 		}
 
 		throw(0);
@@ -1926,79 +1904,22 @@ double Input::getFrictionCoefficient() {
 	}
 }
 
-double Input::getFrictionCoefficientContact() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return 0.0;
-		}
-
-		if (inputFile["contact"]["friction"].is_null()) {
-
-			return 0.0;
-		}
-
-		if (inputFile["contact"]["friction"].is_number())
-		{
-			return inputFile["contact"]["friction"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the friction coefficient in contact");
-		throw;
-	}
-}
-
-string Input::getContactNormalType() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return NULL;
-		}
-		// if contact normal type not defined -> default Master 
-		if (inputFile["contact"]["normal_type"].is_null()) {
-
-			return NULL;
-		}
-
-		if (inputFile["contact"]["normal_type"].is_string())
-		{
-			return inputFile["contact"]["normal_type"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the contact normal type");
-		throw;
-	}
-}
-
 double Input::RealDistanceCorrectionCoefficient() {
 
 	try
 	{
-		if (inputFile["contact_manager"].is_null()) {
-
+		if (inputFile["material_contact"].is_null()) {
 			return -1;
 		}
 
-		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_null()) {
-
+		if (inputFile["material_contact"]["real_distance_factor"].is_null()) {
 			return -1;
 		}
 
-		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_number())
+		if (inputFile["material_contact"]["real_distance_factor"].is_number())
 		{
-			return inputFile["contact_manager"]["real_distance_correction_coefficient"];
+			// TODO: print real distance factor in terminal
+			return inputFile["material_contact"]["real_distance_factor"];
 		}
 
 		throw(0);
@@ -2006,62 +1927,6 @@ double Input::RealDistanceCorrectionCoefficient() {
 	catch (...)
 	{
 		Warning::printMessage("Error during reading the real distance correction coefficient in contact");
-		throw;
-	}
-}
-
-int Input::getMasterBodyId() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["master_id"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["master_id"].is_number_integer())
-		{
-			return inputFile["contact"]["master_id"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the master body ID in contact");
-		throw;
-	}
-}
-
-int Input::getSlaveBodyId() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["slave_id"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["slave_id"].is_number_integer())
-		{
-			return inputFile["contact"]["slave_id"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the slave body ID in contact");
 		throw;
 	}
 }
