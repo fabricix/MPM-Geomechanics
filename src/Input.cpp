@@ -1244,6 +1244,17 @@ vector<string> Input::getGridResultFields()
 	}
 }
 
+bool Input::getKeepPreviousResults(){
+
+		if (inputFile.contains("results") &&
+			inputFile["results"].contains("keep_previous") &&
+			inputFile["results"]["keep_previous"].is_boolean())
+		{
+			return inputFile["results"]["keep_previous"];
+		}
+		return false;
+}
+
 vector<string> Input::getResultFields()
 {
 	try

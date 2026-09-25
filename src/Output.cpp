@@ -36,11 +36,19 @@ using std::setw;
 #include <Materials/MohrCoulomb.h>
 using std::vector;
 
-namespace Output{
+#include <filesystem>
+namespace fs = std::filesystem;
 
+namespace Output{
+	
+	bool delete_results_flag = true;
 	vector<string> printParticleFields;
 	vector<string> printNodeFields;
 	vector<string> printSTLContactFields;
+
+	void configurePreviousResults(bool flag_keep) {
+		delete_results_flag=!flag_keep;
+	}
 
 	namespace OutputTolerance {
 		
@@ -147,10 +155,48 @@ namespace Output{
 			Folders::gridFolderExist=true;
 	}
 
+	void deleteResults(const std::string& folderPath, const std::string& extension)
+	{
+		try {
+
+		if (fs::exists(folderPath) && fs::is_directory(folderPath)) {
+			
+			// Recorrer los archivos del directorio (sin entrar en subcarpetas)
+			for (const auto& entry : fs::directory_iterator(folderPath)) {
+				
+				// Asegurarse de que sea un archivo regular
+				if (entry.is_regular_file()) {
+					
+					if (entry.path().extension() == extension) {
+						fs::remove(entry.path());
+					}
+				}
+			}
+		} else {
+			std::cout << "Wrong path for deleting results." << std::endl;
+		}
+		} 
+		catch (const fs::filesystem_error& e) {
+		std::cerr << "File system error: " << e.what() << std::endl;
+		}
+	}
+
+	void deletePreviousResults()
+	{
+		if (delete_results_flag) { delete_results_flag=false; }
+		else { return; }
+		
+		// delete particles and nodal results
+		deleteResults(Folders::particleFolderName, ".vtu");
+		deleteResults(Folders::gridFolderName, ".vtu");
+	}
+
 	void createParticleFolder(){
 
 		if (Folders::particleFolderExist)
+		{
 			return;
+		}
 		
 		int status=0;
 
@@ -1133,6 +1179,9 @@ namespace Output{
 
 	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc)
 	{
+		// delete previous results
+		deletePreviousResults();
+
 		// write initial state 
 		printModelInfo(bodies, iTime);
 

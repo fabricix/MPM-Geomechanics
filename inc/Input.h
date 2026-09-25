@@ -566,6 +566,10 @@ namespace Input {
 	/// \return Number of results to be written
 	int getResultNum();
 
+	/// \brief Keeps previous results
+	/// \return false for deleting previous results
+	bool getKeepPreviousResults();
+
 	/// \brief Return the fields to be written
 	///
 	vector<string> getResultFields();
