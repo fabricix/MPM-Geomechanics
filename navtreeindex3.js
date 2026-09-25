@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"classNodeMixture.html#a46f48cb831d4020599972278eb8477da":[1,0,22,3],
+"classNodeMixture.html#a4de17d48bf0c97df29343d847d60fba0":[1,0,22,10],
 "classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8":[1,0,22,19],
 "classNodeMixture.html#a5da23c1a3c0b73ce305c9d4e046776fb":[1,0,22,21],
 "classNodeMixture.html#a695d28aac00c06ef2f45784a928ba44b":[1,0,22,11],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "functions_func_c.html":[1,3,1,2],
 "functions_func_d.html":[1,3,1,3],
 "functions_func_e.html":[1,3,1,4],
-"functions_func_g.html":[1,3,1,5],
-"functions_func_i.html":[1,3,1,6],
-"functions_func_l.html":[1,3,1,7]
+"functions_func_g.html":[1,3,1,5]
 };

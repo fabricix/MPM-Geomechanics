@@ -5,6 +5,7 @@ var Output_8h =
       [ "CELLS", "Output_8h.html#a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab", null ]
     ] ],
     [ "configureGridResultFields", "Output_8h.html#a7849a9cb53015e958a744f6907fc53b2", null ],
+    [ "configurePreviousResults", "Output_8h.html#a0523ec15fc3fc7ce937ba9690c7fbd84", null ],
     [ "configureResultFields", "Output_8h.html#afd79cf7fe4926c3945b2f8f6067f82fe", null ],
     [ "configureSTLContactFields", "Output_8h.html#a480e299af053dffd44af11b3d6e679c6", null ],
     [ "farewellScreen", "Output_8h.html#a4a665354e2a7494ee4e419fa9fb09f67", null ],

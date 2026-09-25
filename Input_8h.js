@@ -22,6 +22,7 @@ var Input_8h =
     [ "getInitialPressureMaterial", "Input_8h.html#ae05caa1f4428920ef08d379cdc897d2e", null ],
     [ "getInterpolationFunction", "Input_8h.html#a98455dce0439d9fc5e6b5b44784d9b36", null ],
     [ "getJson", "Input_8h.html#a439b092b2d3d47fab42c5de5fa494a67", null ],
+    [ "getKeepPreviousResults", "Input_8h.html#a0ceab6de08028e9b3d9251b73ab86f26", null ],
     [ "getLoadDistributedBox", "Input_8h.html#a38dd844d4e499c46c0e7530a83939fb4", null ],
     [ "getLoadState", "Input_8h.html#a0da20030f4b1bd89c34a217fc7734296", null ],
     [ "getMasterBodyId", "Input_8h.html#a37d8f43be379819e89aa511dccdfa683", null ],

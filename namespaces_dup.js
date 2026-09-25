@@ -44,6 +44,7 @@ var namespaces_dup =
       [ "getInitialPressureMaterial", "namespaceInput.html#ae05caa1f4428920ef08d379cdc897d2e", null ],
       [ "getInterpolationFunction", "namespaceInput.html#a98455dce0439d9fc5e6b5b44784d9b36", null ],
       [ "getJson", "namespaceInput.html#a439b092b2d3d47fab42c5de5fa494a67", null ],
+      [ "getKeepPreviousResults", "namespaceInput.html#a0ceab6de08028e9b3d9251b73ab86f26", null ],
       [ "getLoadDistributedBox", "namespaceInput.html#a38dd844d4e499c46c0e7530a83939fb4", null ],
       [ "getLoadState", "namespaceInput.html#a0da20030f4b1bd89c34a217fc7734296", null ],
       [ "getMasterBodyId", "namespaceInput.html#a37d8f43be379819e89aa511dccdfa683", null ],
@@ -185,6 +186,7 @@ var namespaces_dup =
         [ "CELLS", "namespaceOutput.html#a35c444bc8f56abfa419ef5780fe9d83dacabf123f0959dd5462747abf003eb3ab", null ]
       ] ],
       [ "configureGridResultFields", "namespaceOutput.html#a7849a9cb53015e958a744f6907fc53b2", null ],
+      [ "configurePreviousResults", "namespaceOutput.html#a0523ec15fc3fc7ce937ba9690c7fbd84", null ],
       [ "configureResultFields", "namespaceOutput.html#afd79cf7fe4926c3945b2f8f6067f82fe", null ],
       [ "configureSTLContactFields", "namespaceOutput.html#a480e299af053dffd44af11b3d6e679c6", null ],
       [ "farewellScreen", "namespaceOutput.html#a4a665354e2a7494ee4e419fa9fb09f67", null ],
