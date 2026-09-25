@@ -140,20 +140,20 @@ for contact correction, according to the theoretical documentation. If the value
 The properties associated with each Slave-Master contact pair can be specified by including the following lines in the input file:
 
 \begin{lstlisting}
-  "contact":[
+  "body_contact":[
   {
     "id": 1,
     "friction": 0.2,
-    "master_id": 1,
-    "slave_id": 2,
+    "master_body_id": 1,
+    "slave_body_id": 2,
     "normal_type": "master"
   }
 ]
 \end{lstlisting}
 
 The definition of Slave-Master contact properties for each body pair is made using the "contact" keyword. In this context, the "id"
-keyword defines the contact identifier, "friction" specifies the contact friction coefficient, \verb|"master_id"| defines the master body 
-identifier, \verb|"slave_id"| defines the slave body identifier, and \verb|"normal_type"| specifies which normal will be used in the contact analysis.
+keyword defines the contact identifier, "friction" specifies the contact friction coefficient, \verb|"master_body_id"| defines the master body 
+identifier, \verb|"slave_body_id"| defines the slave body identifier, and \verb|"normal_type"| specifies which normal will be used in the contact analysis.
 
 \section{Verification Problems}
 \label{sec:verification_problems}
@@ -254,12 +254,12 @@ which is given by $(7.07, 0.0, -7.07)$ m/s$^2$. The planes $X_0$, $Y_0$, $Z_0$, 
 
     "contact_manager":{ "active": true },
     
-    "contact":[
+    "body_contact":[
       {
         "id":1,
         "friction":0.5,
-        "master_id":1,
-        "slave_id":2,
+        "master_body_id":1,
+        "slave_body_id":2,
         "normal_type":"master"
       }
     ]
@@ -381,19 +381,19 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
       "active": true
     },
     
-    "contact":[
+    "body_contact":[
       {
         "id": 1,
         "friction": 0.2,
-        "master_id": 1,
-        "slave_id": 2,
+        "master_body_id": 1,
+        "slave_body_id": 2,
         "normal_type": "master"
       },
       {
         "id": 2,
         "friction": 0.0,
-        "master_id": 1,
-        "slave_id": 3,
+        "master_body_id": 1,
+        "slave_body_id": 3,
         "normal_type": "master"
       }
     ]
@@ -507,19 +507,19 @@ The planes $X_0$, $Y_0$, $Z_0$, $X_n$, $Y_n$, and $Z_n$ are defined as sliding, 
       "real_distance_correction_coefficient": 0.5
     },
     
-    "contact":[
+    "body_contact":[
       {
         "id": 1,
         "friction": 0.2,
-        "master_id": 1,
-        "slave_id": 2,
+        "master_body_id": 1,
+        "slave_body_id": 2,
         "normal_type": "master"
       },
       {
         "id": 2,
         "friction": 0.0,
-        "master_id": 1,
-        "slave_id": 3,
+        "master_body_id": 1,
+        "slave_body_id": 3,
         "normal_type": "master"
       }
     ]

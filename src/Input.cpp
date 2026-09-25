@@ -1014,11 +1014,11 @@ vector<Contact*> Input::getContactList() {
 	vector<Contact*> contacts;
 	try
 	{
-		if (!inputFile["material_contact"]["contact"].is_null()) {
+		if (!inputFile["body_contact"]["contact"].is_null()) {
 
 			// loop aver all contacts
 			json::iterator it;
-			for (it = inputFile["material_contact"]["contact"].begin(); it != inputFile["material_contact"]["contact"].end(); it++) {
+			for (it = inputFile["body_contact"]["contact"].begin(); it != inputFile["body_contact"]["contact"].end(); it++) {
 
 				// contact id
 				int id = 0;
@@ -1040,8 +1040,8 @@ vector<Contact*> Input::getContactList() {
 
 				// master id
 				int master_id = 0;
-				if ((*it)["master_id"].is_number()) {
-					master_id = ((*it)["master_id"]);
+				if ((*it)["master_body_id"].is_number()) {
+					master_id = ((*it)["master_body_id"]);
 				}
 				else {
 					throw(0);
@@ -1049,8 +1049,8 @@ vector<Contact*> Input::getContactList() {
 
 				// slave id
 				int slave_id = 0;
-				if ((*it)["slave_id"].is_number()) {
-					slave_id = ((*it)["slave_id"]);
+				if ((*it)["slave_body_id"].is_number()) {
+					slave_id = ((*it)["slave_body_id"]);
 				}
 				else {
 					throw(0);
@@ -1852,19 +1852,19 @@ bool Input::getContactActive()
 {
 	try
 	{
-		if (inputFile["material_contact"].is_null()) {
+		if (inputFile["body_contact"].is_null()) {
 			return false;
 		}
 
-		if (inputFile["material_contact"]["active"].is_null()) {
+		if (inputFile["body_contact"]["active"].is_null()) {
 			// if material contact is defined then is active
 			// use active keyword for dissable contact mainly
 			return true;
 		}
 
-		if (inputFile["material_contact"]["active"].is_boolean())
+		if (inputFile["body_contact"]["active"].is_boolean())
 		{
-			return inputFile["material_contact"]["active"];
+			return inputFile["body_contact"]["active"];
 		}
 
 		throw(0);
@@ -1908,18 +1908,18 @@ double Input::RealDistanceCorrectionCoefficient() {
 
 	try
 	{
-		if (inputFile["material_contact"].is_null()) {
+		if (inputFile["body_contact"].is_null()) {
 			return -1;
 		}
 
-		if (inputFile["material_contact"]["real_distance_factor"].is_null()) {
+		if (inputFile["body_contact"]["real_distance_factor"].is_null()) {
 			return -1;
 		}
 
-		if (inputFile["material_contact"]["real_distance_factor"].is_number())
+		if (inputFile["body_contact"]["real_distance_factor"].is_number())
 		{
 			// TODO: print real distance factor in terminal
-			return inputFile["material_contact"]["real_distance_factor"];
+			return inputFile["body_contact"]["real_distance_factor"];
 		}
 
 		throw(0);

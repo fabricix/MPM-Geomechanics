@@ -52,22 +52,23 @@
         "initial_velocity": [ 0, 0, -2 ]
       }
     ],
-    "contact_manager":{
+    
+    "body_contact":{
       "active": true,
       "real_distance_factor": 0.5,
       "contact":[
         {
           "id": 1,
           "friction": 0.2,
-          "master_id": 1,
-          "slave_id": 2,
+          "master_body_id": 1,
+          "slave_body_id": 2,
           "normal_type": "master"
         },
         {
           "id": 2,
           "friction": 0.0,
-          "master_id": 1,
-          "slave_id": 3,
+          "master_body_id": 1,
+          "slave_body_id": 3,
           "normal_type": "master"
         }
       ]
