@@ -56,6 +56,10 @@ namespace Output {
 	/// \param[in] fields List of fields
 	void configureResultFields(vector<string> fields);
 
+	/// \brief Configures previous results deleting
+	/// \param[in] bool flag for keeps previous results
+	void configurePreviousResults(bool flag_keep);
+
 	/// \brief Configures the grid fields to be written
 	/// \param[in] fields List of fields
 	void configureGridResultFields(vector<string> fields);

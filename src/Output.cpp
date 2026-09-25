@@ -39,13 +39,16 @@ using std::vector;
 #include <filesystem>
 namespace fs = std::filesystem;
 
-bool delete_results_flag = true;
-
 namespace Output{
-
+	
+	bool delete_results_flag = true;
 	vector<string> printParticleFields;
 	vector<string> printNodeFields;
 	vector<string> printSTLContactFields;
+
+	void configurePreviousResults(bool flag_keep) {
+		delete_results_flag=flag_keep;
+	}
 
 	namespace OutputTolerance {
 		

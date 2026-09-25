@@ -355,6 +355,9 @@ void MPM::setupDamping() {
 
 void MPM::setupResults() {
 
+	// configure previous results
+	Output::configurePreviousResults(Input::getKeepPreviousResults());
+
 	// number of results
 	ModelSetup::setResultNum(Input::getResultNum());
 	
