@@ -47,7 +47,7 @@ namespace Output{
 	vector<string> printSTLContactFields;
 
 	void configurePreviousResults(bool flag_keep) {
-		delete_results_flag=flag_keep;
+		delete_results_flag=!flag_keep;
 	}
 
 	namespace OutputTolerance {

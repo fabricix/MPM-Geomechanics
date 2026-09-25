@@ -1252,6 +1252,7 @@ bool Input::getKeepPreviousResults(){
 		{
 			return inputFile["results"]["keep_previous"];
 		}
+		return false;
 }
 
 vector<string> Input::getResultFields()
