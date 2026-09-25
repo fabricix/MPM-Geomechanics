@@ -108,8 +108,8 @@ protected:
     double cohesion; //!< cohesion parameter, \f$c\f$
     double dilation; //!< dilation angle in degree, \f$\psi\f$
     double tensile; //!< tensile strength, \f$\sigma_t\f$
-    double su_factor; //!< undrained strength factor, \f$ S_u / \sigma_v$\f
-    MohrCoulomb::Softening softening; 
+    double su_factor; //!< undrained strength factor, \f$ S_u / \sigma_v$\f$
+    MohrCoulomb::Softening softening;  //!< softening definition
 };
 
 #endif /* INC_MATERIALS_MOHRCOULOMB_H_ */

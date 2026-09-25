@@ -48,10 +48,6 @@ public:
 	/// \brief Return the particles forming the body
 	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
-
-	/// \brief Return the body friction Coefficient
-	/// \return Body friction Coefficient
-	//inline double getFrictionCoefficient() const { return this->friction; }
 	
 	/// \brief Configure the id of the body
 	/// \param[in] body_id Body identification 
@@ -64,10 +60,6 @@ public:
 	/// \brief Configure the particles in the body
 	/// \param[in] particle_list A vector containing pointers to the particle
 	inline void setParticles(const vector<Particle*>& particle_list) { this->particles=particle_list; }
-
-	/// \brief Configure the friction coefficient of the body
-	/// \param[in] body_mu Body friction coefficient 
-	//inline void setFrictionCoefficient(double _friction) { this->friction = _friction; }
 
 	/// \brief Add particles to the current particle list
 	/// \param[in] particle_list A vector containing pointers to particles

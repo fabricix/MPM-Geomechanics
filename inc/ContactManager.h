@@ -21,12 +21,13 @@ using std::vector;
 class ContactManager {
 public:
     /// @brief  Constructor
-    /// @param contact list
+    /// @param contact_list Contact array
     /// @param real_distance_correction_coefficient Real distance correction coefficient (0 to disable)
-    ContactManager(vector<Contact*> contact_List, double real_distance_correction_coefficient);
+    ContactManager(vector<Contact*> contact_list, double real_distance_correction_coefficient);
 
     /// \brief Compute nodal contact for sticking and for non sticking contact.
-	/// \param[in] time_step Time step
+	/// \param[in] mesh Computational mesh
+    /// \param[in] time_step Time step
     void computeContactForces(Mesh* mesh, double time_step);
 
     /// \brief Calculate the nodal normal mass vector \f$ n_I = \frac{\sum_p m_p N_{Ip}}{\left| \sum_p m_p N_{Ip} \right|} \f$

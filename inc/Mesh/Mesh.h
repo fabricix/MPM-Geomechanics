@@ -180,9 +180,8 @@ public:
     /// \brief Return compute the nodal volumes
     void computeNodeVolumes();
 
-    /// \Clear Contact Nodes
+    /// \brief Clear contact nodes map
     void clearContactNodes() { contactNodes.clear(); };
-
 
 private:
     

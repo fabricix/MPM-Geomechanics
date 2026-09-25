@@ -141,7 +141,7 @@ namespace Update {
 
 	/// \brief Configure the force in each node in boundary planes for contact points
 	/// \param[in] boundary Boundary plane
-	/// \param[in] contactNodes unordered_map pointer
+	/// \param[in] mesh computational mesh
 	/// \param[in] direction Direction to apply de boundary condition 
 	void setPlaneForceContact(const Boundary::planeBoundary* boundary, Mesh* mesh, unsigned direction);
 	
