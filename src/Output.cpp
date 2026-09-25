@@ -155,19 +155,8 @@ namespace Output{
 			Folders::gridFolderExist=true;
 	}
 
-	void deletePreviousResutls()
+	void deleteResults(const std::string& folderPath, const std::string& extension)
 	{
-		if (delete_results_flag){
-			delete_results_flag=false;
-		}
-		else
-		{
-			return;
-		}
-			
-		const std::string& folderPath = Folders::particleFolderName;
-		const std::string& extension = ".vtu";
-
 		try {
 
 		if (fs::exists(folderPath) && fs::is_directory(folderPath)) {
@@ -190,6 +179,16 @@ namespace Output{
 		catch (const fs::filesystem_error& e) {
 		std::cerr << "File system error: " << e.what() << std::endl;
 		}
+	}
+
+	void deletePreviousResults()
+	{
+		if (delete_results_flag) { delete_results_flag=false; }
+		else { return; }
+		
+		// delete particles and nodal results
+		deleteResults(Folders::particleFolderName, ".vtu");
+		deleteResults(Folders::gridFolderName, ".vtu");
 	}
 
 	void createParticleFolder(){
@@ -1181,7 +1180,7 @@ namespace Output{
 	void writeInitialState(vector<Body*>* bodies, double iTime, Mesh* mesh, TerrainContact* tc)
 	{
 		// delete previous results
-		deletePreviousResutls();
+		deletePreviousResults();
 
 		// write initial state 
 		printModelInfo(bodies, iTime);
