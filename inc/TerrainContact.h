@@ -12,15 +12,15 @@ class TerrainContact {
 
 private:
     
-    STLReader* stlMesh; //!< triangular mesh for terrain contact 
+    STLReader* stlMesh; //!< Triangular mesh for terrain contact 
     
     double frictionCoefficient; //!< Friction coefficient \f$\mu\f$
 
-    std::vector<double> densityLevelSet; //!< density level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
+    std::vector<double> densityLevelSet; //!< Tensity level set function interpolated in centroids of triangles \f$ \rho_{m} \f$
 
-    std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< contact potential pairs
+    std::vector<std::pair<Particle*, Triangle*>> contactPairs; //!< Tontact potential pairs
 
-    double scalingFactor = 2.0; //!< scaling factor for the distance threshold in contact detection \f$ \alpha \f$
+    double scalingFactor = 2.0; //!< Scaling factor for the distance threshold in contact detection \f$ \alpha \f$
 
     bool usePenaltyContact = false; //!< Use penalty contact method
 

@@ -51,7 +51,7 @@ public:
     void nodalMomentumContactUpdate(Mesh* mesh, double time_step);
 
     /// \brief Return if the real distance correction is active
-    /// \return real distance correction active
+    /// \return flag real distance correction active
     inline bool getRealDistanceCorrectionFlag() const { return this->realDistanceCorrectionActive; }
 
     /// \brief Return if contact detection has occurred
@@ -66,10 +66,10 @@ public:
 
     private:
 
-    bool contactDetection = false; //!<variable for contact detection
-    vector<Contact*> contactList; 
-    double realDistanceCorrectionCoefficient = 0.0; //!< Real distance correction coefficient \f$\lambda\f$
-    bool realDistanceCorrectionActive = false; //!< Real distance correction active
+    bool contactDetection = false; //!< Contact detection flag
+    vector<Contact*> contactList; //!< Contact array
+    double realDistanceCorrectionCoefficient = 0.0; //!< Distance correction factor \f$\lambda\f$
+    bool realDistanceCorrectionActive = false; //!< Real distance correction method flag
 };
 
 #endif /* CONTACT_MANAGER_H_ */

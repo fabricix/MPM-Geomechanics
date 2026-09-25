@@ -391,8 +391,6 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 	}
 }
 
-
-
 void ContactManager::applyVelocityContactCorrection(Mesh* mesh, vector<Body*>* bodies, double dt)
 {
 	// Verify if real distance correction method is active
