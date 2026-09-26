@@ -72,7 +72,9 @@ inline const json& Input::getJson( ) { return inputFile; }
 
 inline string Input::getFileName( ) { return inputFileName; }
 
-bool Input::getLoadState() { return Input::get_boolean(Input::getJson(), "load_state", false); };
+bool Input::getLoadState() { 
+	return Input::get_boolean(Input::getJson(), "load_state", false);
+}
 
 std::string Input::getLoadStateFileName(){
 	 
@@ -83,10 +85,22 @@ std::string Input::getLoadStateFileName(){
 		fileName = j["load_state"]["file_name"];
 	}
 	return fileName;
-};
+}
 
+bool Input::getSaveState() { 
+	return Input::get_boolean(Input::getJson(), "save_state", false);
+}
 
-bool Input::getSaveState() { return Input::get_boolean(Input::getJson(), "save_state", false); };
+std::string Input::getSaveStateFileName(){
+
+	std::string fileName = "particle_stress_data.json";
+	
+	auto& j = Input::getJson();
+	if (j.contains("save_state") && j["save_state"].contains("file_name")) {
+		fileName = j["save_state"]["file_name"];
+	}
+	return fileName;
+}
 
 void Input::readInputFile(string filename) 
 {
