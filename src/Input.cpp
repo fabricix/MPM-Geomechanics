@@ -78,6 +78,7 @@ bool Input::getLoadState() {
 
 std::string Input::getLoadStateFileName(){
 	 
+	// default (legacy) name 
 	std::string fileName = "particle_stress_data.json";
 
 	auto& j = Input::getJson();
@@ -93,6 +94,7 @@ bool Input::getSaveState() {
 
 std::string Input::getSaveStateFileName(){
 
+	// default (legacy) name
 	std::string fileName = "particle_stress_data.json";
 	
 	auto& j = Input::getJson();

@@ -15,9 +15,6 @@ using json = nlohmann::json;
 
 void States::saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles) {
 
-    // unused for now
-    (void)filename;
-    
     // initialize json structure    
     json jsonData;
     
@@ -45,7 +42,7 @@ void States::saveParticleStress(const std::string& filename, const std::vector<P
     }
 
     // create output file and verify if is it open
-    std::ofstream outFile("particle_stress_data.json");
+    std::ofstream outFile(filename);
     if (!outFile.is_open()) {
         std::cerr << "Error: can not open stress field file ..." << std::endl;
         return;
