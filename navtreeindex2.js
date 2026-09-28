@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classElastic.html#a28651c1cbe9247e0f2738adf2cb26207":[1,0,13,6],
+"classElastic.html#a65dd0fef9eb6fbe6c73cb49515aa92d4":[1,0,13,4],
 "classElastic.html#a68fd6e866a2dec082c4dbe107de0d15b":[1,0,13,10],
 "classElastic.html#a70e104591aa936a1593b56bf9c743400":[1,0,13,8],
 "classElastic.html#a750dfe1959b8c50d7d9da463e02409f8":[1,0,13,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "classNodeMixture.html#a152b0a3f69e5e7a65546100923f3e0c5":[1,0,22,18],
 "classNodeMixture.html#a1d2b3be56436515c107a2cb2d7229a6b":[1,0,22,4],
 "classNodeMixture.html#a23b1edb4bedd9aad69ae7e7a43cf66a9":[1,0,22,0],
-"classNodeMixture.html#a2c2d410e8c9dc0366c801a8522bb2a36":[1,0,22,8],
-"classNodeMixture.html#a2e7085f835158ceda0369818f452ba9c":[1,0,22,12],
-"classNodeMixture.html#a2ef1c8b7238b49192e4f8a92f70a7358":[1,0,22,17]
+"classNodeMixture.html#a2c2d410e8c9dc0366c801a8522bb2a36":[1,0,22,8]
 };
