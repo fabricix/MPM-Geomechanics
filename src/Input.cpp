@@ -77,15 +77,7 @@ bool Input::getLoadState() {
 }
 
 std::string Input::getLoadStateFileName(){
-	 
-	// default (legacy) name 
-	std::string fileName = "particle_stress_data.json";
-
-	auto& j = Input::getJson();
-	if (j.contains("load_state") && j["load_state"].contains("file_name")) {
-		fileName = j["load_state"]["file_name"];
-	}
-	return fileName;
+	return Input::get_string(Input::getJson(),"load_state_file","particle_stress_data.jon");
 }
 
 bool Input::getSaveState() { 
@@ -93,15 +85,7 @@ bool Input::getSaveState() {
 }
 
 std::string Input::getSaveStateFileName(){
-
-	// default (legacy) name
-	std::string fileName = "particle_stress_data.json";
-	
-	auto& j = Input::getJson();
-	if (j.contains("save_state") && j["save_state"].contains("file_name")) {
-		fileName = j["save_state"]["file_name"];
-	}
-	return fileName;
+	return Input::get_string(Input::getJson(),"save_state_file","particle_stress_data.jon");
 }
 
 void Input::readInputFile(string filename) 
