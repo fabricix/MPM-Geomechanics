@@ -77,7 +77,7 @@ bool Input::getLoadState() {
 }
 
 std::string Input::getLoadStateFileName(){
-	return Input::get_string(Input::getJson(),"load_state_file","particle_stress_data.jon");
+	return Input::get_string(Input::getJson(),"load_state_file","particle_stress_data.json");
 }
 
 bool Input::getSaveState() { 
@@ -85,7 +85,7 @@ bool Input::getSaveState() {
 }
 
 std::string Input::getSaveStateFileName(){
-	return Input::get_string(Input::getJson(),"save_state_file","particle_stress_data.jon");
+	return Input::get_string(Input::getJson(),"save_state_file","particle_stress_data.json");
 }
 
 void Input::readInputFile(string filename) 
