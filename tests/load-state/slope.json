@@ -7,11 +7,11 @@
 
 	"critical_time_step_multiplier":0.25,
 
-	"load_state":false,
+	"load_state":true,
 	"load_state_file":"stress.json",
 
 	"save_state":false,
-	"save_state_file":"stress.jon"
+	"save_state_file":"stress.json",
 
 	"gravity":[0.0,0.0,-10.0],
 
