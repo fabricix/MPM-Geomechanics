@@ -385,7 +385,7 @@ void MPM::loadState()
 
 	if ( ModelSetup::getLoadState() ) 
 	{
-		States::loadParticleStress("particle_stress_data.json", particles);
+		States::loadParticleStress(Input::getLoadStateFileName(), particles);
 	}
 }
 
@@ -395,7 +395,7 @@ void MPM::saveState()
 
 	if ( ModelSetup::getSaveState() )
 	{
-		States::saveParticleStress("particle_stress_data.json", particles);
+		States::saveParticleStress(Input::getSaveStateFileName(), particles);
 	}
 }
 

@@ -13,11 +13,10 @@ using Eigen::Matrix3d;
 #include "Json/json.hpp"
 using json = nlohmann::json;
 
+#include "Warning.h"
+
 void States::saveParticleStress(const std::string& filename, const std::vector<Particle*>& particles) {
 
-    // unused for now
-    (void)filename;
-    
     // initialize json structure    
     json jsonData;
     
@@ -45,9 +44,9 @@ void States::saveParticleStress(const std::string& filename, const std::vector<P
     }
 
     // create output file and verify if is it open
-    std::ofstream outFile("particle_stress_data.json");
+    std::ofstream outFile(filename);
     if (!outFile.is_open()) {
-        std::cerr << "Error: can not open stress field file ..." << std::endl;
+        Warning::printMessage("Can not open state field.");
         return;
     }
 
@@ -61,7 +60,7 @@ void States::loadParticleStress(const std::string& filename, std::vector<Particl
     // open state file and check if is it open
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
-        std::cerr << "Error: Can not open particle stress file." << std::endl;
+        Warning::printMessage("Error: Can not load state file.");
         return;
     }
 

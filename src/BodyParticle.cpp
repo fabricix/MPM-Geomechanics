@@ -13,4 +13,7 @@ BodyParticle::~BodyParticle() { }
 /// \brief Create a body in space using particles
 /// \param[in] &mesh Mesh reference
 /// \param[in] *material Material pointer
-void BodyParticle::create(Mesh& mesh, Material* material) { }
+void BodyParticle::create(Mesh& mesh, Material* material) { 
+	(void) mesh;
+	(void) material;
+}

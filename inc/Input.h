@@ -504,10 +504,18 @@ namespace Input {
 	/// \return true for load state activated 
 	bool getLoadState();
 
+	/// \brief Return state file name
+	/// \return string of the file name for loading particle state
+	string getLoadStateFileName();
+
 	/// \brief Return save state activated
 	/// \return true for load state activated
 	bool getSaveState();
 	
+	/// \brief Return save state file name
+	/// \return string of the file name for saving particle state
+	string getSaveStateFileName();
+
 	/// \brief Return the simulation time
 	/// \return Simulation time
 	double getSimulationTime();
