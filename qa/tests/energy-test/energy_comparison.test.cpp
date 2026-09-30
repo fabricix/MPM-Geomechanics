@@ -59,8 +59,9 @@ void executeSimulation()
     // verify is the binary exists
     if (!std::filesystem::exists(exe_path)) {
       std::cerr << "Executable not found: " << exe_path << std::endl;
-      FAIL() << "Could not find simulation executable.";
-      return;
+      std::cerr << "Please build the project before running the test." << std::endl;
+      // throw std::runtime_error("Executable not found.");
+      throw;
     }
 
     script = exe_path.string() + " cuboid.json";
@@ -72,12 +73,10 @@ void executeSimulation()
     }
     else
     {
-      std::cerr << "Simulation failed with response code: " << response << std::endl;
+      std::cerr << "MPM-Geomechanics.exe simulation failed with response code: " << response << std::endl;
       std::cerr << "Please check if simulation program exists and try again." << std::endl;
-      FAIL() << "Could not execute simulation.";
-      // raise
-
-      return;
+      // throw std::runtime_error("MPM-Geomechanics.exe simulation failed. Check the executable and try again.");
+      throw;
     }
 
     std::string filename = "time-energy.csv";
@@ -93,22 +92,29 @@ void executeSimulation()
   }
   catch (const std::exception& e)
   {
-    std::cerr << "Exception during simulation execution: " << e.what() << std::endl;
-    FAIL() << "Simulation execution failed due to exception.";
+    // throw std::runtime_error(e.what());
+    throw;
   }
 }
 
 TEST(ENERGY_COMPARISON, ENERGY_SUM)
 {
-  executeSimulation();
+  try{
+    executeSimulation();
 
-  double main_energy = sum_energy("analytical_energy.csv");
-  double test_energy = sum_energy("time-energy.csv");
+    double main_energy = sum_energy("analytical_energy.csv");
+    double test_energy = sum_energy("time-energy.csv");
 
-  if (main_energy == -1.0 || test_energy == -1.0) {
-    FAIL() << "Could not calculate energy from one or both files.";
+    if (main_energy == -1.0 || test_energy == -1.0) {
+      std::cerr << "Could not calculate energy from one or both files." << std::endl;
+      FAIL() << "Could not calculate energy from one or both files.";
+    }
+
+    EXPECT_EQ(main_energy, test_energy);
+  } catch (const std::exception& e) {
+    std::cerr << "Exception during test execution: " << e.what() << std::endl;
+    FAIL() << "Exception during test execution: " << e.what() << std::endl;
+    throw std::runtime_error("Exception during test execution.");
   }
-
-  EXPECT_EQ(main_energy, test_energy);
 }
 
