@@ -413,10 +413,12 @@ vector<Material*> Input::getMaterialList(){
 							softening.friction_residual = get_number((*it),"softening.friction.residual",friction);
 							softening.cohesion_residual = get_number((*it),"softening.cohesion.residual",cohesion); 
 							softening.tensile_residual = get_number((*it),"softening.tensile.residual",tensile);
+							softening.dilation_residual = get_number((*it),"softening.dilation.residual",dilation);
 
 							softening.friction_softening_active = get_boolean((*it),"softening.friction.active",false);
 							softening.cohesion_softening_active = get_boolean((*it),"softening.cohesion.active",false);
 							softening.tensile_softening_active = get_boolean((*it),"softening.tensile.active",false);
+							softening.dilation_softening_active = get_boolean((*it),"softening.dilation.active",false);
 						}
 						
 						// create a new material
