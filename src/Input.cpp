@@ -816,7 +816,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 
 							// search material in material list
 							for (auto* p : *materials) {
-								if(target_material_id == p->getId())
+								if(target_material_id == (unsigned) p->getId())
 								imat = p;
 							}
 
@@ -928,7 +928,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 
 							// search material in material list
 							for (auto* p : *materials) {
-								if(target_material_id == p->getId())
+								if(target_material_id == (unsigned) p->getId())
 								imat = p;
 							}
 
