@@ -42,7 +42,7 @@ namespace Loads {
     {
         Vector3d pointP1; //!< left lower point of the box
         Vector3d pointP2; //!< right upper point of the box
-        double pressure; //!< pressure in particles inside the box
+        double pressure = 0.0; //!< pressure in particles inside the box
     };
 
     /// \struct PressureBoundaryForceBox
@@ -59,8 +59,8 @@ namespace Loads {
     /// Pressure is applied to particles with the specified material id.
     struct PressureMaterial
     {
-        int materialId; //!< material id
-        double pressure; //!< pressure in particles inside the box
+        int materialId = 0; //!< material id
+        double pressure = 0.0; //!< pressure in particles inside the box
     };
 
     /// \struct PrescribedPorePressure
@@ -68,9 +68,9 @@ namespace Loads {
     /// Pressure is applied to particles with the specified index.
     struct PrescribedPorePressure{
 
-        int bodyIndex; //!< body index in body vector
-        int particleIndex; //!< particle index in particle vector
-        double pressure; //!< pressure to be applied to the particle
+        int bodyIndex = 0; //!< body index in body vector
+        int particleIndex = 0; //!< particle index in particle vector
+        double pressure = 0.0; //!< pressure to be applied to the particle
 
         /// \fn PrescribedPorePressure
         /// \brief Structure constructor

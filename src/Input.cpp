@@ -1964,24 +1964,19 @@ double Input::getFrictionCoefficientContact() {
 }
 
 string Input::getContactNormalType() {
-
 	try
 	{
 		if (inputFile["contact"].is_null()) {
-
-			return NULL;
+			return "";
 		}
 		// if contact normal type not defined -> default Master 
 		if (inputFile["contact"]["normal_type"].is_null()) {
-
-			return NULL;
+			return "";
 		}
-
 		if (inputFile["contact"]["normal_type"].is_string())
 		{
 			return inputFile["contact"]["normal_type"];
 		}
-
 		throw(0);
 	}
 	catch (...)
