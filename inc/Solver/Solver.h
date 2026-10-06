@@ -58,7 +58,7 @@ protected:
 	ContactManager* contactManager; //!< pointer to contact manager
 };
 
-inline Solver::Solver():mesh(0),bodies(0),particles(0),terrainContact(0) { }
+inline Solver::Solver():mesh(0),bodies(0),particles(0),terrainContact(0), contactManager(0){ }
 inline Solver::~Solver() { }
 
 #endif /* SOLVER_H_ */

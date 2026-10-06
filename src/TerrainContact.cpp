@@ -284,7 +284,7 @@ void TerrainContact::determineContactPotentialPairs(Mesh* mesh, std::vector<Part
 
     // distance threshold for contact detection
     const double d_threshold = this->scalingFactor*(mesh->getCellDimension()).mean();
-    const double density_threshold = 0.0; // threshold to consider that a triangle is in contact with the body
+    // const double density_threshold = 0.0;
     
     // get the triangles and the density values
     const std::vector<Triangle>& triangles = stlMesh->getTriangles();
@@ -439,6 +439,10 @@ void TerrainContact::computeContactForces(double dt) {
 
 void TerrainContact::projectParticles(Mesh* mesh,std::vector<Particle*> *particles)
 {
+    // unused for now
+    (void) mesh;
+    (void) particles; 
+
     for (int i = 0; i < static_cast<int>(contactPairs.size()); ++i) 
     {
         // get the particle and the triangle in contact

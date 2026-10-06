@@ -1108,17 +1108,22 @@ namespace Output{
 		std::cout << "   Results : " << ModelSetup::getResultNum() << std::endl;
 		std::cout << "    Solver : " << (ModelSetup::getUpdateStressScheme() == ModelSetup::StressUpdateScheme::USL ? "USL" : "MUSL") << std::endl;
 		
-		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY)
+		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY){
 			std::cout << "  Coupling : One-way" << std::endl;
+		}
 
-		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL)
+		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL){
 			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;
-		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION)
+		}
+		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::KINETIC_DYNAMIC_RELAXATION){
 			std::cout << "   Damping : Kinetic" << std::endl;
-		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::UNDAMPED)
-			std::cout << "   Damping : Undamped" << std::endl;
+		}
+		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::UNDAMPED){ 
+			std::cout << "   Damping : Undamped" << std::endl; 
+		}
+
 		
-			if (ModelSetup::getSaveState()) {
+		if (ModelSetup::getSaveState()) {
 			std::cout << "Save state : Enabled" << std::endl;
 		}
 		if (ModelSetup::getLoadState()) {

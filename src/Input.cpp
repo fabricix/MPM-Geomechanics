@@ -816,7 +816,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 
 							// search material in material list
 							for (auto* p : *materials) {
-								if(target_material_id == p->getId())
+								if(target_material_id == (unsigned) p->getId())
 								imat = p;
 							}
 
@@ -928,7 +928,7 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 
 							// search material in material list
 							for (auto* p : *materials) {
-								if(target_material_id == p->getId())
+								if(target_material_id == (unsigned) p->getId())
 								imat = p;
 							}
 
@@ -1964,24 +1964,19 @@ double Input::getFrictionCoefficientContact() {
 }
 
 string Input::getContactNormalType() {
-
 	try
 	{
 		if (inputFile["contact"].is_null()) {
-
-			return NULL;
+			return "";
 		}
 		// if contact normal type not defined -> default Master 
 		if (inputFile["contact"]["normal_type"].is_null()) {
-
-			return NULL;
+			return "";
 		}
-
 		if (inputFile["contact"]["normal_type"].is_string())
 		{
 			return inputFile["contact"]["normal_type"];
 		}
-
 		throw(0);
 	}
 	catch (...)
