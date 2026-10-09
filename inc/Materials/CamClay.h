@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2021-202 MPM-Geomechanics Development Team
+// Copyright (c) 2021-2026 MPM-Geomechanics Development Team
 
 #ifndef INC_MATERIALS_CAMCLAY_H_
 #define INC_MATERIALS_CAMCLAY_H_
@@ -18,8 +18,8 @@ public:
     /// \param[in] id Material identification    
     /// \param[in] density Material density \f$\rho\f$
     /// \param[in] poisson_ Poisson's ratio \f$\nu\f$    
-    /// \param[in] lambda_ Compresion slope index
-    /// \param[in] kappa_ Sweelling slope index
+    /// \param[in] lambda_ Compression slope index
+    /// \param[in] kappa_ Swelling slope index
     /// \param[in] Mc_ Slope of critical line (p-q) for compression
     /// \param[in] Me_ Slope of critical line (p-q) in extension 
     /// \param[in] nu0_ Initial specific volume \f$\nu_0\f$
@@ -45,7 +45,7 @@ public:
 protected:
     // Material parameters
     double poisson; //!< Poisson's ratio \f$\nu\f$
-    double lambda; //!< Compresion slope index
+    double lambda; //!< Compression slope index
     double kappa; //!< Sweelling slope index
     double Mc; //!< Slope of critical line (p-q) for compression
     double Me; //!< Slope of critical line (p-q) in extension 
@@ -136,13 +136,11 @@ protected:
 
     //Main constitutive integrator
     CPPMResult solveCPPM(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old, int subStepLevel = 0) const; 
-
-    //
-    
+   
     //Exact closed-form treatment for an isotropic plastic loading path J = 0
     CPPMResult solveIsotropicPlasticStep(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old) const;
 
-    //Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+    //Recursive bisection of the strain increment when J is too small for the general CPPM formulation but the path is not isotropic
     CPPMResult solveCPPMSubstepped(const Eigen::Matrix3d& stressOld, const Eigen::Matrix3d& de, double p0Old, int subStepLevel) const;
 
         

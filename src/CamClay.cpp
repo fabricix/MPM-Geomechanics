@@ -16,8 +16,8 @@ CamClay::CamClay(int id, double density, double poisson_, double lambda_, double
 {
     // Model parameters
     // poisson Poisson's ratio 
-    // lambda Compresion slope index
-    // kappa Sweelling slope index
+    // lambda Compression slope index
+    // kappa Swelling slope index
     // Mc Slope of critical line (p-q) for compression
     // Me Slope of critical line (p-q) in extension 
     // nu0 Initial specific volume 
@@ -485,8 +485,8 @@ double CamClay::computeInitialPlasticMultiplier(const StressState& trialState, d
     const double rCr = (rTrial.array() * Cr.array()).sum();
 
     //Plastic modulus Kp
-    //12.23 Kp = -9 C_1 p p_0 r_kk
-    const double KpTrial = - 9 * C1 * pTrial * p0Old * rkkTrial;
+    //The sign is incorrect in 12.23. It should be Kp = + 9 C_1 p p_0 r_kk. 
+    const double KpTrial = 9 * C1 * pTrial * p0Old * rkkTrial;
 
     //Initial plastic multiplier 
     const double denominator = rCr + KpTrial;
@@ -522,7 +522,7 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
     //Case 1: Truly isotropic plastic path
     if (smallJTrial && isotropicPath ) {return solveIsotropicPlasticStep(stressOld, de, p0Old);}
 
-    //Case 2: Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+    //Case 2: Recursive bisection of the strain increment when J is too small for the general CPPM formulation but the path is not isotropic
     if (smallJTrial) {return solveCPPMSubstepped(stressOld, de, p0Old, subStepLevel);}
 
     //Plastic trial: Initial Newton estimates
@@ -551,7 +551,7 @@ CamClay::CPPMResult CamClay::solveCPPM(const Matrix3d& stressOld, const Matrix3d
         const StressState currentState = computeStressState(stressNew);
         const double pNew = currentState.I / 3.0;
         const bool smallJNew = currentState.J <= zeroTolerance * std::max({1.0, std::abs(pNew), std::abs(p0New)});
-        //Case 2: Recursive bisection of the strain increment when J is to small for the general CPPM formulation but the path is not isotropic
+        //Case 2: Recursive bisection of the strain increment when J is too small for the general CPPM formulation but the path is not isotropic
         if (smallJNew) {return solveCPPMSubstepped(stressOld, de, p0Old, subStepLevel);}
 
         const Matrix3d rijNew = computeYieldGradient(currentState, p0New);
