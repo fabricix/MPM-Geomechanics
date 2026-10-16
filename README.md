@@ -72,6 +72,13 @@ For the **online documentation**, visit: [MPM-Geomechanics](https://fabricix.git
 
 ## Examples
 
+### Simple mine slope failure
+In this example we show the use of an STL mesh for modelling the topography and material points for representing the failed mass.
+
+![](/examples/mine-slope/simple-mine-slope.gif)
+
+See the input file [mine-slope.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/examples/mine-slope/mine-slope.json) inside to the example folder.
+
 ### Slope failure
 
 In this example an soil slope failure is simulated using an elastoplastic material:
