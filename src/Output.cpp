@@ -158,23 +158,18 @@ namespace Output{
 	void deleteResults(const std::string& folderPath, const std::string& extension)
 	{
 		try {
+			if (fs::exists(folderPath) && fs::is_directory(folderPath)) {
 
-		if (fs::exists(folderPath) && fs::is_directory(folderPath)) {
-			
-			// Recorrer los archivos del directorio (sin entrar en subcarpetas)
-			for (const auto& entry : fs::directory_iterator(folderPath)) {
-				
-				// Asegurarse de que sea un archivo regular
-				if (entry.is_regular_file()) {
+				for (const auto& entry : fs::directory_iterator(folderPath)) {
 					
-					if (entry.path().extension() == extension) {
-						fs::remove(entry.path());
+					if (entry.is_regular_file()) {
+						
+						if (entry.path().extension() == extension) {
+							fs::remove(entry.path());
+						}
 					}
 				}
 			}
-		} else {
-			std::cout << "Wrong path for deleting results." << std::endl;
-		}
 		} 
 		catch (const fs::filesystem_error& e) {
 		std::cerr << "File system error: " << e.what() << std::endl;
