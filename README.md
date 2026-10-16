@@ -77,7 +77,7 @@ In this example we show the use of an STL mesh for modelling the topography and 
 
 ![](/examples/mine-slope/simple-mine-slope.gif)
 
-See the input file [slope-slope.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/tests/mine-slope/mine-slope.json) inside to the example folder.
+See the input file [mine-slope.json](https://github.com/fabricix/MPM-Geomechanics/blob/main/examples/mine-slope/mine-slope.json) inside to the example folder.
 
 ### Slope failure
 
