@@ -21,7 +21,7 @@
       "type":"elastic",
       "id":1,
       "young":10e1,
-      "density":2600,
+      "density":1000,
       "poisson":0.3
     },
     {
