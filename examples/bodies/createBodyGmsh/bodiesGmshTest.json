@@ -51,6 +51,7 @@
     {
       "id":1,
       "type":"gmsh",
+      "particle_distribution":"gaussian",
       "mesh_file":"cuboid.msh",
       "physical_to_material":{"Cuboid":1}
     }
