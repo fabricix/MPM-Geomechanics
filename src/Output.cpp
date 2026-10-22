@@ -323,6 +323,15 @@ namespace Output{
 			partFile<<"</DataArray>\n";
 		}
 
+		if (isFieldRequired("mass")){
+			// particle mass
+			partFile<<"<DataArray type=\"Float64\" Name=\"Mass\" Format=\"ascii\">\n";
+			for (int i = 0; i < nPoints; ++i) {
+				partFile<<scientific<<particles->at(i)->getMass()<<"\n";
+			}
+			partFile<<"</DataArray>\n";
+		}
+
 		if (isFieldRequired("pressure")){
 			
 			// fluid pressure
