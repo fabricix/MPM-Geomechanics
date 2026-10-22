@@ -1,0 +1,3 @@
+particles,expected_particles,mass,expected_mass,current_volume,initial_volume,expected_volume,mass_ratio,mass_and_current_volume_ok,case,probe_exit_code
+6,6,999.9999999999999,1000,0.9999999999999999,6,1,0.9999999999999999,True,cube_barycentric,0
+24,24,249.99999999999991,1000,0.2499999999999999,24,1,0.24999999999999992,False,cube_gaussian,1

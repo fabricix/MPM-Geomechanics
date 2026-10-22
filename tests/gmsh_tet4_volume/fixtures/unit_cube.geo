@@ -1,0 +1,10 @@
+SetFactory("OpenCASCADE");
+Box(1) = {0, 0, 0, 1, 1, 1};
+Transfinite Curve{:} = 2;
+Transfinite Surface{:};
+Transfinite Volume{1};
+Physical Volume("soil", 1) = {1};
+Mesh.ElementOrder = 1;
+Mesh.MshFileVersion = 4.1;
+Mesh.Binary = 0;
+Mesh.SaveAll = 0;

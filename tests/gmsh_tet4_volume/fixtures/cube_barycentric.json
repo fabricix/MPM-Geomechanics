@@ -1,0 +1,67 @@
+{
+  "stress_scheme_update": "USL",
+  "shape_function": "GIMP",
+  "time": 0.001,
+  "time_step": 0.001,
+  "gravity": [
+    0,
+    0,
+    0
+  ],
+  "n_threads": 1,
+  "n_phases": 1,
+  "results": {
+    "grid_nodal_results": [
+      "none"
+    ],
+    "print": 1,
+    "material_point_results": [
+      "id"
+    ]
+  },
+  "mesh": {
+    "cells_dimension": [
+      1,
+      1,
+      1
+    ],
+    "cells_number": [
+      4,
+      4,
+      4
+    ],
+    "origin": [
+      -1,
+      -1,
+      -1
+    ],
+    "boundary_conditions": {
+      "plane_Z0": "free",
+      "plane_Xn": "free",
+      "plane_X0": "free",
+      "plane_Y0": "free",
+      "plane_Zn": "free",
+      "plane_Yn": "free"
+    }
+  },
+  "material": [
+    {
+      "poisson": 0.25,
+      "type": "elastic",
+      "density": 1000,
+      "young": 1000000,
+      "id": 1,
+      "porosity": 0
+    }
+  ],
+  "body": [
+    {
+      "particle_distribution": "barycentric",
+      "type": "gmsh",
+      "mesh_file": "unit_cube.msh",
+      "physical_to_material": {
+        "soil": 1
+      }
+    }
+  ]
+}

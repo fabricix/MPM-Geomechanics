@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="540" viewBox="0 0 600 540">
+<rect width="600" height="540" fill="white"/>
+<line x1="100.0" y1="150.0" x2="210.0" y2="320.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="100.0" y1="150.0" x2="380.0" y2="430.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="210.0" y1="40.0" x2="380.0" y2="150.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="210.0" y1="40.0" x2="490.0" y2="320.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="210.0" y1="320.0" x2="380.0" y2="150.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="210.0" y1="320.0" x2="380.0" y2="430.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="380.0" y1="150.0" x2="490.0" y2="320.0" stroke="#888" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="100.0" y1="150.0" x2="100.0" y2="430.0" stroke="black" stroke-width="2"/>
+<line x1="100.0" y1="150.0" x2="210.0" y2="40.0" stroke="black" stroke-width="2"/>
+<line x1="100.0" y1="150.0" x2="380.0" y2="150.0" stroke="black" stroke-width="2"/>
+<line x1="100.0" y1="430.0" x2="210.0" y2="320.0" stroke="black" stroke-width="2"/>
+<line x1="100.0" y1="430.0" x2="380.0" y2="430.0" stroke="black" stroke-width="2"/>
+<line x1="210.0" y1="40.0" x2="210.0" y2="320.0" stroke="black" stroke-width="2"/>
+<line x1="210.0" y1="40.0" x2="490.0" y2="40.0" stroke="black" stroke-width="2"/>
+<line x1="210.0" y1="320.0" x2="490.0" y2="320.0" stroke="black" stroke-width="2"/>
+<line x1="380.0" y1="150.0" x2="380.0" y2="430.0" stroke="black" stroke-width="2"/>
+<line x1="380.0" y1="150.0" x2="490.0" y2="40.0" stroke="black" stroke-width="2"/>
+<line x1="380.0" y1="430.0" x2="490.0" y2="320.0" stroke="black" stroke-width="2"/>
+<line x1="490.0" y1="40.0" x2="490.0" y2="320.0" stroke="black" stroke-width="2"/>
+<circle cx="100.0" cy="150.0" r="3" fill="black"/>
+<circle cx="100.0" cy="430.0" r="3" fill="black"/>
+<circle cx="210.0" cy="40.0" r="3" fill="black"/>
+<circle cx="210.0" cy="320.0" r="3" fill="black"/>
+<circle cx="380.0" cy="150.0" r="3" fill="black"/>
+<circle cx="380.0" cy="430.0" r="3" fill="black"/>
+<circle cx="490.0" cy="40.0" r="3" fill="black"/>
+<circle cx="490.0" cy="320.0" r="3" fill="black"/>
+<text x="240" y="460" fill="black" font-family="serif" font-size="20" text-anchor="middle" transform="rotate(0 240 460)">1 m</text>
+<text x="458" y="398" fill="black" font-family="serif" font-size="20" text-anchor="middle" transform="rotate(-45 458 398)">1 m</text>
+<text x="76" y="290" fill="black" font-family="serif" font-size="20" text-anchor="middle" transform="rotate(-90 76 290)">1 m</text>
+</svg>
