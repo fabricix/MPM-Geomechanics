@@ -183,7 +183,7 @@ void BodyGmsh::create(Mesh& bg_mesh, Material* material)
                                       {bG,bG,aG,bG},{bG,bG,bG,aG}};
                 for (int i=0;i<4;++i){
                     Vector3d p = w[i][0]*a + w[i][1]*b + w[i][2]*c + w[i][3]*d;
-                    addParticle(p, Mp/4.0, Vp/4.0);
+                    addParticle(p, Mp, Vp);
                     ++seeds;
                 }
             }
