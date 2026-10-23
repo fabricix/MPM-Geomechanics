@@ -1074,8 +1074,16 @@ vector<Contact*> Input::getContactList() {
 				string normal_type = "";
 				if ((*it)["normal_type"].is_string()) {
 					normal_type = ((*it)["normal_type"]);
+
+					if (normal_type != "collinear" && normal_type != "master" && normal_type != "slave") {
+						Warning::printMessage("Error: invalid normal type in contact definition");
+						Warning::printMessage("Error: Assuming normal type 'master'");
+
+						normal_type = "master";
+					}
 				}
 				else {
+					Warning::printMessage("Error: Bad normal type definition");
 					throw(0);
 				}
 
