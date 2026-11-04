@@ -139,9 +139,9 @@ Solver* Input::getSolver() {
 		// default value
 		if (inputFile[key].is_null()) {
 			ModelSetup::setUpdateStressScheme(ModelSetup::USL);
-			if (ModelSetup::getTwoPhaseActive()) {
-				return new SolverExplicitTwoPhaseUSL();
-			}
+			//if (ModelSetup::getTwoPhaseActive()) {
+			//	return new SolverExplicitTwoPhaseUSL();
+			//}
 			return new SolverExplicit();
 		}
 
@@ -150,9 +150,9 @@ Solver* Input::getSolver() {
 
 			if (scheme == "USL") {
 				ModelSetup::setUpdateStressScheme(ModelSetup::USL);
-				if (ModelSetup::getTwoPhaseActive()) {
-					return new SolverExplicitTwoPhaseUSL();
-				}
+				// if (ModelSetup::getTwoPhaseActive()) {
+				// 	return new SolverExplicitTwoPhaseUSL();
+				// }
 				return new SolverExplicit();
 			}
 			else if (scheme == "MUSL") {
