@@ -190,11 +190,6 @@ void SolverExplicit::Solve()
 		// Step 9.2: Update stress
 		Update::particleStress(particles);
 
-		// write particles and grid results in step
-		Output::writeResultInStep(resultSteps, particles, iTime);
-		Output::writeGridInStep(resultSteps, mesh, iTime);
-		Output::writeSTLContactInStep(resultSteps, terrainContact, iTime);
-
 		// Step 10: Reset nodal values
 		Update::resetNodalValues(mesh);
 
@@ -206,6 +201,11 @@ void SolverExplicit::Solve()
 
 		// Step 13: Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
+
+		// write particles and grid results in step
+		Output::writeResultInStep(resultSteps, particles, iTime);
+		Output::writeGridInStep(resultSteps, mesh, iTime);
+		Output::writeSTLContactInStep(resultSteps, terrainContact, iTime);
 	}
 
 	// Final output
