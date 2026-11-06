@@ -262,6 +262,7 @@ void MPM::createBodies() {
 		bodies.at(i)->create(mesh,iMaterial);
 	}
 	BodyGmsh::resetSharedMesh();
+	ModelSetup::configureExcavations(bodies);
 }
 
 void MPM::setupParticles() {

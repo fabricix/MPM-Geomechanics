@@ -29,6 +29,9 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
 
+	// Apply excavation for initial conditions 
+	ModelSetup::applyExcavations(0.0);
+
 	// write initial particles and grid states
 	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
 
@@ -37,6 +40,9 @@ void SolverExplicit::Solve()
 	{
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
+
+		// Apply excavation for the current time step 
+		ModelSetup::applyExcavations(iTime);
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, particles);

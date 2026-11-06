@@ -45,6 +45,7 @@ using Eigen::Vector3d;
 /// | id | define a body identification | integer |
 /// | material_id | used to setup a defined material to the body | integer |
 /// | initial_velocity | used to setup the initial velocity to the body | integer |
+/// | excavation_time | optional finite nonnegative excavation time in seconds; absent means no excavation is scheduled | number |
 
 /// ### Particles
 ///	| Keyword | Description | Data type |

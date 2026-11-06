@@ -21,6 +21,8 @@
 #include "MPM.h"
 
 #include <limits>
+#include <cmath>
+#include <stdexcept>
 using std::numeric_limits;
 
 #include <fstream>
@@ -481,6 +483,22 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 			json::iterator it;
 			for(it=inputFile["body"].begin(); it!=inputFile["body"].end();it++) 
 			{	
+				// Read once for every body type, including entries creating multiple bodies.
+				double excavationTime = numeric_limits<double>::infinity();
+				if (it->contains("excavation_time")) {
+					const json& value = (*it)["excavation_time"];
+					if (!value.is_number()) {
+						Warning::printMessage("Error: body '" + it.key() + "': invalid excavation_time (expected finite nonnegative seconds)");
+						throw std::runtime_error("Error: body '" + it.key() + "': excavation_time must be a finite nonnegative number in seconds");
+					}
+					excavationTime = value.get<double>();
+					if (!std::isfinite(excavationTime) || excavationTime < 0.0) {
+						Warning::printMessage("Error: body '" + it.key() + "': invalid excavation_time (expected finite nonnegative seconds)");
+						throw std::runtime_error("Error: body '" + it.key() + "': excavation_time must be a finite nonnegative number in seconds");
+					}
+				}
+				const size_t firstBodyIndex = bodies.size();
+
 				// sphere body
 				if ((*it)["type"] == "sphere") {
 
@@ -1006,6 +1024,9 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 					bodies.push_back(ibody);
 				}
 			}
+				for (size_t ibody = firstBodyIndex; ibody < bodies.size(); ++ibody) {
+					bodies[ibody]->setExcavationTime(excavationTime);
+				}
 			}
 		}
 

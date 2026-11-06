@@ -5,6 +5,7 @@
 #define BODY_H_
 
 #include<vector>
+#include <limits>
 using std::vector;
 
 #include "Particle/Particle.h"
@@ -41,6 +42,15 @@ public:
 	/// \return Body identification
 	inline int getId() const { return this->id; }
 
+	/// \brief Whether this body has a scheduled excavation time.
+	inline bool hasExcavationTime() const { return this->excavationTime < std::numeric_limits<double>::infinity(); }
+
+	/// \brief Excavation time in seconds, or infinity when not scheduled.
+	inline double getExcavationTime() const { return this->excavationTime; }
+
+	/// \brief Store a validated excavation time; does not deactivate particles.
+	inline void setExcavationTime(double time) { this->excavationTime = time; }
+
 	/// \brief Return the initial velocity of the body
 	/// \return Initial body velocity
 	inline Vector3d getInitialVelocity() const { return this->initial_velocity; }
@@ -48,6 +58,13 @@ public:
 	/// \brief Return the particles forming the body
 	/// \return A reference to a vector containing Particle pointers
 	inline vector<Particle*>* getParticles() { return &(this->particles); }
+
+	/// \brief Deactivate all particles while preserving their IDs and stored references.
+	inline void deactivateParticles() {
+		for (Particle* particle : this->particles) {
+			particle->setActive(false);
+		}
+	}
 
 	/// \brief Return the body friction Coefficient
 	/// \return Body friction Coefficient
@@ -76,11 +93,12 @@ public:
 protected:
 	
 	int id; //!< body identification
+	double excavationTime; //!< optional excavation time; infinity means not scheduled
 	Vector3d initial_velocity; //!< initial velocity of the body
 	vector<Particle*> particles; //!< material points forming the body
 };
 
-inline Body::Body():id(-1),initial_velocity(0,0,0) { }
+inline Body::Body():id(-1),excavationTime(std::numeric_limits<double>::infinity()),initial_velocity(0,0,0) { }
 inline Body::~Body() { }
 
 #endif /* BODY_H_ */
