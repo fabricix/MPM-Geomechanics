@@ -2,11 +2,12 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
     <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
-    <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" align="left" width="75" style="margin-right: 15px;">
+    <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" width="45" style="vertical-align: middle; margin-bottom: 4px; margin-right: 8px;">
   </picture>
-  MPM-Geomechanics<br>
-  <span style="font-size: 16px; font-weight: normal;"><em>An open-source simulator for large-deformation geomechanics</em></span>
+  MPM-Geomechanics
 </h1>
+
+<em>An open-source simulator for large-deformation geomechanics</em>
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
