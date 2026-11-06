@@ -1,20 +1,16 @@
-<table align="left">
-  <tr>
-    <td align="center" width="65" style="vertical-align: middle !important; padding-right: 9px;">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
-        <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
-        <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" width="45" style="display: block; margin: 0 auto;" >
-      </picture>
-    </td>
-    <td style="vertical-align: middle !important;">
-      <h1 style="margin: 1px; padding: 0; border: none; font-size: 24px; line-height: 1.2">MPM-Geomechanics</h1>
-      <p style="margin: 1px 0 0 0; font-size: 11px;"><em>
-      An open-source simulator for large-deformation geomechanics</em></p>
-    </td>
-  </tr>
-</table>
-<div style="clear: both;"></div>
+<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+  <div>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
+      <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" width="45">
+    </picture>
+  </div>
+  <div>
+    <h1 style="margin: 0; padding: 0; border: none; font-size: 24px; line-height: 1.2;">MPM-Geomechanics</h1>
+    <p style="margin: 2px 0 0 0; padding: 0; font-size: 13px; line-height: 1.2;"><em>An open-source simulator for large-deformation geomechanics</em></p>
+  </div>
+</div>
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
