@@ -17,7 +17,7 @@ SolverExplicit::SolverExplicit() : Solver() {}
 
 void SolverExplicit::Solve()
 {
-	// Initialization of simulation variables
+	// Initialization simulation variables
 	double time = ModelSetup::getTime();
 	double dt = ModelSetup::getTimeStep();
 	int resultSteps = ModelSetup::getResultSteps();
@@ -29,23 +29,22 @@ void SolverExplicit::Solve()
 	int loopCounter = 0;
 	ModelSetup::setLoopCounter(loopCounter);
 
-	// write initial particles and grid states
+	// Write initial particles and grid states
 	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
 
 	// Time integration loop
 	while (iTime < time)
 	{
-		// increment loop counter
+		// Increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
 
-		// Step 1: Particle-to-Grid mass and momentum interpolation
+		// Update contribution nodes
 		Update::contributionNodes(mesh, particles);
 
 		// First contact detection
-		if (contactActive) {
-			contactManager->contactNodalDetection(mesh, bodies);
-		}
+		if (contactActive) { contactManager->contactNodalDetection(mesh, bodies); }
 
+		// Nodal mass and momentum
 		#pragma omp parallel sections num_threads(2)
 		{
 			#pragma omp section
@@ -60,31 +59,25 @@ void SolverExplicit::Solve()
 			Interpolation::nodalMomentumFluid(mesh, bodies);
 		}
 
-		// Compute nodal unit normal vector for contact forces calculation
-		if (contactActive) {
-			contactManager->nodalUnitNormal(mesh, bodies);
-		}
+		// Nodal unit normal for contact
+		if (contactActive) { contactManager->nodalUnitNormal(mesh, bodies);	}
 
-		// Step 1.c: Update seismic velocity and acceleration from record
+		// Update seismic velocity and acceleration from record
 		Seismic::updateSeismicVectors(iTime, loopCounter == 1 ? dt / 2.0 : dt);
 
-		// Step 2: Impose boundary conditions on nodal momentum
+		// Impose boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
 
 		// Impose momentum boundary condition in fluid phase
-		if (twoPhaseActive) {
-			Update::boundaryConditionsMomentumFluid(mesh);
+		if (twoPhaseActive) { Update::boundaryConditionsMomentumFluid(mesh);
 		}
 
-		// Step 3.1: Internal nodal force
+		// Nodal internal forces
 		Interpolation::nodalInternalForce(mesh, particles);
 
-		// nodal internal force of fluid phase
-		if (twoPhaseActive) {
-			Interpolation::nodalInternalForceFluid(mesh, particles);
-		}
+		if (twoPhaseActive) { Interpolation::nodalInternalForceFluid(mesh, particles); }
 
-		// Step 3.2: External nodal force
+		// Nodal external forces
 		Interpolation::nodalExternalForce(mesh, particles);
 
 		if (twoPhaseActive) {
@@ -95,52 +88,43 @@ void SolverExplicit::Solve()
 			Interpolation::nodalDragForceFluid(mesh, bodies);
 		}
 
-		// Step 3.3: Total force nodal force
+		// Total force nodal force
 		Update::nodalTotalForce(mesh);
 
-		// Step 3.3: Impose boundary conditions on total force
+		// Impose boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
 
-		if (twoPhaseActive) {
-			// Impose force boundary conditions
-			Update::boundaryConditionsForceFluid(mesh);
-		}
+		if (twoPhaseActive) { Update::boundaryConditionsForceFluid(mesh); }
 
-		// Step 4: Integrate nodal momentum
+		// Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Apply multi field velocity contact correction
-		if (contactActive) {
-			contactManager->applyVelocityContactCorrection(mesh,bodies,dt);
-		}
+		if (contactActive) { contactManager->applyVelocityContactCorrection(mesh,bodies,dt); }
 
-		// Step 5: Particle updates
-		// 5.1: Update particle velocity
+		// Update particle velocity
 		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
 
-		if (twoPhaseActive) {
-			// update particle velocity of fluid phase
-			Update::particleVelocityFluid(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);
-		}
+		if (twoPhaseActive) { Update::particleVelocityFluid(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);	}
 
-		// Step 5.2: Apply contact correction in particle velocity
+		// Apply contact correction in particle velocity
 		if (useSTLContact){
 
-			// 5.2.a: Apply seismic velocity to marked nodes
+			// Apply seismic velocity to marked nodes
 			Seismic::applySeismicVelocityMarkedSTLNodes(mesh);
 
-			// 5.2.b: Apply velocity contact correction
+			// Apply velocity contact correction
 			terrainContact->apply(mesh, particles, dt);
 		}
 
-		// Step 5.3: Update particle position
+		// Update particle position
 		Update::particlePosition(mesh, particles, dt);
 
-		// Step 5.4: Project particle position if any penetrations
+		// Project particle position if any penetrations
 		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
 
-		// Step 6 (MUSL): Momentum recalculation
-		if (useMUSL) //Rever para adicionar TwoPhase analysis
+		// (MUSL) Momentum recalculation
+		if (useMUSL)
 		{
 			// Step 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh); //Rever para adicionar TwoPhase analysis
@@ -159,21 +143,18 @@ void SolverExplicit::Solve()
 			}
 		}
 
-		// Step 7: Compute nodal velocity
+		// Compute nodal velocity
 		Update::nodalVelocity(mesh);
 
-		// Step 8.1: Update strain increments
+		// Update strain increments
 		Interpolation::particleStrainIncrement(mesh, particles, dt);
 
-		if (twoPhaseActive) {
-			// calculate particle strain increment of fluid phase
-			Interpolation::particleStrainIncrementFluid(mesh, bodies, dt);
-		}
+		if (twoPhaseActive) { Interpolation::particleStrainIncrementFluid(mesh, bodies, dt); }
 
-		// Step 8.2: Update vorticity increments
+		// Update vorticity increments
 		Interpolation::particleVorticityIncrement(mesh, particles, dt);
 
-		// Step 9.1: Update density
+		// Update density
 		Update::particleDensity(particles);
 
 		if (twoPhaseActive) {
@@ -187,22 +168,22 @@ void SolverExplicit::Solve()
 			Update::particlePressure(bodies, dt);
 		}
 
-		// Step 9.2: Update stress
+		// Update stress
 		Update::particleStress(particles);
 
-		// Step 10: Reset nodal values
+		// Reset nodal values
 		Update::resetNodalValues(mesh);
 
-		// Step 11: Compute current kinetic energy
+		// Compute current kinetic energy
 		Energy::computeKineticEnergy(particles);
 
-		// Step 12: Static solution check (Dynamic Relaxation)
+		// Static solution using Dynamic Relaxation
 		DynamicRelaxation::setStaticSolution(particles);
 
-		// Step 13: Advance simulation time
+		// Advance simulation time
 		ModelSetup::setCurrentTime(iTime += dt);
 
-		// write particles and grid results in step
+		// Rrite results in step
 		Output::writeResultInStep(resultSteps, particles, iTime);
 		Output::writeGridInStep(resultSteps, mesh, iTime);
 		Output::writeSTLContactInStep(resultSteps, terrainContact, iTime);
