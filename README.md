@@ -1,13 +1,12 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
-  <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" align="left" width="72" style="margin-right: 20px;">
-</picture> 
-
-# MPM-Geomechanics
-*An open-source simulator for large-deformation geomechanics*
-
-<br clear="left"/>
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
+    <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" align="left" width="75" style="margin-right: 15px;">
+  </picture>
+  MPM-Geomechanics<br>
+  <span style="font-size: 16px; font-weight: normal;"><em>An open-source simulator for large-deformation geomechanics</em></span>
+</h1>
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
