@@ -16,7 +16,7 @@ var classNodeMixture =
     [ "setTotalForceFluid", "classNodeMixture.html#a9eab2f238d2c67c31771c55944ed4f13", null ],
     [ "updateDampingForce", "classNodeMixture.html#acf9ffdf17df8f2596f16e91be73c548b", null ],
     [ "updateTotalForce", "classNodeMixture.html#aad23b55c873ceefba5e3496f5ff6c8e2", null ],
-    [ "updateVelocity", "classNodeMixture.html#aa92a7e632617866fe6ceb0145d179ed5", null ],
+    [ "updateVelocity", "classNodeMixture.html#a7f38849d30151ac6d8c1792dafeba000", null ],
     [ "dampingForceFluid", "classNodeMixture.html#a2ef1c8b7238b49192e4f8a92f70a7358", null ],
     [ "externalForceFluid", "classNodeMixture.html#a152b0a3f69e5e7a65546100923f3e0c5", null ],
     [ "internalForceFluid", "classNodeMixture.html#a52bc800e0625674313bda9d740f9a8a8", null ],

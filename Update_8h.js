@@ -21,6 +21,7 @@ var Update_8h =
     [ "particleVelocity", "Update_8h.html#ab635d5fe5107b783c73cdb0d676597d3", null ],
     [ "particleVelocityFluid", "Update_8h.html#a53ff3fd126882deabd18cff824c37f57", null ],
     [ "resetNodalMomentum", "Update_8h.html#ac360699f47d697b0aeb6fbc78a2ab456", null ],
+    [ "resetNodalMomentumFluid", "Update_8h.html#aba85cd1e613408745547b53fe213b14c", null ],
     [ "resetNodalValues", "Update_8h.html#a783728339e39786e7f3d5cafd0433878", null ],
     [ "setPlaneForce", "Update_8h.html#a928ad605b25b17f71dda34c6c6b1fb6c", null ],
     [ "setPlaneForceContact", "Update_8h.html#af510b18e9c7067a704cbebd03f854aa0", null ],

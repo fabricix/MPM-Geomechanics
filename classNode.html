@@ -268,9 +268,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6aad417d1f5ec1d2fde9bb1f4fcac0d8" id="r_a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8">updateDampingForce</a> ()</td></tr>
 <tr class="memdesc:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the damping nodal force.  <br /></td></tr>
 <tr class="separator:a6aad417d1f5ec1d2fde9bb1f4fcac0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c5e1e80ace265d6da48dad9aaf0e540" id="r_a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540">updateVelocity</a> ()</td></tr>
-<tr class="memdesc:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity.  <br /></td></tr>
-<tr class="separator:a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20ce1b5cef17308b44772fb06b01d52c" id="r_a20ce1b5cef17308b44772fb06b01d52c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a20ce1b5cef17308b44772fb06b01d52c">updateVelocity</a> ()</td></tr>
+<tr class="memdesc:a20ce1b5cef17308b44772fb06b01d52c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity.  <br /></td></tr>
+<tr class="separator:a20ce1b5cef17308b44772fb06b01d52c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ec4cc9f72890708bb0c0f7383723a7" id="r_a53ec4cc9f72890708bb0c0f7383723a7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a53ec4cc9f72890708bb0c0f7383723a7">integrateMomentum</a> (double dt)</td></tr>
 <tr class="separator:a53ec4cc9f72890708bb0c0f7383723a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6fbd73a1bd0635f522cf52acc98b338" id="r_ad6fbd73a1bd0635f522cf52acc98b338"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad6fbd73a1bd0635f522cf52acc98b338">setDistanceLevelSet</a> (double distance)</td></tr>
@@ -1764,8 +1764,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2c5e1e80ace265d6da48dad9aaf0e540" name="a2c5e1e80ace265d6da48dad9aaf0e540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c5e1e80ace265d6da48dad9aaf0e540">&#9670;&#160;</a></span>updateVelocity()</h2>
+<a id="a20ce1b5cef17308b44772fb06b01d52c" name="a20ce1b5cef17308b44772fb06b01d52c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20ce1b5cef17308b44772fb06b01d52c">&#9670;&#160;</a></span>updateVelocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1774,7 +1774,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Node::updateVelocity </td>
+          <td class="memname">virtual void Node::updateVelocity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1782,12 +1782,14 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity. </p>
+
+<p>Reimplemented in <a class="el" href="classNodeMixture.html#a7f38849d30151ac6d8c1792dafeba000">NodeMixture</a>.</p>
 
 </div>
 </div>

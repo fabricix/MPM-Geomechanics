@@ -7,7 +7,8 @@ var Model_8h =
     ] ],
     [ "HydroMechanicalCouplingType", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2", [
       [ "NONE", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693", null ],
-      [ "ONE_WAY", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ]
+      [ "ONE_WAY", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ],
+      [ "FULL_EXPLICIT", "Model_8h.html#a674a0b34f56c6cdda86026c8b6ba5ab2a5ad4a615a657afb4900cdc8bbdb6ae6e", null ]
     ] ],
     [ "InterpolationFunctionType", "Model_8h.html#a73c7cfb411f9b3b1062e5fbe694051ab", [
       [ "LINEAR", "Model_8h.html#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd", null ],

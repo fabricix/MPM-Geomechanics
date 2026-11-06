@@ -86,9 +86,9 @@ var namespaces_dup =
       [ "nodalExternalForce", "namespaceInterpolation.html#a91535eb595322d53d6e5ce48706f3b32", null ],
       [ "nodalExternalForceFluid", "namespaceInterpolation.html#aa0e9ca194089680af902b611e4fd6766", null ],
       [ "nodalInternalForce", "namespaceInterpolation.html#a5db18971ac95ae8f94251cdeb9291dd1", null ],
-      [ "nodalInternalForceFluid", "namespaceInterpolation.html#a1364590284e7b40e5e7482a91078fa18", null ],
+      [ "nodalInternalForceFluid", "namespaceInterpolation.html#a295e45aab3721f9a4ac43118102edea1", null ],
       [ "nodalMass", "namespaceInterpolation.html#ae730bd220a63ca2c8d0842fd7da07791", null ],
-      [ "nodalMassFuid", "namespaceInterpolation.html#ada191e99fa8bd78e8274a4316b8e24a4", null ],
+      [ "nodalMassFluid", "namespaceInterpolation.html#aaee2a688759a23f9eda80c950d450aad", null ],
       [ "nodalMomentum", "namespaceInterpolation.html#a023309bb1189d8072610e1600e0819ed", null ],
       [ "nodalMomentumFluid", "namespaceInterpolation.html#a135cfc683b9cffc0abb3e8542c0b17d6", null ],
       [ "particleDeformationGradient", "namespaceInterpolation.html#a923d69b9adaeb5739275f80227c3f1dd", null ],
@@ -105,7 +105,8 @@ var namespaces_dup =
       ] ],
       [ "HydroMechanicalCouplingType", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2", [
         [ "NONE", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2ab50339a10e1de285ac99d4c3990b8693", null ],
-        [ "ONE_WAY", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ]
+        [ "ONE_WAY", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2aaa30404ca3fb4604d829dacae0444dd1", null ],
+        [ "FULL_EXPLICIT", "namespaceModelSetup.html#a674a0b34f56c6cdda86026c8b6ba5ab2a5ad4a615a657afb4900cdc8bbdb6ae6e", null ]
       ] ],
       [ "InterpolationFunctionType", "namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051ab", [
         [ "LINEAR", "namespaceModelSetup.html#a73c7cfb411f9b3b1062e5fbe694051abadea6e591c30d7c6ee7bfb32b19a0cbbd", null ],
@@ -248,6 +249,7 @@ var namespaces_dup =
       [ "particleVelocity", "namespaceUpdate.html#ab635d5fe5107b783c73cdb0d676597d3", null ],
       [ "particleVelocityFluid", "namespaceUpdate.html#a53ff3fd126882deabd18cff824c37f57", null ],
       [ "resetNodalMomentum", "namespaceUpdate.html#ac360699f47d697b0aeb6fbc78a2ab456", null ],
+      [ "resetNodalMomentumFluid", "namespaceUpdate.html#aba85cd1e613408745547b53fe213b14c", null ],
       [ "resetNodalValues", "namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878", null ],
       [ "setPlaneForce", "namespaceUpdate.html#a928ad605b25b17f71dda34c6c6b1fb6c", null ],
       [ "setPlaneForceContact", "namespaceUpdate.html#af510b18e9c7067a704cbebd03f854aa0", null ],

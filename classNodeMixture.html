@@ -188,9 +188,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af885eeffcec845405e08123b9f1a020f" id="r_af885eeffcec845405e08123b9f1a020f"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNodeMixture.html#af885eeffcec845405e08123b9f1a020f">getMassFluid</a> () const</td></tr>
 <tr class="memdesc:af885eeffcec845405e08123b9f1a020f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the nodal mass of fluid phase.  <br /></td></tr>
 <tr class="separator:af885eeffcec845405e08123b9f1a020f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa92a7e632617866fe6ceb0145d179ed5" id="r_aa92a7e632617866fe6ceb0145d179ed5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNodeMixture.html#aa92a7e632617866fe6ceb0145d179ed5">updateVelocity</a> ()</td></tr>
-<tr class="memdesc:aa92a7e632617866fe6ceb0145d179ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity of mixture.  <br /></td></tr>
-<tr class="separator:aa92a7e632617866fe6ceb0145d179ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f38849d30151ac6d8c1792dafeba000" id="r_a7f38849d30151ac6d8c1792dafeba000"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNodeMixture.html#a7f38849d30151ac6d8c1792dafeba000">updateVelocity</a> () override</td></tr>
+<tr class="memdesc:a7f38849d30151ac6d8c1792dafeba000"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity of mixture.  <br /></td></tr>
+<tr class="separator:a7f38849d30151ac6d8c1792dafeba000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f03d78b443a26e66940622961c14ce8" id="r_a9f03d78b443a26e66940622961c14ce8"><td class="memItemLeft" align="right" valign="top">virtual const Vector3d *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNodeMixture.html#a9f03d78b443a26e66940622961c14ce8">getVelocityFluid</a> () const</td></tr>
 <tr class="memdesc:a9f03d78b443a26e66940622961c14ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the nodal velocity of fluid phase.  <br /></td></tr>
 <tr class="separator:a9f03d78b443a26e66940622961c14ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -276,9 +276,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad9191309b6f3de3656ddf2406994655c inherit pub_methods_classNode" id="r_ad9191309b6f3de3656ddf2406994655c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad9191309b6f3de3656ddf2406994655c">addExternalForce</a> (const Vector3d &amp;external_force_increment)</td></tr>
 <tr class="memdesc:ad9191309b6f3de3656ddf2406994655c inherit pub_methods_classNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a external force increment to the nodal external force.  <br /></td></tr>
 <tr class="separator:ad9191309b6f3de3656ddf2406994655c inherit pub_methods_classNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c5e1e80ace265d6da48dad9aaf0e540 inherit pub_methods_classNode" id="r_a2c5e1e80ace265d6da48dad9aaf0e540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540">updateVelocity</a> ()</td></tr>
-<tr class="memdesc:a2c5e1e80ace265d6da48dad9aaf0e540 inherit pub_methods_classNode"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity.  <br /></td></tr>
-<tr class="separator:a2c5e1e80ace265d6da48dad9aaf0e540 inherit pub_methods_classNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6fbd73a1bd0635f522cf52acc98b338 inherit pub_methods_classNode" id="r_ad6fbd73a1bd0635f522cf52acc98b338"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ad6fbd73a1bd0635f522cf52acc98b338">setDistanceLevelSet</a> (double distance)</td></tr>
 <tr class="memdesc:ad6fbd73a1bd0635f522cf52acc98b338 inherit pub_methods_classNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the distance level set function value of the node.  <br /></td></tr>
 <tr class="separator:ad6fbd73a1bd0635f522cf52acc98b338 inherit pub_methods_classNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -874,8 +871,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="aa92a7e632617866fe6ceb0145d179ed5" name="aa92a7e632617866fe6ceb0145d179ed5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa92a7e632617866fe6ceb0145d179ed5">&#9670;&#160;</a></span>updateVelocity()</h2>
+<a id="a7f38849d30151ac6d8c1792dafeba000" name="a7f38849d30151ac6d8c1792dafeba000"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f38849d30151ac6d8c1792dafeba000">&#9670;&#160;</a></span>updateVelocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -892,12 +889,14 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> nodal velocity of mixture. </p>
+
+<p>Reimplemented from <a class="el" href="classNode.html#a20ce1b5cef17308b44772fb06b01d52c">Node</a>.</p>
 
 </div>
 </div>

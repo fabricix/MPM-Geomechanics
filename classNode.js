@@ -47,7 +47,7 @@ var classNode =
     [ "setVolume", "classNode.html#afb4d9670e7f7810a344e03ff9b5ccb58", null ],
     [ "updateDampingForce", "classNode.html#a6aad417d1f5ec1d2fde9bb1f4fcac0d8", null ],
     [ "updateTotalForce", "classNode.html#a302b87a90c5372faaabc07077bb2ab74", null ],
-    [ "updateVelocity", "classNode.html#a2c5e1e80ace265d6da48dad9aaf0e540", null ],
+    [ "updateVelocity", "classNode.html#a20ce1b5cef17308b44772fb06b01d52c", null ],
     [ "active", "classNode.html#a9f86329e8fb9d0bb3541929ba067088a", null ],
     [ "coordinates", "classNode.html#a924e2f81d6f9788fd5a3e35dfe8c6ae6", null ],
     [ "dampingForce", "classNode.html#a1beeb10273f0b88112508a2e31a72f77", null ],
