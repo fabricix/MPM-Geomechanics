@@ -1,9 +1,20 @@
-<p align="center">
-  <img src="manual/latex/figures/mpm-geomechanics-logo-light.png#gh-light-mode-only"
-       alt="MPM-Geomechanics logo" width="600">
-  <img src="manual/latex/figures/mpm-geomechanics-logo-dark.png#gh-dark-mode-only"
-       alt="MPM-Geomechanics logo" width="600">
-</p>
+<table align="left">
+  <tr>
+    <td align="center" width="65" style="vertical-align: middle !important; padding-right: 9px;">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
+        <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
+        <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" width="45" style="display: block; margin: 0 auto;" >
+      </picture>
+    </td>
+    <td style="vertical-align: middle !important;">
+      <h1 style="margin: 1px; padding: 0; border: none; font-size: 24px; line-height: 1.2">MPM-Geomechanics</h1>
+      <p style="margin: 1px 0 0 0; font-size: 11px;"><em>
+      An open-source simulator for large-deformation geomechanics</em></p>
+    </td>
+  </tr>
+</table>
+<div style="clear: both;"></div>
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
@@ -19,12 +30,14 @@ The objective of this repository is to provide a platform for developing the MPM
 
 ## Collaboration
 
-If you are interested to collaborate with this project, please contact to fabricio.fernandez@ucn.cl. There are several topics for developing in this project, here there are a few of them:
+If you are interested to collaborate with this project, please contact to contact@mpmgeomechanics.com. There are several topics for developing in this project, here there are a few of them:
 
 - advanced unsaturated constitutive model for clay and sand (CASM-X) [(Bui et al.,2008)](https://doi.org/10.1002/nag.688)
 - contact method for large terrain models using STL meshes [(Zhang et al., 2023)](https://www.sciencedirect.com/science/article/abs/pii/S0266352X23001684) :white_check_mark:
 - penalty method for avoiding any penetration in STL meshes :white_check_mark:
 - one direction hydro-mechanical coupling :white_check_mark:
+- Explicit fully hydro-mechanical coupling :white_check_mark: [(Liu et al., 2017)](https://doi.org/10.1016/j.powtec.2017.02.022
+)
 - axisymmetric formulation [(Nairn & Guilkey, 2015)](https://www.cof.orst.edu/cof/wse/faculty/Nairn/papers/AxisymGIMP.pdf)
 - implicit [(Nair & Roy, 2012)](https://doi.org/10.1080/15376494.2010.550082) and semi-implicit [(Kularathna et al., 2021)](https://doi.org/10.1002/nag.3207) time integration
 - convected particle domain interpolation [(Sadeghirad et al., 2011)](https://onlinelibrary.wiley.com/doi/10.1002/nme.3110)
@@ -40,9 +53,9 @@ If you are interested to collaborate with this project, please contact to fabric
 
 The main features of the program in the actuality are:
 
-- Three-dimensional formulation (can simulated 2D plane strain problems too)
-- Dynamic formulation (suitable for earthquake and general dynamic problems)
-- Shared memory parallelization (for computational time reduction)
+- Three-dimensional formulation
+- Dynamic formulation suitable for earthquake and general dynamic problems.
+- Shared memory parallelization for computational time reduction
 - Several constitutive models for soils and rock, including softening and hardening options.
 
 ## Documentation and Compilation
@@ -52,16 +65,7 @@ To generate the documentation locally with **Doxygen**, run the following comman
 ```bash
 doxygen Doxyfile
 ```
-
-The documentation will be saved in the `/docs/` folder, with the main entry point at:
-
-```
-/docs/index.html
-```
-
-You can open this file in any web browser.
-
-For the **online documentation**, visit: [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/)
+The documentation will be saved in the `/docs/` folder, with the main entry point at: `/docs/index.html`. You can open this file in any web browser. For the online documentation, visit: [MPM-Geomechanics](https://fabricix.github.io/MPM-Geomechanics/)
 
 ## Compiled binaries
 
@@ -89,8 +93,6 @@ For more details of this simulation see the input file [slope-failure.json](http
 
 ### Exponential softening model to simulate fracturing process in rock
 
-In this example an elastoplastic body impacts over an elastic body. The fracturing process in rock masses is captured using an exponential strain softening over tensile strength in the elastoplastic material: $\sigma^t(\epsilon_p^{pleff}) = \sigma^t_{final}-(\sigma^t_{initial}-\sigma^t_{final})e^{-\eta \epsilon_p^{pleff}}$, where $\eta$ is the shape factor and $\epsilon_p^{pleff}=\sqrt{2/3\epsilon_{pij}^{pl}\epsilon_{pij}^{pl}}$ is the effective plastic strain.
-
 #### Example 1:
 
 Fracturing induced by exponential softening over the tensile strength. The yellow body is subjected to an initial velocity. The withe body is elastic.
@@ -110,9 +112,7 @@ See [exponential-softening-refined.json](/examples/exponential-softening/refined
 
 ## Contributing
 
-If you are part of the team, clone the repo and submit pull requests from your branches.
-
-If you are an external contributor, please fork the repository and submit a pull request from your fork.
+The way to contribution is to clone the repo and submit pull requests from your branches. If you are an external contributor, please fork the repository and submit a pull request from your fork.
 
 ## Disclaimer of Liability
 
