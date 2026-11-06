@@ -126,15 +126,16 @@ void SolverExplicit::Solve()
 		// (MUSL) Momentum recalculation
 		if (useMUSL)
 		{
-			// Step 6.1: Recalculate nodal momentum
+			// Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh); //Rever para adicionar TwoPhase analysis
+			
 			if (contactActive) {
 				contactManager->nodalMomentumContactUpdate(mesh, dt);
 			}
 
 			Interpolation::nodalMomentum(mesh, particles); //Rever para adicionar TwoPhase analysis
 
-			// Step 6.2: Reapply BCs on nodal momentum
+			// Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
 
 			if (twoPhaseActive) {
