@@ -26,8 +26,8 @@
   "n_phases": 2,
   "mesh": {
     "cells_dimension": [
-      1,
-      1,
+      0.025,
+      0.025,
       0.025
     ],
     "cells_number": [
@@ -84,26 +84,26 @@
         0
       ],
       "point_p2": [
-        1,
-        1,
+        0.025,
+        0.025,
         1
       ],
       "material_id": 1
     }
   },
   "initial_pressure_box": {
-    "pressure_initial_1": {
+    "initial": {
       "point_p1": [
         0,
         0,
         0
       ],
       "point_p2": [
-        1,
-        1,
+        0.025,
+        0.025,
         1
       ],
-      "pressure": 1000.0
+      "pressure": 1000
     }
   },
   "prescribed_pressure_box": {
@@ -114,8 +114,8 @@
         0.9935
       ],
       "point_p2": [
-        1,
-        1,
+        0.025,
+        0.025,
         1
       ],
       "pressure": 0
@@ -129,14 +129,14 @@
         0.9935
       ],
       "point_p2": [
-        1,
-        1,
+        0.025,
+        0.025,
         1
       ],
       "load": [
         0,
         0,
-        -1000
+        -0.625
       ]
     }
   },

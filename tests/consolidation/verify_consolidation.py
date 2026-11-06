@@ -1,11 +1,11 @@
 """Run and compare a prepressurized 1D column with its diffusion solution.
 
 Usage:
-  python tests/consolidation/Auxiliar/verify_consolidation.py --exe PATH_TO_EXE --output PATH_TO_RUNS
-  python tests/consolidation/Auxiliar/verify_consolidation.py --output PATH_TO_RUNS --analyze-only
+  python tests/consolidation/verify_consolidation.py --exe PATH_TO_EXE --output PATH_TO_RUNS --cubic-cells
+  python tests/consolidation/verify_consolidation.py --output PATH_TO_RUNS --analyze-only
 
 Requires numpy and matplotlib. Each solver runs in its own output directory.
-The user's consolidation.json and the solver sources are never overwritten.
+The n20 reference input and the solver sources are never overwritten.
 """
 
 import argparse
@@ -30,8 +30,8 @@ CASES = {"n20": (20, 1e-5), "n40": (40, 5e-6),
 SOURCE = "https://docs.itascacg.com/pfc600/flac3d/zone/test3d/Fluid/1DConsolidation/1dconsolidation.html"
 
 
-def prepare(output):
-    sketch = json.loads((HERE / "consolidation.json").read_text())
+def prepare(output, cubic_cells=False):
+    sketch = json.loads((HERE / "n20" / "input.json").read_text())
     for name, (cells, dt) in CASES.items():
         d = copy.deepcopy(sketch)
         d.pop("NO_load_distributed_box", None)
@@ -39,15 +39,16 @@ def prepare(output):
         if name.endswith("_slow"):
             d["time"] = 1.6
             d["material"]["elastic"]["hydraulic_conductivity"] = [0.0001] * 3
-        d["mesh"].update(cells_dimension=[1, 1, 1 / cells], cells_number=[1, 1, cells])
-        d["body"]["soil"]["point_p2"] = [1, 1, 1]
+        width = 1 / cells if cubic_cells else 1
+        d["mesh"].update(cells_dimension=[width, width, 1 / cells], cells_number=[1, 1, cells])
+        d["body"]["soil"]["point_p2"] = [width, width, 1]
         d["initial_pressure_box"] = {"initial": {
-            "point_p1": [0, 0, 0], "point_p2": [1, 1, 1], "pressure": 1000}}
+            "point_p1": [0, 0, 0], "point_p2": [width, width, 1], "pressure": 1000}}
         # One uppermost particle layer, assigned at setup and kept prescribed.
-        top = {"point_p1": [0, 0, 1 - 0.26 / cells], "point_p2": [1, 1, 1]}
+        top = {"point_p1": [0, 0, 1 - 0.26 / cells], "point_p2": [width, width, 1]}
         d["prescribed_pressure_box"] = {"drain": {**top, "pressure": 0}}
-        # This API takes TOTAL FORCE (N), not traction (Pa). Area = 1 m2.
-        d["load_distributed_box"] = {"top_load": {**top, "load": [0, 0, -1000]}}
+        # This API takes TOTAL FORCE (N); preserve the applied pressure at 1000 Pa.
+        d["load_distributed_box"] = {"top_load": {**top, "load": [0, 0, -round(1000 * width**2, 12)]}}
         d["results"] = {"print": 80, "material_point_results": [
             "id", "displacement", "pressure", "stress", "velocity", "active"],
             "grid_nodal_results": ["none"]}
@@ -83,7 +84,7 @@ def read_state(path):
     return xyz, displacement, fields
 
 
-def analyze(output):
+def analyze(output, legacy_time_labels=False):
     metrics = {}
     fig, axes = plt.subplots(1, 3, figsize=(16, 4.6))
     profile_fig, profile_axes = plt.subplots(1, 3, figsize=(13, 4.6), sharey=True)
@@ -104,9 +105,8 @@ def analyze(output):
         all_finite, all_active, max_lateral = True, True, 0.
         for i, item in enumerate(collection):
             label_t = float(item.attrib["timestep"])
-            # The current solver writes the UPDATED state before advancing iTime.
-            # The initial snapshot is unadvanced. Do not change solver code here.
-            t = 0. if i == 0 else label_t + dt
+            # Current solver exports the advanced time. Older runs need an opt-in correction.
+            t = label_t + dt if legacy_time_labels and i > 0 else label_t
             xyz, u, fields = read_state(folder / "particles" / item.attrib["file"])
             z = (xyz - u)[:, 2]
             p = fields["Pressure"]
@@ -152,8 +152,8 @@ def analyze(output):
         axes[1].plot(np.array(times) * cv, np.array(settlements) * 1e6, label=name)
         axes[2].plot(np.array(times) * cv, np.array(errors) * 100, label=name)
         if name == "n40_dt_half":
-            axes[0].plot(np.array(times) * cv, mean_refs, "k--", label="Analytical, particle sampling")
-            axes[1].plot(np.array(times) * cv, np.array(settlement_refs) * 1e6, "k--", label="Analytical, top particle layer")
+            axes[0].plot(np.array(times) * cv, mean_refs, "k--", label="Analytical")
+            axes[1].plot(np.array(times) * cv, np.array(settlement_refs) * 1e6, "k--", label="Analytical")
         for ax, target in zip(profile_axes, [0.1, 0.5, 1.]):
             if times[-1] * cv < target:
                 continue
@@ -164,15 +164,15 @@ def analyze(output):
             if name == "n40_dt_half":
                 zz = np.linspace(0, 1, 200)
                 pp, _ = analytical(zz, target / cv, height, p0, modulus, cv)
-                ax.plot(pp / p0, zz, "k--", label="Analytical at target Tv")
-            ax.set(title=f"Tv approximately {target}", xlabel="p / p0")
+                ax.plot(pp / p0, zz, "k--", label="Analytical")
+            ax.set(title=f"Tv = {target}", xlabel="p / p0")
     for ax, title, ylabel in zip(axes,
             ["Mean pressure at particle positions", "Settlement of upper particle layer", "Pressure profile error"],
             ["mean(p) / p0", "Settlement (micrometres)", "RMSE / p0 (%)"]):
-        ax.set(title=title, xlabel="Tv = cv t / H squared", ylabel=ylabel)
+        ax.set(title=title, xlabel="Tv", ylabel=ylabel)
         ax.grid(alpha=.3)
         ax.legend(fontsize=7)
-    profile_axes[0].set_ylabel("Initial height z / H")
+    profile_axes[0].set_ylabel("z / H")
     for ax in profile_axes:
         ax.grid(alpha=.3)
         ax.legend(fontsize=7)
@@ -195,6 +195,10 @@ def main():
     parser.add_argument("--exe", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--analyze-only", action="store_true")
+    parser.add_argument("--cubic-cells", action="store_true",
+                        help="Use one cubic cell laterally and preserve the 1000 Pa load")
+    parser.add_argument("--legacy-time-labels", action="store_true",
+                        help="Add dt to noninitial labels for runs made before the output-time fix")
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -202,16 +206,19 @@ def main():
         if not args.exe:
             parser.error("--exe is required unless --analyze-only is used")
         exe = args.exe.resolve()
-        prepare(output)
+        prepare(output, cubic_cells=args.cubic_cells)
         (output / "run_metadata.json").write_text(json.dumps({
             "executable": str(exe), "sha256": hashlib.sha256(exe.read_bytes()).hexdigest(),
-            "reference": SOURCE, "time_label_correction_s": "+dt for noninitial outputs",
+            "reference": SOURCE,
+            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=HERE, text=True).strip(),
+            "cubic_cells": args.cubic_cells,
+            "time_label_correction_s": "+dt for noninitial outputs" if args.legacy_time_labels else "none",
             "acceptance": "RMSE pressure/p0 and displacement/(p0 H / M) < 5% for Tv >= 0.05; finite, active, lateral displacement < 1e-8 m"}, indent=2))
         for name in CASES:
             with (output / name / "execution.log").open("w") as log:
                 subprocess.run([str(exe), "input.json"], cwd=output / name,
                                stdout=log, stderr=subprocess.STDOUT, check=True)
-    raise SystemExit(0 if analyze(output) else 1)
+    raise SystemExit(0 if analyze(output, legacy_time_labels=args.legacy_time_labels) else 1)
 
 
 if __name__ == "__main__":
