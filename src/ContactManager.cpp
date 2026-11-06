@@ -273,11 +273,11 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				if (it != contactNodes.end()) {
 					Node::ContactNodeData& contactNodeData = it->second;
 
-					//add mass at node of the master body 
+					// add mass at node of the master body 
 					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 						contactNodeData.normalMaster += nodalMassGradient;
 					}
-					//add mass at node of the slave body 
+					// add mass at node of the slave body 
 					else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 						contactNodeData.normalSlave += nodalMassGradient;
 					}
