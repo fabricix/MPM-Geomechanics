@@ -82,7 +82,7 @@ void SolverExplicit::Solve()
 
 		// Apply multi field velocity contact correction
 		if (contactActive) {
-			contactManager->applyVelocityContactCorrection(mesh,bodies,dt);
+			contactManager->applyVelocityContactCorrection(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 		}
 
 		// Step 5: Particle updates
@@ -110,9 +110,6 @@ void SolverExplicit::Solve()
 		{	
 			// Step 6.1: Recalculate nodal momentum
 			Update::resetNodalMomentum(mesh);
-			if (contactActive) {
-				contactManager->nodalMomentumContactUpdate(mesh, dt);
-			}
 
 			Interpolation::nodalMomentum(mesh, particles);
 			

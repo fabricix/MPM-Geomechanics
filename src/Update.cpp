@@ -109,6 +109,16 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 		// explicitly nullify momentum
 		gNodes->at(i)->setMomentum(Vector3d::Zero());
 	}
+	if (ModelSetup::getContactActive()) {
+    	auto& contactNodes = mesh->getContactNodes();
+
+    	for (auto& entry : contactNodes) {
+        	auto& contactData = entry.second;
+
+        	contactData.momentumMaster.setZero();
+        	contactData.momentumSlave.setZero();
+    	}
+	}
 }
 
 void Update::particleDensity(vector<Particle*>* particles) {

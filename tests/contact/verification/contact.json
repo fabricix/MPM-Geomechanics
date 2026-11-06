@@ -57,8 +57,7 @@
       }
     ],
     "contact_manager":{
-      "active": true,
-      "real_distance_correction_coefficient": 0.5
+      "active": true
     },
     
     "contact":[
