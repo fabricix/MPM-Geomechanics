@@ -1,18 +1,13 @@
-<table style="border: none; background: transparent;">
-  <tr style="background: transparent;">
-    <td align="center" width="60" style="border: none; vertical-align: middle; padding: 0 12px 0 0;">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
-        <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
-        <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" width="42" style="display: block;">
-      </picture>
-    </td>
-    <td style="border: none; vertical-align: middle; padding: 0;">
-      <h1 style="margin: 0; padding: 0; border: none; font-size: 24px; line-height: 1.2;">MPM-Geomechanics</h1>
-      <p style="margin: 2px 0 0 0; padding: 0; font-size: 13px; line-height: 1.2;"><em>An open-source simulator for large-deformation geomechanics</em></p>
-    </td>
-  </tr>
-</table>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="manual/latex/figures/mpm-geomechanics-icon-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="manual/latex/figures/mpm-geomechanics-icon-light.png">
+  <img alt="MPM-Geomechanics icon" src="manual/latex/figures/mpm-geomechanics-icon-light.png" align="left" width="72" style="margin-right: 20px;">
+</picture> 
+
+# MPM-Geomechanics
+*An open-source simulator for large-deformation geomechanics*
+
+<br clear="left"/>
 
 [![CI](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/c-cpp.yml)
 [![MSBuild](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml/badge.svg)](https://github.com/fabricix/MPM-Geomechanics/actions/workflows/msbuild.yml)
