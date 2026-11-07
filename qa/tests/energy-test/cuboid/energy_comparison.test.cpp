@@ -8,17 +8,17 @@
 #include <MPM.h>
 #include <filesystem>
 
-double sum_energy(const std::string &filename)
+std::vector<double> sum_energy(const std::string &filename)
 {
 
   std::ifstream file(filename);
   std::string line;
-  double sum = 0.0;
+  std::vector<double> energies;
 
   if (!file.is_open())
   {
     std::cerr << "Error opening file: " << filename << std::endl;
-    return -1.0;
+    return std::vector<double>();
   }
 
   // Saltar encabezado
@@ -34,21 +34,21 @@ double sum_energy(const std::string &filename)
     {
       try
       {
-        sum += std::stod(second);
+        energies.push_back(std::stod(second));
       }
       catch (...)
       {
         std::cerr << "Error converting value to double in file: " << filename
                   << " at line: " << line << std::endl;
-        return -1.0;
+        return std::vector<double>();
       }
     }
   }
 
-  return sum;
+  return energies;
 }
 
-double analyticalEnergy(const std::string &time_energy_file)
+std::vector<double> analyticalEnergy(const std::string &time_energy_file)
 {
   // Constants from the analytical energy calculation
   const double g = 9.81;    // gravity (m/s²)
@@ -57,12 +57,12 @@ double analyticalEnergy(const std::string &time_energy_file)
 
   std::ifstream file(time_energy_file);
   std::string line;
-  double sum = 0.0;
+  std::vector<double> energies;
 
   if (!file.is_open())
   {
     std::cerr << "Error opening file: " << time_energy_file << std::endl;
-    return -1.0;
+    return std::vector<double>();
   }
 
   // Skip header
@@ -97,37 +97,42 @@ double analyticalEnergy(const std::string &time_energy_file)
         oss << std::scientific << std::setprecision(5) << energy;
         std::string rounded_energy_str = oss.str();
         double rounded_energy = std::stod(rounded_energy_str);
-        std::cout << "Analytical energy at time " << t << " : " << rounded_energy_str << std::endl;
 
-        sum += rounded_energy;
+        energies.push_back(rounded_energy);
       }
       catch (...)
       {
         std::cerr << "Error converting value to double in file: " << time_energy_file
-          << " at line: " << line << std::endl;
-        return -1.0;
+                  << " at line: " << line << std::endl;
+        return std::vector<double>();
       }
     }
   }
 
-  return sum;
+  return energies;
 }
 
 void executeSimulation()
 {
-  std::filesystem::path test_dir = std::filesystem::current_path() / ".." / ".." / "qa" / "tests" / "energy-test";
-  std::filesystem::current_path(test_dir);
-  std::filesystem::path exe_path;
-  std::string script;
-
   try
   {
-    exe_path = std::filesystem::path("..") / ".." / ".." / "build" / "CMake" / "MPM-Geomechanics";
-#ifdef _WIN32
-    exe_path += ".exe";
-#endif
+    std::cout << "Verifying simulation environment..." << std::endl;
 
-    script = exe_path.string() + " cuboid.json";
+    const std::filesystem::path test_dir{MPM_TEST_DIR};
+    const std::filesystem::path exe_path{MPM_EXECUTABLE_PATH};
+
+    if (!std::filesystem::is_directory(test_dir))
+      throw std::runtime_error("No test directory found");
+
+    if (!std::filesystem::is_regular_file(exe_path))
+      throw std::runtime_error("No executable found");
+
+    std::filesystem::current_path(test_dir);
+
+    std::cout << "Starting Simulation: " << std::endl;
+
+    std::string script = exe_path.string() + " cuboid.json";
+    std::cout << "Executing script: " << script << std::endl;
     int response = system(script.c_str());
 
     if (response == 0)
@@ -148,6 +153,7 @@ void executeSimulation()
     if (!file.is_open())
     {
       std::cerr << "Error opening file: " << filename << std::endl;
+      FAIL() << "Could not open time-energy file.";
     }
     else
     {
@@ -161,17 +167,22 @@ void executeSimulation()
   }
 }
 
-TEST(ENERGY_COMPARISON, ENERGY_SUM)
+TEST(ENERGY_COMPARISON, CUBOID_ENERGY)
 {
   executeSimulation();
 
-  double main_energy = analyticalEnergy("time-energy.csv");
-  double test_energy = sum_energy("time-energy.csv");
+  std::vector<double> main_energies = analyticalEnergy("time-energy.csv");
+  std::vector<double> test_energies = sum_energy("time-energy.csv");
 
-  if (main_energy == -1.0 || test_energy == -1.0)
+  if (main_energies.empty() || test_energies.empty())
   {
     FAIL() << "Could not calculate energy from one or both files.";
   }
 
-  EXPECT_EQ(main_energy, test_energy);
+  ASSERT_EQ(main_energies.size(), test_energies.size()) << "Energy vectors have different sizes.";
+
+  for (size_t i = 0; i < main_energies.size(); ++i)
+  {
+    EXPECT_EQ(main_energies[i], test_energies[i]);
+  }
 }
