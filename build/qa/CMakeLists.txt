@@ -73,6 +73,7 @@ set(MPM_EXECUTABLE
     CACHE FILEPATH "Ruta al ejecutable del simulador")
 
 target_compile_definitions(MPM-Geomechanics-tests PRIVATE
+    MPM_PROJECT_ROOT="${MPM_ROOT}"
     MPM_TEST_DIR="${MPM_ROOT}/qa/tests/energy-test/cuboid"
     MPM_EXECUTABLE_PATH="${MPM_EXECUTABLE}"
 )
