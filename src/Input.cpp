@@ -1071,11 +1071,21 @@ vector<Contact*> Input::getContactList() {
 				}
 
 				// real distance correction coefficient
-				string normal_type = "";
+				Contact::NormalType normal_type;
 				if ((*it)["normal_type"].is_string()) {
-					normal_type = ((*it)["normal_type"]);
+					string normal_type_str = ((*it)["normal_type"]);
+
+					if (normal_type_str != "collinear" && normal_type_str != "master" && normal_type_str != "slave") {
+						Warning::printMessage("Error: invalid normal type in contact definition");
+						Warning::printMessage("Error: Assuming normal type 'master'");
+
+						normal_type_str = "master";
+					}
+
+					normal_type = Contact::getNormalTypeString(normal_type_str);
 				}
 				else {
+					Warning::printMessage("Error: Bad normal type definition");
 					throw(0);
 				}
 
