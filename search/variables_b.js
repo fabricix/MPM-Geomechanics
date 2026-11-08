@@ -11,6 +11,6 @@ var searchData=
   ['normalcontactforce_8',['normalContactForce',['../structNode_1_1ContactNodeData.html#a5c232cec89858eaeaef1dab0b7ea8efc',1,'Node::ContactNodeData']]],
   ['normalmaster_9',['normalMaster',['../structNode_1_1ContactNodeData.html#a17ea662a5c12d35bf99b8d3351f4dcb7',1,'Node::ContactNodeData']]],
   ['normalslave_10',['normalSlave',['../structNode_1_1ContactNodeData.html#a7d97a6d001a81f266f512874c72fa970',1,'Node::ContactNodeData']]],
-  ['normaltype_11',['normalType',['../classContact.html#a845e4f0386b70e28b21600059198bda7',1,'Contact']]],
+  ['normaltype_11',['normalType',['../classContact.html#a16b6a4a9def811980e18fadc1f6f8907',1,'Contact']]],
   ['nrows_12',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]]
 ];

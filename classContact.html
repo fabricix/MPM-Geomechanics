@@ -107,7 +107,9 @@ $(document).ready(function(){initNavTree('classContact.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classContact-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Contact Class Reference</div></div>
@@ -118,22 +120,21 @@ $(document).ready(function(){initNavTree('classContact.html',''); initResizable(
  <a href="classContact.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Contact_8h_source.html">Contact.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for Contact:</div>
-<div class="dyncontent">
-<div class="center"><img src="classContact__coll__graph.png" border="0" usemap="#aContact_coll__map" alt="Collaboration graph"/></div>
-<map name="aContact_coll__map" id="aContact_coll__map">
-<area shape="rect" title="Represents a frictional contact between bodies." alt="" coords="5,93,77,119"/>
-<area shape="rect" title=" " alt="" coords="12,5,71,31"/>
-<area shape="poly" title=" " alt="" coords="44,45,44,93,39,93,39,45"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa92c688ff4db690e51788eb19f3cedba" id="r_aa92c688ff4db690e51788eb19f3cedba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> { <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedbaa20176505d0d3ba639a0d62b4c83cf2f2">MASTER</a>
+, <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedbaa9076913da8bd8f9e55f124dbac4f679e">COLLINEAR</a>
+, <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedbaaea42dc447e763bc37423b1ef0f68afe9">SLAVE</a>
+ }</td></tr>
+<tr class="memdesc:aa92c688ff4db690e51788eb19f3cedba"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classContact.html" title="Represents a frictional contact between bodies.">Contact</a> normal selection and corresponding input strings.  <a href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">More...</a><br /></td></tr>
+<tr class="separator:aa92c688ff4db690e51788eb19f3cedba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac43474837c16f2626b426f6fc57d3c94" id="r_ac43474837c16f2626b426f6fc57d3c94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ac43474837c16f2626b426f6fc57d3c94">Contact</a> (int <a class="el" href="classContact.html#aa31847b281001bb11f2e8e50c039c3b2">id</a>, double friction, int master_id, int slave_id, string normal_type)</td></tr>
-<tr class="memdesc:ac43474837c16f2626b426f6fc57d3c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <br /></td></tr>
-<tr class="separator:ac43474837c16f2626b426f6fc57d3c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a290f59a1763dc9542b6b21d2981aeba5" id="r_a290f59a1763dc9542b6b21d2981aeba5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a290f59a1763dc9542b6b21d2981aeba5">Contact</a> (int <a class="el" href="classContact.html#aa31847b281001bb11f2e8e50c039c3b2">id</a>, double friction, int master_id, int slave_id, <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> normal_type)</td></tr>
+<tr class="memdesc:a290f59a1763dc9542b6b21d2981aeba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <br /></td></tr>
+<tr class="separator:a290f59a1763dc9542b6b21d2981aeba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11d908db352f83ad63bebbd8e790fdc1" id="r_a11d908db352f83ad63bebbd8e790fdc1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a11d908db352f83ad63bebbd8e790fdc1">~Contact</a> ()</td></tr>
 <tr class="memdesc:a11d908db352f83ad63bebbd8e790fdc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <br /></td></tr>
 <tr class="separator:a11d908db352f83ad63bebbd8e790fdc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,8 +146,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad27d2129811bc87211a6072393b20970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c239cb39ee852a6578362f6aad9d865" id="r_a1c239cb39ee852a6578362f6aad9d865"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a1c239cb39ee852a6578362f6aad9d865">getSlaveId</a> () const</td></tr>
 <tr class="separator:a1c239cb39ee852a6578362f6aad9d865"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf9f40cc281689652418cbf97cd83ab2" id="r_aaf9f40cc281689652418cbf97cd83ab2"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#aaf9f40cc281689652418cbf97cd83ab2">getNormalType</a> () const</td></tr>
-<tr class="separator:aaf9f40cc281689652418cbf97cd83ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e2a28e199b324721ba7d66030cfbd3c" id="r_a1e2a28e199b324721ba7d66030cfbd3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a1e2a28e199b324721ba7d66030cfbd3c">getNormalType</a> () const</td></tr>
+<tr class="separator:a1e2a28e199b324721ba7d66030cfbd3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a874132c47c459ea2b53044e2202e912b" id="r_a874132c47c459ea2b53044e2202e912b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a874132c47c459ea2b53044e2202e912b">setId</a> (int new_id)</td></tr>
 <tr class="separator:a874132c47c459ea2b53044e2202e912b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40192c3bc0c3eefd3014c692006e87b9" id="r_a40192c3bc0c3eefd3014c692006e87b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a40192c3bc0c3eefd3014c692006e87b9">setFrictionCoefficient</a> (double mu)</td></tr>
@@ -155,8 +156,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac6b07691cc644aa87ae48e0b2a6ca13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45cfb89a5765ccaee2d90916f5844ce2" id="r_a45cfb89a5765ccaee2d90916f5844ce2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a45cfb89a5765ccaee2d90916f5844ce2">setSlaveId</a> (int new_slave_id)</td></tr>
 <tr class="separator:a45cfb89a5765ccaee2d90916f5844ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac00143b709622e0aed063f3cc3c5c73d" id="r_ac00143b709622e0aed063f3cc3c5c73d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ac00143b709622e0aed063f3cc3c5c73d">setNormalType</a> (const string &amp;type)</td></tr>
-<tr class="separator:ac00143b709622e0aed063f3cc3c5c73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e427492a6f6414c69db1b5cfccb88f" id="r_a16e427492a6f6414c69db1b5cfccb88f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a16e427492a6f6414c69db1b5cfccb88f">setNormalType</a> (<a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> type)</td></tr>
+<tr class="separator:a16e427492a6f6414c69db1b5cfccb88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a109c17d57477b30ebacfaf76b108d22f" id="r_a109c17d57477b30ebacfaf76b108d22f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a109c17d57477b30ebacfaf76b108d22f">getNormalTypeString</a> (const string &amp;type)</td></tr>
+<tr class="separator:a109c17d57477b30ebacfaf76b108d22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -169,15 +175,40 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a2ffaa6b59e182e4a3a6a7923e34570f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae075c1f9b0c1bccb6b4d28bcf99155fb" id="r_ae075c1f9b0c1bccb6b4d28bcf99155fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#ae075c1f9b0c1bccb6b4d28bcf99155fb">slaveId</a> = 1</td></tr>
 <tr class="separator:ae075c1f9b0c1bccb6b4d28bcf99155fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a845e4f0386b70e28b21600059198bda7" id="r_a845e4f0386b70e28b21600059198bda7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a845e4f0386b70e28b21600059198bda7">normalType</a> = &quot;master&quot;</td></tr>
-<tr class="memdesc:a845e4f0386b70e28b21600059198bda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal type: "master", "slave" or "collinear".  <br /></td></tr>
-<tr class="separator:a845e4f0386b70e28b21600059198bda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16b6a4a9def811980e18fadc1f6f8907" id="r_a16b6a4a9def811980e18fadc1f6f8907"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContact.html#a16b6a4a9def811980e18fadc1f6f8907">normalType</a> = <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedbaa20176505d0d3ba639a0d62b4c83cf2f2">MASTER</a></td></tr>
+<tr class="memdesc:a16b6a4a9def811980e18fadc1f6f8907"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal type: MASTER, COLLINEAR or SLAVE.  <br /></td></tr>
+<tr class="separator:a16b6a4a9def811980e18fadc1f6f8907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a frictional contact between bodies. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac43474837c16f2626b426f6fc57d3c94" name="ac43474837c16f2626b426f6fc57d3c94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac43474837c16f2626b426f6fc57d3c94">&#9670;&#160;</a></span>Contact()</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="aa92c688ff4db690e51788eb19f3cedba" name="aa92c688ff4db690e51788eb19f3cedba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa92c688ff4db690e51788eb19f3cedba">&#9670;&#160;</a></span>NormalType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">Contact::NormalType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classContact.html" title="Represents a frictional contact between bodies.">Contact</a> normal selection and corresponding input strings. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa92c688ff4db690e51788eb19f3cedbaa20176505d0d3ba639a0d62b4c83cf2f2" name="aa92c688ff4db690e51788eb19f3cedbaa20176505d0d3ba639a0d62b4c83cf2f2"></a>MASTER&#160;</td><td class="fielddoc"><p>"master" </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa92c688ff4db690e51788eb19f3cedbaa9076913da8bd8f9e55f124dbac4f679e" name="aa92c688ff4db690e51788eb19f3cedbaa9076913da8bd8f9e55f124dbac4f679e"></a>COLLINEAR&#160;</td><td class="fielddoc"><p>"collinear" </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa92c688ff4db690e51788eb19f3cedbaaea42dc447e763bc37423b1ef0f68afe9" name="aa92c688ff4db690e51788eb19f3cedbaaea42dc447e763bc37423b1ef0f68afe9"></a>SLAVE&#160;</td><td class="fielddoc"><p>"slave" </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a290f59a1763dc9542b6b21d2981aeba5" name="a290f59a1763dc9542b6b21d2981aeba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a290f59a1763dc9542b6b21d2981aeba5">&#9670;&#160;</a></span>Contact()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,7 +240,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string&#160;</td>
+          <td class="paramtype"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a>&#160;</td>
           <td class="paramname"><em>normal_type</em>&#160;</td>
         </tr>
         <tr>
@@ -337,8 +368,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aaf9f40cc281689652418cbf97cd83ab2" name="aaf9f40cc281689652418cbf97cd83ab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf9f40cc281689652418cbf97cd83ab2">&#9670;&#160;</a></span>getNormalType()</h2>
+<a id="a1e2a28e199b324721ba7d66030cfbd3c" name="a1e2a28e199b324721ba7d66030cfbd3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2a28e199b324721ba7d66030cfbd3c">&#9670;&#160;</a></span>getNormalType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +378,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const string &amp; Contact::getNormalType </td>
+          <td class="memname"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> Contact::getNormalType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -356,6 +387,32 @@ Private Attributes</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a109c17d57477b30ebacfaf76b108d22f" name="a109c17d57477b30ebacfaf76b108d22f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a109c17d57477b30ebacfaf76b108d22f">&#9670;&#160;</a></span>getNormalTypeString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> Contact::getNormalTypeString </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -465,8 +522,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac00143b709622e0aed063f3cc3c5c73d" name="ac00143b709622e0aed063f3cc3c5c73d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac00143b709622e0aed063f3cc3c5c73d">&#9670;&#160;</a></span>setNormalType()</h2>
+<a id="a16e427492a6f6414c69db1b5cfccb88f" name="a16e427492a6f6414c69db1b5cfccb88f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16e427492a6f6414c69db1b5cfccb88f">&#9670;&#160;</a></span>setNormalType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,7 +534,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Contact::setNormalType </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a>&#160;</td>
           <td class="paramname"><em>type</em></td><td>)</td>
           <td></td>
         </tr>
@@ -586,8 +643,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a845e4f0386b70e28b21600059198bda7" name="a845e4f0386b70e28b21600059198bda7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a845e4f0386b70e28b21600059198bda7">&#9670;&#160;</a></span>normalType</h2>
+<a id="a16b6a4a9def811980e18fadc1f6f8907" name="a16b6a4a9def811980e18fadc1f6f8907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16b6a4a9def811980e18fadc1f6f8907">&#9670;&#160;</a></span>normalType</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -596,7 +653,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string Contact::normalType = &quot;master&quot;</td>
+          <td class="memname"><a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedba">NormalType</a> Contact::normalType = <a class="el" href="classContact.html#aa92c688ff4db690e51788eb19f3cedbaa20176505d0d3ba639a0d62b4c83cf2f2">MASTER</a></td>
         </tr>
       </table>
   </td>
@@ -606,7 +663,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Normal type: "master", "slave" or "collinear". </p>
+<p>Normal type: MASTER, COLLINEAR or SLAVE. </p>
 
 </div>
 </div>
