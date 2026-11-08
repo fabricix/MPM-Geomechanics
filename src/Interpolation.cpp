@@ -104,7 +104,7 @@ void Interpolation::nodalMass(Mesh* mesh, vector<Particle*>* particles)
     }
 }
 
-void Interpolation::nodalMassFuid(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalMassFluid(Mesh* mesh, vector<Body*>* bodies) {
 
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
@@ -414,7 +414,7 @@ void Interpolation::nodalInternalForce(Mesh* mesh, vector<Particle*>* particles)
 	}
 }
 
-void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
+void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Particle*>* particles) {
 
 	// check if is two-phase calculations
 	if(!ModelSetup::getTwoPhaseActive()) return;
@@ -422,51 +422,44 @@ void Interpolation::nodalInternalForceFluid(Mesh* mesh, vector<Body*>* bodies) {
 	// get nodes
 	vector<Node*>* nodes = mesh->getNodes();
 
-	// for each body
-	for (size_t ibody = 0; ibody < bodies->size(); ++ibody) {
+	// for each particle
+	for (size_t i = 0; i < particles->size(); ++i) {
 
-		// get particles
-		vector<Particle*>* particles = bodies->at(ibody)->getParticles();
+		// only active particle can contribute
+		if (!particles->at(i)->getActive()) { continue; }
 
-		// for each particle
-		for (size_t i = 0; i < particles->size(); ++i) {
+		// only saturated particles contribute to fluid internal force
+		if (particles->at(i)->getSaturation()<=0.0) { continue;	}
 
-			// only active particle can contribute
-			if (!particles->at(i)->getActive()) { continue; }
+		// get nodes and weights that the particle contributes
+		const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
 
-			// only saturated particles can interpolate mass of fluid
-			if (particles->at(i)->getSaturation()<=0.0) { continue;	}
+		// get particle pressure
+		const double pPressure = particles->at(i)->getPressureFluid();
 
-			// get nodes and weights that the particle contributes
-			const vector<Contribution>* contribution = particles->at(i)->getContributionNodes();
+		// get current particle volume
+		const double pVolume = particles->at(i)->getCurrentVolume();
 
-			// get particle pressure
-			const double pPressure = particles->at(i)->getPressureFluid();
-			
-			// get current particle volume
-			const double pVolume = particles->at(i)->getCurrentVolume();
+		// get current porosity
+		const double porosity = particles->at(i)->getPorosity();
 
-			// get current porosity
-			const double porosity = particles->at(i)->getPorosity();
-			
-			// for each node in the contribution list
-			for (size_t j = 0; j < contribution->size(); ++j) {
+		// for each node in the contribution list
+		for (size_t j = 0; j < contribution->size(); ++j) {
 
-				// get contributing node
-				Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
+			// get contributing node
+			Node* nodeI = (*nodes)[contribution->at(j).getNodeId()];
 
-				// get the nodal gradients
-				const Vector3d gradient = contribution->at(j).getGradients();
+			// get the nodal gradients
+			const Vector3d gradient = contribution->at(j).getGradients();
 
-				// compute the particle's contribution to the nodal internal force
-				Vector3d internalForceFluid;
-				internalForceFluid.x()=pPressure*gradient(0)*pVolume*porosity;
-				internalForceFluid.y()=pPressure*gradient(1)*pVolume*porosity;
-				internalForceFluid.z()=pPressure*gradient(2)*pVolume*porosity;
+			// compute the particle's contribution to the nodal internal force
+			Vector3d internalForceFluid;
+			internalForceFluid.x()=pPressure*gradient(0)*pVolume*porosity;
+			internalForceFluid.y()=pPressure*gradient(1)*pVolume*porosity;
+			internalForceFluid.z()=pPressure*gradient(2)*pVolume*porosity;
 
-				// add the internal of fluid force contribution in node
-				nodeI->addInternalForceFluid(internalForceFluid);
-			}
+			// add the internal of fluid force contribution in node
+			nodeI->addInternalForceFluid(internalForceFluid);
 		}
 	}
 }

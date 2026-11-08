@@ -63,3 +63,17 @@ target_compile_definitions(MPM-Geomechanics-benchmark PRIVATE USE_PARALLEL_COMPU
 
 # Link Google Test and OpenMP
 target_link_libraries(MPM-Geomechanics-benchmark gtest OpenMP::OpenMP_CXX)
+
+# Define the root directory of the MPM project and the path to the executable
+get_filename_component(MPM_ROOT
+    "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
+
+set(MPM_EXECUTABLE
+    "${MPM_ROOT}/build/CMake/MPM-Geomechanics${CMAKE_EXECUTABLE_SUFFIX}"
+    CACHE FILEPATH "Ruta al ejecutable del simulador")
+
+target_compile_definitions(MPM-Geomechanics-tests PRIVATE
+    MPM_PROJECT_ROOT="${MPM_ROOT}"
+    MPM_TEST_DIR="${MPM_ROOT}/qa/tests/energy-test/cuboid"
+    MPM_EXECUTABLE_PATH="${MPM_EXECUTABLE}"
+)
