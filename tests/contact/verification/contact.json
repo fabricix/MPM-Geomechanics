@@ -56,8 +56,9 @@
         "material_id":2
       }
     ],
+
     "contact_manager":{
-      "active": true
+      "active": false
     },
     
     "contact":[
