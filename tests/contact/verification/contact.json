@@ -14,10 +14,10 @@
       "origin":[ 0, 0, 0 ],
       "boundary_conditions":
       {
-        "plane_X0": "sliding",
+        "plane_X0": "fixed",
         "plane_Y0": "sliding",
-        "plane_Z0": "sliding",
-        "plane_Xn": "sliding",
+        "plane_Z0": "fixed",
+        "plane_Xn": "fixed",
         "plane_Yn": "sliding",
         "plane_Zn": "sliding"
       }

@@ -1,8 +1,232 @@
 # Veusz saved document (version 4.2.1)
-# Saved at 2026-09-18T20:45:41.817539
+# Saved at 2026-11-09T18:51:31.113350
 
 SetCompatLevel(1)
 AddImportPath('C:\\Users\\fabri\\Estructura_Fabricio\\PROFESIONAL\\Backup_Codigo\\MPM\\MPM-Geomechanics\\tests\\terrain-contact\\verification')
+ImportString('`_material-contact_Displacement_mu_0.0_`(numeric)','''
+0.000000e+00
+2.257200e-02
+8.986300e-02
+2.020900e-01
+3.593700e-01
+5.613200e-01
+8.083800e-01
+1.100300e+00
+1.437000e+00
+1.818800e+00
+2.245300e+00
+2.716900e+00
+3.233300e+00
+3.794600e+00
+4.401000e+00
+5.051900e+00
+5.748100e+00
+6.489100e+00
+7.274800e+00
+8.105700e+00
+8.981200e+00
+9.901900e+00
+1.086700e+01
+1.187800e+01
+1.293300e+01
+1.403300e+01
+''')
+ImportString('`_material-contact_Displacement_mu_0.1_`(numeric)','''
+0.000000e+00
+2.194000e-02
+8.107300e-02
+1.829200e-01
+3.253100e-01
+5.049900e-01
+7.291200e-01
+9.913400e-01
+1.294000e+00
+1.638400e+00
+2.021200e+00
+2.447100e+00
+2.910900e+00
+3.416200e+00
+3.962900e+00
+4.547300e+00
+5.175000e+00
+5.841400e+00
+6.548600e+00
+7.297100e+00
+8.083700e+00
+8.913700e+00
+9.782200e+00
+1.069100e+01
+1.164200e+01
+1.263100e+01
+''')
+ImportString('`_material-contact_Displacement_mu_0.3_`(numeric)','''
+0.000000e+00
+2.071100e-02
+6.355300e-02
+1.417500e-01
+2.549300e-01
+3.929700e-01
+5.669500e-01
+7.738900e-01
+1.006500e+00
+1.275600e+00
+1.574500e+00
+1.904000e+00
+2.266400e+00
+2.657900e+00
+3.084900e+00
+3.539500e+00
+4.025800e+00
+4.546800e+00
+5.095500e+00
+5.677700e+00
+6.290500e+00
+6.934800e+00
+7.612100e+00
+8.317700e+00
+9.057400e+00
+9.828100e+00
+''')
+ImportString('`_material-contact_Displacement_mu_0.5_`(numeric)','''
+0.000000e+00
+2.010000e-02
+5.015900e-02
+1.038700e-01
+1.887900e-01
+2.959100e-01
+4.191200e-01
+5.705200e-01
+7.461500e-01
+9.376800e-01
+1.157700e+00
+1.399500e+00
+1.660000e+00
+1.946700e+00
+2.255200e+00
+2.585500e+00
+2.937700e+00
+3.311800e+00
+3.711200e+00
+4.130600e+00
+4.571600e+00
+5.037600e+00
+5.525100e+00
+6.033800e+00
+6.565800e+00
+7.120700e+00
+''')
+ImportString('`_material-contact_Time_mu_0.0_`(numeric)','''
+0.000000e+00
+7.916980e-02
+1.588670e-01
+2.385650e-01
+3.182630e-01
+3.979600e-01
+4.776580e-01
+5.573550e-01
+6.370530e-01
+7.167510e-01
+7.964480e-01
+8.761460e-01
+9.558430e-01
+1.035540e+00
+1.115240e+00
+1.194940e+00
+1.274630e+00
+1.354330e+00
+1.434030e+00
+1.513730e+00
+1.593420e+00
+1.673120e+00
+1.752820e+00
+1.832520e+00
+1.912210e+00
+1.991910e+00
+''')
+ImportString('`_material-contact_Time_mu_0.1_`(numeric)','''
+0.000000e+00
+7.916980e-02
+1.588670e-01
+2.385650e-01
+3.182630e-01
+3.979600e-01
+4.776580e-01
+5.573550e-01
+6.370530e-01
+7.167510e-01
+7.964480e-01
+8.761460e-01
+9.558430e-01
+1.035540e+00
+1.115240e+00
+1.194940e+00
+1.274630e+00
+1.354330e+00
+1.434030e+00
+1.513730e+00
+1.593420e+00
+1.673120e+00
+1.752820e+00
+1.832520e+00
+1.912210e+00
+1.991910e+00
+''')
+ImportString('`_material-contact_Time_mu_0.3_`(numeric)','''
+0.000000e+00
+7.916980e-02
+1.588670e-01
+2.385650e-01
+3.182630e-01
+3.979600e-01
+4.776580e-01
+5.573550e-01
+6.370530e-01
+7.167510e-01
+7.964480e-01
+8.761460e-01
+9.558430e-01
+1.035540e+00
+1.115240e+00
+1.194940e+00
+1.274630e+00
+1.354330e+00
+1.434030e+00
+1.513730e+00
+1.593420e+00
+1.673120e+00
+1.752820e+00
+1.832520e+00
+1.912210e+00
+1.991910e+00
+''')
+ImportString('`_material-contact_Time_mu_0.5_`(numeric)','''
+0.000000e+00
+7.916980e-02
+1.588670e-01
+2.385650e-01
+3.182630e-01
+3.979600e-01
+4.776580e-01
+5.573550e-01
+6.370530e-01
+7.167510e-01
+7.964480e-01
+8.761460e-01
+9.558430e-01
+1.035540e+00
+1.115240e+00
+1.194940e+00
+1.274630e+00
+1.354330e+00
+1.434030e+00
+1.513730e+00
+1.593420e+00
+1.673120e+00
+1.752820e+00
+1.832520e+00
+1.912210e+00
+1.991910e+00
+''')
 ImportString('`mu_0.0Displacement_0`(numeric)','''
 0.000000e+00
 2.230200e-02
@@ -451,6 +675,7 @@ ImportString('`mu_0.5Time`(numeric)','''
 1.907580e+00
 1.987090e+00
 ''')
+TagDatasets('mpm_mcontact', ['_material-contact_Displacement_mu_0.0_', '_material-contact_Displacement_mu_0.1_', '_material-contact_Displacement_mu_0.3_', '_material-contact_Displacement_mu_0.5_', '_material-contact_Time_mu_0.0_', '_material-contact_Time_mu_0.1_', '_material-contact_Time_mu_0.3_', '_material-contact_Time_mu_0.5_'])
 TagDatasets('mu_0.0', ['mu_0.0Displacement_0', 'mu_0.0Displacement_1', 'mu_0.0Displacement_2', 'mu_0.0Time'])
 TagDatasets('mu_0.1', ['mu_0.1Displacement_0', 'mu_0.1Displacement_1', 'mu_0.1Displacement_2', 'mu_0.1Time'])
 TagDatasets('mu_0.3', ['mu_0.3Displacement_0', 'mu_0.3Displacement_1', 'mu_0.3Displacement_2', 'mu_0.3Time'])
@@ -459,12 +684,14 @@ Set('colorTheme', 'default-latest')
 Set('StyleSheet/axis-function/autoRange', 'next-tick')
 Add('page', name='page1', autoadd=False)
 To('page1')
+Set('width', '14.252cm')
+Set('height', '14.046cm')
 Add('graph', name='graph1', autoadd=False)
 To('graph1')
-Set('leftMargin', '1.647cm')
-Set('rightMargin', '0.623cm')
-Set('topMargin', '0.623cm')
-Set('bottomMargin', '1.33cm')
+Set('leftMargin', '1.685cm')
+Set('rightMargin', '0.603cm')
+Set('topMargin', '0.886cm')
+Set('bottomMargin', '1.536cm')
 Add('axis', name='x', autoadd=False)
 To('x')
 Set('label', 'Time (s)')
@@ -476,51 +703,84 @@ Set('label', 'Displacement (m)')
 Set('direction', 'vertical')
 Set('MinorGridLines/hide', True)
 To('..')
+Add('function', name='analytical', autoadd=False)
+To('analytical')
+Set('function', '')
+Set('variable', 'y')
+Set('color', 'black')
+Set('key', 'Analytical')
+Set('FillAbove/hide', True)
+To('..')
+Add('xy', name='mpm-stl-label', autoadd=False)
+To('mpm-stl-label')
+Set('marker', 'circle')
+Set('key', 'Terrain contact algorithm')
+Set('PlotLine/hide', True)
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='mpm-mcontact-label', autoadd=False)
+To('mpm-mcontact-label')
+Set('marker', 'lineplus')
+Set('markerSize', '3pt')
+Set('thinfactor', 1)
+Set('xData', [])
+Set('yData', [])
+Set('key', 'Material contact algorithm')
+Set('PlotLine/hide', True)
+Set('MarkerLine/hide', False)
+Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
+To('..')
 Add('xy', name='0.0', autoadd=False)
 To('0.0')
 Set('xData', 'mu_0.1Time')
 Set('yData', 'mu_0.0Displacement_0')
-Set('key', '\\mu=0.0 (MPM)')
+Set('key', '')
 Set('PlotLine/hide', True)
 Set('MarkerLine/hide', False)
 Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
 To('..')
 Add('xy', name='0.1', autoadd=False)
 To('0.1')
 Set('xData', 'mu_0.1Time')
 Set('yData', 'mu_0.1Displacement_0')
-Set('key', '\\mu=0.1')
+Set('key', '')
 Set('PlotLine/hide', True)
 Set('MarkerLine/hide', False)
 Set('MarkerFill/color', 'green')
+Set('MarkerFill/hide', True)
 To('..')
 Add('xy', name='0.3', autoadd=False)
 To('0.3')
 Set('xData', 'mu_0.1Time')
 Set('yData', 'mu_0.3Displacement_0')
-Set('key', '\\mu=0.3')
+Set('key', '')
 Set('PlotLine/hide', True)
 Set('MarkerFill/color', 'blue')
+Set('MarkerFill/hide', True)
 To('..')
 Add('xy', name='0.5', autoadd=False)
 To('0.5')
 Set('xData', 'mu_0.1Time')
 Set('yData', 'mu_0.5Displacement_0')
-Set('key', '\\mu=0.5')
+Set('key', '')
 Set('PlotLine/hide', True)
 Set('MarkerFill/color', 'magenta')
+Set('MarkerFill/hide', True)
 To('..')
 Add('key', name='key1', autoadd=False)
 To('key1')
+Set('Text/size', '12pt')
 Set('horzPosn', 'manual')
 Set('vertPosn', 'manual')
-Set('horzManual', 0.08594348775001809)
-Set('vertManual', 0.5935584902777851)
+Set('horzManual', 0.08303275288570466)
+Set('vertManual', 0.5012807616736417)
 To('..')
 Add('function', name='mu-0.0', autoadd=False)
 To('mu-0.0')
 Set('function', '0.5*(10*sin(pi*45/180)-0.0*10*cos(pi*45/180))*x**2')
-Set('key', '\\mu=0.0 (analytical)')
+Set('key', '\\mu=0.0')
 Set('Line/color', 'red')
 Set('Line/width', '1pt')
 Set('Line/hide', False)
@@ -554,6 +814,66 @@ Set('label', 'MPM')
 Set('hide', True)
 Set('xPos', [0.674])
 Set('yPos', [0.787])
+To('..')
+Add('xy', name='xy1', autoadd=False)
+To('xy1')
+Set('marker', 'lineplus')
+Set('markerSize', '3pt')
+Set('thinfactor', 1)
+Set('xData', '_material-contact_Time_mu_0.0_')
+Set('yData', '_material-contact_Displacement_mu_0.0_')
+Set('key', '')
+Set('PlotLine/hide', True)
+Set('MarkerLine/hide', False)
+Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy2', autoadd=False)
+To('xy2')
+Set('marker', 'lineplus')
+Set('markerSize', '3pt')
+Set('thinfactor', 1)
+Set('xData', '_material-contact_Time_mu_0.1_')
+Set('yData', '_material-contact_Displacement_mu_0.1_')
+Set('key', '')
+Set('PlotLine/hide', True)
+Set('MarkerLine/hide', False)
+Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy3', autoadd=False)
+To('xy3')
+Set('marker', 'lineplus')
+Set('markerSize', '3pt')
+Set('thinfactor', 1)
+Set('xData', '_material-contact_Time_mu_0.3_')
+Set('yData', '_material-contact_Displacement_mu_0.3_')
+Set('key', '')
+Set('PlotLine/hide', True)
+Set('MarkerLine/hide', False)
+Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy4', autoadd=False)
+To('xy4')
+Set('marker', 'lineplus')
+Set('markerSize', '3pt')
+Set('thinfactor', 1)
+Set('xData', '_material-contact_Time_mu_0.5_')
+Set('yData', '_material-contact_Displacement_mu_0.5_')
+Set('key', '')
+Set('PlotLine/hide', True)
+Set('MarkerLine/hide', False)
+Set('MarkerFill/color', 'red')
+Set('MarkerFill/hide', True)
+To('..')
+Add('label', name='label2', autoadd=False)
+To('label2')
+Set('label', 'MPM-Geomechanics contact verification')
+Set('xPos', [0.202])
+Set('yPos', [0.913])
+Set('Text/font', 'Times New Roman')
+Set('Text/underline', True)
 To('..')
 To('..')
 To('..')
