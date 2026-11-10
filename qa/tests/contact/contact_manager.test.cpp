@@ -19,7 +19,7 @@ namespace
   }
 }
 
-TEST(ContactManager, DetectsSharedNodeAndComputesMasterNormal)
+TEST(ContactManager, Detects_Shared_Node_And_Computes_Master_Normal)
 {
   Mesh mesh;
   mesh.setNumCells(1, 1, 1);
@@ -54,7 +54,7 @@ TEST(ContactManager, DetectsSharedNodeAndComputesMasterNormal)
   EXPECT_TRUE(contactNode.normal.isApprox(Vector3d::UnitX()));
 }
 
-TEST(ContactManager, LimitsTangentialForceAndBalancesMomentumUpdate)
+TEST(ContactManager, Limits_Tangential_Force_And_Balances_Momentum_Update)
 {
   Mesh mesh;
   mesh.setNumCells(1, 1, 1);

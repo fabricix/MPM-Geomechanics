@@ -4,7 +4,7 @@
 #include "MohrCoulomb.h"
 #include "Particle.h"
 
-TEST(ElasticJaumann, RotatesDeviatoricStressWithoutChangingItsTrace)
+TEST(ElasticJaumann, Rotates_Deviatoric_Stress_Without_Changing_Its_Trace)
 {
   ElasticJaumann material(1, 1000.0, 1000.0, 0.25);
   Particle particle(Vector3d::Zero(), &material, Vector3d::Ones());
@@ -24,7 +24,7 @@ TEST(ElasticJaumann, RotatesDeviatoricStressWithoutChangingItsTrace)
   EXPECT_NEAR(particle.getStress().trace(), initialStress.trace(), 1e-12);
 }
 
-TEST(MohrCoulomb, CorrectsShearYieldAndAppliesDilation)
+TEST(MohrCoulomb, Corrects_Shear_Yield_And_Applies_Dilation)
 {
   MohrCoulomb::Softening noSoftening;
   MohrCoulomb zeroDilation(1, 1000.0, 1000.0, 0.25, 30.0, 0.1, 0.0, 100.0, noSoftening);
@@ -43,7 +43,7 @@ TEST(MohrCoulomb, CorrectsShearYieldAndAppliesDilation)
   EXPECT_FALSE(particleZero.getStress().isApprox(particleDilated.getStress(), 1e-8));
 }
 
-TEST(MohrCoulomb, SofteningReducesCohesionAndYieldStrength)
+TEST(MohrCoulomb, Softening_Reduces_Cohesion_And_Yield_Strength)
 {
   MohrCoulomb::Softening softening;
   softening.softening_type = MohrCoulomb::Softening::EXPONENTIAL;

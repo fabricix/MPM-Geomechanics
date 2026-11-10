@@ -62,7 +62,7 @@ void releaseMesh(Mesh& mesh)
 }
 }
 
-TEST(SolverIntegration, AdvancesOnePhaseAndTwoPhaseModelsWithoutExternalLoads)
+TEST(SolverIntegration, Advances_One_Phase_And_Two_Phase_Models_Without_External_Loads)
 {
   TestTemporaryDirectory directory;
   CurrentDirectoryGuard currentDirectory(directory.path());

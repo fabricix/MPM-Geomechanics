@@ -2,7 +2,7 @@
 
 #include "Mesh/Mesh.h"
 
-TEST(Mesh, GridDimensionsAndDomainQueries)
+TEST(Mesh, Grid_Dimensions_And_Domain_Queries)
 {
   Mesh mesh;
   mesh.setNumCells(2, 1, 3);

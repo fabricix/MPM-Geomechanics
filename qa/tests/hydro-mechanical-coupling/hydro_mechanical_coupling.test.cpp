@@ -9,7 +9,7 @@
 #include "Particle.h"
 #include "TestTemporaryDirectory.h"
 
-TEST(HydroMechanicalCoupling, AssignsPorePressureToNearbyParticles)
+TEST(HydroMechanicalCoupling, Assigns_Pore_Pressure_To_Nearby_Particles)
 {
   TestTemporaryDirectory directory;
   const auto pressureFile = directory.path() / "pressure.json";
@@ -41,7 +41,7 @@ TEST(HydroMechanicalCoupling, AssignsPorePressureToNearbyParticles)
   ModelSetup::setHydroMechanicalCouplingType(ModelSetup::HydroMechanicalCouplingType::NONE);
 }
 
-TEST(HydroMechanicalCoupling, ComputesTotalStress)
+TEST(HydroMechanicalCoupling, Computes_Total_Stress)
 {
   const Matrix3d effectiveStress =
       (Matrix3d() << 2.0, 0.5, 0.0,

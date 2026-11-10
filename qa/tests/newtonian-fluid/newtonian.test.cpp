@@ -10,7 +10,7 @@
 #include "Model.h"
 #include "Newtonian.h"
 
-TEST(MaterialNewtonian, PureShear) {
+TEST(MaterialNewtonian, Pure_Shear) {
     
     // Set time step
     ModelSetup::setTimeStep(0.1);
@@ -51,7 +51,7 @@ TEST(MaterialNewtonian, PureShear) {
     EXPECT_NEAR(stress(2,2), expected_mean_stress, 1e-6) << "Failed at (2,2) in volumetric deformation case";
 }
 
-TEST(MaterialNewtonian, PureVolumetric) {
+TEST(MaterialNewtonian, Pure_Volumetric) {
     
     // Set time step
     ModelSetup::setTimeStep(0.1);

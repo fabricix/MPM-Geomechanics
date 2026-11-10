@@ -29,7 +29,7 @@ protected:
   }
 };
 
-TEST_F(SeismicTest, ReadsTimeSeriesAndInterpolatesWithinRecord)
+TEST_F(SeismicTest, Reads_Time_Series_And_Interpolates_Within_Record)
 {
   TestTemporaryDirectory directory;
   const auto recordFile = directory.path() / "record.csv";
@@ -57,7 +57,7 @@ TEST_F(SeismicTest, ReadsTimeSeriesAndInterpolatesWithinRecord)
   EXPECT_TRUE(Seismic::getAccumulatedVelocity().isApprox(Vector3d(0.2, 0.1, -0.1)));
 }
 
-TEST_F(SeismicTest, MarksNodesAndAppliesVelocityOnlyToActiveMarkedNodes)
+TEST_F(SeismicTest, Marks_Nodes_And_Applies_Velocity_Only_To_Active_Marked_Nodes)
 {
   Mesh mesh;
   mesh.setNumCells(1, 1, 1);
@@ -87,7 +87,7 @@ TEST_F(SeismicTest, MarksNodesAndAppliesVelocityOnlyToActiveMarkedNodes)
   EXPECT_TRUE(nodes->at(markedInactiveId)->getVelocity().isApprox(Vector3d::Zero()));
 }
 
-TEST_F(SeismicTest, DisablesAnalysisAtEndOfRecord)
+TEST_F(SeismicTest, Disables_Analysis_At_End_Of_Record)
 {
   EXPECT_TRUE(Interpolation::interpolateVector(
                   Seismic::getSeismicData().time,

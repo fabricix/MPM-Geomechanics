@@ -2,7 +2,7 @@
 
 #include "Geometry.h"
 
-TEST(Geometry, BoundingBox)
+TEST(Geometry, Bounding_Box)
 {
   const std::vector<Vector3d> points{
       Vector3d(2.0, -1.0, 4.0),
@@ -17,7 +17,7 @@ TEST(Geometry, BoundingBox)
   EXPECT_TRUE(box[1].isApprox(Vector3d(2.0, 5.0, 4.0)));
 }
 
-TEST(Geometry, PointInsideBox)
+TEST(Geometry, Point_Inside_Box)
 {
   const Vector3d lower(0.0, 0.0, 0.0);
   const Vector3d upper(1.0, 2.0, 3.0);
@@ -29,7 +29,7 @@ TEST(Geometry, PointInsideBox)
   EXPECT_FALSE(Geometry::getInsideBox(lower, upper, Vector3d(0.5, 1.0, 3.1)));
 }
 
-TEST(Geometry, PointInsidePolygonOnEachExtrusionPlane)
+TEST(Geometry, Point_Inside_Polygon_On_Each_Extrusion_Plane)
 {
   const std::vector<Vector3d> polygonXY{
       Vector3d(0.0, 0.0, 0.0),
