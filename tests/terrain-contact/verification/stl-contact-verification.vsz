@@ -1,5 +1,5 @@
 # Veusz saved document (version 4.2.1)
-# Saved at 2026-11-09T18:51:31.113350
+# Saved at 2026-11-10T19:59:41.397713
 
 SetCompatLevel(1)
 AddImportPath('C:\\Users\\fabri\\Estructura_Fabricio\\PROFESIONAL\\Backup_Codigo\\MPM\\MPM-Geomechanics\\tests\\terrain-contact\\verification')
@@ -870,8 +870,8 @@ To('..')
 Add('label', name='label2', autoadd=False)
 To('label2')
 Set('label', 'MPM-Geomechanics contact verification')
-Set('xPos', [0.202])
-Set('yPos', [0.913])
+Set('xPos', [0.18])
+Set('yPos', [0.919])
 Set('Text/font', 'Times New Roman')
 Set('Text/underline', True)
 To('..')

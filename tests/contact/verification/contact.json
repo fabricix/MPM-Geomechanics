@@ -58,13 +58,13 @@
     ],
 
     "contact_manager":{
-      "active": false
+      "active": true
     },
     
     "contact":[
       {
         "id": 1,
-        "friction": 0.5,
+        "friction": 0.2,
         "master_id": 1,
         "slave_id": 2,
         "normal_type": "master"
