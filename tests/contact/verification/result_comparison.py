@@ -11,7 +11,7 @@ dt = 0.001  # time step (s)
 t_max = 2  # total time (s)
 
 # friction coefficients
-mu_values = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
+mu_values = [0.0, 0.1, 0.3, 0.5]
 markers =  ["o", "o", "o", "o", "o", "o"]
 colors = plt.cm.tab10.colors[:len(markers)]
 
@@ -38,7 +38,7 @@ for mu in mu_values:
 for mu in mu_values:
     
     # load MPM results
-    filename = f"mpm_results_mu_{mu}.csv"
+    filename = f"mpm_results_mu_{mu}_USL.csv"
     mpm_data = pd.read_csv(filename)
 
     # extract MPM results
@@ -46,7 +46,20 @@ for mu in mu_values:
     mpm_u_y = mpm_data["avg(Displacement (0))"]
 
     # plot MPM results
-    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})", marker="o", color=colors[mu_values.index(mu)])
+    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})-USL", marker="o", color=colors[mu_values.index(mu)],markerfacecolor='none')
+
+for mu in mu_values:
+    
+    # load MPM results
+    filename = f"mpm_results_mu_{mu}_MUSL.csv"
+    mpm_data = pd.read_csv(filename)
+
+    # extract MPM results
+    mpm_time = mpm_data["Time"]
+    mpm_u_y = mpm_data["avg(Displacement (0))"]
+
+    # plot MPM results
+    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})-MUSL", marker="x", color=colors[mu_values.index(mu)])
 
 # configure plot
 ax.set_xlabel("Time (s)")
