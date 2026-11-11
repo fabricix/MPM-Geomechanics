@@ -5,6 +5,71 @@
 #include "Loads.h"
 #include "Interpolation.h"
 #include "Seismic.h"
+#include <array>
+#include <map>
+#include <limits>
+#include <stdexcept>
+
+void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
+    // Contact bodies have independent fields; other nodes have one shared field.
+    std::map<std::pair<int,int>, std::array<double,3>> values;
+    const double free = std::numeric_limits<double>::quiet_NaN();
+    auto& contact = mesh->getContactNodes();
+    for (const auto& condition : Loads::getPrescribedVelocities()) {
+        for (auto* p : condition.particles) {
+            if (!p->getActive()) throw std::runtime_error("Prescribed velocity particle left the mesh");
+            for (const auto& contribution : *p->getContributionNodes()) {
+                if (contribution.getWeight() <= 1e-12) continue;
+                const int id = contribution.getNodeId();
+                const auto it = contact.find(id);
+                const int body = it == contact.end() ? -1 : static_cast<int>(p->getBodyId());
+                auto inserted = values.emplace(std::make_pair(id, body), std::array<double,3>{free,free,free});
+                auto& v = inserted.first->second;
+                for (int axis = 0; axis < 3; ++axis) {
+                    if (!condition.constrained[axis]) continue;
+                    if (!std::isnan(v[axis]) && v[axis] != condition.velocity[axis])
+                        throw std::runtime_error("Conflicting prescribed velocities on a shared grid field");
+                    v[axis] = condition.velocity[axis];
+                }
+            }
+        }
+    }
+    for (const auto& entry : values) {
+        auto* node = mesh->getNodes()->at(entry.first.first);
+        const auto it = contact.find(entry.first.first);
+        if (it == contact.end()) {
+            auto value = constrainForce ? node->getTotalForce() : node->getMomentum();
+            for (int axis = 0; axis < 3; ++axis)
+                if (!std::isnan(entry.second[axis])) value[axis] = constrainForce ? 0 : node->getMass()*entry.second[axis];
+            if (constrainForce) node->setTotalForce(value); else node->setMomentum(value);
+        } else {
+            auto& data = it->second;
+            const bool master = entry.first.second == data.bodyMasterId;
+            if (!master && entry.first.second != data.bodySlaveId)
+                throw std::runtime_error("Prescribed velocity body is absent from contact field");
+            Vector3d& value = constrainForce ? (master ? data.totalForceMaster : data.totalForceSlave)
+                                            : (master ? data.momentumMaster : data.momentumSlave);
+            const double mass = master ? data.massMaster : data.massSlave;
+            for (int axis = 0; axis < 3; ++axis)
+                if (!std::isnan(entry.second[axis])) value[axis] = constrainForce ? 0 : mass*entry.second[axis];
+        }
+    }
+}
+
+void Update::prescribedVelocityParticles(double time) {
+    for (const auto& condition : Loads::getPrescribedVelocities()) {
+        for (auto* p : condition.particles) {
+            auto velocity = p->getVelocity();
+            auto position = p->getPosition();
+            for (int axis = 0; axis < 3; ++axis) {
+                if (!condition.constrained[axis]) continue;
+                velocity[axis] = condition.velocity[axis];
+                position[axis] = p->getInitialPosition()[axis]+condition.velocity[axis]*time;
+            }
+            p->setVelocity(velocity); p->setPosition(position);
+        }
+    }
+}
 
 void Update::nodalVelocity(Mesh* mesh) {
 

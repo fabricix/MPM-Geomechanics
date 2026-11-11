@@ -16,6 +16,16 @@ using Eigen::Vector3d;
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
 
+    /// Constant velocity on material points selected in the reference geometry.
+    /// Unconstrained components retain their ordinary dynamic response.
+    struct PrescribedVelocity {
+        vector<Particle*> particles;
+        Vector3d velocity = Vector3d::Zero();
+        bool constrained[3] = {false, false, false};
+    };
+    void setPrescribedVelocity(vector<Body*>& bodies);
+    const vector<PrescribedVelocity>& getPrescribedVelocities();
+
     /// \struct LoadDistributedBox
     /// \brief Structure to define a distributed load in 
     /// particles inside the cuboid defined by point p1 and p2

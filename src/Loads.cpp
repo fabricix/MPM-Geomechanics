@@ -6,11 +6,78 @@
 #include "Geometry.h"
 #include "Input.h"
 #include "Warning.h"
+#include <cmath>
+#include <algorithm>
+#include <stdexcept>
 
 namespace Loads 
 {
 	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
 	NodalPointLoadData nodalPointLoadList;
+    vector<PrescribedVelocity> prescribedVelocities;
+}
+
+const vector<Loads::PrescribedVelocity>& Loads::getPrescribedVelocities() { return prescribedVelocities; }
+
+void Loads::setPrescribedVelocity(vector<Body*>& bodies) {
+    prescribedVelocities.clear();
+    const auto& input = Input::getJson();
+    if (!input.contains("prescribed_velocity")) return;
+    if (ModelSetup::getTwoPhaseActive())
+        throw std::runtime_error("prescribed_velocity currently supports single-phase USL/MUSL only");
+    const auto& entries = input.at("prescribed_velocity");
+    if (!entries.is_array()) throw std::runtime_error("prescribed_velocity must be an array");
+    for (const auto& entry : entries) {
+        PrescribedVelocity condition;
+        const auto& velocity = entry.at("velocity");
+        if (!velocity.is_array() || velocity.size() != 3)
+            throw std::runtime_error("prescribed_velocity requires three velocity components (number or null)");
+        bool any = false;
+        for (int axis = 0; axis < 3; ++axis) {
+            if (velocity[axis].is_null()) continue;
+            if (!velocity[axis].is_number() || !std::isfinite(velocity[axis].get<double>()))
+                throw std::runtime_error("Invalid prescribed velocity component");
+            condition.constrained[axis] = true;
+            condition.velocity[axis] = velocity[axis].get<double>();
+            any = true;
+        }
+        const bool box = entry.contains("point_p1") || entry.contains("point_p2");
+        if (!any || (!box && !entry.contains("body_id")))
+            throw std::runtime_error("prescribed_velocity needs a body_id or box and a constrained component");
+        Vector3d p1 = Vector3d::Zero(), p2 = Vector3d::Zero();
+        if (box) {
+            for (const auto* key : {"point_p1", "point_p2"})
+                if (!entry.contains(key) || !entry[key].is_array() || entry[key].size() != 3)
+                    throw std::runtime_error("prescribed_velocity box requires point_p1 and point_p2");
+            for (int axis = 0; axis < 3; ++axis) {
+                p1[axis] = entry["point_p1"][axis].get<double>();
+                p2[axis] = entry["point_p2"][axis].get<double>();
+                if (!std::isfinite(p1[axis]) || !std::isfinite(p2[axis]) || p1[axis] > p2[axis])
+                    throw std::runtime_error("Invalid prescribed_velocity box bounds");
+            }
+        }
+        for (auto* body : bodies) {
+            if (entry.contains("body_id") && body->getId() != entry["body_id"].get<int>()) continue;
+            for (auto* p : *body->getParticles()) {
+                const auto& x = p->getInitialPosition();
+                if (box && ((x.array() < p1.array()).any() || (x.array() > p2.array()).any())) continue;
+                for (const auto& previous : prescribedVelocities) {
+                    if (std::find(previous.particles.begin(), previous.particles.end(), p) == previous.particles.end()) continue;
+                    for (int axis = 0; axis < 3; ++axis)
+                        if (previous.constrained[axis] && condition.constrained[axis] &&
+                            previous.velocity[axis] != condition.velocity[axis])
+                            throw std::runtime_error("Conflicting prescribed velocities on a particle");
+                }
+                auto value = p->getVelocity();
+                for (int axis = 0; axis < 3; ++axis)
+                    if (condition.constrained[axis]) value[axis] = condition.velocity[axis];
+                p->setVelocity(value);
+                condition.particles.push_back(p);
+            }
+        }
+        if (condition.particles.empty()) throw std::runtime_error("prescribed_velocity selects no particles");
+        prescribedVelocities.push_back(condition);
+    }
 }
 
 Loads::NodalPointLoadData& Loads::getNodalPointList() { return nodalPointLoadList; }

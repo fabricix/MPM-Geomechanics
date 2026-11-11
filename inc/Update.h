@@ -12,6 +12,11 @@
 /// \brief Represents operations to update values in nodes and particles.
 namespace Update {
 
+    /// Enforce constant velocity on the grid, independently for each contact field.
+    void prescribedVelocityNodes(Mesh* mesh, bool constrainForce = false);
+    /// Keep selected particle components consistent with x = X + v*t.
+    void prescribedVelocityParticles(double time);
+
 	/// \enum Direction
 	/// \brief Principal direction in the model.
 	/// This enumeration is used to update the boundary conditions in each direction

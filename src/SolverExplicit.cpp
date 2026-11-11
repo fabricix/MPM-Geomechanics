@@ -64,6 +64,7 @@ void SolverExplicit::Solve()
 
 		// Step 2: Impose boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
+		Update::prescribedVelocityNodes(mesh);
 
 		// Step 3.1: Internal nodal force
 		Interpolation::nodalInternalForce(mesh, particles);
@@ -76,6 +77,7 @@ void SolverExplicit::Solve()
 
 		// Step 3.3: Impose boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
+		Update::prescribedVelocityNodes(mesh, true);
 
 		// Step 4: Integrate nodal momentum
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
@@ -84,6 +86,8 @@ void SolverExplicit::Solve()
 		if (contactActive) {
 			contactManager->applyVelocityContactCorrection(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
 		}
+
+		Update::prescribedVelocityNodes(mesh);
 
 		// Step 5: Particle updates
 		// 5.1: Update particle velocity
@@ -104,6 +108,7 @@ void SolverExplicit::Solve()
  
 		// Step 5.4: Project particle position if any penetrations
 		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
+		Update::prescribedVelocityParticles(iTime+dt);
 
 		// Step 6 (MUSL): Momentum recalculation 
 		if (useMUSL)
@@ -115,6 +120,7 @@ void SolverExplicit::Solve()
 			
 			// Step 6.2: Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
+			Update::prescribedVelocityNodes(mesh);
 		}
 
 		// Step 7: Compute nodal velocity

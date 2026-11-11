@@ -329,6 +329,7 @@ void MPM::setupLoads() {
 
 	// set initial velocity
 	Loads::setInitialVelocity(bodies);
+	Loads::setPrescribedVelocity(bodies);
 }
 
 void MPM::setupSeismicAnalysis() {
