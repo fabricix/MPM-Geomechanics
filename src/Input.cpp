@@ -1028,16 +1028,24 @@ vector<Contact*> Input::getContactList() {
 	vector<Contact*> contacts;
 	try
 	{
-		if (!inputFile["contact"].is_null()) {
+		const json* pairsArray = nullptr;
 
-			// loop aver all contacts
-			json::iterator it;
-			for (it = inputFile["contact"].begin(); it != inputFile["contact"].end(); it++) {
+		if (inputFile.contains("material_contact") && inputFile["material_contact"].contains("pairs") && inputFile["material_contact"]["pairs"].is_array()) {
+			pairsArray = &inputFile["material_contact"]["pairs"];
+		}
+		else if (inputFile.contains("contact") && inputFile["contact"].is_array()) {
+			Warning::printMessage("Deprecated contact key 'contact'; use 'material_contact.pairs' instead");
+			pairsArray = &inputFile["contact"];
+		}
+
+		if (pairsArray != nullptr) {
+
+			for (auto it = pairsArray->begin(); it != pairsArray->end(); ++it) {
 
 				// contact id
 				int id = 0;
 				if ((*it)["id"].is_number()) {
-					id = ((*it)["id"]);
+					id = (*it)["id"];
 				}
 				else {
 					throw(0);
@@ -1046,7 +1054,7 @@ vector<Contact*> Input::getContactList() {
 				// contact friction
 				double friction = 0;
 				if ((*it)["friction"].is_number()) {
-					friction = ((*it)["friction"]);
+					friction = (*it)["friction"];
 				}
 				else {
 					throw(0);
@@ -1054,8 +1062,12 @@ vector<Contact*> Input::getContactList() {
 
 				// master id
 				int master_id = 0;
-				if ((*it)["master_id"].is_number()) {
-					master_id = ((*it)["master_id"]);
+				if ((*it)["master_body_id"].is_number()) {
+					master_id = (*it)["master_body_id"];
+				}
+				else if ((*it)["master_id"].is_number()) {
+					Warning::printMessage("Deprecated contact key 'master_id'; use 'master_body_id' instead");
+					master_id = (*it)["master_id"];
 				}
 				else {
 					throw(0);
@@ -1063,23 +1075,27 @@ vector<Contact*> Input::getContactList() {
 
 				// slave id
 				int slave_id = 0;
-				if ((*it)["slave_id"].is_number()) {
-					slave_id = ((*it)["slave_id"]);
+				if ((*it)["slave_body_id"].is_number()) {
+					slave_id = (*it)["slave_body_id"];
+				}
+				else if ((*it)["slave_id"].is_number()) {
+					Warning::printMessage("Deprecated contact key 'slave_id'; use 'slave_body_id' instead");
+					slave_id = (*it)["slave_id"];
 				}
 				else {
 					throw(0);
 				}
 
-				// real distance correction coefficient
+				// normal type
 				string normal_type = "";
 				if ((*it)["normal_type"].is_string()) {
-					normal_type = ((*it)["normal_type"]);
+					normal_type = (*it)["normal_type"];
 				}
 				else {
 					throw(0);
 				}
 
-				// create a new contact manager
+				// create a new contact object
 				Contact* iContact = new Contact(id, friction, master_id, slave_id, normal_type);
 				if (iContact == NULL) {
 					throw(0);
@@ -1090,7 +1106,6 @@ vector<Contact*> Input::getContactList() {
 		}
 
 		if (contacts.empty()) {
-
 			throw(0);
 		}
 
@@ -1857,48 +1872,20 @@ double Input::getDistanceThreshold(){
 	}
 }
 
-//bool Input::getContactActive()
-//{
-//	try
-//	{
-//		string key = "contact_active";
-//
-//		if (!inputFile[key].is_null() && inputFile[key].is_boolean())
-//		{
-//			return inputFile[key];
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-//	catch (...)
-//	{
-//		Warning::printMessage("Error during reading the contact active keyword");
-//		throw;
-//	}
-//}
-
 bool Input::getContactActive() 
 {
 	try
 	{
-		if (inputFile["contact_manager"].is_null()) {
-
-			return false;
+		if (inputFile.contains("material_contact") && inputFile["material_contact"].is_object()) {
+			return get_boolean(inputFile["material_contact"], "active", false);
 		}
 
-		if (inputFile["contact_manager"]["active"].is_null()) {
-
-			return false;
+		if (inputFile.contains("contact_manager") && !inputFile["contact_manager"].is_null()) {
+			Warning::printMessage("Deprecated contact key 'contact_manager'; use 'material_contact' instead");
+			return get_boolean(inputFile["contact_manager"], "active", false);
 		}
 
-		if (inputFile["contact_manager"]["active"].is_boolean())
-		{
-			return inputFile["contact_manager"]["active"];
-		}
-
-		throw(0);
+		return false;
 	}
 	catch (...)
 	{
@@ -1963,109 +1950,30 @@ double Input::getFrictionCoefficientContact() {
 	}
 }
 
-string Input::getContactNormalType() {
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-			return "";
-		}
-		// if contact normal type not defined -> default Master 
-		if (inputFile["contact"]["normal_type"].is_null()) {
-			return "";
-		}
-		if (inputFile["contact"]["normal_type"].is_string())
-		{
-			return inputFile["contact"]["normal_type"];
-		}
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the contact normal type");
-		throw;
-	}
-}
-
 double Input::RealDistanceCorrectionCoefficient() {
 
 	try
 	{
-		if (inputFile["contact_manager"].is_null()) {
-
-			return -1;
+		if (inputFile.contains("material_contact") && inputFile["material_contact"].contains("real_distance_lambda")) {
+			if (inputFile["material_contact"]["real_distance_lambda"].is_number()) {
+				return inputFile["material_contact"]["real_distance_lambda"];
+			}
+			throw(0);
 		}
 
-		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_null()) {
-
-			return -1;
+		if (inputFile.contains("contact_manager") && inputFile["contact_manager"].contains("real_distance_correction_coefficient")) {
+			Warning::printMessage("Deprecated contact key 'contact_manager'; move 'real_distance_lambda' into 'material_contact'");
+			if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_number()) {
+				return inputFile["contact_manager"]["real_distance_correction_coefficient"];
+			}
+			throw(0);
 		}
 
-		if (inputFile["contact_manager"]["real_distance_correction_coefficient"].is_number())
-		{
-			return inputFile["contact_manager"]["real_distance_correction_coefficient"];
-		}
-
-		throw(0);
+		return -1;
 	}
 	catch (...)
 	{
 		Warning::printMessage("Error during reading the real distance correction coefficient in contact");
-		throw;
-	}
-}
-
-int Input::getMasterBodyId() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["master_id"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["master_id"].is_number_integer())
-		{
-			return inputFile["contact"]["master_id"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the master body ID in contact");
-		throw;
-	}
-}
-
-int Input::getSlaveBodyId() {
-
-	try
-	{
-		if (inputFile["contact"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["slave_id"].is_null()) {
-
-			return -1;
-		}
-
-		if (inputFile["contact"]["slave_id"].is_number_integer())
-		{
-			return inputFile["contact"]["slave_id"];
-		}
-
-		throw(0);
-	}
-	catch (...)
-	{
-		Warning::printMessage("Error during reading the slave body ID in contact");
 		throw;
 	}
 }
