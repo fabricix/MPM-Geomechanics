@@ -1,0 +1,112 @@
+{
+  "time": 0.05,
+  "critical_time_step_multiplier": 0.3,
+  "stress_scheme_update": "USL",
+  "n_threads": 4,
+  "n_phases": 1,
+  "gravity": [0, 0, 0],
+  "results": {
+    "print": 100,
+    "material_point_results": [
+      "id",
+      "body",
+      "mass",
+      "active",
+      "displacement",
+      "velocity",
+      "stress"
+    ],
+    "grid_nodal_results": [
+      "id",
+      "contact_force",
+      "mass_gradient_vector",
+      "prescribed_velocity_reaction"
+    ]
+  },
+  "mesh": {
+    "cells_dimension": [0.005, 0.005, 0.005],
+    "cells_number": [24, 2, 12],
+    "origin": [0, 0, 0],
+    "boundary_conditions": {
+      "plane_X0": "free",
+      "plane_Xn": "free",
+      "plane_Y0": "sliding",
+      "plane_Yn": "sliding",
+      "plane_Z0": "fixed",
+      "plane_Zn": "free"
+    }
+  },
+  "material": [
+    {
+      "type": "elastic",
+      "id": 1,
+      "young": 5000000000.0,
+      "density": 2600,
+      "poisson": 0.25
+    }
+  ],
+  "body": [
+    {
+      "type": "polygon_2d",
+      "id": 1,
+      "material_id": 1,
+      "extrude_direction": "y",
+      "extrude_displacement": 0.01,
+      "discretization_length": 0.005,
+      "points": [
+        [0.01, 0, 0],
+        [0.11, 0, 0],
+        [0.11, 0, 0.025],
+        [0.01, 0, 0.025]
+      ]
+    },
+    {
+      "type": "polygon_2d",
+      "id": 2,
+      "material_id": 1,
+      "extrude_direction": "y",
+      "extrude_displacement": 0.01,
+      "discretization_length": 0.005,
+      "points": [
+        [0.01, 0, 0.025],
+        [0.11, 0, 0.025],
+        [0.11, 0, 0.055],
+        [0.01, 0, 0.055]
+      ]
+    }
+  ],
+  "load_distributed_box": [
+    {
+      "point_p1": [0.01, 0, 0.05],
+      "point_p2": [0.11, 0.01, 0.055],
+      "load": [0, 0, -1000]
+    }
+  ],
+  "damping": {
+    "type": "none"
+  },
+  "save_state": true,
+  "save_state_file": "final-stress.json",
+  "load_state": true,
+  "load_state_file": "../01-normal-loading/normal-stress.json",
+  "prescribed_velocity": [
+    {
+      "body_id": 2,
+      "point_p1": [0.02, 0, 0.0525],
+      "point_p2": [0.1, 0.01, 0.055],
+      "velocity": [0.01, null, null]
+    }
+  ],
+  "material_contact": {
+    "active": true,
+    "pairs": [
+      {
+        "id": 1,
+        "friction": 0.6,
+        "normal_type": "collinear",
+        "master_body_id": 1,
+        "slave_body_id": 2
+      }
+    ]
+  }
+}
