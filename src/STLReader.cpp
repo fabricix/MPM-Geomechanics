@@ -2,6 +2,8 @@
 // Copyright (c) 2021-2025 MPM-Geomechanics Development Team
 
 #include "Mesh/STLReader.h"
+#include <array>
+#include <cstdint>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -15,19 +17,38 @@ bool STLReader::read(const std::string& filename)
         return false;
     }
  
-    // read header to determine the format
-    char header[80];
-    file.read(header, 80);
+    file.seekg(0, std::ios::end);
+    const std::streamoff fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
 
-    // determine if it is ASCII or binary
-    std::string headerStr(header, 80);
-    if (headerStr.find("solid") == 0) {
+    std::array<char, 80> header{};
+    file.read(header.data(), static_cast<std::streamsize>(header.size()));
+    const std::streamsize headerSize = file.gcount();
+
+    if (fileSize >= 84) {
+        std::uint32_t numTriangles = 0;
+        file.clear();
+        file.seekg(80, std::ios::beg);
+        file.read(reinterpret_cast<char*>(&numTriangles), sizeof(numTriangles));
+        const std::uint64_t expectedSize =
+            84 + static_cast<std::uint64_t>(numTriangles) * 50;
+        if (file && expectedSize == static_cast<std::uint64_t>(fileSize)) {
+            file.seekg(80, std::ios::beg);
+            return readBinary(file);
+        }
+    }
+
+    std::string headerStr(header.data(), static_cast<size_t>(headerSize));
+    const size_t firstNonWhitespace = headerStr.find_first_not_of(" \t\r\n");
+    if (firstNonWhitespace != std::string::npos &&
+        headerStr.compare(firstNonWhitespace, 5, "solid") == 0) {
         file.close();
         file.open(filename); // open it in text mode
         return readASCII(file);
-    } else {
-        return readBinary(file);
     }
+
+    std::cerr << "Invalid or unsupported STL file: " << filename << std::endl;
+    return false;
 }
 
 bool STLReader::readASCII(std::ifstream& file) 
@@ -64,29 +85,49 @@ bool STLReader::readASCII(std::ifstream& file)
             std::getline(file, line);  // end facet
         }
     }
-    return true;
+    return !triangles.empty();
 }
 
 bool STLReader::readBinary(std::ifstream& file) {
-    
-    std::cout<<"   Warning : Binary stl reader is under development\n";
-
-    // clear triangles
-    triangles.clear();
-
-    uint32_t numTriangles;
-    
+    std::uint32_t numTriangles = 0;
     file.read(reinterpret_cast<char*>(&numTriangles), sizeof(uint32_t));
+    if (!file) {
+        return false;
+    }
+
+    std::vector<Triangle> parsedTriangles;
+    if (numTriangles > parsedTriangles.max_size()) {
+        return false;
+    }
+    parsedTriangles.reserve(numTriangles);
 
     for (uint32_t i = 0; i < numTriangles; ++i) {
         Triangle triangle;
-        file.read(reinterpret_cast<char*>(&triangle.normal), sizeof(float)*3);
-        file.read(reinterpret_cast<char*>(&triangle.v1), sizeof(float)*3);
-        file.read(reinterpret_cast<char*>(&triangle.v2), sizeof(float)*3);
-        file.read(reinterpret_cast<char*>(&triangle.v3), sizeof(float)*3);
-        file.ignore(2); // Ignore 2 bytes attributes. Byte count.
-        triangles.push_back(triangle);
+        auto readVector = [&file](Vector3d& value) {
+            std::array<float, 3> coordinates{};
+            file.read(reinterpret_cast<char*>(coordinates.data()), sizeof(coordinates));
+            if (!file) {
+                return false;
+            }
+            value = Vector3d(coordinates[0], coordinates[1], coordinates[2]);
+            return true;
+        };
+        if (!readVector(triangle.normal) ||
+            !readVector(triangle.v1) ||
+            !readVector(triangle.v2) ||
+            !readVector(triangle.v3)) {
+            return false;
+        }
+
+        std::uint16_t attributeByteCount = 0;
+        file.read(reinterpret_cast<char*>(&attributeByteCount), sizeof(attributeByteCount));
+        if (!file) {
+            return false;
+        }
+        parsedTriangles.push_back(triangle);
     }
+
+    triangles = std::move(parsedTriangles);
     return true;
 }
 
