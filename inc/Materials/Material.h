@@ -99,6 +99,14 @@ public:
 	/// \return sound_speed Sound speed
 	virtual double getSoundSpeed( ) const = 0;
 
+	/// @brief Get reference gravity
+	/// @return reference_gravity Reference gravity
+	inline double getReferenceGravity() {return referenceGravity;}
+
+	/// @brief Set reference gravity
+	/// @param[in] reference_gravity Reference gravity
+	inline void setReferenceGravity(double reference_gravity) { referenceGravity = reference_gravity; }
+
 protected:
 	
 	int id; //!< material identification
@@ -113,22 +121,26 @@ protected:
 
 	double mu;  //!< friction coefficient\f$K^f\f$
 
+	double referenceGravity; //!< reference gravity
+
 	Vector3d hydraulicConductivity; //!< hydraulic conductivity of the fluid in the material \f$k_i\f$
 	
 	MaterialType type; //!< material type
 };
 
-inline Material::Material(int id, double density, double mu, MaterialType type) {
-	
-	this->id=id;
-	this->density=density;
-	this->densityFluid=0.0;
-	this->porosity=0.0;
-	this->bulkModulusFluid=0.0;
-	this->mu = mu;
-	this->hydraulicConductivity.setZero();
-	this->type=type;
-}
+inline Material::Material(int id, double density, double mu, MaterialType type):
+	  id(id),
+      density(density),
+      densityFluid(0.0),
+      porosity(0.0),
+      bulkModulusFluid(0.0),
+      mu(mu),
+      hydraulicConductivity(Vector3d::Zero()),
+      type(type),
+      referenceGravity(9.81)
+	  { 
+		//...
+	  }
 
 inline Material::~Material() { }
 

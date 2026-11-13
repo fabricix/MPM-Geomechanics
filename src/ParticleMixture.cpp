@@ -45,11 +45,13 @@ void ParticleMixture::setMaterial(Material* material) {
 ParticleMixture::~ParticleMixture() { }
 
 Vector3d ParticleMixture::getDragForceFluid() const {
+    
+    const double g_ref = this->material->getReferenceGravity();
 
     Vector3d drag;
-    drag.x()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().x()*(this->velocityFluid.x()-Particle::velocity.x());
-    drag.y()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().y()*(this->velocityFluid.y()-Particle::velocity.y());
-    drag.z()= -this->massFluid*9.81*this->porosityMixture/this->material->getHydraulicConductivity().z()*(this->velocityFluid.z()-Particle::velocity.z());
+    drag.x()= -this->massFluid*g_ref*this->porosityMixture/this->material->getHydraulicConductivity().x()*(this->velocityFluid.x()-Particle::velocity.x());
+    drag.y()= -this->massFluid*g_ref*this->porosityMixture/this->material->getHydraulicConductivity().y()*(this->velocityFluid.y()-Particle::velocity.y());
+    drag.z()= -this->massFluid*g_ref*this->porosityMixture/this->material->getHydraulicConductivity().z()*(this->velocityFluid.z()-Particle::velocity.z());
 
     return drag;
 }

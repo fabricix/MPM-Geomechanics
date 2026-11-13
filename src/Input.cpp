@@ -445,6 +445,16 @@ vector<Material*> Input::getMaterialList(){
 						material->setPorosity(porosity);
 						material->setBulkModulusFluid(bulk_fluid);
 						material->setHydraulicConductivity(hydraulic_conductivity);
+
+						// Reference gravity (default 9.81 set in Material constructor)
+						if (it->contains("reference_gravity") && (*it)["reference_gravity"].is_number()) {
+							double referenceGravity = (*it)["reference_gravity"];
+							if (referenceGravity > 0.0) {
+								material->setReferenceGravity(referenceGravity);
+							} else {
+								Warning::printMessage("Reference gravity must be positive. Using default (9.81).");
+							}
+						}
 					}
 
 					if (material!=NULL){
