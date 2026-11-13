@@ -710,6 +710,21 @@ vector<Body*> Input::getBodyList(const vector<Material*>* materials){
 								iBody->setExtrudeDirection(extrude_direction);
 								iBody->setExtrudeDisplacement(extrude_displacement);
 								iBody->setDiscretizationLength(discretization_length);
+                                if ((*it).contains("discretization_origin")) {
+                                    const auto& origin = (*it).at("discretization_origin");
+                                    if (!origin.is_array() || origin.size() != 3) {
+                                        Warning::printMessage("Error: discretization_origin requires three numeric components");
+                                        delete iBody;
+                                        throw(0);
+                                    }
+                                    Vector3d discretizationOrigin;
+                                    for (int axis = 0; axis < 3; ++axis) discretizationOrigin[axis] = origin.at(axis).get<double>();
+                                    if (!discretizationOrigin.allFinite()) {
+                                        delete iBody;
+                                        throw(0);
+                                    }
+                                    iBody->setDiscretizationOrigin(discretizationOrigin);
+                                }
 							}
 						
 							bodies.push_back(iBody);

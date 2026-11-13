@@ -37,6 +37,16 @@ void BodyPolygon::create(Mesh& mesh, Material* material) {
 	Vector3d minPoint = box.at(0); // left-lower point
 	Vector3d maxPoint = box.at(1); // right-upper point
 
+    // Keep the extrusion bounds; align only the polygon-plane sampling lattice.
+    if (useDiscretizationOrigin) {
+        const int extrusionAxis = extrudeDirection == "x" ? 0 : (extrudeDirection == "y" ? 1 : 2);
+        for (int axis = 0; axis < 3; ++axis) {
+            if (axis == extrusionAxis) continue;
+            const double cellIndex = (minPoint[axis] - discretizationOrigin[axis]) / cellDimension;
+            minPoint[axis] = discretizationOrigin[axis] + std::floor(cellIndex + 1e-10) * cellDimension;
+        }
+    }
+
 	// reference cell dimension
 	double dx = cellDimension;
 	double dy = cellDimension;
