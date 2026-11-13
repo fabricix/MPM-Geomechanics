@@ -18,7 +18,7 @@ var searchData=
   ['bodyslaveid_15',['bodySlaveId',['../structNode_1_1ContactNodeData.html#a9574574cf41de1dc76b3c1089c4b91e7',1,'Node::ContactNodeData']]],
   ['bodysphere_16',['bodysphere',['../classBodySphere.html#a5b713f631f795d48a837d486d1e36dcd',1,'BodySphere::BodySphere()'],['../classBodySphere.html',1,'BodySphere']]],
   ['bodysphere_2eh_17',['BodySphere.h',['../BodySphere_8h.html',1,'']]],
-  ['boundary_18',['boundary',['../classMesh.html#ae856f697db9b5c61445e64cff311c46a',1,'Mesh::boundary'],['../classBoundary.html',1,'Boundary'],['../classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71',1,'Boundary::Boundary()']]],
+  ['boundary_18',['boundary',['../classBoundary.html#a7c4c8db45b13dab630e4c6ed7a958e71',1,'Boundary::Boundary()'],['../classBoundary.html',1,'Boundary'],['../classMesh.html#ae856f697db9b5c61445e64cff311c46a',1,'Mesh::boundary']]],
   ['boundary_20conditions_19',['Definition of the planes for setting boundary conditions',['../classBoundary.html#autotoc_md0',1,'']]],
   ['boundary_2eh_20',['Boundary.h',['../Boundary_8h.html',1,'']]],
   ['boundaryconditionscontactforce_21',['boundaryConditionsContactForce',['../namespaceUpdate.html#a5dc615002c4e43657f538a5e7bcc57b7',1,'Update']]],

@@ -143,6 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af12c4c848e1f9f02549bddd18760dbee" id="r_af12c4c848e1f9f02549bddd18760dbee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContactManager.html#af12c4c848e1f9f02549bddd18760dbee">contactNodalDetection</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies)</td></tr>
 <tr class="memdesc:af12c4c848e1f9f02549bddd18760dbee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if nodes are in contact.  <br /></td></tr>
 <tr class="separator:af12c4c848e1f9f02549bddd18760dbee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad65e543311c89d0de1545dbd6e487b00" id="r_ad65e543311c89d0de1545dbd6e487b00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContactManager.html#ad65e543311c89d0de1545dbd6e487b00">checkContactApproach</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ad65e543311c89d0de1545dbd6e487b00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check normal approach using trial nodal momenta.  <br /></td></tr>
+<tr class="separator:ad65e543311c89d0de1545dbd6e487b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad108a71b3d4ab1cc9690b125679b117" id="r_aad108a71b3d4ab1cc9690b125679b117"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classContactManager.html#aad108a71b3d4ab1cc9690b125679b117">realDistanceCorrection</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; *bodies)</td></tr>
 <tr class="memdesc:aad108a71b3d4ab1cc9690b125679b117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the "real distance correction" method for contact detection. \( D^{ MS }_I = - X_I ^ M n_I ^ M - X_I ^ S n_I ^ S \leq \lambda \, d_c\).  <br /></td></tr>
 <tr class="separator:aad108a71b3d4ab1cc9690b125679b117"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,6 +256,32 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">bodies</td><td></td></tr>
     <tr><td class="paramname">dt</td><td><br  />
  </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad65e543311c89d0de1545dbd6e487b00" name="ad65e543311c89d0de1545dbd6e487b00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad65e543311c89d0de1545dbd6e487b00">&#9670;&#160;</a></span>checkContactApproach()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ContactManager::checkContactApproach </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check normal approach using trial nodal momenta. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mesh</td><td><a class="el" href="classMesh.html" title="Class representing a rectangular grid mesh.">Mesh</a> reference </td></tr>
   </table>
   </dd>
 </dl>

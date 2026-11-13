@@ -2,7 +2,7 @@ var searchData=
 [
   ['name_0',['name',['../structGMSH_1_1PhysicalGroup.html#ae6a1e5771798a70c9809e16fc212c003',1,'GMSH::PhysicalGroup']]],
   ['ncells_1',['nCells',['../classMesh.html#a64370d667c6ea5953e6282ea0eff29ad',1,'Mesh']]],
-  ['newtonian_2',['newtonian',['../classNewtonian.html',1,'Newtonian'],['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749',1,'Material::NEWTONIAN'],['../classNewtonian.html#a314e18731c89d65843d5a1c991714d45',1,'Newtonian::Newtonian()']]],
+  ['newtonian_2',['newtonian',['../classNewtonian.html',1,'Newtonian'],['../classNewtonian.html#a314e18731c89d65843d5a1c991714d45',1,'Newtonian::Newtonian()'],['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749',1,'Material::NEWTONIAN']]],
   ['newtonian_2eh_3',['Newtonian.h',['../Newtonian_8h.html',1,'']]],
   ['nghosts_4',['nGhosts',['../classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27',1,'Mesh']]],
   ['nodal_5fids_5',['nodal_ids',['../structLoads_1_1NodalPointLoadData.html#a14fd981401531322fd2572c17b3416f7',1,'Loads::NodalPointLoadData']]],
@@ -34,6 +34,6 @@ var searchData=
   ['normalcontactforce_31',['normalContactForce',['../structNode_1_1ContactNodeData.html#a5c232cec89858eaeaef1dab0b7ea8efc',1,'Node::ContactNodeData']]],
   ['normalmaster_32',['normalMaster',['../structNode_1_1ContactNodeData.html#a17ea662a5c12d35bf99b8d3351f4dcb7',1,'Node::ContactNodeData']]],
   ['normalslave_33',['normalSlave',['../structNode_1_1ContactNodeData.html#a7d97a6d001a81f266f512874c72fa970',1,'Node::ContactNodeData']]],
-  ['normaltype_34',['normaltype',['../classContact.html#aa92c688ff4db690e51788eb19f3cedba',1,'Contact::NormalType'],['../classContact.html#a16b6a4a9def811980e18fadc1f6f8907',1,'Contact::normalType']]],
+  ['normaltype_34',['normaltype',['../classContact.html#a16b6a4a9def811980e18fadc1f6f8907',1,'Contact::normalType'],['../classContact.html#aa92c688ff4db690e51788eb19f3cedba',1,'Contact::NormalType']]],
   ['nrows_35',['nRows',['../classMesh.html#a92cada479e59250c2411dc220c72822d',1,'Mesh']]]
 ];

@@ -2,6 +2,7 @@ var classContactManager =
 [
     [ "ContactManager", "classContactManager.html#aed9e1d12a2f4324f2ee10189a50b0156", null ],
     [ "applyVelocityContactCorrection", "classContactManager.html#a5275ee89623c1b260cf57551d862d6aa", null ],
+    [ "checkContactApproach", "classContactManager.html#ad65e543311c89d0de1545dbd6e487b00", null ],
     [ "computeContactForces", "classContactManager.html#a3652704124da7e15f7f0bc945f346d67", null ],
     [ "contactNodalDetection", "classContactManager.html#af12c4c848e1f9f02549bddd18760dbee", null ],
     [ "getContactDetectionFlag", "classContactManager.html#a7d1683de0bec9557435b6f375affa84b", null ],
