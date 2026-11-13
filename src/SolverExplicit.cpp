@@ -100,7 +100,9 @@ void SolverExplicit::Solve()
 		Integration::nodalMomentum(mesh, loopCounter == 1 ? dt / 2.0 : dt);
 
 		// Apply multi field velocity contact correction
-		if (contactActive) { contactManager->applyVelocityContactCorrection(mesh,bodies,dt); }
+		if (contactActive) {
+			contactManager->applyVelocityContactCorrection(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+		}
 
 		// Update particle velocity
 		Update::particleVelocity(mesh, particles, loopCounter == 1 ? dt / 2.0 : dt);

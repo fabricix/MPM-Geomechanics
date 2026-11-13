@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib as plt
 
 # problem parameters
 g = 10.0  # gravity (m/s^2)
@@ -10,8 +11,9 @@ dt = 0.001  # time step (s)
 t_max = 2  # total time (s)
 
 # friction coefficients
-mu_values = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
-markers =  ["o", "s", "D", "*", "+", "^"]
+mu_values = [0.0, 0.1, 0.3, 0.5]
+markers =  ["o", "o", "o", "o", "o", "o"]
+colors = plt.cm.tab10.colors[:len(markers)]
 
 # initialize time vector
 t_values = np.arange(0, t_max, dt)
@@ -26,22 +28,38 @@ canvas = FigureCanvas(fig)
 ax = fig.add_subplot(111)
 
 for mu in mu_values:
+    
     # analytical solution for displacement in y direction
     u_y_analytical = [analytical_solution_y(t, mu) for t in t_values]
 
+    # plot analytical
+    ax.plot(t_values, u_y_analytical, linestyle="solid", label=f"Analytical (μ={mu})", color=colors[mu_values.index(mu)])
+
+for mu in mu_values:
+    
     # load MPM results
-    filename = f"mpm_results_mu_{mu}.csv"
+    filename = f"mpm_results_mu_{mu}_USL.csv"
     mpm_data = pd.read_csv(filename)
 
     # extract MPM results
     mpm_time = mpm_data["Time"]
     mpm_u_y = mpm_data["avg(Displacement (0))"]
 
-    # plot analytical
-    ax.plot(t_values, u_y_analytical, linestyle="solid", label=f"Analytical (μ={mu})")
+    # plot MPM results
+    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})-USL", marker="o", color=colors[mu_values.index(mu)],markerfacecolor='none')
+
+for mu in mu_values:
+    
+    # load MPM results
+    filename = f"mpm_results_mu_{mu}_MUSL.csv"
+    mpm_data = pd.read_csv(filename)
+
+    # extract MPM results
+    mpm_time = mpm_data["Time"]
+    mpm_u_y = mpm_data["avg(Displacement (0))"]
 
     # plot MPM results
-    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})", marker=markers[mu_values.index(mu)])
+    ax.plot(mpm_time, mpm_u_y, linestyle="none", label=f"MPM-Geomechanics (μ={mu})-MUSL", marker="x", color=colors[mu_values.index(mu)])
 
 # configure plot
 ax.set_xlabel("Time (s)")
@@ -51,5 +69,5 @@ ax.legend()
 ax.grid(True)
 
 # render/save output
-fig.savefig("comparison.png", dpi=150)
-print("Gráfico salvo em 'comparison.png'")
+fig.savefig("mpm-analytical-comparison.png", dpi=300)
+print("png saved...")

@@ -1,0 +1,74 @@
+{
+    "time": 1.5,
+    "critical_time_step_multiplier": 0.25,
+    "gravity":[0.0, 0.0, 0.0],
+    "results":
+    {
+      "print": 25,
+      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity","body" ]
+    },
+    "mesh":
+    {
+      "cells_dimension":[ 1, 1, 1 ],
+      "cells_number":[ 32, 14, 14 ],
+      "origin":[ 0, 0, 0 ],
+      "boundary_conditions":
+      {
+        "plane_X0": "fixed",
+        "plane_Y0": "sliding",
+        "plane_Z0": "fixed",
+        "plane_Xn": "fixed",
+        "plane_Yn": "sliding",
+        "plane_Zn": "sliding"
+      }
+    },
+    "material":
+    [ 
+      {
+        "type":"elastic",
+        "id":1,
+        "young":150e6,
+        "density":2500,
+        "poisson":0.3
+      },
+      {
+        "type":"elastic",
+        "id":2,
+        "young":100e6,
+        "density":2500,
+        "poisson":0.3
+      }
+    ],
+    "body":
+    [
+      {
+        "type":"cuboid",
+        "id": 1,
+        "point_p1":[ 0, 0, 0 ],
+        "point_p2":[ 8, 10, 2 ],
+        "material_id":1
+      },
+      {
+        "type": "cuboid",
+        "id": 2,
+        "point_p1": [ 2, 2, 6 ],
+        "point_p2": [ 6, 8, 11 ],
+        "material_id": 2,
+        "initial_velocity": [ 0, 0, -4 ]
+      }
+    ],
+    
+    "material_contact":{
+      "active": true,
+      "real_distance_lambda": 0.6,
+      "pairs":[
+        {
+          "id": 1,
+          "friction": 0.2,
+          "master_body_id": 1,
+          "slave_body_id": 2,
+          "normal_type":"master"
+        }
+      ]
+    }
+  }

@@ -1141,6 +1141,13 @@ namespace Output{
 		}
 		if (ModelSetup::getContactActive()) {
 			std::cout << "   Contact : Master-Slave" << std::endl;
+
+			if(ModelSetup::getRealDistanceActive()){
+				std::cout << "Real dist. : Active" << std::endl;
+			}
+			else{
+				std::cout << "Real dist. : False" << std::endl;
+			}
 		}
 	}
 
