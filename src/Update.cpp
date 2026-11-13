@@ -7,15 +7,19 @@
 #include "Seismic.h"
 #include <array>
 #include <map>
+#include <set>
 #include <limits>
 #include <stdexcept>
 
 void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
     // Contact bodies have independent fields; other nodes have one shared field.
     std::map<std::pair<int,int>, std::array<double,3>> values;
+    std::map<std::pair<int,int>, std::array<size_t,3>> conditionOwners;
     const double free = std::numeric_limits<double>::quiet_NaN();
     auto& contact = mesh->getContactNodes();
-    for (const auto& condition : Loads::getPrescribedVelocities()) {
+    auto& conditions = Loads::getPrescribedVelocities();
+    for (size_t conditionIndex = 0; conditionIndex < conditions.size(); ++conditionIndex) {
+        const auto& condition = conditions[conditionIndex];
         for (auto* p : condition.particles) {
             if (!p->getActive()) throw std::runtime_error("Prescribed velocity particle left the mesh");
             for (const auto& contribution : *p->getContributionNodes()) {
@@ -29,6 +33,8 @@ void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
                     if (!condition.constrained[axis]) continue;
                     if (!std::isnan(v[axis]) && v[axis] != condition.velocity[axis])
                         throw std::runtime_error("Conflicting prescribed velocities on a shared grid field");
+                    // Attribute a shared component to the first condition, without duplicating its reaction.
+                    if (std::isnan(v[axis])) conditionOwners[inserted.first->first][axis] = conditionIndex;
                     v[axis] = condition.velocity[axis];
                 }
             }
@@ -39,8 +45,13 @@ void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
         const auto it = contact.find(entry.first.first);
         if (it == contact.end()) {
             auto value = constrainForce ? node->getTotalForce() : node->getMomentum();
-            for (int axis = 0; axis < 3; ++axis)
-                if (!std::isnan(entry.second[axis])) value[axis] = constrainForce ? 0 : node->getMass()*entry.second[axis];
+            for (int axis = 0; axis < 3; ++axis) {
+                if (std::isnan(entry.second[axis])) continue;
+                if (constrainForce)
+                    conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
+                        .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
+                value[axis] = constrainForce ? 0 : node->getMass()*entry.second[axis];
+            }
             if (constrainForce) node->setTotalForce(value); else node->setMomentum(value);
         } else {
             auto& data = it->second;
@@ -50,19 +61,36 @@ void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
             Vector3d& value = constrainForce ? (master ? data.totalForceMaster : data.totalForceSlave)
                                             : (master ? data.momentumMaster : data.momentumSlave);
             const double mass = master ? data.massMaster : data.massSlave;
-            for (int axis = 0; axis < 3; ++axis)
-                if (!std::isnan(entry.second[axis])) value[axis] = constrainForce ? 0 : mass*entry.second[axis];
+            for (int axis = 0; axis < 3; ++axis) {
+                if (std::isnan(entry.second[axis])) continue;
+                if (constrainForce)
+                    conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
+                        .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
+                value[axis] = constrainForce ? 0 : mass*entry.second[axis];
+            }
         }
     }
 }
 
 void Update::prescribedVelocityParticles(double time) {
-    for (const auto& condition : Loads::getPrescribedVelocities()) {
+    std::set<std::pair<Particle*,int>> constrainedComponents;
+    for (auto& condition : Loads::getPrescribedVelocities()) {
         for (auto* p : condition.particles) {
             auto velocity = p->getVelocity();
             auto position = p->getPosition();
             for (int axis = 0; axis < 3; ++axis) {
                 if (!condition.constrained[axis]) continue;
+                // FLIP updates velocities from forces. Record only the remaining particle correction;
+                // grid momentum projections (including MUSL) are not extra physical impulses.
+                if (constrainedComponents.emplace(p, axis).second) {
+                    const double forceTimeStep = ModelSetup::getTimeStep() * (ModelSetup::getLoopCounter() == 1 ? 0.5 : 1.0);
+                    const double reactionForce = p->getMass() * (condition.velocity[axis] - velocity[axis]) / forceTimeStep;
+                    // Distribute the complementary particle correction with its current shape weights.
+                    for (const auto& contribution : *p->getContributionNodes()) {
+                        condition.nodalReactionForces.try_emplace(contribution.getNodeId(), Vector3d::Zero())
+                            .first->second[axis] += contribution.getWeight() * reactionForce;
+                    }
+                }
                 velocity[axis] = condition.velocity[axis];
                 position[axis] = p->getInitialPosition()[axis]+condition.velocity[axis]*time;
             }

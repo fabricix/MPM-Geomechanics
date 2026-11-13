@@ -7,6 +7,7 @@
 #include "Body/Body.h"
 
 #include <vector>
+#include <map>
 using std::vector;
 
 #include "Eigen/Core"
@@ -22,9 +23,11 @@ namespace Loads {
         vector<Particle*> particles;
         Vector3d velocity = Vector3d::Zero();
         bool constrained[3] = {false, false, false};
+        std::map<int, Vector3d> nodalReactionForces; //!< force of this prescribed velocity condition on the body (N)
     };
     void setPrescribedVelocity(vector<Body*>& bodies);
-    const vector<PrescribedVelocity>& getPrescribedVelocities();
+    vector<PrescribedVelocity>& getPrescribedVelocities();
+    void resetPrescribedVelocityReactions();
 
     /// \struct LoadDistributedBox
     /// \brief Structure to define a distributed load in 

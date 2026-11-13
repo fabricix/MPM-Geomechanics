@@ -36,6 +36,7 @@ void SolverExplicit::Solve()
 	{
 		// increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
+        Loads::resetPrescribedVelocityReactions();
 
 		// Step 1: Particle-to-Grid mass and momentum interpolation
 		Update::contributionNodes(mesh, particles);

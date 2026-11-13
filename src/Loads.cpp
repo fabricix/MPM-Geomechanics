@@ -17,7 +17,13 @@ namespace Loads
     vector<PrescribedVelocity> prescribedVelocities;
 }
 
-const vector<Loads::PrescribedVelocity>& Loads::getPrescribedVelocities() { return prescribedVelocities; }
+vector<Loads::PrescribedVelocity>& Loads::getPrescribedVelocities() { return prescribedVelocities; }
+
+void Loads::resetPrescribedVelocityReactions() {
+    for (auto& condition : prescribedVelocities) {
+        condition.nodalReactionForces.clear();
+    }
+}
 
 void Loads::setPrescribedVelocity(vector<Body*>& bodies) {
     prescribedVelocities.clear();

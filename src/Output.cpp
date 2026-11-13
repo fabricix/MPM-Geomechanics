@@ -14,6 +14,7 @@
 #include "Energy.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
+#include "Loads.h"
 
 #include <iostream>
 using std::cout;
@@ -732,6 +733,21 @@ namespace Output{
 			}
 			gridFile << "</DataArray>\n";
 		}
+
+        if (isGridFieldRequired("prescribed_velocity_reaction")) {
+            const auto& conditions = Loads::getPrescribedVelocities();
+            for (size_t conditionIndex = 0; conditionIndex < conditions.size(); ++conditionIndex) {
+                gridFile << "<DataArray type=\"Float64\" NumberOfComponents=\"3\" Name=\"prescribed_velocity_reaction_"
+                         << conditionIndex + 1 << "\" Format=\"ascii\">\n";
+                const auto& reactions = conditions[conditionIndex].nodalReactionForces;
+                for (int i = 0; i < nPoints; ++i) {
+                    const auto reaction = reactions.find(inodes->at(i)->getId());
+                    const Vector3d force = reaction == reactions.end() ? Vector3d::Zero().eval() : reaction->second;
+                    gridFile << scientific << force[0] << ' ' << force[1] << ' ' << force[2] << '\n';
+                }
+                gridFile << "</DataArray>\n";
+            }
+        }
 
 		if (isGridFieldRequired("contact_force")) {
 
