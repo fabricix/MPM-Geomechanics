@@ -102,3 +102,27 @@ TEST(Interpolation, Particles_10_position_rng) {
   float mass = interpolation(particles, mesh);
   EXPECT_EQ(mass, 10.0);
 };
+
+TEST(Interpolation, Elevated_Z_Origin_Preserves_GIMP_Mass_Transfer) {
+  Mesh mesh;
+  mesh.setNumCells(10, 10, 10);
+  mesh.setCellDimension(1.0, 1.0, 1.0);
+  mesh.setOrigin(Vector3d(0.0, 0.0, 300.0));
+  mesh.createGrid(false);
+
+  ShapeGimp shape;
+  Particle particle(Vector3d(2.25, 3.75, 300.0), nullptr,
+                    Vector3d(0.5, 0.5, 0.5));
+  particle.setShape(&shape);
+  particle.setMass(1.0);
+  particle.updateContributionNodes(&mesh);
+
+  std::vector<Particle*> particles{&particle};
+  Interpolation::nodalMass(&mesh, &particles);
+
+  double transferredMass = 0.0;
+  for (const Node* node : *mesh.getNodes()) {
+    transferredMass += node->getMass();
+  }
+  EXPECT_NEAR(transferredMass, particle.getMass(), 1e-12);
+}
