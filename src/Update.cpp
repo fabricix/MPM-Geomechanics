@@ -121,6 +121,24 @@ void Update::resetNodalMomentum(Mesh* mesh) {
 	}
 }
 
+void Update::resetNodalMomentumFluid(Mesh* mesh) {
+
+	// get nodes
+	vector<Node*>* gNodes = mesh->getNodes();
+
+	// for each node
+#ifdef _OPENMP
+	#pragma omp parallel for shared(gNodes)
+#endif
+	for (int i = 0; i < static_cast<int>(gNodes->size()); ++i) {
+
+		if(!gNodes->at(i)->getActive()){ continue; }
+
+		// explicitly nullify momentum
+		gNodes->at(i)->setMomentumFluid(Vector3d::Zero());
+	}
+}
+
 void Update::particleDensity(vector<Particle*>* particles) {
 	
 #ifdef _OPENMP

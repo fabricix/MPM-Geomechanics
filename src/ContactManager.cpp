@@ -288,11 +288,11 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 				if (it != contactNodes.end()) {
 					Node::ContactNodeData& contactNodeData = it->second;
 
-					//add mass at node of the master body 
+					// add mass at node of the master body 
 					if (static_cast<int>(ibody) == contactNodeData.bodyMasterId - 1) {
 						contactNodeData.normalMaster += nodalMassGradient;
 					}
-					//add mass at node of the slave body 
+					// add mass at node of the slave body 
 					else if (static_cast<int>(ibody) == contactNodeData.bodySlaveId - 1) {
 						contactNodeData.normalSlave += nodalMassGradient;
 					}
@@ -309,7 +309,7 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		Contact* contact = contactList[contactNodesData.contactId - 1];
 
 		// get normal type
-		string normalType = contact->getNormalType();
+		Contact::NormalType normalType = contact->getNormalType();
 
 		// nodal normal vector master
 		Vector3d nM = contactNodesData.normalMaster.normalized();
@@ -320,13 +320,13 @@ void ContactManager::nodalUnitNormal(Mesh* mesh, vector<Body*>* bodies) {
 		// nodal unit normal vector
 		Vector3d n = (nM - nS).normalized();
 
-		if (normalType == "collinear") {
+		if (normalType == Contact::COLLINEAR) {
 			contactNodesData.normal = n;
 		}
-		else if (normalType == "master") {
+		else if (normalType == Contact::MASTER) {
 			contactNodesData.normal = nM;
 		}
-		else if (normalType == "slave") {
+		else if (normalType == Contact::SLAVE) {
 			contactNodesData.normal = -nS;
 		}
 	}

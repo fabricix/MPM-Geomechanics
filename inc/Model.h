@@ -61,7 +61,7 @@ namespace ModelSetup {
 
 	/// \enum HydroMechanicalCouplingType
 	/// \brief Defines the type of hydro-mechanical coupling
-	enum class HydroMechanicalCouplingType { NONE, ONE_WAY };
+	enum class HydroMechanicalCouplingType { NONE, ONE_WAY, FULL_EXPLICIT };
 
 	/// \brief Return true is the system is Windows
 	/// \return True if is Windows system

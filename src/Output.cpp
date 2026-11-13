@@ -1115,6 +1115,9 @@ namespace Output{
 		if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::ONE_WAY){
 			std::cout << "  Coupling : One-way" << std::endl;
 		}
+		else if(ModelSetup::getHydroMechanicalCouplingType() == ModelSetup::HydroMechanicalCouplingType::FULL_EXPLICIT){
+			std::cout << "  Coupling : Full explicit" << std::endl;
+		}
 
 		if (ModelSetup::getDampingType() == ModelSetup::DampingType::LOCAL){
 			std::cout << "   Damping : Local (" << ModelSetup::getDampingLocal() << ")" << std::endl;
@@ -1189,7 +1192,7 @@ namespace Output{
 			updateTerminal(iTime);
 
 			// write energy in the CSV file
-			writeCSVEnergyFile( iTime);
+			writeCSVEnergyFile(iTime);
 		}
 	}
 

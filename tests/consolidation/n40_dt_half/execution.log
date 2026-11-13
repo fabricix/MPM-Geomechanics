@@ -1,0 +1,100 @@
+
+ -----------------------------------------------------   
+| *                                                 * |
+|                  MPM-Geomechanics                   |
+|                                                     |
+|  A material point method program for geomechanics   |
+|                                                     |
+ -----------------------------------------------------  
+    OpenMP : Number of active threads: 1
+      Time : 1.6000e-01s
+ Time step : 2.5000e-06s
+ Particles : 320
+   Results : 80
+    Solver : USL
+   Damping : Undamped
+Time: 0.0000e+00 s, Energy: 0.0000e+00 J - (0%) 
+Time: 1.9975e-03 s, Energy: 2.9469e-08 J - (1%) 
+Time: 3.9950e-03 s, Energy: 1.1712e-08 J - (2%) 
+Time: 5.9925e-03 s, Energy: 1.2681e-08 J - (3%) 
+Time: 7.9900e-03 s, Energy: 1.0263e-08 J - (4%) 
+Time: 9.9875e-03 s, Energy: 7.0710e-09 J - (6%) 
+Time: 1.1985e-02 s, Energy: 1.0689e-08 J - (7%) 
+Time: 1.3983e-02 s, Energy: 4.4534e-09 J - (8%) 
+Time: 1.5980e-02 s, Energy: 1.0491e-08 J - (9%) 
+Time: 1.7978e-02 s, Energy: 3.4177e-09 J - (11%) 
+Time: 1.9975e-02 s, Energy: 9.1742e-09 J - (12%) 
+Time: 2.1972e-02 s, Energy: 3.2518e-09 J - (13%) 
+Time: 2.3970e-02 s, Energy: 7.2224e-09 J - (14%) 
+Time: 2.5967e-02 s, Energy: 3.5240e-09 J - (16%) 
+Time: 2.7965e-02 s, Energy: 5.3003e-09 J - (17%) 
+Time: 2.9962e-02 s, Energy: 3.9019e-09 J - (18%) 
+Time: 3.1960e-02 s, Energy: 3.8087e-09 J - (19%) 
+Time: 3.3957e-02 s, Energy: 4.1166e-09 J - (21%) 
+Time: 3.5955e-02 s, Energy: 2.8351e-09 J - (22%) 
+Time: 3.7953e-02 s, Energy: 4.0216e-09 J - (23%) 
+Time: 3.9950e-02 s, Energy: 2.2883e-09 J - (24%) 
+Time: 4.1948e-02 s, Energy: 3.6275e-09 J - (26%) 
+Time: 4.3945e-02 s, Energy: 2.0298e-09 J - (27%) 
+Time: 4.5943e-02 s, Energy: 3.0581e-09 J - (28%) 
+Time: 4.7940e-02 s, Energy: 1.9329e-09 J - (29%) 
+Time: 4.9938e-02 s, Energy: 2.4631e-09 J - (31%) 
+Time: 5.1935e-02 s, Energy: 1.8954e-09 J - (32%) 
+Time: 5.3933e-02 s, Energy: 1.9499e-09 J - (33%) 
+Time: 5.5930e-02 s, Energy: 1.8426e-09 J - (34%) 
+Time: 5.7928e-02 s, Energy: 1.5627e-09 J - (36%) 
+Time: 5.9925e-02 s, Energy: 1.7345e-09 J - (37%) 
+Time: 6.1923e-02 s, Energy: 1.2978e-09 J - (38%) 
+Time: 6.3920e-02 s, Energy: 1.5669e-09 J - (39%) 
+Time: 6.5918e-02 s, Energy: 1.1274e-09 J - (41%) 
+Time: 6.7915e-02 s, Energy: 1.3615e-09 J - (42%) 
+Time: 6.9913e-02 s, Energy: 1.0182e-09 J - (43%) 
+Time: 7.1910e-02 s, Energy: 1.1500e-09 J - (44%) 
+Time: 7.3908e-02 s, Energy: 9.4001e-10 J - (46%) 
+Time: 7.5905e-02 s, Energy: 9.5824e-10 J - (47%) 
+Time: 7.7903e-02 s, Energy: 8.7050e-10 J - (48%) 
+Time: 7.9900e-02 s, Energy: 8.0036e-10 J - (49%) 
+Time: 8.1898e-02 s, Energy: 7.9674e-10 J - (51%) 
+Time: 8.3895e-02 s, Energy: 6.7869e-10 J - (52%) 
+Time: 8.5893e-02 s, Energy: 7.1503e-10 J - (53%) 
+Time: 8.7890e-02 s, Energy: 5.8807e-10 J - (54%) 
+Time: 8.9888e-02 s, Energy: 6.2840e-10 J - (56%) 
+Time: 9.1885e-02 s, Energy: 5.2021e-10 J - (57%) 
+Time: 9.3883e-02 s, Energy: 5.4302e-10 J - (58%) 
+Time: 9.5880e-02 s, Energy: 4.6670e-10 J - (59%) 
+Time: 9.7878e-02 s, Energy: 4.6476e-10 J - (61%) 
+Time: 9.9875e-02 s, Energy: 4.2079e-10 J - (62%) 
+Time: 1.0187e-01 s, Energy: 3.9729e-10 J - (63%) 
+Time: 1.0387e-01 s, Energy: 3.7815e-10 J - (64%) 
+Time: 1.0587e-01 s, Energy: 3.4161e-10 J - (66%) 
+Time: 1.0787e-01 s, Energy: 3.3688e-10 J - (67%) 
+Time: 1.0986e-01 s, Energy: 2.9674e-10 J - (68%) 
+Time: 1.1186e-01 s, Energy: 2.9691e-10 J - (69%) 
+Time: 1.1386e-01 s, Energy: 2.6055e-10 J - (71%) 
+Time: 1.1586e-01 s, Energy: 2.5920e-10 J - (72%) 
+Time: 1.1785e-01 s, Energy: 2.3069e-10 J - (73%) 
+Time: 1.1985e-01 s, Energy: 2.2486e-10 J - (74%) 
+Time: 1.2185e-01 s, Energy: 2.0510e-10 J - (76%) 
+Time: 1.2385e-01 s, Energy: 1.9467e-10 J - (77%) 
+Time: 1.2584e-01 s, Energy: 1.8231e-10 J - (78%) 
+Time: 1.2784e-01 s, Energy: 1.6886e-10 J - (79%) 
+Time: 1.2984e-01 s, Energy: 1.6148e-10 J - (81%) 
+Time: 1.3184e-01 s, Energy: 1.4714e-10 J - (82%) 
+Time: 1.3383e-01 s, Energy: 1.4228e-10 J - (83%) 
+Time: 1.3583e-01 s, Energy: 1.2892e-10 J - (84%) 
+Time: 1.3783e-01 s, Energy: 1.2472e-10 J - (86%) 
+Time: 1.3983e-01 s, Energy: 1.1349e-10 J - (87%) 
+Time: 1.4182e-01 s, Energy: 1.0890e-10 J - (88%) 
+Time: 1.4382e-01 s, Energy: 1.0019e-10 J - (89%) 
+Time: 1.4582e-01 s, Energy: 9.4924e-11 J - (91%) 
+Time: 1.4781e-01 s, Energy: 8.8507e-11 J - (92%) 
+Time: 1.4981e-01 s, Energy: 8.2768e-11 J - (93%) 
+Time: 1.5181e-01 s, Energy: 7.8089e-11 J - (94%) 
+Time: 1.5381e-01 s, Energy: 7.2308e-11 J - (96%) 
+Time: 1.5580e-01 s, Energy: 6.8729e-11 J - (97%) 
+Time: 1.5780e-01 s, Energy: 6.3339e-11 J - (98%) 
+Time: 1.5980e-01 s, Energy: 6.0328e-11 J - (99%) 
+
+Elapsed time: 0 h, 1 m, 8.17 s
+
+-------------------------------------------------------
