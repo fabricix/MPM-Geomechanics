@@ -16,6 +16,7 @@ var classMaterial =
     [ "getHydraulicConductivity", "classMaterial.html#aeae2939829b700ac4df23fc16f76782b", null ],
     [ "getId", "classMaterial.html#a92772816435ab97fda35860e1b16d1ef", null ],
     [ "getPorosity", "classMaterial.html#ae7982512dc24aec65afffc3f9269e869", null ],
+    [ "getReferenceGravity", "classMaterial.html#a617de165625681c09347592e148a4804", null ],
     [ "getSoundSpeed", "classMaterial.html#a5cbe2406b8622edec8b272a005f7a168", null ],
     [ "getType", "classMaterial.html#a40f32c5036f85ad9d0c49ad66b083194", null ],
     [ "setBulkModulusFluid", "classMaterial.html#a3ac2f8a6cb39f6782161f25ca19ad78a", null ],
@@ -25,6 +26,7 @@ var classMaterial =
     [ "setHydraulicConductivity", "classMaterial.html#afc3949394033e0133d1c60a925cbeb13", null ],
     [ "setId", "classMaterial.html#a006af31ffda9ddcf5e9c5b0da579e0d8", null ],
     [ "setPorosity", "classMaterial.html#a3db6fc9a1fc84b10dc5985a369794e6b", null ],
+    [ "setReferenceGravity", "classMaterial.html#a30e99c7b5aa53d70d38adeb51b96d5a2", null ],
     [ "setType", "classMaterial.html#a31641b0e400c29879d6aa5cee73d30bc", null ],
     [ "updateStress", "classMaterial.html#ad19adc91e258ec9d09a71c7e1b24b93c", null ],
     [ "bulkModulusFluid", "classMaterial.html#af273c3103e5a1ff733b77edd3da8a5ff", null ],
@@ -34,5 +36,6 @@ var classMaterial =
     [ "id", "classMaterial.html#a3c350361ffe39076a51722fff3346781", null ],
     [ "mu", "classMaterial.html#a3c4d46bfeb461f0faebff61ca74029ee", null ],
     [ "porosity", "classMaterial.html#a1da7180771687fd58e2cf5e1778d8655", null ],
+    [ "referenceGravity", "classMaterial.html#aab41f4e44febdd9117a7b7ba72522d7b", null ],
     [ "type", "classMaterial.html#ab54be6694ca8c0adcd8450121bdf1592", null ]
 ];

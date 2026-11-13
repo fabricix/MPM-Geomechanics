@@ -2,7 +2,7 @@ var searchData=
 [
   ['name_0',['name',['../structGMSH_1_1PhysicalGroup.html#ae6a1e5771798a70c9809e16fc212c003',1,'GMSH::PhysicalGroup']]],
   ['ncells_1',['nCells',['../classMesh.html#a64370d667c6ea5953e6282ea0eff29ad',1,'Mesh']]],
-  ['newtonian_2',['newtonian',['../classNewtonian.html',1,'Newtonian'],['../classNewtonian.html#a314e18731c89d65843d5a1c991714d45',1,'Newtonian::Newtonian()'],['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749',1,'Material::NEWTONIAN']]],
+  ['newtonian_2',['newtonian',['../classNewtonian.html',1,'Newtonian'],['../classMaterial.html#aaaec00187d5d2d1827eb7b7a684cf439a4afc7413b07eb3ec68898418b424c749',1,'Material::NEWTONIAN'],['../classNewtonian.html#a314e18731c89d65843d5a1c991714d45',1,'Newtonian::Newtonian()']]],
   ['newtonian_2eh_3',['Newtonian.h',['../Newtonian_8h.html',1,'']]],
   ['nghosts_4',['nGhosts',['../classMesh.html#adbcc26ba65b26ce2d1b3b8f697e94d27',1,'Mesh']]],
   ['nodal_5fids_5',['nodal_ids',['../structLoads_1_1NodalPointLoadData.html#a14fd981401531322fd2572c17b3416f7',1,'Loads::NodalPointLoadData']]],
