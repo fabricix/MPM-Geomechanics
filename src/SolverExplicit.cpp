@@ -86,9 +86,8 @@ void SolverExplicit::Solve()
 		// Apply multi field velocity contact correction
 		if (contactActive) {
 			contactManager->applyVelocityContactCorrection(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+			Update::prescribedVelocityNodes(mesh);
 		}
-
-		Update::prescribedVelocityNodes(mesh);
 
 		// Step 5: Particle updates
 		// 5.1: Update particle velocity
