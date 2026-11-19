@@ -13,7 +13,7 @@ class Contact {
 public:
 	
 	/// @brief  Constructor
-	/// @param contact id
+	/// @param id Contact id
 	/// @param friction Friction coefficient
 	/// @param master_id ID of the master body
 	/// @param slave_id ID of the slave body
