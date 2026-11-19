@@ -139,9 +139,9 @@ Solver* Input::getSolver() {
 		// default value
 		if (inputFile[key].is_null()) {
 			ModelSetup::setUpdateStressScheme(ModelSetup::USL);
-			if (ModelSetup::getTwoPhaseActive()) {
-				return new SolverExplicitTwoPhaseUSL();
-			}
+			//if (ModelSetup::getTwoPhaseActive()) {
+			//	return new SolverExplicitTwoPhaseUSL();
+			//}
 			return new SolverExplicit();
 		}
 
@@ -150,9 +150,9 @@ Solver* Input::getSolver() {
 
 			if (scheme == "USL") {
 				ModelSetup::setUpdateStressScheme(ModelSetup::USL);
-				if (ModelSetup::getTwoPhaseActive()) {
-					return new SolverExplicitTwoPhaseUSL();
-				}
+				// if (ModelSetup::getTwoPhaseActive()) {
+				// 	return new SolverExplicitTwoPhaseUSL();
+				// }
 				return new SolverExplicit();
 			}
 			else if (scheme == "MUSL") {
@@ -445,6 +445,16 @@ vector<Material*> Input::getMaterialList(){
 						material->setPorosity(porosity);
 						material->setBulkModulusFluid(bulk_fluid);
 						material->setHydraulicConductivity(hydraulic_conductivity);
+
+						// Reference gravity (default 9.81 set in Material constructor)
+						if (it->contains("reference_gravity") && (*it)["reference_gravity"].is_number()) {
+							double referenceGravity = (*it)["reference_gravity"];
+							if (referenceGravity > 0.0) {
+								material->setReferenceGravity(referenceGravity);
+							} else {
+								Warning::printMessage("Reference gravity must be positive. Using default (9.81).");
+							}
+						}
 					}
 
 					if (material!=NULL){
@@ -1101,12 +1111,22 @@ vector<Contact*> Input::getContactList() {
 					throw(0);
 				}
 
-				// normal type
-				string normal_type = "";
+				// real distance correction coefficient
+				Contact::NormalType normal_type;
 				if ((*it)["normal_type"].is_string()) {
-					normal_type = (*it)["normal_type"];
+					string normal_type_str = ((*it)["normal_type"]);
+
+					if (normal_type_str != "collinear" && normal_type_str != "master" && normal_type_str != "slave") {
+						Warning::printMessage("Error: invalid normal type in contact definition");
+						Warning::printMessage("Error: Assuming normal type 'master'");
+
+						normal_type_str = "master";
+					}
+
+					normal_type = Contact::getNormalTypeString(normal_type_str);
 				}
 				else {
+					Warning::printMessage("Error: Bad normal type definition");
 					throw(0);
 				}
 

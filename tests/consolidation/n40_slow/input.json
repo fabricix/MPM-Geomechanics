@@ -1,0 +1,146 @@
+{
+  "stress_scheme_update": "USL",
+  "shape_function": "GIMP",
+  "time": 1.6,
+  "time_step": 5e-06,
+  "gravity": [
+    0.0,
+    0.0,
+    0
+  ],
+  "n_threads": 1,
+  "results": {
+    "print": 80,
+    "material_point_results": [
+      "id",
+      "displacement",
+      "pressure",
+      "stress",
+      "velocity",
+      "active"
+    ],
+    "grid_nodal_results": [
+      "none"
+    ]
+  },
+  "n_phases": 2,
+  "mesh": {
+    "cells_dimension": [
+      0.025,
+      0.025,
+      0.025
+    ],
+    "cells_number": [
+      1,
+      1,
+      40
+    ],
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "boundary_conditions": {
+      "plane_X0": "sliding",
+      "plane_Y0": "sliding",
+      "plane_Z0": "sliding",
+      "plane_Xn": "sliding",
+      "plane_Yn": "sliding",
+      "plane_Zn": "free"
+    },
+    "boundary_conditions_fluid": {
+      "plane_X0": "sliding",
+      "plane_Y0": "sliding",
+      "plane_Z0": "sliding",
+      "plane_Xn": "sliding",
+      "plane_Yn": "sliding",
+      "plane_Zn": "free"
+    }
+  },
+  "material": {
+    "elastic": {
+      "type": "elastic",
+      "id": 1,
+      "young": 50000000.0,
+      "density": 2600,
+      "poisson": 0.3,
+      "density_fluid": 1000,
+      "porosity": 0.3,
+      "bulk_fluid": 500000000.0,
+      "hydraulic_conductivity": [
+        0.0001,
+        0.0001,
+        0.0001
+      ]
+    }
+  },
+  "body": {
+    "soil": {
+      "type": "cuboid",
+      "id": 1,
+      "point_p1": [
+        0,
+        0,
+        0
+      ],
+      "point_p2": [
+        0.025,
+        0.025,
+        1
+      ],
+      "material_id": 1
+    }
+  },
+  "initial_pressure_box": {
+    "initial": {
+      "point_p1": [
+        0,
+        0,
+        0
+      ],
+      "point_p2": [
+        0.025,
+        0.025,
+        1
+      ],
+      "pressure": 1000
+    }
+  },
+  "prescribed_pressure_box": {
+    "drain": {
+      "point_p1": [
+        0,
+        0,
+        0.9935
+      ],
+      "point_p2": [
+        0.025,
+        0.025,
+        1
+      ],
+      "pressure": 0
+    }
+  },
+  "load_distributed_box": {
+    "top_load": {
+      "point_p1": [
+        0,
+        0,
+        0.9935
+      ],
+      "point_p2": [
+        0.025,
+        0.025,
+        1
+      ],
+      "load": [
+        0,
+        0,
+        -0.625
+      ]
+    }
+  },
+  "damping": {
+    "type": "none"
+  }
+}

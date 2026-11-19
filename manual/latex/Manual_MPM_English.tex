@@ -31,14 +31,30 @@
 
 % ---- Code listings ---- 
 \usepackage{listings}
+\usepackage{xcolor}
+\usepackage{soul}
+\sethlcolor{gray!15}
+\newcommand{\inlinecode}[1]{%
+    \begingroup
+    \ttfamily
+    \hl{#1}%
+    \endgroup
+}
 \lstset{
-	basicstyle=\ttfamily\small,
-	frame=single,
-	breaklines=true,
-	numbers=left,
-	numberstyle=\tiny,
-	tabsize=2,
-	showstringspaces=false
+   basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    rulecolor=\color{gray!30},
+    framesep=6pt,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=10pt,
+    tabsize=2,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red}
 }
 
 % ---- Algorithm ---- 

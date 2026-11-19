@@ -6,21 +6,25 @@ In order to compile the testing and benchmarking executables, please follow the 
 
 \subsection{How to Compile} 
 
-Prior to proceeding with these instructions, please consult required programs in manual.
+	
 
-The tests use **GoogleTest**. It is necessary to import this library by cloning the official repository into the folder `/external`. Each developer must clone this repository independently.
+Prior to proceeding with these instructions, please refer to \underline{\hyperref[sec:required_programs]{the list of required programs}}.
+
+\par\medskip
+The tests use \inlinecode{GoogleTest}. It is necessary to import this library by cloning the official repository. In the root directory of the project, execute the following command to clone the GoogleTest repository:
 
 \begin{lstlisting}[language=bash]
-	cd external
-	git clone https://github.com/google/googletest.git
+	git clone https://github.com/google/googletest.git external/googletest
 \end{lstlisting}
 
-The simplest way to compile on Windows and Linux is by using the `.bash` file at `/build/qa` with `MSYS2 MINGW64` console line, simply execute the following command in the directory `MPM-Geomechanics/build/qa`:
+\par\medskip
+The simplest way to compile on Windows and Linux is by using the \inlinecode{.bash} file at \inlinecode{/build/qa} with \inlinecode{MSYS2 MINGW64} console line, simply execute the following command in the directory \inlinecode{MPM-Geomechanics/build/qa}:
 
 \begin{lstlisting}[language=bash]
 	./cmake-build.bash
 \end{lstlisting}
 
+\par\medskip
 Alternatively, you can use the following commands:
 
 \begin{lstlisting}[language=bash]
@@ -28,39 +32,59 @@ Alternatively, you can use the following commands:
 	cmake --build build
 \end{lstlisting}
 
-These commands will generate two executables: `MPM-Geomechanics-tests` and `MPM-Geomechanics-benchmark`.
+\par\medskip
+These commands will generate two executables: \inlinecode{MPM-Geomechanics-tests} and \inlinecode{MPM-Geomechanics-benchmark}.
 
-- `MPM-Geomechanics-tests`: Run testing using GoogleTest. All files ending with `.test.cpp` are testing files, you can find them in the directory `qa/tests`.
+\begin{itemize}
+	\item \inlinecode{MPM-Geomechanics-tests}: Run testing using GoogleTest. All files ending with \inlinecode{.test.cpp} are testing files, you can find them in the directory \inlinecode{qa/tests}.
+	\item \inlinecode{MPM-Geomechanics-benchmark}: Run benchmark using GoogleTest. All files ending with \inlinecode{.benchmark.cpp} are performance files. You can find them in the directory \inlinecode{qa/benchmark}.
+\end{itemize}
 
-- `MPM-Geomechanics-benchmark`: Run benchmark using GoogleTest. All files ending with `.benchmark.cpp` are performance files. You can find them in the directory `qa/benchmark`.
+\subsection {Running the Tests with MPM-Geomechanics-tests}
 
-\subsection {How does benchmarking work?}
+To run the tests, use the executable \inlinecode{MPM-Geomechanics-tests}. This executable will automatically detect all test files ending with \inlinecode{.test.cpp} in the \inlinecode{qa/tests} directory and execute them using GoogleTest.
 
-If you are using Windows OS, make sure to use the MINGW64 command-line console.
+Execute \inlinecode{MPM-Geomechanics-tests} at \inlinecode{build/qa}:
+\begin{lstlisting}[language=bash]
+	./MPM-Geomechanics-tests
+\end{lstlisting}
 
-\subsection {Executable MPM-Geomechanics-benchmark}
+The output will display the results of each test, indicating whether it passed or failed.
 
-To run the benchmark correctly, a JSON file named \texttt{benchmark-configuration.json} is required. This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.
+\subsection {Running the Benchmark with MPM-Geomechanics-benchmark}
 
-The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line arguments:
+To run the benchmark correctly, it uses a JSON file named \inlinecode{benchmark-configuration.json}. This file is located in \inlinecode{build/qa} directory and must be present there. 
 
-\texttt{<directory>}: Specifies which file should be used to run the benchmark. If no file is specified, the program will use \texttt{benchmark-configuration.json} located in the same directory as the executable. Example: \texttt{MPM-Geomechanics-benchmark configuration-file.json}
+This file allows the user to specify values for each test. If the file does not exist or a value is missing, a default value will be used.
 
-The executable \texttt{MPM-Geomechanics-benchmark} allows the following command-line flags:
+\par\medskip
+Execute \inlinecode{MPM-Geomechanics-benchmark} at \inlinecode{build/qa}:
+\begin{lstlisting}[language=bash]
+	./MPM-Geomechanics-benchmark
+\end{lstlisting}
 
-\texttt{--log}: Shows more information about missing keys in the \texttt{benchmark-configuration.json} file
+The executable allows the following command-line arguments:
+\begin{itemize}
+	\item \inlinecode{<directory>}: Specifies which file should be used to run the benchmark. If no file is specified, the program will use \inlinecode{benchmark-configuration.json} located in \inlinecode{build/qa}
+\end{itemize}
 
-\subsection {Script (executable): start-multi-benchmark.py}
+\par\medskip
+The executable allows the following command-line flags:
+\begin{itemize}
+	\item \inlinecode{--log}: Shows more information about missing keys in the \inlinecode{benchmark-configuration.json} file
+\end{itemize}
 
-The performance test can also be executed using the `start-multi-benchmark.py` script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in \texttt{start-multi-benchmark-configuration.json}. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file. 
+\subsection {Alternative method for running benchmarks: \inlinecode{start-multi-benchmark.py}}
 
-Example of a \texttt{start-multi-benchmark-configuration.json} file:
+The performance test can also be executed using the \inlinecode{start-multi-benchmark.py} script, which allows running benchmarks with one or more executables downloaded as artifacts from GitHub and stores the log results in separate folders. Each executable is automatically downloaded from GitHub as an artifact, using an ID specified in \inlinecode{start-multi-benchmark-configuration.json}. Additionally, the benchmark configuration (number of martial points and number of threads) can be defined in the same file. 
+
+Example of a \inlinecode{start-multi-benchmark-configuration.json} file:
 
 \begin{lstlisting}[language=bash]
 	{
 		"executables": {
-			"win_benchmark_executable": "MPM-Geomechanics-benchmark.exe",  -> An executable located at build/qa/MPM-Geomechanics-benchmark.exe
-			"win_github_id": "17847226555"  -> An artifact ID that represent it. can check out if it exists via gh run view <ID>
+			"win_benchmark_executable": "./MPM-Geomechanics-benchmark.exe",  
+			"win_github_id": "17847226555" 
 		},
 		"parameters": {
 			"particles": [ 15000, 25000, 50000],  -> material point to test
@@ -69,9 +93,11 @@ Example of a \texttt{start-multi-benchmark-configuration.json} file:
 	}
 \end{lstlisting}
 
-This setup will run 3x3 (particles x threads) totaling 18 tests (3x3x2). The executable \texttt{start-multi-benchmark.py} allows the following command-line flags:
+In the example above, \inlinecode{win\_benchmark\_executable} specifies the path to the benchmark executable, and \inlinecode{win\_github\_id} provides the corresponding GitHub artifact ID. The parameter \inlinecode{particles} defines the number of material points to test, and \inlinecode{threads} specifies the number of threads to use for each test.
+
+This setup will run 3x3 (particles x threads) totaling 18 tests (3x3x2). The executable \inlinecode{start-multi-benchmark.py} allows the following command-line flags:
 
 \begin{itemize}
-	\item \verb|--clear|: Removes the **benchmark folder** (if it exists) before executing the performance tests. 
-	\item \verb|--cache|: Uses the previously created cache instead of the \\ \verb|start-multi-benchmark-configuration.json| file.
+	\item \inlinecode{--clear}: Removes the \inlinecode{benchmark} folder (if it exists) before executing the performance tests. 
+	\item \inlinecode{--cache}: Uses the previously created cache instead of the \inlinecode{start-multi-benchmark-configuration.json} file.
 \end{itemize}

@@ -38,7 +38,7 @@ namespace Interpolation
 	///
 	/// \param[in] mesh Mesh reference
 	/// \param[in] bodies A list of Bodies
-	void nodalMassFuid(Mesh *mesh, vector<Body *> *bodies);
+	void nodalMassFluid(Mesh *mesh, vector<Body *> *bodies);
 
 	/// \brief Interpolate solid momentum from particles to nodes
 	///
@@ -73,8 +73,8 @@ namespace Interpolation
 	/// \f$ f_{iI}^{int,f}= \sum_p n p^f N_{Ip,i} V_p\f$
 	///
 	/// \param[in] mesh Mesh reference
-	/// \param[in] bodies A list o Body pointers
-	void nodalInternalForceFluid(Mesh *mesh, vector<Body *> *bodies);
+	/// \param[in] particles A list of Particle pointers
+	void nodalInternalForceFluid(Mesh *mesh, vector<Particle *> *particles);
 
 	/// \brief Interpolate external force of solid from particles to nodes
 	///

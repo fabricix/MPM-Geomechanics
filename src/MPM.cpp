@@ -382,6 +382,11 @@ void MPM::setNumberPhasesInSimulation() {
 
 	// configures the number of phases in the simulation
 	ModelSetup::setTwoPhaseActive(Input::getNumberPhases()>1?true:false);
+
+	if(ModelSetup::getTwoPhaseActive())
+	{
+		ModelSetup::setHydroMechanicalCouplingType(ModelSetup::HydroMechanicalCouplingType::FULL_EXPLICIT);
+	}
 }
 
 void MPM::loadState()

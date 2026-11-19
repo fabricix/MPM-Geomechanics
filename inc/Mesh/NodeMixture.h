@@ -75,7 +75,7 @@ public:
 
     /// \brief Update nodal velocity of mixture
     ///
-    virtual void updateVelocity();
+    virtual void updateVelocity() override;
 
     /// \brief Return the nodal velocity of fluid phase
     /// \return Vector containing the nodal velocity of fluid phase

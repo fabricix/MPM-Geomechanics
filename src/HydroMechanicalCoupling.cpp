@@ -27,8 +27,7 @@ namespace HydroMechanicalCoupling {
         }
         else
         {
-            ModelSetup::setHydroMechanicalCouplingType(ModelSetup::HydroMechanicalCouplingType::NONE);
-            return; // No hydro-mechanical coupling to configure
+            return;
         }
 
         // Compute spatial tolerance based on mesh cell dimensions

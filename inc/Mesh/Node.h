@@ -195,7 +195,7 @@ public:
 
 	/// \brief Update nodal velocity
 	///
-	inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
+	virtual inline void updateVelocity(){ this->velocity = this->momentum / this->mass; }
 
 	/// brief Integrate momentum
 	/// \param[in] dt Time step

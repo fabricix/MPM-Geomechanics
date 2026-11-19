@@ -50,6 +50,10 @@ namespace Update {
     /// @param mesh 
     void resetNodalMomentum(Mesh *mesh);
 
+	/// \brief Delete fluid momentum stored in nodes
+    /// @param mesh 
+    void resetNodalMomentumFluid(Mesh *mesh);
+
     /// \brief Updates the particles' density
 	///
 	/// In one phase calculations:

@@ -51,7 +51,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Interpolation::nodalMass(mesh, particles);
 
 		// nodal mass of fluid
-		Interpolation::nodalMassFuid(mesh, bodies);
+		Interpolation::nodalMassFluid(mesh, bodies);
 
 		// impose momentum boundary condition in solid phase
 		Update::boundaryConditionsMomentum(mesh);
@@ -63,7 +63,7 @@ void SolverExplicitTwoPhaseUSL::Solve()
 		Interpolation::nodalInternalForce(mesh, particles);
 
 		// nodal internal force of fluid phase
-		Interpolation::nodalInternalForceFluid(mesh, bodies);
+		Interpolation::nodalInternalForceFluid(mesh, particles);
 
 		// nodal external force of mixture	
 		Interpolation::nodalExternalForce(mesh, particles);
