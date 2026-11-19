@@ -643,6 +643,11 @@ namespace Input {
 	/// \return pressure_force  Pore pressure force
 	vector<Loads::PressureBoundaryForceBox> getPressureBoundaryForceBox();
 
+	/// \brief Get the prescribed-velocity loads for the model bodies
+	/// \param[in] bodies Bodies used to resolve or configure the prescribed velocities
+	/// \return Prescribed velocity loads
+	void getPrescribedVelocity(vector<Body*>& bodies, vector<Loads::PrescribedVelocity>& prescribed_velocity);
+
 	/// \brief Return the seismic data
 	/// \return seismic_data Seismic data
 	SeismicData readSeismicData(const std::string& filename, bool hasHeader);
