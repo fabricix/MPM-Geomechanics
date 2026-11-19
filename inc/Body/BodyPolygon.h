@@ -93,7 +93,13 @@ public:
     /// \param[in] distretization_length Distretization length
     inline void setDiscretizationLength(double distretization_length) { this->distretizationLength=distretization_length; }
 
+    /// Optional common origin of the particle lattice in the polygon plane.
+    inline void setDiscretizationOrigin(const Vector3d& origin) { discretizationOrigin = origin; useDiscretizationOrigin = true; }
+
 private:
+
+    Vector3d discretizationOrigin = Vector3d::Zero();
+    bool useDiscretizationOrigin = false;
 
     int materialId; //!< material identification
 

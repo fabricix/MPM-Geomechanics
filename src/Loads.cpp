@@ -6,11 +6,28 @@
 #include "Geometry.h"
 #include "Input.h"
 #include "Warning.h"
+#include <cmath>
+#include <algorithm>
+#include <stdexcept>
 
 namespace Loads 
 {
 	vector<PrescribedPorePressure> prescribedPorePressureParticlesList;
 	NodalPointLoadData nodalPointLoadList;
+    vector<PrescribedVelocity> prescribedVelocities;
+}
+
+vector<Loads::PrescribedVelocity>& Loads::getPrescribedVelocities() { return prescribedVelocities; }
+
+void Loads::resetPrescribedVelocityReactions() {
+    for (auto& condition : prescribedVelocities) {
+        condition.nodalReactionForces.clear();
+    }
+}
+
+void Loads::setPrescribedVelocity(vector<Body*>& bodies) {
+	
+	Input::getPrescribedVelocity(bodies,prescribedVelocities);
 }
 
 Loads::NodalPointLoadData& Loads::getNodalPointList() { return nodalPointLoadList; }

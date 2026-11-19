@@ -37,6 +37,7 @@ void SolverExplicit::Solve()
 	{
 		// Increment loop counter
 		loopCounter = ModelSetup::incrementLoopCounter();
+        Loads::resetPrescribedVelocityReactions();
 
 		// Update contribution nodes
 		Update::contributionNodes(mesh, particles);
@@ -67,6 +68,7 @@ void SolverExplicit::Solve()
 
 		// Impose boundary conditions on nodal momentum
 		Update::boundaryConditionsMomentum(mesh);
+		Update::prescribedVelocityNodes(mesh);
 
 		// Impose momentum boundary condition in fluid phase
 		if (twoPhaseActive) { Update::boundaryConditionsMomentumFluid(mesh);
@@ -93,6 +95,7 @@ void SolverExplicit::Solve()
 
 		// Impose boundary conditions on total force
 		Update::boundaryConditionsForce(mesh);
+		Update::prescribedVelocityNodes(mesh, true);
 
 		if (twoPhaseActive) { Update::boundaryConditionsForceFluid(mesh); }
 
@@ -102,6 +105,7 @@ void SolverExplicit::Solve()
 		// Apply multi field velocity contact correction
 		if (contactActive) {
 			contactManager->applyVelocityContactCorrection(mesh, bodies, loopCounter == 1 ? dt / 2.0 : dt);
+			Update::prescribedVelocityNodes(mesh);
 		}
 
 		// Update particle velocity
@@ -124,6 +128,7 @@ void SolverExplicit::Solve()
 
 		// Project particle position if any penetrations
 		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
+		Update::prescribedVelocityParticles(iTime+dt);
 
 		// (MUSL) Momentum recalculation
 		if (useMUSL)
@@ -141,13 +146,15 @@ void SolverExplicit::Solve()
 
 			// Reapply BCs on nodal momentum
 			Update::boundaryConditionsMomentum(mesh);
+
+			Update::prescribedVelocityNodes(mesh);
 			
 			if (twoPhaseActive) {
 				// Impose force boundary conditions
 				Update::boundaryConditionsMomentumFluid(mesh);
 			}
 		}
-
+		
 		// Compute nodal velocity
 		Update::nodalVelocity(mesh);
 

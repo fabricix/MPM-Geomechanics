@@ -52,3 +52,5 @@ manual/**/*.synctex.gz
 manual/**/*.contact_documentation.pdf
 manual/**/*.main_manual_temporal_for_merge.pdf
 manual/**/*.pdf
+!/manual/latex/figures/direct-shear-consolidation.pdf
+!/manual/latex/figures/direct-shear-velocity-check.pdf

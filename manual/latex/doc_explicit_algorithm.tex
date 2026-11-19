@@ -1,6 +1,87 @@
+\clearpage
+\section{Prescribed velocity}\label{sec:prescribed-velocity-formulation}
+
+\subsection{Constant prescribed velocity}\label{sec:prescribed-velocity}
+
+The single-phase USL and MUSL solvers support a constant velocity on selected material points. For condition $c$, the particle set $\mathcal{P}_c$ is selected once in the reference configuration by a body identifier, an axis-aligned box, or their intersection, including particles on the box boundaries. The selected set of material points remains unchanged throughout the simulation.
+
+Let $\mathcal{D}_c$ denote the constrained Cartesian components and $\bar v_{ci}$ their prescribed values. The particle constraint is
+\begin{equation}
+ v_{ip}^{k+1/2}=\bar v_{ci},\qquad
+ x_{ip}^{k+1}=x_{ip}^{0}+\bar v_{ci}(t^k+\Delta t),
+ \quad p\in\mathcal{P}_c,\ i\in\mathcal{D}_c,
+ \label{eq:prescribed-particle-constraint}
+\end{equation}
+where $x_{ip}^{0}$ is the initial position. Components outside $\mathcal{D}_c$ retain their ordinary dynamic response.
+
+For nodal mass $m_I^{b,k}$ and momentum $p_{iI}^{b,k\pm1/2}$, where $b$ identifies the selected body's nodal field at contact nodes or the shared nodal field elsewhere, the prescribed nodal values are
+\begin{equation}
+ p_{iI}^{b,k\pm1/2}=m_I^{b,k}\bar v_{ci},\qquad
+ f_{iI}^{b,\mathrm{tot},k}=0,\quad i\in\mathcal{D}_c.
+ \label{eq:prescribed-nodal-constraint}
+\end{equation}
+
+Prescribed nodal momenta are imposed after the ordinary momentum boundary conditions, after material-contact correction, and after MUSL remapping. Force components are set to zero after the ordinary force boundary conditions and before nodal momentum integration. Prescribed particle velocities and positions are imposed after the dynamic velocity and position updates. The solver stops with an error if two prescribed-velocity conditions impose different values on the same particle or nodal velocity component, if a condition selects no particles, or if a selected particle moves outside the computational mesh. Time-dependent velocities and two-phase problems are not supported by this implementation.
+
+\subsection{Reaction of the prescribed velocity}\label{sec:prescribed-velocity-reaction}
+
+The exported reaction is the force applied by the velocity restriction to the body. Its opposite is the body's reaction on the external constraint. The reaction combines two discrete corrections. First, the grid contribution balances the total nodal force in each prescribed-velocity direction:
+\begin{equation}
+ r_{iI,c}^{\mathrm{grid},k}=-f_{iI}^{b,\mathrm{tot,pre},k}.
+ \label{eq:prescribed-grid-reaction}
+\end{equation}
+The superscript ``pre'' denotes the force after the ordinary force boundary conditions have been applied, but before the prescribed-velocity condition sets its constrained components to zero. Second, let $\widetilde v_{ip}^{k+1/2}$ denote the particle velocity after the dynamic update and any particle-contact correction, but before the constrained velocity components are set to their prescribed values (Eq.~\eqref{eq:prescribed-particle-constraint}). The impulse required to enforce those values is
+\begin{equation}
+ \Delta p_{ip,c}^{\mathrm{corr},k+1/2}=m_p(\bar v_{ci}-\widetilde v_{ip}^{k+1/2}).
+ \label{eq:prescribed-particle-impulse}
+\end{equation}
+To convert this impulse into a force, let $\delta t_f^k$ denote the interval used by the solver to integrate forces. The staggered initialization uses half a time step for the first integration and a full time step thereafter:
+\begin{equation}
+ \delta t_f^k=
+ \begin{cases}
+ \Delta t/2,&\text{first integration step},\\
+ \Delta t,&\text{subsequent integration steps}.
+ \end{cases}
+ \label{eq:prescribed-force-interval}
+\end{equation}
+The complementary particle force is then
+\begin{equation}
+ f_{ip,c}^{\mathrm{corr},k}=\frac{\Delta p_{ip,c}^{\mathrm{corr},k+1/2}}{\delta t_f^k}.
+ \label{eq:prescribed-particle-force}
+\end{equation}
+The particle correction forces are distributed to the grid nodes using the GIMP weights $S_{Ip}^k$ defined in Section~\ref{sec:mpm-formulation}, preserving their total because the weights sum to one for each particle. To avoid double counting when compatible prescribed-velocity conditions overlap, each particle velocity component contributes only to the first applicable condition in input order. The set $\mathcal{P}_{ci}^{\mathrm{own}}$ contains the particles whose correction in direction $i$ is counted toward condition $c$. The exported nodal reaction and its total are then
+\begin{equation}
+ r_{iI,c}^{k}=r_{iI,c}^{\mathrm{grid},k}+
+ \sum_{p\in\mathcal{P}_{ci}^{\mathrm{own}}}S_{Ip}^k
+ f_{ip,c}^{\mathrm{corr},k},\qquad
+ R_{ic}^{k}=\sum_I r_{iI,c}^{k}.
+ \label{eq:prescribed-total-reaction}
+\end{equation}
+The reaction contributions are reset at the start of each time step. Imposing prescribed nodal momenta, including after MUSL remapping, adds no separate contribution to the reaction. Forces already canceled by other boundary conditions are excluded.
+
+\subsection{Prescribed-velocity input and output}
+
+The following input fragment selects part of a body and constrains only its X velocity. A numeric zero constrains a component to zero; \texttt{null} leaves it free. Omitting the box selects the whole specified body; omitting the body identifier selects particles from all bodies inside the box.
+\begin{lstlisting}
+"prescribed_velocity": [
+  {
+    "body_id": 2,
+    "point_p1": [0.02, 0, 0.0525],
+    "point_p2": [0.1, 0.01, 0.055],
+    "velocity": [0.01, null, null]
+  }
+],
+"results": {
+  "grid_nodal_results": ["id", "prescribed_velocity_reaction"]
+}
+\end{lstlisting}
+
+The reaction is written as a three-component PointData array in the existing grid \texttt{.vtu} files, at the normal grid-output frequency. In \texttt{prescribed\_velocity\_reaction\_1}, the suffix identifies the prescribed velocity condition using one-based numbering: 1 for the first condition, 2 for the second, and so on.
+
+\clearpage
 \section{Explicit algorithm}\label{sec:explicit-algorithm}
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{Explicit MPM integration scheme}
 	\begin{algorithmic}[1]
 		
@@ -17,7 +98,7 @@
 		$ v_i^{s,\,k+\frac12} = \sum_{l=0}^{l=1-\frac12} v_i^{s,\,l} + a_{i}^{s,\,\text{record}}\, \Delta t $
 		
 		\State Impose nodal momentum boundary conditions:
-		$p_{iI}^{k-1/2} = 0 $ (fixed condition) 
+		$p_{iI}^{k-1/2} = 0 $ (fixed condition), or $p_{iI}^{b,k-1/2}=m_I^{b,k}\bar v_{ci}$ for $i\in\mathcal{D}_c$ (prescribed velocity; Section~\ref{sec:prescribed-velocity}).
 		
 		\State Compute internal forces:
 		$ f_{iI}^{int}{}^{k} = - \sum_{p=1}^{n_p} \sigma_{ij}^{p}{}^{k} S_{Ip,j}^{k} V_p $
@@ -36,6 +117,8 @@
 		
 		\State Impose nodal force boundary conditions:
 		$ f_{iI}^{tot}{}^{k} = 0 $ (fixed condition)
+		\State Zero nodal force components in prescribed-velocity directions:
+		$ f_{iI}^{b,\mathrm{tot},k} \leftarrow 0,\quad i\in\mathcal{D}_c $.
 		
 		\State Update nodal momenta:
 		$ p_{iI}^{k+\frac12} = p_{iI}^{k-1/2} + f_{iI}^{tot}{}^{k} \Delta t $
@@ -51,12 +134,18 @@
 		
 		\State Update particle positions:
 		$ x_{ip}^{k+1} = x_{ip}^{k} + \sum_{I=1}^{n_n} v_{iI}^{k+\frac12} N_{Ip}^k \Delta t $
+		\State Impose prescribed particle velocities and positions:
+		$ v_{ip}^{k+\frac12}\leftarrow\bar v_{ci},\quad
+		x_{ip}^{k+1}\leftarrow x_{ip}^{0}+\bar v_{ci}(t^k+\Delta t),\quad
+		p\in\mathcal{P}_c,\ i\in\mathcal{D}_c $.
 		
 		\State For MUSL scheme, recalculate nodal momentum:
 		$ p_{iI}^{k+1/2} = \sum_{p=1}^{n_p} m_p v_{ip}^{k+1/2} N_{Ip}^k $
 		
 		\State Impose nodal momentum boundary conditions:
 		$p_{iI}^{k+1/2} = 0 $ (fixed condition)
+		\State For MUSL scheme, reapply prescribed nodal momenta after remapping:
+		$ p_{iI}^{b,k+\frac12}\leftarrow m_I^{b,k}\bar v_{ci},\quad i\in\mathcal{D}_c $.
 		
 		\State Calculate nodal velocities:
 		$ v_{iI}^{k+1/2} = p_{iI}^{k+1/2} / m_I^k $

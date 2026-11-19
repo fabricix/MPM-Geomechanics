@@ -130,14 +130,14 @@ protected:
 
 inline Material::Material(int id, double density, double mu, MaterialType type):
 	  id(id),
-      density(density),
-      densityFluid(0.0),
-      porosity(0.0),
-      bulkModulusFluid(0.0),
-      mu(mu),
-      hydraulicConductivity(Vector3d::Zero()),
-      type(type),
-      referenceGravity(9.81)
+	  density(density),
+	  densityFluid(0.0),
+	  porosity(0.0),
+	  bulkModulusFluid(0.0),
+	  mu(mu),
+	  referenceGravity(9.81),
+	  hydraulicConductivity(Vector3d::Zero()),
+	  type(type)
 	  { 
 		//...
 	  }
