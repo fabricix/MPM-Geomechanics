@@ -22,9 +22,13 @@ In MPM, a continuum body is discretized into a set of Lagrangian material points
 
 A computational MPM cycle consists in a) interpolate values from particles to nodes, b) solve equations in nodes, d) interpolate solution from nodes to particles, and c) update particle's position.
 
+---
+
 ## MPM Formulation {#mpm_formulation}
 
-#### Motion Equation and Weak Form
+The MPM formulation is based on the weak form of motion equations and hybrid Lagrangian-Eulerian interpolation scheme for solving equations.
+
+### Motion Equation and Weak Form
 
 The Material Point Method formulation is based on the 3D continuum mechanics equation of motion:
 
@@ -90,6 +94,8 @@ v_{ip}^{n+1} = v_{ip}^n + \Delta t \sum_I a_{iI}^n N_I(\mathbf{x}_p^n), \quad \m
 \Delta \varepsilon_{ijp} = \frac{\Delta t}{2} \sum_I \left( v_{iI}^{n+1} N_{I,j}(\mathbf{x}_p^n) + v_{jI}^{n+1} N_{I,i}(\mathbf{x}_p^n) \right)
 \f]
 
+---
+
 ## Generalized Interpolation Material Point Method -- GIMP {#gimp_formulation}
 
 In the GIMP formulation any spatial field \f$f(x_i)\f$ is approximated using the values stored at the particles \f$f_p\f$ and the particle characteristic function \f$\chi_p(x_i)\f$:
@@ -133,7 +139,6 @@ From the equation of motion \f$\ddot{u}^n = f^n / m\f$, the velocity and displac
 
 \f[ u^{n+1} = u^n + \dot{u}^{n+1/2} \Delta t\f]
 
-
 #### Stability Requirement (CFL Condition)
 Because the central difference scheme is conditionally stable, the time step \f$\Delta t\f$ must satisfy the Courant–Friedrichs–Lewy (CFL) condition so that a mechanical wave does not travel across more than one grid cell in a single step:
 
@@ -143,7 +148,7 @@ where \f$l^e\f$ is the grid cell dimension, \f$|v_p|\f$ is the particle velocity
 
 \f[ c = \sqrt{\frac{E(1-\nu)}{(1+\nu)(1-2\nu)\rho}}\f]
 
-#### Explicit MPM Computational Cycle {#mpm_explicit_algorithm}
+### Explicit MPM Computational Cycle {#mpm_explicit_algorithm}
 Within each time step \f$\Delta t\f$, the explicit algorithm executes the following sequence (Update Stress Last - USL):
 
 1. **Reset Grid:** Clear nodal mass, momentum, and force arrays from the previous step.
@@ -152,6 +157,8 @@ Within each time step \f$\Delta t\f$, the explicit algorithm executes the follow
 4. **Integrate Grid Momentum:** Update nodal momenta \f$\dot{p}_{iI}\f$ and apply essential boundary conditions and multi-body contact corrections.
 5. **Grid-to-Particle (G2P):** Interpolate nodal accelerations and velocities back to update particle velocities \f$v_{ip}^{n+1}\f$ and positions \f$x_{ip}^{n+1}\f$.
 6. **Constitutive Update:** Compute strain increments \f$\Delta \varepsilon_{ijp}\f$ at particles and update stresses \f$\sigma_{ijp}^{n+1}\f$ and state variables via the constitutive model.
+
+---
 
 ## Numerical Damping {#mpm_damping}
 
@@ -195,8 +202,6 @@ When this condition is triggered, all kinetic energy is instantaneously removed 
 
 The simulation then continues from the current deformed configuration and stress state, repeating this peak-detection and velocity-reset cycle until residual kinetic energy peaks become negligible and static equilibrium is achieved.
 
----
-
 #### Numerical Implementation Algorithm
 
 Within each time step \f$t^n\f$, the `DynamicRelaxation::setStaticSolution` routine executes the following steps:
@@ -207,8 +212,6 @@ Within each time step \f$t^n\f$, the `DynamicRelaxation::setStaticSolution` rout
    * Set \f$\mathbf{v}_p = (0, 0, 0)\f$ for all active particles in parallel (`#pragma omp parallel for`).
    * Reset the current kinetic energy tracker \f$E_k^n = 0\f$.
 4. **State History Update:** Store \f$E_k^{n-1} \leftarrow E_k^n\f$ for the next time step evaluation.
-
----
 
 #### JSON Input Configuration
 

@@ -2,13 +2,18 @@
 
 This guide covers the repository organization, software dependencies, compilation workflow, and simulation execution parameters for **MPM-Geomechanics**.
 
-* @subpage code_execution
-
+* @ref program_features
+* @ref project_data_structure
+* @ref required_programs
+* @ref code_documentation
+* @ref code_execution
+* @ref build_commands
+* @ref compiled_binaries
+* @ref program_execution
+  
 ---
 
 ## Program Features {#program_features}
-
-**MPM-Geomechanics** is an open-source implementation of the Material Point Method (MPM) designed to simulate the behavior of soils and rock under static and dynamic loading conditions. Its main features include:
 
 * Three-dimensional (3D) dynamic formulation
 * Shared-memory parallelization using OpenMP
@@ -17,7 +22,7 @@ This guide covers the repository organization, software dependencies, compilatio
 * Softening/hardening models to represent strength degradation under large deformations
 * Frictional contact algorithm using STL surfaces and the Slave-Master approach
 * Seismic boundary conditions
-* Coupled hydro-mechanical formulation (*under development*)
+* Coupled hydro-mechanical formulation
 
 ---
 
@@ -32,7 +37,7 @@ The repository directories are organized as follows:
 * `manual/`, `docs/`: Technical manual source files and Doxygen-generated HTML/LaTeX documentation.
 * `tests/`: Simulation results for analytical and numerical verification benchmarks.
 * `examples/`: Ready-to-run application examples.
-
+  
 ---
 
 ## Required Programs {#required_programs}
@@ -60,10 +65,41 @@ sudo apt install git gh python3 python3-pip cmake build-essential
 
 ## Code Documentation {#code_documentation}
 
-The technical manual and API reference are unified using **Doxygen**. To build the HTML documentation locally from the repository root:
+This technical doccumentation is generated using **Doxygen**. To build the HTML documentation locally from the repository root:
 
 ```bash
 doxygen Doxyfile
 ```
 
 The generated HTML site is placed in the `docs/` directory (`docs/index.html`).
+
+---
+
+## Compilation and Execution {#code_execution}
+
+### Build Commands {#build_commands}
+
+**MPM-Geomechanics** uses CMake for out-of-source builds. From the repository root, run:
+
+```bash
+mkdir -p build && cd build
+cmake ..
+make -j$(nproc)
+```
+
+*(On Windows under MSYS2 MINGW64, use `cmake -G "MinGW Makefiles" ..` followed by `mingw32-make -j4`).*
+
+### Compiled Binaries {#compiled_binaries}
+
+After a successful build, the following executables are generated inside `build/` (or the configured binary output folder):
+
+* `mpm-geomechanics`: Main simulation engine executable.
+* `mpm-tests` (if QA/testing is enabled): GoogleTest suite for unit and regression testing.
+
+### Program Execution {#program_execution}
+
+Simulations are configured via a `.json` input file containing mesh geometry, boundary conditions, material constitutive parameters, body definitions, and solver settings. To run a simulation:
+
+```bash
+./build/mpm-geomechanics path/to/input_model.json
+```
