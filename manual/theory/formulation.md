@@ -16,14 +16,14 @@ where \f$t_i\f$ represents external tractions acting on boundary \f$\Gamma\f$.
 
 In the standard Material Point Method (sMPM), the continuum domain is discretized into a set of Lagrangian material points (particles) carrying mass \f$m_p\f$, volume \f$V_p\f$, velocity \f$\mathbf{v}_p\f$, and Cauchy stress \f$\boldsymbol{\sigma}_p\f$, while the equations of motion are solved on a background Eulerian grid.
 
-### 1. Dirac-Delta Particle Approximation
+### Dirac-Delta Particle Approximation
 Unlike GIMP, standard MPM assumes each particle is concentrated at a single point \f$\mathbf{x}_p\f$ using Dirac delta functions \f$\delta(\mathbf{x} - \mathbf{x}_p)\f$:
 
 \f[
 \rho(\mathbf{x}) = \sum_p m_p \delta(\mathbf{x} - \mathbf{x}_p), \quad \boldsymbol{\sigma}(\mathbf{x}) = \sum_p \boldsymbol{\sigma}_p V_p \delta(\mathbf{x} - \mathbf{x}_p)
 \f]
 
-### 2. Linear Nodal Shape Functions
+### Linear Nodal Shape Functions
 The nodal weighting functions \f$S_{Ip}\f$ and their gradients \f$\nabla S_{Ip}\f$ reduce directly to the standard piecewise-linear finite element shape functions \f$N_I(\mathbf{x})\f$ evaluated at the particle position \f$\mathbf{x}_p\f$:
 
 \f[
@@ -42,7 +42,7 @@ N_I(x_p) =
 
 In 3D, the shape function is the tensor product \f$N_I(\mathbf{x}_p) = N_I(x_p) N_I(y_p) N_I(z_p)\f$.
 
-### 3. Discrete Nodal Equations of Motion
+### Discrete Nodal Equations of Motion
 Substituting the Dirac-delta fields and linear shape functions into the weak form yields the discrete momentum balance at grid node \f$I\f$:
 
 \f[
@@ -55,7 +55,7 @@ where:
 * **Internal nodal force:** \f$f_{iI}^{int} = -\sum_p \sigma_{ijp} N_{I,j}(\mathbf{x}_p) V_p\f$
 * **External nodal force:** \f$f_{iI}^{ext} = \sum_p m_p b_{ip} N_I(\mathbf{x}_p) + \int_{\Gamma} t_i N_I(\mathbf{x}) \, dA\f$
 
-### 4. Grid-to-Particle Kinematics & Strain Rate
+### Grid-to-Particle Kinematics & Strain Rate
 Once nodal accelerations \f$a_{iI} = \dot{p}_{iI} / m_I\f$ and updated velocities \f$v_{iI}^{n+1}\f$ are computed on the grid, particle kinematics and strain increments are interpolated back using the same linear functions:
 
 \f[
@@ -93,9 +93,10 @@ with relative coordinates \f$\xi = x_p - x_I\f$, \f$\eta = y_p - y_I\f$, and \f$
 
 ## Time Integration {#mpm_integration}
 
-### Explicit time integration
+This section describes explicit time integration for motion equation.
 
-#### Central Difference Method
+### Explicit Central Difference Method
+
 To advance the discrete equation of motion from time \f$t^n\f$ to \f$t^{n+1}\f$, the explicit scheme computes the updated state strictly from known quantities at step \f$t^n\f$.
 
 Using central differences, nodal velocity at half-step \f$t^{n+1/2}\f$ and nodal acceleration at \f$t^n\f$ are approximated as:
@@ -108,7 +109,8 @@ From the equation of motion \f$\ddot{u}^n = f^n / m\f$, the velocity and displac
 
 \f[ u^{n+1} = u^n + \dot{u}^{n+1/2} \Delta t\f]
 
-### Stability Requirement (CFL Condition)
+
+#### Stability Requirement (CFL Condition)
 Because the central difference scheme is conditionally stable, the time step \f$\Delta t\f$ must satisfy the Courant–Friedrichs–Lewy (CFL) condition so that a mechanical wave does not travel across more than one grid cell in a single step:
 
 \f[ \Delta t_{cr} = \frac{l^e}{\max_p \left( c_p + |v_p| \right)}\f]
@@ -117,7 +119,7 @@ where \f$l^e\f$ is the grid cell dimension, \f$|v_p|\f$ is the particle velocity
 
 \f[ c = \sqrt{\frac{E(1-\nu)}{(1+\nu)(1-2\nu)\rho}}\f]
 
-### Explicit MPM Computational Cycle {#mpm_explicit_algorithm}
+#### Explicit MPM Computational Cycle {#mpm_explicit_algorithm}
 Within each time step \f$\Delta t\f$, the explicit algorithm executes the following sequence (Update Stress Last - USL):
 
 1. **Reset Grid:** Clear nodal mass, momentum, and force arrays from the previous step.
