@@ -222,3 +222,23 @@ To activate kinetic dynamic relaxation in a simulation input file, specify the d
   "type": "kinetic"
 }
 ```
+
+---
+
+## Slave-Master Velocity Contact Formulation {#mpm_material_contact}
+
+In the Slave-Master contact approach implemented in **MPM-Geomechanics**, two separate nodal velocity fields are maintained at grid node \f$I\f$: one for the master body (\f$v_{iI}^{M}\f$) and one for the slave body (\f$v_{iI}^{S}\f$).
+
+### Contact Detection and Real Distance Correction
+Contact between two bodies occurs at grid node \f$I\f$ when:
+1. Both bodies map momentum to the same grid node \f$I\f$.
+2. Normal relative velocity satisfies \f$(v_{iI}^{M} - v_{iI}^{S}) n_{iI}^{M} > 0\f$.
+3. The projected real distance between the closest particles to node \f$I\f$ satisfies:
+   \f[D^{MS}_I = -X_I^M \cdot n_I^M - X_I^S \cdot n_I^S \leq \lambda \, d_c\f]
+   where \f$d_c\f$ is the grid cell size and \f$\lambda = 0.5\f$ by default (accounting for two particles per cell direction) to prevent spurious early contact.
+
+### Contact Normal and Forces
+The unit normal vector is computed from the nodal mass gradient. To ensure momentum conservation (\f$n^{MS}_{iI} = -n^{SM}_{iI}\f$), either an averaged collinear normal or the master body normal (when \f$M\f$ is stiffer or flat/convex) is selected.
+
+Using a predictor–corrector scheme, each body is first integrated independently. If penetration occurs, sticking contact forces are computed and decomposed into normal (\f$f^{M,nor}_{iI}\f$) and tangential components capped by Coulomb friction:
+\f[f^{M,tan,k}_{iI,\text{corr}} = \min \Big( \|f^{M,tan,k}_{iI}\|, \mu \, \| f^{M,nor,k}_{iI}\| \Big) \frac{f^{M,tan,k}_{iI}}{ \|f^{M,tan,k}_{iI}\|}\f]

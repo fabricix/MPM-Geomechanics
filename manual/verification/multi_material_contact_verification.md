@@ -1,25 +1,5 @@
 # Multi-Material Contact Verification {#multi_material_contact}
 
-## Slave-Master Velocity Contact Formulation
-
-In the Slave-Master contact approach implemented in **MPM-Geomechanics**, two separate nodal velocity fields are maintained at grid node $I$: one for the master body ($v_{iI}^{M}$) and one for the slave body ($v_{iI}^{S}$).
-
-### Contact Detection and Real Distance Correction
-Contact between two bodies occurs at grid node $I$ when:
-1. Both bodies map momentum to the same grid node $I$.
-2. Normal relative velocity satisfies $(v_{iI}^{M} - v_{iI}^{S}) n_{iI}^{M} > 0$.
-3. The projected real distance between the closest particles to node $I$ satisfies:
-   $$D^{MS}_I = -X_I^M \cdot n_I^M - X_I^S \cdot n_I^S \leq \lambda \, d_c$$
-   where $d_c$ is the grid cell size and $\lambda = 0.5$ by default (accounting for two particles per cell direction) to prevent spurious early contact.
-
-### Contact Normal and Forces
-The unit normal vector is computed from the nodal mass gradient. To ensure momentum conservation ($n^{MS}_{iI} = -n^{SM}_{iI}$), either an averaged collinear normal or the master body normal (when $M$ is stiffer or flat/convex) is selected.
-
-Using a predictor–corrector scheme, each body is first integrated independently. If penetration occurs, sticking contact forces are computed and decomposed into normal ($f^{M,nor}_{iI}$) and tangential components capped by Coulomb friction:
-$$f^{M,tan,k}_{iI,\text{corr}} = \min \Big( \|f^{M,tan,k}_{iI}\|, \mu \, \| f^{M,nor,k}_{iI}\| \Big) \frac{f^{M,tan,k}_{iI}}{ \|f^{M,tan,k}_{iI}\|}$$
-
----
-
 ## Verification Benchmarks
 
 ### 1. Single Block Sliding on an Inclined Plane
