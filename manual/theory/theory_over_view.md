@@ -213,16 +213,6 @@ Within each time step \f$t^n\f$, the `DynamicRelaxation::setStaticSolution` rout
    * Reset the current kinetic energy tracker \f$E_k^n = 0\f$.
 4. **State History Update:** Store \f$E_k^{n-1} \leftarrow E_k^n\f$ for the next time step evaluation.
 
-#### JSON Input Configuration
-
-To activate kinetic dynamic relaxation in a simulation input file, specify the damping type in the solver setup:
-
-```json
-"damping": {
-  "type": "kinetic"
-}
-```
-
 ---
 
 ## Slave-Master Velocity Contact Formulation {#mpm_material_contact}
