@@ -966,12 +966,6 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ./inc/ \
-                         ./inc/Materials/ \
-                         ./inc/Body/ \
-                         ./inc/Particle/ \
-                         ./inc/Mesh/ \
-                         ./inc/Shape/ \
-                         ./inc/Solver/ \
                          ./manual
 
 # This tag can be used to specify the character encoding of the source files
@@ -1064,7 +1058,7 @@ FILE_PATTERNS          = *.c \
 # be searched for input files as well.
 # The default value is: NO.
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be
 # excluded from the INPUT source files. This way you can easily exclude a
@@ -1073,8 +1067,12 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which Doxygen is
 # run.
 
-EXCLUDE                =
 
+EXCLUDE                = ./inc/Eigen \
+                         ./inc/Json \
+                         ./manual/latex
+                         
+            
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
 # from the input.
@@ -1123,7 +1121,7 @@ EXAMPLE_RECURSIVE      = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             = manual/latex/figures
+IMAGE_PATH             = manual/figures
 
 # The INPUT_FILTER tag can be used to specify a program that Doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program

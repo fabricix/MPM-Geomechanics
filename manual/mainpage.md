@@ -1,8 +1,8 @@
 # MPM-Geomechanics {#mainpage}
 
-**MPM-Geomechanics** is an open-source implementation of the Material Point Method (MPM) designed to simulate large deformations and dynamics in soils and rock mechanics.
+An open-source implementation of the Material Point Method (MPM) designed to simulate large deformations and dynamics in soils and rock mechanics.
 
-## Main Features
+### Main Features
 * Three-dimensional explicit dynamic formulation
 * Shared-memory parallelization using OpenMP
 * Body-based modeling with pre-defined bodies and particle lists.
@@ -11,7 +11,7 @@
 * Seismic boundary conditions
 * Coupled hydro-mechanical formulation
  
-## Manual Structure
+### Manual Structure
 * @subpage theory_overview
 * @subpage user_guide_overview
 * @subpage verification_overview
