@@ -1,5 +1,5 @@
 # Veusz saved document (version 4.2.1)
-# Saved at 2026-11-10T19:59:41.397713
+# Saved at 2026-11-20T20:06:10.082023
 
 SetCompatLevel(1)
 AddImportPath('C:\\Users\\fabri\\Estructura_Fabricio\\PROFESIONAL\\Backup_Codigo\\MPM\\MPM-Geomechanics\\tests\\terrain-contact\\verification')
@@ -680,12 +680,16 @@ TagDatasets('mu_0.0', ['mu_0.0Displacement_0', 'mu_0.0Displacement_1', 'mu_0.0Di
 TagDatasets('mu_0.1', ['mu_0.1Displacement_0', 'mu_0.1Displacement_1', 'mu_0.1Displacement_2', 'mu_0.1Time'])
 TagDatasets('mu_0.3', ['mu_0.3Displacement_0', 'mu_0.3Displacement_1', 'mu_0.3Displacement_2', 'mu_0.3Time'])
 TagDatasets('mu_0.5', ['mu_0.5Displacement_0', 'mu_0.5Displacement_1', 'mu_0.5Displacement_2', 'mu_0.5Time'])
+Set('width', '13.227cm')
+Set('height', '12.91cm')
 Set('colorTheme', 'default-latest')
 Set('StyleSheet/axis-function/autoRange', 'next-tick')
 Add('page', name='page1', autoadd=False)
 To('page1')
-Set('width', '14.252cm')
-Set('height', '14.046cm')
+Set('width', '13.194cm')
+Set('height', '12.882cm')
+Set('Background/color', 'white')
+Set('Background/hide', False)
 Add('graph', name='graph1', autoadd=False)
 To('graph1')
 Set('leftMargin', '1.685cm')

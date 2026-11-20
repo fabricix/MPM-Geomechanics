@@ -4,7 +4,7 @@ This section documents the verification and benchmarking suite used to validate 
 
 ## Verification Cases
 
-* @subpage multi_material_contact
+* @subpage material_contact
 * @subpage boussinesq_verification
 * @subpage base_acceleration_verification
 * @subpage strength_stress_vertical
