@@ -3,6 +3,7 @@
 \begin{algorithm}
 	\caption{Explicit MPM integration scheme}
 	\begin{algorithmic}[1]
+		\State Deactivate bodies whose excavation time has been reached (Section~\ref{sec:scheduled-excavation}).
 		
 		\State Compute nodal mass:
 		$ m_I^k = \sum_{p=1}^{n_p} m_p N_{Ip}^k $

@@ -1,0 +1,23 @@
+\clearpage
+\section{Scheduled body excavation}
+\label{sec:scheduled-excavation}
+
+Scheduled excavation is implemented by deactivating the bodies to be excavated at the times specified in the input file. Each body's removal time is defined by the \texttt{excavation\_time} entry. The value must be finite and nonnegative. A body without this entry remains in the model unless another mechanism deactivates its particles.
+
+\begin{lstlisting}
+"excavation_1": {
+  "type": "particles",
+  "particles": {
+    "id": [...],
+    "position": [...],
+    "volume": [...],
+    "material_id": [...]
+  },
+  "excavation_time": 0.25
+}
+\end{lstlisting}
+The \texttt{excavation\_time} entry belongs to the body definition, at the same level as \texttt{type} and \texttt{particles}. 
+
+At the beginning of each integration step, before particle contributions are assembled on the grid, the solver checks the scheduled removals. A body is removed at the first step whose start time reaches its prescribed time. Thus, removal times are resolved to the integration step. Events at zero are applied before the initial state is exported. Multiple events reached in the same step are all processed.
+
+Removal sets the body's particles to inactive. They no longer contribute to grid mass, momentum or forces, and subsequent particle updates skip them. Their positions remain at the values reached at removal. The records are retained in the particle output, with \texttt{Particle Active} equal to zero; particle indices are not renumbered. Section~\ref{sec:staged-excavation-example} illustrates a damped gravity initialization followed by excavation.
