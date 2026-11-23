@@ -3,72 +3,86 @@
 
 #include "Update.h"
 #include "Loads.h"
+#include "Warning.h"
 #include "Interpolation.h"
 #include "Seismic.h"
 #include <array>
 #include <map>
 #include <set>
 #include <limits>
-#include <stdexcept>
 
 void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
-    // Contact bodies have independent fields; other nodes have one shared field.
-    std::map<std::pair<int,int>, std::array<double,3>> values;
-    std::map<std::pair<int,int>, std::array<size_t,3>> conditionOwners;
-    const double free = std::numeric_limits<double>::quiet_NaN();
-    auto& contact = mesh->getContactNodes();
-    auto& conditions = Loads::getPrescribedVelocities();
-    for (size_t conditionIndex = 0; conditionIndex < conditions.size(); ++conditionIndex) {
-        const auto& condition = conditions[conditionIndex];
-        for (auto* p : condition.particles) {
-            if (!p->getActive()) throw std::runtime_error("Prescribed velocity particle left the mesh");
-            for (const auto& contribution : *p->getContributionNodes()) {
-                if (contribution.getWeight() <= 1e-12) continue;
-                const int id = contribution.getNodeId();
-                const auto it = contact.find(id);
-                const int body = it == contact.end() ? -1 : static_cast<int>(p->getBodyId());
-                auto inserted = values.emplace(std::make_pair(id, body), std::array<double,3>{free,free,free});
-                auto& v = inserted.first->second;
+    try {
+        // Contact bodies have independent fields; other nodes have one shared field.
+        std::map<std::pair<int,int>, std::array<double,3>> values;
+        std::map<std::pair<int,int>, std::array<size_t,3>> conditionOwners;
+        const double free = std::numeric_limits<double>::quiet_NaN();
+        auto& contact = mesh->getContactNodes();
+        auto& conditions = Loads::getPrescribedVelocities();
+        for (size_t conditionIndex = 0; conditionIndex < conditions.size(); ++conditionIndex) {
+            auto& condition = conditions[conditionIndex];
+            for (auto* p : condition.particles) {
+                if (!p->getActive()) {
+                    Warning::printMessage("Prescribed velocity particle is inactive; inactive particles skipped");
+                    continue;
+                }
+                for (const auto& contribution : *p->getContributionNodes()) {
+                    if (contribution.getWeight() <= 1e-12) continue;
+                    const int id = contribution.getNodeId();
+                    const auto it = contact.find(id);
+                    const int body = it == contact.end() ? -1 : static_cast<int>(p->getBodyId());
+                    auto inserted = values.emplace(std::make_pair(id, body), std::array<double,3>{free,free,free});
+                    auto& v = inserted.first->second;
+                    for (int axis = 0; axis < 3; ++axis) {
+                        if (!condition.constrained[axis]) continue;
+                        if (!std::isnan(v[axis]) && v[axis] != condition.velocity[axis]) {
+                            Warning::printMessage("Conflicting prescribed velocities on a shared grid field");
+                            throw(0);
+                        }
+                        // Attribute a shared component to the first condition, without duplicating its reaction.
+                        if (std::isnan(v[axis])) conditionOwners[inserted.first->first][axis] = conditionIndex;
+                        v[axis] = condition.velocity[axis];
+                    }
+                }
+            }
+        }
+        for (const auto& entry : values) {
+            auto* node = mesh->getNodes()->at(entry.first.first);
+            const auto it = contact.find(entry.first.first);
+            if (it == contact.end()) {
+                auto value = constrainForce ? node->getTotalForce() : node->getMomentum();
                 for (int axis = 0; axis < 3; ++axis) {
-                    if (!condition.constrained[axis]) continue;
-                    if (!std::isnan(v[axis]) && v[axis] != condition.velocity[axis])
-                        throw std::runtime_error("Conflicting prescribed velocities on a shared grid field");
-                    // Attribute a shared component to the first condition, without duplicating its reaction.
-                    if (std::isnan(v[axis])) conditionOwners[inserted.first->first][axis] = conditionIndex;
-                    v[axis] = condition.velocity[axis];
+                    if (std::isnan(entry.second[axis])) continue;
+                    if (constrainForce)
+                        conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
+                            .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
+                    value[axis] = constrainForce ? 0 : node->getMass()*entry.second[axis];
+                }
+                if (constrainForce) node->setTotalForce(value); else node->setMomentum(value);
+            } else {
+                auto& data = it->second;
+                const bool master = entry.first.second == data.bodyMasterId;
+                if (!master && entry.first.second != data.bodySlaveId) {
+                    Warning::printMessage("Prescribed velocity body is absent from contact field");
+                    throw(0);
+                }
+                Vector3d& value = constrainForce ? (master ? data.totalForceMaster : data.totalForceSlave)
+                                                : (master ? data.momentumMaster : data.momentumSlave);
+                const double mass = master ? data.massMaster : data.massSlave;
+                for (int axis = 0; axis < 3; ++axis) {
+                    if (std::isnan(entry.second[axis])) continue;
+                    if (constrainForce)
+                        conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
+                            .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
+                    value[axis] = constrainForce ? 0 : mass*entry.second[axis];
                 }
             }
         }
     }
-    for (const auto& entry : values) {
-        auto* node = mesh->getNodes()->at(entry.first.first);
-        const auto it = contact.find(entry.first.first);
-        if (it == contact.end()) {
-            auto value = constrainForce ? node->getTotalForce() : node->getMomentum();
-            for (int axis = 0; axis < 3; ++axis) {
-                if (std::isnan(entry.second[axis])) continue;
-                if (constrainForce)
-                    conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
-                        .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
-                value[axis] = constrainForce ? 0 : node->getMass()*entry.second[axis];
-            }
-            if (constrainForce) node->setTotalForce(value); else node->setMomentum(value);
-        } else {
-            auto& data = it->second;
-            const bool master = entry.first.second == data.bodyMasterId;
-            if (!master && entry.first.second != data.bodySlaveId)
-                throw std::runtime_error("Prescribed velocity body is absent from contact field");
-            Vector3d& value = constrainForce ? (master ? data.totalForceMaster : data.totalForceSlave)
-                                            : (master ? data.momentumMaster : data.momentumSlave);
-            const double mass = master ? data.massMaster : data.massSlave;
-            for (int axis = 0; axis < 3; ++axis) {
-                if (std::isnan(entry.second[axis])) continue;
-                if (constrainForce)
-                    conditions[conditionOwners.at(entry.first)[axis]].nodalReactionForces
-                        .try_emplace(entry.first.first, Vector3d::Zero()).first->second[axis] -= value[axis];
-                value[axis] = constrainForce ? 0 : mass*entry.second[axis];
-            }
-        }
+    catch (...)
+    {
+        Warning::printMessage("Unable to apply prescribed nodal velocities");
+        throw;
     }
 }
 
@@ -76,6 +90,7 @@ void Update::prescribedVelocityParticles(double time) {
     std::set<std::pair<Particle*,int>> constrainedComponents;
     for (auto& condition : Loads::getPrescribedVelocities()) {
         for (auto* p : condition.particles) {
+            if (!p->getActive()) continue;
             auto velocity = p->getVelocity();
             auto position = p->getPosition();
             for (int axis = 0; axis < 3; ++axis) {

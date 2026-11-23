@@ -2211,59 +2211,116 @@ void Input::getPrescribedVelocity(vector<Body*>& bodies, vector<Loads::Prescribe
 
     const auto& input = Input::getJson();
     if (!input.contains("prescribed_velocity")) return;
-    if (ModelSetup::getTwoPhaseActive())
-        throw std::runtime_error("prescribed_velocity currently supports single-phase USL/MUSL only");
+    if (ModelSetup::getTwoPhaseActive()) {
+        Warning::printMessage("prescribed_velocity currently supports single-phase USL/MUSL only; conditions ignored");
+        return;
+    }
     const auto& entries = input.at("prescribed_velocity");
-    if (!entries.is_array()) throw std::runtime_error("prescribed_velocity must be an array");
-    for (const auto& entry : entries) {
-        PrescribedVelocity condition;
-        const auto& velocity = entry.at("velocity");
-        if (!velocity.is_array() || velocity.size() != 3)
-            throw std::runtime_error("prescribed_velocity requires three velocity components (number or null)");
-        bool any = false;
-        for (int axis = 0; axis < 3; ++axis) {
-            if (velocity[axis].is_null()) continue;
-            if (!velocity[axis].is_number() || !std::isfinite(velocity[axis].get<double>()))
-                throw std::runtime_error("Invalid prescribed velocity component");
-            condition.constrained[axis] = true;
-            condition.velocity[axis] = velocity[axis].get<double>();
-            any = true;
-        }
-        const bool box = entry.contains("point_p1") || entry.contains("point_p2");
-        if (!any || (!box && !entry.contains("body_id")))
-            throw std::runtime_error("prescribed_velocity needs a body_id or box and a constrained component");
-        Vector3d p1 = Vector3d::Zero(), p2 = Vector3d::Zero();
-        if (box) {
-            for (const auto* key : {"point_p1", "point_p2"})
-                if (!entry.contains(key) || !entry[key].is_array() || entry[key].size() != 3)
-                    throw std::runtime_error("prescribed_velocity box requires point_p1 and point_p2");
-            for (int axis = 0; axis < 3; ++axis) {
-                p1[axis] = entry["point_p1"][axis].get<double>();
-                p2[axis] = entry["point_p2"][axis].get<double>();
-                if (!std::isfinite(p1[axis]) || !std::isfinite(p2[axis]) || p1[axis] > p2[axis])
-                    throw std::runtime_error("Invalid prescribed_velocity box bounds");
-            }
-        }
-        for (auto* body : bodies) {
-            if (entry.contains("body_id") && body->getId() != entry["body_id"].get<int>()) continue;
-            for (auto* p : *body->getParticles()) {
-                const auto& x = p->getInitialPosition();
-                if (box && ((x.array() < p1.array()).any() || (x.array() > p2.array()).any())) continue;
-                for (const auto& previous : prescribedVelocities) {
-                    if (std::find(previous.particles.begin(), previous.particles.end(), p) == previous.particles.end()) continue;
-                    for (int axis = 0; axis < 3; ++axis)
-                        if (previous.constrained[axis] && condition.constrained[axis] &&
-                            previous.velocity[axis] != condition.velocity[axis])
-                            throw std::runtime_error("Conflicting prescribed velocities on a particle");
+    if (!entries.is_array()) {
+        Warning::printMessage("prescribed_velocity must be an array; conditions ignored");
+        return;
+    }
+    for (size_t index = 0; index < entries.size(); ++index) {
+        try {
+            const auto& entry = entries[index];
+            PrescribedVelocity condition;
+            bool validVelocity = entry.is_object() && entry.contains("velocity") &&
+                                 entry["velocity"].is_array() && entry["velocity"].size() == 3;
+            bool any = false;
+            if (validVelocity) {
+                for (const auto& component : entry["velocity"]) {
+                    if (component.is_number()) any = true;
+                    if (!component.is_null() &&
+                        (!component.is_number() || !std::isfinite(component.get<double>()))) {
+                        validVelocity = false;
+                        break;
+                    }
                 }
+            }
+            if (!validVelocity || !any) {
+                Warning::printMessage("prescribed_velocity: 'velocity' must be an array [vx, vy, vz] with exactly three entries. "
+                                      "Each entry must be a finite number or null to leave that direction unconstrained; "
+                                      "At least one entry must be a number; for example, [0.01, null, 0.0].");
+                throw(0);
+            }
+            if (entry.contains("body_id") &&
+                (!entry["body_id"].is_number_integer() ||
+                 entry["body_id"].get<double>() < std::numeric_limits<int>::min() ||
+                 entry["body_id"].get<double>() > std::numeric_limits<int>::max())) {
+                Warning::printMessage("Invalid body_id (expected an integer)");
+                throw(0);
+            }
+            const auto& velocity = entry.at("velocity");
+            for (int axis = 0; axis < 3; ++axis) {
+                if (velocity[axis].is_null()) continue;
+                condition.constrained[axis] = true;
+                condition.velocity[axis] = velocity[axis].get<double>();
+            }
+            const bool box = entry.contains("point_p1") || entry.contains("point_p2");
+            if (!box && !entry.contains("body_id")) {
+                Warning::printMessage("prescribed_velocity: select particles using 'body_id', a box ('point_p1' and 'point_p2'), or both");
+                throw(0);
+            }
+            Vector3d p1 = Vector3d::Zero(), p2 = Vector3d::Zero();
+            if (box) {
+                bool validBox = entry.contains("point_p1") && entry.contains("point_p2") &&
+                                entry["point_p1"].is_array() && entry["point_p1"].size() == 3 &&
+                                entry["point_p2"].is_array() && entry["point_p2"].size() == 3;
+                if (validBox) {
+                    for (int axis = 0; axis < 3; ++axis) {
+                        if (!entry["point_p1"][axis].is_number() || !entry["point_p2"][axis].is_number()) {
+                            validBox = false;
+                            break;
+                        }
+                        p1[axis] = entry["point_p1"][axis].get<double>();
+                        p2[axis] = entry["point_p2"][axis].get<double>();
+                        if (!std::isfinite(p1[axis]) || !std::isfinite(p2[axis]) || p1[axis] > p2[axis]) {
+                            validBox = false;
+                            break;
+                        }
+                    }
+                }
+                if (!validBox) {
+                    Warning::printMessage("prescribed_velocity: a box requires 'point_p1' and 'point_p2', each with three finite numeric coordinates [x, y, z]. "
+                                          "Each coordinate of point_p1 must be less than or equal to the corresponding coordinate of point_p2.");
+                    throw(0);
+                }
+            }
+            for (auto* body : bodies) {
+                if (entry.contains("body_id") && body->getId() != entry["body_id"].get<int>()) continue;
+                for (auto* p : *body->getParticles()) {
+                    const auto& x = p->getInitialPosition();
+                    if (box && ((x.array() < p1.array()).any() || (x.array() > p2.array()).any())) continue;
+                    for (const auto& previous : prescribedVelocities) {
+                        if (std::find(previous.particles.begin(), previous.particles.end(), p) == previous.particles.end()) continue;
+                        for (int axis = 0; axis < 3; ++axis)
+                            if (previous.constrained[axis] && condition.constrained[axis] &&
+                                previous.velocity[axis] != condition.velocity[axis]) {
+                                Warning::printMessage("Conflicting prescribed velocities on a particle");
+                                throw(0);
+                            }
+                    }
+                    condition.particles.push_back(p);
+                }
+            }
+            if (condition.particles.empty()) {
+                Warning::printMessage("prescribed_velocity selects no particles");
+                throw(0);
+            }
+            // Validate the whole condition before changing any particle velocity.
+            prescribedVelocities.push_back(condition);
+            for (auto* p : condition.particles) {
                 auto value = p->getVelocity();
                 for (int axis = 0; axis < 3; ++axis)
                     if (condition.constrained[axis]) value[axis] = condition.velocity[axis];
                 p->setVelocity(value);
-                condition.particles.push_back(p);
             }
         }
-        if (condition.particles.empty()) throw std::runtime_error("prescribed_velocity selects no particles");
-        prescribedVelocities.push_back(condition);
+        catch (...)
+        {
+            Warning::printMessage("prescribed_velocity condition " + std::to_string(index + 1) +
+                                  ": invalid definition");
+            throw;
+        }
     }
 }
