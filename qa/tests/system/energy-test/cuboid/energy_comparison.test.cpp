@@ -139,7 +139,7 @@ void executeSimulation()
 
     std::cout << "Starting Simulation: " << std::endl;
 
-    std::string script = exe_path.string() + " cuboid.json";
+    std::string script = "\"" + exe_path.string() + "\" cuboid.json";
     std::cout << "Executing script: " << script << std::endl;
     int response = system(script.c_str());
 
