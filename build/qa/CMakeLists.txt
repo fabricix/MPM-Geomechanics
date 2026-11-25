@@ -24,7 +24,7 @@ include_directories(../../inc/Shape)
 include_directories(../../inc/Body)
 include_directories(../../inc/Materials)
 include_directories(../../inc/Mesh)
-include_directories(../../qa/benchmark)
+include_directories(../../benchmark)
 include_directories(../../qa/tests)
 
 # ====================================
@@ -53,7 +53,7 @@ target_link_libraries(MPM-Geomechanics-tests gtest)
 # ==============================================
 
 # Gather all benchmark test files (*.benchmark.cpp)
-file(GLOB_RECURSE BENCHMARK_SOURCES "../../qa/benchmark/*.benchmark.cpp" "../../qa/benchmark/main.benchmark.cpp")
+file(GLOB_RECURSE BENCHMARK_SOURCES "../../benchmark/*.benchmark.cpp" "../../benchmark/main.benchmark.cpp")
 
 # Reuse the simulator sources (same as for MPM-Geomechanics-tests)
 add_executable(MPM-Geomechanics-benchmark ${BENCHMARK_SOURCES} ${EXECUTABLES})
@@ -74,6 +74,6 @@ set(MPM_EXECUTABLE
 
 target_compile_definitions(MPM-Geomechanics-tests PRIVATE
     MPM_PROJECT_ROOT="${MPM_ROOT}"
-    MPM_TEST_DIR="${MPM_ROOT}/qa/tests/energy-test/cuboid"
+    MPM_TEST_DIR="${MPM_ROOT}/qa/tests/system/energy-test/cuboid"
     MPM_EXECUTABLE_PATH="${MPM_EXECUTABLE}"
 )
