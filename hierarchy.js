@@ -40,6 +40,7 @@ var hierarchy =
     [ "GMSH::PhysicalGroup", "structGMSH_1_1PhysicalGroup.html", null ],
     [ "Boundary::planeBoundary", "structBoundary_1_1planeBoundary.html", null ],
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", null ],
+    [ "Loads::PrescribedVelocity", "structLoads_1_1PrescribedVelocity.html", null ],
     [ "Loads::PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", null ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", null ],
     [ "Loads::PressureMaterial", "structLoads_1_1PressureMaterial.html", null ],

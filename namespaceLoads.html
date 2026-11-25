@@ -114,6 +114,8 @@ $(function(){initNavTree('namespaceLoads.html','',''); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:PrescribedVelocity" id="r_PrescribedVelocity"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1PrescribedVelocity.html">PrescribedVelocity</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a constant prescribed velocity constraint on selected material points.  <a href="structLoads_1_1PrescribedVelocity.html#details">More...</a><br /></td></tr>
 <tr class="memitem:LoadDistributedBox" id="r_LoadDistributedBox"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1LoadDistributedBox.html">LoadDistributedBox</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define a distributed load in particles inside the cuboid defined by point p1 and p2.  <a href="structLoads_1_1LoadDistributedBox.html#details">More...</a><br /></td></tr>
 <tr class="memitem:NodalPointLoadData" id="r_NodalPointLoadData"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoads_1_1NodalPointLoadData.html">NodalPointLoadData</a></td></tr>
@@ -128,6 +130,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5d63fa88748746eac480418752dd7d5b" id="r_a5d63fa88748746eac480418752dd7d5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d63fa88748746eac480418752dd7d5b">setPrescribedVelocity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies)</td></tr>
+<tr class="memdesc:a5d63fa88748746eac480418752dd7d5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures prescribed velocity constraints on particles selected from the reference geometry.  <br /></td></tr>
+<tr class="memitem:ad1bdf63efb9003ccfe1f0a7f60d31edc" id="r_ad1bdf63efb9003ccfe1f0a7f60d31edc"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structLoads_1_1PrescribedVelocity.html">PrescribedVelocity</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1bdf63efb9003ccfe1f0a7f60d31edc">getPrescribedVelocities</a> ()</td></tr>
+<tr class="memdesc:ad1bdf63efb9003ccfe1f0a7f60d31edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the configured prescribed velocity constraints.  <br /></td></tr>
+<tr class="memitem:ac7952e0eed9efcda0cb50209137ed02d" id="r_ac7952e0eed9efcda0cb50209137ed02d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7952e0eed9efcda0cb50209137ed02d">resetPrescribedVelocityReactions</a> ()</td></tr>
+<tr class="memdesc:ac7952e0eed9efcda0cb50209137ed02d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the nodal reaction forces accumulated for all prescribed velocity constraints.  <br /></td></tr>
 <tr class="memitem:a1a2299651bd04336c8233e10785aca1b" id="r_a1a2299651bd04336c8233e10785aca1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a2299651bd04336c8233e10785aca1b">setGravity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies)</td></tr>
 <tr class="memdesc:a1a2299651bd04336c8233e10785aca1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the gravity load in particles.  <br /></td></tr>
 <tr class="memitem:a2f4cbf0274418e75675e0f07616538d4" id="r_a2f4cbf0274418e75675e0f07616538d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f4cbf0274418e75675e0f07616538d4">setLoadDistributedBox</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies, vector&lt; <a class="el" href="structLoads_1_1LoadDistributedBox.html">Loads::LoadDistributedBox</a> &gt; loads)</td></tr>
@@ -193,6 +201,47 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get (node-id load) vector for set nodal point load. </p>
+
+</div>
+</div>
+<a id="ad1bdf63efb9003ccfe1f0a7f60d31edc" name="ad1bdf63efb9003ccfe1f0a7f60d31edc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1bdf63efb9003ccfe1f0a7f60d31edc">&#9670;&#160;</a></span>getPrescribedVelocities()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="structLoads_1_1PrescribedVelocity.html">PrescribedVelocity</a> &gt; &amp; Loads::getPrescribedVelocities </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the configured prescribed velocity constraints. </p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the list of prescribed velocity constraints. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The returned reference remains valid while the internal list is not modified or destroyed. </dd></dl>
+
+</div>
+</div>
+<a id="ac7952e0eed9efcda0cb50209137ed02d" name="ac7952e0eed9efcda0cb50209137ed02d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7952e0eed9efcda0cb50209137ed02d">&#9670;&#160;</a></span>resetPrescribedVelocityReactions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Loads::resetPrescribedVelocityReactions </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets the nodal reaction forces accumulated for all prescribed velocity constraints. </p>
+<dl class="section note"><dt>Note</dt><dd>This should be called before accumulating reactions for a new load or time step. </dd></dl>
 
 </div>
 </div>
@@ -390,6 +439,31 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bodies</td><td>A list containing <a class="el" href="classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number.">Body</a> pointers </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pressures</td><td>A list containing pressures to be applied </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5d63fa88748746eac480418752dd7d5b" name="a5d63fa88748746eac480418752dd7d5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d63fa88748746eac480418752dd7d5b">&#9670;&#160;</a></span>setPrescribedVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Loads::setPrescribedVelocity </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>bodies</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configures prescribed velocity constraints on particles selected from the reference geometry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bodies</td><td>A list containing pointers to the bodies whose particles are evaluated. </td></tr>
   </table>
   </dd>
 </dl>

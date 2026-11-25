@@ -9,6 +9,7 @@ var annotated_dup =
       [ "GmshMeshReader", "classGMSH_1_1GmshMeshReader.html", "classGMSH_1_1GmshMeshReader" ]
     ] ],
     [ "Loads", "namespaceLoads.html", [
+      [ "PrescribedVelocity", "structLoads_1_1PrescribedVelocity.html", "structLoads_1_1PrescribedVelocity" ],
       [ "LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
       [ "NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
       [ "PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],

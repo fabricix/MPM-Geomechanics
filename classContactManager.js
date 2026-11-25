@@ -1,6 +1,6 @@
 var classContactManager =
 [
-    [ "ContactManager", "classContactManager.html#aed9e1d12a2f4324f2ee10189a50b0156", null ],
+    [ "ContactManager", "classContactManager.html#af9470052cd57c424f2b41188baa1d365", null ],
     [ "applyVelocityContactCorrection", "classContactManager.html#a5275ee89623c1b260cf57551d862d6aa", null ],
     [ "checkContactApproach", "classContactManager.html#ad65e543311c89d0de1545dbd6e487b00", null ],
     [ "computeContactForces", "classContactManager.html#a3652704124da7e15f7f0bc945f346d67", null ],

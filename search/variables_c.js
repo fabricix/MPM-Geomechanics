@@ -2,7 +2,7 @@ var searchData=
 [
   ['particledistribution_0',['particleDistribution',['../classBodyGmsh.html#a7a2743a939aa53d10503eb7a4281ca60',1,'BodyGmsh']]],
   ['particleindex_1',['particleIndex',['../structLoads_1_1PrescribedPorePressure.html#a44996aedc022be846930199f8f39b94d',1,'Loads::PrescribedPorePressure']]],
-  ['particles_2',['particles',['../classMPM.html#ae95e181ff212a5f2c27e66dfa951009d',1,'MPM::particles'],['../classBody.html#af8aaa282121a6e26fdd9826514cc1098',1,'Body::particles'],['../classSolver.html#ad9e0e0bfb7ccbd2877a536dcbcb45654',1,'Solver::particles']]],
+  ['particles_2',['particles',['../structLoads_1_1PrescribedVelocity.html#a1a93a8424a56abcec9d4d85718e78410',1,'Loads::PrescribedVelocity::particles'],['../classMPM.html#ae95e181ff212a5f2c27e66dfa951009d',1,'MPM::particles'],['../classBody.html#af8aaa282121a6e26fdd9826514cc1098',1,'Body::particles'],['../classSolver.html#ad9e0e0bfb7ccbd2877a536dcbcb45654',1,'Solver::particles']]],
   ['particlesperdirection_3',['particlesPerDirection',['../classBodySphere.html#a2ec335ce4a1a891fdc71df00a8c6918d',1,'BodySphere']]],
   ['penaltystiffness_4',['penaltyStiffness',['../classTerrainContact.html#a395d86cdd6648b52df59fd9966eff02b',1,'TerrainContact']]],
   ['physicals_5',['physicals',['../structGMSH_1_1Entity.html#ab0e8946733cbd7e0aa712b68554bc00d',1,'GMSH::Entity::physicals'],['../structGMSH_1_1GmshMesh.html#ac5e3c4cab6db0a12efafcbdf3c4af672',1,'GMSH::GmshMesh::physicals']]],

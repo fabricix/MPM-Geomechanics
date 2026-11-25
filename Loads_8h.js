@@ -1,5 +1,6 @@
 var Loads_8h =
 [
+    [ "Loads::PrescribedVelocity", "structLoads_1_1PrescribedVelocity.html", "structLoads_1_1PrescribedVelocity" ],
     [ "Loads::LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
     [ "Loads::NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
     [ "Loads::PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
@@ -8,6 +9,8 @@ var Loads_8h =
     [ "Loads::PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
     [ "Loads::configureNodalPointLoads", "namespaceLoads.html#a17a7cd5461a3f485a589936ab71da9da", null ],
     [ "Loads::getNodalPointList", "namespaceLoads.html#a67971878871ece27ff54401ffcd9a5ff", null ],
+    [ "Loads::getPrescribedVelocities", "namespaceLoads.html#ad1bdf63efb9003ccfe1f0a7f60d31edc", null ],
+    [ "Loads::resetPrescribedVelocityReactions", "namespaceLoads.html#ac7952e0eed9efcda0cb50209137ed02d", null ],
     [ "Loads::setGravity", "namespaceLoads.html#a1a2299651bd04336c8233e10785aca1b", null ],
     [ "Loads::setInitialPorePressureBox", "namespaceLoads.html#ab69a7f18bdaf04c6fd6197f465ac9446", null ],
     [ "Loads::setInitialPorePressureMaterial", "namespaceLoads.html#ab43ba822ff0a2657155f8819db1a36b8", null ],
@@ -15,5 +18,6 @@ var Loads_8h =
     [ "Loads::setLoadDistributedBox", "namespaceLoads.html#a2f4cbf0274418e75675e0f07616538d4", null ],
     [ "Loads::setPrescribedPorePressureBoundaryForceBox", "namespaceLoads.html#aab3e0ec525ab42f967dc058e7d057dde", null ],
     [ "Loads::setPrescribedPorePressureBox", "namespaceLoads.html#af688d48cc51e2b6005d0088502120c55", null ],
+    [ "Loads::setPrescribedVelocity", "namespaceLoads.html#a5d63fa88748746eac480418752dd7d5b", null ],
     [ "Loads::updatePrescribedPorePressure", "namespaceLoads.html#a6f957fba555640cd03240c65124a35c2", null ]
 ];

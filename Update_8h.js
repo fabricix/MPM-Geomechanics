@@ -20,6 +20,8 @@ var Update_8h =
     [ "Update::particleStress", "namespaceUpdate.html#a27a8415d39ce8d44ff2e22d6565b2e08", null ],
     [ "Update::particleVelocity", "namespaceUpdate.html#ab635d5fe5107b783c73cdb0d676597d3", null ],
     [ "Update::particleVelocityFluid", "namespaceUpdate.html#a53ff3fd126882deabd18cff824c37f57", null ],
+    [ "Update::prescribedVelocityNodes", "namespaceUpdate.html#abcb4f4114409c12db2534e3ba3c8db08", null ],
+    [ "Update::prescribedVelocityParticles", "namespaceUpdate.html#a06c0aa8717df15966f3b6306ece175c0", null ],
     [ "Update::resetNodalMomentum", "namespaceUpdate.html#ac360699f47d697b0aeb6fbc78a2ab456", null ],
     [ "Update::resetNodalMomentumFluid", "namespaceUpdate.html#aba85cd1e613408745547b53fe213b14c", null ],
     [ "Update::resetNodalValues", "namespaceUpdate.html#a783728339e39786e7f3d5cafd0433878", null ],

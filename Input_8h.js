@@ -35,6 +35,7 @@ var Input_8h =
     [ "Input::getPenaltyStiffness", "namespaceInput.html#aa9b4ba500aecc81fd80cac4ce3dc09b7", null ],
     [ "Input::getPorePressureFilename", "namespaceInput.html#a594d5fa72e39f5200f37a29e48406c83", null ],
     [ "Input::getPrescribedPressureBox", "namespaceInput.html#a22ce7cc2c2261b0784b944184c7efcb2", null ],
+    [ "Input::getPrescribedVelocity", "namespaceInput.html#a316406289b870d20c418e98a81375c45", null ],
     [ "Input::getPressureBoundaryForceBox", "namespaceInput.html#a938199e6c47c007f37b518b559e2ee43", null ],
     [ "Input::getResultFields", "namespaceInput.html#a5de246ace76db47015f0af32c9e7eea6", null ],
     [ "Input::getResultNum", "namespaceInput.html#ac817a10baf4c98d3f406dae86d0fcc60", null ],

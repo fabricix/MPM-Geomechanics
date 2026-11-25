@@ -188,6 +188,8 @@ Functions</h2></td></tr>
 <tr class="memdesc:ae05caa1f4428920ef08d379cdc897d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return initial pore pressure in particles by material id.  <br /></td></tr>
 <tr class="memitem:a938199e6c47c007f37b518b559e2ee43" id="r_a938199e6c47c007f37b518b559e2ee43"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="structLoads_1_1PressureBoundaryForceBox.html">Loads::PressureBoundaryForceBox</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938199e6c47c007f37b518b559e2ee43">getPressureBoundaryForceBox</a> ()</td></tr>
 <tr class="memdesc:a938199e6c47c007f37b518b559e2ee43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pore pressure force in particles inside a box.  <br /></td></tr>
+<tr class="memitem:a316406289b870d20c418e98a81375c45" id="r_a316406289b870d20c418e98a81375c45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a316406289b870d20c418e98a81375c45">getPrescribedVelocity</a> (vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;bodies, vector&lt; <a class="el" href="structLoads_1_1PrescribedVelocity.html">Loads::PrescribedVelocity</a> &gt; &amp;prescribed_velocity)</td></tr>
+<tr class="memdesc:a316406289b870d20c418e98a81375c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the prescribed-velocity loads for the model bodies.  <br /></td></tr>
 <tr class="memitem:aec95c042d839e3ae12de0b73ee08279d" id="r_aec95c042d839e3ae12de0b73ee08279d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSeismicData.html">SeismicData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec95c042d839e3ae12de0b73ee08279d">readSeismicData</a> (const std::string &amp;filename, bool hasHeader)</td></tr>
 <tr class="memdesc:aec95c042d839e3ae12de0b73ee08279d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the seismic data.  <br /></td></tr>
 <tr class="memitem:a562ec03ef4e0d6561a9de59f31ac20db" id="r_a562ec03ef4e0d6561a9de59f31ac20db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSeismicAnalysis.html">SeismicAnalysis</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a562ec03ef4e0d6561a9de59f31ac20db">getSeismicAnalysisInfo</a> ()</td></tr>
@@ -1386,6 +1388,36 @@ Save/Load States</h2>
 
 <p>Return prescribed pressure in particles inside a box. </p>
 <dl class="section return"><dt>Returns</dt><dd>pressure_prescribed_box Pressures prescribed in particles </dd></dl>
+
+</div>
+</div>
+<a id="a316406289b870d20c418e98a81375c45" name="a316406289b870d20c418e98a81375c45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a316406289b870d20c418e98a81375c45">&#9670;&#160;</a></span>getPrescribedVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Input::getPrescribedVelocity </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; <a class="el" href="classBody.html">Body</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>bodies</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="structLoads_1_1PrescribedVelocity.html">Loads::PrescribedVelocity</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>prescribed_velocity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the prescribed-velocity loads for the model bodies. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bodies</td><td>Bodies used to resolve or configure the prescribed velocities </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Prescribed velocity loads </dd></dl>
 
 </div>
 </div>

@@ -122,6 +122,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:abcb4f4114409c12db2534e3ba3c8db08" id="r_abcb4f4114409c12db2534e3ba3c8db08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcb4f4114409c12db2534e3ba3c8db08">prescribedVelocityNodes</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh, bool constrainForce=false)</td></tr>
+<tr class="memdesc:abcb4f4114409c12db2534e3ba3c8db08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce constant velocity on the grid, independently for each contact field.  <br /></td></tr>
+<tr class="memitem:a06c0aa8717df15966f3b6306ece175c0" id="r_a06c0aa8717df15966f3b6306ece175c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06c0aa8717df15966f3b6306ece175c0">prescribedVelocityParticles</a> (double time)</td></tr>
+<tr class="memdesc:a06c0aa8717df15966f3b6306ece175c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep selected particle components consistent with x = X + v*t.  <br /></td></tr>
 <tr class="memitem:a6d65ee56959a561441007d13172b647d" id="r_a6d65ee56959a561441007d13172b647d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d65ee56959a561441007d13172b647d">nodalVelocity</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:a6d65ee56959a561441007d13172b647d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceUpdate.html" title="Represents operations to update values in nodes and particles.">Update</a> the nodal velocity.  <br /></td></tr>
 <tr class="memitem:ad27e963611658974a0b33f5a1e77fc3e" id="r_ad27e963611658974a0b33f5a1e77fc3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad27e963611658974a0b33f5a1e77fc3e">nodalTotalForce</a> (<a class="el" href="classMesh.html">Mesh</a> *mesh)</td></tr>
@@ -628,6 +632,48 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="abcb4f4114409c12db2534e3ba3c8db08" name="abcb4f4114409c12db2534e3ba3c8db08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb4f4114409c12db2534e3ba3c8db08">&#9670;&#160;</a></span>prescribedVelocityNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Update::prescribedVelocityNodes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMesh.html">Mesh</a> *</td>          <td class="paramname"><span class="paramname"><em>mesh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>constrainForce</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enforce constant velocity on the grid, independently for each contact field. </p>
+
+</div>
+</div>
+<a id="a06c0aa8717df15966f3b6306ece175c0" name="a06c0aa8717df15966f3b6306ece175c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06c0aa8717df15966f3b6306ece175c0">&#9670;&#160;</a></span>prescribedVelocityParticles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Update::prescribedVelocityParticles </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>time</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Keep selected particle components consistent with x = X + v*t. </p>
+
+</div>
+</div>
 <a id="ac360699f47d697b0aeb6fbc78a2ab456" name="ac360699f47d697b0aeb6fbc78a2ab456"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac360699f47d697b0aeb6fbc78a2ab456">&#9670;&#160;</a></span>resetNodalMomentum()</h2>
 
@@ -767,7 +813,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">boundary</td><td><a class="el" href="classBoundary.html" title="Mesh boundary nodes.">Boundary</a> plane </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">contactNodes</td><td>unordered_map pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mesh</td><td>Computational mesh </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td><a class="el" href="#a2cd2a66c096a164b7e316cb94eedf1ae" title="Principal direction in the model. This enumeration is used to update the boundary conditions in each ...">Direction</a> to apply de boundary condition </td></tr>
   </table>
   </dd>

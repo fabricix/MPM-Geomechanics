@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structSeismicAnalysis.html" title="Structure to hold seismic analysis information." alt="" coords="5,5,133,33"/>
+<area shape="rect" id="Node000000" href="$classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="5,5,75,33"/>
+<area shape="rect" id="Node000001" href="$classParticleMixture.html" title="A material point for calculations using the mixture theory." alt="" coords="123,5,242,33"/>
+<area shape="poly" id="edge11_Node000000_Node000001" title=" " alt="" coords="90,17,125,19,120,20,90,22"/>
 </map>
