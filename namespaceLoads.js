@@ -2,10 +2,10 @@ var namespaceLoads =
 [
     [ "LoadDistributedBox", "structLoads_1_1LoadDistributedBox.html", "structLoads_1_1LoadDistributedBox" ],
     [ "NodalPointLoadData", "structLoads_1_1NodalPointLoadData.html", "structLoads_1_1NodalPointLoadData" ],
-    [ "PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
-    [ "PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
     [ "PressureBox", "structLoads_1_1PressureBox.html", "structLoads_1_1PressureBox" ],
+    [ "PressureBoundaryForceBox", "structLoads_1_1PressureBoundaryForceBox.html", "structLoads_1_1PressureBoundaryForceBox" ],
     [ "PressureMaterial", "structLoads_1_1PressureMaterial.html", "structLoads_1_1PressureMaterial" ],
+    [ "PrescribedPorePressure", "structLoads_1_1PrescribedPorePressure.html", "structLoads_1_1PrescribedPorePressure" ],
     [ "configureNodalPointLoads", "namespaceLoads.html#a17a7cd5461a3f485a589936ab71da9da", null ],
     [ "getNodalPointList", "namespaceLoads.html#a67971878871ece27ff54401ffcd9a5ff", null ],
     [ "setGravity", "namespaceLoads.html#a1a2299651bd04336c8233e10785aca1b", null ],

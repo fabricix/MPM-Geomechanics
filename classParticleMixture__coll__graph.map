@@ -1,19 +1,9 @@
 <map id="ParticleMixture" name="ParticleMixture">
-<area shape="rect" id="Node000001" title="A material point for calculations using the mixture theory." alt="" coords="430,407,550,432"/>
-<area shape="rect" id="Node000002" href="$classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="455,332,526,357"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="493,372,493,406,488,406,488,372"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="154,5,232,31"/>
-<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="141,33,121,43,103,57,49,118,30,149,16,179,9,210,10,241,21,273,42,306,67,327,106,346,156,362,212,376,329,397,430,410,430,415,328,402,210,381,154,367,104,351,64,332,38,310,16,276,5,242,4,210,11,178,25,146,45,115,99,53,118,38,139,28"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="241,35,260,53,272,74,278,94,277,132,276,169,280,189,291,209,329,252,374,286,420,312,460,329,458,334,418,316,371,290,325,255,287,212,275,190,271,170,272,132,272,95,267,76,256,56,237,39"/>
-<area shape="rect" id="Node000006" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="650,147,712,172"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="247,17,327,21,427,34,481,46,536,61,588,81,638,106,661,125,676,145,672,148,657,128,635,110,586,86,534,66,480,51,427,40,326,26,246,22"/>
-<area shape="rect" id="Node000007" href="$classMaterial.html" title="Represents a material." alt="" coords="116,147,192,172"/>
-<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="142,34,126,43,114,56,109,67,108,79,115,103,129,126,145,145,141,148,125,130,110,106,103,79,104,66,109,53,123,39,139,29"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="772,147,852,172"/>
-<area shape="poly" id="edge10_Node000001_Node000004" title=" " alt="" coords="833,181,852,208,869,241,876,276,873,294,864,310,844,328,812,345,729,374,635,396,551,412,550,406,634,391,727,369,810,340,840,324,860,306,868,292,870,276,864,243,848,211,829,184"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="783,182,752,206,723,236,714,256,711,274,706,292,692,310,662,324,618,333,526,344,525,338,617,328,660,318,689,306,701,290,705,273,709,254,719,233,748,202,780,178"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="452,147,625,172"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="522,185,506,208,494,235,489,262,488,288,491,331,486,332,482,288,484,261,489,234,501,206,517,182"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="672,186,649,236,642,257,638,275,632,293,617,310,596,324,573,334,527,344,526,339,571,329,594,320,614,306,627,290,633,274,637,256,644,234,667,183"/>
-<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="161,185,176,254,187,286,200,306,218,316,245,325,315,335,391,340,455,341,455,346,391,345,315,341,244,330,216,321,196,310,183,289,171,256,156,186"/>
+<area shape="rect" id="Node000001" title="A material point for calculations using the mixture theory." alt="" coords="22,183,141,211"/>
+<area shape="rect" id="Node000002" href="$classParticle.html" title="Represents a Lagrangian material point This class contain all Lagrangian variables that represents th..." alt="" coords="47,106,116,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,147,84,184,79,182,79,151"/>
+<area shape="rect" id="Node000003" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="5,5,67,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="41,46,54,81,71,105,66,106,49,83,40,51"/>
+<area shape="rect" id="Node000004" href="$classMaterial.html" title="Represents a material." alt="" coords="90,5,166,33"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="117,45,90,107,85,104,114,49"/>
 </map>

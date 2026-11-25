@@ -1,7 +1,5 @@
 <map id="ShapeLinear" name="ShapeLinear">
-<area shape="rect" id="Node000001" title="Represents the Linear shape functions used in the interpolation process." alt="" coords="5,183,108,208"/>
-<area shape="rect" id="Node000002" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="25,108,88,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,148,59,182,54,182,54,148"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="17,5,96,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,45,59,108,54,108,54,45"/>
+<area shape="rect" id="Node000001" title="Represents the Linear shape functions used in the interpolation process." alt="" coords="5,81,107,109"/>
+<area shape="rect" id="Node000002" href="$classShape.html" title="Represents the shape functions used in the interpolation process." alt="" coords="25,5,87,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="58,47,59,81,53,80,54,51"/>
 </map>

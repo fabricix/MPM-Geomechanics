@@ -11,7 +11,7 @@ var searchData=
   ['contactforce_8',['contactForce',['../structNode_1_1ContactNodeData.html#a5cd770dd79cc0c1208daf606aecf37af',1,'Node::ContactNodeData']]],
   ['contactid_9',['contactId',['../structNode_1_1ContactNodeData.html#a3a99916d75c7a0ca4e50f3674767905d',1,'Node::ContactNodeData']]],
   ['contactlist_10',['contactList',['../classContactManager.html#a99f491d85ac6bcd5b3192fdab575384e',1,'ContactManager']]],
-  ['contactmanager_11',['contactmanager',['../classMPM.html#aea1e269cc3a5e7506475e3a4b21a36da',1,'MPM::contactManager'],['../classSolver.html#a86a6f3c98fe67a2db20d28df61105215',1,'Solver::contactManager']]],
+  ['contactmanager_11',['contactManager',['../classMPM.html#aea1e269cc3a5e7506475e3a4b21a36da',1,'MPM::contactManager'],['../classSolver.html#a86a6f3c98fe67a2db20d28df61105215',1,'Solver::contactManager']]],
   ['contactnodes_12',['contactNodes',['../classMesh.html#a4931ce7c346e2b23096f8b2f22867371',1,'Mesh']]],
   ['contactnormalforce_13',['contactNormalForce',['../classParticle.html#ad2a05e49f40bc23b683ebfcb2ee097cb',1,'Particle']]],
   ['contactpairs_14',['contactPairs',['../classTerrainContact.html#ab9810c6c61d1e1238f4576d10f87caf9',1,'TerrainContact']]],

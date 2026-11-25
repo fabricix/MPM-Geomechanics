@@ -6,5 +6,5 @@ var GmshMeshReader_8h =
     [ "GMSH::Entity", "structGMSH_1_1Entity.html", "structGMSH_1_1Entity" ],
     [ "GMSH::GmshMesh", "structGMSH_1_1GmshMesh.html", "structGMSH_1_1GmshMesh" ],
     [ "GMSH::GmshMeshReader", "classGMSH_1_1GmshMeshReader.html", "classGMSH_1_1GmshMeshReader" ],
-    [ "entityKey", "GmshMeshReader_8h.html#a5178a9841df696dc9e3793def2b02c0e", null ]
+    [ "GMSH::entityKey", "namespaceGMSH.html#a5178a9841df696dc9e3793def2b02c0e", null ]
 ];

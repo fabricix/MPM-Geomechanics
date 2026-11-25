@@ -1,5 +1,5 @@
 <map id="BodyParticle" name="BodyParticle">
-<area shape="rect" id="Node000001" title="Is a Body created by a list of particles." alt="" coords="5,79,108,104"/>
-<area shape="rect" id="Node000002" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="29,5,84,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,44,59,79,54,79,54,44"/>
+<area shape="rect" id="Node000001" title="Is a Body created by a list of particles." alt="" coords="5,81,108,109"/>
+<area shape="rect" id="Node000002" href="$classBody.html" title="Represents a body in the space forming by a group of materials points and identified by a number." alt="" coords="29,5,84,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="58,47,59,81,54,80,55,51"/>
 </map>

@@ -1,5 +1,0 @@
-<map id="Loads::PressureBox" name="Loads::PressureBox">
-<area shape="rect" id="Node000001" title="Structure to represent a box with a pressure. Pressure in applied to particles inside the cuboid defi..." alt="" coords="5,108,155,133"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="41,5,119,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,45,83,108,77,108,77,45"/>
-</map>

@@ -1,5 +1,5 @@
 <map id="TerrainContact" name="TerrainContact">
-<area shape="rect" id="Node000001" title="Class to compute terrain contact." alt="" coords="5,93,121,119"/>
-<area shape="rect" id="Node000002" href="$classSTLReader.html" title="Class to read STL files." alt="" coords="18,5,109,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,45,66,93,61,93,61,45"/>
+<area shape="rect" id="Node000001" title="Class to compute terrain contact." alt="" coords="5,106,121,134"/>
+<area shape="rect" id="Node000002" href="$classSTLReader.html" title="Class to read STL files." alt="" coords="18,5,108,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,47,66,106,60,105,61,50"/>
 </map>

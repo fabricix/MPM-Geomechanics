@@ -1,9 +1,9 @@
 <map id="Solver" name="Solver">
-<area shape="rect" id="Node000001" title="Represents the operations to solve the equations in time." alt="" coords="209,5,272,31"/>
-<area shape="rect" id="Node000002" href="$classSolverExplicit.html" title="Represents the operations to solve explicitly the equations in time using the Update Stress Last (USL..." alt="" coords="5,79,116,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,38,91,81,89,76,198,33"/>
-<area shape="rect" id="Node000003" href="$classSolverExplicitTwoPhaseUSL.html" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="141,79,341,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="243,44,243,79,238,79,238,44"/>
-<area shape="rect" id="Node000004" href="$classSolverExplicitUSL.html" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="365,79,501,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,33,402,76,400,81,284,38"/>
+<area shape="rect" id="Node000001" title="Represents the operations to solve the equations in time." alt="" coords="208,5,270,33"/>
+<area shape="rect" id="Node000002" href="$classSolverExplicit.html" title="Represents the operations to solve explicitly the equations in time using the Update Stress Last (USL..." alt="" coords="5,81,116,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,41,93,83,91,78,192,37"/>
+<area shape="rect" id="Node000003" href="$classSolverExplicitTwoPhaseUSL.html" title="Solves explicitly the two phase motion equation in time using the scheme Update Stress Last." alt="" coords="140,81,339,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,47,241,82,237,79,237,51"/>
+<area shape="rect" id="Node000004" href="$classSolverExplicitUSL.html" title="Represents the operations to solve explicitly the equations in time using the scheme Update Stress La..." alt="" coords="364,81,499,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,35,399,80,394,81,284,40"/>
 </map>

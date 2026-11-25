@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['mass_0',['mass',['../classNode.html#a63e510fc9158eb15e751861bc14eae38',1,'Node::mass'],['../classParticle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle::mass']]],
-  ['massfluid_1',['massfluid',['../classParticleMixture.html#a74ccc525e1b7d70492fe754902b5830b',1,'ParticleMixture::massFluid'],['../classNodeMixture.html#abc6558b0f778ec0c697cf950dd87aef7',1,'NodeMixture::massFluid']]],
+  ['mass_0',['mass',['../classParticle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle::mass'],['../classNode.html#a63e510fc9158eb15e751861bc14eae38',1,'Node::mass']]],
+  ['massfluid_1',['massFluid',['../classParticleMixture.html#a74ccc525e1b7d70492fe754902b5830b',1,'ParticleMixture::massFluid'],['../classNodeMixture.html#abc6558b0f778ec0c697cf950dd87aef7',1,'NodeMixture::massFluid']]],
   ['massmaster_2',['massMaster',['../structNode_1_1ContactNodeData.html#a13034c617bc5cc323f3fdd9a7676fab7',1,'Node::ContactNodeData']]],
   ['massslave_3',['massSlave',['../structNode_1_1ContactNodeData.html#aef8d178d9c5176c46e80ea14dfe75140',1,'Node::ContactNodeData']]],
   ['masterid_4',['masterId',['../classContact.html#a2ffaa6b59e182e4a3a6a7923e34570f5',1,'Contact']]],
   ['material_5',['material',['../classParticle.html#a2d2c909473d35b93e501969d474ade82',1,'Particle']]],
-  ['materialid_6',['materialid',['../classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2',1,'BodyPolygon::materialId'],['../classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e',1,'BodySphere::materialId'],['../classBodyParticle.html#af968de001b6f0d7a44cae68ec02da0d8',1,'BodyParticle::materialId'],['../classBodyGmsh.html#a73322702a328f7edd9645b0f2ff32d8e',1,'BodyGmsh::materialId'],['../classBodyCuboid.html#a9dc27d5823f6ee0fbce296e057c1e524',1,'BodyCuboid::materialId'],['../structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692',1,'Loads::PressureMaterial::materialId']]],
+  ['materialid_6',['materialId',['../structLoads_1_1PressureMaterial.html#a049b4bc25fe21610649f3ffb6f447692',1,'Loads::PressureMaterial::materialId'],['../classBodyCuboid.html#a9dc27d5823f6ee0fbce296e057c1e524',1,'BodyCuboid::materialId'],['../classBodyGmsh.html#a73322702a328f7edd9645b0f2ff32d8e',1,'BodyGmsh::materialId'],['../classBodyParticle.html#af968de001b6f0d7a44cae68ec02da0d8',1,'BodyParticle::materialId'],['../classBodyPolygon.html#a970abd4a7b3c3bb4978e35f418911ad2',1,'BodyPolygon::materialId'],['../classBodySphere.html#a5d15944a986226c6d8d804f66bb51d4e',1,'BodySphere::materialId']]],
   ['materials_7',['materials',['../classMPM.html#a85be5f9823bccdb2b9a3616ce46b57cf',1,'MPM']]],
   ['maxlimit_8',['maxLimit',['../classMesh.html#a372edf56232cae8e5800a3d6bee6c71d',1,'Mesh']]],
   ['mesh_9',['mesh',['../classMPM.html#a3eccc5a6205228f1487de39592553fb3',1,'MPM::mesh'],['../classSolver.html#a9b516765134fb4193329639761924cf7',1,'Solver::mesh']]],
