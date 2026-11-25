@@ -22,6 +22,7 @@ MohrCoulomb::MohrCoulomb(int id, double density, double young, double poisson, d
     this->cohesion=cohesion;
     this->tensile=tensile; 
     this->dilation=dilation;
+    this->su_factor=0.0;
 
     // default tensile strength
     this->tensile = (this->tensile == 0 && tan(this->friction * PI / 180.0) != 0) ? this->cohesion / tan(this->friction * PI / 180.0) : this->tensile;

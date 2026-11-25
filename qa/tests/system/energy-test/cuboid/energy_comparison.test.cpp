@@ -8,6 +8,8 @@
 #include <MPM.h>
 #include <filesystem>
 
+bool verifyExecutableExists();
+
 std::vector<double> sum_energy(const std::string &filename)
 {
 
@@ -116,6 +118,12 @@ void executeSimulation()
 {
   try
   {
+    if (!verifyExecutableExists())
+    {
+      FAIL() << "Cannot run energy integration test without the simulator executable.";
+      return;
+    }
+
     std::cout << "Verifying simulation environment..." << std::endl;
 
     const std::filesystem::path test_dir{MPM_TEST_DIR};
@@ -131,7 +139,7 @@ void executeSimulation()
 
     std::cout << "Starting Simulation: " << std::endl;
 
-    std::string script = exe_path.string() + " cuboid.json";
+    std::string script = "\"" + exe_path.string() + "\" cuboid.json";
     std::cout << "Executing script: " << script << std::endl;
     int response = system(script.c_str());
 

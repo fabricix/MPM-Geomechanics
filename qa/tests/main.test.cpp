@@ -59,21 +59,11 @@ bool verifyExecutableExists()
   }
 
   std::cout << "\n✓ Executable verified: " << exe_path.string() << std::endl;
-  std::cout << "✓ All prerequisite checks passed. Starting tests...\n"
-            << std::endl;
   return true;
 }
 
 int main(int argc, char **argv)
 {
-  // Verify the executable exists before running any tests
-  if (!verifyExecutableExists())
-  {
-    std::cerr << "ERROR: Cannot proceed without the MPM-Geomechanics executable." << std::endl;
-    std::cerr << "Please build the project and try again." << std::endl;
-    return 1;
-  }
-
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
