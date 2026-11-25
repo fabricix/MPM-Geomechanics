@@ -166,12 +166,16 @@ void MPM::setupContac()
 	// verity if contact active
 	bool contactActive = Input::getContactActive();
 	ModelSetup::setContactActive(contactActive);
+
+	double real_dist_coeff = Input::RealDistanceCorrectionCoefficient();
+	ModelSetup::setRealDistanceActive(real_dist_coeff != -1 ? true : false);
+
 	if (!contactActive) { return; }
 	else {	
 
 		vector<Contact*> contactList = Input::getContactList();
 		// set contact manager
-		contactManager = new ContactManager(contactList, Input::RealDistanceCorrectionCoefficient());
+		contactManager = new ContactManager(contactList,real_dist_coeff);
 	}
 }
 

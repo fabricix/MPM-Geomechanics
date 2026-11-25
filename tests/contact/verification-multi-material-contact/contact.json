@@ -4,20 +4,20 @@
     "gravity":[7.07,0.0,-7.07],
     "results":
     {
-      "print": 25,
-      "material_point_results": [ "id", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity" ]
+      "print": 50,
+      "material_point_results": [ "all", "displacement", "material", "active", "pressure", "external_force", "contact", "velocity","body" ]
     },
     "mesh":
     {
       "cells_dimension":[ 1, 1, 1 ],
-      "cells_number":[ 32, 14, 14 ],
+      "cells_number":[ 32, 14, 10 ],
       "origin":[ 0, 0, 0 ],
       "boundary_conditions":
       {
-        "plane_X0": "sliding",
+        "plane_X0": "fixed",
         "plane_Y0": "sliding",
-        "plane_Z0": "sliding",
-        "plane_Xn": "sliding",
+        "plane_Z0": "fixed",
+        "plane_Xn": "fixed",
         "plane_Yn": "sliding",
         "plane_Zn": "sliding"
       }
@@ -63,24 +63,24 @@
         "material_id": 2
       }
     ],
-    "contact_manager":{
-      "active": true
-    },
-    
-    "contact":[
-      {
-        "id": 1,
-        "friction": 0.2,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
-      },
-      {
-        "id": 2,
-        "friction": 0.0,
-        "master_id": 1,
-        "slave_id": 3,
-        "normal_type": "master"
-      }
-    ]
+
+    "material_contact":{
+      "active": true,
+      "pairs":[
+        {
+          "id": 1,
+          "friction": 0.2,
+          "master_body_id": 1,
+          "slave_body_id": 2,
+          "normal_type": "master"
+        },
+        {
+          "id": 2,
+          "friction": 0.0,
+          "master_body_id": 1,
+          "slave_body_id": 3,
+          "normal_type": "master"
+        }
+      ]
+    }
   }

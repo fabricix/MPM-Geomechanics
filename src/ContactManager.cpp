@@ -116,6 +116,35 @@ void ContactManager::contactNodalDetection(Mesh* mesh, vector<Body*>* bodies) {
 	}
 }
 
+void ContactManager::checkContactApproach(Mesh* mesh)
+{
+	auto& contactNodes = mesh->getContactNodes();
+
+	contactDetection = false;
+
+	for (auto& contactNode : contactNodes) {
+		Node::ContactNodeData& contactNodeData = contactNode.second;
+
+		contactNodeData.hasContact = false;
+
+		// Avoid division by zero nodal masses.
+		if (contactNodeData.massMaster <= 0.0 || contactNodeData.massSlave <= 0.0) {
+			continue;
+		}
+
+		const Vector3d relativeVelocity =
+			contactNodeData.momentumMaster / contactNodeData.massMaster
+			- contactNodeData.momentumSlave / contactNodeData.massSlave;
+
+		// The normal is oriented from the master towards the slave.
+		contactNodeData.hasContact = contactNodeData.normal.dot(relativeVelocity) > 0.0;
+
+		if (contactNodeData.hasContact) {
+			contactDetection = true;
+		}
+	}
+}
+
 void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 
 	if( this->getRealDistanceCorrectionFlag() == false ) return;
@@ -203,38 +232,24 @@ void ContactManager::realDistanceCorrection(Mesh* mesh, vector<Body*>* bodies) {
 		}
 	}
 
-	//for each contact node
-	for (auto it = contactNodes.begin(); it != contactNodes.end(); ++it) {
-		Node::ContactNodeData& contactNodesData = it->second;
+	// Apply the distance filter only to nodes approved by the approach check.
+	for (auto& contactNode : contactNodes) {
+		Node::ContactNodeData& contactNodeData = contactNode.second;
 
-		// get nodal momentum
-		Vector3d momentumA = contactNodesData.momentumMaster;
-		Vector3d momentumB = contactNodesData.momentumSlave;
-
-		// get nodal mass
-		double massA = contactNodesData.massMaster;
-		double massB = contactNodesData.massSlave;
-
-		// get normal vector
-		Vector3d n = contactNodesData.normal;
-
-		// relative velocity
-		Vector3d vAB = (massB * momentumA - massA * momentumB)/(massA * massB);
-
-		if (n.dot(vAB) > 0.0) {
-			// contact correction
-			double cellDimension = mesh->getCellDimension()[0];
-			double contactDistance = contactNodesData.closestParticleDistanceMaster + contactNodesData.closestParticleDistanceSlave;
-			if (contactDistance <= realDistanceCorrectionCoefficient * cellDimension) {
-				contactNodesData.hasContact = true;
-				contactDetection = true;
-			}
-			else {
-				contactNodesData.hasContact = false;
-			}
+		if (!contactNodeData.hasContact) {
+			continue;
 		}
-		else {
-			contactNodesData.hasContact = false;
+
+		const double cellDimension = mesh->getCellDimension()[0];
+		const double contactDistance =
+			contactNodeData.closestParticleDistanceMaster
+			+ contactNodeData.closestParticleDistanceSlave;
+
+		contactNodeData.hasContact =
+			contactDistance <= realDistanceCorrectionCoefficient * cellDimension;
+
+		if (contactNodeData.hasContact) {
+			contactDetection = true;
 		}
 	}
 }
@@ -395,19 +410,24 @@ void ContactManager::nodalMomentumContactUpdate(Mesh* mesh, double dt) {
 
 void ContactManager::applyVelocityContactCorrection(Mesh* mesh, vector<Body*>* bodies, double dt)
 {
+	// Check approach using the trial nodal momenta.
+	checkContactApproach(mesh);
 	// Verify if real distance correction method is active
-	this->realDistanceCorrection(mesh, bodies);
-	
-	// Update contact forces and apply boundary conditions 
-	if (this->getContactDetectionFlag()) {
+	realDistanceCorrection(mesh, bodies);
 
+	// Update contact forces and apply boundary conditions 
+	if (getContactDetectionFlag()) {
+		
 		// contact forces
-		this->computeContactForces(mesh, dt);
+		computeContactForces(mesh, dt);
 
 		// boundary conditions
 		Update::boundaryConditionsContactForce(mesh);
 
 		// Correct nodal momentum using contact forces
-		this->nodalMomentumContactUpdate(mesh, dt);
+		nodalMomentumContactUpdate(mesh, dt);
+
+		// Restore momentum constraints after applying the contact impulse.
+    	Update::boundaryConditionsMomentum(mesh);
 	}		
 }

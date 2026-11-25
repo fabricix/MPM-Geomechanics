@@ -57,7 +57,7 @@
 	"terrain_contact":
 	{
 		"active":true,
-		"stl_mesh":"STLmesh/slope-mesh.stl",
+		"stl_mesh":"STLmesh/slope-mesh-binary.stl",
 		"friction":0.5,
 		"distance_threshold":2.0
 	}

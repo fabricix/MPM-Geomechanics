@@ -1,4 +1,5 @@
 {
+    "stress_scheme_update":"USL",
     "time": 2.0,
     "critical_time_step_multiplier": 0.15,
     "gravity":[7.07,0.0,-7.07],
@@ -14,10 +15,10 @@
       "origin":[ 0, 0, 0 ],
       "boundary_conditions":
       {
-        "plane_X0": "sliding",
+        "plane_X0": "fixed",
         "plane_Y0": "sliding",
-        "plane_Z0": "sliding",
-        "plane_Xn": "sliding",
+        "plane_Z0": "fixed",
+        "plane_Xn": "fixed",
         "plane_Yn": "sliding",
         "plane_Zn": "sliding"
       }
@@ -56,18 +57,17 @@
         "material_id":2
       }
     ],
-    "contact_manager":{
+
+    "material_contact":{
       "active": true,
-      "real_distance_correction_coefficient": 0.5
-    },
-    
-    "contact":[
-      {
-        "id": 1,
-        "friction": 0.5,
-        "master_id": 1,
-        "slave_id": 2,
-        "normal_type": "master"
-      }
-    ]
+      "pairs":[
+        {
+          "id": 1,
+          "friction": 0.2,
+          "master_body_id": 1,
+          "slave_body_id": 2,
+          "normal_type": "master"
+        }
+      ]
+    }
   }

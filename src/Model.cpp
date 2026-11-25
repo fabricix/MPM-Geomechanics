@@ -33,9 +33,14 @@ namespace ModelSetup {
 	bool contactActive = false; //!< is contact active
 	bool getContactActive() { return contactActive; }
 	void setContactActive(bool d) { contactActive = d; }
+	
 	int contactNormalType = 0;
 	bool getContactNormal() { return contactNormalType; }
 	void setContactNormal(int d) { contactNormalType = d; }
+
+	bool real_distance_active = false;
+	void setRealDistanceActive(bool a){ real_distance_active = a; }
+	bool getRealDistanceActive(){ return real_distance_active; }
 
 	// states
 	bool loadState = false; //!< if state need to be loaded

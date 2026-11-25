@@ -309,6 +309,14 @@ namespace ModelSetup {
 	/// \brief Increment the loop counter by one
 	/// \return The current loop counter value
 	int incrementLoopCounter();
+
+	/// @brief Set real distance coefficient active
+	/// @param  active
+	void setRealDistanceActive(bool active);
+
+	/// @brief Get real distance coefficient active
+	/// @return active
+	bool getRealDistanceActive();
 };
 
 #endif /* MODEL_H_ */

@@ -1,0 +1,589 @@
+# Veusz saved document (version 4.2.1)
+# Saved at 2026-11-10T19:39:55.536892
+
+SetCompatLevel(1)
+ImportString('`_real_dist_corr_Displacement_0_coeff_0.2_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+1.718600e-05
+1.869900e-02
+1.032700e-02
+-2.793700e-04
+-4.406500e-04
+''')
+ImportString('`_real_dist_corr_Displacement_0_coeff_0.3_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+5.812700e-03
+3.650900e-03
+4.434800e-03
+-1.328600e-03
+-1.000900e-02
+-1.608100e-02
+-2.282100e-02
+-2.725300e-02
+''')
+ImportString('`_real_dist_corr_Displacement_0_coeff_0.5_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+4.834600e-03
+-6.467900e-03
+-4.536300e-03
+-8.378200e-03
+-1.088800e-02
+-1.403300e-02
+-1.730900e-02
+-1.986200e-02
+-2.442400e-02
+''')
+ImportString('`_real_dist_corr_Displacement_0_coeff_0.6_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+7.034700e-03
+5.199300e-04
+-2.607800e-04
+-4.742400e-03
+-8.662700e-03
+-1.354200e-02
+-1.700700e-02
+-1.727300e-02
+-1.933800e-02
+''')
+ImportString('`_real_dist_corr_Displacement_1_coeff_0.2_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+4.468000e-08
+1.650200e-03
+6.118500e-04
+5.373300e-05
+-7.065600e-05
+''')
+ImportString('`_real_dist_corr_Displacement_1_coeff_0.3_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+7.971100e-04
+-8.190800e-04
+-2.286500e-03
+-3.616000e-03
+-3.902300e-03
+-4.540300e-03
+-5.324000e-03
+-5.791900e-03
+''')
+ImportString('`_real_dist_corr_Displacement_1_coeff_0.5_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+2.851300e-04
+-8.945300e-04
+-1.926700e-03
+-2.613300e-03
+-2.715700e-03
+-3.362300e-03
+-4.029700e-03
+-4.877200e-03
+-5.955300e-03
+''')
+ImportString('`_real_dist_corr_Displacement_1_coeff_0.6_`(numeric)','''
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+0.000000e+00
+1.581500e-03
+1.151900e-03
+7.726800e-05
+-9.854000e-04
+-2.028100e-03
+-2.708200e-03
+-3.151700e-03
+-3.601500e-03
+-3.919500e-03
+''')
+ImportString('`_real_dist_corr_Displacement_2_coeff_0.2_`(numeric)','''
+0.000000e+00
+-2.392700e-01
+-4.785400e-01
+-7.178100e-01
+-9.570700e-01
+-1.196300e+00
+-1.435600e+00
+-1.674900e+00
+-1.914100e+00
+-2.153400e+00
+-2.392700e+00
+-2.632000e+00
+-2.871200e+00
+-3.110500e+00
+-3.349800e+00
+-3.589000e+00
+-3.828300e+00
+-4.067600e+00
+-4.306800e+00
+-4.546100e+00
+-4.785400e+00
+-5.024700e+00
+-5.225100e+00
+-5.176500e+00
+-4.944700e+00
+-4.710400e+00
+''')
+ImportString('`_real_dist_corr_Displacement_2_coeff_0.3_`(numeric)','''
+0.000000e+00
+-2.392700e-01
+-4.785400e-01
+-7.178100e-01
+-9.570700e-01
+-1.196300e+00
+-1.435600e+00
+-1.674900e+00
+-1.914100e+00
+-2.153400e+00
+-2.392700e+00
+-2.632000e+00
+-2.871200e+00
+-3.110500e+00
+-3.349800e+00
+-3.589000e+00
+-3.828300e+00
+-4.067600e+00
+-4.219700e+00
+-4.122700e+00
+-3.933900e+00
+-3.749300e+00
+-3.568400e+00
+-3.384500e+00
+-3.202300e+00
+-3.019600e+00
+''')
+ImportString('`_real_dist_corr_Displacement_2_coeff_0.5_`(numeric)','''
+0.000000e+00
+-2.392700e-01
+-4.785400e-01
+-7.178100e-01
+-9.570700e-01
+-1.196300e+00
+-1.435600e+00
+-1.674900e+00
+-1.914100e+00
+-2.153400e+00
+-2.392700e+00
+-2.632000e+00
+-2.871200e+00
+-3.110500e+00
+-3.349800e+00
+-3.589000e+00
+-3.828300e+00
+-4.021100e+00
+-3.973400e+00
+-3.784000e+00
+-3.600700e+00
+-3.420000e+00
+-3.241200e+00
+-3.064600e+00
+-2.887300e+00
+-2.711000e+00
+''')
+ImportString('`_real_dist_corr_Displacement_2_coeff_0.6_`(numeric)','''
+0.000000e+00
+-2.392700e-01
+-4.785400e-01
+-7.178100e-01
+-9.570700e-01
+-1.196300e+00
+-1.435600e+00
+-1.674900e+00
+-1.914100e+00
+-2.153400e+00
+-2.392700e+00
+-2.632000e+00
+-2.871200e+00
+-3.110500e+00
+-3.349800e+00
+-3.589000e+00
+-3.828300e+00
+-3.921300e+00
+-3.759900e+00
+-3.572700e+00
+-3.383000e+00
+-3.189400e+00
+-2.994300e+00
+-2.798100e+00
+-2.598700e+00
+-2.401500e+00
+''')
+ImportString('`_real_dist_corr_Time_coeff_0.2_`(numeric)','''
+0.000000e+00
+5.893750e-02
+1.187550e-01
+1.785720e-01
+2.383890e-01
+2.982060e-01
+3.580230e-01
+4.178410e-01
+4.776580e-01
+5.374750e-01
+5.972920e-01
+6.571090e-01
+7.169270e-01
+7.767440e-01
+8.365610e-01
+8.963780e-01
+9.561950e-01
+1.016010e+00
+1.075830e+00
+1.135650e+00
+1.195460e+00
+1.255280e+00
+1.315100e+00
+1.374920e+00
+1.434730e+00
+1.494550e+00
+''')
+ImportString('`_real_dist_corr_Time_coeff_0.3_`(numeric)','''
+0.000000e+00
+5.893750e-02
+1.187550e-01
+1.785720e-01
+2.383890e-01
+2.982060e-01
+3.580230e-01
+4.178410e-01
+4.776580e-01
+5.374750e-01
+5.972920e-01
+6.571090e-01
+7.169270e-01
+7.767440e-01
+8.365610e-01
+8.963780e-01
+9.561950e-01
+1.016010e+00
+1.075830e+00
+1.135650e+00
+1.195460e+00
+1.255280e+00
+1.315100e+00
+1.374920e+00
+1.434730e+00
+1.494550e+00
+''')
+ImportString('`_real_dist_corr_Time_coeff_0.5_`(numeric)','''
+0.000000e+00
+5.893750e-02
+1.187550e-01
+1.785720e-01
+2.383890e-01
+2.982060e-01
+3.580230e-01
+4.178410e-01
+4.776580e-01
+5.374750e-01
+5.972920e-01
+6.571090e-01
+7.169270e-01
+7.767440e-01
+8.365610e-01
+8.963780e-01
+9.561950e-01
+1.016010e+00
+1.075830e+00
+1.135650e+00
+1.195460e+00
+1.255280e+00
+1.315100e+00
+1.374920e+00
+1.434730e+00
+1.494550e+00
+''')
+ImportString('`_real_dist_corr_Time_coeff_0.6_`(numeric)','''
+0.000000e+00
+5.893750e-02
+1.187550e-01
+1.785720e-01
+2.383890e-01
+2.982060e-01
+3.580230e-01
+4.178410e-01
+4.776580e-01
+5.374750e-01
+5.972920e-01
+6.571090e-01
+7.169270e-01
+7.767440e-01
+8.365610e-01
+8.963780e-01
+9.561950e-01
+1.016010e+00
+1.075830e+00
+1.135650e+00
+1.195460e+00
+1.255280e+00
+1.315100e+00
+1.374920e+00
+1.434730e+00
+1.494550e+00
+''')
+TagDatasets('mpm_mcontact', ['_real_dist_corr_Displacement_0_coeff_0.2_', '_real_dist_corr_Displacement_0_coeff_0.3_', '_real_dist_corr_Displacement_0_coeff_0.5_', '_real_dist_corr_Displacement_0_coeff_0.6_', '_real_dist_corr_Displacement_1_coeff_0.2_', '_real_dist_corr_Displacement_1_coeff_0.3_', '_real_dist_corr_Displacement_1_coeff_0.5_', '_real_dist_corr_Displacement_1_coeff_0.6_', '_real_dist_corr_Displacement_2_coeff_0.2_', '_real_dist_corr_Displacement_2_coeff_0.3_', '_real_dist_corr_Displacement_2_coeff_0.5_', '_real_dist_corr_Displacement_2_coeff_0.6_', '_real_dist_corr_Time_coeff_0.2_', '_real_dist_corr_Time_coeff_0.3_', '_real_dist_corr_Time_coeff_0.5_', '_real_dist_corr_Time_coeff_0.6_'])
+Set('colorTheme', 'default-latest')
+Set('StyleSheet/axis-function/autoRange', 'next-tick')
+Add('page', name='page1', autoadd=False)
+To('page1')
+Add('graph', name='graph1', autoadd=False)
+To('graph1')
+Set('leftMargin', '1.84cm')
+Set('rightMargin', '1.107cm')
+Set('topMargin', '1.28cm')
+Set('bottomMargin', '1.351cm')
+Add('axis', name='x', autoadd=False)
+To('x')
+Set('label', 'Time (s)')
+Set('min', 0.3)
+To('..')
+Add('axis', name='y', autoadd=False)
+To('y')
+Set('label', 'Displacement (m)')
+Set('direction', 'vertical')
+To('..')
+Add('label', name='label1', autoadd=False)
+To('label1')
+Set('label', 'Interpenetration zone')
+Set('xPos', [0.084])
+Set('yPos', [0.179])
+Set('Background/color', 'yellow')
+Set('Background/style', 'solid')
+Set('Background/hide', False)
+Set('Background/transparency', 74)
+Set('Border/hide', False)
+To('..')
+Add('xy', name='xy4', autoadd=False)
+To('xy4')
+Set('key', 'MPM-Geomechanics')
+Set('PlotLine/color', 'black')
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy3', autoadd=False)
+To('xy3')
+Set('xData', '_real_dist_corr_Time_coeff_0.5_')
+Set('yData', '_real_dist_corr_Displacement_2_coeff_0.5_')
+Set('key', '\\lambda = 0.5')
+Set('PlotLine/color', 'green')
+Set('PlotLine/width', '1pt')
+Set('PlotLine/hide', False)
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy1', autoadd=False)
+To('xy1')
+Set('xData', '_real_dist_corr_Time_coeff_0.2_')
+Set('yData', '_real_dist_corr_Displacement_2_coeff_0.2_')
+Set('key', '\\lambda = 0.2')
+Set('PlotLine/color', 'red')
+Set('PlotLine/width', '1pt')
+Set('PlotLine/hide', False)
+Set('MarkerFill/hide', True)
+To('..')
+Add('xy', name='xy2', autoadd=False)
+To('xy2')
+Set('xData', '_real_dist_corr_Time_coeff_0.3_')
+Set('yData', '_real_dist_corr_Displacement_2_coeff_0.3_')
+Set('key', '\\lambda = 0.3')
+Set('PlotLine/color', 'blue')
+Set('PlotLine/width', '1pt')
+Set('PlotLine/hide', False)
+Set('MarkerFill/color', 'blue')
+Set('MarkerFill/hide', True)
+To('..')
+Add('function', name='function2', autoadd=False)
+To('function2')
+Set('function', '')
+Set('color', 'green')
+Set('key', 'Perceived contact')
+Set('Line/color', 'black')
+Set('Line/width', '1.5pt')
+Set('Line/style', 'dash-dot')
+Set('Line/hide', False)
+To('..')
+Add('function', name='function1', autoadd=False)
+To('function1')
+Set('function', '-4')
+Set('color', 'blue')
+Set('key', '')
+Set('Line/width', '2pt')
+Set('Line/style', 'dashed')
+Set('Line/hide', True)
+Set('FillBelow/color', '#000000')
+Set('FillBelow/style', 'forward diagonals')
+Set('FillBelow/hide', False)
+Set('FillBelow/linewidth', '0.25pt')
+Set('FillAbove/color', 'black')
+To('..')
+Add('function', name='0.5', autoadd=False)
+To('0.5')
+Set('function', '-4')
+Set('color', 'green')
+Set('key', '')
+Set('Line/width', '1.5pt')
+Set('Line/style', 'dash-dot')
+Set('Line/hide', False)
+To('..')
+Add('function', name='0.3', autoadd=False)
+To('0.3')
+Set('function', '-4.2')
+Set('color', 'green')
+Set('key', '')
+Set('Line/color', 'blue')
+Set('Line/width', '1.5pt')
+Set('Line/style', 'dash-dot')
+Set('Line/hide', False)
+To('..')
+Add('function', name='0.2', autoadd=False)
+To('0.2')
+Set('function', '-5.22')
+Set('color', 'green')
+Set('key', '')
+Set('Line/color', 'red')
+Set('Line/width', '1.5pt')
+Set('Line/style', 'dash-dot')
+Set('Line/hide', False)
+To('..')
+Add('key', name='key1', autoadd=False)
+To('key1')
+Set('horzPosn', 'right')
+Set('vertPosn', 'top')
+Set('horzManual', 0.0)
+Set('vertManual', 0.0)
+To('..')
+To('..')
+Add('label', name='label1', autoadd=False)
+To('label1')
+Set('label', 'MPM-Geomechanics: Real distance correction method verification')
+Set('xPos', [0.11])
+Set('yPos', [0.943])
+To('..')
+To('..')

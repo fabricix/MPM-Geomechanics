@@ -39,6 +39,10 @@ public:
     /// \param[in] bodies A list of Bodies
     void contactNodalDetection(Mesh* mesh, vector<Body*>* bodies);
 
+    /// \brief Check normal approach using trial nodal momenta.
+    /// \param[in] mesh Mesh reference
+    void checkContactApproach(Mesh* mesh);
+
     /// \brief Applies the "real distance correction" method for contact detection.
     ///  \f$ D^{ MS }_I = - X_I ^ M n_I ^ M - X_I ^ S n_I ^ S \leq \lambda \, d_c\f$
     /// \param[in] mesh Mesh reference
