@@ -7,6 +7,7 @@
 #include "Body/Body.h"
 
 #include <vector>
+#include <map>
 using std::vector;
 
 #include "Eigen/Core"
@@ -15,6 +16,31 @@ using Eigen::Vector3d;
 /// \namespace Loads
 /// \brief Operations to manage loads in the MPM model.
 namespace Loads {
+
+    /// \struct PrescribedVelocity
+    /// \brief Defines a constant prescribed velocity constraint on selected material points.
+    ///
+    /// The constraint is applied to the components indicated by `constrained`.
+    /// Components that are not constrained retain their ordinary dynamic response.
+    struct PrescribedVelocity {
+        vector<Particle*> particles; //!< Material points on which the constraint is applied.
+        Vector3d velocity = Vector3d::Zero(); //!< Prescribed velocity vector (m/s).
+        bool constrained[3] = {false, false, false}; //!< Components constrained in the x, y, and z directions, respectively.
+        std::map<int, Vector3d> nodalReactionForces; //!< Reaction force of this prescribed velocity condition at each node (N).
+    };
+
+    /// \brief Configures prescribed velocity constraints on particles selected from the reference geometry.
+    /// \param[in] bodies A list containing pointers to the bodies whose particles are evaluated.
+    void setPrescribedVelocity(vector<Body*>& bodies);
+   
+    /// \brief Gets the configured prescribed velocity constraints.
+    /// \return A reference to the list of prescribed velocity constraints.
+    /// \note The returned reference remains valid while the internal list is not modified or destroyed.
+    vector<PrescribedVelocity>& getPrescribedVelocities();
+
+    /// \brief Resets the nodal reaction forces accumulated for all prescribed velocity constraints.
+    /// \note This should be called before accumulating reactions for a new load or time step.
+    void resetPrescribedVelocityReactions();
 
     /// \struct LoadDistributedBox
     /// \brief Structure to define a distributed load in 

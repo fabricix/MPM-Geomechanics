@@ -57,7 +57,7 @@ namespace Output {
 	void configureResultFields(vector<string> fields);
 
 	/// \brief Configures previous results deleting
-	/// \param[in] bool flag for keeps previous results
+	/// \param[in] flag_keep flag for keeps previous results
 	void configurePreviousResults(bool flag_keep);
 
 	/// \brief Configures the grid fields to be written
