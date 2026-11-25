@@ -12,6 +12,9 @@
 #include <limits>
 
 void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
+	
+	if(Loads::getPrescribedVelocities().empty()) return;
+
     try {
         // Contact bodies have independent fields; other nodes have one shared field.
         std::map<std::pair<int,int>, std::array<double,3>> values;
@@ -87,8 +90,12 @@ void Update::prescribedVelocityNodes(Mesh* mesh, bool constrainForce) {
 }
 
 void Update::prescribedVelocityParticles(double time) {
-    std::set<std::pair<Particle*,int>> constrainedComponents;
-    for (auto& condition : Loads::getPrescribedVelocities()) {
+
+    if (Loads::getPrescribedVelocities().empty()) {	return;	}
+	
+	std::set<std::pair<Particle*,int>> constrainedComponents;
+    
+	for (auto& condition : Loads::getPrescribedVelocities()) {
         for (auto* p : condition.particles) {
             if (!p->getActive()) continue;
             auto velocity = p->getVelocity();

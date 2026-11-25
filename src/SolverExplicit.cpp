@@ -128,6 +128,7 @@ void SolverExplicit::Solve()
 
 		// Project particle position if any penetrations
 		if (useSTLContact) terrainContact->projectParticles(mesh, particles);
+		
 		Update::prescribedVelocityParticles(iTime+dt);
 
 		// (MUSL) Momentum recalculation

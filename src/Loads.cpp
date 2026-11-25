@@ -20,6 +20,9 @@ namespace Loads
 vector<Loads::PrescribedVelocity>& Loads::getPrescribedVelocities() { return prescribedVelocities; }
 
 void Loads::resetPrescribedVelocityReactions() {
+	
+	if (prescribedVelocities.empty()) return;
+
     for (auto& condition : prescribedVelocities) {
         condition.nodalReactionForces.clear();
     }
