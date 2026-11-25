@@ -2,6 +2,7 @@
 
 #include "Geometry.h"
 
+// Verifies that the bounding box contains the minimum and maximum coordinates of the input points.
 TEST(Geometry, Bounding_Box)
 {
   const std::vector<Vector3d> points{
@@ -17,6 +18,7 @@ TEST(Geometry, Bounding_Box)
   EXPECT_TRUE(box[1].isApprox(Vector3d(2.0, 5.0, 4.0)));
 }
 
+// Verifies point containment in a box, including its boundary, and rejection of points outside it.
 TEST(Geometry, Point_Inside_Box)
 {
   const Vector3d lower(0.0, 0.0, 0.0);
@@ -29,6 +31,7 @@ TEST(Geometry, Point_Inside_Box)
   EXPECT_FALSE(Geometry::getInsideBox(lower, upper, Vector3d(0.5, 1.0, 3.1)));
 }
 
+// Verifies polygon containment on XY, XZ, and YZ extrusion planes, including invalid-axis handling.
 TEST(Geometry, Point_Inside_Polygon_On_Each_Extrusion_Plane)
 {
   const std::vector<Vector3d> polygonXY{

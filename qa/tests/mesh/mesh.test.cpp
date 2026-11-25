@@ -2,6 +2,7 @@
 
 #include "Mesh/Mesh.h"
 
+// Verifies grid dimensions, node and cell counts, domain bounds, and inside/outside point queries.
 TEST(Mesh, Grid_Dimensions_And_Domain_Queries)
 {
   Mesh mesh;
