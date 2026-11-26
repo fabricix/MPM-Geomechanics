@@ -4,6 +4,8 @@
 #ifndef CELL_H_
 #define CELL_H_
 
+#include <array>
+#include <cstddef>
 #include <vector>
 
 #include <Eigen/Eigenvalues>
@@ -14,7 +16,16 @@ using namespace Eigen;
 class Cell {
 
     public:
-        
+        // Local positions relative to the cell's minimum and maximum coordinates.
+        // Edge and face nodes are stored separately from the eight corner nodes.
+        enum class HangingNodePosition : std::size_t {
+            EdgeX_YMin_ZMin, EdgeX_YMax_ZMin, EdgeX_YMin_ZMax, EdgeX_YMax_ZMax,
+            EdgeY_XMin_ZMin, EdgeY_XMax_ZMin, EdgeY_XMin_ZMax, EdgeY_XMax_ZMax,
+            EdgeZ_XMin_YMin, EdgeZ_XMax_YMin, EdgeZ_XMin_YMax, EdgeZ_XMax_YMax,
+            FaceXMin, FaceXMax, FaceYMin, FaceYMax, FaceZMin, FaceZMax,
+            Count
+        };
+
         Cell() : volume(0.0), id(0) {}
 
         void computeVolume() {
@@ -41,8 +52,19 @@ class Cell {
     inline std::vector<Node*> getNodes() const { return nodes; };
     inline void setNodes(const std::vector<Node*>& nodes) { this->nodes = nodes; };
 
+    /// Store a non-owning pointer to a hanging node, or nullptr if absent.
+    inline void setHangingNode(HangingNodePosition position, Node* node) {
+        hangingNodes.at(static_cast<std::size_t>(position)) = node;
+    }
+
+    /// Return the hanging node at this local position, or nullptr if absent.
+    inline Node* getHangingNode(HangingNodePosition position) const {
+        return hangingNodes.at(static_cast<std::size_t>(position));
+    }
+
     private:
         std::vector<Node*> nodes;
+        std::array<Node*, static_cast<std::size_t>(HangingNodePosition::Count)> hangingNodes{};
         double volume;
         int id;
 };

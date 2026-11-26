@@ -77,21 +77,9 @@ void Particle::updateContributionNodes(Mesh* mesh)
 		// update the shape functions and gradients
 		shape->update(position,gNodes->at(nodesId.at(i))->getCoordinates(),mesh->getCellDimension(),size);
 
-		// get shape function and its derivates
-		Vector3d shapeFn = shape->getShape();
-		Vector3d derivateFn = shape->getDerivate();
-
-		// set weight
-		contributionNodes.at(i).setWeight(shapeFn.x()*shapeFn.y()*shapeFn.z());
-
-		// update gradients
-		Vector3d gradient;
-		gradient.x() = derivateFn.x()*shapeFn.y()*shapeFn.z();
-		gradient.y() = shapeFn.x()*derivateFn.y()*shapeFn.z();
-		gradient.z() = shapeFn.x()*shapeFn.y()*derivateFn.z();
-
-		// set gradients
-		contributionNodes.at(i).setGradients(gradient);
+        // Use complete weights and gradients for both separable and cell-based shapes.
+        contributionNodes.at(i).setWeight(shape->getWeight());
+        contributionNodes.at(i).setGradients(shape->getGradient());
 	}
 }
 

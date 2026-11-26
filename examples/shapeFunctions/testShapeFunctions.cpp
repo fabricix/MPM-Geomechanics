@@ -27,7 +27,7 @@ void computeShapeAndGradients(
 	// open a file
 	ofstream outputfile;
 	outputfile.open (filenameStr);
-	outputfile<<"x,y,z,sx,sy,sz,gx,gy,gz\n";
+	outputfile<<"x,y,z,weight,gx,gy,gz\n";
 
 	// compute shape and gradients
 	for(size_t i=0; i<nIncrements;i++){
@@ -38,27 +38,24 @@ void computeShapeAndGradients(
 		// update shape function and derivates
 		shapePntr->update(pPosition,gx,cellDim,particleSize);
 
-		// shape function values
-		Vector3d shapeFn=shapePntr->getShape();
-		Vector3d derivateFn=shapePntr->getDerivate();
+		// Complete nodal weight and spatial gradient, as used by Particle.
+		const double weight = shapePntr->getWeight();
+		const Vector3d gradient = shapePntr->getGradient();
 
 		// write the results
 		outputfile
 		<<pPosition.x()<<","<<pPosition.y()<<","<<pPosition.z()<<","
-		<<shapeFn.x()<<","<<shapeFn.y()<<","<<shapeFn.z()<<","
-		<<derivateFn.x()<<","<<derivateFn.y()<<","<<derivateFn.z()<<"\n";
+		<<weight<<","
+		<<gradient.x()<<","<<gradient.y()<<","<<gradient.z()<<"\n";
 	}
 	outputfile.close();
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	// shape instance
 	ShapeGimp shapeGimp;
 	ShapeLinear shapeLinear;
-
-	// node position
-	Vector3d nodePosition(0.0,0.0,0.0);
 
 	// domain
 	Vector3d iDomain(-3,-3,-3);

@@ -175,6 +175,7 @@
     <ClCompile Include="..\..\src\Seismic.cpp" />
     <ClCompile Include="..\..\src\ShapeGimp.cpp" />
     <ClCompile Include="..\..\src\ShapeLinear.cpp" />
+    <ClCompile Include="..\..\src\ShapeLinearMultiLevel.cpp" />
     <ClCompile Include="..\..\src\SolverExplicit.cpp" />
     <ClCompile Include="..\..\src\SolverExplicitTwoPhaseUSL.cpp" />
     <ClCompile Include="..\..\src\States.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="..\..\inc\Shape\Shape.h" />
     <ClInclude Include="..\..\inc\Shape\ShapeGimp.h" />
     <ClInclude Include="..\..\inc\Shape\ShapeLinear.h" />
+    <ClInclude Include="..\..\inc\Shape\ShapeLinearMultiLevel.h" />
     <ClInclude Include="..\..\inc\Solver\Solver.h" />
     <ClInclude Include="..\..\inc\Solver\SolverExplicitTwoPhaseUSL.h" />
     <ClInclude Include="..\..\inc\States.h" />
