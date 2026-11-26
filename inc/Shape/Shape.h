@@ -31,13 +31,24 @@ public:
 	/// \brief Return the shape function values
 	/// \return The nodal shape 
 	/// function value \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$
-	inline const Vector3d& getShape() const { return this->shape; }
+	virtual const Vector3d& getShape() const { return this->shape; }
 	
 	/// \brief Returns the derivates values
 	/// \return The derivates of the nodal shape
 	/// function \f$dS_{Ip}/dx, dS_{Ip}/dy, dS_{Ip}/dz\f$
-	inline const Vector3d& getDerivate() const { return this->derivate; }
+	virtual const Vector3d& getDerivate() const { return this->derivate; }
 	
+    /// Return the complete interpolation weight and gradient for the current node.
+    /// The default combines the separable components used by linear and GIMP shapes.
+    virtual double getWeight() const {
+        return shape.x() * shape.y() * shape.z();
+    }
+    virtual Vector3d getGradient() const {
+        return Vector3d(derivate.x()*shape.y()*shape.z(),
+                        shape.x()*derivate.y()*shape.z(),
+                        shape.x()*shape.y()*derivate.z());
+    }
+
 	/// \brief Configure the shape function values
 	///
 	/// Nodal shape function values: \f$S_{Ipx}, S_{Ipy}, S_{Ipy}\f$

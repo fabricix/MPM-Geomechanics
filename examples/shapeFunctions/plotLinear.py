@@ -43,20 +43,10 @@ fig,ax=plt.subplots(1,1)
 import pandas as pd
 sh1=pd.read_csv("shapeLinear.csv")
 
-# plot shape function and gradients in x
-ax.plot(sh1.x,sh1.sx,'--b',label='Sx-MPM++')
-ax.plot(sh1.x,sh1.gx,'--r',label='Gx-MPM++')
-ax.legend()
-
-# plot shape function and gradients in y
-ax.plot(sh1.y,sh1.sy,':b',label='Sy-MPM++')
-ax.plot(sh1.y,sh1.gy,':r',label='Gy-MPM++')
-ax.legend()
-
-# plot shape function and gradients in z
-ax.plot(sh1.z,sh1.sz,'-.b',label='Sz-MPM++')
-ax.plot(sh1.z,sh1.gz,'-.r',label='Gz-MPM++')
-ax.legend()
+# Along this example's diagonal x = y = z, the complete weight and
+# each gradient component are computed as in Particle.updateContributionNodes.
+ax.plot(sh1.x, sh1.weight, '--b', label='Weight - MPM')
+ax.plot(sh1.x, sh1.gx, '--r', label='Gradient x - MPM')
 
 #
 # Results comparison
@@ -69,7 +59,7 @@ L = 1.0
 lp = 0.25
 
 # particle position
-xp = np.linspace(-3,3,300)
+xp = sh1.x.to_numpy()
 
 # node position  
 xi = 0.5
@@ -88,8 +78,8 @@ for i in np.arange(xp.size):
     dNi[i]  = GNiShapeFunction(L,lp,xp[i],xi)
 
 # plot results
-ax.plot(xp,Ni,'xb',label='S-MPM-Py')
-ax.plot(xp,dNi,'xr',label='G-MPM-Py')
+ax.plot(xp,Ni**3,'xb',label='S-MPM-Py')
+ax.plot(xp,dNi*Ni**2,'xr',label='G-MPM-Py')
 
 # add legends and show the figure
 ax.legend()
