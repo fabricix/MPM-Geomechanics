@@ -20,6 +20,10 @@ namespace Excavation {
 
 	} // namespace
 
+	bool hasScheduledExcavations() {
+		return !excavationEvents.empty();
+	}
+
 	void configure(const std::vector<Body*>& bodies) {
 		excavationEvents.clear();
 		nextExcavation = 0;

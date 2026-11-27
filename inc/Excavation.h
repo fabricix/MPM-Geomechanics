@@ -9,20 +9,42 @@
 
 namespace Excavation {
 
-	/// Configure excavation schedule from bodies carrying an excavation_time
+	/**
+	 * @brief Configure the excavation schedule from the supplied bodies.
+	 * @param bodies Bodies carrying an excavation_time used to register excavation events.
+	 */
 	void configure(const std::vector<Body*>& bodies);
 
-	/// Deactivate particles of bodies whose excavation_time <= stepTime
+	/**
+	 * @brief Apply excavation events whose scheduled time has been reached.
+	 * @param stepTime Current simulation step time.
+	 */
 	void apply(double stepTime);
 
-	/// Clear registered excavation events
+	/**
+	 * @brief Clear all registered excavation events.
+	 *
+	 * This resets the excavation schedule, leaving no pending or applied events.
+	 */
 	void clear();
 
-	/// Return whether any excavation events are registered
+	/**
+	 * @brief Check whether any excavation events are registered.
+	 * @return true if one or more excavation events are registered, false otherwise.
+	 */
 	bool hasEvents();
 
-	/// Return number of pending excavation events
+	/**
+	 * @brief Return the number of pending excavation events.
+	 * @return Number of excavation events that have not yet been applied.
+	 */
 	size_t pendingCount();
+
+	/**
+	 * @brief Check whether excavation events are scheduled.
+	 * @return true if one or more excavation events are scheduled, false otherwise.
+	 */
+	bool hasScheduledExcavations();
 
 } // namespace Excavation
 
