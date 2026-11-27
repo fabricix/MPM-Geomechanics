@@ -41,6 +41,9 @@ namespace Excavation {
 	}
 
 	void apply(double stepTime) {
+		
+		if (!hasScheduledExcavations()){ return; }
+		
 		while (nextExcavation < excavationEvents.size()) {
 			const ExcavationEvent& event = excavationEvents[nextExcavation];
 			const double tolerance = 8.0 * std::numeric_limits<double>::epsilon()
