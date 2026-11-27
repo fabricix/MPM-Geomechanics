@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\src\Elastic.cpp" />
     <ClCompile Include="..\..\src\ElasticJaumann.cpp" />
     <ClCompile Include="..\..\src\Energy.cpp" />
+    <ClCompile Include="..\..\src\Excavation.cpp" />
     <ClCompile Include="..\..\src\Geometry.cpp" />
     <ClCompile Include="..\..\src\GmshMeshReader.cpp" />
     <ClCompile Include="..\..\src\HydroMechanicalCoupling.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="..\..\inc\Contribution.h" />
     <ClInclude Include="..\..\inc\DynamicRelaxation.h" />
     <ClInclude Include="..\..\inc\Energy.h" />
+    <ClInclude Include="..\..\inc\Excavation.h" />
     <ClInclude Include="..\..\inc\Geometry.h" />
     <ClInclude Include="..\..\inc\GmshMeshReader.h" />
     <ClInclude Include="..\..\inc\HydroMechanicalCoupling.h" />

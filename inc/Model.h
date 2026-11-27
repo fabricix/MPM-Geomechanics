@@ -19,12 +19,6 @@ class Body;
 /// \brief Contain the configuration variables that defines an specific simulation
 namespace ModelSetup {
 
-	/// \brief Rebuild the time-ordered excavation schedule for a new model.
-	void configureExcavations(const std::vector<Body*>& bodies);
-
-	/// \brief Deactivate bodies whose excavation time has been reached, once each.
-	void applyExcavations(double stepTime);
-
 	/// \enum StressUpdateScheme
 	/// \brief Defines the type of scheme used to update the stress
 	enum StressUpdateScheme{ USF, USL, MUSL };

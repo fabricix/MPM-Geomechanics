@@ -46365,6 +46365,6 @@
   },
   "load_state": true,
   "load_state_file": "../01-initialization/equilibrated-stress.json",
-  "save_state": true,
+  "save_state": false,
   "save_state_file": "final-stress.json"
 }

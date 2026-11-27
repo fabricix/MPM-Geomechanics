@@ -17,35 +17,6 @@ using std::floor;
 
 namespace ModelSetup {
 
-	namespace {
-		struct ExcavationEvent {double time;	Body* body;};
-		std::vector<ExcavationEvent> excavationEvents;
-		size_t nextExcavation = 0;
-	}
-
-	void configureExcavations(const std::vector<Body*>& bodies) {
-		excavationEvents.clear();
-		nextExcavation = 0;
-		for (Body* body : bodies) {
-			if (body->hasExcavationTime()) {
-				excavationEvents.push_back({body->getExcavationTime(), body});
-			}
-		}
-		std::stable_sort(excavationEvents.begin(), excavationEvents.end(),
-			[](const ExcavationEvent& a, const ExcavationEvent& b) { return a.time < b.time; });
-	}
-
-	void applyExcavations(double stepTime) {
-		while (nextExcavation < excavationEvents.size()) {
-			const ExcavationEvent& event = excavationEvents[nextExcavation];
-			const double tolerance = 8.0 * std::numeric_limits<double>::epsilon()
-				* std::max(stepTime, event.time);
-			if (stepTime < event.time && event.time - stepTime > tolerance) break;
-			event.body->deactivateParticles();
-			++nextExcavation;
-		}
-	}
-
 	///
 	/// Default values for the model
 	///

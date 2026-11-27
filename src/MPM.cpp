@@ -17,6 +17,7 @@
 #include "Seismic.h"
 #include "Contact.h"
 #include "GmshMeshReader.h"
+#include "Excavation.h"
 
 #include "Json/json.hpp"
 using json = nlohmann::json;
@@ -262,7 +263,7 @@ void MPM::createBodies() {
 		bodies.at(i)->create(mesh,iMaterial);
 	}
 	BodyGmsh::resetSharedMesh();
-	ModelSetup::configureExcavations(bodies);
+	Excavation::configure(bodies);
 }
 
 void MPM::setupParticles() {

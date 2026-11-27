@@ -12,6 +12,7 @@
 #include "TerrainContact.h"
 #include "Seismic.h"
 #include "ContactManager.h"
+#include "Excavation.h"
 
 SolverExplicit::SolverExplicit() : Solver() {}
 
@@ -30,7 +31,7 @@ void SolverExplicit::Solve()
 	ModelSetup::setLoopCounter(loopCounter);
 
 	// Apply excavation for initial conditions
-	ModelSetup::applyExcavations(0.0);
+	Excavation::apply(0.0);
 
 	// Write initial particles and grid states
 	Output::writeInitialState(bodies, iTime, mesh, terrainContact);
@@ -42,7 +43,7 @@ void SolverExplicit::Solve()
 		loopCounter = ModelSetup::incrementLoopCounter();
 
 		// Apply excavation for the current time step
-		ModelSetup::applyExcavations(iTime);
+		Excavation::apply(iTime);
 
 		// Update contribution nodes
 		Update::contributionNodes(mesh, particles);
