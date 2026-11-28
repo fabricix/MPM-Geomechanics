@@ -14,6 +14,7 @@
 #include "Energy.h"
 #include "DynamicRelaxation.h"
 #include "Seismic.h"
+#include "Excavation.h"
 
 #include <iostream>
 using std::cout;
@@ -1125,8 +1126,6 @@ namespace Output{
 		else if (ModelSetup::getDampingType() == ModelSetup::DampingType::UNDAMPED){ 
 			std::cout << "   Damping : Undamped" << std::endl; 
 		}
-
-		
 		if (ModelSetup::getSaveState()) {
 			std::cout << "Save state : Enabled" << std::endl;
 		}
@@ -1138,6 +1137,9 @@ namespace Output{
 		}
 		if (ModelSetup::getContactActive()) {
 			std::cout << "   Contact : Master-Slave" << std::endl;
+		}
+		if (Excavation::hasScheduledExcavations()) {
+			std::cout << "Excavation : Enabled" << std::endl;
 		}
 	}
 

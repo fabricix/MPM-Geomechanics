@@ -2,16 +2,16 @@
   "stress_scheme_update": "USL",
   "shape_function": "GIMP",
   "n_phases": 1,
-  "time": 5.0,
+  "time": 13.0,
   "critical_time_step_multiplier": 0.2,
   "gravity": [0.0, 0.0, -9.81],
-  "n_threads": 4,
+  "n_threads": 20,
   "damping": {
     "type": "none"
   },
   "results": {
-    "print": 80,
-    "material_point_results": ["id", "body", "material", "active", "mass", "displacement", "velocity", "stress", "plastic_strain"],
+    "print": 50,
+    "material_point_results": ["id", "body", "material", "active", "displacement","plastic_strain"],
     "grid_nodal_results": ["none"]
   },
   "mesh": {
@@ -31,10 +31,10 @@
     "rock": {
       "id": 1,
       "type": "mohr-coulomb",
-      "young": 20000000000.0,
+      "young": 1e9,
       "poisson": 0.2,
       "density": 2700.0,
-      "cohesion": 500000.0,
+      "cohesion": 500e3,
       "friction": 20.0,
       "dilation": 0.0,
       "tensile": 0.0
@@ -42,10 +42,10 @@
     "ore": {
       "id": 2,
       "type": "mohr-coulomb",
-      "young": 20000000000.0,
+      "young": 1e9,
       "poisson": 0.2,
       "density": 2700.0,
-      "cohesion": 500000.0,
+      "cohesion": 500e3,
       "friction": 20.0,
       "dilation": 0.0,
       "tensile": 0.0
@@ -45001,7 +45001,7 @@
           2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
         ]
       },
-      "excavation_time": 0.25
+      "excavation_time": 0.5
     },
     "excavation_2": {
       "type": "particles",
@@ -45585,7 +45585,7 @@
           2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
         ]
       },
-      "excavation_time": 0.50
+      "excavation_time": 4.0
     },
     "excavation_3": {
       "type": "particles",
@@ -46360,7 +46360,7 @@
           2, 2, 2, 2, 2, 2, 2, 2
         ]
       },
-      "excavation_time": 2.5
+      "excavation_time": 6.0
     }
   },
   "load_state": true,
